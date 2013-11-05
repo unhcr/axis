@@ -17,6 +17,6 @@ Indices and tables
 ==================
 
 * :ref:`models`
-* :ref:`modindex`
+* :ref:`modules`
 * :ref:`search`
 
