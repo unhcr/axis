@@ -16,7 +16,7 @@ Contents:
 Indices and tables
 ==================
 
-* :ref:`genindex`
+* :ref:`models`
 * :ref:`modindex`
 * :ref:`search`
 
