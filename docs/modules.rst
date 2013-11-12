@@ -1,15 +1,6 @@
 Modules
 =======
 
-OmniSearch
-----------
-
-NavigationPanel
----------------
-
-NavigationDropdown
-------------------
-
 PhantomReporter
 ---------------
 
