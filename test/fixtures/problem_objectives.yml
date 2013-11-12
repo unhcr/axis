@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  problem_name: MyString
+  objective_name: MyString
+  is_excluded: false
+
+two:
+  problem_name: MyString
+  objective_name: MyString
+  is_excluded: false
