@@ -8,6 +8,9 @@ gem 'rails', '3.2.11'
 gem 'sqlite3'
 gem 'devise'
 gem 'backbone-on-rails'
+gem 'haml'
+gem 'haml-rails', '>= 0.3.4'
+
 
 
 # Gems used only for assets and not required
