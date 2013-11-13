@@ -20,5 +20,7 @@ class Visio.Views.SigninView extends Backbone.View
 
     email = @$el.find('.email').val()
     password = @$el.find('.password').val()
-    Visio.Utils.signin(email, password)
+    Visio.Utils.signin(email, password, () =>
+      window.location.href = '/'
+    )
 
