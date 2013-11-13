@@ -3,6 +3,10 @@ Visio::Application.routes.draw do
 
   get '/navigation' => 'application#navigation'
 
+  post '/test/user_setup' => 'test#user_setup'
+  post '/test/user_teardown' => 'test#user_teardown'
+  post '/test/user_signed_in' => 'test#user_signed_in'
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
