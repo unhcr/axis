@@ -20,24 +20,5 @@ class Visio.Views.SigninView extends Backbone.View
 
     email = @$el.find('.email').val()
     password = @$el.find('.password').val()
-    @signin(email, password)
-
-  signin: (email, password) =>
-    data =
-      remote: true
-      commit: "Sign in"
-      utf8: "✓"
-      user:
-        remember_me: 1
-        password: password
-        email: email
-
-    $.post('/users/sign_in.json', data, (resp) ->
-      console.log resp
-      if (resp.success)
-        alert 'authenticated'
-      else
-        alert 'shit something went wrong'
-    )
-    return false
+    Visio.Utils.signin(email, password)
 

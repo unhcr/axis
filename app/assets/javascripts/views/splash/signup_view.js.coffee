@@ -23,7 +23,7 @@ class Visio.Views.SignupView extends Backbone.View
     passwordConf = @$el.find('.password-confirmation').val()
     @signup(email, password, passwordConf)
 
-  signup: (email, password, passwordConf) =>
+  signup: (email, password, passwordConf, callback) =>
     data =
       remote: true
       commit: "Sign up"
@@ -36,10 +36,8 @@ class Visio.Views.SignupView extends Backbone.View
 
     $.post('/users', data, (resp) ->
       console.log resp
-      if (resp.success)
-        alert 'authenticated'
-      else
-        alert 'shit something went wrong'
+      if callback
+        callback(resp)
     )
     return false
 

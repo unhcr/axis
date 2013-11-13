@@ -3,4 +3,5 @@ window.Visio =
   Collections: {}
   Views: {}
   Routers: {}
+  Utils: {}
 
