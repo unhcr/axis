@@ -1,0 +1,33 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  scenerio: MyString
+  type: 
+  cost_center: MyString
+  implementer_code: MyString
+  implementer_name: MyString
+  account_code: MyString
+  account_name: MyString
+  quantity: 1
+  unit: 1
+  currency: MyString
+  unit_cost: 1
+  local_cost: 1
+  amount: 1
+  comment: MyText
+
+two:
+  scenerio: MyString
+  type: 
+  cost_center: MyString
+  implementer_code: MyString
+  implementer_name: MyString
+  account_code: MyString
+  account_name: MyString
+  quantity: 1
+  unit: 1
+  currency: MyString
+  unit_cost: 1
+  local_cost: 1
+  amount: 1
+  comment: MyText

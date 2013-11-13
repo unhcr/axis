@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  operation: MyString
+  name: MyString
+  year: 1
+
+two:
+  operation: MyString
+  name: MyString
+  year: 1
