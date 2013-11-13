@@ -1,5 +1,8 @@
 Visio::Application.routes.draw do
-  devise_for :users, :controllers => {:sessions => 'sessions'}
+  devise_for :users, :controllers => {:sessions => 'sessions', :registrations => 'registrations' }
+
+  get '/navigation' => 'application#navigation'
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

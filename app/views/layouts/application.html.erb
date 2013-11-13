@@ -7,7 +7,9 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-
+  <script>
+    window.Visio.user = new Visio.Models.User(<%= current_user.to_json.html_safe %>)
+  </script>
 <%= yield %>
 
 </body>

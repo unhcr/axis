@@ -12,5 +12,5 @@ class Visio.Routers.SplashRouter extends Backbone.Router
     @signin = new Visio.Views.SigninView({ el: $('.session-container') })
 
   signup: () ->
-    @signup = new Visio.Views.SignupView()
+    @signup = new Visio.Views.SignupView({ el: $('.session-container') })
 
