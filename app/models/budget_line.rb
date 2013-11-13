@@ -3,4 +3,8 @@ class BudgetLine < ActiveRecord::Base
 
   belongs_to :output
   belongs_to :problem_objective
+  belongs_to :rights_group
+  belongs_to :goal
+  belongs_to :ppg
+  belongs_to :plan
 end
