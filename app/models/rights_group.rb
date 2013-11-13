@@ -1,8 +1,8 @@
 class RightsGroup < ActiveRecord::Base
   attr_accessible :name
 
-  has_many :problem_objectives
-  has_many :indicator_data
+  has_and_belongs_to_many :problem_objectives
+  has_and_belongs_to_many :goals
 
-  belongs_to :goal
+  has_many :indicator_data
 end
