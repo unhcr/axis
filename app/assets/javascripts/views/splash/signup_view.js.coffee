@@ -42,5 +42,3 @@ class Visio.Views.SignupView extends Backbone.View
         callback(resp)
     )
     return false
-
-

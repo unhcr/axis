@@ -9,8 +9,14 @@ class Visio.Routers.SplashRouter extends Backbone.Router
     '*default': 'signin'
 
   signin: () ->
-    @signin = new Visio.Views.SigninView({ el: $('.session-container') })
+    el = $('.signin')
+    $('.session-container').hide()
+    @signin = new Visio.Views.SigninView({ el: el })
+    el.slideDown()
 
   signup: () ->
-    @signup = new Visio.Views.SignupView({ el: $('.session-container') })
+    el = $('.signup')
+    $('.session-container').hide()
+    @signup = new Visio.Views.SignupView({ el: $('.signup') })
+    el.slideDown()
 
