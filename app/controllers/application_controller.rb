@@ -1,10 +1,14 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
+  @@world = File.read("#{Rails.root}/public/world.json")
+
   def index
-    redirect_to :navigation if user_signed_in?
+    redirect_to :splash unless user_signed_in?
+    @world = @@world
   end
 
-  def navigation
+  def splash
   end
+
 end
