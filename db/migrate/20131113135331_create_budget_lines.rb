@@ -16,6 +16,13 @@ class CreateBudgetLines < ActiveRecord::Migration
       t.integer :amount
       t.text :comment
 
+      t.belongs_to :output
+      t.belongs_to :problem_objective
+      t.belongs_to :rights_group
+      t.belongs_to :goal
+      t.belongs_to :ppg
+      t.belongs_to :plan
+
       t.timestamps
     end
   end
