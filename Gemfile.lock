@@ -79,9 +79,9 @@ GEM
     mime-types (1.25)
     mini_portile (0.5.1)
     multi_json (1.8.2)
-    orm_adapter (0.4.0)
     nokogiri (1.6.0)
       mini_portile (~> 0.5.0)
+    orm_adapter (0.4.0)
     polyglot (0.3.3)
     pry (0.9.12.2)
       coderay (~> 1.0.5)
@@ -149,10 +149,9 @@ DEPENDENCIES
   haml
   haml-rails (>= 0.3.4)
   jquery-rails
-  pry
-  qunit-rails
   nokogiri
   pry
+  qunit-rails
   rails (= 3.2.11)
   rubyzip
   sass-rails (~> 3.2.3)
