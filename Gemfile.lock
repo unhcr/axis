@@ -101,6 +101,7 @@ GEM
     uglifier (2.3.0)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
+    zip (2.0.2)
 
 PLATFORMS
   ruby
@@ -113,3 +114,4 @@ DEPENDENCIES
   sass-rails (~> 3.2.3)
   sqlite3
   uglifier (>= 1.0.3)
+  zip

@@ -7,8 +7,9 @@ module FocusParse
   OUTPUT = 'Output'
   INDICATOR = 'Indicator'
 
-  def parse(path)
-    doc = Nokogiri::XML(File.read(path))
+  def parse(file)
+    #TODO Update new data pts if they created new data
+    doc = Nokogiri::XML(file)
 
     xml_plan = doc.search(PLAN)
 
