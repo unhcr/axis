@@ -4,4 +4,5 @@ window.Visio =
   Views: {}
   Routers: {}
   Utils: {}
+  Graphs: {}
 

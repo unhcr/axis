@@ -11,9 +11,10 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131113135650) do
+ActiveRecord::Schema.define(:version => 20131114134958) do
 
-  create_table "budget_lines", :force => true do |t|
+  create_table "budget_lines", :id => false, :force => true do |t|
+    t.string   "id"
     t.string   "scenerio"
     t.string   "type"
     t.string   "cost_center"
@@ -28,33 +29,35 @@ ActiveRecord::Schema.define(:version => 20131113135650) do
     t.integer  "local_cost"
     t.integer  "amount"
     t.text     "comment"
-    t.integer  "output_id"
-    t.integer  "problem_objective_id"
-    t.integer  "rights_group_id"
-    t.integer  "goal_id"
-    t.integer  "ppg_id"
-    t.integer  "plan_id"
+    t.string   "output_id"
+    t.string   "problem_objective_id"
+    t.string   "rights_group_id"
+    t.string   "goal_id"
+    t.string   "ppg_id"
+    t.string   "plan_id"
     t.datetime "created_at",           :null => false
     t.datetime "updated_at",           :null => false
   end
 
-  create_table "goals", :force => true do |t|
+  create_table "goals", :id => false, :force => true do |t|
+    t.string   "id"
     t.string   "name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
 
   create_table "goals_ppgs", :id => false, :force => true do |t|
-    t.integer "goal_id", :null => false
-    t.integer "ppg_id",  :null => false
+    t.string "goal_id", :null => false
+    t.string "ppg_id",  :null => false
   end
 
   create_table "goals_rights_groups", :id => false, :force => true do |t|
-    t.integer "goal_id",         :null => false
-    t.integer "rights_group_id", :null => false
+    t.string "goal_id",         :null => false
+    t.string "rights_group_id", :null => false
   end
 
-  create_table "indicator_data", :force => true do |t|
+  create_table "indicator_data", :id => false, :force => true do |t|
+    t.string   "id"
     t.integer  "standard"
     t.boolean  "reversal"
     t.integer  "comp_target"
@@ -63,18 +66,19 @@ ActiveRecord::Schema.define(:version => 20131113135650) do
     t.integer  "stored_baseline"
     t.integer  "threshold_green"
     t.integer  "threshold_red"
-    t.integer  "indicator_id"
-    t.integer  "output_id"
-    t.integer  "problem_objective_id"
-    t.integer  "rights_group_id"
-    t.integer  "goal_id"
-    t.integer  "ppg_id"
-    t.integer  "plan_id"
+    t.string   "indicator_id"
+    t.string   "output_id"
+    t.string   "problem_objective_id"
+    t.string   "rights_group_id"
+    t.string   "goal_id"
+    t.string   "ppg_id"
+    t.string   "plan_id"
     t.datetime "created_at",           :null => false
     t.datetime "updated_at",           :null => false
   end
 
-  create_table "indicators", :force => true do |t|
+  create_table "indicators", :id => false, :force => true do |t|
+    t.string   "id"
     t.string   "name"
     t.boolean  "is_performance"
     t.boolean  "is_gsp"
@@ -83,16 +87,17 @@ ActiveRecord::Schema.define(:version => 20131113135650) do
   end
 
   create_table "indicators_outputs", :id => false, :force => true do |t|
-    t.integer "output_id",    :null => false
-    t.integer "indicator_id", :null => false
+    t.string "output_id",    :null => false
+    t.string "indicator_id", :null => false
   end
 
   create_table "indicators_problem_objectives", :id => false, :force => true do |t|
-    t.integer "problem_objective_id", :null => false
-    t.integer "indicator_id",         :null => false
+    t.string "problem_objective_id", :null => false
+    t.string "indicator_id",         :null => false
   end
 
-  create_table "outputs", :force => true do |t|
+  create_table "outputs", :id => false, :force => true do |t|
+    t.string   "id"
     t.string   "name"
     t.string   "priority"
     t.datetime "created_at", :null => false
@@ -100,11 +105,12 @@ ActiveRecord::Schema.define(:version => 20131113135650) do
   end
 
   create_table "outputs_problem_objectives", :id => false, :force => true do |t|
-    t.integer "problem_objective_id", :null => false
-    t.integer "output_id",            :null => false
+    t.string "problem_objective_id", :null => false
+    t.string "output_id",            :null => false
   end
 
-  create_table "plans", :force => true do |t|
+  create_table "plans", :id => false, :force => true do |t|
+    t.string   "id"
     t.string   "operation"
     t.string   "name"
     t.integer  "year"
@@ -113,17 +119,19 @@ ActiveRecord::Schema.define(:version => 20131113135650) do
   end
 
   create_table "plans_ppgs", :id => false, :force => true do |t|
-    t.integer "plan_id", :null => false
-    t.integer "ppg_id",  :null => false
+    t.string "plan_id", :null => false
+    t.string "ppg_id",  :null => false
   end
 
-  create_table "ppgs", :force => true do |t|
+  create_table "ppgs", :id => false, :force => true do |t|
+    t.string   "id"
     t.string   "name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
 
-  create_table "problem_objectives", :force => true do |t|
+  create_table "problem_objectives", :id => false, :force => true do |t|
+    t.string   "id"
     t.string   "problem_name"
     t.string   "objective_name"
     t.boolean  "is_excluded"
@@ -132,11 +140,12 @@ ActiveRecord::Schema.define(:version => 20131113135650) do
   end
 
   create_table "problem_objectives_rights_groups", :id => false, :force => true do |t|
-    t.integer "problem_objective_id", :null => false
-    t.integer "rights_group_id",      :null => false
+    t.string "problem_objective_id", :null => false
+    t.string "rights_group_id",      :null => false
   end
 
-  create_table "rights_groups", :force => true do |t|
+  create_table "rights_groups", :id => false, :force => true do |t|
+    t.string   "id"
     t.string   "name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false

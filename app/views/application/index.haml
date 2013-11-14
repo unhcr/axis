@@ -1,11 +1,16 @@
 
 .signin.session-container.full-wrapper
 .signup.session-container.full-wrapper
+navigatin'
+
+#map
 
 :javascript
   $(document).ready(function() {
 
-    window.router = new Visio.Routers.SplashRouter();
+    window.router = new Visio.Routers.IndexRouter({
+      map: #{@world}
+    });
     Backbone.history.start();
 
   });
