@@ -15,7 +15,7 @@ class ApplicationControllerTest < ActionController::TestCase
 
     get :index
 
-    assert_response :success
+    assert_response :found
 
   end
 
@@ -23,7 +23,7 @@ class ApplicationControllerTest < ActionController::TestCase
 
     get :index
 
-    assert_response :found
+    assert_response :success
 
   end
 
