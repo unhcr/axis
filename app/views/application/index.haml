@@ -1,2 +1,13 @@
 navigatin'
-= @world
+
+#map
+
+:javascript
+  $(document).ready(function() {
+
+    window.router = new Visio.Routers.IndexRouter({
+      map: #{@world}
+    });
+    Backbone.history.start();
+
+  });
