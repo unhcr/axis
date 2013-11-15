@@ -4,11 +4,10 @@ class FocusParseTest < ActiveSupport::TestCase
 
   TESTFILE_PATH = "#{Rails.root}/test/files/"
   TESTFILE_NAME = "PlanTest.xml"
+  TESTHEADER_NAME = "HeaderTest.xml"
+  PLAN_TYPES = ['ONEPLAN']
   include FocusParse
   def setup
-  end
-
-  test "Parse file FOCUS basic" do
     # Destory any fixtures or previous data
     Plan.destroy_all
     Ppg.destroy_all
@@ -19,9 +18,17 @@ class FocusParseTest < ActiveSupport::TestCase
     Indicator.destroy_all
     IndicatorDatum.destroy_all
     BudgetLine.destroy_all
+  end
+
+  test "Parse operation_header FOCUS" do
+    file = File.read(TESTFILE_PATH + TESTHEADER_NAME)
+    parse_header(file, PLAN_TYPES)
+  end
+
+  test "Parse plan FOCUS basic" do
 
     file = File.read(TESTFILE_PATH + TESTFILE_NAME)
-    parse(file)
+    parse_plan(file)
 
     assert_equal 1, Plan.count, "Plan count"
     Plan.all.each do |plan|
