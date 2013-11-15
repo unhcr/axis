@@ -8,6 +8,11 @@ Visio.Graphs.map = (config) ->
   zoomMax = 2.2
   zoomMin = 0.5
 
+  # Left, Right
+  # Top, Bottom
+  translateX = [843, -743]
+  translateY = [880, -346]
+
   projection = d3.geo.mercator()
     .scale(scale)
     .translate([width / 2, height / 2])
@@ -34,18 +39,32 @@ Visio.Graphs.map = (config) ->
     .attr('height', height)
     .attr('class', 'background-rect')
 
+
+
   zoom = d3.behavior.zoom()
+    .scaleExtent([.5, 2.2])
     .on("zoom", () ->
-      if d3.event.scale < zoomMin
-        scale = zoomMin
-      else if d3.event.scale > zoomMax
-        scale = zoomMax
-      else
-        scale = d3.event.scale
+      scale = d3.event.scale
 
       translate = d3.event.translate
-      console.log scale
-      console.log translate
+
+      absTranslateX = translate[0] / scale
+      absTranslateY = translate[1] / scale
+      console.log(absTranslateX)
+
+      if absTranslateX < translateX[1]
+        console.log('too far right')
+        translate[0] = translateX[1] * Math.abs(scale)
+      else if absTranslateX > translateX[0]
+        translate[0] = translateX[0] * Math.abs(scale)
+
+      if absTranslateY < translateY[1]
+        translate[1] = translateY[1] * Math.abs(scale)
+      else if absTranslateY > translateY[0]
+        translate[1] = translateY[0] * Math.abs(scale)
+
+      $('.country').css('stroke-width', .5 / scale + 'px')
+
       g.attr("transform","translate(#{translate.join(",")})scale(#{scale})")
       g.select('.background-rect')
         .attr('x', -(translate[0] / scale))
