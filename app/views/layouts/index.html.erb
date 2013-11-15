@@ -6,7 +6,7 @@
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
-<body class="ui-primary-theme">
+<body class="ui-invert-theme">
   <script>
     window.Visio.user = new Visio.Models.User(<%= current_user.to_json.html_safe %>)
   </script>
@@ -14,3 +14,4 @@
 
 </body>
 </html>
+
