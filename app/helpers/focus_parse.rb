@@ -28,7 +28,7 @@ module FocusParse
       years = []
 
 
-      play_types.each do |type|
+      plan_types.each do |type|
         years += xml_operation_header.search(
           "./plans/PlanHeader[type = \"#{type}\"]/planningPeriod").map(&:text)
       end

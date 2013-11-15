@@ -18,11 +18,19 @@ class FocusParseTest < ActiveSupport::TestCase
     Indicator.destroy_all
     IndicatorDatum.destroy_all
     BudgetLine.destroy_all
+    Operation.destroy_all
   end
 
   test "Parse operation_header FOCUS" do
     file = File.read(TESTFILE_PATH + TESTHEADER_NAME)
     parse_header(file, PLAN_TYPES)
+
+    assert_equal 139, Operation.count, "Operation count"
+    Operation.all.each do |o|
+      assert o.years.length >= 0
+      assert o.name
+      assert o.id
+    end
   end
 
   test "Parse plan FOCUS basic" do

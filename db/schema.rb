@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131115111341) do
+ActiveRecord::Schema.define(:version => 20131115112838) do
 
   create_table "budget_lines", :id => false, :force => true do |t|
     t.string   "id"
@@ -96,7 +96,8 @@ ActiveRecord::Schema.define(:version => 20131115111341) do
     t.string "indicator_id",         :null => false
   end
 
-  create_table "operations", :force => true do |t|
+  create_table "operations", :id => false, :force => true do |t|
+    t.string   "id"
     t.string   "name"
     t.text     "years"
     t.datetime "created_at", :null => false
