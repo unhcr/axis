@@ -3,6 +3,9 @@ $primary: rgb(13, 45, 70);
 $primary-light: rgb(1, 139, 176);
 $secondary: rgb(223, 91, 87);
 $thirdary: rgb(255, 203, 5);
+$soft-glow: rgb(245, 227, 155);
+$selection: rgb(252, 239, 23);
+$bright: rgb(255, 248, 59);
 
 /* Lengths */
 $radius: 3px;
@@ -18,9 +21,26 @@ body, html {
   margin: 0;
 }
 
+.ui-primary-light {
+  background-color: $primary-light
+}
+
+.ui-bright {
+  color: $bright;
+}
+
 .full-wrapper {
   min-height: 100%;
   min-width: 100%;
+}
+
+.ui-large-header {
+  font-size: 4em;
+  letter-spacing: -.02em
+}
+
+.ui-medium-header {
+  font-size: 3em;
 }
 
 .ui-active {
@@ -33,16 +53,38 @@ body, html {
   color: $primary;
 }
 
+.center-text {
+  text-align: center;
+}
+
 .gone {
   display: none !important;
+}
+
+::selection {
+	background: $selection; /* Safari */
+	}
+::-moz-selection {
+	background: $selection; /* Firefox */
 }
 
 input {
   border: none;
 }
 
+input:focus {
+  background-color: $soft-glow;
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
+
+.full-width {
+  width: 100%
+}
+
 button, input {
-  padding: 0 4px;
+  padding: .2em .8em;
   line-height: 2em;
 }
 
