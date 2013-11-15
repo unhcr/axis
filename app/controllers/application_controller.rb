@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
   end
 
   def splash
+    render :layout => 'application'
   end
 
 end
