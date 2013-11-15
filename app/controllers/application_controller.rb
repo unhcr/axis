@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   def index
     redirect_to :splash unless user_signed_in?
     @world = @@world
+    render :layout => 'index'
   end
 
   def splash
