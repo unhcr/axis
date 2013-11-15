@@ -17,9 +17,14 @@ module 'Signup',
     )
 
 asyncTest('Basic user creation via ajax', () =>
-  Visio.Utils.signup 'r@r.com', '12345678', '12345678', (resp) ->
+  Visio.Utils.signup 'ben', 'rudolph', 'r@r.com', '12345678', '12345678', (resp) ->
     ok(resp.success)
-    start()
+
+    $.get('/test/current_user', (r) =>
+      assert.strictEqual(r.current_user.firstname, 'ben')
+      assert.strictEqual(r.current_user.lastname, 'rudolph')
+      start()
+    )
 )
 
 asyncTest('Test basic sign in via ajax', () =>
@@ -32,7 +37,6 @@ asyncTest('Test basic sign out via ajax', () =>
   Visio.Utils.signin('test@test.com', 'TeStInG!',(resp) =>
     ok(resp.success)
     Visio.Utils.signout((resp) ->
-      console.log(resp)
       start()
       )
     )

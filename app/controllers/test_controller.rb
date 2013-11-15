@@ -31,8 +31,8 @@ class TestController < ActionController::Base
     render :json => { :success => true }
   end
 
-  def user_signed_in
-    render :json => { :user_sign_in => user_sign_in? }
+  def get_current_user
+    render :json => { :current_user => current_user }
   end
 end
 

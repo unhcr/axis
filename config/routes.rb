@@ -5,7 +5,7 @@ Visio::Application.routes.draw do
 
   post '/test/user_setup' => 'test#user_setup'
   post '/test/user_teardown' => 'test#user_teardown'
-  post '/test/user_signed_in' => 'test#user_signed_in'
+  get '/test/current_user' => 'test#get_current_user'
 
 
   # The priority is based upon order of creation:
