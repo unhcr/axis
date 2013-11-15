@@ -52,11 +52,15 @@ module FocusParse
     xml_plan = doc.search(PLAN)
 
     plan = Plan.find_or_create_by_id(:id => xml_plan.attribute('ID').value) do |p|
-      p.operation = xml_plan.search('./operation').text
+      p.operation_name = xml_plan.search('./operation').text
       p.year = xml_plan.search('./year').text.to_i
       p.name = xml_plan.search('./name').text
       p.id = xml_plan.attribute('ID').value
     end
+
+    # Use ID once it's in the XML
+    operation = Operation.where(:name => plan.operation_name).first
+    operation.plans << plan
 
     xml_ppgs = xml_plan.search(PPG)
 

@@ -4,4 +4,6 @@ class Operation < ActiveRecord::Base
   self.primary_key = :id
 
   serialize :years, Array
+
+  has_many :plans
 end

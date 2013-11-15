@@ -34,6 +34,8 @@ class FocusParseTest < ActiveSupport::TestCase
   end
 
   test "Parse plan FOCUS basic" do
+    file = File.read(TESTFILE_PATH + TESTHEADER_NAME)
+    parse_header(file, PLAN_TYPES)
 
     file = File.read(TESTFILE_PATH + TESTFILE_NAME)
     parse_plan(file)
@@ -42,6 +44,11 @@ class FocusParseTest < ActiveSupport::TestCase
     Plan.all.each do |plan|
       assert_equal Ppg.count, plan.ppgs.length
     end
+
+    plan = Plan.first
+    operation = Operation.where(:name => plan.operation_name).first
+
+    assert_equal 1, operation.plans.length, "Should only have one plan"
 
     assert_equal 3, Ppg.count, "Ppg count"
     Ppg.all.each do |ppg|
