@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131114134958) do
+ActiveRecord::Schema.define(:version => 20131115095523) do
 
   create_table "budget_lines", :id => false, :force => true do |t|
     t.string   "id"
@@ -164,6 +164,8 @@ ActiveRecord::Schema.define(:version => 20131114134958) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
+    t.string   "firstname"
+    t.string   "lastname"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
