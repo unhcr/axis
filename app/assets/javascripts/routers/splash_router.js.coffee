@@ -11,14 +11,16 @@ class Visio.Routers.SplashRouter extends Backbone.Router
   signin: () ->
     el = $('.signin')
     $('.session-container').hide()
-    $('.session-container').removeClass 'ui-primary-light'
+    $('body').addClass 'ui-primary-theme'
+    $('body').removeClass 'ui-primary-medium-theme'
     @signin = new Visio.Views.SigninView({ el: el })
     el.show()
 
   signup: () ->
     el = $('.signup')
     $('.session-container').hide()
-    $('.session-container').addClass 'ui-primary-light'
+    $('body').addClass 'ui-primary-medium-theme'
+    $('body').removeClass 'ui-primary-theme'
     @signup = new Visio.Views.SignupView({ el: el })
     el.show()
 

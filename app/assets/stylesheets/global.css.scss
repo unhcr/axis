@@ -1,32 +1,76 @@
 /* Colors */
 $primary: rgb(13, 45, 70);
-$primary-light: rgb(1, 139, 176);
+$primary-light: rgb(2, 178, 225);
+$primary-medium: rgb(3, 114, 142);
 $secondary: rgb(223, 91, 87);
 $thirdary: rgb(255, 203, 5);
 $soft-glow: rgb(245, 227, 155);
 $selection: rgb(252, 239, 23);
 $bright: rgb(255, 248, 59);
+$white: rgb(249, 249, 249);
 
 /* Lengths */
 $radius: 3px;
 
-@import url(http://fonts.googleapis.com/css?family=Lato:300,400,700);
+
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Lato Light'), local('Lato-Light'), url('Lato/Lato-Light.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Lato Regular'), local('Lato-Regular'), url('Lato/Lato-Regular.ttf')
+  format('truetype');
+}
+
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Lato Bold'), local('Lato-Bold'), url('Lato/Lato-Bold.ttf') format('truetype');
+}
+
+.ui-primary-theme {
+  background-color: $primary;
+  color: $white;
+
+}
+
+.ui-primary-medium-theme {
+  background-color: $primary-medium;
+  color: $white;
+}
+
+.ui-invert-theme {
+  background-color: $white;
+  color: $primary;
+}
 
 body, html {
-  background-color: $primary;
   height: 100%;
   font-family: 'Lato', sans-serif;
-  color: white;
   padding: 0;
   margin: 0;
 }
 
+.ui-primary {
+  color: $primary;
+}
+
 .ui-primary-light {
-  background-color: $primary-light
+  color: $primary-light
 }
 
 .ui-bright {
   color: $bright;
+}
+
+.menu-item {
+  margin: .3em 1.5em;
 }
 
 .full-wrapper {
@@ -55,6 +99,37 @@ body, html {
 
 .center-text {
   text-align: center;
+}
+
+.thematic-item {
+  height: 2.4em;
+}
+
+.thematic-item:hover {
+  text-decoration: none;
+}
+
+.theme-content {
+  position: relative;
+  top: -1.4em;
+  pointer-events: none;
+}
+
+.underline {
+  position: relative;
+  color: transparent;
+  border-bottom: 1.5px solid $primary-light;
+  min-width: 14%;
+  width: 0%;
+
+  -moz-transition:width 1s;
+  -webkit-transition:width 1s;
+  -o-transition:width 1s;
+  transition:width 1s;
+}
+
+.underline:hover {
+  width: 100%;
 }
 
 .gone {
@@ -116,4 +191,9 @@ a {
 }
 :-ms-input-placeholder { /* Internet Explorer 10+ */
     color:    $secondary;
+}
+
+#map {
+  padding-top: 3px;
+  border-top: 1px solid $primary-light;
 }
