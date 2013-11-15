@@ -32,11 +32,8 @@ module FocusFetch
       zip.each_with_index do |entry, index|
         raise 'More than one header file' if index > 0
 
-        doc = Nokogiri::XML(entry.get_input_stream)
-
-        PLAN_TYPES.each do |type|
-          ids += doc.search("//PlanHeader[type =\"#{type}\"]/@ID").map(&:value)
-        end
+        r = parse_header(entry.get_input_stream)
+        ids = r[:ids]
 
         ret[:files_total] = ids.length
 
@@ -58,7 +55,7 @@ module FocusFetch
         zip.each_with_index do |entry, j|
           raise 'More than one header file' if j > 0
 
-          parse(entry.get_input_stream)
+          parse_plan(entry.get_input_stream)
         end
       end
 

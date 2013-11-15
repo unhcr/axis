@@ -6,8 +6,46 @@ module FocusParse
   PPG = 'PPG'
   OUTPUT = 'Output'
   INDICATOR = 'Indicator'
+  OPERATION_HEADER = 'OperationHeader'
 
-  def parse(file)
+  def parse_header(file, plan_types = ['ONEPLAN'])
+    doc = Nokogiri::XML(file)
+
+    ret = {
+      :ids => [],
+      :operation_count => 0
+    }
+
+    plan_types.each do |type|
+      ret[:ids] += doc.search("//PlanHeader[type =\"#{type}\"]/@ID").map(&:value)
+    end
+
+    xml_operation_headers = doc.search(OPERATION_HEADER)
+
+    xml_operation_headers.each do |xml_operation_header|
+      id = xml_operation_header.attribute('ID').value
+      name = xml_operation_header.search('./name').text
+      years = []
+
+
+      play_types.each do |type|
+        years += xml_operation_header.search(
+          "./plans/PlanHeader[type = \"#{type}\"]/planningPeriod").map(&:text)
+      end
+
+      Operation.find_or_create_by_id(:id => id) do |o|
+        o.id = id
+        o.name = name
+        o.years = years.uniq
+      end
+
+    end
+
+    return ret
+
+  end
+
+  def parse_plan(file)
     #TODO Update new data pts if they created new data
     doc = Nokogiri::XML(file)
 
