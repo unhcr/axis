@@ -1,4 +1,7 @@
 Visio.Utils.signin = (email, password, callback) ->
+  assert(typeof email == 'string', 'Email must be string')
+  assert(typeof password == 'string', 'Password must be string')
+
   data =
     remote: true
     commit: "Sign in"
@@ -13,10 +16,15 @@ Visio.Utils.signin = (email, password, callback) ->
     if callback
       callback(resp)
   )
-  return false
 
 
-Visio.Utils.signup = (email, password, passwordConf, callback) ->
+Visio.Utils.signup = (firstname, lastname, email, password, passwordConf, callback) ->
+  assert(typeof firstname == 'string', 'Name must be string')
+  assert(typeof lastname == 'string', 'Name must be string')
+  assert(typeof email == 'string', 'Email must be string')
+  assert(typeof password == 'string', 'Password must be string')
+  assert(typeof passwordConf == 'string', 'PasswordConf must be string')
+
   data =
     remote: true
     commit: "Sign up"
@@ -26,13 +34,14 @@ Visio.Utils.signup = (email, password, passwordConf, callback) ->
       password: password
       password_confirmation: passwordConf
       email: email
+      firstname: firstname
+      lastname: lastname
 
   $.post('/users', data, (resp) ->
     console.log resp
     if callback
       callback(resp)
   )
-  return false
 
 Visio.Utils.signout = (callback) ->
 
