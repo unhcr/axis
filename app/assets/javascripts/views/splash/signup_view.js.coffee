@@ -21,24 +21,9 @@ class Visio.Views.SignupView extends Backbone.View
     email = @$el.find('.email').val()
     password = @$el.find('.password').val()
     passwordConf = @$el.find('.password-confirmation').val()
-    @signup(email, password, passwordConf, () =>
+    firstname = @$el.find('.firstname').val()
+    lastname = @$el.find('.lastname').val()
+
+    Visio.Utils.signup(firstname, lastname, email, password, passwordConf, () =>
       window.location.href = '/'
     )
-
-  signup: (email, password, passwordConf, callback) =>
-    data =
-      remote: true
-      commit: "Sign up"
-      utf8: "✓"
-      user:
-        remember_me: 1
-        password: password
-        password_confirmation: passwordConf
-        email: email
-
-    $.post('/users', data, (resp) ->
-      console.log resp
-      if callback
-        callback(resp)
-    )
-    return false
