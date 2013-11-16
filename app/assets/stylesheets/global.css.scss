@@ -78,13 +78,15 @@ body, html {
   min-width: 100%;
 }
 
+.ui-medium-header {
+  font-size: 3em;
+  letter-spacing: -.02em
+
+}
+
 .ui-large-header {
   font-size: 4em;
   letter-spacing: -.02em
-}
-
-.ui-medium-header {
-  font-size: 3em;
 }
 
 .ui-active {
@@ -113,6 +115,23 @@ body, html {
   position: relative;
   top: -1.4em;
   pointer-events: none;
+}
+
+.logo:before {
+  background-image: url(/assets/logo.png);
+  background-size: 1.5em;
+  content: "";
+  height: 1.5em;
+  display: inline-block;
+  width: 2em;
+  background-repeat: no-repeat;
+  position: relative;
+  top: .4em;
+  left: .4em;
+}
+
+.logo-white:before {
+  background-image: url(/assets/logo_white.png);
 }
 
 .underline {
