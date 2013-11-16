@@ -11,12 +11,12 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131115124631) do
+ActiveRecord::Schema.define(:version => 20131116133711) do
 
   create_table "budget_lines", :id => false, :force => true do |t|
     t.string   "id"
     t.string   "scenerio"
-    t.string   "type"
+    t.string   "cost_type"
     t.string   "cost_center"
     t.string   "implementer_code"
     t.string   "implementer_name"
