@@ -4,13 +4,13 @@ class ApplicationController < ActionController::Base
   @@world = File.read("#{Rails.root}/public/world_50m.json")
 
   def index
-    redirect_to :splash unless user_signed_in?
+    redirect_to :splash and return unless user_signed_in?
     @world = @@world
     render :layout => 'index'
   end
 
   def splash
-    render :layout => 'application' && return
+    render :layout => 'application' and return
   end
 
 end

@@ -9,6 +9,10 @@ $selection: rgb(252, 239, 23);
 $bright: rgb(255, 248, 59);
 $white: rgb(249, 249, 249);
 
+/* Transitions */
+$fast-transition: .5s;
+$medium-transition: 1s;
+
 /* Lengths */
 $radius: 3px;
 
@@ -141,10 +145,10 @@ body, html {
   min-width: 14px;
   width: 0%;
 
-  -moz-transition:width 1s;
-  -webkit-transition:width 1s;
-  -o-transition:width 1s;
-  transition:width 1s;
+  -moz-transition:width $medium-transition;
+  -webkit-transition:width $medium-transition;
+  -o-transition:width $medium-transition;
+  transition:width $medium-transition;
 }
 
 .underline:hover {
@@ -171,6 +175,11 @@ input:focus {
   border: none;
   outline: none;
   box-shadow: none;
+
+  -moz-transition:background-color $fast-transition;
+  -webkit-transition:background-color $fast-transition;
+  -o-transition:background-color $fast-transition;
+  transition:background-color $fast-transition;
 }
 
 .full-width {
