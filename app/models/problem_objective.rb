@@ -5,7 +5,7 @@ class ProblemObjective < ActiveRecord::Base
   has_many :indicator_data
   has_many :budget_lines
 
-  has_and_belongs_to_many :outputs
-  has_and_belongs_to_many :indicators
-  has_and_belongs_to_many :rights_groups
+  has_and_belongs_to_many :outputs, :uniq => true
+  has_and_belongs_to_many :indicators, :uniq => true
+  has_and_belongs_to_many :rights_groups, :uniq => true
 end

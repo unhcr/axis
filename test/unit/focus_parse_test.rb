@@ -115,7 +115,6 @@ class FocusParseTest < ActiveSupport::TestCase
     operation = Operation.where(:name => plan.operation_name).first
 
     assert_equal 1, operation.plans.length, "Should only have one plan"
-    require 'pry'; binding.pry
 
     assert_equal 3, Ppg.count, "Ppg count"
     Ppg.all.each do |ppg|
@@ -161,6 +160,19 @@ class FocusParseTest < ActiveSupport::TestCase
       assert d.indicator, "Must be an indicator"
     end
 
+  end
+
+  test "Parse operation_header FOCUS duplicates" do
+    file = File.read(TESTFILE_PATH + TESTHEADER_NAME)
+    parse_header(file, PLAN_TYPES)
+    parse_header(file, PLAN_TYPES)
+
+    assert_equal 139, Operation.count, "Operation count"
+    Operation.all.each do |o|
+      assert o.years.length >= 0
+      assert o.name
+      assert o.id
+    end
   end
 end
 

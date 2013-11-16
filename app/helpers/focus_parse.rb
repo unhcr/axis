@@ -60,18 +60,18 @@ module FocusParse
 
     # Use ID once it's in the XML
     operation = Operation.where(:name => plan.operation_name).first
-    operation.plans << plan
+    operation.plans << plan unless operation.plans.include? plan
 
     xml_ppgs = xml_plan.search(PPG)
 
     xml_ppgs.each do |xml_ppg|
 
-      ppg = Ppg.find_or_create_by_id(:id => xml_ppg.search('./name').text) do |p|
+      ppg = Ppg.find_or_create_by_id(xml_ppg.search('./name').text) do |p|
         p.name = xml_ppg.search('./name').text
         p.id = xml_ppg.search('./name').text
       end
 
-      plan.ppgs << ppg
+      plan.ppgs << ppg unless plan.ppgs.include? ppg
 
       xml_goals = xml_ppg.search(GOAL)
 
@@ -83,7 +83,7 @@ module FocusParse
           g.id = xml_goal.attribute('RFID').value
         end
 
-        ppg.goals << goal
+        ppg.goals << goal unless ppg.goals.include? goal
 
         xml_rights_groups.each do |xml_rights_group|
           xml_problem_objectives = xml_rights_group.search(PROBLEM_OBJECTIVE)
@@ -93,7 +93,7 @@ module FocusParse
             rg.id = xml_rights_group.attribute('RFID').value
           end
 
-          goal.rights_groups << rights_group
+          goal.rights_groups << rights_group unless goal.rights_groups.include? rights_group
 
           xml_problem_objectives.each do |xml_problem_objective|
             xml_outputs = xml_problem_objective.search(OUTPUT)
@@ -105,7 +105,9 @@ module FocusParse
               po.id = xml_problem_objective.attribute('RFID').value
             end
 
-            rights_group.problem_objectives << problem_objective
+            unless rights_group.problem_objectives.include? problem_objective
+              rights_group.problem_objectives << problem_objective
+            end
 
             xml_outputs.each do |xml_output|
               # Must be performance indicators if part of output
@@ -117,7 +119,7 @@ module FocusParse
                 o.id = xml_output.attribute('RFID').value
               end
 
-              problem_objective.outputs << output
+              problem_objective.outputs << output unless problem_objective.outputs.include? output
 
               xml_performance_indicators.each do |xml_performance_indicator|
                 indicator = Indicator.find_or_create_by_id(:id => xml_performance_indicator.attribute('RFID').value) do |i|
@@ -127,10 +129,10 @@ module FocusParse
                   i.id = xml_performance_indicator.attribute('RFID').value
                 end
 
-                output.indicators << indicator
+                output.indicators << indicator unless output.indicators.include? indicator
 
                 # Create datum
-                datum = IndicatorDatum.find_or_create_by_id(:id => xml_performance_indicator.attribute('ID').value) do |d|
+                IndicatorDatum.find_or_create_by_id(:id => xml_performance_indicator.attribute('ID').value) do |d|
                   d.id = xml_performance_indicator.attribute('ID').value
                   d.goal = goal
                   d.rights_group = rights_group
@@ -158,10 +160,10 @@ module FocusParse
                 i.id = xml_impact_indicator.attribute('RFID').value
               end
 
-              problem_objective.indicators << indicator
+              problem_objective.indicators << indicator unless problem_objective.indicators.include? indicator
 
               # Create datum
-              datum = IndicatorDatum.find_or_create_by_id(:id => xml_impact_indicator.attribute('ID').value) do |d|
+              IndicatorDatum.find_or_create_by_id(:id => xml_impact_indicator.attribute('ID').value) do |d|
                 d.id = xml_impact_indicator.attribute('ID').value
                 d.goal = goal
                 d.rights_group = rights_group
