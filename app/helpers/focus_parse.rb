@@ -163,7 +163,7 @@ module FocusParse
                   b.output = output
 
                   b.account_code = xml_budget_line.search('./accountCode').text
-                  b.account_name = xml_budget_line.serach('./accountName').text
+                  b.account_name = xml_budget_line.search('./accountName').text
                   b.amount = xml_budget_line.search('./amount').text.to_i
                   b.comment = xml_budget_line.search('./comment').text
                   b.cost_center = xml_budget_line.search('./costCenter').text
@@ -173,7 +173,7 @@ module FocusParse
                   b.local_cost = xml_budget_line.search('./localCost').text
                   b.quantity = xml_budget_line.search('./quantity').text.to_i
                   b.scenerio = xml_budget_line.search('./scenerio').text
-                  b.type = xml_budget_line.search('./type').text
+                  b.cost_type = xml_budget_line.search('./type').text
                   b.unit = xml_budget_line.search('./unit').text
                   b.unit_cost = xml_budget_line.search('./unitCost').text.to_i
                 end
@@ -194,7 +194,7 @@ module FocusParse
                 b.problem_objective = problem_objective
 
                 b.account_code = xml_budget_line.search('./accountCode').text
-                b.account_name = xml_budget_line.serach('./accountName').text
+                b.account_name = xml_budget_line.search('./accountName').text
                 b.amount = xml_budget_line.search('./amount').text.to_i
                 b.comment = xml_budget_line.search('./comment').text
                 b.cost_center = xml_budget_line.search('./costCenter').text
@@ -204,7 +204,7 @@ module FocusParse
                 b.local_cost = xml_budget_line.search('./localCost').text
                 b.quantity = xml_budget_line.search('./quantity').text.to_i
                 b.scenerio = xml_budget_line.search('./scenerio').text
-                b.type = xml_budget_line.search('./type').text
+                b.cost_type = xml_budget_line.search('./type').text
                 b.unit = xml_budget_line.search('./unit').text
                 b.unit_cost = xml_budget_line.search('./unitCost').text.to_i
               end

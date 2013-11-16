@@ -2,7 +2,6 @@
 
 one:
   scenerio: MyString
-  type: 
   cost_center: MyString
   implementer_code: MyString
   implementer_name: MyString
@@ -18,7 +17,6 @@ one:
 
 two:
   scenerio: MyString
-  type: 
   cost_center: MyString
   implementer_code: MyString
   implementer_name: MyString
