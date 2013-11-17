@@ -1,9 +1,9 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  name: MyString
+  name: Kenya
   years: MyText
 
 two:
-  name: MyString
+  name: Ethiopia
   years: MyText

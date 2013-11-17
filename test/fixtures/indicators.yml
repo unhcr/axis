@@ -1,11 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  name: MyString
+  name: People in school
   is_performance: false
   is_gsp: false
 
 two:
-  name: MyString
+  name: People on my pool
   is_performance: false
   is_gsp: false

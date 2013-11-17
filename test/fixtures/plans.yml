@@ -1,11 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  operation: MyString
+  operation: Death March
   name: MyString
   year: 1
 
 two:
-  operation: MyString
+  operation: God Will
   name: MyString
   year: 1
