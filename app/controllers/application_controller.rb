@@ -18,4 +18,8 @@ class ApplicationController < ActionController::Base
     render :layout => 'application' and return
   end
 
+  def overview
+    render :layout => 'index'
+  end
+
 end
