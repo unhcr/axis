@@ -16,7 +16,14 @@ class ApplicationControllerTest < ActionController::TestCase
     get :index
 
     assert_response :found
+  end
 
+  test 'Splash page' do
+    get :splash
+
+    assert_response :success
+    assert_template :splash
+    assert_template layout: "layouts/application"
   end
 
   test 'A signed in user should be redirected to navigation page' do
@@ -24,6 +31,9 @@ class ApplicationControllerTest < ActionController::TestCase
     get :index
 
     assert_response :success
+    assert_not_nil assigns :mapMD5
+    assert_template :index
+    assert_template layout: "layouts/index"
 
   end
 

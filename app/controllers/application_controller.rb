@@ -1,17 +1,17 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
-  @@world = File.read("#{Rails.root}/public/world_50m.json")
-  @@world_MD5 = Digest::MD5.hexdigest(@@world)
+  @@map = File.read("#{Rails.root}/public/world_50m.json")
+  @@mapMD5 = Digest::MD5.hexdigest(@@map)
 
   def index
     redirect_to :splash and return unless user_signed_in?
-    @world_MD5 = @@world_MD5
+    @mapMD5 = @@mapMD5
     render :layout => 'index'
   end
 
   def map
-    render :json => @@world
+    render :json => @@map
   end
 
   def splash
