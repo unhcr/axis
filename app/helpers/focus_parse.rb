@@ -6,6 +6,7 @@ module FocusParse
   PPG = 'PPG'
   OUTPUT = 'Output'
   INDICATOR = 'Indicator'
+  BUDGET_LINE = 'BudgetLine'
   OPERATION_HEADER = 'OperationHeader'
 
   def parse_header(file, plan_types = ['ONEPLAN'])
@@ -112,6 +113,7 @@ module FocusParse
             xml_outputs.each do |xml_output|
               # Must be performance indicators if part of output
               xml_performance_indicators = xml_output.search(INDICATOR)
+              xml_budget_lines = xml_output.search(BUDGET_LINE)
 
               output = Output.find_or_create_by_id(:id => xml_output.attribute('RFID').value) do |o|
                 o.name = xml_output.search('./name').text
@@ -148,8 +150,66 @@ module FocusParse
                 end
 
               end
+
+              xml_budget_lines.each do |xml_budget_line|
+
+                BudgetLine.find_or_create_by_id(:id => xml_budget_line.attribute('ID').value) do |b|
+                  b.id = xml_budget_line.attribute('ID').value
+                  b.goal = goal
+                  b.rights_group = rights_group
+                  b.plan = plan
+                  b.ppg = ppg
+                  b.problem_objective = problem_objective
+                  b.output = output
+
+                  b.account_code = xml_budget_line.search('./accountCode').text
+                  b.account_name = xml_budget_line.search('./accountName').text
+                  b.amount = xml_budget_line.search('./amount').text.to_i
+                  b.comment = xml_budget_line.search('./comment').text
+                  b.cost_center = xml_budget_line.search('./costCenter').text
+                  b.currency = xml_budget_line.search('./currency').text
+                  b.implementer_code = xml_budget_line.search('./implementerCode').text
+                  b.implementer_name = xml_budget_line.search('./implementerName').text
+                  b.local_cost = xml_budget_line.search('./localCost').text
+                  b.quantity = xml_budget_line.search('./quantity').text.to_i
+                  b.scenerio = xml_budget_line.search('./scenerio').text
+                  b.cost_type = xml_budget_line.search('./type').text
+                  b.unit = xml_budget_line.search('./unit').text
+                  b.unit_cost = xml_budget_line.search('./unitCost').text.to_i
+                end
+
+              end
             end
 
+            xml_budget_lines = xml_problem_objective.search('./budgetLines/BudgetLine')
+
+            xml_budget_lines.each do |xml_budget_line|
+
+              BudgetLine.find_or_create_by_id(:id => xml_budget_line.attribute('ID').value) do |b|
+                b.id = xml_budget_line.attribute('ID').value
+                b.goal = goal
+                b.rights_group = rights_group
+                b.plan = plan
+                b.ppg = ppg
+                b.problem_objective = problem_objective
+
+                b.account_code = xml_budget_line.search('./accountCode').text
+                b.account_name = xml_budget_line.search('./accountName').text
+                b.amount = xml_budget_line.search('./amount').text.to_i
+                b.comment = xml_budget_line.search('./comment').text
+                b.cost_center = xml_budget_line.search('./costCenter').text
+                b.currency = xml_budget_line.search('./currency').text
+                b.implementer_code = xml_budget_line.search('./implementerCode').text
+                b.implementer_name = xml_budget_line.search('./implementerName').text
+                b.local_cost = xml_budget_line.search('./localCost').text
+                b.quantity = xml_budget_line.search('./quantity').text.to_i
+                b.scenerio = xml_budget_line.search('./scenerio').text
+                b.cost_type = xml_budget_line.search('./type').text
+                b.unit = xml_budget_line.search('./unit').text
+                b.unit_cost = xml_budget_line.search('./unitCost').text.to_i
+              end
+
+            end
             # Impact indicators tied to objective
             xml_impact_indicators = xml_problem_objective.search('./indicators/Indicator')
             xml_impact_indicators.each do |xml_impact_indicator|
