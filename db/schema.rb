@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131116133711) do
+ActiveRecord::Schema.define(:version => 20131117151543) do
 
   create_table "budget_lines", :id => false, :force => true do |t|
     t.string   "id"
@@ -56,6 +56,11 @@ ActiveRecord::Schema.define(:version => 20131116133711) do
     t.string "rights_group_id", :null => false
   end
 
+  create_table "goals_strategies", :id => false, :force => true do |t|
+    t.integer "strategy_id", :null => false
+    t.string  "goal_id",     :null => false
+  end
+
   create_table "indicator_data", :id => false, :force => true do |t|
     t.string   "id"
     t.integer  "standard"
@@ -75,6 +80,7 @@ ActiveRecord::Schema.define(:version => 20131116133711) do
     t.string   "plan_id"
     t.datetime "created_at",           :null => false
     t.datetime "updated_at",           :null => false
+    t.string   "operation_id"
   end
 
   create_table "indicators", :id => false, :force => true do |t|
@@ -96,6 +102,11 @@ ActiveRecord::Schema.define(:version => 20131116133711) do
     t.string "indicator_id",         :null => false
   end
 
+  create_table "indicators_strategies", :id => false, :force => true do |t|
+    t.integer "strategy_id",  :null => false
+    t.string  "indicator_id", :null => false
+  end
+
   create_table "operations", :id => false, :force => true do |t|
     t.string   "id"
     t.string   "name"
@@ -104,12 +115,22 @@ ActiveRecord::Schema.define(:version => 20131116133711) do
     t.datetime "updated_at", :null => false
   end
 
+  create_table "operations_strategies", :id => false, :force => true do |t|
+    t.integer "strategy_id",  :null => false
+    t.string  "operation_id", :null => false
+  end
+
   create_table "outputs", :id => false, :force => true do |t|
     t.string   "id"
     t.string   "name"
     t.string   "priority"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "outputs__strategies", :id => false, :force => true do |t|
+    t.integer "strategy_id", :null => false
+    t.string  "output_id",   :null => false
   end
 
   create_table "outputs_problem_objectives", :id => false, :force => true do |t|
@@ -139,6 +160,11 @@ ActiveRecord::Schema.define(:version => 20131116133711) do
     t.datetime "updated_at", :null => false
   end
 
+  create_table "ppgs_strategies", :id => false, :force => true do |t|
+    t.integer "strategy_id", :null => false
+    t.string  "ppg_id",      :null => false
+  end
+
   create_table "problem_objectives", :id => false, :force => true do |t|
     t.string   "id"
     t.string   "problem_name"
@@ -153,8 +179,24 @@ ActiveRecord::Schema.define(:version => 20131116133711) do
     t.string "rights_group_id",      :null => false
   end
 
+  create_table "problem_objectives_strategies", :id => false, :force => true do |t|
+    t.integer "strategy_id",          :null => false
+    t.string  "problem_objective_id", :null => false
+  end
+
   create_table "rights_groups", :id => false, :force => true do |t|
     t.string   "id"
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "rights_groups_strategies", :id => false, :force => true do |t|
+    t.integer "strategy_id",     :null => false
+    t.string  "rights_group_id", :null => false
+  end
+
+  create_table "strategies", :force => true do |t|
     t.string   "name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false

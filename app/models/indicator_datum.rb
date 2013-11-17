@@ -9,4 +9,5 @@ class IndicatorDatum < ActiveRecord::Base
   belongs_to :goal
   belongs_to :ppg
   belongs_to :plan
+  belongs_to :operation
 end

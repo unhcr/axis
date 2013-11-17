@@ -92,6 +92,7 @@ class FocusParseTest < ActiveSupport::TestCase
       assert d.rights_group, "Must be a rights group"
       assert d.problem_objective || d.output, "Must be either a obj or output"
       assert d.indicator, "Must be an indicator"
+      assert d.operation, "Must be an operation"
     end
 
     assert_equal 3425, BudgetLine.count, "BudgetLine count"
@@ -166,10 +167,11 @@ class FocusParseTest < ActiveSupport::TestCase
       assert d.rights_group, "Must be a rights group"
       assert d.problem_objective || d.output, "Must be either a obj or output"
       assert d.indicator, "Must be an indicator"
+      assert d.operation, "Must be an operation"
     end
 
     assert_equal 3425, BudgetLine.count, "BudgetLine count"
-    IndicatorDatum.all.each do |d|
+    BudgetLine.all.each do |d|
       assert d.plan, "Must be a plan"
       assert d.ppg, "Must be a ppg"
       assert d.goal, "Must be a goal"

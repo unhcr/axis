@@ -6,4 +6,5 @@ class Operation < ActiveRecord::Base
   serialize :years, Array
 
   has_many :plans
+  has_many :indicator_data
 end

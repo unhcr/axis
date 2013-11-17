@@ -142,6 +142,7 @@ module FocusParse
                   d.ppg = ppg
                   d.problem_objective = problem_objective
                   d.output = output
+                  d.operation = operation
                   d.indicator = indicator
                   d.yer = xml_performance_indicator.search('./yearEndValue').text.to_i
                   d.standard = xml_performance_indicator.search('./standard').text.to_i
@@ -231,6 +232,7 @@ module FocusParse
                 d.ppg = ppg
                 d.problem_objective = problem_objective
                 d.indicator = indicator
+                d.operation = operation
                 d.yer = xml_impact_indicator.search('./yearEndValue').text.to_i
                 d.standard = xml_impact_indicator.search('./standard').text.to_i
                 d.baseline = xml_impact_indicator.search('./baseline').text.to_i
