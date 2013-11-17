@@ -14,6 +14,7 @@ Visio.Graphs.map = (config) ->
   translateY = [880, -346]
 
   projection = d3.geo.mercator()
+    .center([0, 35])
     .scale(scale)
     .translate([width / 2, height / 2])
     .precision(0.1)
