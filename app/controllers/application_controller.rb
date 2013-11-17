@@ -21,5 +21,4 @@ class ApplicationController < ActionController::Base
   def overview
     render :layout => 'index'
   end
-
 end
