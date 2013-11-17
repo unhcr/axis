@@ -5,4 +5,7 @@ window.Visio =
   Routers: {}
   Utils: {}
   Graphs: {}
+  Constants:
+    DB_NAME: 'visio'
+    MAP_STORE: 'map'
 

@@ -7,6 +7,7 @@ Visio::Application.routes.draw do
   post '/test/user_teardown' => 'test#user_teardown'
   get '/test/current_user' => 'test#get_current_user'
 
+  get '/map' => 'application#map'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
