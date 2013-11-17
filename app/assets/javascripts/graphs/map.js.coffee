@@ -23,7 +23,8 @@ Visio.Graphs.map = (config) ->
 
   selection = config.selection
 
-  data = config.mapJSON.features
+  if config.mapJSON
+    data = config.mapJSON.features
 
   svg = selection.append('svg')
     .attr('width', config.width)
@@ -81,6 +82,9 @@ Visio.Graphs.map = (config) ->
     world.attr('class', (d) ->
       ['country'].join(' '))
       .attr('d', path)
+
+  render.mapJSON = (mapJSON) ->
+    data = mapJSON.features
 
   svg.call zoom
 
