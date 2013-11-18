@@ -8,10 +8,11 @@ Visio.Graphs.map = (config) ->
   zoomMax = 2.2
   zoomMin = 0.5
 
-  # Left, Right
-  # Top, Bottom
-  translateX = [843, -743]
-  translateY = [880, -346]
+  translateExtent =
+    left: 843
+    right: -743
+    top: 880
+    bottom: -346
 
   projection = d3.geo.mercator()
     .center([0, 35])
@@ -52,18 +53,17 @@ Visio.Graphs.map = (config) ->
 
       absTranslateX = translate[0] / scale
       absTranslateY = translate[1] / scale
-      console.log(absTranslateX)
 
-      if absTranslateX < translateX[1]
-        console.log('too far right')
-        translate[0] = translateX[1] * Math.abs(scale)
-      else if absTranslateX > translateX[0]
-        translate[0] = translateX[0] * Math.abs(scale)
 
-      if absTranslateY < translateY[1]
-        translate[1] = translateY[1] * Math.abs(scale)
-      else if absTranslateY > translateY[0]
-        translate[1] = translateY[0] * Math.abs(scale)
+      if absTranslateX < translateExtent.left - width / scale
+        translate[0] = (translateExtent.left - width / scale) * scale
+      else if absTranslateX > translateExtent.left
+        translate[0] = translateExtent.left * Math.abs(scale)
+
+      if absTranslateY < translateExtent.bottom
+        translate[1] = translateExtent.bottom * Math.abs(scale)
+      else if absTranslateY > translateExtent.top
+        translate[1] = translateExtent.top * Math.abs(scale)
 
       $('.country').css('stroke-width', .5 / scale + 'px')
 
