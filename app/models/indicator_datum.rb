@@ -10,4 +10,18 @@ class IndicatorDatum < ActiveRecord::Base
   belongs_to :ppg
   belongs_to :plan
   belongs_to :operation
+
+  def self.relevant_data(ids = {})
+
+    data = IndicatorDatum.where('
+      operation_id IN (:operation_ids) AND
+      ppg_id IN (:ppg_ids) AND
+      goal_id IN (:goal_ids) AND
+      (problem_objective_id IN (:problem_objective_ids) OR output_id IN (:output_ids)) AND
+      indicator_id IN (:indicator_ids)
+      ', ids)
+
+    return data
+
+  end
 end
