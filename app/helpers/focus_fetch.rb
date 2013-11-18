@@ -14,7 +14,8 @@ module FocusFetch
 
   def fetch(max_files = +1.0/0.0)
     begin
-      headers_zip = open(BASE_URL + HEADERS, :http_basic_authentication => ['rudolph@unhcr.org', 'benn2690'])
+      headers_zip = open(BASE_URL + HEADERS, :http_basic_authentication =>
+                         [ENV['LDAP_USERNAME'], ENV['LDAP_PASSWORD']])
     rescue SocketError
       puts 'Internet connection appears to be bad.'
       exit
@@ -42,6 +43,8 @@ module FocusFetch
 
     ids.each_with_index do |id, i|
       break if i >= max_files
+      p id
+      p i
 
       begin
         plan_zip = open(BASE_URL + PLAN_PREFIX + id + PLAN_SUFFIX,
