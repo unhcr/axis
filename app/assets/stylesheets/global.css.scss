@@ -54,6 +54,10 @@ $radius: 3px;
   color: $primary;
 }
 
+.logo-circle img {
+  width: 160px;
+}
+
 body, html {
   height: 100%;
   font-family: 'Lato', sans-serif;
@@ -84,6 +88,10 @@ body, html {
 
 .ui-secondary {
   color: $secondary;
+}
+
+.ui-thirdary {
+  color: $thirdary;
 }
 
 .menu-item {
