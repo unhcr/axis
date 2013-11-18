@@ -2,6 +2,7 @@
 $primary: rgb(13, 45, 70);
 $primary-light: rgb(2, 178, 225);
 $primary-medium: rgb(3, 114, 142);
+$primary-dark: rgb(18, 34, 57);
 $secondary: rgb(223, 91, 87);
 $thirdary: rgb(255, 203, 5);
 $soft-glow: rgb(245, 227, 155);
@@ -42,6 +43,11 @@ $radius: 3px;
   background-color: $primary;
   color: $white;
 
+}
+
+.ui-primary-dark-theme {
+  background-color: $primary-dark;
+  color: $white;
 }
 
 .ui-primary-medium-theme {
@@ -200,7 +206,6 @@ input {
 }
 
 input:focus {
-  background-color: $soft-glow;
   border: none;
   outline: none;
   box-shadow: none;

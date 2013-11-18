@@ -13,7 +13,7 @@ class Visio.Routers.SplashRouter extends Backbone.Router
 
     $('body').addClass 'ui-primary-theme'
     $('body').removeClass 'ui-primary-medium-theme'
-    @signinView = new Visio.Views.SigninView({ el: el })
+    @signinView = new Visio.Views.SigninView({ el: el }) unless @signinView
 
     # Need to slide out if signup container exists
     if @signupView
