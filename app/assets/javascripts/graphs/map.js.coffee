@@ -12,7 +12,7 @@ Visio.Graphs.map = (config) ->
     left: 843
     right: -743
     top: 880
-    bottom: -346
+    bottom: -680
 
   projection = d3.geo.mercator()
     .center([0, 35])
@@ -51,17 +51,20 @@ Visio.Graphs.map = (config) ->
 
       translate = d3.event.translate
 
+      deltaWidth = width - width / scale
+      deltaHeight = height - height / scale
+
       absTranslateX = translate[0] / scale
       absTranslateY = translate[1] / scale
 
 
-      if absTranslateX < translateExtent.left - width / scale
-        translate[0] = (translateExtent.left - width / scale) * scale
+      if absTranslateX < translateExtent.right - deltaWidth
+        translate[0] = (translateExtent.right - deltaWidth) * Math.abs(scale)
       else if absTranslateX > translateExtent.left
         translate[0] = translateExtent.left * Math.abs(scale)
 
-      if absTranslateY < translateExtent.bottom
-        translate[1] = translateExtent.bottom * Math.abs(scale)
+      if absTranslateY < translateExtent.bottom - deltaHeight
+        translate[1] = (translateExtent.bottom  - deltaHeight) * Math.abs(scale)
       else if absTranslateY > translateExtent.top
         translate[1] = translateExtent.top * Math.abs(scale)
 
