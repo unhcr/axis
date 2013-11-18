@@ -12,6 +12,7 @@ gem 'devise'
 gem 'backbone-on-rails'
 gem 'haml'
 gem 'haml-rails', '>= 0.3.4'
+gem "figaro"
 
 
 
