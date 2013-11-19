@@ -48,7 +48,7 @@ module FocusFetch
 
       begin
         plan_zip = open(BASE_URL + PLAN_PREFIX + id + PLAN_SUFFIX,
-                      :http_basic_authentication => ['rudolph@unhcr.org', 'benn2690'])
+                      :http_basic_authentication => [ENV['LDAP_USERNAME'], ENV['LDAP_PASSWORD']])
       rescue SocketError
         puts 'Internet connection appears to be bad.'
       end
