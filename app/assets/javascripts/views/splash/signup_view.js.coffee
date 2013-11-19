@@ -4,6 +4,8 @@ class Visio.Views.SignupView extends Backbone.View
 
   events:
     'click .signup' : 'onClickSignup'
+    'focus input' : 'onFocus'
+    'blur input' : 'onBlur'
 
   initialize: () ->
     @render()
@@ -27,3 +29,11 @@ class Visio.Views.SignupView extends Backbone.View
     Visio.Utils.signup(firstname, lastname, email, password, passwordConf, () =>
       window.location.href = '/'
     )
+
+  onFocus: (e) ->
+    $('body').addClass('ui-primary-medium-dark-theme')
+    $('body').removeClass('ui-primary-medium-theme')
+
+  onBlur: (e) ->
+    $('body').addClass('ui-primary-medium-theme')
+    $('body').removeClass('ui-primary-medium-dark-theme')

@@ -1,7 +1,8 @@
 /* Colors */
 $primary: rgb(13, 45, 70);
 $primary-light: rgb(2, 178, 225);
-$primary-medium: rgb(3, 114, 142);
+$primary-medium-dark: rgb(3, 114, 142);
+$primary-medium: rgb(1, 139, 176);
 $primary-dark: rgb(18, 34, 57);
 $secondary: rgb(223, 91, 87);
 $thirdary: rgb(255, 203, 5);
@@ -77,6 +78,11 @@ $radius: 3px;
 
 .ui-primary-dark-theme {
   background-color: $primary-dark;
+  color: $white;
+}
+
+.ui-primary-medium-dark-theme {
+  background-color: $primary-medium-dark;
   color: $white;
 }
 
