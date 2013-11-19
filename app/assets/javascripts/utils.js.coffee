@@ -57,3 +57,12 @@ Visio.Utils.signout = (callback) ->
       if callback
         callback(resp))
 
+Visio.Utils.flash = ($ele, msg) ->
+  $ele.removeClass('flash')
+
+  # Cause a redraw
+  $ele[0].offsetWidth = $ele[0].offsetWidth
+
+  $ele.addClass('flash')
+
+  $ele.attr('placeholder', msg)

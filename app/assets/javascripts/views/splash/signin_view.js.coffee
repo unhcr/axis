@@ -20,11 +20,20 @@ class Visio.Views.SigninView extends Backbone.View
 
     console.log 'clicked login'
 
-    email = @$el.find('.email').val()
-    password = @$el.find('.password').val()
-    Visio.Utils.signin(email, password, () =>
-      window.location.href = '/'
-    )
+    $email = @$el.find('.email')
+    $password = @$el.find('.password')
+
+    email = $email.val()
+    password = $password.val()
+
+
+    Visio.Utils.flash($email, 'Please enter valid email address') unless email
+    Visio.Utils.flash($password, 'This field is required') unless password
+
+    if email && password
+      Visio.Utils.signin(email, password, () =>
+        window.location.href = '/'
+      )
 
   onFocus: (e) ->
     $('body').addClass('ui-primary-dark-theme')

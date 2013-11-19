@@ -39,6 +39,36 @@ $radius: 3px;
   src: local('Lato Bold'), local('Lato-Bold'), url('Lato/Lato-Bold.ttf') format('truetype');
 }
 
+@-webkit-keyframes flash {
+  0% { background-color: $white; }
+  50% { background-color: $soft-glow; }
+  100% { background-color: $white; }
+}
+
+@-mox-keyframes flash {
+  0% { background-color: $white; }
+  50% { background-color: $soft-glow; }
+  100% { background-color: $white; }
+}
+
+@-o-keyframes flash {
+  0% { background-color: $white; }
+  50% { background-color: $soft-glow; }
+  100% { background-color: $white; }
+}
+
+@keyframes flash {
+  0% { background-color: $white; }
+  50% { background-color: $soft-glow; }
+  100% { background-color: $white; }
+}
+.flash {
+  -webkit-animation: flash 1000ms 1;
+  -moz-animation: flash 1000ms 1;
+  -o-animation: flash 1000ms 1;
+  animation: flash 1000ms 1;
+}
+
 .ui-primary-theme {
   background-color: $primary;
   color: $white;
