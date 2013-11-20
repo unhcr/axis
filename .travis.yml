@@ -7,4 +7,4 @@ env:
 script:
   - RAILS_ENV=test bundle exec rake --trace db:migrate test
 before_script:
-  - psql -c 'create database visio_test' -U mysql
+  - mysql -e 'create database visio_test'
