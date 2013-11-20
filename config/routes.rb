@@ -2,7 +2,10 @@ Visio::Application.routes.draw do
   devise_for :users, :controllers => {:sessions => 'sessions', :registrations => 'registrations' }
 
   get '/splash' => 'application#splash'
+
   get '/map' => 'application#map'
+  get '/map_data' => 'application#map_data'
+
   get '/overview' => 'application#overview'
 
   post '/test/user_setup' => 'test#user_setup'

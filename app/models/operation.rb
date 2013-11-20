@@ -14,4 +14,20 @@ class Operation < ActiveRecord::Base
   has_and_belongs_to_many :rights_groups
   has_and_belongs_to_many :goals
   has_and_belongs_to_many :ppgs
+
+  def self.public_models(operations, options = {})
+    response = Jbuilder.encode do |j|
+      j.operations operations do |json, operation|
+        json.(operation, :id, :name, :years)
+
+        json.ppgs operation.ppgs
+        json.goals operation.goals
+        json.problem_objectives operation.problem_objectives
+        json.indicators operation.indicators
+      end
+    end
+
+    return response
+  end
+
 end

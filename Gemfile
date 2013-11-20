@@ -14,6 +14,8 @@ gem 'backbone-on-rails'
 gem 'haml'
 gem 'haml-rails', '>= 0.3.4'
 gem "figaro"
+gem 'jbuilder'
+gem 'mysql2'
 
 
 
