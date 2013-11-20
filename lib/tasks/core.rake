@@ -13,3 +13,17 @@ task :clear => :environment do
   BudgetLine.destroy_all
   IndicatorDatum.destroy_all
 end
+
+task :fetch => :environment do
+
+  p 'Fetching FOCUS data'
+
+  include FocusFetch
+
+  ret fetch
+  p 'Finished fetching'
+  p '-----------------'
+  p "Files Read: #{ret[:files_red]}"
+  p "Files Total: #{ret[:files_total]}"
+
+end
