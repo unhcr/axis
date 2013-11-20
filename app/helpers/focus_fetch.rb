@@ -65,8 +65,10 @@ module FocusFetch
             parse_plan(entry.get_input_stream)
           end
         end
-      rescue
-        p "Error parsing plan with id: #{id}"
+      rescue Exception => e
+        p "Error parsing plan with id: #{id} -- Skipping"
+        p e.message
+        next
       end
 
       # Save plan after it's been read
