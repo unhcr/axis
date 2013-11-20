@@ -37511,10 +37511,10 @@ UNHCR will also use partnerships to monitor the return areas in order to better 
           <name>Protection and mixed solutions</name>
           <rightsGroups>
             <RightsGroup ID="513bdee5-47a8-4512-ad5f-ba28f9b19d7e" RFID="126240dd-276d-482f-aef0-dc62acd94011">
-              <name>Basic Needs and Essential Services</name>
+              <name>Basic Needs and Essential Services Changed</name>
               <problemObjectives>
                 <ProblemObjective ID="5124741d-0f2e-403e-8dc6-59b5d042e8b1" RFID="d13a589a-fdb1-4913-90c5-d67fb3d21fd1">
-                  <problemName>Health status of the population is unsatisfactory or needs constant attention</problemName>
+                  <problemName>Health status of the population is unsatisfactory or needs constant attention Changed</problemName>
                   <objectiveName>Health status of the population improved</objectiveName>
                   <isExcluded>false</isExcluded>
                   <outputs>
@@ -51395,15 +51395,15 @@ UNHCR plans to have sufficient amount of NFIs to meaningfully assist the conflic
           <name>Protection pending solutions</name>
           <rightsGroups>
             <RightsGroup ID="b2993643-9bc2-4e93-8b50-48f7a3055385" RFID="126240dd-276d-482f-aef0-dc62acd94011">
-              <name>Basic Needs and Essential Services</name>
+              <name>Basic Needs and Essential Services Changed</name>
               <problemObjectives>
                 <ProblemObjective ID="9c9281db-f7a4-4b89-8e15-6c9df66048b8" RFID="d13a589a-fdb1-4913-90c5-d67fb3d21fd1">
-                  <problemName>Health status of the population is unsatisfactory or needs constant attention</problemName>
+                  <problemName>Health status of the population is unsatisfactory or needs constant attention Changed</problemName>
                   <objectiveName>Health status of the population improved</objectiveName>
                   <isExcluded>false</isExcluded>
                   <outputs>
                     <Output ID="6c6de4bc-c853-4766-9360-1777d6c2a8af" RFID="e3191653-46ca-4887-a2d7-bf90321ac6e2">
-                      <name>Access to primary health care services provided or supported</name>
+                      <name>Access to primary health care services provided or supported Changed</name>
                       <priority>PARTIAL</priority>
                       <budgetLines>
                         <BudgetLine ID="887e201d-ec37-4219-b613-3cf8700ebcf7">
