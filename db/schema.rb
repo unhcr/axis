@@ -13,8 +13,7 @@
 
 ActiveRecord::Schema.define(:version => 20131120152341) do
 
-  create_table "budget_lines", :id => false, :force => true do |t|
-    t.string   "id"
+  create_table "budget_lines", :force => true do |t|
     t.string   "scenerio"
     t.string   "cost_type"
     t.string   "cost_center"
@@ -39,8 +38,7 @@ ActiveRecord::Schema.define(:version => 20131120152341) do
     t.datetime "updated_at",           :null => false
   end
 
-  create_table "goals", :id => false, :force => true do |t|
-    t.string   "id"
+  create_table "goals", :force => true do |t|
     t.string   "name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
@@ -66,8 +64,7 @@ ActiveRecord::Schema.define(:version => 20131120152341) do
     t.string  "goal_id",     :null => false
   end
 
-  create_table "indicator_data", :id => false, :force => true do |t|
-    t.string   "id"
+  create_table "indicator_data", :force => true do |t|
     t.integer  "standard"
     t.boolean  "reversal"
     t.integer  "comp_target"
@@ -88,8 +85,7 @@ ActiveRecord::Schema.define(:version => 20131120152341) do
     t.string   "operation_id"
   end
 
-  create_table "indicators", :id => false, :force => true do |t|
-    t.string   "id"
+  create_table "indicators", :force => true do |t|
     t.string   "name"
     t.boolean  "is_performance"
     t.boolean  "is_gsp"
@@ -117,8 +113,7 @@ ActiveRecord::Schema.define(:version => 20131120152341) do
     t.string  "indicator_id", :null => false
   end
 
-  create_table "operations", :id => false, :force => true do |t|
-    t.string   "id"
+  create_table "operations", :force => true do |t|
     t.string   "name"
     t.text     "years"
     t.datetime "created_at", :null => false
@@ -150,8 +145,7 @@ ActiveRecord::Schema.define(:version => 20131120152341) do
     t.string  "operation_id", :null => false
   end
 
-  create_table "outputs", :id => false, :force => true do |t|
-    t.string   "id"
+  create_table "outputs", :force => true do |t|
     t.string   "name"
     t.string   "priority"
     t.datetime "created_at", :null => false
@@ -168,8 +162,7 @@ ActiveRecord::Schema.define(:version => 20131120152341) do
     t.string  "output_id",   :null => false
   end
 
-  create_table "plans", :id => false, :force => true do |t|
-    t.string   "id"
+  create_table "plans", :force => true do |t|
     t.string   "operation_name"
     t.string   "name"
     t.integer  "year"
@@ -183,8 +176,7 @@ ActiveRecord::Schema.define(:version => 20131120152341) do
     t.string "ppg_id",  :null => false
   end
 
-  create_table "ppgs", :id => false, :force => true do |t|
-    t.string   "id"
+  create_table "ppgs", :force => true do |t|
     t.string   "name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
@@ -195,8 +187,7 @@ ActiveRecord::Schema.define(:version => 20131120152341) do
     t.string  "ppg_id",      :null => false
   end
 
-  create_table "problem_objectives", :id => false, :force => true do |t|
-    t.string   "id"
+  create_table "problem_objectives", :force => true do |t|
     t.string   "problem_name"
     t.string   "objective_name"
     t.boolean  "is_excluded"
@@ -214,8 +205,7 @@ ActiveRecord::Schema.define(:version => 20131120152341) do
     t.string  "problem_objective_id", :null => false
   end
 
-  create_table "rights_groups", :id => false, :force => true do |t|
-    t.string   "id"
+  create_table "rights_groups", :force => true do |t|
     t.string   "name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
