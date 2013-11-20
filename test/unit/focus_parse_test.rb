@@ -62,7 +62,7 @@ class FocusParseTest < ActiveSupport::TestCase
       config.noblanks.strict
     end
 
-    assert !EquivalentXml.equivalent?(doc, updated_doc, opts = {
+    assert !EquivalentXml.equivalent?(doc, updated_doc, {
       :element_order => false,
       :normalize_whitespace => true })
 
