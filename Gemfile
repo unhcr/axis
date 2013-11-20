@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.11'
 gem 'nokogiri'
+gem 'equivalent-xml'
 gem 'rubyzip'
 
 # Bundle edge Rails instead:
@@ -30,6 +31,7 @@ end
 
 group :development, :test do
   gem 'qunit-rails'
+  gem 'single_test'
 end
 
 gem 'jquery-rails'
