@@ -8,6 +8,7 @@ class ProblemObjective < ActiveRecord::Base
   has_and_belongs_to_many :outputs, :uniq => true
   has_and_belongs_to_many :indicators, :uniq => true
   has_and_belongs_to_many :rights_groups, :uniq => true
+  has_and_belongs_to_many :operations, :uniq => true
 
   AOL = 'Above Operating Level'
   OL = 'Operating Level'
