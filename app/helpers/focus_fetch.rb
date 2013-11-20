@@ -43,8 +43,6 @@ module FocusFetch
 
     ids.each_with_index do |id, i|
       break if i >= max_files
-      p id
-      p i
 
       begin
         plan_zip = open(BASE_URL + PLAN_PREFIX + id + PLAN_SUFFIX,
@@ -53,13 +51,17 @@ module FocusFetch
         puts 'Internet connection appears to be bad.'
       end
 
-      Zip::File.open(plan_zip) do |zip|
-        ret[:files_read] += 1
-        zip.each_with_index do |entry, j|
-          raise 'More than one header file' if j > 0
+      begin
+        Zip::File.open(plan_zip) do |zip|
+          ret[:files_read] += 1
+          zip.each_with_index do |entry, j|
+            raise 'More than one plan file' if j > 0
 
-          parse_plan(entry.get_input_stream)
+            parse_plan(entry.get_input_stream)
+          end
         end
+      rescue
+        p "Error parsing plan with id: #{id}"
       end
 
 
