@@ -16,11 +16,15 @@ end
 
 task :fetch => :environment do
 
+  n = ENV['n']
+
+  n ||= 1.0/0.0
+
   p 'Fetching FOCUS data'
 
   include FocusFetch
 
-  ret fetch
+  ret = fetch n
   p 'Finished fetching'
   p '-----------------'
   p "Files Read: #{ret[:files_red]}"
