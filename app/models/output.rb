@@ -7,7 +7,6 @@ class Output < ActiveRecord::Base
   has_and_belongs_to_many :operations, :uniq => true
 
   has_many :indicator_data
-  has_many :budget_lines
 
   AOL = 'Above Operating Level'
   OL = 'Operating Level'
