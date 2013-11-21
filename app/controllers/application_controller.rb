@@ -11,7 +11,8 @@ class ApplicationController < ActionController::Base
   end
 
   def map_data
-    render :json => Operation.public_models(Operation.all)
+    year = params[:year] || Time.now.year
+    render :json => Plan.public_models(Plan.where(:year => year))
   end
 
   def map
