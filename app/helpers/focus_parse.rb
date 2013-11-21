@@ -166,8 +166,10 @@ module FocusParse
                 amount = xml_budget_line.search('./amount').text.to_i
                 if scenerio == Output::AOL
                   output.aol_budget += amount
+                  problem_objective.aol_budget += amount
                 elsif scenerio == Output::OL
                   output.ol_budget += amount
+                  problem_objective.ol_budget += amount
                 end
 
               end
@@ -197,7 +199,6 @@ module FocusParse
 
               problem_objective.indicators << indicator unless problem_objective.indicators.include? indicator
               operation.indicators << indicator unless operation.indicators.include? indicator
-
               # Create datum
               IndicatorDatum.find_or_initialize_by_id(:id => xml_impact_indicator.attribute('ID').value).tap do |d|
                 d.id = xml_impact_indicator.attribute('ID').value
