@@ -8,22 +8,22 @@ class Operation < ActiveRecord::Base
   has_many :plans
   has_many :indicator_data
 
-  has_and_belongs_to_many :indicators
-  has_and_belongs_to_many :outputs
-  has_and_belongs_to_many :problem_objectives
-  has_and_belongs_to_many :rights_groups
-  has_and_belongs_to_many :goals
-  has_and_belongs_to_many :ppgs
+  has_and_belongs_to_many :indicators, :uniq => true
+  has_and_belongs_to_many :outputs, :uniq => true
+  has_and_belongs_to_many :problem_objectives, :uniq => true
+  has_and_belongs_to_many :rights_groups, :uniq => true
+  has_and_belongs_to_many :goals, :uniq => true
+  has_and_belongs_to_many :ppgs, :uniq => true
 
   def self.public_models(operations, options = {})
-    response = Jbuilder.encode do |j|
-      j.operations operations do |json, operation|
+    response = Jbuilder.encode do |json|
+      json.operations operations do |operation|
         json.(operation, :id, :name, :years)
 
-        json.ppgs operation.ppgs
-        json.goals operation.goals
-        json.problem_objectives operation.problem_objectives
-        json.indicators operation.indicators
+        json.ppg_ids operation.ppg_ids
+        json.goal_ids operation.goal_ids
+        json.problem_objective_ids operation.problem_objective_ids
+        json.indicator_ids operation.indicator_ids
       end
     end
 
