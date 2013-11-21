@@ -162,30 +162,13 @@ module FocusParse
 
               xml_budget_lines.each do |xml_budget_line|
 
-                BudgetLine.find_or_initialize_by_id(:id => xml_budget_line.attribute('ID').value).tap do |b|
-                  b.id = xml_budget_line.attribute('ID').value
-                  b.goal = goal
-                  b.rights_group = rights_group
-                  b.plan = plan
-                  b.ppg = ppg
-                  b.problem_objective = problem_objective
-                  b.output = output
-
-                  b.account_code = xml_budget_line.search('./accountCode').text
-                  b.account_name = xml_budget_line.search('./accountName').text
-                  b.amount = xml_budget_line.search('./amount').text.to_i
-                  b.comment = xml_budget_line.search('./comment').text
-                  b.cost_center = xml_budget_line.search('./costCenter').text
-                  b.currency = xml_budget_line.search('./currency').text
-                  b.implementer_code = xml_budget_line.search('./implementerCode').text
-                  b.implementer_name = xml_budget_line.search('./implementerName').text
-                  b.local_cost = xml_budget_line.search('./localCost').text
-                  b.quantity = xml_budget_line.search('./quantity').text.to_i
-                  b.scenerio = xml_budget_line.search('./scenerio').text
-                  b.cost_type = xml_budget_line.search('./type').text
-                  b.unit = xml_budget_line.search('./unit').text
-                  b.unit_cost = xml_budget_line.search('./unitCost').text.to_i
-                end.save
+                scenerio = xml_budget_line.search('./scenerio').text
+                amount = xml_budget_line.search('./amount').text.to_i
+                if scenerio == Output::AOL
+                  output.aol_budget += amount
+                elsif scenerio == Output::OL
+                  output.ol_budget += amount
+                end
 
               end
             end
@@ -193,30 +176,13 @@ module FocusParse
             xml_budget_lines = xml_problem_objective.search('./budgetLines/BudgetLine')
 
             xml_budget_lines.each do |xml_budget_line|
-
-              BudgetLine.find_or_initialize_by_id(:id => xml_budget_line.attribute('ID').value).tap do |b|
-                b.id = xml_budget_line.attribute('ID').value
-                b.goal = goal
-                b.rights_group = rights_group
-                b.plan = plan
-                b.ppg = ppg
-                b.problem_objective = problem_objective
-
-                b.account_code = xml_budget_line.search('./accountCode').text
-                b.account_name = xml_budget_line.search('./accountName').text
-                b.amount = xml_budget_line.search('./amount').text.to_i
-                b.comment = xml_budget_line.search('./comment').text
-                b.cost_center = xml_budget_line.search('./costCenter').text
-                b.currency = xml_budget_line.search('./currency').text
-                b.implementer_code = xml_budget_line.search('./implementerCode').text
-                b.implementer_name = xml_budget_line.search('./implementerName').text
-                b.local_cost = xml_budget_line.search('./localCost').text
-                b.quantity = xml_budget_line.search('./quantity').text.to_i
-                b.scenerio = xml_budget_line.search('./scenerio').text
-                b.cost_type = xml_budget_line.search('./type').text
-                b.unit = xml_budget_line.search('./unit').text
-                b.unit_cost = xml_budget_line.search('./unitCost').text.to_i
-              end.save
+                scenerio = xml_budget_line.search('./scenerio').text
+                amount = xml_budget_line.search('./amount').text.to_i
+                if scenerio == Output::AOL
+                  problem_objective.aol_budget += amount
+                elsif scenerio == Output::OL
+                  problem_objective.ol_budget += amount
+                end
 
             end
             # Impact indicators tied to objective
