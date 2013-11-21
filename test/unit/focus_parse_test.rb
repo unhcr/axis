@@ -83,7 +83,7 @@ class FocusParseTest < ActiveSupport::TestCase
     end
   end
 
-  test "Parse plan FOCUS basic" do
+  test "parse plan focus basic" do
     file = File.read(TESTFILE_PATH + TESTHEADER_NAME)
     parse_header(file, PLAN_TYPES)
 
