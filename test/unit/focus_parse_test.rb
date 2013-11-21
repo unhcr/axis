@@ -102,6 +102,7 @@ class FocusParseTest < ActiveSupport::TestCase
 
     assert_equal COUNTS[:ppgs], Ppg.count, "Ppg count"
     assert_equal COUNTS[:ppgs], operation.ppgs.count, "Operation's Ppg count"
+    assert_equal COUNTS[:ppgs], plan.ppgs.count, "Plan's Ppg count"
     Ppg.all.each do |ppg|
       assert ppg.goals.length >= 0
       assert ppg.goals.length <= Goal.count
@@ -109,6 +110,7 @@ class FocusParseTest < ActiveSupport::TestCase
 
     assert_equal COUNTS[:goals], Goal.count, "Goal count"
     assert_equal COUNTS[:goals], operation.goals.count, "Operation's goals count"
+    assert_equal COUNTS[:goals], plan.goals.count, "Plan's goals count"
     Goal.all.each do |goal|
       assert goal.rights_groups.length >= 0
       assert goal.rights_groups.length <= RightsGroup.count
@@ -116,6 +118,7 @@ class FocusParseTest < ActiveSupport::TestCase
 
     assert_equal COUNTS[:rights_groups], RightsGroup.count, "Rights Group count"
     assert_equal COUNTS[:rights_groups], operation.rights_groups.count, "Operation's rights groups count"
+    assert_equal COUNTS[:rights_groups], plan.rights_groups.count, "Plan's rights groups count"
     RightsGroup.all.each do |rights_group|
       assert rights_group.problem_objectives.length >= 0
       assert rights_group.problem_objectives.length <= ProblemObjective.count
@@ -123,6 +126,7 @@ class FocusParseTest < ActiveSupport::TestCase
 
     assert_equal COUNTS[:problem_objectives], ProblemObjective.count, "ProblemObjective count"
     assert_equal COUNTS[:problem_objectives], operation.problem_objectives.count, "Operation's ProblemObjective count"
+    assert_equal COUNTS[:problem_objectives], plan.problem_objectives.count, "Plan's ProblemObjective count"
     ProblemObjective.all.each do |problem_objective|
       assert problem_objective.outputs.length >= 0
       assert problem_objective.outputs.length <= Output.count
@@ -134,6 +138,7 @@ class FocusParseTest < ActiveSupport::TestCase
 
     assert_equal COUNTS[:outputs], Output.count, "Output count"
     assert_equal COUNTS[:outputs], operation.outputs.count, "Operation's outputs count"
+    assert_equal COUNTS[:outputs], plan.outputs.count, "Plan's outputs count"
     Output.all.each do |output|
       assert output.indicators.length >= 0
       assert output.indicators.length <= Indicator.count
@@ -143,6 +148,7 @@ class FocusParseTest < ActiveSupport::TestCase
 
     assert_equal COUNTS[:indicators], Indicator.count, "Indicator count"
     assert_equal COUNTS[:indicators], operation.indicators.count, "Operation's indicators count"
+    assert_equal COUNTS[:indicators], plan.indicators.count, "Plan's indicators count"
 
     assert_equal COUNTS[:indicator_data], IndicatorDatum.count, "IndicatorDatum count"
     IndicatorDatum.all.each do |d|
@@ -179,6 +185,7 @@ class FocusParseTest < ActiveSupport::TestCase
 
     assert_equal COUNTS[:ppgs], Ppg.count, "Ppg count"
     assert_equal COUNTS[:ppgs], operation.ppgs.count, "Operation's Ppg count"
+    assert_equal COUNTS[:ppgs], plan.ppgs.count, "Plan's Ppg count"
     Ppg.all.each do |ppg|
       assert ppg.goals.length >= 0
       assert ppg.goals.length <= Goal.count
@@ -186,6 +193,7 @@ class FocusParseTest < ActiveSupport::TestCase
 
     assert_equal COUNTS[:goals], Goal.count, "Goal count"
     assert_equal COUNTS[:goals], operation.goals.count, "Operation's goals count"
+    assert_equal COUNTS[:goals], plan.goals.count, "Plan's goals count"
     Goal.all.each do |goal|
       assert goal.rights_groups.length >= 0
       assert goal.rights_groups.length <= RightsGroup.count
@@ -193,6 +201,7 @@ class FocusParseTest < ActiveSupport::TestCase
 
     assert_equal COUNTS[:rights_groups], RightsGroup.count, "Rights Group count"
     assert_equal COUNTS[:rights_groups], operation.rights_groups.count, "Operation's rights groups count"
+    assert_equal COUNTS[:rights_groups], plan.rights_groups.count, "Plan's rights groups count"
     RightsGroup.all.each do |rights_group|
       assert rights_group.problem_objectives.length >= 0
       assert rights_group.problem_objectives.length <= ProblemObjective.count
@@ -200,6 +209,7 @@ class FocusParseTest < ActiveSupport::TestCase
 
     assert_equal COUNTS[:problem_objectives], ProblemObjective.count, "ProblemObjective count"
     assert_equal COUNTS[:problem_objectives], operation.problem_objectives.count, "Operation's ProblemObjective count"
+    assert_equal COUNTS[:problem_objectives], plan.problem_objectives.count, "Plan's ProblemObjective count"
     ProblemObjective.all.each do |problem_objective|
       assert problem_objective.outputs.length >= 0
       assert problem_objective.outputs.length <= Output.count
@@ -209,6 +219,7 @@ class FocusParseTest < ActiveSupport::TestCase
 
     assert_equal COUNTS[:outputs], Output.count, "Output count"
     assert_equal COUNTS[:outputs], operation.outputs.count, "Operation's outputs count"
+    assert_equal COUNTS[:outputs], plan.outputs.count, "Plan's outputs count"
     Output.all.each do |output|
       assert output.indicators.length >= 0
       assert output.indicators.length <= Indicator.count
@@ -216,6 +227,7 @@ class FocusParseTest < ActiveSupport::TestCase
 
     assert_equal COUNTS[:indicators], Indicator.count, "Indicator count"
     assert_equal COUNTS[:indicators], operation.indicators.count, "Operation's indicators count"
+    assert_equal COUNTS[:indicators], plan.indicators.count, "Plan's indicators count"
 
     assert_equal COUNTS[:indicator_data], IndicatorDatum.count, "IndicatorDatum count"
     IndicatorDatum.all.each do |d|

@@ -87,6 +87,7 @@ module FocusParse
 
         ppg.goals << goal unless ppg.goals.include? goal
         operation.goals << goal unless operation.goals.include? goal
+        plan.goals << goal unless plan.goals.include? goal
 
         xml_rights_groups.each do |xml_rights_group|
           xml_problem_objectives = xml_rights_group.search(PROBLEM_OBJECTIVE)
@@ -98,6 +99,7 @@ module FocusParse
 
           goal.rights_groups << rights_group unless goal.rights_groups.include? rights_group
           operation.rights_groups << rights_group unless operation.rights_groups.include? rights_group
+          plan.rights_groups << rights_group unless plan.rights_groups.include? rights_group
 
           xml_problem_objectives.each do |xml_problem_objective|
             xml_outputs = xml_problem_objective.search(OUTPUT)
@@ -115,6 +117,9 @@ module FocusParse
             unless operation.problem_objectives.include? problem_objective
               operation.problem_objectives << problem_objective
             end
+            unless plan.problem_objectives.include? problem_objective
+              plan.problem_objectives << problem_objective
+            end
 
             xml_outputs.each do |xml_output|
               # Must be performance indicators if part of output
@@ -129,6 +134,7 @@ module FocusParse
 
               problem_objective.outputs << output unless problem_objective.outputs.include? output
               operation.outputs << output unless operation.outputs.include? output
+              plan.outputs << output unless plan.outputs.include? output
 
               xml_performance_indicators.each do |xml_performance_indicator|
                 (indicator = Indicator.find_or_initialize_by_id(:id => xml_performance_indicator.attribute('RFID').value).tap do |i|
@@ -140,6 +146,7 @@ module FocusParse
 
                 output.indicators << indicator unless output.indicators.include? indicator
                 operation.indicators << indicator unless operation.indicators.include? indicator
+                plan.indicators << indicator unless plan.indicators.include? indicator
 
                 # Create datum
                 IndicatorDatum.find_or_initialize_by_id(:id => xml_performance_indicator.attribute('ID').value).tap do |d|
@@ -199,6 +206,7 @@ module FocusParse
 
               problem_objective.indicators << indicator unless problem_objective.indicators.include? indicator
               operation.indicators << indicator unless operation.indicators.include? indicator
+              plan.indicators << indicator unless plan.indicators.include? indicator
               # Create datum
               IndicatorDatum.find_or_initialize_by_id(:id => xml_impact_indicator.attribute('ID').value).tap do |d|
                 d.id = xml_impact_indicator.attribute('ID').value
