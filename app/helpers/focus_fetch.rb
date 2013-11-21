@@ -5,7 +5,7 @@ module FocusFetch
   PLAN_PREFIX = 'Plan_'
   PLAN_SUFFIX = '.zip'
 
-  DIR = "#{Rails.root}/data/focus"
+  @@DIR = "#{Rails.root}/data/focus"
 
   PLAN_TYPES = ['ONEPLAN']
 
@@ -86,16 +86,16 @@ module FocusFetch
   end
 
   def filename(id)
-    "#{DIR}/#{PLAN_PREFIX}#{id}__#{Time.now.to_i}#{PLAN_SUFFIX}"
+    "#{@@DIR}/#{PLAN_PREFIX}#{id}__#{Time.now.to_i}#{PLAN_SUFFIX}"
   end
 
   def filename_glob(id)
-    "#{DIR}/#{PLAN_PREFIX}#{id}__*#{PLAN_SUFFIX}"
+    "#{@@DIR}/#{PLAN_PREFIX}#{id}__*#{PLAN_SUFFIX}"
   end
 
   def find_plan_file(id, expires)
 
-    filenames = Dir.glob("#{DIR}/#{PLAN_PREFIX}#{id}__*#{PLAN_SUFFIX}")
+    filenames = Dir.glob("#{@@DIR}/#{PLAN_PREFIX}#{id}__*#{PLAN_SUFFIX}")
 
     return nil if filenames.empty?
 
@@ -114,6 +114,14 @@ module FocusFetch
     return current
 
 
+  end
+
+  def set_data_dir(dir)
+    @@DIR = dir
+  end
+
+  def get_data_dir
+    @@DIR
   end
 
 end
