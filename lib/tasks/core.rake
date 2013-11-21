@@ -10,7 +10,6 @@ task :clear => :environment do
   ProblemObjective.destroy_all
   Output.destroy_all
   Indicator.destroy_all
-  BudgetLine.destroy_all
   IndicatorDatum.destroy_all
 end
 
