@@ -17,7 +17,6 @@ class FocusParseTest < ActiveSupport::TestCase
     :indicators => 47,
     :outputs => 28,
     :operations => 139,
-    :budget_lines => 3425,
     :indicator_data => 67
   }
   include FocusParse
@@ -31,7 +30,6 @@ class FocusParseTest < ActiveSupport::TestCase
     Output.destroy_all
     Indicator.destroy_all
     IndicatorDatum.destroy_all
-    BudgetLine.destroy_all
     Operation.destroy_all
   end
 
@@ -53,7 +51,6 @@ class FocusParseTest < ActiveSupport::TestCase
     assert_equal COUNTS[:problem_objectives], ProblemObjective.count, "ProblemObjective count"
     assert_equal COUNTS[:outputs], Output.count, "Output count"
     assert_equal COUNTS[:operations], Operation.count, "Operation count"
-    assert_equal COUNTS[:budget_lines], BudgetLine.count, "BudgetLine count"
 
     doc = Nokogiri::XML(file) do |config|
       config.noblanks.strict
@@ -71,7 +68,6 @@ class FocusParseTest < ActiveSupport::TestCase
     assert RightsGroup.where(:name => 'Basic Needs and Essential Services Changed').first
     assert ProblemObjective.where(:problem_name => 'Health status of the population is unsatisfactory or needs constant attention Changed').first
     assert Output.where(:name => 'Access to primary health care services provided or supported Changed')
-    assert BudgetLine.where(:type => 'PROJECT Changed')
     assert Indicator.where(:name => '# of health facilities equipped/constructed/rehabilitated Changed')
   end
 
@@ -132,6 +128,8 @@ class FocusParseTest < ActiveSupport::TestCase
       assert problem_objective.outputs.length <= Output.count
       assert problem_objective.indicators.length >= 0
       assert problem_objective.indicators.length <= Indicator.count
+      assert problem_objective.aol_budget >= 0
+      assert problem_objective.ol_budget >= 0
     end
 
     assert_equal COUNTS[:outputs], Output.count, "Output count"
@@ -139,6 +137,8 @@ class FocusParseTest < ActiveSupport::TestCase
     Output.all.each do |output|
       assert output.indicators.length >= 0
       assert output.indicators.length <= Indicator.count
+      assert output.aol_budget >= 0
+      assert output.ol_budget >= 0
     end
 
     assert_equal COUNTS[:indicators], Indicator.count, "Indicator count"
@@ -155,14 +155,6 @@ class FocusParseTest < ActiveSupport::TestCase
       assert d.operation, "Must be an operation"
     end
 
-    assert_equal COUNTS[:budget_lines], BudgetLine.count, "BudgetLine count"
-    BudgetLine.all.each do |d|
-      assert d.plan, "Must be a plan"
-      assert d.ppg, "Must be a ppg"
-      assert d.goal, "Must be a goal"
-      assert d.rights_group, "Must be a rights group"
-      assert d.problem_objective || d.output, "Must be either a obj or output"
-    end
   end
 
   test "should find duplicates and not create extra entries" do
@@ -236,14 +228,6 @@ class FocusParseTest < ActiveSupport::TestCase
       assert d.operation, "Must be an operation"
     end
 
-    assert_equal COUNTS[:budget_lines], BudgetLine.count, "BudgetLine count"
-    BudgetLine.all.each do |d|
-      assert d.plan, "Must be a plan"
-      assert d.ppg, "Must be a ppg"
-      assert d.goal, "Must be a goal"
-      assert d.rights_group, "Must be a rights group"
-      assert d.problem_objective || d.output, "Must be either a obj or output"
-    end
   end
 
   test "Parse operation_header FOCUS duplicates" do
