@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131121164010) do
+ActiveRecord::Schema.define(:version => 20131121165934) do
 
   create_table "goals", :id => false, :force => true do |t|
     t.string   "id",         :null => false
@@ -23,6 +23,11 @@ ActiveRecord::Schema.define(:version => 20131121164010) do
   create_table "goals_operations", :id => false, :force => true do |t|
     t.string "goal_id",      :null => false
     t.string "operation_id", :null => false
+  end
+
+  create_table "goals_plans", :id => false, :force => true do |t|
+    t.string "goal_id", :null => false
+    t.string "plan_id", :null => false
   end
 
   create_table "goals_ppgs", :id => false, :force => true do |t|
@@ -81,6 +86,11 @@ ActiveRecord::Schema.define(:version => 20131121164010) do
     t.string "indicator_id", :null => false
   end
 
+  create_table "indicators_plans", :id => false, :force => true do |t|
+    t.string "plan_id",      :null => false
+    t.string "indicator_id", :null => false
+  end
+
   create_table "indicators_problem_objectives", :id => false, :force => true do |t|
     t.string "problem_objective_id", :null => false
     t.string "indicator_id",         :null => false
@@ -134,6 +144,11 @@ ActiveRecord::Schema.define(:version => 20131121164010) do
     t.datetime "updated_at",                :null => false
   end
 
+  create_table "outputs_plans", :id => false, :force => true do |t|
+    t.string "plan_id",   :null => false
+    t.string "output_id", :null => false
+  end
+
   create_table "outputs_problem_objectives", :id => false, :force => true do |t|
     t.string "problem_objective_id", :null => false
     t.string "output_id",            :null => false
@@ -157,6 +172,16 @@ ActiveRecord::Schema.define(:version => 20131121164010) do
   create_table "plans_ppgs", :id => false, :force => true do |t|
     t.string "plan_id", :null => false
     t.string "ppg_id",  :null => false
+  end
+
+  create_table "plans_problem_objectives", :id => false, :force => true do |t|
+    t.string "problem_objective_id", :null => false
+    t.string "plan_id",              :null => false
+  end
+
+  create_table "plans_rights_groups", :id => false, :force => true do |t|
+    t.string "plan_id",         :null => false
+    t.string "rights_group_id", :null => false
   end
 
   create_table "ppgs", :id => false, :force => true do |t|
