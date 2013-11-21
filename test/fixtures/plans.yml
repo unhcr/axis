@@ -3,9 +3,9 @@
 one:
   operation: Death March
   name: MyString
-  year: 1
+  year: <%= Time.now.year %>
 
 two:
   operation: God Will
   name: MyString
-  year: 1
+  year: 2012
