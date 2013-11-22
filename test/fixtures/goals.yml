@@ -5,3 +5,7 @@ one:
 
 two:
   name: Football
+
+deleted:
+  name: Football
+  is_deleted: true
