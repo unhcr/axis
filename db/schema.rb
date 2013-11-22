@@ -11,13 +11,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131121165934) do
+ActiveRecord::Schema.define(:version => 20131122103111) do
 
   create_table "goals", :id => false, :force => true do |t|
-    t.string   "id",         :null => false
+    t.string   "id",                            :null => false
     t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+    t.boolean  "is_deleted", :default => false
   end
 
   create_table "goals_operations", :id => false, :force => true do |t|
@@ -46,7 +47,7 @@ ActiveRecord::Schema.define(:version => 20131121165934) do
   end
 
   create_table "indicator_data", :id => false, :force => true do |t|
-    t.string   "id",                   :null => false
+    t.string   "id",                                      :null => false
     t.integer  "standard"
     t.boolean  "reversal"
     t.integer  "comp_target"
@@ -62,18 +63,20 @@ ActiveRecord::Schema.define(:version => 20131121165934) do
     t.string   "goal_id"
     t.string   "ppg_id"
     t.string   "plan_id"
-    t.datetime "created_at",           :null => false
-    t.datetime "updated_at",           :null => false
+    t.datetime "created_at",                              :null => false
+    t.datetime "updated_at",                              :null => false
     t.string   "operation_id"
+    t.boolean  "is_deleted",           :default => false
   end
 
   create_table "indicators", :id => false, :force => true do |t|
-    t.string   "id",             :null => false
+    t.string   "id",                                :null => false
     t.string   "name"
     t.boolean  "is_performance"
     t.boolean  "is_gsp"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
+    t.boolean  "is_deleted",     :default => false
   end
 
   create_table "indicators_operations", :id => false, :force => true do |t|
@@ -102,11 +105,12 @@ ActiveRecord::Schema.define(:version => 20131121165934) do
   end
 
   create_table "operations", :id => false, :force => true do |t|
-    t.string   "id",         :null => false
+    t.string   "id",                            :null => false
     t.string   "name"
     t.text     "years"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+    t.boolean  "is_deleted", :default => false
   end
 
   create_table "operations_outputs", :id => false, :force => true do |t|
@@ -135,13 +139,14 @@ ActiveRecord::Schema.define(:version => 20131121165934) do
   end
 
   create_table "outputs", :id => false, :force => true do |t|
-    t.string   "id",                        :null => false
+    t.string   "id",                            :null => false
     t.string   "name"
     t.string   "priority"
     t.integer  "aol_budget", :default => 0
     t.integer  "ol_budget",  :default => 0
-    t.datetime "created_at",                :null => false
-    t.datetime "updated_at",                :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+    t.boolean  "is_deleted", :default => false
   end
 
   create_table "outputs_plans", :id => false, :force => true do |t|
@@ -160,13 +165,14 @@ ActiveRecord::Schema.define(:version => 20131121165934) do
   end
 
   create_table "plans", :id => false, :force => true do |t|
-    t.string   "id",             :null => false
+    t.string   "id",                                :null => false
     t.string   "operation_name"
     t.string   "name"
     t.integer  "year"
     t.integer  "operation_id"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
+    t.boolean  "is_deleted",     :default => false
   end
 
   create_table "plans_ppgs", :id => false, :force => true do |t|
@@ -185,10 +191,11 @@ ActiveRecord::Schema.define(:version => 20131121165934) do
   end
 
   create_table "ppgs", :id => false, :force => true do |t|
-    t.string   "id",         :null => false
+    t.string   "id",                            :null => false
     t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+    t.boolean  "is_deleted", :default => false
   end
 
   create_table "ppgs_strategies", :id => false, :force => true do |t|
@@ -197,14 +204,15 @@ ActiveRecord::Schema.define(:version => 20131121165934) do
   end
 
   create_table "problem_objectives", :id => false, :force => true do |t|
-    t.string   "id",                            :null => false
+    t.string   "id",                                :null => false
     t.string   "problem_name"
     t.string   "objective_name"
     t.boolean  "is_excluded"
     t.integer  "aol_budget",     :default => 0
     t.integer  "ol_budget",      :default => 0
-    t.datetime "created_at",                    :null => false
-    t.datetime "updated_at",                    :null => false
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
+    t.boolean  "is_deleted",     :default => false
   end
 
   create_table "problem_objectives_rights_groups", :id => false, :force => true do |t|
@@ -218,10 +226,11 @@ ActiveRecord::Schema.define(:version => 20131121165934) do
   end
 
   create_table "rights_groups", :id => false, :force => true do |t|
-    t.string   "id",         :null => false
+    t.string   "id",                            :null => false
     t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+    t.boolean  "is_deleted", :default => false
   end
 
   create_table "rights_groups_strategies", :id => false, :force => true do |t|
