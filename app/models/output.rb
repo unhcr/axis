@@ -1,4 +1,5 @@
 class Output < ActiveRecord::Base
+  extend Parameter
   attr_accessible :name, :priority
 
   self.primary_key = :id
