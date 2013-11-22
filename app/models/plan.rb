@@ -1,4 +1,5 @@
 class Plan < ActiveRecord::Base
+  extend Parameter
   attr_accessible :name, :operation_name, :year
 
   self.primary_key = :id
