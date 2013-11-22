@@ -1,4 +1,5 @@
 class Indicator < ActiveRecord::Base
+  extend Parameter
   attr_accessible :is_gsp, :is_performance, :name
 
   self.primary_key  = :id

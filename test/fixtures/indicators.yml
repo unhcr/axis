@@ -9,3 +9,9 @@ two:
   name: People on my pool
   is_performance: false
   is_gsp: false
+
+deleted:
+  name: Slayers
+  is_performance: false
+  is_gsp: false
+  is_deleted: true
