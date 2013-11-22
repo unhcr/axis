@@ -5,3 +5,7 @@ one:
 
 two:
   name: IDPs
+
+deleted:
+  name: Men
+  is_deleted: true
