@@ -4,7 +4,6 @@ Visio::Application.routes.draw do
   get '/splash' => 'application#splash'
 
   get '/map' => 'application#map'
-  get '/map_data' => 'application#map_data'
 
   get '/overview' => 'application#overview'
 
@@ -26,7 +25,7 @@ Visio::Application.routes.draw do
   # This route can be invoked with purchase_url(:id => product.id)
 
   # Sample resource route (maps HTTP verbs to controller actions automatically):
-  #   resources :products
+  resources :plans
 
   # Sample resource route with options:
   #   resources :products do
