@@ -41,7 +41,6 @@
 
   :javascript
     window.Visio.user = new Visio.Models.User(#{current_user.to_json.html_safe})
-    window.Visio.db = new ydn.db.Storage(Visio.Constants.DB_NAME);
 
   = yield
 

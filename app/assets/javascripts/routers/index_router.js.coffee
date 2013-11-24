@@ -12,24 +12,13 @@ class Visio.Routers.IndexRouter extends Backbone.Router
       width: $(window).width()
       height: 500)
 
-    req = Visio.db.get(Visio.Constants.MAP_STORE, options.mapMD5)
 
-    req.done (record) =>
-      if !record
-        $.get('/map', (map) =>
-          console.log 'Got map'
-          Visio.db.put(Visio.Constants.MAP_STORE, { map: map }, options.mapMD5)
-          @map.mapJSON(map)
-          @map()
-        )
-      else
-        console.log 'Stored map'
-        @map.mapJSON(record.map)
+    Visio.manager.getMap(
+      success: (data) =>
+        @map.mapJSON(data.map)
         @map()
-
-    req.fail (e) ->
-      console.log e
-
+      fail: (err) =>
+        console.log err)
 
   routes: () ->
     '*default': 'index'

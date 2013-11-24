@@ -4,9 +4,9 @@
 :javascript
   $(document).ready(function() {
 
-    window.router = new Visio.Routers.IndexRouter({
-      mapMD5: '#{@mapMD5}'
-    });
+    Visio.manager = new Visio.Models.Manager({ mapMD5: '#{@mapMD5}' })
+
+    window.router = new Visio.Routers.IndexRouter();
     Backbone.history.start();
 
   });
