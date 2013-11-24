@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131122103111) do
+ActiveRecord::Schema.define(:version => 20131123154818) do
 
   create_table "goals", :id => false, :force => true do |t|
     t.string   "id",                            :null => false
@@ -93,6 +93,8 @@ ActiveRecord::Schema.define(:version => 20131122103111) do
     t.string "plan_id",      :null => false
     t.string "indicator_id", :null => false
   end
+
+  add_index "indicators_plans", ["plan_id", "indicator_id"], :name => "index_indicators_plans_on_plan_id_and_indicator_id", :unique => true
 
   create_table "indicators_problem_objectives", :id => false, :force => true do |t|
     t.string "problem_objective_id", :null => false
