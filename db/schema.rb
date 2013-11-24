@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131123154818) do
+ActiveRecord::Schema.define(:version => 20131124164419) do
 
   create_table "goals", :id => false, :force => true do |t|
     t.string   "id",                            :null => false
@@ -30,6 +30,8 @@ ActiveRecord::Schema.define(:version => 20131123154818) do
     t.string "goal_id", :null => false
     t.string "plan_id", :null => false
   end
+
+  add_index "goals_plans", ["plan_id", "goal_id"], :name => "index_goals_plans_on_plan_id_and_goal_id", :unique => true
 
   create_table "goals_ppgs", :id => false, :force => true do |t|
     t.string "goal_id", :null => false
@@ -156,6 +158,8 @@ ActiveRecord::Schema.define(:version => 20131123154818) do
     t.string "output_id", :null => false
   end
 
+  add_index "outputs_plans", ["plan_id", "output_id"], :name => "index_outputs_plans_on_plan_id_and_output_id", :unique => true
+
   create_table "outputs_problem_objectives", :id => false, :force => true do |t|
     t.string "problem_objective_id", :null => false
     t.string "output_id",            :null => false
@@ -182,10 +186,14 @@ ActiveRecord::Schema.define(:version => 20131123154818) do
     t.string "ppg_id",  :null => false
   end
 
+  add_index "plans_ppgs", ["plan_id", "ppg_id"], :name => "index_plans_ppgs_on_plan_id_and_ppg_id", :unique => true
+
   create_table "plans_problem_objectives", :id => false, :force => true do |t|
     t.string "problem_objective_id", :null => false
     t.string "plan_id",              :null => false
   end
+
+  add_index "plans_problem_objectives", ["plan_id", "problem_objective_id"], :name => "plans_objectives_index", :unique => true
 
   create_table "plans_rights_groups", :id => false, :force => true do |t|
     t.string "plan_id",         :null => false
