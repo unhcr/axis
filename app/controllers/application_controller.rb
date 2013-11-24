@@ -10,11 +10,6 @@ class ApplicationController < ActionController::Base
     render :layout => 'index'
   end
 
-  def map_data
-    year = params[:year] || Time.now.year
-    render :json => Plan.public_models(Plan.where(:year => year))
-  end
-
   def map
     render :json => @@map
   end
