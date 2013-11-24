@@ -10,10 +10,6 @@ class ApplicationController < ActionController::Base
     render :layout => 'index'
   end
 
-  def map_data
-    render :json => Operation.public_models(Operation.all)
-  end
-
   def map
     render :json => @@map
   end

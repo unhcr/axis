@@ -1,4 +1,5 @@
 class Ppg < ActiveRecord::Base
+  extend Parameter
   attr_accessible :name
 
   self.primary_key = :id

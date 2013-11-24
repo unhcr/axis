@@ -6,6 +6,8 @@ class FocusFetchTest < ActiveSupport::TestCase
 
   TESTDATA_PATH = "#{Rails.root}/test/files/focus"
   def setup
+    # Change directory for testing
+    set_data_dir(TESTDATA_PATH)
   end
 
   def teardown
@@ -24,10 +26,8 @@ class FocusFetchTest < ActiveSupport::TestCase
     id_new = 'recent'
     id_old = 'old'
 
-    # Change directory for testing
-    FocusFetch::DIR = TESTDATA_PATH
 
-    f = File.new("#{DIR}/#{PLAN_PREFIX}#{id_old}__#{(Time.now - 2.weeks).to_i}#{PLAN_SUFFIX}", 'w')
+    f = File.new("#{get_data_dir}/#{PLAN_PREFIX}#{id_old}__#{(Time.now - 2.weeks).to_i}#{PLAN_SUFFIX}", 'w')
     f.write('abcd')
     f.close
 

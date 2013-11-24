@@ -7,3 +7,8 @@ one:
 two:
   name: ComingIn
   priority: Partial
+
+deleted:
+  name: Georgia
+  priority: Suck
+  is_deleted: true

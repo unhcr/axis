@@ -4,37 +4,37 @@ class OutputTest < ActiveSupport::TestCase
   fixtures :all
   def setup
 
-    bl = [budget_lines(:one), budget_lines(:two), budget_lines(:three), budget_lines(:four)]
-    @o = outputs(:one)
-    @o.budget_lines = bl
-    @o.save
-
   end
 
-  test "aol budget calculation" do
-    aol_budget = @o.aol_budget
+  test "synced models no date" do
+    i = [outputs(:one), outputs(:two)]
 
-    assert_equal 70, aol_budget, 'Aol Budget'
+    i.map(&:save)
+
+    models = Output.synced_models
+
+    assert_equal 0, models[:deleted].count
+    assert_equal 0, models[:updated].count
+    assert_equal 3, models[:new].count
   end
 
-  test "ol budget calculation" do
-    ol_budget = @o.ol_budget
+  test "synced model with date" do
+    i = [outputs(:one), outputs(:two), outputs(:deleted)]
 
-    assert_equal 280, ol_budget, 'Ol Budget'
+    # Updated
+    i[1].created_at = Time.now - 1.week
+
+    i.map(&:save)
+
+    models = Output.synced_models(Time.now - 3.days)
+
+    assert_equal 1, models[:new].count
+    assert_equal 1, models[:updated].count
+    assert_equal 1, models[:deleted].count
+
+    assert_equal i[0].name, models[:new][0].name
+    assert_equal i[1].name, models[:updated][0].name
+    assert_equal i[2].name, models[:deleted][0].name
   end
 
-  test "total budget calculation" do
-    budget = @o.budget
-
-    assert_equal 350, budget, 'Budget'
-  end
-
-  test "no budget lines test" do
-
-    o2 = outputs(:two)
-
-    assert_equal 0, o2.aol_budget
-    assert_equal 0, o2.ol_budget
-    assert_equal 0, o2.budget
-  end
 end

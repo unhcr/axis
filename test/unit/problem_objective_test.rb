@@ -4,38 +4,37 @@ class ProblemObjectiveTest < ActiveSupport::TestCase
   fixtures :all
   def setup
 
-    bl = [budget_lines(:one), budget_lines(:two), budget_lines(:three), budget_lines(:four)]
-    @po = problem_objectives(:one)
-    @po.budget_lines = bl
-    @po.save
-
   end
 
-  test "aol budget calculation" do
-    aol_budget = @po.aol_budget
+  test "synced models no date" do
+    i = [problem_objectives(:one), problem_objectives(:two)]
 
-    assert_equal 70, aol_budget, 'Aol Budget'
+    i.map(&:save)
+
+    models = ProblemObjective.synced_models
+
+    assert_equal 0, models[:deleted].count
+    assert_equal 0, models[:updated].count
+    assert_equal 3, models[:new].count
   end
 
-  test "ol budget calculation" do
-    ol_budget = @po.ol_budget
+  test "synced model with date" do
+    i = [problem_objectives(:one), problem_objectives(:two), problem_objectives(:deleted)]
 
-    assert_equal 280, ol_budget, 'Ol Budget'
-  end
+    # Updated
+    i[1].created_at = Time.now - 1.week
 
-  test "total budget calculation" do
-    budget = @po.budget
+    i.map(&:save)
 
-    assert_equal 350, budget, 'Budget'
-  end
+    models = ProblemObjective.synced_models(Time.now - 3.days)
 
-  test "no budget lines test" do
+    assert_equal 1, models[:new].count
+    assert_equal 1, models[:updated].count
+    assert_equal 1, models[:deleted].count
 
-    p = problem_objectives(:two)
-
-    assert_equal 0, p.aol_budget
-    assert_equal 0, p.ol_budget
-    assert_equal 0, p.budget
+    assert_equal i[0].problem_name, models[:new][0].problem_name
+    assert_equal i[1].problem_name, models[:updated][0].problem_name
+    assert_equal i[2].problem_name, models[:deleted][0].problem_name
   end
 
 end

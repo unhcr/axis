@@ -1,11 +1,18 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  operation: Death March
+  operation_name: Death March
   name: MyString
-  year: 1
+  year: <%= Time.now.year %>
 
 two:
-  operation: God Will
+  operation_name: God Will
   name: MyString
-  year: 1
+  year: 2012
+
+deleted:
+  operation_name: Good God
+  name: Ethiopia
+  year: 2014
+  is_deleted: true
+

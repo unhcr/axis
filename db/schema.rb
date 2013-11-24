@@ -11,43 +11,27 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131120152341) do
+ActiveRecord::Schema.define(:version => 20131124164419) do
 
-  create_table "budget_lines", :force => true do |t|
-    t.string   "scenerio"
-    t.string   "cost_type"
-    t.string   "cost_center"
-    t.string   "implementer_code"
-    t.string   "implementer_name"
-    t.string   "account_code"
-    t.string   "account_name"
-    t.integer  "quantity"
-    t.integer  "unit"
-    t.string   "currency"
-    t.integer  "unit_cost"
-    t.integer  "local_cost"
-    t.integer  "amount"
-    t.text     "comment"
-    t.string   "output_id"
-    t.string   "problem_objective_id"
-    t.string   "rights_group_id"
-    t.string   "goal_id"
-    t.string   "ppg_id"
-    t.string   "plan_id"
-    t.datetime "created_at",           :null => false
-    t.datetime "updated_at",           :null => false
-  end
-
-  create_table "goals", :force => true do |t|
+  create_table "goals", :id => false, :force => true do |t|
+    t.string   "id",                            :null => false
     t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+    t.boolean  "is_deleted", :default => false
   end
 
   create_table "goals_operations", :id => false, :force => true do |t|
     t.string "goal_id",      :null => false
     t.string "operation_id", :null => false
   end
+
+  create_table "goals_plans", :id => false, :force => true do |t|
+    t.string "goal_id", :null => false
+    t.string "plan_id", :null => false
+  end
+
+  add_index "goals_plans", ["plan_id", "goal_id"], :name => "index_goals_plans_on_plan_id_and_goal_id", :unique => true
 
   create_table "goals_ppgs", :id => false, :force => true do |t|
     t.string "goal_id", :null => false
@@ -64,7 +48,8 @@ ActiveRecord::Schema.define(:version => 20131120152341) do
     t.string  "goal_id",     :null => false
   end
 
-  create_table "indicator_data", :force => true do |t|
+  create_table "indicator_data", :id => false, :force => true do |t|
+    t.string   "id",                                      :null => false
     t.integer  "standard"
     t.boolean  "reversal"
     t.integer  "comp_target"
@@ -80,17 +65,20 @@ ActiveRecord::Schema.define(:version => 20131120152341) do
     t.string   "goal_id"
     t.string   "ppg_id"
     t.string   "plan_id"
-    t.datetime "created_at",           :null => false
-    t.datetime "updated_at",           :null => false
+    t.datetime "created_at",                              :null => false
+    t.datetime "updated_at",                              :null => false
     t.string   "operation_id"
+    t.boolean  "is_deleted",           :default => false
   end
 
-  create_table "indicators", :force => true do |t|
+  create_table "indicators", :id => false, :force => true do |t|
+    t.string   "id",                                :null => false
     t.string   "name"
     t.boolean  "is_performance"
     t.boolean  "is_gsp"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
+    t.boolean  "is_deleted",     :default => false
   end
 
   create_table "indicators_operations", :id => false, :force => true do |t|
@@ -103,6 +91,13 @@ ActiveRecord::Schema.define(:version => 20131120152341) do
     t.string "indicator_id", :null => false
   end
 
+  create_table "indicators_plans", :id => false, :force => true do |t|
+    t.string "plan_id",      :null => false
+    t.string "indicator_id", :null => false
+  end
+
+  add_index "indicators_plans", ["plan_id", "indicator_id"], :name => "index_indicators_plans_on_plan_id_and_indicator_id", :unique => true
+
   create_table "indicators_problem_objectives", :id => false, :force => true do |t|
     t.string "problem_objective_id", :null => false
     t.string "indicator_id",         :null => false
@@ -113,11 +108,13 @@ ActiveRecord::Schema.define(:version => 20131120152341) do
     t.string  "indicator_id", :null => false
   end
 
-  create_table "operations", :force => true do |t|
+  create_table "operations", :id => false, :force => true do |t|
+    t.string   "id",                            :null => false
     t.string   "name"
     t.text     "years"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+    t.boolean  "is_deleted", :default => false
   end
 
   create_table "operations_outputs", :id => false, :force => true do |t|
@@ -145,12 +142,23 @@ ActiveRecord::Schema.define(:version => 20131120152341) do
     t.string  "operation_id", :null => false
   end
 
-  create_table "outputs", :force => true do |t|
+  create_table "outputs", :id => false, :force => true do |t|
+    t.string   "id",                            :null => false
     t.string   "name"
     t.string   "priority"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.integer  "aol_budget", :default => 0
+    t.integer  "ol_budget",  :default => 0
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+    t.boolean  "is_deleted", :default => false
   end
+
+  create_table "outputs_plans", :id => false, :force => true do |t|
+    t.string "plan_id",   :null => false
+    t.string "output_id", :null => false
+  end
+
+  add_index "outputs_plans", ["plan_id", "output_id"], :name => "index_outputs_plans_on_plan_id_and_output_id", :unique => true
 
   create_table "outputs_problem_objectives", :id => false, :force => true do |t|
     t.string "problem_objective_id", :null => false
@@ -162,13 +170,15 @@ ActiveRecord::Schema.define(:version => 20131120152341) do
     t.string  "output_id",   :null => false
   end
 
-  create_table "plans", :force => true do |t|
+  create_table "plans", :id => false, :force => true do |t|
+    t.string   "id",                                :null => false
     t.string   "operation_name"
     t.string   "name"
     t.integer  "year"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
-    t.string   "operation_id"
+    t.integer  "operation_id"
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
+    t.boolean  "is_deleted",     :default => false
   end
 
   create_table "plans_ppgs", :id => false, :force => true do |t|
@@ -176,10 +186,26 @@ ActiveRecord::Schema.define(:version => 20131120152341) do
     t.string "ppg_id",  :null => false
   end
 
-  create_table "ppgs", :force => true do |t|
+  add_index "plans_ppgs", ["plan_id", "ppg_id"], :name => "index_plans_ppgs_on_plan_id_and_ppg_id", :unique => true
+
+  create_table "plans_problem_objectives", :id => false, :force => true do |t|
+    t.string "problem_objective_id", :null => false
+    t.string "plan_id",              :null => false
+  end
+
+  add_index "plans_problem_objectives", ["plan_id", "problem_objective_id"], :name => "plans_objectives_index", :unique => true
+
+  create_table "plans_rights_groups", :id => false, :force => true do |t|
+    t.string "plan_id",         :null => false
+    t.string "rights_group_id", :null => false
+  end
+
+  create_table "ppgs", :id => false, :force => true do |t|
+    t.string   "id",                            :null => false
     t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+    t.boolean  "is_deleted", :default => false
   end
 
   create_table "ppgs_strategies", :id => false, :force => true do |t|
@@ -187,12 +213,16 @@ ActiveRecord::Schema.define(:version => 20131120152341) do
     t.string  "ppg_id",      :null => false
   end
 
-  create_table "problem_objectives", :force => true do |t|
+  create_table "problem_objectives", :id => false, :force => true do |t|
+    t.string   "id",                                :null => false
     t.string   "problem_name"
     t.string   "objective_name"
     t.boolean  "is_excluded"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.integer  "aol_budget",     :default => 0
+    t.integer  "ol_budget",      :default => 0
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
+    t.boolean  "is_deleted",     :default => false
   end
 
   create_table "problem_objectives_rights_groups", :id => false, :force => true do |t|
@@ -205,10 +235,12 @@ ActiveRecord::Schema.define(:version => 20131120152341) do
     t.string  "problem_objective_id", :null => false
   end
 
-  create_table "rights_groups", :force => true do |t|
+  create_table "rights_groups", :id => false, :force => true do |t|
+    t.string   "id",                            :null => false
     t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+    t.boolean  "is_deleted", :default => false
   end
 
   create_table "rights_groups_strategies", :id => false, :force => true do |t|
