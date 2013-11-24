@@ -37,34 +37,6 @@ class ApplicationControllerTest < ActionController::TestCase
 
   end
 
-  test 'map_data should get current plans if no year' do
-    get :map_data
-
-    r = JSON.parse(response.body)
-    plans = r["plans"]
-
-    assert_response :success
-    assert_equal 1, plans.count
-    plans.each do |plan|
-      assert_equal plan["year"], Time.now.year
-    end
-
-  end
-
-  test 'map_data should get passed in year' do
-
-    get :map_data, { :year => 2012 }
-
-
-    r = JSON.parse(response.body)
-    plans = r["plans"]
-
-    assert_response :success
-    assert_equal 1, plans.count
-    plans.each do |plan|
-      assert_equal plan["year"], 2012
-    end
-  end
 
 
 end
