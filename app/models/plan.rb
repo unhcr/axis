@@ -14,18 +14,21 @@ class Plan < ActiveRecord::Base
 
   belongs_to :operation
 
-  def self.public_models(plans, options = {})
-    response = Jbuilder.encode do |json|
-      json.plans plans do |plan|
-        json.(plan, :id, :name, :year)
+  def to_jbuilder(options = {})
+    Jbuilder.new do |json|
+      json.extract! self, :name, :operation_name, :year
 
-        json.ppg_ids plan.ppg_ids
-        json.goal_ids plan.goal_ids
-        json.problem_objective_ids plan.problem_objective_ids
-        json.indicator_ids plan.indicator_ids
+      if options[:include] && options[:include][:counts] && options[:include][:counts]
+        json.indicator_count self.indicators.count
+        json.goal_count self.goals.count
+        json.ppg_count self.ppgs.count
+        json.output_count self.outputs.count
+        json.problem_objective_count self.problem_objectives.count
       end
     end
+  end
 
-    return response
+  def as_json(options = {})
+    to_jbuilder(options).attributes!
   end
 end
