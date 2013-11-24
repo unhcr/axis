@@ -1,18 +1,18 @@
 module Parameter
 
-  def synced_models(synced_date = nil, limit = 200)
-    models = {}
+  def synced_models(synced_date = nil, models = nil, limit = 200, options = {})
+    synced_models = {}
 
     if synced_date
-      models[:new] = self.where('created_at >= ? and is_deleted = false', synced_date).limit(limit)
-      models[:updated] = self.where('created_at < ? and updated_at >= ? and is_deleted = false', synced_date, synced_date).limit(limit)
-      models[:deleted] = self.where('is_deleted = true and updated_at >= ?', synced_date).limit(limit)
+      synced_models[:new] = (models || self).where('created_at >= ? and is_deleted = false', synced_date).where(options).limit(limit)
+      synced_models[:updated] = (models || self).where('created_at < ? and updated_at >= ? and is_deleted = false', synced_date, synced_date).where(options).limit(limit)
+      synced_models[:deleted] = (models || self).where('is_deleted = true and updated_at >= ?', synced_date).where(options).limit(limit)
     else
-      models[:new] = self.limit(limit)
-      models[:updated] = models[:deleted] = []
+      synced_models[:new] = (models || self).where(options).limit(limit)
+      synced_models[:updated] = synced_models[:deleted] = []
     end
 
-    return models
+    return synced_models
   end
 
 end
