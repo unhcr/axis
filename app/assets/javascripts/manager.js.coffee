@@ -24,10 +24,10 @@ class Visio.Models.Manager extends Backbone.Model
     db = @get('db')
     req = db.get(Visio.Stores.MAP, @get('mapMD5'))
 
-    req.done (record) ->
+    req.done (record) =>
       if !record
         $.get('/map', (map) =>
-          db.put(Visio.Stores.MAP, { map: map }, options.mapMD5)
+          db.put(Visio.Stores.MAP, { map: map }, @get('mapMD5'))
         )
         options.success(record) if options.success
       else
