@@ -7,6 +7,7 @@ window.Visio =
   Graphs: {}
   Constants:
     DB_NAME: 'visio'
-    MAP_STORE: 'map'
-    SYNC_STORE: 'sync_date'
-    PLANS_STORE: 'plans_store'
+  Stores:
+    MAP: 'map'
+    SYNC: 'sync_date'
+    PLANS: 'plans_store'

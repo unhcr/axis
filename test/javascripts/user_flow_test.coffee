@@ -21,8 +21,8 @@ asyncTest('Basic user creation via ajax', () =>
     ok(resp.success)
 
     $.get('/test/current_user', (r) =>
-      assert.strictEqual(r.current_user.firstname, 'ben')
-      assert.strictEqual(r.current_user.lastname, 'rudolph')
+      strictEqual(r.current_user.firstname, 'ben')
+      strictEqual(r.current_user.lastname, 'rudolph')
       start()
     )
 )
