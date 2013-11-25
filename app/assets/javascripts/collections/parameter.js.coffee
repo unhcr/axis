@@ -4,6 +4,8 @@ class Visio.Collections.Parameter extends Backbone.Collection
 
   keyPath: 'id'
 
+  limit: 1000
+
   store: () ->
     @name + '_store'
 
@@ -21,21 +23,33 @@ class Visio.Collections.Parameter extends Backbone.Collection
           req = db.remove(@store(), parameter.id)
         )
         return req
+      ).done(() ->
+         Visio.manager.setSyncDate()
       )
     else
-      return req
+      return req.done(() ->
+        Visio.manager.setSyncDate()
+      )
 
   getSynced: () ->
     db = Visio.manager.get('db')
-    db.values(@store())
+    db.values(@store(), undefined, @limit)
 
-  fetchSynced: (options) ->
+  fetchSynced: () ->
     db = Visio.manager.get('db')
 
-    Visio.manager.getSyncDate().done((record) =>
-      return @fetch(synced_date: record.synced_date)
+    $.when(Visio.manager.getSyncDate()).then((record) =>
+      date = if record then record.synced_timestamp else undefined
+      console.log date
+      return $.get(@url, synced_timestamp: date)
     ).done((response) =>
-      return @setSynced(response[@name])
-    ).done(() ->
-      return db.values(@store)
+      parameters = response[@name]
+      console.log parameters.new.length
+      @setSynced(parameters)
+    ).done((ids) =>
+      @getSynced()
+    ).done((records) =>
+      @reset(records)
     )
+
+
