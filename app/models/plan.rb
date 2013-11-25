@@ -16,7 +16,7 @@ class Plan < ActiveRecord::Base
 
   def to_jbuilder(options = {})
     Jbuilder.new do |json|
-      json.extract! self, :name, :operation_name, :year
+      json.extract! self, :name, :operation_name, :year, :id
 
       if options[:include] && options[:include][:counts] && options[:include][:counts]
         json.indicator_count self.indicators.count
