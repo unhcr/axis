@@ -12,7 +12,7 @@ asyncTest('getLastSync', () ->
   Visio.manager.setSyncDate().done((key) ->
     return Visio.manager.getSyncDate()
   ).done((record) ->
-    ok(record.synced_date, 'Should have a sync date')
+    ok(record.synced_timestamp, 'Should have a sync date')
     start()
   )
 
@@ -24,7 +24,7 @@ asyncTest('setLastSync', () ->
   Visio.manager.setSyncDate().done(() ->
     return Visio.manager.getSyncDate()
     ).then((record) ->
-      ok(+record.synced_date >= +s, 'Should always be less than sync date')
+      ok(+record.synced_timestamp >= +s, 'Should always be less than sync date')
       start()
     )
 )
