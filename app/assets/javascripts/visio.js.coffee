@@ -11,3 +11,5 @@ window.Visio =
     MAP: 'map'
     SYNC: 'sync_date'
     PLANS: 'plans_store'
+  Parameters:
+    PLANS: 'plans'

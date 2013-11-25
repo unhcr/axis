@@ -1,4 +1,4 @@
-class Visio.Models.Plan extends Backbone.Model
+class Visio.Models.Plan extends Visio.Models.Parameter
 
   constructor: () ->
     @indicators = new Visio.Collections.Indicator()
