@@ -49,6 +49,7 @@ asyncTest('fetchSyncedPlans', () ->
     )
     return p.fetchSynced()
   ).done(() ->
+    #TODO Need to check to ensure that it hasn't recomputed all plans
     start()
   )
 )
