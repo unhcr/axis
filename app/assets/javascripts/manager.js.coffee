@@ -10,6 +10,9 @@ class Visio.Models.Manager extends Backbone.Model
     'mapMD5': null
     'syncTimestampId': 'syncTimestampId'
 
+  plan: (id) ->
+    @get('plans').get(id)
+
   getSyncDate: () ->
     db = @get('db')
     db.get(Visio.Stores.SYNC, @get('syncTimestampId'))
