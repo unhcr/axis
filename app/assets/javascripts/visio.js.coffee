@@ -10,6 +10,10 @@ window.Visio =
   Stores:
     MAP: 'map'
     SYNC: 'sync_date'
-    PLANS: 'plans_store'
   Parameters:
     PLANS: 'plans'
+    PPGS: 'ppgs'
+    GOALS: 'goals'
+    OUTPUTS: 'outputs'
+    PROBLEM_OBJECTIVES: 'problem_objectives'
+    INDICATORS: 'indicators'
