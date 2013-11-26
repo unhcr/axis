@@ -5,7 +5,7 @@ class PlansControllerTest < ActionController::TestCase
     get :index
 
     r = JSON.parse(response.body)
-    plans = r["plans"]["new"]
+    plans = r["new"]
 
     assert_response :success
     assert_equal 1, plans.count
@@ -26,7 +26,7 @@ class PlansControllerTest < ActionController::TestCase
 
 
     r = JSON.parse(response.body)
-    plans = r["plans"]["new"]
+    plans = r["new"]
 
     assert_response :success
     assert_equal 1, plans.count
@@ -34,7 +34,7 @@ class PlansControllerTest < ActionController::TestCase
       assert_equal plan["year"], 2012
       assert_equal 0, plan["ppgs_count"]
       assert_equal 0, plan["goals_count"]
-      assert_equal 0, plan["problems_objective_count"]
+      assert_equal 0, plan["problem_objectives_count"]
       assert_equal 0, plan["outputs_count"]
     end
   end
