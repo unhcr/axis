@@ -3,7 +3,7 @@
     <div class="col-md-4"><%= plan.operation_name %></div>
     <div class="tabs col-md-8">
       <% for (var i = 0; i < tabs.length; i ++) { %>
-      <span data-type="<%= tabs[i].type %>" class="<% if (tabs[i].type == type) { %>selected<% } %> tab pull-right"><%= tabs[i].name %></span>
+      <span data-type="<%= tabs[i].type %>" class="<% if (tabs[i].type == type) { %>selected<% } %> tab pull-right <%= tabs[i].type %>"><%= tabs[i].name %></span>
       <% } %>
     </div>
   </div>

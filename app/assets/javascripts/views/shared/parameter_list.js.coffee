@@ -40,11 +40,24 @@ class Visio.Views.ParameterListView extends Backbone.View
 
     @
 
+  onClickTab: (e) ->
+    $target = $(e.currentTarget)
+    @switchTab($target.attr('data-type'))
+
+  switchTab: (type) ->
+    window.router.navigate("/#{@model.id}/#{type}")
+
+    @$el.find('.selected').removeClass('selected')
+    @$el.find(".#{type}").addClass('selected')
+
+    @content(type)
+
   content: (type) ->
     @type = type
     items = []
 
-    if @model.get(type).length < @minItems && @model.get("#{type}_count") >= 10
+    if (@model.get(type).length < @minItems && @model.get("#{type}_count") >= 10) ||
+       (@model.get(type).length == 0 && @model.get("#{type}_count") > 0)
       @model.fetchParameter(type).done(() =>
         items = @model.get(type).map(@item)
         @$el.find('.content').html items.join(' ')
