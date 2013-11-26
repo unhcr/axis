@@ -18,11 +18,12 @@ class Visio.Routers.IndexRouter extends Backbone.Router
       @map()
     )
 
+    plans = Visio.manager.get('plans')
+    plans.fetchSynced().done(() ->
+      Visio.manager.set('plans', plans)
+    )
+
   routes: () ->
     '*default': 'index'
 
   index: () ->
-    plans = Visio.manager.get('plans')
-    plans.fetchSynced().done(() ->
-      console.log(plans)
-    )
