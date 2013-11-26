@@ -28,6 +28,10 @@ Visio::Application.routes.draw do
   # Sample resource route (maps HTTP verbs to controller actions automatically):
   resources :plans do
     resources :indicators
+    resources :ppgs
+    resources :outputs
+    resources :problem_objectives
+    resources :goals
   end
 
   # Sample resource route with options:
