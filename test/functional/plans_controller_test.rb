@@ -11,11 +11,11 @@ class PlansControllerTest < ActionController::TestCase
     assert_equal 1, plans.count
     plans.each do |plan|
       assert_equal plan["year"], Time.now.year
-      assert_equal 0, plan["indicator_count"]
-      assert_equal 0, plan["ppg_count"]
-      assert_equal 0, plan["goal_count"]
-      assert_equal 0, plan["problem_objective_count"]
-      assert_equal 0, plan["output_count"]
+      assert_equal 0, plan["indicators_count"]
+      assert_equal 0, plan["ppgs_count"]
+      assert_equal 0, plan["goals_count"]
+      assert_equal 0, plan["problem_objectives_count"]
+      assert_equal 0, plan["outputs_count"]
     end
 
   end
@@ -32,10 +32,10 @@ class PlansControllerTest < ActionController::TestCase
     assert_equal 1, plans.count
     plans.each do |plan|
       assert_equal plan["year"], 2012
-      assert_equal 0, plan["ppg_count"]
-      assert_equal 0, plan["goal_count"]
-      assert_equal 0, plan["problem_objective_count"]
-      assert_equal 0, plan["output_count"]
+      assert_equal 0, plan["ppgs_count"]
+      assert_equal 0, plan["goals_count"]
+      assert_equal 0, plan["problems_objective_count"]
+      assert_equal 0, plan["outputs_count"]
     end
   end
 

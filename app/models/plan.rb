@@ -19,11 +19,11 @@ class Plan < ActiveRecord::Base
       json.extract! self, :name, :operation_name, :year, :id
 
       if options[:include] && options[:include][:counts] && options[:include][:counts]
-        json.indicator_count self.indicators.count
-        json.goal_count self.goals.count
-        json.ppg_count self.ppgs.count
-        json.output_count self.outputs.count
-        json.problem_objective_count self.problem_objectives.count
+        json.indicators_count self.indicators.count
+        json.goals_count self.goals.count
+        json.ppgs_count self.ppgs.count
+        json.outputs_count self.outputs.count
+        json.problem_objectives_count self.problem_objectives.count
       end
     end
   end

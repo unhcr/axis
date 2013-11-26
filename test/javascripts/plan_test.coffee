@@ -54,11 +54,11 @@ asyncTest('fetchSyncedPlans', () ->
     ok(p.models.length > 0, 'Should have greater than 0 plans')
     p.each((model) ->
       ok(model.get('id'), 'Each model should have id')
-      ok(_.isNumber(model.get('indicator_count')), 'Each model should have i count')
-      ok(_.isNumber(model.get('ppg_count')), 'Each model should have ppg count')
-      ok(_.isNumber(model.get('goal_count')), 'Each model should have goal count')
-      ok(_.isNumber(model.get('output_count')), 'Each model should have o count')
-      ok(_.isNumber(model.get('problem_objective_count')), 'Each model should have po count')
+      ok(_.isNumber(model.get('indicators_count')), 'Each model should have i count')
+      ok(_.isNumber(model.get('ppgs_count')), 'Each model should have ppg count')
+      ok(_.isNumber(model.get('goals_count')), 'Each model should have goal count')
+      ok(_.isNumber(model.get('outputs_count')), 'Each model should have o count')
+      ok(_.isNumber(model.get('problem_objectives_count')), 'Each model should have po count')
     )
     return p.fetchSynced()
   ).done(() ->
