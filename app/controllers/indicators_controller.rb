@@ -1,9 +1,14 @@
 class IndicatorsController < ApplicationController
 
   def index
-    require 'pry'; binding.pry
     synced_date = params[:synced_timestamp] ? Time.at(params[:synced_timestamp].to_i) : nil
 
-    render :json => Indicator.synced_models(synced_date, nil, 20, params[:where]).as_json
+    # Must be a nested route
+    if params[:plan_id]
+      plan = Plan.find(params[:plan_id])
+      render :json => plan.indicators.as_json
+    else
+      render :json => Indicator.synced_models(synced_date, nil, 20, params[:where]).as_json
+    end
   end
 end

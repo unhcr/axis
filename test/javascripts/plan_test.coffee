@@ -66,3 +66,20 @@ asyncTest('fetchSyncedPlans', () ->
     start()
   )
 )
+
+asyncTest('fetchIndicators', () ->
+
+  p = new Visio.Models.Plan({ id: '26be980c-62af-44ab-877b-de7309fa4a18', name: 'ben' })
+
+  strictEqual(p.id, '26be980c-62af-44ab-877b-de7309fa4a18')
+  strictEqual(p.get('name'), 'ben')
+
+  p.fetchIndicators().done((id) ->
+    strictEqual(p.id, id)
+    p.getSynced().done((record) ->
+      strictEqual(p.get('indicators').length, record.indicators.length)
+      start()
+    )
+  )
+
+)
