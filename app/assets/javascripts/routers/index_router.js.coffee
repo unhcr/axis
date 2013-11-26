@@ -13,14 +13,16 @@ class Visio.Routers.IndexRouter extends Backbone.Router
       height: 500)
 
 
-    Visio.manager.getMap(
-      success: (data) =>
-        @map.mapJSON(data.map)
-        @map()
-      fail: (err) =>
-        console.log err)
+    Visio.manager.getMap().done((map) =>
+      @map.mapJSON(map)
+      @map()
+    )
 
   routes: () ->
     '*default': 'index'
 
   index: () ->
+    plans = Visio.manager.get('plans')
+    plans.fetchSynced().done(() ->
+      console.log(plans)
+    )

@@ -31,4 +31,6 @@ class Visio.Models.Manager extends Backbone.Model
         return record
     ).done((record) =>
       db.put(Visio.Stores.MAP, record, @get('mapMD5'))
+    ).done(() =>
+      db.get(Visio.Stores.MAP, @get('mapMD5'))
     )
