@@ -9,9 +9,6 @@ class PlansController < ApplicationController
       }
     }
 
-    response = {
-      :plans => Plan.synced_models(synced_date, nil, Plan.count, { :year => year }).as_json(options)
-    }
-    render :json => response
+    render :json => Plan.synced_models(synced_date, nil, Plan.count, { :year => year }).as_json(options)
   end
 end
