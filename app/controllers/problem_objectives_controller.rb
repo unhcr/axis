@@ -1,0 +1,2 @@
+class ProblemObjectivesController < ApplicationController
+end
