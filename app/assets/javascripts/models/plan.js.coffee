@@ -2,11 +2,11 @@ class Visio.Models.Plan extends Visio.Models.Parameter
 
   initialize: (attrs, options) ->
     @set(
-      indicators: new Visio.Collections.Indicator()
-      outputs: new Visio.Collections.Output()
-      problem_objectives: new Visio.Collections.ProblemObjective()
-      ppgs: new Visio.Collections.Ppg()
-      goals: new Visio.Collections.Goal()
+      indicators: new Visio.Collections.Indicator(attrs.indicators)
+      outputs: new Visio.Collections.Output(attrs.outputs)
+      problem_objectives: new Visio.Collections.ProblemObjective(attrs.problem_objectives)
+      ppgs: new Visio.Collections.Ppg(attrs.ppgs)
+      goals: new Visio.Collections.Goal(attrs.goals)
     )
 
   name: Visio.Parameters.PLANS
