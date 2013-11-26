@@ -16,4 +16,14 @@ class ProblemObjective < ActiveRecord::Base
   def budget
     return self.ol_budget + self.aol_budget
   end
+
+  def to_jbuilder(options = {})
+    Jbuilder.new do |json|
+      json.extract! self, :objective_name, :problem_name, :id
+    end
+  end
+
+  def as_json(options = {})
+    to_jbuilder(options).attributes!
+  end
 end

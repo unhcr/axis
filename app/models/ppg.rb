@@ -9,4 +9,13 @@ class Ppg < ActiveRecord::Base
   has_and_belongs_to_many :operations, :uniq => true
 
   has_many :indicator_data
+  def to_jbuilder(options = {})
+    Jbuilder.new do |json|
+      json.extract! self, :name, :id
+    end
+  end
+
+  def as_json(options = {})
+    to_jbuilder(options).attributes!
+  end
 end
