@@ -15,22 +15,35 @@ asyncTest('setSyncedPlans', () ->
     updated: []
   }
 
-  p.setSynced(plans).done(() ->
+  timestamp = null
+
+  p.setSynced(plans, true).done(() ->
     return p.getSynced()
   ).done((records) ->
     strictEqual(2, records.length, 'length of plans')
     plans.new = []
     plans.updated = [{ id: 'bob', name: 'matt' }]
     plans.deleted = [{ id: 'wendy', name: 'sue' }]
-
-    return p.setSynced(plans)
+    return Visio.manager.getSyncDate()
+  ).done((record) ->
+    ok(record.synced_timestamp, 'Should sync the date')
+    timestamp = record.synced_timestamp
+    return p.setSynced(plans, false)
   ).done(() ->
+    return Visio.manager.getSyncDate()
+  ).done((record) ->
+    strictEqual(timestamp, record.synced_timestamp, 'Should not have updated sync date')
     return p.getSynced()
   ).done((records) ->
     strictEqual('matt', records[0].name, 'Update 1 plan')
     strictEqual(1, records.length, 'Deleted 1 plan')
+    return Visio.manager.getSyncDate()
+  ).done((record) ->
+    ok(record, 'Should have the record')
+    ok(record.synced_timestamp, 'Should set synced timestamp')
     start()
   )
+
 )
 
 asyncTest('fetchSyncedPlans', () ->
