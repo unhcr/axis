@@ -23,7 +23,18 @@ class Visio.Routers.IndexRouter extends Backbone.Router
       Visio.manager.set('plans', plans)
     )
 
-  routes: () ->
+  routes:
+    ':plan_id/:type': 'list'
     '*default': 'index'
 
   index: () ->
+    console.log 'index'
+
+  list: (plan_id, type) ->
+
+    @list = new Visio.Views.ParameterListView(
+      model: Visio.manager.plan(plan_id)
+      type: type || Visio.Parameters.INDICATORS
+    )
+
+    $('header').after(@list.el)
