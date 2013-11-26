@@ -41,13 +41,11 @@ class Visio.Collections.Parameter extends Backbone.Collection
     $.when(Visio.manager.getSyncDate()).then((record) =>
       timestamp = if record then record.synced_timestamp else undefined
       return $.get(@url, synced_timestamp: timestamp)
-    ).done((response) =>
-      parameters = response[@name]
+    ).done((parameters) =>
       @setSynced(parameters, true)
     ).done((ids) =>
       @getSynced()
     ).done((records) =>
       @reset(records)
     )
-
 
