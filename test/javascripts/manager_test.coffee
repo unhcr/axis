@@ -28,3 +28,20 @@ asyncTest('setLastSync', () ->
       start()
     )
 )
+
+asyncTest('getMap', () ->
+  $.when($.get('/maphash')).then((response) ->
+    Visio.manager.set('mapMD5', response.mapMD5)
+  ).done(() ->
+    return Visio.manager.getMap().done((md5) ->
+      # Should retreive via ajax
+      strictEqual Visio.manager.get('mapMD5'), md5
+    ).done(() ->
+      Visio.manager.getMap()
+    ).done((md5) ->
+      # Should retreive local
+      strictEqual Visio.manager.get('mapMD5'), md5
+      start()
+    )
+  )
+)

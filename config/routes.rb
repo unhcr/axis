@@ -4,6 +4,7 @@ Visio::Application.routes.draw do
   get '/splash' => 'application#splash'
 
   get '/map' => 'application#map'
+  get '/maphash' => 'application#mapMD5'
 
   get '/overview' => 'application#overview'
 

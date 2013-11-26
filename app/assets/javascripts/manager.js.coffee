@@ -20,20 +20,15 @@ class Visio.Models.Manager extends Backbone.Model
 
     db.put(Visio.Stores.SYNC, { synced_timestamp: +d }, @get('syncTimestampId'))
 
-  getMap: (options) ->
+  getMap: () ->
     db = @get('db')
-    req = db.get(Visio.Stores.MAP, @get('mapMD5'))
+    assert(@get('mapMD5'))
 
-    req.done (record) =>
+    $.when(db.get(Visio.Stores.MAP, @get('mapMD5'))).then((record) =>
       if !record
-        $.get('/map', (map) =>
-          db.put(Visio.Stores.MAP, { map: map }, @get('mapMD5'))
-        )
-        options.success(record) if options.success
+        return $.get('/map')
       else
-        options.success(record) if options.success
-
-    req.fail (err) ->
-      options.fail(err) if options.fail
-
-    req
+        return record
+    ).done((record) =>
+      db.put(Visio.Stores.MAP, record, @get('mapMD5'))
+    )

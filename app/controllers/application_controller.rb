@@ -10,6 +10,12 @@ class ApplicationController < ActionController::Base
     render :layout => 'index'
   end
 
+  # Used for testing
+  def mapMD5
+    render :json => { :mapMD5 => @@mapMD5 }
+
+  end
+
   def map
     render :json => @@map
   end
