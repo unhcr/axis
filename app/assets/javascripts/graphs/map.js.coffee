@@ -5,6 +5,8 @@ Visio.Graphs.map = (config) ->
 
   scale = 500
 
+  views = {}
+
   zoomMax = 2.2
   zoomMin = 0.5
 
@@ -86,11 +88,26 @@ Visio.Graphs.map = (config) ->
     world.attr('class', (d) ->
       ['country'].join(' '))
       .attr('d', path)
+
+    centerData = Visio.manager.plans({ year: Visio.manager.year() }).filter((d) -> d.get('country'))
+
+    centers = g.selectAll('.center')
+      .data(centerData)
+
+    centers.enter().append 'circle'
+
+    centers.attr('class', (d) ->
+      classList = ['center', d.get('country').iso3]
+      classList.join(' '))
+      .attr('cx', (d) ->
+        return projection([d.get('country').latlng[1], d.get('country').latlng[0]])[0]
+      )
+      .attr('cy', (d) ->
+        return projection([d.get('country').latlng[1], d.get('country').latlng[0]])[1]
+      )
+      .attr('r', 3)
       .each((d) ->
-        plan = Visio.manager.plan(d.properties.adm0_a3)
-
-        return unless plan
-
+        views[d.get('country').iso3] = new Visio.Views.MapTooltipView({ model: d, point: @ })
       )
 
   render.mapJSON = (mapJSON) ->
