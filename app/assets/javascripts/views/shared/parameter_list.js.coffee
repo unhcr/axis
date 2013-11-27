@@ -24,6 +24,7 @@ class Visio.Views.ParameterListView extends Backbone.View
     'click .tab': 'onClickTab'
     'focus .parameter-search': 'onFocusSearch'
     'blur .parameter-search': 'onBlurSearch'
+    'click .close' : 'onClickClose'
 
   initialize: (options) ->
 
@@ -88,6 +89,13 @@ class Visio.Views.ParameterListView extends Backbone.View
       return
     JST['parameter_list/item'](
       parameter: parameter.toJSON())
+
+  onClickClose: (e) ->
+    @close()
+
+  close: () ->
+    @unbind()
+    @remove()
 
 
 

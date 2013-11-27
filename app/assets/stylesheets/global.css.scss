@@ -11,6 +11,7 @@ $selection: rgb(252, 239, 23);
 $bright: rgb(255, 248, 59);
 $white: rgb(249, 249, 249);
 $dark-gray: rgb(133, 135, 134);
+$light-gray: rgb(177, 177, 177);
 
 /* Transitions */
 $fast-transition: .5s;
@@ -171,6 +172,7 @@ body, html {
 .tab {
   padding-top: 14px;
   margin-bottom: 0px;
+  cursor: pointer;
 }
 
 .tab.selected {
@@ -329,6 +331,16 @@ button, input {
 .btn {
   border: none;
 
+}
+
+.close {
+  width: 3em;
+  height: 3em;
+  background-color: $light-gray;
+  position: absolute;
+  top: .8em;
+  right: .8em;
+  cursor: pointer;
 }
 
 .parameter-list {

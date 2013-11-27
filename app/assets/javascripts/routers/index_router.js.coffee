@@ -32,9 +32,11 @@ class Visio.Routers.IndexRouter extends Backbone.Router
 
   list: (plan_id, type) ->
 
-    @list = new Visio.Views.ParameterListView(
+    @listView.close() if @listView
+
+    @listView = new Visio.Views.ParameterListView(
       model: Visio.manager.plan(plan_id)
       type: type || Visio.Parameters.INDICATORS
     )
 
-    $('header').after(@list.el)
+    $('header').after(@listView.el)
