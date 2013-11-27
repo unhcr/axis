@@ -15,7 +15,7 @@ class Visio.Routers.IndexRouter extends Backbone.Router
 
 
     plans = Visio.manager.get('plans')
-    plans.fetchSynced().done(() ->
+    plans.fetchSynced().done(() =>
       Visio.manager.set('plans', plans)
       Visio.manager.getMap().done((map) =>
         @map.mapJSON(map)
