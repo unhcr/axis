@@ -15,6 +15,8 @@ class Plan < ActiveRecord::Base
   belongs_to :operation
   belongs_to :country
 
+  default_scope { includes([:country]) }
+
   def to_jbuilder(options = {})
     Jbuilder.new do |json|
       json.extract! self, :name, :operation_name, :year, :id
@@ -26,6 +28,8 @@ class Plan < ActiveRecord::Base
         json.outputs_count self.outputs.count
         json.problem_objectives_count self.problem_objectives.count
       end
+
+      json.country self.country
     end
   end
 
