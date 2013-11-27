@@ -1,7 +1,17 @@
 require 'test_helper'
 
 class CountryTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  fixtures :all
+
+  include CountryHelper
+  test "match plan to country" do
+    plan = plans(:one)
+
+    match_plan_to_country(plan)
+
+    p = Plan.find(plan.id)
+
+    assert p.country
+
+  end
 end

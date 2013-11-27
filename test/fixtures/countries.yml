@@ -1,9 +1,8 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  iso: MyString
-  center: MyText
+  iso: BEN
+  un_names: [blue, red, green, death march]
 
 two:
   iso: MyString
-  center: MyText

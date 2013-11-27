@@ -59,14 +59,13 @@ task :init_countries => :environment do
 
 end
 
-task :match_plan_to_country => :environment do
+task :match_plans_to_country => :environment do
   p 'No countries loaded' and return unless Country.count > 0
 
+  include CountryHelper
+
   Plan.all.each do |plan|
-    country = Country.where("un_names LIKE %#{plan.operation_name}%").first
-    p "No country for plan: #{plan.operation_name}" and next unless country
-    plan.country = country
-    plan.save
+    match_plan_to_country(plan)
   end
 
 end
