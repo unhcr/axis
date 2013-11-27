@@ -13,6 +13,7 @@ class Plan < ActiveRecord::Base
   has_many :indicator_data
 
   belongs_to :operation
+  belongs_to :country
 
   def to_jbuilder(options = {})
     Jbuilder.new do |json|
