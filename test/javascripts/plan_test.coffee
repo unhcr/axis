@@ -149,3 +149,21 @@ asyncTest('fetchGoals', () ->
   )
 
 )
+
+test('find plan', () ->
+  Visio.manager.get('plans').reset([{ id: 'bien', year: 2013, country: { iso3: 'BEN' } },
+                              { id: 'dirk', year: 2013, country: { iso3: 'UGA' } }])
+
+  plan = Visio.manager.plan('bien')
+  ok(plan, 'Must have plan')
+  strictEqual(plan.id, 'bien')
+  Visio.manager.setYear(2013)
+
+  plan = Visio.manager.plan('UGA')
+  ok(plan, 'Must have plan')
+  strictEqual(plan.id, 'dirk')
+
+  Visio.manager.setYear(2012)
+  plan = Visio.manager.plan('UGA')
+  ok(!plan, 'Must not have plan')
+)

@@ -10,8 +10,20 @@ class Visio.Models.Manager extends Backbone.Model
     'mapMD5': null
     'syncTimestampId': 'syncTimestampId'
 
-  plan: (id) ->
-    @get('plans').get(id)
+  year: () ->
+    @get('date').getFullYear()
+
+  setYear: (year) ->
+    @set('date', new Date(year, 1))
+
+  plan: (idOrISO) ->
+    if idOrISO.length == 3
+      plan = @get('plans').find((p) =>
+        p.get('country').iso3 == idOrISO && p.get('year') == @year()
+      )
+      return plan
+    else
+      return @get('plans').get(idOrISO)
 
   getSyncDate: () ->
     db = @get('db')
