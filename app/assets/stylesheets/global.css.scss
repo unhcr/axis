@@ -10,6 +10,7 @@ $soft-glow: rgb(245, 227, 155);
 $selection: rgb(252, 239, 23);
 $bright: rgb(255, 248, 59);
 $white: rgb(249, 249, 249);
+$dark-gray: rgb(133, 135, 134);
 
 /* Transitions */
 $fast-transition: .5s;
@@ -17,6 +18,7 @@ $medium-transition: 1s;
 
 /* Lengths */
 $radius: 3px;
+$content-margin: 20px;
 
 
 @font-face {
@@ -136,12 +138,61 @@ body, html {
   color: $thirdary;
 }
 
-.menu-item {
+.menu-item, {
   margin: .3em 1.5em;
 }
 
+.small-item, .tab {
+  margin: .3em .8em;
+}
+
+.content {
+  margin-left: $content-margin;
+  min-height: 400px;
+}
+
+.parameter-search {
+  background-color: $dark-gray;
+  width: 220px;
+  color: $white;
+}
+
+.parameter-search, .parameter-search:focus {
+  -moz-transition:padding,width $medium-transition;
+  -webkit-transition:padding,width $medium-transition;
+  -o-transition:padding,width $medium-transition;
+  transition:padding,width $medium-transition;
+}
+
+.parameter-list {
+  margin-top: 25px;
+}
+
+.tab {
+  padding-top: 14px;
+  margin-bottom: 0px;
+}
+
+.tab.selected {
+  color: $primary;
+}
+
+.item {
+  line-height: 2.2em;
+  font-weight: 300;
+}
+
 .divider {
+  padding: 0;
   border-bottom: 1px solid $white;
+}
+
+.divider.primary {
+  border-bottom: 1px solid $primary;
+}
+
+.divider.primary-light {
+  border-bottom: 1px solid $primary-light;
 }
 
 .full-wrapper {
@@ -256,6 +307,12 @@ input:focus {
   width: 100%
 }
 
+.zero-width {
+  width: 0px !important;
+  padding: 0px !important;
+  margin: 0px !important;
+}
+
 button, input {
   padding: .2em .8em;
   line-height: 2em;
@@ -296,7 +353,18 @@ a {
     color:    $secondary;
 }
 
+.white-placeholder::-webkit-input-placeholder { /* WebKit browsers */
+    color:    $white;
+}
+.white-placeholder:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color:    $white;
+}
+.white-placeholder::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color:    $white;
+}
+.white-placeholder:-ms-input-placeholder { /* Internet Explorer 10+ */
+    color:    $white;
+}
 #map {
-  padding-top: 3px;
-  border-top: 1px solid $primary-light;
+  border-top: 3px solid $primary-light;
 }
