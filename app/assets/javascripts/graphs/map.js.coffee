@@ -86,6 +86,12 @@ Visio.Graphs.map = (config) ->
     world.attr('class', (d) ->
       ['country'].join(' '))
       .attr('d', path)
+      .each((d) ->
+        plan = Visio.manager.plan(d.properties.adm0_a3)
+
+        return unless plan
+
+      )
 
   render.mapJSON = (mapJSON) ->
     data = mapJSON.features
