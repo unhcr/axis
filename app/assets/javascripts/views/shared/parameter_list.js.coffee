@@ -2,7 +2,7 @@ class Visio.Views.ParameterListView extends Backbone.View
 
   template: JST['parameter_list/list']
 
-  className: 'parameter-list container'
+  className: 'parameter-list container full-width'
 
   tabs: [{
       type: Visio.Parameters.INDICATORS
@@ -22,6 +22,8 @@ class Visio.Views.ParameterListView extends Backbone.View
 
   events:
     'click .tab': 'onClickTab'
+    'focus .parameter-search': 'onFocusSearch'
+    'blur .parameter-search': 'onBlurSearch'
 
   initialize: (options) ->
 
@@ -33,10 +35,10 @@ class Visio.Views.ParameterListView extends Backbone.View
     @$el.html @template(
       plan: @model.toJSON()
       tabs: @tabs
-      type: @type
+      tab: _.findWhere(@tabs, { type: @type })
     )
 
-    @content(@type)
+    @items(@type)
 
     @
 
@@ -44,15 +46,25 @@ class Visio.Views.ParameterListView extends Backbone.View
     $target = $(e.currentTarget)
     @switchTab($target.attr('data-type'))
 
+  onFocusSearch: (e) ->
+    $(e.currentTarget).addClass('full-width')
+
+  onBlurSearch: (e) ->
+    $(e.currentTarget).removeClass('full-width')
+
   switchTab: (type) ->
     window.router.navigate("/#{@model.id}/#{type}")
 
     @$el.find('.selected').removeClass('selected')
     @$el.find(".#{type}").addClass('selected')
 
-    @content(type)
+    tab = _.findWhere(@tabs, { type: type })
 
-  content: (type) ->
+    @$el.find('.parameter-search').attr('placeholder', "Search #{tab.name}")
+
+    @items(type)
+
+  items: (type) ->
     @type = type
     items = []
 
@@ -60,11 +72,11 @@ class Visio.Views.ParameterListView extends Backbone.View
        (@model.get(type).length == 0 && @model.get("#{type}_count") > 0)
       @model.fetchParameter(type).done(() =>
         items = @model.get(type).map(@item)
-        @$el.find('.content').html items.join(' ')
+        @$el.find('.items').html items.join(' ')
       )
     else
       items = @model.get(type).map(@item)
-      @$el.find('.content').html items.join(' ')
+      @$el.find('.items').html items.join(' ')
 
   item: (parameter, index) =>
     if index > @minItems
