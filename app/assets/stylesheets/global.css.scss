@@ -154,13 +154,14 @@ body, html {
 .parameter-search {
   background-color: $dark-gray;
   width: 220px;
+  color: $white;
 }
 
 .parameter-search, .parameter-search:focus {
-  -moz-transition:width $medium-transition;
-  -webkit-transition:width $medium-transition;
-  -o-transition:width $medium-transition;
-  transition:width $medium-transition;
+  -moz-transition:padding,width $medium-transition;
+  -webkit-transition:padding,width $medium-transition;
+  -o-transition:padding,width $medium-transition;
+  transition:padding,width $medium-transition;
 }
 
 .parameter-list {
@@ -178,6 +179,7 @@ body, html {
 
 .item {
   line-height: 2.2em;
+  font-weight: 300;
 }
 
 .divider {
@@ -303,6 +305,12 @@ input:focus {
 
 .full-width {
   width: 100%
+}
+
+.zero-width {
+  width: 0px !important;
+  padding: 0px !important;
+  margin: 0px !important;
 }
 
 button, input {

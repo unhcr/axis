@@ -68,6 +68,11 @@ class Visio.Views.ParameterListView extends Backbone.View
     @type = type
     items = []
 
+    if @model.get("#{type}_count") < 10
+      @$el.find('.parameter-search').addClass('zero-width')
+    else
+      @$el.find('.parameter-search').removeClass('zero-width')
+
     if (@model.get(type).length < @minItems && @model.get("#{type}_count") >= 10) ||
        (@model.get(type).length == 0 && @model.get("#{type}_count") > 0)
       @model.fetchParameter(type).done(() =>
