@@ -1,7 +1,15 @@
 <div class="row">
   <div class="col-md-8 col-centered">
-    <div class="col-md-4 ui-small-header ui-primary-light"><%= plan.operation_name.toUpperCase() %></div>
-    <div class="tabs col-md-8">
+    <div class="pin">
+      <div class="pin-tip"></div>
+      <div class="pin-body"></div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-8 col-centered zero-padding">
+    <div class="col-md-4 ui-small-header ui-primary-light zero-padding"><%= plan.operation_name.toUpperCase() %></div>
+    <div class="tabs col-md-8 zero-padding">
       <% for (var i = 0; i < tabs.length; i ++) { %>
       <span data-type="<%= tabs[i].type %>" class="ui-primary-light <% if (tabs[i].type == tab.type) { %>selected<% } %> tab pull-right <%= tabs[i].type %>"><%= tabs[i].name %></span>
       <% } %>

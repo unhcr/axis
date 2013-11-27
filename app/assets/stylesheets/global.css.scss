@@ -20,6 +20,9 @@ $medium-transition: 1s;
 /* Lengths */
 $radius: 3px;
 $content-margin: 20px;
+$pin-medium: 20px;
+$pin-small: 12px;
+$pin-large: 30px;
 
 
 @font-face {
@@ -305,6 +308,10 @@ input:focus {
   transition:background-color $fast-transition;
 }
 
+.zero-padding {
+  padding: 0 !important;
+}
+
 .full-width {
   width: 100%
 }
@@ -379,4 +386,59 @@ a {
 }
 #map {
   border-top: 3px solid $primary-light;
+}
+
+/* pin */
+.pin {
+  width: $pin-medium;
+  height: 2 * $pin-medium;
+  position: relative;
+  .pin-tip {
+    width: 0;
+    height: 0;
+    border-top: ($pin-medium / 2) solid transparent;
+    border-bottom: ($pin-medium / 2) solid transparent;
+    border-left: ($pin-medium / 2) solid #710d09;
+    position:absolute;
+    right: 0;
+    bottom: 0;
+  }
+  .pin-body {
+    width: $pin-medium;
+    height: 1.5 * $pin-medium;
+    background-color: #c6302a;
+    position: absolute;
+  }
+}
+
+.pin.pin-small {
+  width: $pin-small;
+  height: 2 * $pin-small;
+
+  .pin-tip {
+    border-top: ($pin-small / 2) solid transparent;
+    border-bottom: ($pin-small / 2) solid transparent;
+    border-left: ($pin-small / 2) solid #710d09;
+  }
+  .pin-body {
+    width: $pin-small;
+    height: 1.5 * $pin-small;
+  }
+
+}
+
+.pin.pin-large {
+  width: $pin-large;
+  height: 2 * $pin-large;
+
+  .pin-tip {
+    border-top: ($pin-large / 2) solid transparent;
+    border-bottom: ($pin-large / 2) solid transparent;
+    border-left: ($pin-large / 2) solid #710d09;
+  }
+  .pin-body {
+    width: $pin-large;
+    height: 1.5 * $pin-large;
+  }
+
 }
