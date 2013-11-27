@@ -8,9 +8,9 @@
 %body.ui-invert-theme
   %header.container.full-width
     .account-menu
-      .menu-item.ui-primary.pull-right
+      .small-item.ui-primary.pull-right
         = link_to "Sign out", destroy_user_session_path, :method => :delete, :class => 'ui-primary'
-      .menu-item.ui-primary.pull-right
+      .small-item.ui-primary.pull-right
         Ça va,
         %span.ui-secondary
           = current_user.firstname
