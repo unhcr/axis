@@ -388,6 +388,18 @@ a {
   border-top: 3px solid $primary-light;
 }
 
+.transparent {
+  fill: transparent !important;
+}
+
+/* tooltip */
+
+.tooltip {
+  position: absolute;
+}
+
+/* end tooltip */
+
 /* pin */
 .pin {
   width: $pin-medium;
