@@ -144,6 +144,10 @@ body, html {
   color: $thirdary;
 }
 
+.ui-white {
+  color: $white;
+}
+
 .menu-item, {
   margin: .3em 1.5em;
 }
@@ -403,8 +407,10 @@ a {
 .tooltip-content {
   position: absolute;
   right: 0;
+  bottom: $pin-large / 2;
   min-width: 200px;
   background-color: $fail;
+  z-index: 99;
 }
 
 /* end tooltip */

@@ -2,6 +2,20 @@
   <div class="pin-tip"></div>
   <div class="pin-body"></div>
   <div class="tooltip-content gone">
-    asdfasdf
+    <div class="operation ui-small-header ui-white">
+      <%= plan.operation_name %>
+    </div>
+    <div class="ppgs count">
+      PPG (<%= plan.ppgs_count %>)
+    </div>
+    <div class="goals count">
+      Goals (<%= plan.goals_count %>)
+    </div>
+    <div class="outputs problem_objectives count">
+      Objectives/Outputs (<%= plan.outputs_count + plan.problem_objectives_count %>)
+    </div>
+    <div class="indicators count">
+      Indicators (<%= plan.indicators_count %>)
+    </div>
   </div>
 </div>
