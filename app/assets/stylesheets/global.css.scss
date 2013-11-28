@@ -191,6 +191,11 @@ body, html {
   color: $primary;
 }
 
+.items {
+  overflow: auto;
+  max-height: 300px;
+}
+
 .item {
   line-height: 2.2em;
   font-weight: 300;
