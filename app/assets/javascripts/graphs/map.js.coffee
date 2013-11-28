@@ -44,6 +44,8 @@ Visio.Graphs.map = (config) ->
     .attr('height', height)
     .attr('class', 'background-rect')
 
+  expanded = null
+
 
 
   zoom = d3.behavior.zoom()
@@ -93,6 +95,13 @@ Visio.Graphs.map = (config) ->
     world.attr('class', (d) ->
       ['country'].join(' '))
       .attr('d', path)
+      .on('click', (d) ->
+        expanded.shrink() if expanded
+        expanded = views[d.properties.adm0_a3]
+        return unless expanded
+
+        expanded.expand()
+      )
 
     centerData = Visio.manager.plans({ year: Visio.manager.year() }).filter((d) -> d.get('country'))
 

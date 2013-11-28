@@ -12,6 +12,8 @@ $bright: rgb(255, 248, 59);
 $white: rgb(249, 249, 249);
 $dark-gray: rgb(133, 135, 134);
 $light-gray: rgb(177, 177, 177);
+$fail: #c6302a;
+$fail-dark: #710d09;
 
 /* Transitions */
 $fast-transition: .5s;
@@ -398,6 +400,13 @@ a {
   position: absolute;
 }
 
+.tooltip-content {
+  position: absolute;
+  right: 0;
+  min-width: 200px;
+  background-color: $fail;
+}
+
 /* end tooltip */
 
 /* pin */
@@ -410,7 +419,7 @@ a {
     height: 0;
     border-top: ($pin-medium / 2) solid transparent;
     border-bottom: ($pin-medium / 2) solid transparent;
-    border-left: ($pin-medium / 2) solid #710d09;
+    border-left: ($pin-medium / 2) solid $fail-dark;
     position:absolute;
     right: 0;
     bottom: 0;
@@ -418,7 +427,7 @@ a {
   .pin-body {
     width: $pin-medium;
     height: 1.5 * $pin-medium;
-    background-color: #c6302a;
+    background-color: $fail;
     position: absolute;
   }
 }
@@ -430,7 +439,7 @@ a {
   .pin-tip {
     border-top: ($pin-small / 2) solid transparent;
     border-bottom: ($pin-small / 2) solid transparent;
-    border-left: ($pin-small / 2) solid #710d09;
+    border-left: ($pin-small / 2) solid $fail-dark;
   }
   .pin-body {
     width: $pin-small;
@@ -446,7 +455,7 @@ a {
   .pin-tip {
     border-top: ($pin-large / 2) solid transparent;
     border-bottom: ($pin-large / 2) solid transparent;
-    border-left: ($pin-large / 2) solid #710d09;
+    border-left: ($pin-large / 2) solid $fail-dark;
   }
   .pin-body {
     width: $pin-large;

@@ -56,4 +56,14 @@ class Visio.Views.MapTooltipView extends Backbone.View
 
     bounds
 
+  expand: () ->
+    @$el.find('.tooltip-content').removeClass('gone')
+    @$el.find('.pin').addClass('pin-large')
+    @render(true)
+
+  shrink: ()->
+    @$el.find('.tooltip-content').addClass('gone')
+    @$el.find('.pin').removeClass('pin-large')
+    @render(true)
+
 
