@@ -69,3 +69,16 @@ task :match_plans_to_country => :environment do
   end
 
 end
+
+task :load_sample_strategy => :environment do
+
+  name = 'education'
+
+  Strategy.where(:name => name).destroy_all
+  s = Strategy.create(:name => name)
+
+  s.ppgs = Ppg.limit(10)
+  s.goals = Goal.limit(10)
+  s.indicators = Indicator.limit(40)
+
+end
