@@ -12,6 +12,7 @@ $bright: rgb(255, 248, 59);
 $white: rgb(249, 249, 249);
 $dark-gray: rgb(133, 135, 134);
 $light-gray: rgb(177, 177, 177);
+$black: rgb(39,38,34);
 $fail: #c6302a;
 $fail-dark: #710d09;
 
@@ -25,6 +26,7 @@ $content-margin: 20px;
 $pin-medium: 20px;
 $pin-small: 12px;
 $pin-large: 30px;
+$pin-extra-large: 50px;
 
 
 @font-face {
@@ -168,14 +170,15 @@ body, html {
 }
 
 .parameter-search, .parameter-search:focus {
-  -moz-transition:padding,width $medium-transition;
-  -webkit-transition:padding,width $medium-transition;
-  -o-transition:padding,width $medium-transition;
-  transition:padding,width $medium-transition;
+  -moz-transition:padding $medium-transition,width $medium-transition;
+  -webkit-transition:padding $medium-transition,width $medium-transition;
+  -o-transition:padding $medium-transition,width $medium-transition;
+  transition:padding $medium-transition,width $medium-transition;
 }
 
 .parameter-list {
   margin-top: 25px;
+  z-index: 200;
 }
 
 .tab {
@@ -218,6 +221,11 @@ body, html {
 
 .ui-small-header {
   font-size: 2em;
+  letter-spacing: -.02em;
+}
+
+.ui-extra-small-header {
+  font-size: 1.4em;
   letter-spacing: -.02em;
 }
 
@@ -324,7 +332,8 @@ input:focus {
 
 .zero-width {
   width: 0px !important;
-  padding: 0px !important;
+  padding-left: 0px !important;
+  padding-right: 0px !important;
   margin: 0px !important;
 }
 
@@ -402,16 +411,50 @@ a {
 
 .tooltip {
   position: absolute;
+
+  .count {
+    background-color: $black;
+    color: $white;
+    padding-left: $content-margin;
+    padding-bottom: 4px;
+    padding-top: 4px;
+    font-weight: 300;
+    border-bottom: 1px solid $white;
+    cursor: pointer;
+    display: block;
+  }
+
+  .count.last {
+    border-bottom: none;
+  }
+
+  .count:hover {
+    background-color: black;
+  }
 }
 
 .tooltip-content {
   position: absolute;
   right: 0;
-  bottom: $pin-large / 2;
-  min-width: 200px;
+  bottom: $pin-extra-large / 2;
+  min-width: 230px;
   background-color: $fail;
   z-index: 99;
+
+  .operation {
+    padding-left: $content-margin;
+    padding-bottom: 15px;
+    padding-top: 8px;
+    font-weight: 300;
+  }
+
+  .tooltip-content-bottom {
+    height: 10px;
+    background-color: $fail;
+  }
 }
+
+
 
 /* end tooltip */
 
@@ -466,6 +509,22 @@ a {
   .pin-body {
     width: $pin-large;
     height: 1.5 * $pin-large;
+  }
+
+}
+
+.pin.pin-extra-large {
+  width: $pin-extra-large;
+  height: 2 * $pin-extra-large;
+
+  .pin-tip {
+    border-top: ($pin-extra-large / 2) solid transparent;
+    border-bottom: ($pin-extra-large / 2) solid transparent;
+    border-left: ($pin-extra-large / 2) solid $fail-dark;
+  }
+  .pin-body {
+    width: $pin-extra-large;
+    height: 1.5 * $pin-extra-large;
   }
 
 }

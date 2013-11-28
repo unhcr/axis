@@ -2,20 +2,21 @@
   <div class="pin-tip"></div>
   <div class="pin-body"></div>
   <div class="tooltip-content gone">
-    <div class="operation ui-small-header ui-white">
-      <%= plan.operation_name %>
+    <div class="operation ui-extra-small-header ui-white">
+      <%= plan.operation_name.toUpperCase() %>
     </div>
-    <div class="ppgs count">
+    <a href="/#<%= plan.id %>/ppgs" class="ppgs count">
       PPG (<%= plan.ppgs_count %>)
-    </div>
-    <div class="goals count">
+    </a>
+    <a href="/#<%= plan.id %>/goals" class="goals count">
       Goals (<%= plan.goals_count %>)
-    </div>
-    <div class="outputs problem_objectives count">
+    </a>
+    <a href="/#<%= plan.id %>/problem_objectives" class="outputs problem_objectives count">
       Objectives/Outputs (<%= plan.outputs_count + plan.problem_objectives_count %>)
-    </div>
-    <div class="indicators count">
+    </a>
+    <a href="/#<%= plan.id %>/indicators" class="indicators count last">
       Indicators (<%= plan.indicators_count %>)
-    </div>
+    </a>
+    <div class="tooltip-content-bottom"></div>
   </div>
 </div>
