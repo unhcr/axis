@@ -1,1 +1,11 @@
-AND WE BE OVERVIEWING!!
+#navigation
+
+:javascript
+  $(document).ready(function() {
+
+    Visio.manager = new Visio.Models.Manager()
+
+    window.router = new Visio.Routers.OverviewRouter();
+    Backbone.history.start();
+
+  });
