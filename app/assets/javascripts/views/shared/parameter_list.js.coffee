@@ -25,6 +25,7 @@ class Visio.Views.ParameterListView extends Backbone.View
     'focus .parameter-search': 'onFocusSearch'
     'blur .parameter-search': 'onBlurSearch'
     'click .close' : 'onClickClose'
+    'keyup .parameter-search': 'onParameterSearch'
 
   initialize: (options) ->
 
@@ -86,6 +87,22 @@ class Visio.Views.ParameterListView extends Backbone.View
   item: (parameter, index) =>
     JST['parameter_list/item'](
       parameter: parameter.toJSON())
+
+  onParameterSearch: (e) =>
+    query = $(e.currentTarget).val()
+    parameters = @search(query)
+
+    items = parameters.map(@item)
+    @$el.find('.items').html items.join(' ')
+
+
+  search: (query) =>
+    re = new RegExp('.*' + query.split('').join('.*') + '.*', 'g')
+
+    @model.get(@type).filter((parameter) ->
+      name = parameter.get('name') || parameter.get('objective_name')
+      return name.search(re) != -1
+    )
 
   onClickClose: (e) ->
     @close()
