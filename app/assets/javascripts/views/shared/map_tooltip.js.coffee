@@ -14,6 +14,7 @@ class Visio.Views.MapTooltipView extends Backbone.View
 
   events:
     'click .tooltip-close': 'onClickClose'
+    'click .count': 'onCountClick'
 
   render: (isRerender) ->
 
@@ -71,4 +72,7 @@ class Visio.Views.MapTooltipView extends Backbone.View
 
 
   onClickClose: (e) =>
+    @shrink()
+
+  onCountClick: (e) =>
     @shrink()
