@@ -77,7 +77,12 @@ Visio.Graphs.map = (config) ->
         .attr('x', -(translate[0] / scale))
         .attr('y', -(translate[1] / scale))
         .attr('width', width / scale)
-        .attr('height', height / scale))
+        .attr('height', height / scale)
+
+      for key, value of views
+        value.render()
+
+    )
 
   render = () ->
     world = g.selectAll('.country')
@@ -97,7 +102,7 @@ Visio.Graphs.map = (config) ->
     centers.enter().append 'circle'
 
     centers.attr('class', (d) ->
-      classList = ['center', d.get('country').iso3]
+      classList = ['center', d.get('country').iso3, 'transparent']
       classList.join(' '))
       .attr('cx', (d) ->
         return projection([d.get('country').latlng[1], d.get('country').latlng[0]])[0]
