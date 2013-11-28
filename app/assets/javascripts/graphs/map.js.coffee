@@ -80,7 +80,7 @@ Visio.Graphs.map = (config) ->
         .attr('height', height / scale)
 
       for key, value of views
-        value.render()
+        value.render(true)
 
     )
 
@@ -112,7 +112,8 @@ Visio.Graphs.map = (config) ->
       )
       .attr('r', 3)
       .each((d) ->
-        views[d.get('country').iso3] = new Visio.Views.MapTooltipView({ model: d, point: @ })
+        unless views[d.get('country').iso3]
+          views[d.get('country').iso3] = new Visio.Views.MapTooltipView({ model: d, point: @ })
       )
 
   render.mapJSON = (mapJSON) ->
