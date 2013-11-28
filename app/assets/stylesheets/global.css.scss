@@ -365,6 +365,16 @@ button, input {
   cursor: pointer;
 }
 
+.tooltip-close {
+  width: 2em;
+  height: 2em;
+  background-color: $fail-dark;
+  position: absolute;
+  top: 0;
+  right: -2em;
+  cursor: pointer;
+}
+
 .parameter-list {
   position: absolute;
   background-color: $white;
