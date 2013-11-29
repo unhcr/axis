@@ -21,24 +21,12 @@
     .row.menu
       .search.menu-item.ui-primary.pull-right
         Search by Operation or Indicator
-      %a.thematic-item.menu-item.ui-primary-light.pull-right{ :href => '/#03ea1f94-b488-40a0-a308-592bedc9d0df/indicators' }
-        .underline
-          SGBV
-        .theme-content
-          SGBV
-      %a.thematic-item.menu-item.ui-primary-light.pull-right{ :href => '/#03ec826f-631e-4522-925e-8d62e9ff3c47/indicators' }
-        .underline
-          Education
-        .theme-content
-          Education
-      %a.thematic-item.menu-item.ui-primary-light.pull-right{ :href => '/overview' }
-        .underline
-          Child&nbsp;Protection
-        .theme-content
-          Child&nbsp;Protection
-
-
-
+      - @strategies.each do |strategy|
+        %a.thematic-item.menu-item.ui-primary-light.pull-right{ :href => "/overview?strategy_id=#{strategy.id}" }
+          .underline
+            = strategy.name
+          .theme-content
+            = strategy.name
   :javascript
     window.Visio.user = new Visio.Models.User(#{current_user.to_json.html_safe})
 

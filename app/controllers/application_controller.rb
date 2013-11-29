@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
   def index
     redirect_to :splash and return unless user_signed_in?
     @mapMD5 = @@mapMD5
+    @strategies = Strategy.all
     render :layout => 'index'
   end
 
