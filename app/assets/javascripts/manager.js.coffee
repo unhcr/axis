@@ -9,6 +9,7 @@ class Visio.Models.Manager extends Backbone.Model
     'db': null
     'mapMD5': null
     'syncTimestampId': 'sync_timestamp_id_'
+    'yearList': [2012, 2013, 2014, 2015]
 
   year: () ->
     @get('date').getFullYear()

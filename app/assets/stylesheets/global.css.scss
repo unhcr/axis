@@ -91,6 +91,23 @@ $pin-extra-large: 50px;
   color: $white;
 }
 
+.ui-line-item-theme {
+  background-color: $black;
+  color: $white;
+  padding-left: $content-margin;
+  padding-right: $content-margin;
+  padding-bottom: 4px;
+  padding-top: 4px;
+  font-weight: 300;
+  cursor: pointer;
+
+}
+
+.ui-line-item-theme:hover {
+  background-color: black;
+  text-decoration: none;
+}
+
 .ui-primary-medium-dark-theme {
   background-color: $primary-medium-dark;
   color: $white;
@@ -342,6 +359,14 @@ input:focus {
   margin: 0px !important;
 }
 
+.zero-height {
+  max-height: 0px !important;
+  height: 0px !important;
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+  margin: 0px !important;
+}
+
 button, input {
   padding: .2em .8em;
   line-height: 2em;
@@ -357,7 +382,31 @@ button, input {
 
 .btn {
   border: none;
+}
 
+.dropdown {
+  overflow: hidden;
+  max-height: 300px;
+  -moz-transition:max-height $medium-transition;
+  -webkit-transition:max-height $medium-transition;
+  -o-transition:max-height $medium-transition;
+  transition:max-height $medium-transition;
+  margin-top: 4px;
+
+}
+
+.dropdown-item {
+  border-bottom: 1px solid $white;
+  width: 180px;
+}
+.dropdown-item:last-child {
+  border-bottom: none;
+}
+
+.map-filters {
+  position: absolute;
+  margin-left: 1em;
+  margin-top: 1em;
 }
 
 .close {
@@ -429,12 +478,6 @@ a {
   position: absolute;
 
   .count {
-    background-color: $black;
-    color: $white;
-    padding-left: $content-margin;
-    padding-bottom: 4px;
-    padding-top: 4px;
-    font-weight: 300;
     border-bottom: 1px solid $white;
     cursor: pointer;
     display: block;
@@ -444,10 +487,6 @@ a {
     border-bottom: none;
   }
 
-  .count:hover {
-    background-color: black;
-    text-decoration: none;
-  }
 }
 
 .tooltip-content {

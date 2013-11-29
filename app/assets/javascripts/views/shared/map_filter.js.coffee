@@ -9,10 +9,10 @@ class Visio.Views.MapFilterView extends Backbone.View
     @render()
 
   render: () ->
-    @filters.each (filter) =>
-      @filterViews = Visio.Views["#{filter}FilterView"]
+    _.each @filters, (filter) =>
+      @filterViews = new Visio.Views["#{filter}FilterView"]
 
       @$el.append @filterViews.el
 
-    $('body').append @el
+    $('header').after @el
     @

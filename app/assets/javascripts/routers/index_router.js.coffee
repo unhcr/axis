@@ -22,6 +22,8 @@ class Visio.Routers.IndexRouter extends Backbone.Router
     )
     @setup()
 
+    @filterView = new Visio.Views.MapFilterView()
+
   routes:
     ':plan_id/:type': 'list'
     '*default': 'index'
