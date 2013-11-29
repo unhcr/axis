@@ -16,28 +16,29 @@ asyncTest('setSyncedPlans', () ->
   }
 
   timestamp = null
+  id = 'ben'
 
-  p.setSynced(plans, true).done(() ->
+  p.setSynced(plans, id).done(() ->
     return p.getSynced()
   ).done((records) ->
     strictEqual(2, records.length, 'length of plans')
     plans.new = []
     plans.updated = [{ id: 'bob', name: 'matt' }]
     plans.deleted = [{ id: 'wendy', name: 'sue' }]
-    return Visio.manager.getSyncDate()
+    return Visio.manager.getSyncDate(id)
   ).done((record) ->
     ok(record.synced_timestamp, 'Should sync the date')
     timestamp = record.synced_timestamp
-    return p.setSynced(plans, false)
+    return p.setSynced(plans)
   ).done(() ->
-    return Visio.manager.getSyncDate()
+    return Visio.manager.getSyncDate(id)
   ).done((record) ->
     strictEqual(timestamp, record.synced_timestamp, 'Should not have updated sync date')
     return p.getSynced()
   ).done((records) ->
     strictEqual('matt', records[0].name, 'Update 1 plan')
     strictEqual(1, records.length, 'Deleted 1 plan')
-    return Visio.manager.getSyncDate()
+    return Visio.manager.getSyncDate(id)
   ).done((record) ->
     ok(record, 'Should have the record')
     ok(record.synced_timestamp, 'Should set synced timestamp')
@@ -65,6 +66,24 @@ asyncTest('fetchSyncedPlans', () ->
     #TODO Need to check to ensure that it hasn't recomputed all plans
     start()
   )
+)
+
+asyncTest('fetchSyncedPlans for different years', () ->
+  p = new Visio.Collections.Plan()
+
+  initialCount = 0
+
+  p.fetchSynced().done(() ->
+    ok(p.models.length > 0, 'Should have greater than 0 plans')
+    initialCount = p.models.length
+    # Change year
+    Visio.manager.setYear(2012)
+    return p.fetchSynced()
+  ).done(() ->
+    ok(p.models.length > initialCount)
+    start()
+  )
+
 )
 
 asyncTest('fetchIndicators', () ->

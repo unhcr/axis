@@ -9,7 +9,7 @@ class Visio.Collections.Parameter extends Backbone.Collection
   store: () ->
     @name + '_store'
 
-  setSynced: (parameters, resetSyncDate) ->
+  setSynced: (parameters, timestampId) ->
     db = Visio.manager.get('db')
     req = db.put({
       name: @store()
@@ -24,25 +24,30 @@ class Visio.Collections.Parameter extends Backbone.Collection
         )
         return req
       ).done(() ->
-         Visio.manager.setSyncDate() if resetSyncDate
+         Visio.manager.setSyncDate(timestampId) if timestampId
       )
     else
       return req.done(() ->
-        Visio.manager.setSyncDate() if resetSyncDate
+        Visio.manager.setSyncDate(timestampId) if timestampId
       )
 
   getSynced: () ->
     db = Visio.manager.get('db')
     db.values(@store(), undefined, @limit)
 
-  fetchSynced: () ->
+  fetchSynced: (options) ->
     db = Visio.manager.get('db')
+    options ||= {}
 
-    $.when(Visio.manager.getSyncDate()).then((record) =>
+
+    timestampId = "#{@url}#{JSON.stringify(options)}".hashCode()
+
+    $.when(Visio.manager.getSyncDate(timestampId)).then((record) =>
       timestamp = if record then record.synced_timestamp else undefined
-      return $.get(@url, synced_timestamp: timestamp)
+      options.synced_timestamp = timestamp
+      return $.get(@url, options)
     ).done((parameters) =>
-      @setSynced(parameters, true)
+      @setSynced(parameters, timestampId)
     ).done((ids) =>
       @getSynced()
     ).done((records) =>

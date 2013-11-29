@@ -106,7 +106,7 @@ Visio.Graphs.map = (config) ->
     centerData = Visio.manager.plans({ year: Visio.manager.year() }).filter((d) -> d.get('country'))
 
     centers = g.selectAll('.center')
-      .data(centerData)
+      .data(centerData, (d) -> d.id)
 
     centers.enter().append 'circle'
 
@@ -127,6 +127,11 @@ Visio.Graphs.map = (config) ->
 
   render.mapJSON = (mapJSON) ->
     data = mapJSON.features
+
+  render.clearTooltips = () ->
+    for key, value of views
+      value.close()
+    views = {}
 
   svg.call zoom
 

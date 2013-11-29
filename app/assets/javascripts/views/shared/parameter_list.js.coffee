@@ -25,6 +25,7 @@ class Visio.Views.ParameterListView extends Backbone.View
     'focus .parameter-search': 'onFocusSearch'
     'blur .parameter-search': 'onBlurSearch'
     'click .close' : 'onClickClose'
+    'keyup .parameter-search': 'onParameterSearch'
 
   initialize: (options) ->
 
@@ -69,13 +70,12 @@ class Visio.Views.ParameterListView extends Backbone.View
     @type = type
     items = []
 
-    if @model.get("#{type}_count") < 10
+    if @model.get("#{type}_count") < @minItems
       @$el.find('.parameter-search').addClass('zero-width')
     else
       @$el.find('.parameter-search').removeClass('zero-width')
 
-    if (@model.get(type).length < @minItems && @model.get("#{type}_count") >= 10) ||
-       (@model.get(type).length == 0 && @model.get("#{type}_count") > 0)
+    if (@model.get(type).length == 0 && @model.get("#{type}_count") > 0)
       @model.fetchParameter(type).done(() =>
         items = @model.get(type).map(@item)
         @$el.find('.items').html items.join(' ')
@@ -85,15 +85,30 @@ class Visio.Views.ParameterListView extends Backbone.View
       @$el.find('.items').html items.join(' ')
 
   item: (parameter, index) =>
-    if index > @minItems
-      return
     JST['parameter_list/item'](
       parameter: parameter.toJSON())
+
+  onParameterSearch: (e) =>
+    query = $(e.currentTarget).val()
+    parameters = @search(query)
+
+    items = parameters.map(@item)
+    @$el.find('.items').html items.join(' ')
+
+
+  search: (query) =>
+    re = new RegExp('.*' + query.split('').join('.*') + '.*', 'g')
+
+    @model.get(@type).filter((parameter) ->
+      name = parameter.get('name') || parameter.get('objective_name')
+      return name.search(re) != -1
+    )
 
   onClickClose: (e) ->
     @close()
 
   close: () ->
+    window.router.navigate('/')
     @unbind()
     @remove()
 

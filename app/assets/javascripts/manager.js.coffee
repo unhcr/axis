@@ -8,7 +8,8 @@ class Visio.Models.Manager extends Backbone.Model
     'date': new Date()
     'db': null
     'mapMD5': null
-    'syncTimestampId': 'syncTimestampId'
+    'syncTimestampId': 'sync_timestamp_id_'
+    'yearList': [2012, 2013, 2014, 2015]
 
   year: () ->
     @get('date').getFullYear()
@@ -31,15 +32,15 @@ class Visio.Models.Manager extends Backbone.Model
   plans: (options) ->
     @get('plans').where(options)
 
-  getSyncDate: () ->
+  getSyncDate: (id) ->
     db = @get('db')
-    db.get(Visio.Stores.SYNC, @get('syncTimestampId'))
+    db.get(Visio.Stores.SYNC, id)
 
-  setSyncDate: (options) ->
+  setSyncDate: (id) ->
     d = new Date()
     db = @get('db')
 
-    db.put(Visio.Stores.SYNC, { synced_timestamp: +d }, @get('syncTimestampId'))
+    db.put(Visio.Stores.SYNC, { synced_timestamp: +d }, id)
 
   getMap: () ->
     db = @get('db')

@@ -15,6 +15,7 @@ $light-gray: rgb(177, 177, 177);
 $black: rgb(39,38,34);
 $fail: #c6302a;
 $fail-dark: #710d09;
+$turquoise: rgb(32, 180, 180);
 
 /* Transitions */
 $fast-transition: .5s;
@@ -27,6 +28,7 @@ $pin-medium: 20px;
 $pin-small: 12px;
 $pin-large: 30px;
 $pin-extra-large: 50px;
+$map-filter-width: 200px;
 
 
 @font-face {
@@ -90,6 +92,17 @@ $pin-extra-large: 50px;
   background-color: $primary-dark;
   color: $white;
 }
+
+.ui-line-item-theme {
+  background-color: $black;
+  color: $white;
+  padding-left: $content-margin;
+  padding-right: $content-margin;
+  padding-bottom: 4px;
+  padding-top: 4px;
+  font-weight: 300;
+}
+
 
 .ui-primary-medium-dark-theme {
   background-color: $primary-medium-dark;
@@ -189,6 +202,11 @@ body, html {
 
 .tab.selected {
   color: $primary;
+}
+
+.items {
+  overflow: auto;
+  max-height: 300px;
 }
 
 .item {
@@ -337,6 +355,14 @@ input:focus {
   margin: 0px !important;
 }
 
+.zero-height {
+  max-height: 0px !important;
+  height: 0px !important;
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+  margin: 0px !important;
+}
+
 button, input {
   padding: .2em .8em;
   line-height: 2em;
@@ -352,7 +378,64 @@ button, input {
 
 .btn {
   border: none;
+}
 
+.visio-check input {
+  display: none;
+}
+
+.visio-check label {
+  display: block;
+  cursor: pointer;
+}
+
+.visio-check label:after {
+  content: ' ';
+  border: 1px solid $white;
+  width: 12px;
+  height: 12px;
+  margin-top: 3px;
+  float: right;
+}
+
+.visio-check input:checked + label:after {
+  content: ' ';
+  border: 3px solid $turquoise;
+}
+
+.dropdown-item:hover, .count:hover {
+  background-color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.dropdown {
+  overflow: hidden;
+  max-height: 300px;
+  -moz-transition:max-height $medium-transition;
+  -webkit-transition:max-height $medium-transition;
+  -o-transition:max-height $medium-transition;
+  transition:max-height $medium-transition;
+  margin-top: 4px;
+
+}
+
+.dropdown-item {
+  border-bottom: 1px solid $white;
+  width: $map-filter-width;
+}
+.dropdown-item:last-child {
+  border-bottom: none;
+}
+
+.map-filter {
+  margin-bottom: 1em;
+}
+
+.map-filters {
+  position: absolute;
+  margin-left: 1em;
+  margin-top: 1em;
 }
 
 .close {
@@ -378,6 +461,7 @@ button, input {
 .parameter-list {
   position: absolute;
   background-color: $white;
+  margin-bottom: 8px;
 }
 
 a {
@@ -423,12 +507,6 @@ a {
   position: absolute;
 
   .count {
-    background-color: $black;
-    color: $white;
-    padding-left: $content-margin;
-    padding-bottom: 4px;
-    padding-top: 4px;
-    font-weight: 300;
     border-bottom: 1px solid $white;
     cursor: pointer;
     display: block;
@@ -438,10 +516,6 @@ a {
     border-bottom: none;
   }
 
-  .count:hover {
-    background-color: black;
-    text-decoration: none;
-  }
 }
 
 .tooltip-content {
@@ -538,4 +612,14 @@ a {
     height: 1.5 * $pin-extra-large;
   }
 
+}
+
+.pin.pin-white {
+  .pin-tip {
+    border-left-color: $light-gray;
+  }
+
+  .pin-body {
+    background-color: $white;
+  }
 }
