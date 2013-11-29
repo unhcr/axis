@@ -2,42 +2,48 @@
   = f.text_field :name
 
   %p Operations
-  .check-boxes
+  <input type="text" class="strategy-search" data-search="operations" />
+  .check-boxes.operations
     - @operations.each do |o|
       .check-box
         = check_box_tag "operations[#{o.id}]", o.id
         = label_tag("operations[#{o.id}]", o.name)
 
   %p PPGs
-  .check-boxes
+  <input type="text" class="strategy-search" data-search="ppgs" />
+  .check-boxes.ppgs
     - @ppgs.each do |p|
       .check-box
         = check_box_tag "ppgs[#{p.id}]", p.id
         = label_tag("ppgs[#{p.id}]", p.name)
 
   %p Goals
-  .check-boxes
+  <input type="text" class="strategy-search" data-search="goals" />
+  .check-boxes.goals
     - @goals.each do |g|
       .check-box
         = check_box_tag "goals[#{g.id}]", g.id
         = label_tag("goals[#{g.id}]", g.name)
 
   %p Problem Objectives
-  .check-boxes
+  <input type="text" class="strategy-search" data-search="problem-objectives" />
+  .check-boxes.problem-objectives
     - @problem_objectives.each do |po|
       .check-box
         = check_box_tag "problem_objectives[#{po.id}]", po.id
         = label_tag("problem_objectives[#{po.id}]", po.objective_name)
 
   %p Outputs
-  .check-boxes
+  <input type="text" class="strategy-search" data-search="outputs" />
+  .check-boxes.outputs
     - @outputs.each do |o|
       .check-box
         = check_box_tag "outputs[#{o.id}]", o.id
         = label_tag("outputs[#{o.id}]", o.name)
 
   %p Indicators
-  .check-boxes
+  <input type="text" class="strategy-search" data-search="indicators" />
+  .check-boxes.indicators
     - @indicators.each do |i|
       .check-box
         = check_box_tag "indicators[#{i.id}]", i.id
@@ -46,3 +52,26 @@
 
 
   = f.submit "Create"
+
+:javascript
+  $(document).ready(function() {
+
+    $('.strategy-search').on('keyup', function(e) {
+      var query = $(e.currentTarget).val();
+      var dataSearch = $(e.currentTarget).attr('data-search')
+
+      re = new RegExp('.*' + query.split('').join('.*') + '.*', 'g')
+
+      $('.' + dataSearch + ' .check-box').each(function(idx, ele) {
+        label = $(ele).find('label')
+        if ($(label).text().toLowerCase().search(re) === -1) {
+          $(ele).addClass('gone')
+        } else {
+          $(ele).removeClass('gone')
+        }
+      })
+
+
+    })
+
+  })
