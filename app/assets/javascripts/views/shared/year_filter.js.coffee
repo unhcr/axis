@@ -1,6 +1,6 @@
 class Visio.Views.YearFilterView extends Backbone.View
 
-  className: 'year-filter'
+  className: 'year-filter map-filter'
 
   template: JST['shared/year_filter']
 
