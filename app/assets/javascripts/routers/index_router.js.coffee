@@ -13,7 +13,22 @@ class Visio.Routers.IndexRouter extends Backbone.Router
       height: 500)
 
 
+    Visio.manager.on('change:date', () =>
+      Visio.manager.get('plans').fetchSynced().done(() =>
+        console.log('rendering')
+        @map()
+      )
+    )
+    @setup()
 
+  routes:
+    ':plan_id/:type': 'list'
+    '*default': 'index'
+
+  index: () ->
+    console.log 'index'
+
+  setup: () ->
     plans = Visio.manager.get('plans')
     plans.fetchSynced().done(() =>
       Visio.manager.set('plans', plans)
@@ -22,13 +37,6 @@ class Visio.Routers.IndexRouter extends Backbone.Router
         @map()
       )
     )
-
-  routes:
-    ':plan_id/:type': 'list'
-    '*default': 'index'
-
-  index: () ->
-    console.log 'index'
 
   list: (plan_id, type) ->
 
