@@ -380,6 +380,12 @@ button, input {
   border: none;
 }
 
+.check-boxes {
+  overflow: auto;
+  max-height: 300px;
+  width: 600px;
+}
+
 .visio-check input {
   display: none;
 }

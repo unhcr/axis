@@ -1,0 +1,48 @@
+= form_for @strategy, url: {action: "create"}, html: {class: "form"} do |f|
+  = f.text_field :name
+
+  %p Operations
+  .check-boxes
+    - @operations.each do |o|
+      .check-box
+        = check_box_tag "operations[#{o.id}]", o.id
+        = label_tag("operations[#{o.id}]", o.name)
+
+  %p PPGs
+  .check-boxes
+    - @ppgs.each do |p|
+      .check-box
+        = check_box_tag "ppgs[#{p.id}]", p.id
+        = label_tag("ppgs[#{p.id}]", p.name)
+
+  %p Goals
+  .check-boxes
+    - @goals.each do |g|
+      .check-box
+        = check_box_tag "goals[#{g.id}]", g.id
+        = label_tag("goals[#{g.id}]", g.name)
+
+  %p Problem Objectives
+  .check-boxes
+    - @problem_objectives.each do |po|
+      .check-box
+        = check_box_tag "problem_objectives[#{po.id}]", po.id
+        = label_tag("problem_objectives[#{po.id}]", po.objective_name)
+
+  %p Outputs
+  .check-boxes
+    - @outputs.each do |o|
+      .check-box
+        = check_box_tag "outputs[#{o.id}]", o.id
+        = label_tag("outputs[#{o.id}]", o.name)
+
+  %p Indicators
+  .check-boxes
+    - @indicators.each do |i|
+      .check-box
+        = check_box_tag "indicators[#{i.id}]", i.id
+        = label_tag("indicators[#{i.id}]", i.name)
+
+
+
+  = f.submit "Create"
