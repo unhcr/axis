@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131127170249) do
+ActiveRecord::Schema.define(:version => 20131129212803) do
 
   create_table "countries", :force => true do |t|
     t.string   "iso"
@@ -212,6 +212,11 @@ ActiveRecord::Schema.define(:version => 20131127170249) do
   create_table "plans_rights_groups", :id => false, :force => true do |t|
     t.string "plan_id",         :null => false
     t.string "rights_group_id", :null => false
+  end
+
+  create_table "plans_strategies", :id => false, :force => true do |t|
+    t.integer "strategy_id", :null => false
+    t.string  "plan_id",     :null => false
   end
 
   create_table "ppgs", :id => false, :force => true do |t|
