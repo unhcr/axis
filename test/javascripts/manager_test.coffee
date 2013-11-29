@@ -9,8 +9,9 @@ module 'Manager',
     Visio.manager.get('db').clear()
 
 asyncTest('getLastSync', () ->
-  Visio.manager.setSyncDate().done((key) ->
-    return Visio.manager.getSyncDate()
+  id = 'ben'
+  Visio.manager.setSyncDate(id).done((key) ->
+    return Visio.manager.getSyncDate(id)
   ).done((record) ->
     ok(record.synced_timestamp, 'Should have a sync date')
     start()
@@ -21,12 +22,25 @@ asyncTest('getLastSync', () ->
 asyncTest('setLastSync', () ->
   s = new Date()
 
-  Visio.manager.setSyncDate().done(() ->
-    return Visio.manager.getSyncDate()
+  id = 'lisa'
+  Visio.manager.setSyncDate(id).done(() ->
+    return Visio.manager.getSyncDate(id)
     ).then((record) ->
       ok(+record.synced_timestamp >= +s, 'Should always be less than sync date')
       start()
     )
+)
+
+asyncTest('setSyncDate with different ids', () ->
+  id = 10
+  id2 = 15
+  Visio.manager.setSyncDate(id).done(() ->
+    return Visio.manager.getSyncDate(id2)
+  ).then((record) ->
+    ok(!record, 'Should not have record for different ids')
+    start()
+  )
+
 )
 
 asyncTest('getMap', () ->
