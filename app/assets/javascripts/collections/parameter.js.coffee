@@ -41,7 +41,6 @@ class Visio.Collections.Parameter extends Backbone.Collection
 
 
     timestampId = "#{@url}#{JSON.stringify(options)}".hashCode()
-    console.log options
 
     $.when(Visio.manager.getSyncDate(timestampId)).then((record) =>
       timestamp = if record then record.synced_timestamp else undefined

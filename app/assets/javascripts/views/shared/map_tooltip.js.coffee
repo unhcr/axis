@@ -71,6 +71,10 @@ class Visio.Views.MapTooltipView extends Backbone.View
     @render(true)
 
 
+  close: ()->
+    @unbind()
+    @remove()
+
   onClickClose: (e) =>
     @shrink()
 

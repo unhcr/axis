@@ -16,6 +16,7 @@ class Visio.Routers.IndexRouter extends Backbone.Router
     Visio.manager.on('change:date', () =>
       Visio.manager.get('plans').fetchSynced().done(() =>
         console.log('rendering')
+        @map.clearTooltips()
         @map()
       )
     )
