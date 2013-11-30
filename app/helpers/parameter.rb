@@ -20,7 +20,7 @@ module Parameter
           join_table = [self.table_name, name.pluralize].sort.join('_')
           synced_models[key] = query.joins(
             "inner join (select * from #{join_table} where
-            #{id_name.to_s.singularize} in (#{Array(value).join(',')})) as #{join_table}_rel
+            #{id_name.to_s.singularize} in ('#{Array(value).join("','")}')) as #{join_table}_rel
             on #{self.table_name}.id = #{join_table}_rel.#{self.table_name.singularize}_id")
         end
       end
