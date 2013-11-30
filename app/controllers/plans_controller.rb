@@ -9,6 +9,9 @@ class PlansController < ApplicationController
       }
     }
 
-    render :json => Plan.synced_models(synced_date, nil, Plan.count, { :year => year }).as_json(options)
+    params[:where] ||= {}
+    params[:where][:year] = year
+
+    render :json => Plan.synced_models(synced_date, params[:join_ids], nil, params[:where]).as_json(options)
   end
 end

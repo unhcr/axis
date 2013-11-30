@@ -7,7 +7,7 @@ class GoalsController < ApplicationController
       plan = Plan.find(params[:plan_id])
       render :json => plan.goals.as_json
     else
-      render :json => Goal.synced_models(synced_date, nil, 20, params[:where]).as_json
+      render :json => Goal.synced_models(synced_date, params[:join_ids], nil, params[:where]).as_json
     end
   end
 end
