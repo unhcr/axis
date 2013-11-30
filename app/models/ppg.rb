@@ -7,6 +7,7 @@ class Ppg < ActiveRecord::Base
   has_and_belongs_to_many :goals, :uniq => true
   has_and_belongs_to_many :plans, :uniq => true
   has_and_belongs_to_many :operations, :uniq => true
+  has_and_belongs_to_many :strategies, :uniq => true
 
   has_many :indicator_data
   def to_jbuilder(options = {})
