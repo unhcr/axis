@@ -8,6 +8,9 @@ class Goal < ActiveRecord::Base
   has_and_belongs_to_many :ppgs, :uniq => true
   has_and_belongs_to_many :rights_groups, :uniq => true
   has_and_belongs_to_many :operations, :uniq => true
+  has_and_belongs_to_many :strategies, :uniq => true
+  has_and_belongs_to_many :plans, :uniq => true
+
   def to_jbuilder(options = {})
     Jbuilder.new do |json|
       json.extract! self, :name, :id
