@@ -29,6 +29,8 @@ $pin-small: 12px;
 $pin-large: 30px;
 $pin-extra-large: 50px;
 $map-filter-width: 200px;
+$navigation-width: 300px;
+$accordian-max-height: 340px;
 
 
 @font-face {
@@ -396,7 +398,7 @@ button, input {
   cursor: pointer;
 }
 
-.visio-check label:after {
+.visio-check label:before {
   content: ' ';
   border: 1px solid $white;
   width: 12px;
@@ -405,7 +407,7 @@ button, input {
   float: right;
 }
 
-.visio-check input:checked + label:after {
+.visio-check input:checked + label:before {
   content: ' ';
   border: 3px solid $turquoise;
 }
@@ -629,4 +631,27 @@ a {
   .pin-body {
     background-color: $white;
   }
+}
+
+#navigation {
+  width: $navigation-width;
+}
+
+.ui-accordian-content {
+  max-height: $accordian-max-height;
+  overflow: auto;
+  height: 0px;
+
+  -moz-transition:height $medium-transition;
+  -webkit-transition:height $medium-transition;
+  -o-transition:height $medium-transition;
+  transition:height $medium-transition;
+}
+
+.ui-accordian-content.opened {
+  height: $accordian-max-height;
+}
+
+.ui-accordian-container .open {
+  cursor: pointer;
 }

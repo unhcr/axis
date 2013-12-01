@@ -3,7 +3,10 @@
 :javascript
   $(document).ready(function() {
 
-    Visio.manager = new Visio.Models.Manager()
+    Visio.manager = new Visio.Models.Manager({
+      strategy_id: #{@strategy_id},
+      strategies: new Visio.Collections.Strategy(#{@strategies.to_json.html_safe})
+    })
 
     window.router = new Visio.Routers.OverviewRouter();
     Backbone.history.start();

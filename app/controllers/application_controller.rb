@@ -26,6 +26,8 @@ class ApplicationController < ActionController::Base
   end
 
   def overview
+    @strategy_id = params[:strategy_id]
+    @strategies = Strategy.all
     render :layout => 'index'
   end
 end
