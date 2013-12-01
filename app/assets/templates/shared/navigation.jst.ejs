@@ -6,11 +6,11 @@
   <div class="ui-accordian-container">
   <% for (var p = 0; p < parameters.length; p++) { %>
     <div data-type="<%= parameters[p].type %>" class="ui-accordian open">
-      <div class="name"><%= parameters[p].name %></div>
+      <div class="name ui-extra-small-header ui-line-item-theme"><%= parameters[p].name.toUpperCase() %></div>
       <div data-type="<%= parameters[p].type %>" class="ui-accordian-content <%= parameters[p].type %>">
         <% for (var i = 0; i < parameters[p].data.length; i ++) { %>
         <div class="visio-check ui-line-item-theme">
-          <input type="checkbox" id="check_<%= parameters[p].data[i].id %>"/>
+          <input checked="checked" type="checkbox" id="check_<%= parameters[p].data[i].id %>"/>
           <% name = parameters[p].type === Visio.Parameters.PLANS ? parameters[p].data[i].operation_name : (parameters[p].data[i].name || parameters[p].data[i].objective_name) %>
           <label for="check_<%= parameters[p].data[i].id %>"><%= name %></label>
         </div>

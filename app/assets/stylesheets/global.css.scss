@@ -638,18 +638,17 @@ a {
 }
 
 .ui-accordian-content {
-  max-height: $accordian-max-height;
+  max-height: 0px;
   overflow: auto;
-  height: 0px;
 
-  -moz-transition:height $medium-transition;
-  -webkit-transition:height $medium-transition;
-  -o-transition:height $medium-transition;
-  transition:height $medium-transition;
+  -moz-transition:max-height $medium-transition;
+  -webkit-transition:max-height $medium-transition;
+  -o-transition:max-height $medium-transition;
+  transition:max-height $medium-transition;
 }
 
 .ui-accordian-content.opened {
-  height: $accordian-max-height;
+  max-height: $accordian-max-height;
 }
 
 .ui-accordian-container .open {
