@@ -12,7 +12,7 @@ class StrategiesController < ApplicationController
   def create
     s = Strategy.new(:name => params[:strategy][:name])
     s.operations << Operation.find(params[:operations].keys) if params[:operations]
-    s.plans << Plan.where(:operation_id => params[:operations].keys) if params[:plans]
+    s.plans << Plan.where(:operation_id => params[:operations].keys) if params[:operations]
     s.ppgs << Ppg.find(params[:ppgs].keys) if params[:ppgs]
     s.goals << Goal.find(params[:goals].keys) if params[:goals]
     s.problem_objectives << ProblemObjective.find(params[:problem_objectives].keys) if params[:problem_objectives]
