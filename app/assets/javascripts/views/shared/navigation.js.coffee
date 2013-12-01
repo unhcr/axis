@@ -9,6 +9,7 @@ class Visio.Views.NavigationView extends Backbone.View
 
   render: () ->
 
+    # TODO only select those that are part of the strategy
     @$el.html(@template(
       parameters: [
         {

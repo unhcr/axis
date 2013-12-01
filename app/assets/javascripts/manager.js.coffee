@@ -10,6 +10,7 @@ class Visio.Models.Manager extends Backbone.Model
     'outputs': new Visio.Collections.Output()
     'problem_objectives': new Visio.Collections.ProblemObjective()
     'indicators': new Visio.Collections.Indicator()
+    'indicator_data': new Visio.Collections.IndicatorDatum()
     'date': new Date()
     'db': null
     'mapMD5': null
