@@ -35,17 +35,18 @@ class Visio.Collections.Parameter extends Backbone.Collection
     db = Visio.manager.get('db')
     db.values(@store(), undefined, @limit)
 
-  fetchSynced: (options) ->
+  fetchSynced: (options, url) ->
     db = Visio.manager.get('db')
     options ||= {}
 
+    url ||= @url
 
-    timestampId = "#{@url}#{JSON.stringify(options)}".hashCode()
+    timestampId = "#{url}#{JSON.stringify(options)}".hashCode()
 
     $.when(Visio.manager.getSyncDate(timestampId)).then((record) =>
       timestamp = if record then record.synced_timestamp else undefined
       options.synced_timestamp = timestamp
-      return $.get(@url, options)
+      return $.get(url, options)
     ).done((parameters) =>
       @setSynced(parameters, timestampId)
     ).done((ids) =>
