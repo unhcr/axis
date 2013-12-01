@@ -5,7 +5,6 @@ class StrategyTest < ActiveSupport::TestCase
 
     @s = strategies(:one)
 
-    @ops = [operations(:one)]
     @plans = [plans(:one)]
     @ppgs = [ppgs(:one)]
     @rights_groups = [rights_groups(:one)]
@@ -14,7 +13,7 @@ class StrategyTest < ActiveSupport::TestCase
     @outputs = [outputs(:one)]
     @indicators = [indicators(:one)]
 
-    @s.operations << @ops
+    @s.plans << @plans
     @s.ppgs << @ppgs
     @s.rights_groups << @rights_groups
     @s.goals << @goals
@@ -27,7 +26,7 @@ class StrategyTest < ActiveSupport::TestCase
   test "should get indicator data for strategy" do
 
     datum = IndicatorDatum.new()
-    datum.operation = operations(:one)
+    datum.plan = plans(:one)
     datum.ppg = ppgs(:one)
     datum.goal = goals(:one)
     datum.rights_group = rights_groups(:one)
@@ -36,13 +35,15 @@ class StrategyTest < ActiveSupport::TestCase
     datum.indicator = indicators(:one)
     datum.save
 
-    data = @s.data
-    assert_equal 1, data.length
+    data = @s.synced_data
+    assert_equal 1, data[:new].length
+    assert_equal 0, data[:updated].length
+    assert_equal 0, data[:deleted].length
   end
 
   test "should not get indicator data for the strategy" do
     datum = IndicatorDatum.new()
-    datum.operation = operations(:one)
+    datum.plan = plans(:one)
     datum.ppg = ppgs(:one)
     datum.goal = goals(:two)
     datum.rights_group = rights_groups(:one)
@@ -51,13 +52,15 @@ class StrategyTest < ActiveSupport::TestCase
     datum.indicator = indicators(:one)
     datum.save
 
-    data = @s.data
-    assert_equal 0, data.length
+    data = @s.synced_data
+    assert_equal 0, data[:new].length
+    assert_equal 0, data[:updated].length
+    assert_equal 0, data[:deleted].length
   end
 
   test "should allow to not have an output" do
     datum = IndicatorDatum.new()
-    datum.operation = operations(:one)
+    datum.plan = plans(:one)
     datum.ppg = ppgs(:one)
     datum.goal = goals(:one)
     datum.rights_group = rights_groups(:one)
@@ -65,7 +68,49 @@ class StrategyTest < ActiveSupport::TestCase
     datum.indicator = indicators(:one)
     datum.save
 
-    data = @s.data
-    assert_equal 1, data.length
+    data = @s.synced_data
+    assert_equal 1, data[:new].length
+    assert_equal 0, data[:updated].length
+    assert_equal 0, data[:deleted].length
+  end
+
+  test "should get updated data for strategy" do
+
+    datum = IndicatorDatum.new()
+    datum.plan = plans(:one)
+    datum.ppg = ppgs(:one)
+    datum.goal = goals(:one)
+    datum.rights_group = rights_groups(:one)
+    datum.problem_objective = problem_objectives(:one)
+    datum.output = outputs(:one)
+    datum.indicator = indicators(:one)
+    datum.created_at = Time.now - 1.week
+    datum.save
+
+    data = @s.synced_data(Time.now - 3.days)
+    assert_equal 1, data[:updated].length
+    assert_equal 0, data[:new].length
+    assert_equal 0, data[:deleted].length
+  end
+
+  test "should get deleted data for strategy" do
+
+    datum = IndicatorDatum.new()
+    datum.plan = plans(:one)
+    datum.ppg = ppgs(:one)
+    datum.goal = goals(:one)
+    datum.rights_group = rights_groups(:one)
+    datum.problem_objective = problem_objectives(:one)
+    datum.output = outputs(:one)
+    datum.indicator = indicators(:one)
+    datum.created_at = Time.now - 1.week
+    datum.is_deleted = true
+    datum.save
+
+    data = @s.synced_data(Time.now - 3.days)
+    assert_equal 0, data[:updated].length
+    assert_equal 0, data[:new].length
+    assert_equal 1, data[:deleted].length
+
   end
 end

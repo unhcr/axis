@@ -11,7 +11,7 @@ class Strategy < ActiveRecord::Base
   has_and_belongs_to_many :indicators, :uniq => true
 
   # Get IndicatorData related to particular strategy
-  def data(synced_date = nil, limit = nil, where = {})
+  def synced_data(synced_date = nil, limit = nil, where = {})
 
     ids = {
       :plan_ids => self.plan_ids,
