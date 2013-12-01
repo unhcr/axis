@@ -5,6 +5,11 @@ class Visio.Models.Manager extends Backbone.Model
 
   defaults:
     'plans': new Visio.Collections.Plan()
+    'ppgs': new Visio.Collections.Ppg()
+    'goals': new Visio.Collections.Goal()
+    'outputs': new Visio.Collections.Output()
+    'problem_objectives': new Visio.Collections.ProblemObjective()
+    'indicators': new Visio.Collections.Indicator()
     'date': new Date()
     'db': null
     'mapMD5': null
