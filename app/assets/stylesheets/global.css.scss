@@ -30,7 +30,7 @@ $pin-large: 30px;
 $pin-extra-large: 50px;
 $map-filter-width: 200px;
 $navigation-width: 300px;
-$accordian-max-height: 340px;
+$accordion-max-height: 340px;
 
 
 @font-face {
@@ -637,7 +637,7 @@ a {
   width: $navigation-width;
 }
 
-.ui-accordian-content {
+.ui-accordion-content {
   max-height: 0px;
   overflow: auto;
 
@@ -647,10 +647,25 @@ a {
   transition:max-height $medium-transition;
 }
 
-.ui-accordian-content.opened {
-  max-height: $accordian-max-height;
+.ui-accordion-content.opened {
+  max-height: $accordion-max-height;
 }
 
-.ui-accordian-container .open {
+.ui-accordion-container .open {
   cursor: pointer;
+}
+
+.ui-accordion-container .open:after {
+  width: 12px;
+  height: 12px;
+  margin-top: 3px;
+  float: right;
+  background-image: url(/assets/logo_white.png);
+  background-size: 12px 12px;
+  content: "";
+  background-repeat: no-repeat;
+}
+
+.ui-accordion-container.opened .open:after {
+  background-image: url(/assets/logo.png);
 }

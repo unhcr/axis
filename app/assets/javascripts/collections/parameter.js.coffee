@@ -9,6 +9,13 @@ class Visio.Collections.Parameter extends Backbone.Collection
   store: () ->
     @name + '_store'
 
+  comparator: (a, b) ->
+    aName = a.get('operation_name') || a.get('name') || a.get('problem_name')
+    bName = b.get('operation_name') || b.get('name') || b.get('problem_name')
+    return -1 if aName < bName
+    return 1 if aName > bName
+    return 0 if aName == bName
+
   setSynced: (parameters, timestampId) ->
     db = Visio.manager.get('db')
     req = db.put({
