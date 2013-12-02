@@ -87,6 +87,7 @@ asyncTest('fetchSyncedPlans for different years', () ->
 )
 
 test('find plan', () ->
+  Visio.manager.get('db').put('dummy-store', {test: 'Hello World!'}, 123)
   Visio.manager.get('plans').reset([{ id: 'bien', year: 2013, country: { iso3: 'BEN' } },
                               { id: 'dirk', year: 2013, country: { iso3: 'UGA' } }])
 
@@ -103,3 +104,87 @@ test('find plan', () ->
   plan = Visio.manager.plan('UGA')
   ok(!plan, 'Must not have plan')
 )
+
+asyncTest('fetchIndicators', () ->
+
+  p = new Visio.Models.Plan({ id: '26be980c-62af-44ab-877b-de7309fa4a18', name: 'ben' })
+
+  strictEqual(p.id, '26be980c-62af-44ab-877b-de7309fa4a18')
+  strictEqual(p.get('name'), 'ben')
+
+  p.fetchIndicators().done((id) ->
+    strictEqual(p.id, id)
+    p.getSynced().done((record) ->
+      strictEqual(p.get('indicators').length, record.indicators.length)
+      start()
+    )
+  )
+
+)
+
+asyncTest('fetchPpgs', () ->
+
+  p = new Visio.Models.Plan({ id: '26be980c-62af-44ab-877b-de7309fa4a18', name: 'ben' })
+
+  strictEqual(p.id, '26be980c-62af-44ab-877b-de7309fa4a18')
+  strictEqual(p.get('name'), 'ben')
+
+  p.fetchPpgs().done((id) ->
+    strictEqual(p.id, id)
+    p.getSynced().done((record) ->
+      strictEqual(p.get('ppgs').length, record.ppgs.length)
+      start()
+    )
+  )
+
+)
+
+asyncTest('fetchOutputs', () ->
+
+  p = new Visio.Models.Plan({ id: '26be980c-62af-44ab-877b-de7309fa4a18', name: 'ben' })
+
+  strictEqual(p.id, '26be980c-62af-44ab-877b-de7309fa4a18')
+  strictEqual(p.get('name'), 'ben')
+
+  p.fetchOutputs().done((id) ->
+    strictEqual(p.id, id)
+    p.getSynced().done((record) ->
+      strictEqual(p.get('outputs').length, record.outputs.length)
+      start()
+    )
+  )
+
+)
+asyncTest('fetchProblemObjectives', () ->
+
+  p = new Visio.Models.Plan({ id: '26be980c-62af-44ab-877b-de7309fa4a18', name: 'ben' })
+
+  strictEqual(p.id, '26be980c-62af-44ab-877b-de7309fa4a18')
+  strictEqual(p.get('name'), 'ben')
+
+  p.fetchProblemObjectives().done((id) ->
+    strictEqual(p.id, id)
+    p.getSynced().done((record) ->
+      strictEqual(p.get('problem_objectives').length, record.problem_objectives.length)
+      start()
+    )
+  )
+
+)
+asyncTest('fetchGoals', () ->
+
+  p = new Visio.Models.Plan({ id: '26be980c-62af-44ab-877b-de7309fa4a18', name: 'ben' })
+
+  strictEqual(p.id, '26be980c-62af-44ab-877b-de7309fa4a18')
+  strictEqual(p.get('name'), 'ben')
+
+  p.fetchGoals().done((id) ->
+    strictEqual(p.id, id)
+    p.getSynced().done((record) ->
+      strictEqual(p.get('goals').length, record.goals.length)
+      start()
+    )
+  )
+
+)
+
