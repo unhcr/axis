@@ -14,7 +14,7 @@ class Visio.Views.NavigationView extends Backbone.View
       strategy: Visio.manager.strategy()
       parameters: [
         {
-          data: Visio.manager.get('plans').toJSON()
+          data: Visio.manager.plans({ year: Visio.manager.year() }).map((p) -> p.toJSON())
           name: 'Operations'
           type: Visio.Parameters.PLANS
         },
