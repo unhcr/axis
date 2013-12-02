@@ -415,17 +415,13 @@ button, input {
 
 .visio-check-yellow label:before {
   content: ' ';
-  border: 1px solid $white;
-  width: 12px;
-  height: 12px;
-  margin-top: 3px;
   float: left;
+  margin-right: 6px;
 }
 
 .visio-check-yellow input:checked + label:before {
   content: ' ';
   border: 3px solid $yellow;
-  margin-right: 6px;
 }
 
 .dropdown-item:hover, .count:hover {
