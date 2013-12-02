@@ -4,7 +4,10 @@
 :javascript
   $(document).ready(function() {
 
-    Visio.manager = new Visio.Models.Manager({ mapMD5: '#{@mapMD5}' })
+    Visio.manager = new Visio.Models.Manager({
+      mapMD5: '#{@mapMD5}',
+      strategies: new Visio.Collections.Strategy(#{@strategies.to_json.html_safe})
+    })
 
     window.router = new Visio.Routers.IndexRouter();
     Backbone.history.start();

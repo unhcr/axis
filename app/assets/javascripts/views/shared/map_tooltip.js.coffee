@@ -70,6 +70,11 @@ class Visio.Views.MapTooltipView extends Backbone.View
     @$el.find('.pin').removeClass('pin-extra-large')
     @render(true)
 
+  hide: () ->
+    @$el.addClass('gone')
+
+  show: () ->
+    @$el.removeClass('gone')
 
   close: ()->
     @unbind()

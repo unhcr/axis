@@ -125,6 +125,15 @@ Visio.Graphs.map = (config) ->
           views[d.get('country').iso3] = new Visio.Views.MapTooltipView({ model: d, point: @ })
       )
 
+  render.filterTooltips = (plan_ids) ->
+    for key, value of views
+      id = value.model.id
+      if (_.include(plan_ids, id) || plan_ids.length == 0)
+        value.show()
+      else
+        value.hide()
+
+
   render.mapJSON = (mapJSON) ->
     data = mapJSON.features
 

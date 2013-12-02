@@ -22,7 +22,6 @@ class Visio.Routers.IndexRouter extends Backbone.Router
     )
     @setup()
 
-    @filterView = new Visio.Views.MapFilterView()
 
   routes:
     ':plan_id/:type': 'list'
@@ -38,6 +37,7 @@ class Visio.Routers.IndexRouter extends Backbone.Router
       Visio.manager.getMap().done((map) =>
         @map.mapJSON(map)
         @map()
+        @filterView = new Visio.Views.MapFilterView()
       )
     )
 

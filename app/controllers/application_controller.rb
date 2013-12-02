@@ -7,7 +7,12 @@ class ApplicationController < ActionController::Base
   def index
     redirect_to :splash and return unless user_signed_in?
     @mapMD5 = @@mapMD5
-    @strategies = Strategy.all.as_json
+    options = {
+      :include => {
+        :ids => true
+      }
+    }
+    @strategies = Strategy.all.as_json(options)
     render :layout => 'index'
   end
 
