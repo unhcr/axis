@@ -50,11 +50,11 @@ class Visio.Views.NavigationView extends Backbone.View
     @open(type)
 
   open: (type) =>
-    $opened = @$el.find('.ui-accordian-content.opened')
+    $opened = @$el.find('.ui-accordion-content.opened')
     if $opened.attr('data-type') == type
       $opened.toggleClass('opened')
     else
       $opened.removeClass('opened')
-      @$el.find(".ui-accordian-content.#{type}").addClass('opened')
+      @$el.find(".ui-accordion-content.#{type}").addClass('opened')
 
 

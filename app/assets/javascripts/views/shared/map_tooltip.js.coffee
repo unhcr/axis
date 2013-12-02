@@ -2,7 +2,7 @@ class Visio.Views.MapTooltipView extends Backbone.View
 
   template: JST['shared/map_tooltip']
 
-  className: 'tooltip'
+  className: 'tooltip tooltip-transition'
 
   initialize: (options) ->
     @point = options.point
@@ -15,6 +15,13 @@ class Visio.Views.MapTooltipView extends Backbone.View
   events:
     'click .tooltip-close': 'onClickClose'
     'click .count': 'onCountClick'
+    'transitionend': 'onTransitionEnd'
+    'MSTransitionEnd': 'onTransitionEnd'
+    'webkitTransitionEnd': 'onTransitionEnd'
+    'oTransitionEnd': 'onTransitionEnd'
+
+  onTransitionEnd: (e) ->
+    @$el.removeClass('tooltip-transition')
 
   render: (isRerender) ->
 
@@ -37,6 +44,7 @@ class Visio.Views.MapTooltipView extends Backbone.View
       @$el.show()
     else
       @$el.hide()
+
 
     @
 

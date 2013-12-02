@@ -445,6 +445,7 @@ button, input {
   position: absolute;
   margin-left: 1em;
   margin-top: 1em;
+  z-index: 100;
 }
 
 .close {
@@ -514,6 +515,7 @@ a {
 
 .tooltip {
   position: absolute;
+  top: 135px;
 
   .count {
     border-bottom: 1px solid $white;
@@ -525,6 +527,14 @@ a {
     border-bottom: none;
   }
 
+
+}
+
+.tooltip-transition {
+  -moz-transition:top $medium-transition;
+  -webkit-transition:top $medium-transition;
+  -o-transition:top $medium-transition;
+  transition:top $medium-transition;
 }
 
 .tooltip-content {
