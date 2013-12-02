@@ -96,11 +96,17 @@ Visio.Graphs.map = (config) ->
       ['country'].join(' '))
       .attr('d', path)
       .on('click', (d) ->
-        expanded.shrink() if expanded
-        expanded = views[d.properties.adm0_a3]
-        return unless expanded
+        if expanded && expanded.model.id == views[d.properties.adm0_a3].model.id
+          if expanded.isShrunk()
+            expanded.expand()
+          else
+            expanded.shrink()
+        else
+          expanded.shrink() if expanded
+          expanded = views[d.properties.adm0_a3]
+          return unless expanded
 
-        expanded.expand()
+          expanded.expand()
       )
 
     centerData = Visio.manager.plans({ year: Visio.manager.year() }).filter((d) -> d.get('country'))
