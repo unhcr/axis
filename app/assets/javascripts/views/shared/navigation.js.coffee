@@ -11,6 +11,7 @@ class Visio.Views.NavigationView extends Backbone.View
 
     # TODO only select those that are part of the strategy
     @$el.html(@template(
+      strategy: Visio.manager.strategy()
       parameters: [
         {
           data: Visio.manager.get('plans').toJSON()

@@ -23,6 +23,10 @@ class Visio.Models.Manager extends Backbone.Model
   setYear: (year) ->
     @set('date', new Date(year, 1))
 
+  strategy: () ->
+    return unless @get('strategies')
+    @get('strategies').get(@get('strategy_id'))
+
   plan: (idOrISO) ->
     if idOrISO.length == 3
       plan = @get('plans').find((p) =>

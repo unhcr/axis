@@ -22,11 +22,11 @@
       .search.menu-item.ui-primary.pull-right
         Search by Operation or Indicator
       - @strategies.each do |strategy|
-        %a.thematic-item.menu-item.ui-primary-light.pull-right{ :href => "/overview?strategy_id=#{strategy.id}" }
+        %a.thematic-item.menu-item.ui-primary-light.pull-right{ :href => "/overview?strategy_id=#{strategy["id"]}" }
           .underline
-            = strategy.name
+            = strategy["name"]
           .theme-content
-            = strategy.name
+            = strategy["name"]
   :javascript
     window.Visio.user = new Visio.Models.User(#{current_user.to_json.html_safe})
 

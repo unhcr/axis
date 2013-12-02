@@ -25,4 +25,22 @@ class Strategy < ActiveRecord::Base
     return IndicatorDatum.synced_data(ids, synced_date, limit, where)
   end
 
+  def to_jbuilder(options = {})
+    Jbuilder.new do |json|
+      json.extract! self, :name, :id
+
+      if options[:include] && options[:include][:ids]
+        json.indicators_ids self.indicator_ids
+        json.goals_ids self.goal_ids
+        json.ppgs_ids self.ppg_ids
+        json.outputs_ids self.output_ids
+        json.plans_ids self.plan_ids
+        json.problem_objectives_ids self.problem_objective_ids
+      end
+    end
+  end
+
+  def as_json(options = {})
+    to_jbuilder(options).attributes!
+  end
 end
