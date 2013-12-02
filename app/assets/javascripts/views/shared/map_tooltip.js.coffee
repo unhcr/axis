@@ -95,6 +95,7 @@ class Visio.Views.MapTooltipView extends Backbone.View
     return !@$el.find('.tooltip-content').hasClass('gone')
 
   hide: () ->
+    @shrink()
     @$el.addClass('gone')
 
   show: () ->
