@@ -16,6 +16,7 @@ $black: rgb(39,38,34);
 $fail: #c6302a;
 $fail-dark: #710d09;
 $turquoise: rgb(32, 180, 180);
+$yellow: rgb(222, 229, 29);
 
 /* Transitions */
 $fast-transition: .5s;
@@ -410,6 +411,21 @@ button, input {
 .visio-check input:checked + label:before {
   content: ' ';
   border: 3px solid $turquoise;
+}
+
+.visio-check-yellow label:before {
+  content: ' ';
+  border: 1px solid $white;
+  width: 12px;
+  height: 12px;
+  margin-top: 3px;
+  float: left;
+}
+
+.visio-check-yellow input:checked + label:before {
+  content: ' ';
+  border: 3px solid $yellow;
+  margin-right: 6px;
 }
 
 .dropdown-item:hover, .count:hover {
