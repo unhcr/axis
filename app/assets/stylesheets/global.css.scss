@@ -474,16 +474,6 @@ button, input {
   cursor: pointer;
 }
 
-.tooltip-close {
-  width: 2em;
-  height: 2em;
-  background-color: $fail-dark;
-  position: absolute;
-  top: 0;
-  right: -2em;
-  cursor: pointer;
-}
-
 .parameter-list {
   position: absolute;
   background-color: $white;
@@ -557,7 +547,7 @@ a {
   position: absolute;
   right: 0;
   bottom: $pin-extra-large / 2;
-  min-width: 230px;
+  min-width: 190px;
   background-color: $fail;
   z-index: 99;
 
@@ -566,11 +556,33 @@ a {
     padding-bottom: 15px;
     padding-top: 8px;
     font-weight: 300;
+    line-height: 1.1em;
   }
 
   .tooltip-content-bottom {
     height: 10px;
     background-color: $fail;
+  }
+}
+
+.tooltip-close {
+  width: 2em;
+  height: 2em;
+  background-color: $fail-dark;
+  position: absolute;
+  top: 0;
+  right: -2em;
+  cursor: pointer;
+}
+
+.tooltip-close.darken {
+  background-color: darken($fail-dark, 5%);
+}
+
+.tooltip-content.darken {
+  background-color: darken($fail, 5%);
+  .tooltip-content-bottom {
+    background-color: darken($fail, 5%);
   }
 }
 

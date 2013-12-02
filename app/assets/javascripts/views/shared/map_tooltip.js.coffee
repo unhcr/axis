@@ -19,6 +19,16 @@ class Visio.Views.MapTooltipView extends Backbone.View
     'MSTransitionEnd': 'onTransitionEnd'
     'webkitTransitionEnd': 'onTransitionEnd'
     'oTransitionEnd': 'onTransitionEnd'
+    'mouseenter .rollover': 'onEnterRollover'
+    'mouseout .rollover': 'onOutRollover'
+
+  onOutRollover: (e) ->
+    @$el.find('.tooltip-content').removeClass('darken')
+    @$el.find('.tooltip-close').removeClass('darken')
+
+  onEnterRollover: (e) ->
+    @$el.find('.tooltip-content').addClass('darken')
+    @$el.find('.tooltip-close').addClass('darken')
 
   onTransitionEnd: (e) ->
     @$el.removeClass('tooltip-transition')
