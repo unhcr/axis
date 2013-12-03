@@ -2,7 +2,7 @@ class Visio.Views.MapFilterView extends Backbone.View
 
   className: 'map-filters'
 
-  filters: ['PriorityCountry', 'Year']
+  filters: ['Zoom', 'PriorityCountry', 'Year']
 
   initialize: (options) ->
 

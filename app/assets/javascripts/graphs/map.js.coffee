@@ -46,45 +46,47 @@ Visio.Graphs.map = (config) ->
 
   expanded = null
 
+  zoomStep = .4
 
+
+
+  zoomed = () ->
+    scale = if d3.event then d3.event.scale else zoom.scale()
+
+    translate = if d3.event then d3.event.translate else zoom.translate()
+
+    deltaWidth = width - width / scale
+    deltaHeight = height - height / scale
+
+    absTranslateX = translate[0] / scale
+    absTranslateY = translate[1] / scale
+
+
+    if absTranslateX < translateExtent.right - deltaWidth
+      translate[0] = (translateExtent.right - deltaWidth) * Math.abs(scale)
+    else if absTranslateX > translateExtent.left
+      translate[0] = translateExtent.left * Math.abs(scale)
+
+    if absTranslateY < translateExtent.bottom - deltaHeight
+      translate[1] = (translateExtent.bottom  - deltaHeight) * Math.abs(scale)
+    else if absTranslateY > translateExtent.top
+      translate[1] = translateExtent.top * Math.abs(scale)
+
+    $('.country').css('stroke-width', .5 / scale + 'px')
+
+    g.attr("transform","translate(#{translate.join(",")})scale(#{scale})")
+    g.select('.background-rect')
+      .attr('x', -(translate[0] / scale))
+      .attr('y', -(translate[1] / scale))
+      .attr('width', width / scale)
+      .attr('height', height / scale)
+
+    for key, value of views
+      value.render(true)
 
   zoom = d3.behavior.zoom()
     .scaleExtent([.5, 2.2])
-    .on("zoom", () ->
-      scale = d3.event.scale
-
-      translate = d3.event.translate
-
-      deltaWidth = width - width / scale
-      deltaHeight = height - height / scale
-
-      absTranslateX = translate[0] / scale
-      absTranslateY = translate[1] / scale
-
-
-      if absTranslateX < translateExtent.right - deltaWidth
-        translate[0] = (translateExtent.right - deltaWidth) * Math.abs(scale)
-      else if absTranslateX > translateExtent.left
-        translate[0] = translateExtent.left * Math.abs(scale)
-
-      if absTranslateY < translateExtent.bottom - deltaHeight
-        translate[1] = (translateExtent.bottom  - deltaHeight) * Math.abs(scale)
-      else if absTranslateY > translateExtent.top
-        translate[1] = translateExtent.top * Math.abs(scale)
-
-      $('.country').css('stroke-width', .5 / scale + 'px')
-
-      g.attr("transform","translate(#{translate.join(",")})scale(#{scale})")
-      g.select('.background-rect')
-        .attr('x', -(translate[0] / scale))
-        .attr('y', -(translate[1] / scale))
-        .attr('width', width / scale)
-        .attr('height', height / scale)
-
-      for key, value of views
-        value.render(true)
-
-    )
+    .on("zoom", zoomed)
 
   render = () ->
     world = g.selectAll('.country')
@@ -130,6 +132,18 @@ Visio.Graphs.map = (config) ->
         unless views[d.get('country').iso3]
           views[d.get('country').iso3] = new Visio.Views.MapTooltipView({ model: d, point: @ })
       )
+
+  render.zoomIn = () ->
+    scale = zoom.scale()
+    scale = if scale + zoomStep > zoom.scaleExtent()[1] then zoom.scaleExtent()[1] else scale + zoomStep
+    zoom.scale(scale)
+    zoomed()
+
+  render.zoomOut = () ->
+    scale = zoom.scale()
+    scale = if scale - zoomStep < zoom.scaleExtent()[0] then zoom.scaleExtent()[0] else scale - zoomStep
+    zoom.scale(scale)
+    zoomed()
 
   render.filterTooltips = (plan_ids) ->
     for key, value of views

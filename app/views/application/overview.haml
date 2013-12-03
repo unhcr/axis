@@ -8,7 +8,7 @@
       strategies: new Visio.Collections.Strategy(#{@strategies.to_json.html_safe})
     })
 
-    window.router = new Visio.Routers.OverviewRouter();
+    Visio.router = new Visio.Routers.OverviewRouter();
     Backbone.history.start();
 
   });

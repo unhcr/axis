@@ -33,4 +33,4 @@ class Visio.Views.PriorityCountryFilterView extends Backbone.View
       ), true)
     )
 
-    window.router.map.filterTooltips(plan_ids)
+    Visio.router.map.filterTooltips(plan_ids)

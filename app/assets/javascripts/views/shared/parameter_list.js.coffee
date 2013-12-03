@@ -55,7 +55,7 @@ class Visio.Views.ParameterListView extends Backbone.View
     $(e.currentTarget).removeClass('full-width')
 
   switchTab: (type) ->
-    window.router.navigate("/#{@model.id}/#{type}")
+    Visio.router.navigate("/#{@model.id}/#{type}")
 
     @$el.find('.selected').removeClass('selected')
     @$el.find(".#{type}").addClass('selected')
@@ -108,7 +108,7 @@ class Visio.Views.ParameterListView extends Backbone.View
     @close()
 
   close: () ->
-    window.router.navigate('/')
+    Visio.router.navigate('/')
     @unbind()
     @remove()
 
