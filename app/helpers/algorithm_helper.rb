@@ -6,7 +6,10 @@ module AlgorithmHelper
     :fail => 'fail'
   }
 
-  def situation_analysis_algo(indicator_data, reported_value)
+  SUCCESS_THRESHOLD = 0.66
+  OK_THRESHOLD = 0.33
+
+  def situation_analysis_algo(indicator_data, reported_value = 'yer')
     num_green = 0
     num_amber = 0
 
@@ -23,9 +26,9 @@ module AlgorithmHelper
     count = indicator_data.count.to_f
     result = (num_green / count) + (0.5 * (num_amber / count))
 
-    if result >= 0.66
+    if result >= SUCCESS_THRESHOLD
       return ALGO_COLORS[:success]
-    elsif result >= 0.33
+    elsif result >= OK_THRESHOLD
       return ALGO_COLORS[:ok]
     else
       return ALGO_COLORS[:fail]
