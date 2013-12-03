@@ -1,6 +1,6 @@
 class Output < ActiveRecord::Base
   extend Parameter
-  attr_accessible :name, :priority
+  attr_accessible :name, :priority, :admin_cost, :partner_cost, :project_cost, :staff_cost
 
   self.primary_key = :id
   has_and_belongs_to_many :indicators, :uniq => true

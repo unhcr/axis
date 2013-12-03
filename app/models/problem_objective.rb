@@ -1,6 +1,6 @@
 class ProblemObjective < ActiveRecord::Base
   extend Parameter
-  attr_accessible :is_excluded, :objective_name, :problem_name
+  attr_accessible :is_excluded, :objective_name, :problem_name, :admin_cost, :partner_cost, :project_cost, :staff_cost
 
   self.primary_key = :id
   has_many :indicator_data
