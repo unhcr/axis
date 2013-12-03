@@ -2,15 +2,15 @@ task :clear => :environment do
 
   p 'Clearing Database'
 
-  Operation.destroy_all
-  Plan.destroy_all
-  Ppg.destroy_all
-  Goal.destroy_all
-  RightsGroup.destroy_all
-  ProblemObjective.destroy_all
-  Output.destroy_all
-  Indicator.destroy_all
-  IndicatorDatum.destroy_all
+  Operation.delete_all
+  Plan.delete_all
+  Ppg.delete_all
+  Goal.delete_all
+  RightsGroup.delete_all
+  ProblemObjective.delete_all
+  Output.delete_all
+  Indicator.delete_all
+  IndicatorDatum.delete_all
 end
 
 task :fetch => :environment do
