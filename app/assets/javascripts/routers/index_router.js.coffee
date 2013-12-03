@@ -14,8 +14,12 @@ class Visio.Routers.IndexRouter extends Backbone.Router
 
 
     Visio.manager.on('change:date', () =>
-      Visio.manager.get('plans').fetchSynced().done(() =>
-        console.log('rendering')
+      options =
+        options:
+          include:
+            counts: true
+            situation_analysis: true
+      Visio.manager.get('plans').fetchSynced(options).done(() =>
         @map.clearTooltips()
         @map()
       )
@@ -30,7 +34,7 @@ class Visio.Routers.IndexRouter extends Backbone.Router
   index: () ->
     console.log 'index'
 
-  setup: () ->
+  setup: () =>
 
     options =
       options:
