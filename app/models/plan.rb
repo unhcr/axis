@@ -1,5 +1,7 @@
 class Plan < ActiveRecord::Base
   extend Parameter
+
+  include AlgorithmHelper
   attr_accessible :name, :operation_name, :year
 
   self.primary_key = :id
@@ -23,16 +25,34 @@ class Plan < ActiveRecord::Base
     Jbuilder.new do |json|
       json.extract! self, :name, :operation_name, :year, :id
 
-      if options[:include] && options[:include][:counts]
-        json.indicators_count self.indicators.count
-        json.goals_count self.goals.count
-        json.ppgs_count self.ppgs.count
-        json.outputs_count self.outputs.count
-        json.problem_objectives_count self.problem_objectives.count
+      if options[:include]
+
+        if options[:include][:counts]
+          json.indicators_count self.indicators.count
+          json.goals_count self.goals.count
+          json.ppgs_count self.ppgs.count
+          json.outputs_count self.outputs.count
+          json.problem_objectives_count self.problem_objectives.count
+        end
+
+        if options[:include][:situation_analysis]
+          json.situation_analysis self.situation_analysis
+        end
+
       end
 
       json.country self.country
     end
+  end
+
+  def impact_indicators
+    @impact_indicators ||= self.indicators.where(:is_performance => false)
+    @impact_indicators
+  end
+
+  def situation_analysis(reported_value = 'myr')
+    indicator_data = self.indicator_data.where(:indicator_id => self.impact_indicators.map(&:id))
+    situation_analysis_algo(indicator_data, reported_value)
   end
 
   def as_json(options = {})
