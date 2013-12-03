@@ -98,7 +98,8 @@ Visio.Graphs.map = (config) ->
       ['country'].join(' '))
       .attr('d', path)
       .on('click', (d) ->
-        if expanded && expanded.model.id == views[d.properties.adm0_a3].model.id
+        iso3 = d.properties.adm0_a3
+        if expanded && views[iso3] && expanded.model.id == views[iso3].model.id
           if expanded.isShrunk()
             expanded.expand()
           else
