@@ -460,6 +460,34 @@ button, input {
   z-index: 100;
 }
 
+.zoom-btn {
+  display: inline-block;
+  background-color: $white;
+  width: 30px;
+  text-align: center;
+  height: 30px;
+  margin: 0;
+  padding: 0;
+  font-size: 1.3em;
+  cursor: pointer;
+  border: 1px solid $light-gray;
+}
+
+.zoom-btn:first-child {
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+
+.zoom-btn:last-child {
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+  border-left: none;
+}
+
+.zoom-btn:hover {
+  background-color: darken($white, 5%);
+}
+
 .close {
   width: 3em;
   height: 3em;
