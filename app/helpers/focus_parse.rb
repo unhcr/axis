@@ -194,7 +194,7 @@ module FocusParse
                   output.admin_cost += amount
                   problem_objective.admin_cost += amount
                 elsif type == PARTNER
-                  output.partner += amount
+                  output.partner_cost += amount
                   problem_objective.partner_cost += amount
                 elsif type == PROJECT
                   output.project_cost += amount
