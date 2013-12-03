@@ -11,10 +11,9 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131203161811) do
+ActiveRecord::Schema.define(:version => 20131203165554) do
 
   create_table "countries", :force => true do |t|
-    t.string   "iso"
     t.text     "latlng"
     t.string   "iso3"
     t.string   "iso2"
