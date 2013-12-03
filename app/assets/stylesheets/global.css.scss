@@ -616,6 +616,9 @@ a {
 
 .tooltip-content.tooltip-ok {
   background-color: $ok;
+  .operation {
+    color: $primary;
+  }
   .tooltip-content-bottom {
     background-color: $ok;
   }
