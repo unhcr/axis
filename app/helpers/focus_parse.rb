@@ -181,15 +181,35 @@ module FocusParse
 
                 scenerio = xml_budget_line.search('./scenerio').text
                 amount = xml_budget_line.search('./amount').text.to_i
-                if scenerio == Output::AOL
+                type = xml_budget_line.search('./type').text
+                if scenerio == AOL
                   output.aol_budget += amount
                   problem_objective.aol_budget += amount
-                elsif scenerio == Output::OL
+                elsif scenerio == OL
                   output.ol_budget += amount
                   problem_objective.ol_budget += amount
                 end
 
+                if type == ADMIN
+                  output.admin_cost += amount
+                  problem_objective.admin_cost += amount
+                elsif type == PARTNER
+                  output.partner += amount
+                  problem_objective.partner_cost += amount
+                elsif type == PROJECT
+                  output.project_cost += amount
+                  problem_objective.project_cost += amount
+                elsif type == STAFF
+                  output.staff_cost += amount
+                  problem_objective.staff_cost += amount
+                else
+                  p "Unidentified cost type: #{type}"
+                end
+
               end
+
+              output.save
+              problem_objective.save
             end
 
             xml_budget_lines = xml_problem_objective.search('./budgetLines/BudgetLine')
@@ -197,13 +217,26 @@ module FocusParse
             xml_budget_lines.each do |xml_budget_line|
                 scenerio = xml_budget_line.search('./scenerio').text
                 amount = xml_budget_line.search('./amount').text.to_i
-                if scenerio == Output::AOL
+                if scenerio == AOL
                   problem_objective.aol_budget += amount
-                elsif scenerio == Output::OL
+                elsif scenerio == OL
                   problem_objective.ol_budget += amount
                 end
 
+                if type == ADMIN
+                  problem_objective.admin_cost += amount
+                elsif type == PARTNER
+                  problem_objective.partner_cost += amount
+                elsif type == PROJECT
+                  problem_objective.project_cost += amount
+                elsif type == STAFF
+                  problem_objective.staff_cost += amount
+                else
+                  p "Unidentified cost type: #{type}"
+                end
             end
+            problem_objective.save
+
             # Impact indicators tied to objective
             xml_impact_indicators = xml_problem_objective.search('./indicators/Indicator')
             xml_impact_indicators.each do |xml_impact_indicator|
