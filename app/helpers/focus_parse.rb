@@ -9,6 +9,14 @@ module FocusParse
   BUDGET_LINE = 'BudgetLine'
   OPERATION_HEADER = 'OperationHeader'
 
+  AOL = 'Above Operating Level'
+  OL = 'Operating Level'
+
+  ADMIN = 'ADMIN'
+  PARTNER = 'PARTNER'
+  PROJECT = 'PROJECT'
+  STAFF = 'STAFF'
+
   def parse_header(file, plan_types = ['ONEPLAN'])
     doc = Nokogiri::XML(file)
 

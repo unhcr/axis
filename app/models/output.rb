@@ -12,8 +12,6 @@ class Output < ActiveRecord::Base
 
   has_many :indicator_data
 
-  AOL = 'Above Operating Level'
-  OL = 'Operating Level'
 
   def budget
     return self.ol_budget + self.aol_budget
