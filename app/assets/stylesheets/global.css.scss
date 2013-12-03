@@ -769,11 +769,11 @@ a {
 
 .pin.pin-ok {
   .pin-tip {
-    border-left-color: $ok;
+    border-left-color: $ok-dark;
   }
 
   .pin-body {
-    background-color: $ok-dark;
+    background-color: $ok;
   }
 }
 #navigation {
