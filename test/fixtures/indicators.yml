@@ -7,7 +7,7 @@ one:
 
 two:
   name: People on my pool
-  is_performance: false
+  is_performance: true
   is_gsp: false
 
 deleted:
