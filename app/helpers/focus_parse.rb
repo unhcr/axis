@@ -160,6 +160,7 @@ module FocusParse
                   d.operation = operation
                   d.indicator = indicator
                   d.yer = xml_performance_indicator.search('./yearEndValue').text.to_i
+                  d.myr = xml_performance_indicator.search('./midYearValue').text.to_i
                   d.standard = xml_performance_indicator.search('./standard').text.to_i
                   d.baseline = xml_performance_indicator.search('./baseline').text.to_i
                   d.comp_target = xml_performance_indicator.search('./compTarget').text.to_i
@@ -218,9 +219,12 @@ module FocusParse
                 d.indicator = indicator
                 d.operation = operation
                 d.yer = xml_impact_indicator.search('./yearEndValue').text.to_i
+                d.myr = xml_impact_indicator.search('./midYearValue').text.to_i
                 d.standard = xml_impact_indicator.search('./standard').text.to_i
                 d.baseline = xml_impact_indicator.search('./baseline').text.to_i
                 d.comp_target = xml_impact_indicator.search('./compTarget').text.to_i
+                d.threshold_red = xml_impact_indicator.search('./thresholdRed').text.to_i
+                d.threshold_green = xml_impact_indicator.search('./thresholdGreen').text.to_i
               end.save
 
             end
