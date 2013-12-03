@@ -159,6 +159,7 @@ class FocusParseTest < ActiveSupport::TestCase
       assert d.problem_objective || d.output, "Must be either a obj or output"
       assert d.indicator, "Must be an indicator"
       assert d.operation, "Must be an operation"
+      assert !d.is_performance.nil?, "Must have a performance field"
     end
 
   end

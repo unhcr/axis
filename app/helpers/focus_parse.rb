@@ -164,6 +164,7 @@ module FocusParse
                   d.standard = xml_performance_indicator.search('./standard').text.to_i
                   d.baseline = xml_performance_indicator.search('./baseline').text.to_i
                   d.comp_target = xml_performance_indicator.search('./compTarget').text.to_i
+                  d.is_performance = true
                 end.save
 
               end
@@ -225,6 +226,7 @@ module FocusParse
                 d.comp_target = xml_impact_indicator.search('./compTarget').text.to_i
                 d.threshold_red = xml_impact_indicator.search('./thresholdRed').text.to_i
                 d.threshold_green = xml_impact_indicator.search('./thresholdGreen').text.to_i
+                d.is_performance = false
               end.save
 
             end
