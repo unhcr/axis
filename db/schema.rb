@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131203155901) do
+ActiveRecord::Schema.define(:version => 20131203161811) do
 
   create_table "countries", :force => true do |t|
     t.string   "iso"
@@ -158,14 +158,18 @@ ActiveRecord::Schema.define(:version => 20131203155901) do
   end
 
   create_table "outputs", :id => false, :force => true do |t|
-    t.string   "id",                            :null => false
+    t.string   "id",                              :null => false
     t.string   "name"
     t.string   "priority"
-    t.integer  "aol_budget", :default => 0
-    t.integer  "ol_budget",  :default => 0
-    t.datetime "created_at",                    :null => false
-    t.datetime "updated_at",                    :null => false
-    t.boolean  "is_deleted", :default => false
+    t.integer  "aol_budget",   :default => 0
+    t.integer  "ol_budget",    :default => 0
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
+    t.boolean  "is_deleted",   :default => false
+    t.integer  "admin_cost",   :default => 0
+    t.integer  "partner_cost", :default => 0
+    t.integer  "project_cost", :default => 0
+    t.integer  "staff_cost",   :default => 0
   end
 
   create_table "outputs_plans", :id => false, :force => true do |t|
@@ -244,6 +248,10 @@ ActiveRecord::Schema.define(:version => 20131203155901) do
     t.datetime "created_at",                        :null => false
     t.datetime "updated_at",                        :null => false
     t.boolean  "is_deleted",     :default => false
+    t.integer  "admin_cost",     :default => 0
+    t.integer  "partner_cost",   :default => 0
+    t.integer  "project_cost",   :default => 0
+    t.integer  "staff_cost",     :default => 0
   end
 
   create_table "problem_objectives_rights_groups", :id => false, :force => true do |t|
