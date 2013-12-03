@@ -24,7 +24,7 @@
                       <budgetLines>
                         <BudgetLine ID="73d6901c-a17b-4245-85fe-3d31b2836e9f">
                           <scenario>Above Operating Level</scenario>
-                          <type>PROJECT Changed</type>
+                          <type>PROJECT</type>
                           <costCenter>33021</costCenter>
                           <implementerCode>0000002</implementerCode>
                           <implementerName>DIRECT IMPLEMENTATION</implementerName>
