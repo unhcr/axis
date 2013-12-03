@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131129212803) do
+ActiveRecord::Schema.define(:version => 20131203112457) do
 
   create_table "countries", :force => true do |t|
     t.string   "iso"
@@ -82,6 +82,7 @@ ActiveRecord::Schema.define(:version => 20131129212803) do
     t.datetime "updated_at",                              :null => false
     t.string   "operation_id"
     t.boolean  "is_deleted",           :default => false
+    t.integer  "myr"
   end
 
   create_table "indicators", :id => false, :force => true do |t|
