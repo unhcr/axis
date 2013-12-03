@@ -1,8 +1,9 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  iso: BEN
+  iso3: BEN
   un_names: [blue, red, green, death march]
 
 two:
-  iso: MyString
+  un_names: [afghanistan]
+  iso3: AFG

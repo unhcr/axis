@@ -83,7 +83,7 @@ class FocusParseTest < ActiveSupport::TestCase
     end
   end
 
-  test "parse plan focus basic" do
+  test "basic" do
     file = File.read(TESTFILE_PATH + TESTHEADER_NAME)
     parse_header(file, PLAN_TYPES)
 
@@ -97,6 +97,10 @@ class FocusParseTest < ActiveSupport::TestCase
 
     plan = Plan.first
     operation = Operation.where(:name => plan.operation_name).first
+
+    assert plan.country
+
+    assert_equal 'AFG', plan.country.iso3
 
     assert_equal COUNTS[:plans], operation.plans.length, "Should only have one plan"
 

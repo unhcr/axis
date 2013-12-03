@@ -17,6 +17,8 @@ module FocusParse
   PROJECT = 'PROJECT'
   STAFF = 'STAFF'
 
+  include CountryHelper
+
   def parse_header(file, plan_types = ['ONEPLAN'])
     doc = Nokogiri::XML(file)
 
@@ -65,7 +67,12 @@ module FocusParse
       p.year = xml_plan.search('./year').text.to_i
       p.name = xml_plan.search('./name').text
       p.id = xml_plan.attribute('ID').value
+
     end).save
+
+    unless plan.country
+      match_plan_to_country(plan)
+    end
 
     # Use ID once it's in the XML
     operation = Operation.where(:name => plan.operation_name).first
