@@ -17,6 +17,11 @@ $fail: #c6302a;
 $fail-dark: #710d09;
 $turquoise: rgb(32, 180, 180);
 $yellow: rgb(222, 229, 29);
+$success: rgb(70, 190, 30);
+$success-dark: rgb(7, 113, 15);
+$ok: rgb(242, 211, 25);
+$ok-dark: rgb(170, 173, 25);
+
 
 /* Transitions */
 $fast-transition: .5s;
@@ -587,29 +592,76 @@ a {
     height: 10px;
     background-color: $fail;
   }
+
+  .tooltip-close {
+    width: 2em;
+    height: 2em;
+    background-color: $fail-dark;
+    position: absolute;
+    top: 0;
+    right: -2em;
+    cursor: pointer;
+  }
 }
 
-.tooltip-close {
-  width: 2em;
-  height: 2em;
-  background-color: $fail-dark;
-  position: absolute;
-  top: 0;
-  right: -2em;
-  cursor: pointer;
+.tooltip-content.tooltip-success {
+  background-color: $success;
+  .tooltip-content-bottom {
+    background-color: $success;
+  }
+  .tooltip-close {
+    background-color: $success-dark;
+  }
 }
 
-.tooltip-close.darken {
-  background-color: darken($fail-dark, 5%);
+.tooltip-content.tooltip-ok {
+  background-color: $ok;
+  .tooltip-content-bottom {
+    background-color: $ok;
+  }
+  .tooltip-close {
+    background-color: $ok-dark;
+  }
+}
+.tooltip-content.tooltip-fail {
+  background-color: $fail;
+  .tooltip-content-bottom {
+    background-color: $fail;
+  }
+  .tooltip-close {
+    background-color: $fail-dark;
+  }
 }
 
-.tooltip-content.darken {
+
+.tooltip-content.tooltip-fail.darken {
   background-color: darken($fail, 5%);
   .tooltip-content-bottom {
     background-color: darken($fail, 5%);
   }
+  .tooltip-close.darken {
+    background-color: darken($fail-dark, 5%);
+  }
 }
 
+.tooltip-content.tooltip-ok.darken {
+  background-color: darken($ok, 5%);
+  .tooltip-content-bottom {
+    background-color: darken($ok, 5%);
+  }
+  .tooltip-close.darken {
+    background-color: darken($ok-dark, 5%);
+  }
+}
+.tooltip-content.tooltip-success.darken {
+  background-color: darken($success, 5%);
+  .tooltip-content-bottom {
+    background-color: darken($success, 5%);
+  }
+  .tooltip-close.darken {
+    background-color: darken($success-dark, 5%);
+  }
+}
 
 
 /* end tooltip */
@@ -695,6 +747,35 @@ a {
   }
 }
 
+.pin.pin-fail {
+  .pin-tip {
+    border-left-color: $fail-dark;
+  }
+
+  .pin-body {
+    background-color: $fail;
+  }
+}
+
+.pin.pin-success {
+  .pin-tip {
+    border-left-color: $success-dark;
+  }
+
+  .pin-body {
+    background-color: $success;
+  }
+}
+
+.pin.pin-ok {
+  .pin-tip {
+    border-left-color: $ok;
+  }
+
+  .pin-body {
+    background-color: $ok-dark;
+  }
+}
 #navigation {
   width: $navigation-width;
 }

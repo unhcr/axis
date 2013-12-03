@@ -1,7 +1,7 @@
-<div class="pin pin-small <%= plan.country.iso3 %>">
+<div class="pin pin-small pin-<%= plan.situation_analysis %> <%= plan.country.iso3 %>">
   <div class="pin-tip"></div>
   <div class="pin-body"></div>
-  <div class="tooltip-content gone">
+  <div class="tooltip-content tooltip-<%= plan.situation_analysis %> gone">
     <div class="operation ui-extra-small-header ui-white">
       <%= plan.operation_name %>
     </div>
