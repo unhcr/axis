@@ -15,3 +15,8 @@ deleted:
   is_performance: false
   is_gsp: false
   is_deleted: true
+
+impact:
+  name: My baby
+  is_performance: false
+  is_gsp: false
