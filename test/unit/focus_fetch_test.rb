@@ -12,6 +12,7 @@ class FocusFetchTest < ActiveSupport::TestCase
 
   def teardown
     FileUtils.rm_rf("#{TESTDATA_PATH}/.", secure: true)
+    FileUtils.touch("#{TESTDATA_PATH}/.gitignore")
   end
 
   test "Fetching from FOCUS - max files 2" do
