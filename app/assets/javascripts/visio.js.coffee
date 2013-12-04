@@ -18,3 +18,4 @@ window.Visio =
     PROBLEM_OBJECTIVES: 'problem_objectives'
     INDICATORS: 'indicators'
     INDICATOR_DATA: 'indicator_data'
+  Algorithms: {}
