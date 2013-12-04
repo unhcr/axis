@@ -16,6 +16,7 @@ class Visio.Models.Plan extends Visio.Models.Parameter
   paramRoot: 'plan'
 
   situation_analysis: () ->
+    # Should be calculated once in manager
     $checkedStrategies = $('.visio-check input:checked')
     if $checkedStrategies.length == 0
       # Just return analysis for entire plan
@@ -23,7 +24,15 @@ class Visio.Models.Plan extends Visio.Models.Parameter
     else
       # Need to calculate based on strategy data
       strategy_ids = $checkedStrategies.map((i, ele) -> +$(ele).val())
-      Visio.manager.get('indicator_data').situation_analysis(strategy_ids)
+      strategies = Visio.manager.strategies(strategy_ids)
+      Visio.manager.get('indicator_data').situation_analysis(
+        plans_ids: _.flatten(strategies.pluck('plans_ids'))
+        ppgs_ids: _.flatten(strategies.pluck('ppgs_ids'))
+        goals_ids: _.flatten(strategies.pluck('goals_ids'))
+        outputs_ids: _.flatten(strategies.pluck('outputs_ids'))
+        problem_objectives_ids: _.flatten(strategies.pluck('problem_objectives_ids'))
+        indicators_ids: _.flatten(strategies.pluck('indicators_ids'))
+      )
 
 
   fetchIndicators: () ->

@@ -21,15 +21,7 @@ class Visio.Views.PriorityCountryFilterView extends Backbone.View
     strategy_id = $(e.currentTarget).val()
     Visio.manager.get('indicator_data').fetchSynced({ strategy_id: strategy_id }).done(() =>
       strategy_ids = @$el.find('.visio-check input:checked').map((i, ele) -> +$(ele).val())
-      strategies = Visio.manager.strategies(strategy_ids)
-      @filter(
-        plans_ids: _.flatten(strategies.pluck('plans_ids'))
-        ppgs_ids: _.flatten(strategies.pluck('ppgs_ids'))
-        goals_ids: _.flatten(strategies.pluck('goals_ids'))
-        outputs_ids: _.flatten(strategies.pluck('outputs_ids'))
-        problem_objectives_ids: _.flatten(strategies.pluck('problem_objectives_ids'))
-        indicators_ids: _.flatten(strategies.pluck('indicators_ids'))
-      )
+      @filter(strategy_ids)
     )
 
 
