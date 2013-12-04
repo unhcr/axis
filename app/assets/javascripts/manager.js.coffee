@@ -1,7 +1,7 @@
 class Visio.Models.Manager extends Backbone.Model
 
   initialize: () ->
-    @set('db', new ydn.db.Storage(Visio.Constants.DB_NAME))
+    @set('db', new ydn.db.Storage(Visio.Constants.DB_NAME, Visio.Schema))
 
   defaults:
     'plans': new Visio.Collections.Plan()

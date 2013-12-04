@@ -93,7 +93,6 @@ asyncTest('fetchSyncedPlans for different years', () ->
 )
 
 test('find plan', () ->
-  Visio.manager.get('db').put('dummy-store', {test: 'Hello World!'}, 123)
   Visio.manager.get('plans').reset([{ id: 'bien', year: 2013, country: { iso3: 'BEN' } },
                               { id: 'dirk', year: 2013, country: { iso3: 'UGA' } }])
 
