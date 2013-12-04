@@ -26,13 +26,10 @@ class Visio.Views.PriorityCountryFilterView extends Backbone.View
 
 
   filter: (strategy_ids) ->
+    if strategy_ids.length == 0
+      Visio.router.map.filterTooltips()
+      return
 
-    plan_ids = _.intersection(_.flatten(Visio.manager.get('strategies').map((s) ->
-      if _.include(strategy_ids, s.id)
-        s.get("#{Visio.Parameters.PLANS}_ids")
-      else
-        return []
-      ), true)
-    )
+    plan_ids = _.intersection.apply(null, Visio.manager.strategies(strategy_ids).pluck('plans_ids'))
 
     Visio.router.map.filterTooltips(plan_ids)
