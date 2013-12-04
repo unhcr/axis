@@ -9,7 +9,7 @@ module AlgorithmHelper
   SUCCESS_THRESHOLD = 0.66
   OK_THRESHOLD = 0.33
 
-  def situation_analysis_algo(indicator_data, reported_value = 'yer')
+  def situation_analysis_algo(indicator_data, reported_value = 'myr')
     num_green = 0
     num_amber = 0
 

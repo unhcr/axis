@@ -7,7 +7,7 @@ class AlgorithmHelperTest < ActiveSupport::TestCase
   test "situation analysis" do
     data = [indicator_data(:one), indicator_data(:two)]
 
-    color = situation_analysis_algo(data)
+    color = situation_analysis_algo(data, 'yer')
 
     assert_equal color, AlgorithmHelper::ALGO_COLORS[:success]
 
