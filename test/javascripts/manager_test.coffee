@@ -61,3 +61,27 @@ asyncTest('getMap', () ->
     )
   )
 )
+
+test('strategies', () ->
+  Visio.manager.get('strategies').reset([
+    {
+      id: 'ben'
+    },
+    {
+      id: 'lisa'
+    },
+    {
+      id: 'jeff'
+    }
+  ])
+
+  strategies = Visio.manager.strategies(['ben', 'lisa'])
+  strictEqual(strategies.length, 2)
+
+  strategies = Visio.manager.strategies(['ben'])
+  strictEqual(strategies.length, 1)
+  strictEqual(strategies[0].id, 'ben')
+
+  strategies = Visio.manager.strategies([])
+  strictEqual(strategies.length, 3)
+)

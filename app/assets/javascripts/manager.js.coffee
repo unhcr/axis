@@ -11,6 +11,7 @@ class Visio.Models.Manager extends Backbone.Model
     'problem_objectives': new Visio.Collections.ProblemObjective()
     'indicators': new Visio.Collections.Indicator()
     'indicator_data': new Visio.Collections.IndicatorDatum()
+    'strategies': new Visio.Collections.Strategy()
     'date': new Date()
     'db': null
     'mapMD5': null
@@ -24,8 +25,16 @@ class Visio.Models.Manager extends Backbone.Model
     @set('date', new Date(year, 1))
 
   strategy: () ->
-    return unless @get('strategies')
+    return unless @get('strategies') && @get('strategy_id')
     @get('strategies').get(@get('strategy_id'))
+
+  strategies: (strategy_ids) ->
+    if !strategy_ids || strategy_ids.length == 0
+      return @get('strategies')
+
+    @get('strategies').filter((strategy) ->
+      _.include(strategy_ids, strategy.id)
+    )
 
   plan: (idOrISO) ->
     if idOrISO.length == 3
