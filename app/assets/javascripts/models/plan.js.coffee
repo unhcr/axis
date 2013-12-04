@@ -15,6 +15,16 @@ class Visio.Models.Plan extends Visio.Models.Parameter
 
   paramRoot: 'plan'
 
+  situation_analysis: () ->
+    $checkedStrategies = $('.visio-check input:checked')
+    if $checkedStrategies.length == 0
+      # Just return analysis for entire plan
+      return @get('situation_analysis')
+    else
+      # Need to calculate based on strategy data
+      strategy_ids = $checkedStrategies.map((i, ele) -> +$(ele).val())
+      Visio.manager.get('indicator_data').situation_analysis(strategy_ids)
+
 
   fetchIndicators: () ->
     @fetchParameter(Visio.Parameters.INDICATORS)
