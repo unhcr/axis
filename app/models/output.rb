@@ -1,6 +1,6 @@
 class Output < ActiveRecord::Base
   extend Parameter
-  attr_accessible :name, :priority, :admin_cost, :partner_cost, :project_cost, :staff_cost
+  attr_accessible :name, :priority, :admin_budget, :partner_budget, :project_budget, :staff_budget, :aol_budget, :ol_budget
 
   self.primary_key = :id
   has_and_belongs_to_many :indicators, :uniq => true
@@ -19,7 +19,7 @@ class Output < ActiveRecord::Base
 
   def to_jbuilder(options = {})
     Jbuilder.new do |json|
-      json.extract! self, :name, :id, :priority
+      json.extract! self, :name, :id, :priority, :ol_budget, :aol_budget, :admin_budget, :partner_budget, :project_budget, :staff_budget
     end
   end
 

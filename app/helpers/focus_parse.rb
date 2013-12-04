@@ -199,17 +199,17 @@ module FocusParse
                 end
 
                 if type == ADMIN
-                  output.admin_cost += amount
-                  problem_objective.admin_cost += amount
+                  output.admin_budget += amount
+                  problem_objective.admin_budget += amount
                 elsif type == PARTNER
-                  output.partner_cost += amount
-                  problem_objective.partner_cost += amount
+                  output.partner_budget += amount
+                  problem_objective.partner_budget += amount
                 elsif type == PROJECT
-                  output.project_cost += amount
-                  problem_objective.project_cost += amount
+                  output.project_budget += amount
+                  problem_objective.project_budget += amount
                 elsif type == STAFF
-                  output.staff_cost += amount
-                  problem_objective.staff_cost += amount
+                  output.staff_budget += amount
+                  problem_objective.staff_budget += amount
                 else
                   p "Unidentified cost type: #{type}"
                 end
@@ -232,13 +232,13 @@ module FocusParse
                 end
 
                 if type == ADMIN
-                  problem_objective.admin_cost += amount
+                  problem_objective.admin_budget += amount
                 elsif type == PARTNER
-                  problem_objective.partner_cost += amount
+                  problem_objective.partner_budget += amount
                 elsif type == PROJECT
-                  problem_objective.project_cost += amount
+                  problem_objective.project_budget += amount
                 elsif type == STAFF
-                  problem_objective.staff_cost += amount
+                  problem_objective.staff_budget += amount
                 else
                   p "Unidentified cost type: #{type}"
                 end
