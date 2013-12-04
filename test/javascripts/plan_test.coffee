@@ -51,7 +51,13 @@ asyncTest('fetchSyncedPlans', () ->
 
   p = new Visio.Collections.Plan()
 
-  p.fetchSynced().done(() ->
+  options =
+    options:
+      include:
+        counts: true
+
+
+  p.fetchSynced(options).done(() ->
     ok(p.models.length > 0, 'Should have greater than 0 plans')
     p.each((model) ->
       ok(model.get('id'), 'Each model should have id')
