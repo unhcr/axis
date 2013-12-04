@@ -411,6 +411,7 @@ button, input {
   height: 12px;
   margin-top: 3px;
   float: right;
+  margin-left: 6px;
 }
 
 .visio-check input:checked + label:before {
@@ -422,6 +423,7 @@ button, input {
   content: ' ';
   float: left;
   margin-right: 6px;
+  margin-left: 0px;
 }
 
 .visio-check-yellow input:checked + label:before {
