@@ -151,6 +151,7 @@ Visio.Graphs.map = (config) ->
       id = value.model.id
       if (_.include(plan_ids, id) || plan_ids.length == 0)
         value.show()
+        value.render()
       else
         value.hide()
 
