@@ -164,6 +164,7 @@ class FocusParseTest < ActiveSupport::TestCase
       assert d.indicator, "Must be an indicator"
       assert d.operation, "Must be an operation"
       assert !d.is_performance.nil?, "Must have a performance field"
+      assert d.year, "Must be a year"
     end
 
   end
