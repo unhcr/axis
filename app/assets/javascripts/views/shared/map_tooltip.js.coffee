@@ -37,8 +37,12 @@ class Visio.Views.MapTooltipView extends Backbone.View
 
     unless isRerender
       @$el.hide()
-      @$el.html @template({ plan: @model.toJSON() })
       $('body').append(@el)
+
+    @$el.html @template({
+      plan: @model.toJSON()
+      situation_analysis: @model.situation_analysis()
+    })
 
     offset = $(@point).offset()
     offset.left -= @$el.width() / 2
