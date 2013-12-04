@@ -202,7 +202,7 @@ test 'situation analysis', () ->
       myr: 8
       threshold_green: 10
       threshold_red: 5
-      plan_id: 1
+      plan_id: 'abcd'
       goal_id: 1
       output_id: 1
       ppg_id: 1
@@ -254,3 +254,29 @@ test 'situation analysis', () ->
   color = p.situation_analysis()
   strictEqual(Visio.Algorithms.ALGO_COLORS.fail, color)
 
+  $('.visio-check').html('<input type="checkbox" checked="checked" value="1" /><input value="2" type="checkbox"/>')
+
+  color = p.situation_analysis()
+  strictEqual(Visio.Algorithms.ALGO_COLORS.fail, color)
+
+  Visio.manager.get('strategies').reset([{
+      id: 1
+      plans_ids: ['abcd']
+      goals_ids: [1]
+      ppgs_ids: [1]
+      outputs_ids: [1]
+      problem_objectives_ids: [1]
+      indicators_ids: [1]
+    },
+    {
+      id: 2,
+      plans_ids: []
+      goals_ids: []
+      ppgs_ids: []
+      outputs_ids: []
+      problem_objectives_ids: []
+      indicators_ids: []
+    }])
+
+  color = p.situation_analysis()
+  strictEqual(Visio.Algorithms.ALGO_COLORS.ok, color)
