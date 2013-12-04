@@ -46,4 +46,16 @@ class IndicatorDatum < ActiveRecord::Base
     return synced_data
 
   end
+
+  def to_jbuilder(options = {})
+    Jbuilder.new do |json|
+      json.extract! self, :baseline, :comp_target, :reversal, :standard, :stored_baseline, :threshold_green, :threshold_red, :yer, :myr, :is_performance, :year, :indicator_id, :output_id, :problem_objective_id, :goal_id, :ppg_id, :plan_id
+
+    end
+
+  end
+
+  def as_json(options = {})
+    to_jbuilder(options).attributes!
+  end
 end
