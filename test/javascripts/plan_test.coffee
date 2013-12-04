@@ -280,3 +280,61 @@ test 'situation analysis', () ->
 
   color = p.situation_analysis()
   strictEqual(Visio.Algorithms.ALGO_COLORS.ok, color)
+
+test 'budget', () ->
+  p = new Visio.Models.Plan({ id: 'abcd', name: 'ben' })
+
+  Visio.manager.get('indicator_data').reset([
+    {
+      id: 1
+      yer: 20
+      myr: 8
+      threshold_green: 10
+      threshold_red: 5
+      plan_id: 'abcd'
+      goal_id: 1
+      output_id: 1
+      ppg_id: 1
+      problem_objective_id: 1
+      indicator_id: 1
+      is_performance: false
+      problem_objective_id: 1
+      plan_id: 'abcd'
+    },
+    {
+      id: 2
+      yer: 30
+      myr: 21
+      threshold_green: 40
+      threshold_red: 20
+      plan_id: 2
+      goal_id: 2
+      output_id: 2
+      ppg_id: 2
+      problem_objective_id: 2
+      indicator_id: 2
+      is_performance: false
+      problem_objective_id: 2
+      plan_id: 'abcd'
+    }])
+
+  Visio.manager.get('problem_objectives').reset([
+    {
+      id: 1
+      budget: 20
+    },
+    {
+      id: 2
+      budget: 30
+    }
+  ])
+
+  budget = p.budget()
+
+  strictEqual(50, budget)
+
+  Visio.manager.get('indicator_data').get(1).set('problem_objective_id', 2)
+
+  budget = p.budget()
+
+  strictEqual(30, budget)

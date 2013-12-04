@@ -187,13 +187,13 @@ module FocusParse
 
               xml_budget_lines.each do |xml_budget_line|
 
-                scenerio = xml_budget_line.search('./scenerio').text
+                scenario = xml_budget_line.search('./scenario').text
                 amount = xml_budget_line.search('./amount').text.to_i
                 type = xml_budget_line.search('./type').text
-                if scenerio == AOL
+                if scenario == AOL
                   output.aol_budget += amount
                   problem_objective.aol_budget += amount
-                elsif scenerio == OL
+                elsif scenario == OL
                   output.ol_budget += amount
                   problem_objective.ol_budget += amount
                 end
@@ -223,11 +223,11 @@ module FocusParse
             xml_budget_lines = xml_problem_objective.search('./budgetLines/BudgetLine')
 
             xml_budget_lines.each do |xml_budget_line|
-                scenerio = xml_budget_line.search('./scenerio').text
+                scenario = xml_budget_line.search('./scenario').text
                 amount = xml_budget_line.search('./amount').text.to_i
-                if scenerio == AOL
+                if scenario == AOL
                   problem_objective.aol_budget += amount
-                elsif scenerio == OL
+                elsif scenario == OL
                   problem_objective.ol_budget += amount
                 end
 
