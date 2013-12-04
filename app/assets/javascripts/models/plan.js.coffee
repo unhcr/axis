@@ -26,12 +26,12 @@ class Visio.Models.Plan extends Visio.Models.Parameter
       strategy_ids = $checkedStrategies.map((i, ele) -> +$(ele).val())
       strategies = Visio.manager.strategies(strategy_ids)
       Visio.manager.get('indicator_data').situation_analysis(
-        plans_ids: _.flatten(strategies.pluck('plans_ids'))
-        ppgs_ids: _.flatten(strategies.pluck('ppgs_ids'))
-        goals_ids: _.flatten(strategies.pluck('goals_ids'))
-        outputs_ids: _.flatten(strategies.pluck('outputs_ids'))
-        problem_objectives_ids: _.flatten(strategies.pluck('problem_objectives_ids'))
-        indicators_ids: _.flatten(strategies.pluck('indicators_ids'))
+        plans_ids: _.intersection.apply(null, strategies.pluck('plans_ids'))
+        ppgs_ids: _.intersection.apply(null, strategies.pluck('ppgs_ids'))
+        goals_ids: _.intersection.apply(null, strategies.pluck('goals_ids'))
+        outputs_ids: _.intersection.apply(null, strategies.pluck('outputs_ids'))
+        problem_objectives_ids: _.intersection.apply(null, strategies.pluck('problem_objectives_ids'))
+        indicators_ids: _.intersection.apply(null, strategies.pluck('indicators_ids'))
       )
 
 

@@ -4,7 +4,7 @@ class Visio.Collections.Parameter extends Backbone.Collection
 
   keyPath: 'id'
 
-  limit: 1000
+  limit: 3000
 
   store: () ->
     @name + '_store'

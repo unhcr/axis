@@ -194,3 +194,64 @@ asyncTest('fetchGoals', () ->
 
 )
 
+test 'situation analysis', () ->
+  p = new Visio.Models.Plan({ id: 'abcd', name: 'ben', situation_analysis: Visio.Algorithms.ALGO_COLORS.success })
+  Visio.manager.get('indicator_data').reset([
+    {
+      id: 1
+      yer: 20
+      myr: 8
+      threshold_green: 10
+      threshold_red: 5
+      plan_id: 1
+      goal_id: 1
+      output_id: 1
+      ppg_id: 1
+      problem_objective_id: 1
+      indicator_id: 1
+      is_performance: false
+    },
+    {
+      id: 2
+      yer: 30
+      myr: 21
+      threshold_green: 40
+      threshold_red: 20
+      plan_id: 2
+      goal_id: 2
+      output_id: 2
+      ppg_id: 2
+      problem_objective_id: 2
+      indicator_id: 2
+      is_performance: false
+    }])
+
+
+
+  color = p.situation_analysis()
+  strictEqual(Visio.Algorithms.ALGO_COLORS.success, color)
+
+  Visio.manager.get('strategies').reset([{
+      id: 1
+      plans_ids: [1]
+      goals_ids: [1]
+      ppgs_ids: [1]
+      outputs_ids: [1]
+      problem_objectives_ids: [1]
+      indicators_ids: [1]
+    },
+    {
+      id: 2,
+      plans_ids: []
+      goals_ids: []
+      ppgs_ids: []
+      outputs_ids: []
+      problem_objectives_ids: []
+      indicators_ids: []
+    }])
+
+  $('body').append('<div class="visio-check"><input type="checkbox" checked="checked" value="1" /><input checked="checked" value="2" type="checkbox"/></div>')
+
+  color = p.situation_analysis()
+  strictEqual(Visio.Algorithms.ALGO_COLORS.fail, color)
+
