@@ -82,3 +82,22 @@ task :load_sample_strategy => :environment do
   s.indicators = Indicator.limit(40)
 
 end
+
+task :random_strategy => :environment do
+
+  probability = 0.33
+
+  s = Strategy.new(
+    :name => "#{RandomWord.adjs.next} #{RandomWord.nouns.next}"
+  )
+
+  s.operations << Operation.order("RAND()").limit(probability * Operation.count)
+  s.ppgs << Ppg.order("RAND()").limit(probability * Ppg.count)
+  s.goals << Goal.order("RAND()").limit(probability * Goal.count)
+  s.problem_objectives << ProblemObjective.order("RAND()").limit(probability * ProblemObjective.count)
+  s.outputs << Output.order("RAND()").limit(probability * Output.count)
+  s.indicators << Indicator.order("RAND()").limit(probability * Indicator.count)
+  s.plans << Plan.where(:operation_id => s.operation_ids)
+  s.save
+
+end
