@@ -37,6 +37,7 @@ $pin-extra-large: 50px;
 $map-filter-width: 200px;
 $navigation-width: 300px;
 $accordion-max-height: 340px;
+$meter-height: 10px;
 
 
 @font-face {
@@ -393,6 +394,10 @@ button, input {
   max-height: 300px;
   min-height: 300px;
   width: 600px;
+}
+
+.ui-blank-radio input {
+  display: none;
 }
 
 .visio-check input {
@@ -816,4 +821,40 @@ a {
 
 .ui-accordion-container.opened .open:after {
   background-image: url(/assets/logo.png);
+}
+
+/* meter */
+
+.meter {
+  height: $meter-height;  /* Can be anything */
+	position: relative;
+	background: $light-gray;
+	-moz-border-radius: 25px;
+	-webkit-border-radius: 25px;
+	border-radius: 25px;
+}
+
+.meter > span {
+	display: block;
+	height: $meter-height;
+	   -webkit-border-top-right-radius: $meter-height;
+	-webkit-border-bottom-right-radius: $meter-height;
+	       -moz-border-radius-topright: $meter-height;
+	    -moz-border-radius-bottomright: $meter-height;
+	           border-top-right-radius: $meter-height;
+	        border-bottom-right-radius: $meter-height;
+	    -webkit-border-top-left-radius: $meter-height;
+	 -webkit-border-bottom-left-radius: $meter-height;
+	        -moz-border-radius-topleft: $meter-height;
+	     -moz-border-radius-bottomleft: $meter-height;
+	            border-top-left-radius: $meter-height;
+	         border-bottom-left-radius: $meter-height;
+	background-color: $primary-light;
+  position: relative;
+	overflow: hidden;
+
+  -moz-transition:width $medium-transition;
+  -webkit-transition:width $medium-transition;
+  -o-transition:width $medium-transition;
+  transition:width $medium-transition;
 }

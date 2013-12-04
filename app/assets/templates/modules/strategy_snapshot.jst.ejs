@@ -1,0 +1,22 @@
+<div class="row">
+  <div class="col-md-2">
+    <div>Target Countries</div>
+    <div>All</div>
+    <% for (var i = 0; i < targetPlans.length; i++) { %>
+    <div class="ui-blank-radio">
+      <label for="radio-<%= targetPlans[i].id %>"><%= targetPlans[i].operation_name %></label>
+      <input name="plan" type="radio" id="radio-<%= targetPlans[i].id %>" value="<%= targetPlans[i].id %>" />
+    </div>
+    <% } %>
+  </div>
+  <div class="col-md-4">
+    <div class="meter">
+      <span style="width: 95%"></span>
+    </div>
+  </div>
+
+  <div class="col-md-3">
+  </div>
+  <div class="col-md-3">
+  </div>
+</div>

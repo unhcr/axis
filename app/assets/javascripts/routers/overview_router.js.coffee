@@ -7,6 +7,10 @@ class Visio.Routers.OverviewRouter extends Backbone.Router
     @setup().done(() =>
 
       @navigation.render()
+      @strategySnapshotView = new Visio.Views.StrategySnapshotView(
+        el: $('#strategy-snapshot')
+      )
+      @strategySnapshotView.render()
 
     )
 
