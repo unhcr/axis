@@ -77,11 +77,14 @@ test('strategies', () ->
 
   strategies = Visio.manager.strategies(['ben', 'lisa'])
   strictEqual(strategies.length, 2)
+  ok(strategies instanceof Visio.Collections.Strategy)
 
   strategies = Visio.manager.strategies(['ben'])
   strictEqual(strategies.length, 1)
-  strictEqual(strategies[0].id, 'ben')
+  strictEqual(strategies.at(0).id, 'ben')
+  ok(strategies instanceof Visio.Collections.Strategy)
 
   strategies = Visio.manager.strategies([])
   strictEqual(strategies.length, 3)
+  ok(strategies instanceof Visio.Collections.Strategy)
 )

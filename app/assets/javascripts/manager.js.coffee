@@ -32,9 +32,9 @@ class Visio.Models.Manager extends Backbone.Model
     if !strategy_ids || strategy_ids.length == 0
       return @get('strategies')
 
-    @get('strategies').filter((strategy) ->
+    return new Visio.Collections.Strategy(@get('strategies').filter((strategy) ->
       _.include(strategy_ids, strategy.id)
-    )
+    ))
 
   plan: (idOrISO) ->
     if idOrISO.length == 3
