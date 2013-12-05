@@ -18,7 +18,19 @@ window.Visio =
     PROBLEM_OBJECTIVES: 'problem_objectives'
     INDICATORS: 'indicators'
     INDICATOR_DATA: 'indicator_data'
-  Algorithms: {}
+  Algorithms:
+    SUCCESS_THRESHOLD: 0.66
+    OK_THRESHOLD: 0.33
+    ALGO_COLORS:
+      success: 'success'
+      ok: 'ok'
+      fail: 'fail'
+      missing: 'missing'
+
+    REPORTED_VALUES:
+      myr: 'myr'
+      yer: 'yer'
+
 
 Visio.Schema =
     stores: [

@@ -23,14 +23,3 @@ Visio.Algorithms.situation_analysis = (indicator_data, reported_value) ->
     return Visio.Algorithms.ALGO_COLORS.ok
   else
     return Visio.Algorithms.ALGO_COLORS.fail
-
-
-
-
-Visio.Algorithms.SUCCESS_THRESHOLD = 0.66
-Visio.Algorithms.OK_THRESHOLD = 0.33
-Visio.Algorithms.ALGO_COLORS =
-  success: 'success'
-  ok: 'ok'
-  fail: 'fail'
-
