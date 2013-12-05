@@ -21,11 +21,16 @@ window.Visio =
   Algorithms:
     SUCCESS_THRESHOLD: 0.66
     OK_THRESHOLD: 0.33
+    HIGH_THRESHOLD: 0.8
+    MEDIUM_THRESHOLD: 0.6
     ALGO_RESULTS:
       success: 'success'
       ok: 'ok'
       fail: 'fail'
       missing: 'missing'
+      high: 'high'
+      medium: 'medium'
+      low: 'low'
 
     REPORTED_VALUES:
       myr: 'myr'
