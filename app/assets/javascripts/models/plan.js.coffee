@@ -26,22 +26,19 @@ class Visio.Models.Plan extends Visio.Models.Parameter
       strategy_ids = $checkedStrategies.map((i, ele) -> +$(ele).val())
       strategies = Visio.manager.strategies(strategy_ids)
 
-      ids =
-        plans_ids: _.intersection([@id], _.intersection.apply(null, strategies.pluck('plans_ids')))
-        ppgs_ids: _.intersection.apply(null, strategies.pluck('ppgs_ids'))
-        goals_ids: _.intersection.apply(null, strategies.pluck('goals_ids'))
-        outputs_ids: _.intersection.apply(null, strategies.pluck('outputs_ids'))
-        problem_objectives_ids: _.intersection.apply(null, strategies.pluck('problem_objectives_ids'))
-        indicators_ids: _.intersection.apply(null, strategies.pluck('indicators_ids'))
+      ids = {}
+
+      _.each Visio.manager.get('types'), (type) =>
+        if type == Visio.Parameters.PLANS
+          ids["#{type}_ids"] = [@id]
+        else
+          ids["#{type}_ids"] = _.intersection.apply(null, strategies.pluck("#{type}_ids"))
 
       data = new Visio.Collections.IndicatorDatum(Visio.manager.get('indicator_data').filter((datum) ->
-          return _.include(ids.plans_ids, datum.get('plan_id')) &&
-            _.include(ids.ppgs_ids, datum.get('ppg_id')) &&
-            _.include(ids.goals_ids, datum.get('goal_id')) &&
-            _.include(ids.outputs_ids, datum.get('output_id')) &&
-            _.include(ids.problem_objectives_ids, datum.get('problem_objective_id')) &&
-            _.include(ids.indicators_ids, datum.get('indicator_id')) &&
-            !datum.get('is_performance')
+          valid = _.every Visio.manager.get('types'), (type) =>
+            _.include(ids["#{type}_ids"], datum.get("#{Inflection.singularize(type)}_id"))
+
+          return valid && !datum.get('is_performance')
         ))
 
       data.situation_analysis()
