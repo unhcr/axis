@@ -11,9 +11,11 @@ Visio.Graphs.bubble = (config) ->
 
   selection = config.selection
 
+  duration = 500
+
   svg = selection.append('svg')
-    .attr('width', width)
-    .attr('height', height)
+    .attr('width', config.width)
+    .attr('height', config.height)
 
   g = svg.append('g')
     .attr('transform', "translate(#{margin.left}, #{margin.top})")
@@ -29,22 +31,40 @@ Visio.Graphs.bubble = (config) ->
     .domain([0, 1000000])
     .range([0, 20])
 
+  xAxis = d3.svg.axis()
+    .scale(x)
+    .orient('bottom')
+
+  yAxis = d3.svg.axis()
+    .scale(y)
+    .orient('left')
+
   parameters = config.parameters
+
+  g.append('g')
+    .attr('class', 'y axis')
+    .attr('transform', 'translate(0,0)')
+
+  g.append('g')
+    .attr('class', 'x axis')
+    .attr('transform', "translate(0,#{height})")
 
   render = () ->
 
     maxBudget = 0
 
     data = parameters.map (parameter) ->
-      achievement = parameter.selectedAchievement()
-      value = if achievement then achievement.result else 0
+      achievement = parameter.selectedAchievement().result
       datum = {
         budget: parameter.selectedBudget()
-        achievement: value
+        achievement: achievement
         population: Math.random() * 1000000
       }
       maxBudget = datum.budget if datum.budget > maxBudget
       return datum
+
+    data = data.filter (d) ->
+      return d.budget && d.achievement
 
     x.domain([0, maxBudget])
 
@@ -63,6 +83,16 @@ Visio.Graphs.bubble = (config) ->
         return x(d.budget))
 
     bubbles.exit().remove()
+
+    g.select('.x.axis')
+      .transition()
+      .duration(duration)
+      .call(xAxis)
+
+    g.select('.y.axis')
+      .transition()
+      .duration(duration)
+      .call(yAxis)
 
 
   return render
