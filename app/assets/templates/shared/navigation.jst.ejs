@@ -10,7 +10,8 @@
       <div data-type="<%= parameters[p].type %>" class="ui-accordion-content <%= parameters[p].type %>">
         <% for (var i = 0; i < parameters[p].data.length; i ++) { %>
         <div class="visio-check visio-check-yellow ui-line-item-theme">
-          <input <% if (strategy.include(parameters[p].type, parameters[p].data[i].id)) { %>checked="checked"<% } %> type="checkbox" id="check_<%= parameters[p].data[i].id %>"/>
+          <input value="<%= parameters[p].type + '__' + parameters[p].data[i].id %>" <% if (strategy.include(parameters[p].type, parameters[p].data[i].id)) { %>checked="checked"<% } %> type="checkbox" id="check_<%= parameters[p].data[i].id %>"/>
+
           <% name = parameters[p].type === Visio.Parameters.PLANS ? parameters[p].data[i].operation_name : (parameters[p].data[i].name || parameters[p].data[i].objective_name) %>
           <label for="check_<%= parameters[p].data[i].id %>"><%= name %></label>
         </div>

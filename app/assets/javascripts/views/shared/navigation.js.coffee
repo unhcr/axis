@@ -3,9 +3,14 @@ class Visio.Views.NavigationView extends Backbone.View
   template: JST['shared/navigation']
 
   initialize: () ->
+    # Set defaults for selected
+    _.each Visio.manager.get('types'), (type) ->
+      Visio.manager.get('selected')[type] = Visio.manager.strategy().get("#{type}_ids")
+
 
   events:
     'click .open': 'onClickOpen'
+    'change .visio-check input': 'onChangeSelection'
 
   render: () ->
 
@@ -44,6 +49,19 @@ class Visio.Views.NavigationView extends Backbone.View
           type: Visio.Parameters.INDICATORS
         }
       ]))
+
+  onChangeSelection: (e) ->
+    $target = $(e.currentTarget)
+
+    typeid = $target.val().split('__')
+
+    type = typeid[0]
+    id = typeid[1]
+
+    if $target.is(':checked')
+      Visio.manager.get('selected')[type] = _.union(Visio.manager.get('selected')[type], [id])
+    else
+      Visio.manager.get('selected')[type] = _.difference(Visio.manager.get('selected')[type], [id])
 
   onClickOpen: (e) ->
     type = $(e.currentTarget).attr('data-type')

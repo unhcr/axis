@@ -1,12 +1,13 @@
 class Visio.Routers.OverviewRouter extends Backbone.Router
 
   initialize: (options) ->
-    @navigation = new Visio.Views.NavigationView({
-      el: $('#navigation')
-    })
     @setup().done(() =>
 
+      @navigation = new Visio.Views.NavigationView({
+        el: $('#navigation')
+      })
       @navigation.render()
+
       @strategySnapshotView = new Visio.Views.StrategySnapshotView(
         el: $('#strategy-snapshot')
       )
