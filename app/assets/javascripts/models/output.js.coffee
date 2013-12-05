@@ -1,4 +1,4 @@
-class Visio.Models.Output extends Backbone.Model
+class Visio.Models.Output extends Visio.Models.Parameter
 
   constructor: () ->
     Backbone.Model.apply(@, arguments)

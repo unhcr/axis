@@ -1,7 +1,4 @@
-class Visio.Models.Ppg extends Backbone.Model
-
-  constructor: () ->
-    Backbone.Model.apply(@, arguments)
+class Visio.Models.Ppg extends Visio.Models.Parameter
 
   urlRoot: '/ppgs'
 

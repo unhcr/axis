@@ -1,7 +1,4 @@
-class Visio.Models.Goal extends Backbone.Model
-
-  constructor: () ->
-    Backbone.Model.apply(@, arguments)
+class Visio.Models.Goal extends Visio.Models.Parameter
 
   urlRoot: '/goals'
 

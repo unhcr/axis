@@ -1,4 +1,4 @@
-class Visio.Models.ProblemObjective extends Backbone.Model
+class Visio.Models.ProblemObjective extends Visio.Models.Parameter
 
   constructor: () ->
     Backbone.Model.apply(@, arguments)

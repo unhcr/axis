@@ -1,4 +1,4 @@
-class Visio.Models.Indicator extends Backbone.Model
+class Visio.Models.Indicator extends Visio.Models.Parameter
 
   constructor: () ->
     Backbone.Model.apply(@, arguments)
