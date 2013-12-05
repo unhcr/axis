@@ -1,4 +1,6 @@
-module 'Indicator Data'
+module 'Indicator Data',
+  setup: () ->
+    Visio.manager = new Visio.Models.Manager()
 
 test 'situation analysis', () ->
 
@@ -84,4 +86,57 @@ test 'situation analysis', () ->
 
 
 
+test 'missingBudget', () ->
+  Visio.manager.get('outputs').reset([
+    {
+      id: 'zero'
+      ol_budget: 0
+    },
+    {
+      id: 'missing'
+      ol_budget: undefined
+    },
+    {
+      id: 'present'
+      ol_budget: 40
+    }
+  ])
+  Visio.manager.get('problem_objectives').reset([
+    {
+      id: 'zero'
+      ol_budget: 0
+    },
+    {
+      id: 'missing'
+      ol_budget: undefined
+    },
+    {
+      id: 'present'
+      ol_budget: 40
+    }
+  ])
 
+
+  datum = new Visio.Models.IndicatorDatum({
+    id: 'ben'
+    output_id: 'zero'
+    problem_objective_id: 'present'
+    is_performance: true
+  })
+
+  ok(datum.missingBudget())
+
+  datum.set('output_id', 'missing')
+  ok(datum.missingBudget())
+
+  datum.set('output_id', 'present')
+  ok(!datum.missingBudget())
+
+  datum.set('is_performance', false)
+  ok(!datum.missingBudget())
+
+  datum.set('problem_objective_id', 'missing')
+  ok(datum.missingBudget())
+
+  datum.set('problem_objective_id', 'zero')
+  ok(datum.missingBudget())
