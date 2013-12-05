@@ -2,6 +2,12 @@ class Visio.Models.Manager extends Backbone.Model
 
   initialize: () ->
     @set('db', new ydn.db.Storage(Visio.Constants.DB_NAME, Visio.Schema))
+    @get('selected')[Visio.Parameters.PLANS] = []
+    @get('selected')[Visio.Parameters.GOALS] = []
+    @get('selected')[Visio.Parameters.OUTPUTS] = []
+    @get('selected')[Visio.Parameters.PROBLEM_OBJECTIVES] = []
+    @get('selected')[Visio.Parameters.INDICATORS] = []
+    @get('selected')[Visio.Parameters.PPGS] = []
 
   defaults:
     'plans': new Visio.Collections.Plan()
@@ -17,6 +23,15 @@ class Visio.Models.Manager extends Backbone.Model
     'mapMD5': null
     'syncTimestampId': 'sync_timestamp_id_'
     'yearList': [2012, 2013, 2014, 2015]
+    'selected': {}
+    'types': [
+      Visio.Parameters.PLANS,
+      Visio.Parameters.PPGS,
+      Visio.Parameters.GOALS,
+      Visio.Parameters.OUTPUTS,
+      Visio.Parameters.PROBLEM_OBJECTIVES,
+      Visio.Parameters.INDICATORS,
+    ]
 
   year: () ->
     @get('date').getFullYear()
@@ -34,6 +49,12 @@ class Visio.Models.Manager extends Backbone.Model
 
     return new Visio.Collections.Strategy(@get('strategies').filter((strategy) ->
       _.include(strategy_ids, strategy.id)
+    ))
+
+  selectedIndicatorData: () ->
+    return new Visio.Collections.IndicatorDatum(@get('indicator_data').filter((d) =>
+      return _.every @get('types'), (type) =>
+        _.include(@get('selected')[type], d.get("#{Inflection.singularize(type)}_id"))
     ))
 
   plan: (idOrISO) ->

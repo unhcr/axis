@@ -88,3 +88,37 @@ test('strategies', () ->
   strictEqual(strategies.length, 3)
   ok(strategies instanceof Visio.Collections.Strategy)
 )
+
+test 'selectedIndicatorData', () ->
+  selected = Visio.manager.get('selected')
+
+  _.each Visio.manager.get('types'), (type) ->
+    selected[type] = [1,2,3]
+
+  Visio.manager.get('indicator_data').reset([
+    {
+      id: 'a'
+      plan_id: 1
+      goal_id: 2
+      ppg_id: 2
+      output_id: 2
+      problem_objective_id: 2
+      indicator_id: 2
+    },
+    {
+      id: 'b'
+      plan_id: 1
+      goal_id: 2
+      ppg_id: 2
+      output_id: 4
+      problem_objective_id: 2
+      indicator_id: 2
+    }
+  ])
+
+
+  data = Visio.manager.selectedIndicatorData()
+
+  strictEqual 1, data.length
+  strictEqual 'a', data.at(0).id
+  ok(data instanceof Visio.Collections.IndicatorDatum)
