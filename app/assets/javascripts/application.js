@@ -16,6 +16,7 @@
 //= require backbone
 //= require visio
 //= require ./collections/parameter
+//= require ./models/parameter
 //= require_tree ../templates
 //= require_tree ./models
 //= require_tree ./collections
