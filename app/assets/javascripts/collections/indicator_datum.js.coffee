@@ -37,6 +37,7 @@ class Visio.Collections.IndicatorDatum extends Visio.Collections.Parameter
     }
 
   achievement: (reported_value) ->
+    return null if @length == 0
     reported_value ||= Visio.Algorithms.REPORTED_VALUES.myr
     results = []
 
