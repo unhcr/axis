@@ -2,12 +2,8 @@ class Visio.Models.Manager extends Backbone.Model
 
   initialize: () ->
     @set('db', new ydn.db.Storage(Visio.Constants.DB_NAME, Visio.Schema))
-    @get('selected')[Visio.Parameters.PLANS] = []
-    @get('selected')[Visio.Parameters.GOALS] = []
-    @get('selected')[Visio.Parameters.OUTPUTS] = []
-    @get('selected')[Visio.Parameters.PROBLEM_OBJECTIVES] = []
-    @get('selected')[Visio.Parameters.INDICATORS] = []
-    @get('selected')[Visio.Parameters.PPGS] = []
+    _.each @get('types'), (type) =>
+      @get('selected')[type] = []
 
   defaults:
     'plans': new Visio.Collections.Plan()
