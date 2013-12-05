@@ -47,6 +47,13 @@ class Visio.Models.Manager extends Backbone.Model
       _.include(strategy_ids, strategy.id)
     ))
 
+  selected: (type) ->
+    ids = @get('selected')[type]
+
+    parameters = @get(type)
+
+    return new parameters.constructor(parameters.filter((p) -> return _.include(ids, p.id)) )
+
   selectedIndicatorData: () ->
     return new Visio.Collections.IndicatorDatum(@get('indicator_data').filter((d) =>
       return _.every @get('types'), (type) =>
