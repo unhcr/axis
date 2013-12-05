@@ -11,6 +11,20 @@ class IndicatorDatum < ActiveRecord::Base
   belongs_to :plan
   belongs_to :operation
 
+  ALGO_RESULTS = {
+    :success => 'success',
+    :ok => 'ok',
+    :fail => 'fail',
+    :missing => 'missing'
+  }
+
+  REPORTED_VALUES = {
+    :myr => 'myr',
+    :yer => 'yer'
+  }
+
+  SUCCESS_THRESHOLD = 0.66
+  OK_THRESHOLD = 0.33
 
 
   def self.synced_data(ids = {}, synced_date = nil, limit = nil, where = {})
@@ -52,6 +66,51 @@ class IndicatorDatum < ActiveRecord::Base
       json.extract! self, :baseline, :comp_target, :reversal, :standard, :stored_baseline, :threshold_green, :threshold_red, :yer, :myr, :is_performance, :year, :indicator_id, :output_id, :problem_objective_id, :goal_id, :ppg_id, :plan_id, :id
 
     end
+
+  end
+
+  def situation_analysis(reported_value = REPORTED_VALUES[:myr])
+    return ALGO_RESULTS[:missing] unless self[reported_value]
+
+    if self[reported_value] >= self.threshold_green
+      return ALGO_RESULTS[:success]
+    elsif self[reported_value] >= self.threshold_red
+      return ALGO_RESULTS[:ok]
+    else
+      return ALGO_RESULTS[:fail]
+    end
+
+  end
+
+  def self.situation_analysis(indicator_data, reported_value = REPORTED_VALUES[:myr])
+    counts = {}
+    counts[ALGO_RESULTS[:success]] = 0
+    counts[ALGO_RESULTS[:ok]] = 0
+    counts[ALGO_RESULTS[:fail]] = 0
+    counts[ALGO_RESULTS[:missing]] = 0
+
+
+    indicator_data.each do |datum|
+      counts[datum.situation_analysis()] += 1
+    end
+
+    count = (counts[ALGO_RESULTS[:success]] +
+             counts[ALGO_RESULTS[:ok]] +
+             counts[ALGO_RESULTS[:fail]]).to_f
+
+    result = (counts[ALGO_RESULTS[:success]] / count) + (0.5 * (counts[ALGO_RESULTS[:ok]] / count))
+    category = ALGO_RESULTS[:fail]
+
+    if result >= SUCCESS_THRESHOLD
+      category = ALGO_RESULTS[:success]
+    elsif result >= OK_THRESHOLD
+      category = ALGO_RESULTS[:ok]
+    end
+
+    return {
+      :result => result.nan? ? nil : result,
+      :category => category
+    }
 
   end
 

@@ -1,7 +1,6 @@
 class Plan < ActiveRecord::Base
   extend Parameter
 
-  include AlgorithmHelper
   attr_accessible :name, :operation_name, :year
 
   self.primary_key = :id
@@ -50,9 +49,9 @@ class Plan < ActiveRecord::Base
     @impact_indicators
   end
 
-  def situation_analysis(reported_value = 'myr')
+  def situation_analysis(reported_value = IndicatorDatum::REPORTED_VALUES[:myr])
     indicator_data = self.indicator_data.where(:indicator_id => self.impact_indicators.map(&:id))
-    situation_analysis_algo(indicator_data, reported_value)
+    indicator_data.situation_analysis(indicator_data, reported_value)
   end
 
   def as_json(options = {})

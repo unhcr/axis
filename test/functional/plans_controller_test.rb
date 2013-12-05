@@ -1,8 +1,6 @@
 require 'test_helper'
 
 class PlansControllerTest < ActionController::TestCase
-  include AlgorithmHelper
-
   test 'plans index should get current plans if no year' do
     get :index
 
@@ -76,7 +74,7 @@ class PlansControllerTest < ActionController::TestCase
 
     plan = plans[0]
 
-    assert_equal AlgorithmHelper::ALGO_RESULTS[:ok], plan["situation_analysis"]
+    assert_equal IndicatorDatum::ALGO_RESULTS[:ok], plan["situation_analysis"]["category"]
 
   end
 end
