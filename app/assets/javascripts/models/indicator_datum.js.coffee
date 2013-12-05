@@ -27,7 +27,7 @@ class Visio.Models.IndicatorDatum extends Backbone.Model
 
     if @get('is_performance')
       result = +@get(reported_value) / +@get('comp_target')
-      return Math.max(result, 1)
+      return Math.min(result, 1)
 
     else
       return 1 if @get(reported_value) == @get('comp_target')
