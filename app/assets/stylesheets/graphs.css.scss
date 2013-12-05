@@ -1,5 +1,4 @@
-$map-background: rgb(232,232,232);
-$country-color: rgb(39,38,34);
+@import "variables.css.scss";
 
 .background-rect {
   fill: $map-background;
@@ -9,4 +8,30 @@ $country-color: rgb(39,38,34);
   fill: $country-color;
   stroke-width: .5px;
   stroke: $map-background;
+}
+
+#bubble {
+  .axis path {
+    fill: none;
+  }
+
+  .y.axis line {
+    stroke: $primary-light;
+  }
+
+  .y.axis text {
+    fill: $primary-light;
+  }
+
+  .x.axis path {
+    stroke: $light-gray;
+  }
+
+  .x.axis line {
+    stroke: $light-gray;
+  }
+
+  .x.axis text {
+    fill: $primary-light;
+  }
 }
