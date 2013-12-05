@@ -11,7 +11,7 @@ class Visio.Models.IndicatorDatum extends Backbone.Model
 
     reported_value ||= Visio.Algorithms.REPORTED_VALUES.myr
 
-    return Visio.Algorithms.ALGO_COLORS.missing if !@get(reported_value) || !@get('comp_target')
+    return Visio.Algorithms.ALGO_RESULTS.missing if !@get(reported_value) || !@get('comp_target')
 
     if @get('is_performance')
       result = +@get(reported_value) / +@get('comp_target')

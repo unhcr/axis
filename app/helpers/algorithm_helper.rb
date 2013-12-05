@@ -1,6 +1,6 @@
 module AlgorithmHelper
 
-  ALGO_COLORS = {
+  ALGO_RESULTS = {
     :success => 'success',
     :ok => 'ok',
     :fail => 'fail'
@@ -27,11 +27,11 @@ module AlgorithmHelper
     result = (num_green / count) + (0.5 * (num_amber / count))
 
     if result >= SUCCESS_THRESHOLD
-      return ALGO_COLORS[:success]
+      return ALGO_RESULTS[:success]
     elsif result >= OK_THRESHOLD
-      return ALGO_COLORS[:ok]
+      return ALGO_RESULTS[:ok]
     else
-      return ALGO_COLORS[:fail]
+      return ALGO_RESULTS[:fail]
     end
   end
 

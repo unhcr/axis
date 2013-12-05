@@ -69,7 +69,7 @@ test 'situation analysis', () ->
       problem_objectives_ids: [1, 2]
       indicators_ids: [1, 2]
     , 'yer')
-  strictEqual color, Visio.Algorithms.ALGO_COLORS.success
+  strictEqual color, Visio.Algorithms.ALGO_RESULTS.success
 
 
   color = data.situation_analysis(
@@ -80,7 +80,7 @@ test 'situation analysis', () ->
       problem_objectives_ids: [1, 2]
       indicators_ids: [1, 2]
     , 'myr')
-  strictEqual color, Visio.Algorithms.ALGO_COLORS.ok
+  strictEqual color, Visio.Algorithms.ALGO_RESULTS.ok
 
 
 

@@ -194,7 +194,7 @@ asyncTest('fetchGoals', () ->
 )
 
 test 'situation analysis', () ->
-  p = new Visio.Models.Plan({ id: 'abcd', name: 'ben', situation_analysis: Visio.Algorithms.ALGO_COLORS.success })
+  p = new Visio.Models.Plan({ id: 'abcd', name: 'ben', situation_analysis: Visio.Algorithms.ALGO_RESULTS.success })
   Visio.manager.get('indicator_data').reset([
     {
       id: 1
@@ -228,7 +228,7 @@ test 'situation analysis', () ->
 
 
   color = p.situation_analysis()
-  strictEqual(Visio.Algorithms.ALGO_COLORS.success, color)
+  strictEqual(Visio.Algorithms.ALGO_RESULTS.success, color)
 
   Visio.manager.get('strategies').reset([{
       id: 1
@@ -252,12 +252,12 @@ test 'situation analysis', () ->
   $('body').append('<div class="visio-check"><input type="checkbox" checked="checked" value="1" /><input checked="checked" value="2" type="checkbox"/></div>')
 
   color = p.situation_analysis()
-  strictEqual(Visio.Algorithms.ALGO_COLORS.fail, color)
+  strictEqual(Visio.Algorithms.ALGO_RESULTS.fail, color)
 
   $('.visio-check').html('<input type="checkbox" checked="checked" value="1" /><input value="2" type="checkbox"/>')
 
   color = p.situation_analysis()
-  strictEqual(Visio.Algorithms.ALGO_COLORS.fail, color)
+  strictEqual(Visio.Algorithms.ALGO_RESULTS.fail, color)
 
   Visio.manager.get('strategies').reset([{
       id: 1
@@ -279,7 +279,7 @@ test 'situation analysis', () ->
     }])
 
   color = p.situation_analysis()
-  strictEqual(Visio.Algorithms.ALGO_COLORS.ok, color)
+  strictEqual(Visio.Algorithms.ALGO_RESULTS.ok, color)
 
 test 'budget', () ->
   p = new Visio.Models.Plan({ id: 'abcd', name: 'ben' })

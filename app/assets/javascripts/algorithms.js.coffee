@@ -18,8 +18,8 @@ Visio.Algorithms.situation_analysis = (indicator_data, reported_value) ->
   result = (numGreen / count) + (0.5 * (numAmber / count))
 
   if result >= Visio.Algorithms.SUCCESS_THRESHOLD
-    return Visio.Algorithms.ALGO_COLORS.success
+    return Visio.Algorithms.ALGO_RESULTS.success
   else if result >= Visio.Algorithms.OK_THRESHOLD
-    return Visio.Algorithms.ALGO_COLORS.ok
+    return Visio.Algorithms.ALGO_RESULTS.ok
   else
-    return Visio.Algorithms.ALGO_COLORS.fail
+    return Visio.Algorithms.ALGO_RESULTS.fail

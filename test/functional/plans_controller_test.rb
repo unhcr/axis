@@ -76,7 +76,7 @@ class PlansControllerTest < ActionController::TestCase
 
     plan = plans[0]
 
-    assert_equal AlgorithmHelper::ALGO_COLORS[:ok], plan["situation_analysis"]
+    assert_equal AlgorithmHelper::ALGO_RESULTS[:ok], plan["situation_analysis"]
 
   end
 end

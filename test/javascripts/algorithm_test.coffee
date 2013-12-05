@@ -20,8 +20,8 @@ test 'situation analysis', () ->
   ])
 
   color = Visio.Algorithms.situation_analysis(data, 'yer')
-  strictEqual color, Visio.Algorithms.ALGO_COLORS.success
+  strictEqual color, Visio.Algorithms.ALGO_RESULTS.success
 
   color = Visio.Algorithms.situation_analysis(data, 'myr')
-  strictEqual color, Visio.Algorithms.ALGO_COLORS.ok
+  strictEqual color, Visio.Algorithms.ALGO_RESULTS.ok
 

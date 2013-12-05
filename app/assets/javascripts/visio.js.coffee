@@ -21,7 +21,7 @@ window.Visio =
   Algorithms:
     SUCCESS_THRESHOLD: 0.66
     OK_THRESHOLD: 0.33
-    ALGO_COLORS:
+    ALGO_RESULTS:
       success: 'success'
       ok: 'ok'
       fail: 'fail'

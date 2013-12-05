@@ -9,10 +9,10 @@ class AlgorithmHelperTest < ActiveSupport::TestCase
 
     color = situation_analysis_algo(data, 'yer')
 
-    assert_equal color, AlgorithmHelper::ALGO_COLORS[:success]
+    assert_equal color, AlgorithmHelper::ALGO_RESULTS[:success]
 
     color = situation_analysis_algo(data, 'myr')
 
-    assert_equal color, AlgorithmHelper::ALGO_COLORS[:ok]
+    assert_equal color, AlgorithmHelper::ALGO_RESULTS[:ok]
   end
 end
