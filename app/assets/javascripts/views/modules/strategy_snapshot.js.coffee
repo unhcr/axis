@@ -4,22 +4,27 @@ class Visio.Views.StrategySnapshotView extends Backbone.View
 
   initialize: (options) ->
     @collection = Visio.manager.targetPlans()
+    @model = @collection.at(0)
 
   events:
     'change .ui-blank-radio > input': 'onChangePlan'
 
-  render: () ->
-    @$el.html @template(
-      targetPlans: @collection.toJSON()
-    )
+  render: (isRerender) ->
 
-  onChangePlan: (e) ->
-    plan = @collection.get($(e.currentTarget).val())
-    console.log plan.budget()
+    if !isRerender
+      @$el.html @template(
+        targetPlans: @collection.toJSON()
+      )
 
-    @updateSituationAnalysis(plan)
+    @updateSituationAnalysis(@model)
 
     @updateMeter(Math.random())
+
+  onChangePlan: (e) ->
+    @model = @collection.get($(e.currentTarget).val())
+    console.log @model.budget()
+    @render(true)
+
 
   updateMeter: (percent) ->
     @$el.find('.meter > span').attr('style', "width: #{percent * 100}%")
