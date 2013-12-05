@@ -29,11 +29,13 @@ class Visio.Collections.IndicatorDatum extends Visio.Collections.Parameter
 
       results.push(result) unless result == Visio.Algorithms.ALGO_RESULTS.missing
 
-    average = _.reduce(results, (sum, num) -> sum + num, 0) / results.length
+    average = _.reduce(results,
+      (sum, num) -> return sum + num,
+      0) / results.length
 
     category = Visio.Algorithms.ALGO_RESULTS.low
 
-    divisor = if reported_value == Visio.REPORTED_VALUES.yer then 1 else 2
+    divisor = if reported_value == Visio.Algorithms.REPORTED_VALUES.yer then 1 else 2
 
     if average >= Visio.Algorithms.HIGH_THRESHOLD / divisor
       category = Visio.Algorithms.ALGO_RESULTS.high

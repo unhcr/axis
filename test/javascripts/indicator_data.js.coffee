@@ -84,6 +84,57 @@ test 'situation analysis', () ->
     , 'myr')
   strictEqual color, Visio.Algorithms.ALGO_RESULTS.ok
 
+test 'achievement collection', () ->
+  Visio.manager.get('outputs').reset([
+    {
+      id: 'present'
+      ol_budget: 40
+    }
+  ])
+  Visio.manager.get('problem_objectives').reset([
+    {
+      id: 'present'
+      ol_budget: 40
+    }
+  ])
+
+  data = new Visio.Collections.IndicatorDatum()
+  data.reset([{
+      id: 'ben'
+      output_id: 'present'
+      problem_objective_id: 'present'
+      is_performance: true
+      myr: 50
+      comp_target: 50
+      reversal: false
+      baseline: 20
+    },
+    {
+      id: 'lisa'
+      output_id: 'present'
+      problem_objective_id: 'present'
+      is_performance: true
+      myr: 50
+      comp_target: 100
+      reversal: false
+      baseline: 25
+    }
+  ])
+
+  result = data.achievement()
+
+  strictEqual(.75, result.result)
+  strictEqual(Visio.Algorithms.ALGO_RESULTS.high, result.category)
+
+  data.get('ben').set({
+    baseline: 100
+    comp_target: 100
+    is_performance: false
+  })
+
+  result = data.achievement()
+  strictEqual(Visio.Algorithms.ALGO_RESULTS.low, result.category)
+
 test 'achievement', () ->
   Visio.manager.get('outputs').reset([
     {
