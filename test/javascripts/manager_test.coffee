@@ -122,3 +122,27 @@ test 'selectedIndicatorData', () ->
   strictEqual 1, data.length
   strictEqual 'a', data.at(0).id
   ok(data instanceof Visio.Collections.IndicatorDatum)
+
+test 'selected', () ->
+  selected = Visio.manager.get('selected')
+
+  _.each Visio.manager.get('types'), (type) ->
+    selected[type] = [1]
+
+
+  _.each Visio.manager.get('types'), (type) ->
+    Visio.manager.get(type).reset([
+      {
+        id: 1
+      },
+      {
+        id: 2
+      }
+    ])
+    selected = Visio.manager.selected(type)
+
+    ok(selected instanceof Visio.manager.get(type).constructor)
+    strictEqual(selected.length, 1)
+    ok(selected.get(1))
+
+
