@@ -13,7 +13,7 @@ class Visio.Routers.OverviewRouter extends Backbone.Router
       )
       @strategySnapshotView.render()
 
-      @achievementBudgetSingleYearView = new Visio.Views.AcheivementBudgetSingleYearView(
+      @achievementBudgetSingleYearView = new Visio.Views.AchievementBudgetSingleYearView(
         el: $('#achievement-budget-single-year')
       )
       @achievementBudgetSingleYearView.render()
