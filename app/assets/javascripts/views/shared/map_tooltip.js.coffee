@@ -41,7 +41,7 @@ class Visio.Views.MapTooltipView extends Backbone.View
 
       @$el.html @template({
         plan: @model.toJSON()
-        situation_analysis: @model.situation_analysis()
+        situation_analysis: @model.strategy_situation_analysis().category
       })
 
     offset = $(@point).offset()

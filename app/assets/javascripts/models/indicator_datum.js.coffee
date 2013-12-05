@@ -19,13 +19,15 @@ class Visio.Models.IndicatorDatum extends Backbone.Model
 
     return false
   situation_analysis: (reported_value) ->
-    reported_value ||= 'myr'
+    reported_value ||= Visio.Algorithms.REPORTED_VALUES.myr
+    return Visio.Algorithms.ALGO_RESULTS.missing unless @get(reported_value)
+
     if @get(reported_value) >= @get('threshold_green')
-      return Visio.Algorithms.ALGO_COLORS.success
+      return Visio.Algorithms.ALGO_RESULTS.success
     else if @get(reported_value) >= @get('threshold_red')
-      return Visio.Algorithms.ALGO_COLORS.ok
+      return Visio.Algorithms.ALGO_RESULTS.ok
     else
-      return Visio.Algorithms.ALGO_COLORS.fail
+      return Visio.Algorithms.ALGO_RESULTS.fail
 
   achievement: (reported_value) ->
 

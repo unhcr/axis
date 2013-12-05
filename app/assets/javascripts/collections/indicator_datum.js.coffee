@@ -6,19 +6,35 @@ class Visio.Collections.IndicatorDatum extends Visio.Collections.Parameter
 
   url: '/indicator_data'
 
-  situation_analysis: (ids, reported_value) ->
+  situation_analysis: (reported_value) ->
     reported_value ||= 'myr'
-    data = new Visio.Collections.IndicatorDatum(@filter((datum) ->
-        return _.include(ids.plans_ids, datum.get('plan_id')) &&
-          _.include(ids.ppgs_ids, datum.get('ppg_id')) &&
-          _.include(ids.goals_ids, datum.get('goal_id')) &&
-          _.include(ids.outputs_ids, datum.get('output_id')) &&
-          _.include(ids.problem_objectives_ids, datum.get('problem_objective_id')) &&
-          _.include(ids.indicators_ids, datum.get('indicator_id')) &&
-          !datum.get('is_performance')
-      ))
 
-    return Visio.Algorithms.situation_analysis(data, reported_value)
+    counts = {}
+    counts[Visio.Algorithms.ALGO_RESULTS.success] = 0
+    counts[Visio.Algorithms.ALGO_RESULTS.ok] = 0
+    counts[Visio.Algorithms.ALGO_RESULTS.fail] = 0
+    counts[Visio.Algorithms.ALGO_RESULTS.missing] = 0
+
+    @each((datum) ->
+      counts[datum.situation_analysis()] += 1
+    )
+
+    count = counts[Visio.Algorithms.ALGO_RESULTS.success] +
+            counts[Visio.Algorithms.ALGO_RESULTS.ok] +
+            counts[Visio.Algorithms.ALGO_RESULTS.fail]
+
+    result = (counts[Visio.Algorithms.ALGO_RESULTS.success] / count) + (0.5 * (counts[Visio.Algorithms.ALGO_RESULTS.ok] / count))
+    category = Visio.Algorithms.ALGO_RESULTS.fail
+
+    if result >= Visio.Algorithms.SUCCESS_THRESHOLD
+      category = Visio.Algorithms.ALGO_RESULTS.success
+    else if result >= Visio.Algorithms.OK_THRESHOLD
+      category = Visio.Algorithms.ALGO_RESULTS.ok
+
+    return {
+      result: result
+      category: category
+    }
 
   achievement: (reported_value) ->
     reported_value ||= Visio.Algorithms.REPORTED_VALUES.myr
