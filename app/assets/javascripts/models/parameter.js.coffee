@@ -22,9 +22,9 @@ class Visio.Models.Parameter extends Backbone.Model
 
         _.include ids, d.get("#{Inflection.singularize(type)}_id")))
 
-  selectedAcheivement: () ->
+  selectedAchievement: () ->
     data = @selectedIndicatorData()
-    data.acheivement()
+    data.achievement()
 
   budget: () ->
     where = {}
