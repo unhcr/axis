@@ -6,21 +6,27 @@
     = javascript_include_tag "application"
     = csrf_meta_tags
 %body.ui-invert-theme
-  %header.container.full-width
-    .account-menu
-      .small-item.ui-primary.pull-right
-        = link_to "Sign out", destroy_user_session_path, :method => :delete, :class => 'ui-primary'
-      .small-item.ui-primary.pull-right
-        Ça va,
-        %span.ui-secondary
-          = current_user.firstname
+  %header.container
     .row
-      .col-md-4.col-md-offset-3
-        .ui-medium-header.logo
-          <span class="bold">VISIO</span><span class="light">UNHCR</span>
-    .row.menu
-      .search.menu-item.ui-primary.pull-right
-        Search by Operation or Indicator
+      .col-md-12.col-centered.center-text.zero-height
+        .col-md-4.extra-padding
+          %span.menu.pull-left.ui-primary-light
+            .menu-icon
+              .menu-row
+              .menu-row
+              .menu-row
+        .col-md-4.center-text
+          %span.ui-small-header.logo
+            <span class="light">UNHCR</span><span class="bold">VISIO</span>
+        .col-md-4.extra-padding
+          %span.account-menu.pull-right
+            .small-item.ui-primary.pull-right
+              = link_to "Sign out", destroy_user_session_path, :method => :delete, :class => 'ui-primary'
+          .small-item.ui-primary.pull-right
+            Ça va,
+            %span.ui-primary-light
+              = current_user.firstname
+    .row
       - @strategies.each do |strategy|
         %a.thematic-item.menu-item.ui-primary-light.pull-right{ :href => "/overview?strategy_id=#{strategy["id"]}" }
           .underline
