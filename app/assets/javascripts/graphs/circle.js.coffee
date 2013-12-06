@@ -38,20 +38,25 @@ Visio.Graphs.circle = (config) ->
 
   oldPercent = percent = config.percent || 1
 
-  number = config.number
-
+  oldNumber = number = config.number
 
   render = () =>
     i = d3.interpolate(oldPercent, percent)
     svg.transition()
-      .duration(500)
+      .duration(Visio.Durations.FAST)
       .tween("percent", () ->
         return (t) ->
           percent = i(t)
           foreground.attr('d', arc.endAngle(twoPi * percent)))
 
-    text.text(number)
+    console.log text[0][0]
+    $(text[0][0]).countTo
+      from: oldNumber
+      to: number
+      speed: Visio.Durations.FAST
+
     oldPercent = percent
+    oldNumber = number
 
   render.percent = (_percent) =>
     return percent if !arguments

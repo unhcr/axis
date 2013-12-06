@@ -69,7 +69,14 @@ class Visio.Views.StrategySnapshotView extends Backbone.View
 
   updateMeter: (percent, budget) ->
     console.log budget
-    @$el.find('.expenditure').text "#{d3.round(percent * 100)}%"
+    $expenditure = @$el.find('.expenditure span')
+    $budget = @$el.find('.budget')
+
+    $expenditure.countTo(
+      from: +$expenditure.text()
+      to: d3.round(percent * 100)
+      speed: Visio.Durations.FAST
+    )
     @$el.find('.budget').text "$#{Visio.Formats.SI(budget)}"
     @$el.find('.meter > span').attr('style', "width: #{percent * 100}%")
 
@@ -91,7 +98,13 @@ class Visio.Views.StrategySnapshotView extends Backbone.View
           .number(count)
           .percent(count / data.length)()
 
-      @$el.find('.total-indicators').text(data.length)
+      $totalIndicators = @$el.find('.total-indicators')
+
+      $totalIndicators.countTo(
+        from: +$totalIndicators.text()
+        to: data.length
+        speed: Visio.Durations.FAST
+      )
 
 
 
