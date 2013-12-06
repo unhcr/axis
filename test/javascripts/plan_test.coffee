@@ -334,12 +334,12 @@ test 'budget', () ->
     }
   ])
 
-  budget = p.budget()
+  budget = p.budget(Visio.manager.get('indicator_data'))
 
   strictEqual(50, budget)
 
   Visio.manager.get('indicator_data').get(1).set('problem_objective_id', 2)
 
-  budget = p.budget()
+  budget = p.budget(Visio.manager.get('indicator_data'))
 
   strictEqual(30, budget)

@@ -43,18 +43,6 @@ class Visio.Models.Plan extends Visio.Models.Parameter
 
       data.situation_analysis()
 
-  budget: () ->
-    data = new Visio.Collections.IndicatorDatum(Visio.manager.get('indicator_data').where({ plan_id: @id }))
-
-    problem_objective_ids = _.uniq(data.pluck('problem_objective_id'))
-
-    problem_objectives = Visio.manager.get('problem_objectives').filter((p) ->
-      _.include(problem_objective_ids, p.id) )
-
-    _.reduce(problem_objectives,
-      (sum, p) -> return sum + p.get('budget'),
-      0)
-
   fetchIndicators: () ->
     @fetchParameter(Visio.Parameters.INDICATORS)
 

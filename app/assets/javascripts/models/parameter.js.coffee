@@ -38,6 +38,7 @@ class Visio.Models.Parameter extends Backbone.Model
         _.include ids, d.get("#{Inflection.singularize(type)}_id")))
 
   budget: (data) ->
+    return null unless data
 
     problem_objective_ids = _.uniq(data.pluck('problem_objective_id'))
 
