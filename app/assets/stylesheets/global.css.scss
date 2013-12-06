@@ -88,6 +88,11 @@
   color: $primary;
 }
 
+.ui-purple-theme {
+  background-color: $purple;
+  color: $white;
+}
+
 .logo-circle img {
   width: 160px;
 }
@@ -233,6 +238,11 @@ body, html {
 
 .center-text {
   text-align: center;
+}
+
+.justify-text {
+  text-align:justify;
+  text-justify:inter-word;
 }
 
 .thematic-item {
@@ -855,4 +865,8 @@ a {
 
 .extra-padding {
   padding-top: 30px
+}
+
+.strategy-description {
+  padding-bottom: 30px;
 }

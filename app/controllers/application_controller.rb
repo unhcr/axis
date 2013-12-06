@@ -31,13 +31,13 @@ class ApplicationController < ActionController::Base
   end
 
   def overview
-    @strategy_id = params[:strategy_id]
     options = {
       :include => {
         :ids => true
       }
     }
     @strategies ||= Strategy.all.as_json(options)
+    @strategy ||= Strategy.find(params[:strategy_id])
     render :layout => 'index'
   end
 end
