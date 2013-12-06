@@ -1,24 +1,43 @@
-<div class="row">
-  <div class="col-md-2 target-countries">
-    <div>Target Countries</div>
-    <div>All</div>
-    <% for (var i = 0; i < targetPlans.length; i++) { %>
-    <div class="ui-blank-radio">
-      <label for="radio-<%= targetPlans[i].id %>"><%= targetPlans[i].operation_name %></label>
-      <input name="plan" type="radio" id="radio-<%= targetPlans[i].id %>" value="<%= targetPlans[i].id %>" />
+<div class="row strategy-snapshot">
+  <div class="col-md-2">
+    <div class="bold">Target Countries</div>
+    <br />
+    <div class="target-countries">
+      <div class="ui-blank-radio">
+        <input name="plan" type="radio" id="radio-all" value="all" />
+        <label for="radio-all">All</label>
+      </div>
+      <% for (var i = 0; i < targetPlans.length; i++) { %>
+      <div class="ui-blank-radio">
+        <input name="plan" type="radio" id="radio-<%= targetPlans[i].id %>" value="<%= targetPlans[i].id %>" />
+        <label for="radio-<%= targetPlans[i].id %>"><%= targetPlans[i].operation_name %></label>
+      </div>
+      <% } %>
     </div>
-    <% } %>
   </div>
   <div class="col-md-4">
+    <div class="ui-big-number expenditure center-text">
+      95%
+    </div>
     <div class="meter">
       <span style="width: 95%"></span>
     </div>
+    <div class="center-text">Total Spent for <span class="ui-primary-light">All Target Countries</span></div>
+    <br />
+    <br />
+    <br />
+    <div class="ui-big-number center-text budget">
+      $<span>200M</span>
+    </div>
+    <div class="center-text">Total Budget for <span class="ui-primary-light">All Target Countries</span></div>
   </div>
-
   <div class="col-md-3">
-    They use no images, just CSS3 fancies. Like a good little designer always does, they fall back to totally
-    acceptable experience. Here's what they look like in Opera 11 which supports some of the CSS3 used here
-    but not all.
+    <div class="pull-left vertical-divider"></div>
+    <div class="description">
+      They use no images, just CSS3 fancies. Like a good little designer always does, they fall back to totally
+      acceptable experience. Here's what they look like in Opera 11 which supports some of the CSS3 used here
+      but not all.
+    </div>
   </div>
   <div class="col-md-3">
     <div class="<%= Visio.Algorithms.ALGO_RESULTS.success %>">0</div>

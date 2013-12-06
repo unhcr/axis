@@ -19,7 +19,8 @@ class Visio.Routers.OverviewRouter extends Backbone.Router
       @achievementBudgetSingleYearView.render()
 
       $('#navigation').removeClass('gone')
-    )
+    ).fail (e) =>
+      console.log e
 
   setup: () ->
     options =

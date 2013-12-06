@@ -51,6 +51,11 @@
   animation: flash 1000ms 1;
 }
 
+.ui-big-number {
+  color: $orange;
+  font-size: 5em;
+}
+
 .ui-primary-theme {
   background-color: $primary;
   color: $white;
@@ -929,4 +934,20 @@ a {
 
 .shift {
   left: $navigation-width;
+}
+
+input[type="radio"]:checked + label {
+  color: $primary-light;
+}
+
+.strategy-snapshot {
+  min-height: 360px;
+  height: 360px;
+}
+
+.vertical-divider {
+  border-left: 1px solid $light-gray;
+  width: 1px;
+  height: 320px;
+  margin: 20px;
 }

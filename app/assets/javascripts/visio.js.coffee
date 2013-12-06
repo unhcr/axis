@@ -5,6 +5,8 @@ window.Visio =
   Routers: {}
   Utils: {}
   Graphs: {}
+  Formats:
+    SI: d3.format('.3s')
   Constants:
     DB_NAME: 'visio'
   Stores:
