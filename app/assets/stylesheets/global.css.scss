@@ -914,6 +914,12 @@ a {
   box-shadow:         0px 3px 5px -3px $light-gray;
 }
 
+.inset-shadow {
+   -moz-box-shadow:    inset 0px 10px 10px -10px $light-gray;
+   -webkit-box-shadow:    inset 0px 10px 10px -10px $light-gray;
+   box-shadow:    inset 0px 10px 10px -10px $light-gray;
+}
+
 .toolbar {
   background-color: white;
   padding: 12px 0;
