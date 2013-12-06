@@ -51,6 +51,10 @@
   animation: flash 1000ms 1;
 }
 
+p.small {
+  font-size: .8em;
+}
+
 .ui-big-number {
   color: $orange;
   font-size: 5em;

@@ -91,6 +91,8 @@ class Visio.Views.StrategySnapshotView extends Backbone.View
           .number(count)
           .percent(count / data.length)()
 
+      @$el.find('.total-indicators').text(data.length)
+
 
 
     else
