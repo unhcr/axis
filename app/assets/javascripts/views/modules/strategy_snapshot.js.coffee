@@ -2,6 +2,13 @@ class Visio.Views.StrategySnapshotView extends Backbone.View
 
   template: JST['modules/strategy_snapshot']
 
+  resultTypes: [
+    Visio.Algorithms.ALGO_RESULTS.success,
+    Visio.Algorithms.ALGO_RESULTS.ok,
+    Visio.Algorithms.ALGO_RESULTS.fail,
+    Visio.Algorithms.ALGO_RESULTS.missing,
+  ]
+
   initialize: (options) ->
     @collection = Visio.manager.targetPlans()
 
@@ -12,7 +19,30 @@ class Visio.Views.StrategySnapshotView extends Backbone.View
 
     @$el.html @template(
       targetPlans: @collection.toJSON()
+      resultTypes: @resultTypes
     )
+    @countCircles = []
+    _.each @resultTypes, (resultType) =>
+      config =
+        resultType: resultType
+        width: 120
+        height: 120
+        selection: d3.select(".#{resultType}-circle")
+        percent: Math.random()
+        number: 45
+        margin:
+          top: 20
+          bottom: 20
+          left: 20
+          right: 20
+
+      @countCircles.push
+        circle: Visio.Graphs.circle(config)
+        type: resultType
+
+    _.each @countCircles, (circle) ->
+      circle.circle()
+
 
   update: () =>
     @updateSituationAnalysis(@model)
@@ -43,17 +73,26 @@ class Visio.Views.StrategySnapshotView extends Backbone.View
     @$el.find('.budget').text "$#{Visio.Formats.SI(budget)}"
     @$el.find('.meter > span').attr('style', "width: #{percent * 100}%")
 
-  updateSituationAnalysis: (plan) ->
+  updateSituationAnalysis: (plan) =>
     counts = {}
-    counts[Visio.Algorithms.ALGO_RESULTS.success] = 0
-    counts[Visio.Algorithms.ALGO_RESULTS.ok] = 0
-    counts[Visio.Algorithms.ALGO_RESULTS.fail] = 0
+    _.each @resultTypes, (resultType) ->
+      counts[resultType] = 0
+
     if plan
       data = Visio.manager.get('indicator_data').where({ plan_id: plan.id })
 
       _.each(data, (d) ->
         counts[d.situation_analysis()] += 1
       )
+
+      for resultType, count of counts
+        circle = _.findWhere @countCircles, { type: resultType }
+        circle.circle
+          .number(count)
+          .percent(count / data.length)()
+
+
+
     else
       # calc for whole strategy
 

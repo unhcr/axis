@@ -35,3 +35,29 @@
     fill: $primary-light;
   }
 }
+
+.circle {
+  .background {
+    fill: $light-gray;
+  }
+
+  .foreground.ok {
+    fill: $ok;
+  }
+
+  .foreground.success {
+    fill: $success;
+  }
+
+  .foreground.fail {
+    fill: $fail;
+  }
+
+  .foreground.missing {
+    fill: $dark-gray;
+  }
+
+  .progress-meter text {
+    font-size: 2em;
+  }
+}

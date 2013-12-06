@@ -1,24 +1,24 @@
-Visio.Graphs.circleFn = (config) ->
-  margin =
-    top: 5,
-    bottom: 5,
-    left: 5,
-    right: 5
+Visio.Graphs.circle = (config) ->
+  margin = config.margin
 
-  width = (config.width || 200) - margin.left - margin.right
-  height = (config.height || 110) - margin.top - margin.bottom
+  width = config.width - margin.left - margin.right
+  height = config.height - margin.top - margin.bottom
   twoPi = 2 * Math.PI
 
   arc = d3.svg.arc()
     .startAngle(0)
-    .innerRadius((height / 2) - 10)
+    .innerRadius((height / 2) - 8)
     .outerRadius(height / 2)
 
   selection = config.selection
 
+  resultType = config.resultType
+
   svg = selection.append('svg')
-    .attr('width', width)
-    .attr('height', height)
+    .attr('width', config.width)
+    .attr('height', config.height)
+    .append('g')
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
     .append('g')
     .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
 
@@ -30,7 +30,7 @@ Visio.Graphs.circleFn = (config) ->
     .attr("d", arc.endAngle(twoPi))
 
   foreground = meter.append("path")
-    .attr("class", "foreground")
+    .attr("class", "foreground #{resultType}")
 
   text = meter.append("text")
     .attr("text-anchor", "middle")
@@ -43,7 +43,7 @@ Visio.Graphs.circleFn = (config) ->
 
   render = () =>
     i = d3.interpolate(oldPercent, percent)
-    d3.transition()
+    svg.transition()
       .duration(500)
       .tween("percent", () ->
         return (t) ->
@@ -55,13 +55,13 @@ Visio.Graphs.circleFn = (config) ->
 
   render.percent = (_percent) =>
     return percent if !arguments
-    percent = _percent
-    return @
+    percent = _percent || 0
+    return render
 
   render.number = (_number) =>
     return number if !arguments
-    number = _number
-    return @
+    number = if _.isNumber(_number) then _number else '?'
+    return render
 
   return render
 

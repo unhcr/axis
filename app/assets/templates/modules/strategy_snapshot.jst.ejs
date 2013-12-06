@@ -40,9 +40,8 @@
     </div>
   </div>
   <div class="col-md-3">
-    <div class="<%= Visio.Algorithms.ALGO_RESULTS.success %>">0</div>
-    <div class="<%= Visio.Algorithms.ALGO_RESULTS.ok %>">0</div>
-    <div class="<%= Visio.Algorithms.ALGO_RESULTS.fail %>">0</div>
-    <div class="missing">0</div>
+    <% for (var i = 0; i < resultTypes.length; i++) { %>
+      <div class="<%= resultTypes[i] %>-circle circle inline-block"></div>
+    <% } %>
   </div>
 </div>
