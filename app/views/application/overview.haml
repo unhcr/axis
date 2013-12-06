@@ -24,9 +24,9 @@
 
 
 
-#navigation
-#strategy-snapshot.container
-#achievement-budget-single-year.container
+.module-container
+  #strategy-snapshot.module.container
+  #achievement-budget-single-year.module.container
 
 :javascript
   $(document).ready(function() {
@@ -38,5 +38,9 @@
 
     Visio.router = new Visio.Routers.OverviewRouter();
     Backbone.history.start();
+
+    $('.menu-icon').click(function(e) {
+      $('.page').toggleClass('shift')
+    })
 
   });

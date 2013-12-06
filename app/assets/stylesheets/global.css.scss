@@ -343,7 +343,8 @@ input:focus {
   width: 0px !important;
   padding-left: 0px !important;
   padding-right: 0px !important;
-  margin: 0px !important;
+  margin-left: 0px !important;
+  margin-right: 0px !important;
 }
 
 .zero-height {
@@ -366,6 +367,12 @@ button, input {
 .light {
   font-weight: 300;
 }
+
+.inline-block {
+  display: inline-block;
+}
+
+.module-
 
 .btn {
   border: none;
@@ -769,7 +776,15 @@ a {
   }
 }
 #navigation {
+  z-index: 1;
   width: $navigation-width;
+  overflow-x: hidden;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background-color: $black;
 }
 
 .ui-accordion-content {
@@ -847,6 +862,7 @@ a {
 }
 
 .menu-icon {
+  cursor: pointer;
   position: relative;
   .menu-row {
     background-color: $primary-light;
@@ -892,4 +908,25 @@ a {
 .toolbar {
   background-color: white;
   padding: 12px 0;
+}
+
+.module {
+  width: 1000px;
+}
+.module-container {
+  background-color: $off-white;
+}
+
+.page {
+  position: absolute;
+  right: 0;
+  -moz-transition:left $very-fast-transition ease-out;
+  -webkit-transition:left $very-fast-transition ease-out;
+  -o-transition:left $very-fast-transition ease-out;
+  transition:left $very-fast-transition ease-out;
+  z-index: 2;
+}
+
+.shift {
+  left: $navigation-width;
 }

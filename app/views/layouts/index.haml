@@ -6,35 +6,38 @@
     = javascript_include_tag "application"
     = csrf_meta_tags
 %body.ui-invert-theme
-  %header.container.full-width
-    .row
-      .col-md-10.col-centered.center-text.zero-padding
-        .col-md-4.extra-padding
-          %span.menu.pull-left.ui-primary-light
-            .menu-icon
-              .menu-row
-              .menu-row
-              .menu-row
-        .col-md-4.center-text
-          %span.ui-small-header.logo
-            <span class="light">UNHCR</span><span class="bold">VISIO</span>
-        .col-md-4.extra-padding
-          %span.account-menu.pull-right
+  .page
+    %header.container.full-width
+      .row
+        .col-md-10.col-centered.center-text.zero-padding
+          .col-md-4.extra-padding
+            %span.menu.pull-left.ui-primary-light
+              .menu-icon
+                .menu-row
+                .menu-row
+                .menu-row
+          .col-md-4.center-text
+            %span.ui-small-header.logo
+              <span class="light">UNHCR</span><span class="bold">VISIO</span>
+          .col-md-4.extra-padding
+            %span.account-menu.pull-right
+              .small-item.ui-primary.pull-right
+                = link_to "Sign out", destroy_user_session_path, :method => :delete, :class => 'ui-primary'
             .small-item.ui-primary.pull-right
-              = link_to "Sign out", destroy_user_session_path, :method => :delete, :class => 'ui-primary'
-          .small-item.ui-primary.pull-right
-            Ça va,
-            %span.ui-primary-light
-              = current_user.firstname
-    .row
-      - @strategies.each do |strategy|
-        %a.thematic-item.menu-item.ui-primary-light.pull-right{ :href => "/overview?strategy_id=#{strategy["id"]}" }
-          .underline
-            = strategy["name"]
-          .theme-content
-            = strategy["name"]
-  :javascript
-    window.Visio.user = new Visio.Models.User(#{current_user.to_json.html_safe})
+              Ça va,
+              %span.ui-primary-light
+                = current_user.firstname
+      .row
+        - @strategies.each do |strategy|
+          %a.thematic-item.menu-item.ui-primary-light.pull-right{ :href => "/overview?strategy_id=#{strategy["id"]}" }
+            .underline
+              = strategy["name"]
+            .theme-content
+              = strategy["name"]
+    :javascript
+      window.Visio.user = new Visio.Models.User(#{current_user.to_json.html_safe})
 
-  = yield
+    = yield
+
+  #navigation.gone
 
