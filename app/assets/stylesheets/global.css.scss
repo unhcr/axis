@@ -818,3 +818,8 @@ a {
   -o-transition:width $medium-transition;
   transition:width $medium-transition;
 }
+
+.target-countries {
+  max-height: 300px;
+  overflow: auto;
+}
