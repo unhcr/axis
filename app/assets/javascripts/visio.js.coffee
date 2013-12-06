@@ -5,6 +5,9 @@ window.Visio =
   Routers: {}
   Utils: {}
   Graphs: {}
+  Durations:
+    FAST: 500
+    MEDIUM: 1000
   Formats:
     SI: d3.format('.3s')
   Constants:
