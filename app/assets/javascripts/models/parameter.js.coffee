@@ -33,7 +33,7 @@ class Visio.Models.Parameter extends Backbone.Model
         if @name == type
           ids = [@id] if Visio.manager.strategy().include(type, @id)
         else
-          ids = Visio.manager.strategy().get(type)
+          ids = Visio.manager.strategy().get("#{type}_ids")
 
         _.include ids, d.get("#{Inflection.singularize(type)}_id")))
 
