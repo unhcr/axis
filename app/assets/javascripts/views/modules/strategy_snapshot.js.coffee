@@ -22,7 +22,7 @@ class Visio.Views.StrategySnapshotView extends Backbone.View
 
   onChangePlan: (e) ->
     @model = @collection.get($(e.currentTarget).val())
-    console.log @model.budget()
+    console.log @model.strategyBudget()
     @render(true)
 
 

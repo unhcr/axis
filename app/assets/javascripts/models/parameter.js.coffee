@@ -26,11 +26,18 @@ class Visio.Models.Parameter extends Backbone.Model
     data = @selectedIndicatorData()
     data.achievement()
 
-  budget: () ->
-    where = {}
-    where["#{Inflection.singularize(@name)}_id"] = @id
+  strategyIndicatorData: () ->
+    return new Visio.Collections.IndicatorDatum(Visio.manager.get('indicator_data').filter((d) =>
+      return _.every Visio.manager.get('types'), (type) =>
+        ids = []
+        if @name == type
+          ids = [@id] if Visio.manager.strategy().include(type, @id)
+        else
+          ids = Visio.manager.strategy().get(type)
 
-    data = new Visio.Collections.IndicatorDatum(Visio.manager.get('indicator_data').where(where))
+        _.include ids, d.get("#{Inflection.singularize(type)}_id")))
+
+  budget: (data) ->
 
     problem_objective_ids = _.uniq(data.pluck('problem_objective_id'))
 
@@ -40,18 +47,15 @@ class Visio.Models.Parameter extends Backbone.Model
     _.reduce(problem_objectives,
       (sum, p) -> return sum + p.get('budget'),
       0)
+
+  strategyBudget: () ->
+    data = @strategyIndicatorData()
+    @budget(data)
+
 
   selectedBudget: () ->
     data = @selectedIndicatorData()
-
-    problem_objective_ids = _.uniq(data.pluck('problem_objective_id'))
-
-    problem_objectives = Visio.manager.get('problem_objectives').filter((p) ->
-      _.include(problem_objective_ids, p.id) )
-
-    _.reduce(problem_objectives,
-      (sum, p) -> return sum + p.get('budget'),
-      0)
+    @budget(data)
 
   toJSON: () ->
     json = _.clone(this.attributes)
