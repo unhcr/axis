@@ -556,7 +556,6 @@ a {
 .tooltip {
   position: absolute;
   top: 135px;
-  z-index: 3;
 
   .count {
     border-bottom: 1px solid $white;
@@ -786,7 +785,7 @@ a {
   }
 }
 #navigation {
-  z-index: 1;
+  z-index: -1;
   width: $navigation-width;
   overflow-x: hidden;
   height: 100%;
@@ -937,7 +936,6 @@ a {
   -webkit-transition:left $very-fast-transition ease-out;
   -o-transition:left $very-fast-transition ease-out;
   transition:left $very-fast-transition ease-out;
-  z-index: 2;
 }
 
 .shift {

@@ -46,8 +46,8 @@ class Visio.Routers.IndexRouter extends Backbone.Router
       Visio.manager.set('plans', plans)
       Visio.manager.getMap().done((map) =>
         @map.mapJSON(map)
-        @map()
         @filterView = new Visio.Views.MapFilterView()
+        @map()
       )
     )
 
