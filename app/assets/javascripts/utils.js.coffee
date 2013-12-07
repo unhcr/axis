@@ -66,3 +66,28 @@ Visio.Utils.flash = ($ele, msg) ->
   $ele.addClass('flash')
 
   $ele.attr('placeholder', msg)
+
+Visio.Utils.parseTransform = (string) ->
+  matchTranslate = string.match(/translate\(([0-9]+,[ ]*[0-9]+)\)/)
+  matchScale = string.match(/scale\(([0-9]*\.[0-9]*)\)/)
+
+  if matchTranslate && matchTranslate[1]
+    translate = matchTranslate[1].split(',').map((d) -> return +d )
+
+  if matchScale && matchScale[1]
+    scale = +matchScale[1]
+
+  return {
+    translate: translate || [0, 0]
+    scale: scale || 1
+  }
+
+Visio.Utils.flash = ($ele, msg) ->
+  $ele.removeClass('flash')
+
+  # Cause a redraw
+  $ele[0].offsetWidth = $ele[0].offsetWidth
+
+  $ele.addClass('flash')
+
+  $ele.attr('placeholder', msg)

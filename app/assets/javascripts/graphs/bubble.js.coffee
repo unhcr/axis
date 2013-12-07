@@ -3,7 +3,7 @@ Visio.Graphs.bubble = (config) ->
   margin =
     top: 50,
     bottom: 50,
-    left: 50,
+    left: 100,
     right: 50
 
   width = config.width - margin.left - margin.right
@@ -38,6 +38,10 @@ Visio.Graphs.bubble = (config) ->
   yAxis = d3.svg.axis()
     .scale(y)
     .orient('left')
+    .ticks(5)
+    .tickFormat((d) -> return if d then d * 100 else '0%')
+    .innerTickSize(14)
+    .tickPadding(20)
 
   parameters = config.parameters
 
@@ -93,6 +97,13 @@ Visio.Graphs.bubble = (config) ->
       .transition()
       .duration(duration)
       .call(yAxis)
+      .selectAll('g')
+        .attr('transform', (d) ->
+          transform = Visio.Utils.parseTransform($(@).attr('transform'))
+          translate = transform.translate
+
+          return "translate(#{translate[0] - 20}, #{translate[1]})"
+        )
 
 
   return render
