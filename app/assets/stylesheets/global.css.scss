@@ -556,6 +556,7 @@ a {
 .tooltip {
   position: absolute;
   top: 135px;
+  z-index: 3;
 
   .count {
     border-bottom: 1px solid $white;
