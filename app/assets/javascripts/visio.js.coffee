@@ -9,7 +9,7 @@ window.Visio =
     FAST: 500
     MEDIUM: 1000
   Formats:
-    SI: d3.format('.3s')
+    SI: d3.format('s')
     PERCENT: d3.format(".0%")
   Constants:
     DB_NAME: 'visio'

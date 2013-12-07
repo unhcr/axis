@@ -19,6 +19,10 @@
     stroke: $primary-light;
   }
 
+  .y.axis g:first-child line {
+    stroke: none
+  }
+
   .y.axis text {
     fill: $primary-light;
     font-size: 1.4em;
