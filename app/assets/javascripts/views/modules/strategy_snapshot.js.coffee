@@ -25,16 +25,16 @@ class Visio.Views.StrategySnapshotView extends Backbone.View
     _.each @resultTypes, (resultType) =>
       config =
         resultType: resultType
-        width: 120
-        height: 120
+        width: 110
+        height: 110
         selection: d3.select(".#{resultType}-circle")
         percent: Math.random()
         number: 45
         margin:
-          top: 20
-          bottom: 20
-          left: 20
-          right: 20
+          top: 10
+          bottom: 10
+          left: 10
+          right: 10
 
       @countCircles.push
         circle: Visio.Graphs.circle(config)
