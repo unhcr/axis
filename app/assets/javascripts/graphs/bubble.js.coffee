@@ -34,7 +34,7 @@ Visio.Graphs.bubble = (config) ->
   xAxis = d3.svg.axis()
     .scale(x)
     .orient('bottom')
-    .tickFormat(Visio.Formats.SI)
+    .tickFormat(d3.format('s'))
     .ticks(6)
     .innerTickSize(14)
 
