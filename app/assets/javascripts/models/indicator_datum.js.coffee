@@ -10,12 +10,12 @@ class Visio.Models.IndicatorDatum extends Backbone.Model
   missingBudget: () ->
     if @get('is_performance')
       output = Visio.manager.get('outputs').findWhere({ id: @get('output_id') })
-      return true if !output || (output.get('ol_budget') == 0 || !output.get('ol_budget'))
+      return true if !output || (output.get('budget') == 0 || !output.get('budget'))
     else
       problem_objective = Visio.manager.get('problem_objectives').findWhere(
         id: @get('problem_objective_id'))
       return true if !problem_objective ||
-        (problem_objective.get('ol_budget') == 0 || !problem_objective.get('ol_budget'))
+        (problem_objective.get('budget') == 0 || !problem_objective.get('budget'))
 
     return false
   situation_analysis: (reported_value) ->
@@ -33,7 +33,7 @@ class Visio.Models.IndicatorDatum extends Backbone.Model
 
     reported_value ||= Visio.Algorithms.REPORTED_VALUES.myr
 
-    return Visio.Algorithms.ALGO_RESULTS.missing if !@get(reported_value) || !@get('comp_target') || @missingBudget()
+    return Visio.Algorithms.ALGO_RESULTS.missing if @get(reported_value) == undefined || @get('comp_target') == undefined || @missingBudget()
 
     if @get('is_performance')
       result = +@get(reported_value) / +@get('comp_target')

@@ -21,6 +21,8 @@ class Output < ActiveRecord::Base
   def to_jbuilder(options = {})
     Jbuilder.new do |json|
       json.extract! self, :name, :id, :priority, :ol_admin_budget, :ol_partner_budget, :ol_project_budget, :ol_staff_budget, :aol_admin_budget, :aol_partner_budget, :aol_project_budget, :aol_staff_budget
+
+      json.budget self.budget
     end
   end
 
