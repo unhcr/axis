@@ -28,7 +28,9 @@ class Visio.Routers.OverviewRouter extends Backbone.Router
     Visio.manager.on 'change:date', () =>
       @navigation.render()
       Visio.manager.setSelected()
-      console.log Visio.manager.selected(Visio.Parameters.PLANS)
+      @achievementBudgetSingleYearView.render(true)
+
+    Visio.manager.on 'change:aggregation_type', () =>
       @achievementBudgetSingleYearView.render(true)
 
 
