@@ -12,10 +12,10 @@ class Visio.Views.AchievementBudgetSingleYearView extends Backbone.View
         width: 600
         height: 400
         selection: d3.select('#bubble')
-        parameters: Visio.manager.selected(Visio.Parameters.PLANS).models
 
       @bubble = Visio.Graphs.bubble(options)
 
+    @bubble.parameters(Visio.manager.selected(Visio.Parameters.PLANS).models)
     @bubble()
 
     @
