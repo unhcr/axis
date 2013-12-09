@@ -22,7 +22,7 @@ class Visio.Models.Manager extends Backbone.Model
     'selected': {}
 
   year: (year) ->
-    return @get('date').getFullYear() unless arguments
+    return @get('date').getFullYear() if arguments.length == 0
     @set('date', new Date(year, 1))
 
   strategy: () ->
