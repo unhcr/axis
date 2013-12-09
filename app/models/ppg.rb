@@ -1,6 +1,6 @@
 class Ppg < ActiveRecord::Base
   extend Parameter
-  attr_accessible :name, :population_type, :population_type_id
+  attr_accessible :name, :population_type, :population_type_id, :operation_name
 
   self.primary_key = :id
 
@@ -12,7 +12,7 @@ class Ppg < ActiveRecord::Base
   has_many :indicator_data
   def to_jbuilder(options = {})
     Jbuilder.new do |json|
-      json.extract! self, :name, :id
+      json.extract! self, :name, :id, :operation_name
     end
   end
 

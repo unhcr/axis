@@ -109,6 +109,7 @@ class FocusParseTest < ActiveSupport::TestCase
     Ppg.all.each do |ppg|
       assert ppg.goals.length >= 0
       assert ppg.goals.length <= Goal.count
+      assert ppg.operation_name
     end
 
     assert_equal COUNTS[:goals], Goal.count, "Goal count"
