@@ -5581,6 +5581,7 @@ goog.async.Deferred.prototype.fire_ = function() {
 
       } catch (ex) {
         res = ex;
+        console.error(ex.stack);
         this.hadError_ = true;
 
         if (!this.hasErrback_()) {
