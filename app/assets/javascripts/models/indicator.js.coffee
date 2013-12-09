@@ -7,5 +7,5 @@ class Visio.Models.Indicator extends Visio.Models.Parameter
 
   paramRoot: 'indicator'
 
-
+  name: Visio.Parameters.INDICATORS
 
