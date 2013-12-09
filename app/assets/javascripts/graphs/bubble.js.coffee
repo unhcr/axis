@@ -48,6 +48,10 @@ Visio.Graphs.bubble = (config) ->
 
   parameters = config.parameters || []
 
+  info = new Visio.Views.BubbleInfoView({
+    el: $('.bubble-info-container .bubble-info')
+  })
+
   g.append('g')
     .attr('class', 'y axis')
     .attr('transform', 'translate(0,0)')
@@ -65,6 +69,7 @@ Visio.Graphs.bubble = (config) ->
       iso = if parameter.get('country') then parameter.get('country').iso3 else null
       datum = {
         id: parameter.get('id')
+        name: parameter.toString()
         iso: iso
         budget: parameter.selectedBudget()
         achievement: achievement
@@ -85,6 +90,13 @@ Visio.Graphs.bubble = (config) ->
     bubbles
       .attr('class', (d) ->
         return ['bubble'].join(' '))
+      .on('mouseenter', (d) ->
+        info.render(d)
+        info.show()
+      )
+      .on('mouseout', (d) ->
+        info.hide()
+      )
 
     bubbles
       .transition()
