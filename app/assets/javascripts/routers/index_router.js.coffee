@@ -37,6 +37,7 @@ class Visio.Routers.IndexRouter extends Backbone.Router
   setup: () =>
 
     options =
+      year: Visio.manager.year()
       options:
         include:
           counts: true
