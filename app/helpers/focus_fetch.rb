@@ -15,8 +15,8 @@ module FocusFetch
 
   def fetch(max_files = +1.0/0.0, expires = 1.week)
     begin
-      headers_zip = open(BASE_URL + HEADERS, :http_basic_authentication =>
-                         [ENV['LDAP_USERNAME'], ENV['LDAP_PASSWORD']])
+      headers_zip = open("#{BASE_URL}#{HEADERS}?user=#{ENV['LDAP_USERNAME']}&type=#{Rails.application.class.parent_name}&ver=0.0.1",
+         :http_basic_authentication => [ENV['LDAP_USERNAME'], ENV['LDAP_PASSWORD']])
     rescue
       puts 'Internet connection appears to be bad.'
       exit
