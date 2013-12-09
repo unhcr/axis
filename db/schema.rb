@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131204165146) do
+ActiveRecord::Schema.define(:version => 20131209104909) do
 
   create_table "countries", :force => true do |t|
     t.text     "latlng"
@@ -226,11 +226,13 @@ ActiveRecord::Schema.define(:version => 20131204165146) do
   end
 
   create_table "ppgs", :id => false, :force => true do |t|
-    t.string   "id",                            :null => false
+    t.string   "id",                                    :null => false
     t.string   "name"
-    t.datetime "created_at",                    :null => false
-    t.datetime "updated_at",                    :null => false
-    t.boolean  "is_deleted", :default => false
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
+    t.boolean  "is_deleted",         :default => false
+    t.string   "population_type"
+    t.string   "population_type_id"
   end
 
   create_table "ppgs_strategies", :id => false, :force => true do |t|
