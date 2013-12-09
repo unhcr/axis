@@ -18,7 +18,7 @@ class Visio.Views.YearFilterView extends Backbone.View
 
   onClickYear: (e) ->
     year = +$(e.currentTarget).attr('data-year')
-    Visio.manager.setYear(year)
+    Visio.manager.year(year)
     @$el.find('.current-year').text year
     @$el.find('.dropdown').toggleClass('zero-height')
 

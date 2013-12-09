@@ -86,7 +86,7 @@ asyncTest('fetchSyncedPlans for different years', () ->
     ok(p.models.length > 0, 'Should have greater than 0 plans')
     initialCount = p.models.length
     # Change year
-    Visio.manager.setYear(2012)
+    Visio.manager.year(2012)
     options.year = Visio.manager.year()
     return p.fetchSynced(options)
   ).done(() ->
@@ -103,13 +103,13 @@ test('find plan', () ->
   plan = Visio.manager.plan('bien')
   ok(plan, 'Must have plan')
   strictEqual(plan.id, 'bien')
-  Visio.manager.setYear(2013)
+  Visio.manager.year(2013)
 
   plan = Visio.manager.plan('UGA')
   ok(plan, 'Must have plan')
   strictEqual(plan.id, 'dirk')
 
-  Visio.manager.setYear(2012)
+  Visio.manager.year(2012)
   plan = Visio.manager.plan('UGA')
   ok(!plan, 'Must not have plan')
 )

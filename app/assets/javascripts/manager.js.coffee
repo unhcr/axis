@@ -21,10 +21,8 @@ class Visio.Models.Manager extends Backbone.Model
     'yearList': [2012, 2013, 2014, 2015]
     'selected': {}
 
-  year: () ->
-    @get('date').getFullYear()
-
-  setYear: (year) ->
+  year: (year) ->
+    return @get('date').getFullYear() unless arguments
     @set('date', new Date(year, 1))
 
   strategy: () ->
