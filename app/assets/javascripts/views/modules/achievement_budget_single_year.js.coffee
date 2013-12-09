@@ -9,7 +9,7 @@ class Visio.Views.AchievementBudgetSingleYearView extends Backbone.View
     if !isRerender
       @$el.html @template()
       options =
-        width: 600
+        width: 800
         height: 400
         selection: d3.select('#bubble')
 
