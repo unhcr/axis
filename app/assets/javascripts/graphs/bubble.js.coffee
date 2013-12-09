@@ -107,13 +107,7 @@ Visio.Graphs.bubble = (config) ->
       .transition()
       .duration(duration)
       .call(yAxis)
-      .selectAll('g')
-        .attr('transform', (d) ->
-          transform = Visio.Utils.parseTransform($(@).attr('transform'))
-          translate = transform.translate
-
-          return "translate(#{translate[0] - 20}, #{translate[1]})"
-        )
+      .attr('transform', 'translate(-20,0)')
 
   render.parameters = (_parameters) ->
     return if !arguments
