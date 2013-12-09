@@ -8,3 +8,15 @@ class Visio.Models.Strategy extends Backbone.Model
 
     _.include(@get("#{type}_ids"), id)
 
+  initialize: (options) ->
+    # Initialize helper functions
+    _.each Visio.Types, (type) =>
+      @[type] = () =>
+        ids = @get("#{type}_ids")
+        parameters = Visio.manager.get(type)
+        return new parameters.constructor(parameters.filter (model) ->
+          _.include ids, model.id)
+
+
+
+
