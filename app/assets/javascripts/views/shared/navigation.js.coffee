@@ -5,7 +5,12 @@ class Visio.Views.NavigationView extends Backbone.View
   initialize: () ->
     # Set defaults for selected
     _.each Visio.manager.get('types'), (type) ->
-      Visio.manager.get('selected')[type] = Visio.manager.strategy().get("#{type}_ids")
+      if type != Visio.Parameters.PLANS
+        Visio.manager.get('selected')[type] = Visio.manager.strategy().get("#{type}_ids")
+      else
+        plans = Visio.manager.plans({ year: Visio.manager.year() })
+
+        Visio.manager.get('selected')[type] = _.intersection(Visio.manager.strategy().get("#{type}_ids"), plans.pluck('id'))
 
 
   events:
@@ -14,12 +19,11 @@ class Visio.Views.NavigationView extends Backbone.View
 
   render: () ->
 
-    # TODO only select those that are part of the strategy
     @$el.html(@template(
       strategy: Visio.manager.strategy()
       parameters: [
         {
-          data: Visio.manager.plans({ year: Visio.manager.year() }).map((p) -> p.toJSON())
+          data: Visio.manager.plans({ year: Visio.manager.year() }).toJSON()
           name: 'Operations'
           type: Visio.Parameters.PLANS
         },
