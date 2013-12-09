@@ -49,7 +49,7 @@ module FocusFetch
       p "Skipping #{id}" and next if find_plan_file(id, expires)
 
       begin
-        plan_zip = open(BASE_URL + PLAN_PREFIX + id + PLAN_SUFFIX,
+        plan_zip = open("#{BASE_URL}#{PLAN_PREFIX}#{id}#{PLAN_SUFFIX}?user=#{ENV['LDAP_USERNAME']}&type=#{Rails.application.class.parent_name}&ver=0.0.1",
                       :http_basic_authentication => [ENV['LDAP_USERNAME'], ENV['LDAP_PASSWORD']])
       rescue
         puts 'Internet connection appears to be bad.'
