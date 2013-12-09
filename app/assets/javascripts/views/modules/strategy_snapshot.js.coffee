@@ -10,7 +10,7 @@ class Visio.Views.StrategySnapshotView extends Backbone.View
   ]
 
   initialize: (options) ->
-    @collection = Visio.manager.targetPlans()
+    @collection = Visio.manager.strategy().plans()
 
   events:
     'change .ui-blank-radio > input': 'onChangePlan'
@@ -18,7 +18,7 @@ class Visio.Views.StrategySnapshotView extends Backbone.View
   render: () ->
 
     @$el.html @template(
-      targetPlans: @collection.toJSON()
+      targetPlans: @collection.where({ year: Visio.manager.year() }).map (plan) -> plan.toJSON()
       resultTypes: @resultTypes
     )
     @countCircles = []
@@ -40,9 +40,7 @@ class Visio.Views.StrategySnapshotView extends Backbone.View
         circle: Visio.Graphs.circle(config)
         type: resultType
 
-    _.each @countCircles, (circle) ->
-      circle.circle()
-
+    @update()
 
   update: () =>
     @updateSituationAnalysis(@model)
@@ -50,7 +48,7 @@ class Visio.Views.StrategySnapshotView extends Backbone.View
     if @model
       budget = @model.strategyBudget()
     else
-      budget = @collection.reduce(
+      budget = @collection.where({ year: Visio.manager.year() }).reduce(
         (budget, p) -> return budget + p.strategyBudget(),
         0)
 
@@ -81,33 +79,50 @@ class Visio.Views.StrategySnapshotView extends Backbone.View
     @$el.find('.meter > span').attr('style', "width: #{percent * 100}%")
 
   updateSituationAnalysis: (plan) =>
+
+    if plan
+      counts = @situationAnalysisCounts(plan)
+
+
+    else
+      counts = {}
+      _.each @resultTypes, (resultType) ->
+        counts[resultType] = 0
+
+      _.each(@collection.where({ year: Visio.manager.year() }), (plan) =>
+        result = @situationAnalysisCounts(plan)
+        _.each @resultTypes, (resultType) ->
+          counts[resultType] += result[resultType])
+
+    total = 0
+    for resultType, count of counts
+      total += count
+
+    _.each @resultTypes, (type) =>
+      circle = _.findWhere @countCircles, { type: type }
+      circle.circle
+        .number(counts[type])
+        .percent(counts[type] / total)()
+
+    $totalIndicators = @$el.find('.total-indicators')
+
+    $totalIndicators.countTo(
+      from: +$totalIndicators.text()
+      to: total
+      speed: Visio.Durations.FAST
+    )
+
+
+
+  situationAnalysisCounts: (plan) =>
     counts = {}
     _.each @resultTypes, (resultType) ->
       counts[resultType] = 0
 
-    if plan
-      data = Visio.manager.get('indicator_data').where({ plan_id: plan.id })
+    data = Visio.manager.get('indicator_data').where({ plan_id: plan.id })
 
-      _.each(data, (d) ->
-        counts[d.situation_analysis()] += 1
-      )
+    _.each(data, (d) ->
+      counts[d.situation_analysis()] += 1
+    )
 
-      for resultType, count of counts
-        circle = _.findWhere @countCircles, { type: resultType }
-        circle.circle
-          .number(count)
-          .percent(count / data.length)()
-
-      $totalIndicators = @$el.find('.total-indicators')
-
-      $totalIndicators.countTo(
-        from: +$totalIndicators.text()
-        to: data.length
-        speed: Visio.Durations.FAST
-      )
-
-
-
-    else
-      # calc for whole strategy
-
+    counts
