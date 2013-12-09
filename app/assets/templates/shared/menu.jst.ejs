@@ -1,0 +1,12 @@
+<div class="row">
+  <div class="col-md-8 col-centered">
+    <a href="/">Home</a>
+  </div>
+</div>
+<% _.each(strategies, function(strategy) { %>
+<div class="row">
+  <div class="col-md-8 col-centered">
+    <a href="/overview?strategy_id=<%= strategy.id %>"><%= strategy.name %></a>
+  </div>
+</div>
+<% }) %>
