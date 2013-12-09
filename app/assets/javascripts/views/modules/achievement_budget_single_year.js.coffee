@@ -15,7 +15,7 @@ class Visio.Views.AchievementBudgetSingleYearView extends Backbone.View
 
       @bubble = Visio.Graphs.bubble(options)
 
-    @bubble.parameters(Visio.manager.selected(Visio.Parameters.PLANS).models)
+    @bubble.parameters(Visio.manager.selected(Visio.manager.get('aggregation_type')).models)
     @bubble()
 
     @

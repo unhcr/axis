@@ -20,6 +20,7 @@ class Visio.Models.Manager extends Backbone.Model
     'syncTimestampId': 'sync_timestamp_id_'
     'yearList': [2012, 2013, 2014, 2015]
     'selected': {}
+    'aggregation_type': Visio.Parameters.PLANS
 
   year: (year) ->
     return @get('date').getFullYear() unless arguments
