@@ -1,6 +1,6 @@
 class ProblemObjective < ActiveRecord::Base
   extend Parameter
-  attr_accessible :is_excluded, :objective_name, :problem_name, :admin_budget, :partner_budget, :project_budget, :staff_budget, :ol_budget, :aol_budget
+  attr_accessible :is_excluded, :objective_name, :problem_name, :ol_admin_budget, :ol_partner_budget, :ol_project_budget, :ol_staff_budget, :aol_admin_budget, :aol_partner_budget, :aol_project_budget, :aol_staff_budget
 
   self.primary_key = :id
   has_many :indicator_data
@@ -19,7 +19,7 @@ class ProblemObjective < ActiveRecord::Base
 
   def to_jbuilder(options = {})
     Jbuilder.new do |json|
-      json.extract! self, :objective_name, :problem_name, :id, :ol_budget, :aol_budget, :admin_budget, :partner_budget, :project_budget, :staff_budget
+      json.extract! self, :objective_name, :problem_name, :id, :ol_admin_budget, :ol_partner_budget, :ol_project_budget, :ol_staff_budget, :aol_admin_budget, :aol_partner_budget, :aol_project_budget, :aol_staff_budget
 
       json.budget self.budget
     end
