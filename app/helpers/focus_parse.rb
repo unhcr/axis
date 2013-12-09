@@ -74,8 +74,7 @@ module FocusParse
       match_plan_to_country(plan)
     end
 
-    # Use ID once it's in the XML
-    operation = Operation.where(:name => plan.operation_name).first
+    operation = Operation.find(xml_plan.search('./operationID').text)
     operation.plans << plan unless operation.plans.include? plan
 
     xml_ppgs = xml_plan.search(PPG)
@@ -84,7 +83,9 @@ module FocusParse
 
       (ppg = Ppg.find_or_initialize_by_id(xml_ppg.search('./name').text).tap do |p|
         p.name = xml_ppg.search('./name').text
-        p.id = xml_ppg.search('./name').text
+        p.id = xml_ppg.attribute('POPGRPID').value
+        p.population_type = xml_ppg.search('./typeName').text
+        p.population_type_id = xml_ppg.search('./typeID').text
       end).save
 
       plan.ppgs << ppg unless plan.ppgs.include? ppg
