@@ -112,29 +112,29 @@ test 'missingBudget', () ->
   Visio.manager.get('outputs').reset([
     {
       id: 'zero'
-      ol_budget: 0
+      budget: 0
     },
     {
       id: 'missing'
-      ol_budget: undefined
+      budget: undefined
     },
     {
       id: 'present'
-      ol_budget: 40
+      budget: 40
     }
   ])
   Visio.manager.get('problem_objectives').reset([
     {
       id: 'zero'
-      ol_budget: 0
+      budget: 0
     },
     {
       id: 'missing'
-      ol_budget: undefined
+      budget: undefined
     },
     {
       id: 'present'
-      ol_budget: 40
+      budget: 40
     }
   ])
 
