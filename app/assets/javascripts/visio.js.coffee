@@ -16,7 +16,6 @@ window.Visio =
   Stores:
     MAP: 'map'
     SYNC: 'sync_date'
-
   Parameters:
     PLANS: 'plans'
     PPGS: 'ppgs'
@@ -43,14 +42,14 @@ window.Visio =
       myr: 'myr'
       yer: 'yer'
 
-Visio.Types: [
-      Visio.Parameters.PLANS,
-      Visio.Parameters.PPGS,
-      Visio.Parameters.GOALS,
-      Visio.Parameters.OUTPUTS,
-      Visio.Parameters.PROBLEM_OBJECTIVES,
-      Visio.Parameters.INDICATORS,
-    ]
+Visio.Types = [
+    Visio.Parameters.PLANS,
+    Visio.Parameters.PPGS,
+    Visio.Parameters.GOALS,
+    Visio.Parameters.OUTPUTS,
+    Visio.Parameters.PROBLEM_OBJECTIVES,
+    Visio.Parameters.INDICATORS,
+  ]
 
 Visio.Schema =
     stores: [
