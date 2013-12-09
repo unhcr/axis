@@ -34,7 +34,7 @@ module FocusParse
     xml_operation_headers = doc.search(OPERATION_HEADER)
 
     xml_operation_headers.each do |xml_operation_header|
-      id = xml_operation_header.attribute('ID').value
+      id = xml_operation_header.search('./operationID').text
       name = xml_operation_header.search('./name').text
       years = []
 
@@ -81,7 +81,7 @@ module FocusParse
 
     xml_ppgs.each do |xml_ppg|
 
-      (ppg = Ppg.find_or_initialize_by_id(xml_ppg.search('./name').text).tap do |p|
+      (ppg = Ppg.find_or_initialize_by_id(xml_ppg.attribute('POPGRPID').value).tap do |p|
         p.name = xml_ppg.search('./name').text
         p.id = xml_ppg.attribute('POPGRPID').value
         p.population_type = xml_ppg.search('./typeName').text

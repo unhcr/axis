@@ -11,13 +11,13 @@ class FocusParseTest < ActiveSupport::TestCase
   COUNTS = {
     :plans => 1,
     :ppgs => 3,
-    :goals => 4,
-    :rights_groups => 7,
-    :problem_objectives => 17,
-    :indicators => 47,
-    :outputs => 28,
+    :goals => 3,
+    :rights_groups => 8,
+    :problem_objectives => 28,
+    :indicators => 171,
+    :outputs => 82,
     :operations => 139,
-    :indicator_data => 67
+    :indicator_data => 208
   }
   include FocusParse
   def setup
@@ -33,7 +33,7 @@ class FocusParseTest < ActiveSupport::TestCase
     Operation.destroy_all
   end
 
-  test "should update plan" do
+  test "update" do
     file = File.read(TESTFILE_PATH + TESTHEADER_NAME)
     parse_header(file, PLAN_TYPES)
 
@@ -64,11 +64,10 @@ class FocusParseTest < ActiveSupport::TestCase
       :normalize_whitespace => true })
 
     assert_equal 2014, Plan.first.year
-    assert Goal.where(:name => 'Reintegration Changed').first
+    assert Goal.where(:name => 'Voluntary return Changed').first
     assert RightsGroup.where(:name => 'Basic Needs and Essential Services Changed').first
-    assert ProblemObjective.where(:problem_name => 'Health status of the population is unsatisfactory or needs constant attention Changed').first
-    assert Output.where(:name => 'Access to primary health care services provided or supported Changed')
-    assert Indicator.where(:name => '# of health facilities equipped/constructed/rehabilitated Changed')
+    assert ProblemObjective.where(:problem_name => 'Self reliance and livelihoods insufficient for protection and solutions Changed').first
+    assert Indicator.where(:name => '# of PoC receiving production kits or inputs for agriculture/livestock/fisheries activities Changed')
   end
 
   test "Parse operation_header FOCUS" do
@@ -100,7 +99,7 @@ class FocusParseTest < ActiveSupport::TestCase
 
     assert plan.country
 
-    assert_equal 'AFG', plan.country.iso3
+    assert_equal 'COG', plan.country.iso3
 
     assert_equal COUNTS[:plans], operation.plans.length, "Should only have one plan"
 
