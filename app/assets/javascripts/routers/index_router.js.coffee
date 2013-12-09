@@ -1,6 +1,8 @@
 class Visio.Routers.IndexRouter extends Backbone.Router
 
   initialize: (options) ->
+    @menuView = new Visio.Views.MenuView()
+    $('body').append @menuView.el
 
     @map = Visio.Graphs.map(
       margin:
@@ -28,11 +30,16 @@ class Visio.Routers.IndexRouter extends Backbone.Router
 
 
   routes:
+    'menu': 'menu'
     ':plan_id/:type': 'list'
     '*default': 'index'
 
   index: () ->
     console.log 'index'
+
+  menu: () ->
+    console.log 'menu'
+    @menuView.show()
 
   setup: () =>
 

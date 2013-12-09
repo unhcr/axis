@@ -12,7 +12,7 @@
       .row
         .col-md-10.col-centered.center-text.zero-padding
           .col-md-4.extra-padding
-            %span.menu.pull-left.ui-primary-light
+            %span.menu-btn.pull-left.ui-primary-light
               .menu-icon
                 .menu-row
                 .menu-row
@@ -28,15 +28,13 @@
               Ça va,
               %span.ui-primary-light
                 = current_user.firstname
-      .row
-        - @strategies.each do |strategy|
-          %a.thematic-item.menu-item.ui-primary-light.pull-right{ :href => "/overview?strategy_id=#{strategy["id"]}" }
-            .underline
-              = strategy["name"]
-            .theme-content
-              = strategy["name"]
     :javascript
       window.Visio.user = new Visio.Models.User(#{current_user.to_json.html_safe})
+      $(document).ready(function() {
+        $('.menu-icon').click(function(e) {
+          Visio.router.navigate('/menu', { trigger: true })
+        })
+      })
 
     = yield
 

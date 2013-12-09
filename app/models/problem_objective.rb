@@ -14,7 +14,8 @@ class ProblemObjective < ActiveRecord::Base
 
 
   def budget
-    return self.ol_budget + self.aol_budget
+    return self.ol_admin_budget + self.ol_staff_budget + self.ol_project_budget + self.ol_partner_budget +
+          self.aol_admin_budget + self.aol_staff_budget + self.aol_project_budget + self.aol_partner_budget
   end
 
   def to_jbuilder(options = {})

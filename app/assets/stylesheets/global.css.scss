@@ -176,11 +176,6 @@ body, html {
   transition:padding $medium-transition,width $medium-transition;
 }
 
-.parameter-list {
-  margin-top: 25px;
-  z-index: 200;
-}
-
 .tab {
   padding-top: 14px;
   margin-bottom: 0px;
@@ -509,9 +504,14 @@ button, input {
 }
 
 .parameter-list {
-  position: absolute;
   background-color: $white;
   margin-bottom: 8px;
+  margin-top: 25px;
+}
+
+.overlay {
+  position: absolute;
+  z-index: 200;
 }
 
 a {
@@ -964,4 +964,9 @@ input[type="radio"]:checked + label {
 
 .bubble-info {
   height: 160px;
+}
+
+.menu {
+  background-color: $orange;
+  height: 100%
 }

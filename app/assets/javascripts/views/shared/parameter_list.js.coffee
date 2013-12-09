@@ -2,7 +2,7 @@ class Visio.Views.ParameterListView extends Backbone.View
 
   template: JST['parameter_list/list']
 
-  className: 'parameter-list container full-width'
+  className: 'parameter-list container full-width overlay'
 
   tabs: [{
       type: Visio.Parameters.INDICATORS

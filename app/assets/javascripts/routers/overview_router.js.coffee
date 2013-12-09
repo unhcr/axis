@@ -1,6 +1,9 @@
 class Visio.Routers.OverviewRouter extends Backbone.Router
 
   initialize: (options) ->
+    @menuView = new Visio.Views.MenuView()
+    $('body').append @menuView.el
+
     @setup().done(() =>
 
       @navigation = new Visio.Views.NavigationView({
@@ -45,7 +48,13 @@ class Visio.Routers.OverviewRouter extends Backbone.Router
 
 
   routes:
+    'menu' : 'menu'
     '*default': 'index'
+
+  menu: () ->
+    console.log 'menu'
+    @menuView.show()
+
 
   index: () ->
     console.log 'index'
