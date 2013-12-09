@@ -47,6 +47,19 @@ class Visio.Models.Manager extends Backbone.Model
       _.include(strategy_ids, strategy.id)
     ))
 
+  setSelected: () ->
+    $navigation = $('#navigation')
+
+    _.each @get('types'), (type) =>
+      @get('selected')[type] = []
+
+    $navigation.find('.visio-check input:checked').each (idx, ele) =>
+      typeid = $(ele).val().split('__')
+
+      type = typeid[0]
+      id = typeid[1]
+      @get('selected')[type].push id
+
   selected: (type) ->
     ids = @get('selected')[type]
 
