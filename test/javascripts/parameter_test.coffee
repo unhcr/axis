@@ -108,3 +108,30 @@ test 'selectedStrategyData', () ->
       strictEqual(data.length, 1)
       ok(data instanceof Visio.Collections.IndicatorDatum)
       ok(data.get('blue'))
+
+ test 'toString', () ->
+  _.each Visio.Types, (type) ->
+    Visio.manager.get(type).reset([
+      {
+        id: 1
+        name: 'ben'
+        operation_name: 'lisa'
+        objective_name: 'george'
+      }
+    ])
+
+  _.each Visio.Types, (type) ->
+    parameters = Visio.manager.get(type)
+
+    p = parameters.at(0)
+
+    if type == Visio.Parameters.PLANS
+      strictEqual p.toString(), 'lisa'
+    else if type == Visio.Parameters.PPGS
+      strictEqual p.toString(), '[lisa] ben'
+    else if type == Visio.Parameters.PROBLEM_OBJECTIVES
+      strictEqual p.toString(), 'george'
+    else
+      strictEqual p.toString(), 'ben'
+
+

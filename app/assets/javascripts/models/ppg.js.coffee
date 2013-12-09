@@ -4,4 +4,7 @@ class Visio.Models.Ppg extends Visio.Models.Parameter
 
   paramRoot: 'ppg'
 
+  toString: () ->
+    return "[#{@get('operation_name')}] #{@get('name')}"
+
 

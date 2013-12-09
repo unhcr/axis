@@ -86,6 +86,7 @@ module FocusParse
         p.id = xml_ppg.attribute('POPGRPID').value
         p.population_type = xml_ppg.search('./typeName').text
         p.population_type_id = xml_ppg.search('./typeID').text
+        p.operation_name = operation.name
       end).save
 
       plan.ppgs << ppg unless plan.ppgs.include? ppg

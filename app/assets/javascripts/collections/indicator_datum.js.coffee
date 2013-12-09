@@ -7,7 +7,7 @@ class Visio.Collections.IndicatorDatum extends Visio.Collections.Parameter
   url: '/indicator_data'
 
   situation_analysis: (reported_value) ->
-    reported_value ||= 'myr'
+    reported_value ||= Visio.Algorithms.REPORTED_VALUES.myr
 
     counts = {}
     counts[Visio.Algorithms.ALGO_RESULTS.success] = 0
