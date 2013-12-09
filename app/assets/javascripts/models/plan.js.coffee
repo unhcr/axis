@@ -71,3 +71,5 @@ class Visio.Models.Plan extends Visio.Models.Parameter
       @setSynced()
     )
 
+  toString: () ->
+    @get('operation_name')

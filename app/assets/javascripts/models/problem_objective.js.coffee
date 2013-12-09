@@ -7,5 +7,8 @@ class Visio.Models.ProblemObjective extends Visio.Models.Parameter
 
   paramRoot: 'problem_objective'
 
+  toString: () ->
+    return @get('objective_name')
+
 
 

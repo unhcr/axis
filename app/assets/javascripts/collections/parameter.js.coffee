@@ -10,8 +10,8 @@ class Visio.Collections.Parameter extends Backbone.Collection
     @name + '_store'
 
   comparator: (a, b) ->
-    aName = a.get('operation_name') || a.get('name') || a.get('problem_name')
-    bName = b.get('operation_name') || b.get('name') || b.get('problem_name')
+    aName = a.toString()
+    bName = b.toString()
     return -1 if aName < bName
     return 1 if aName > bName
     return 0 if aName == bName

@@ -5,6 +5,9 @@ class Visio.Models.Parameter extends Backbone.Model
 
   keyPath: 'id'
 
+  toString: () ->
+    return @get('name')
+
   setSynced: () ->
     db = Visio.manager.get('db')
     db.put({
