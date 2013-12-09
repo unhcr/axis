@@ -136,8 +136,15 @@ class FocusParseTest < ActiveSupport::TestCase
       assert problem_objective.outputs.length <= Output.count
       assert problem_objective.indicators.length >= 0
       assert problem_objective.indicators.length <= Indicator.count
-      assert problem_objective.aol_budget >= 0
-      assert problem_objective.ol_budget >= 0
+
+      assert problem_objective.aol_admin_budget >= 0
+      assert problem_objective.ol_admin_budget >= 0
+      assert problem_objective.aol_partner_budget >= 0
+      assert problem_objective.ol_partner_budget >= 0
+      assert problem_objective.aol_project_budget >= 0
+      assert problem_objective.ol_project_budget >= 0
+      assert problem_objective.aol_staff_budget >= 0
+      assert problem_objective.ol_staff_budget >= 0
     end
 
     assert_equal COUNTS[:outputs], Output.count, "Output count"
@@ -146,8 +153,15 @@ class FocusParseTest < ActiveSupport::TestCase
     Output.all.each do |output|
       assert output.indicators.length >= 0
       assert output.indicators.length <= Indicator.count
-      assert output.aol_budget >= 0
-      assert output.ol_budget >= 0
+
+      assert output.aol_admin_budget >= 0
+      assert output.ol_admin_budget >= 0
+      assert output.aol_partner_budget >= 0
+      assert output.ol_partner_budget >= 0
+      assert output.aol_project_budget >= 0
+      assert output.ol_project_budget >= 0
+      assert output.aol_staff_budget >= 0
+      assert output.ol_staff_budget >= 0
     end
 
     assert_equal COUNTS[:indicators], Indicator.count, "Indicator count"

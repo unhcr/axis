@@ -192,28 +192,39 @@ module FocusParse
                 scenario = xml_budget_line.search('./scenario').text
                 amount = xml_budget_line.search('./amount').text.to_i
                 type = xml_budget_line.search('./type').text
-                if scenario == AOL
-                  output.aol_budget += amount
-                  problem_objective.aol_budget += amount
-                elsif scenario == OL
-                  output.ol_budget += amount
-                  problem_objective.ol_budget += amount
-                end
 
-                if type == ADMIN
-                  output.admin_budget += amount
-                  problem_objective.admin_budget += amount
-                elsif type == PARTNER
-                  output.partner_budget += amount
-                  problem_objective.partner_budget += amount
-                elsif type == PROJECT
-                  output.project_budget += amount
-                  problem_objective.project_budget += amount
-                elsif type == STAFF
-                  output.staff_budget += amount
-                  problem_objective.staff_budget += amount
-                else
-                  p "Unidentified cost type: #{type}"
+                if scenario == AOL
+                  if type == ADMIN
+                    output.aol_admin_budget += amount
+                    problem_objective.aol_admin_budget += amount
+                  elsif type == PARTNER
+                    output.aol_partner_budget += amount
+                    problem_objective.aol_partner_budget += amount
+                  elsif type == PROJECT
+                    output.aol_project_budget += amount
+                    problem_objective.aol_project_budget += amount
+                  elsif type == STAFF
+                    output.aol_staff_budget += amount
+                    problem_objective.aol_staff_budget += amount
+                  else
+                    p "Unidentified cost type: #{type}"
+                  end
+                elsif scenario == OL
+                  if type == ADMIN
+                    output.ol_admin_budget += amount
+                    problem_objective.ol_admin_budget += amount
+                  elsif type == PARTNER
+                    output.ol_partner_budget += amount
+                    problem_objective.ol_partner_budget += amount
+                  elsif type == PROJECT
+                    output.ol_project_budget += amount
+                    problem_objective.ol_project_budget += amount
+                  elsif type == STAFF
+                    output.ol_staff_budget += amount
+                    problem_objective.ol_staff_budget += amount
+                  else
+                    p "Unidentified cost type: #{type}"
+                  end
                 end
 
               end
@@ -225,25 +236,44 @@ module FocusParse
             xml_budget_lines = xml_problem_objective.search('./budgetLines/BudgetLine')
 
             xml_budget_lines.each do |xml_budget_line|
-                scenario = xml_budget_line.search('./scenario').text
-                amount = xml_budget_line.search('./amount').text.to_i
-                if scenario == AOL
-                  problem_objective.aol_budget += amount
-                elsif scenario == OL
-                  problem_objective.ol_budget += amount
-                end
+              scenario = xml_budget_line.search('./scenario').text
+              amount = xml_budget_line.search('./amount').text.to_i
+              type = xml_budget_line.search('./type').text
 
+              if scenario == AOL
                 if type == ADMIN
-                  problem_objective.admin_budget += amount
+                  output.aol_admin_budget += amount
+                  problem_objective.aol_admin_budget += amount
                 elsif type == PARTNER
-                  problem_objective.partner_budget += amount
+                  output.aol_partner_budget += amount
+                  problem_objective.aol_partner_budget += amount
                 elsif type == PROJECT
-                  problem_objective.project_budget += amount
+                  output.aol_project_budget += amount
+                  problem_objective.aol_project_budget += amount
                 elsif type == STAFF
-                  problem_objective.staff_budget += amount
+                  output.aol_staff_budget += amount
+                  problem_objective.aol_staff_budget += amount
                 else
                   p "Unidentified cost type: #{type}"
                 end
+              elsif scenario == OL
+                if type == ADMIN
+                  output.ol_admin_budget += amount
+                  problem_objective.ol_admin_budget += amount
+                elsif type == PARTNER
+                  output.ol_partner_budget += amount
+                  problem_objective.ol_partner_budget += amount
+                elsif type == PROJECT
+                  output.ol_project_budget += amount
+                  problem_objective.ol_project_budget += amount
+                elsif type == STAFF
+                  output.ol_staff_budget += amount
+                  problem_objective.ol_staff_budget += amount
+                else
+                  p "Unidentified cost type: #{type}"
+                end
+              end
+
             end
             problem_objective.save
 
