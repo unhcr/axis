@@ -1,18 +1,6 @@
 require 'test_helper'
 
 class PlansControllerTest < ActionController::TestCase
-  test 'plans index should get current plans if no year' do
-    get :index
-
-    r = JSON.parse(response.body)
-    plans = r["new"]
-
-    assert_response :success
-    assert_equal 1, plans.count
-    plan = plans[0]
-    assert_equal plan["year"], Time.now.year
-
-  end
 
   test 'plans index should get passed in year' do
 
