@@ -108,6 +108,10 @@ Visio.Graphs.bubble = (config) ->
           return "translate(#{translate[0] - 20}, #{translate[1]})"
         )
 
+  render.parameters = (_parameters) ->
+    return if !arguments
+    parameters = _parameters
+    return render
 
   return render
 
