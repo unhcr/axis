@@ -73,7 +73,7 @@ class Visio.Models.Manager extends Backbone.Model
       return @get('plans').get(idOrISO)
 
   plans: (options) ->
-    @get('plans').where(options)
+    new Visio.Collections.Plan(@get('plans').where(options))
 
   targetPlans: ()->
     return new Visio.Collections.Plan(@get('plans').filter((plan) =>
