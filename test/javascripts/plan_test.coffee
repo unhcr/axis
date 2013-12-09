@@ -79,12 +79,16 @@ asyncTest('fetchSyncedPlans for different years', () ->
 
   initialCount = 0
 
-  p.fetchSynced().done(() ->
+  options =
+    year: (new Date()).getFullYear()
+
+  p.fetchSynced(options).done(() ->
     ok(p.models.length > 0, 'Should have greater than 0 plans')
     initialCount = p.models.length
     # Change year
     Visio.manager.setYear(2012)
-    return p.fetchSynced()
+    options.year = Visio.manager.year()
+    return p.fetchSynced(options)
   ).done(() ->
     ok(p.models.length > initialCount)
     start()
