@@ -46,7 +46,7 @@ Visio.Graphs.bubble = (config) ->
     .innerTickSize(14)
     .tickPadding(20)
 
-  parameters = config.parameters
+  parameters = config.parameters || []
 
   g.append('g')
     .attr('class', 'y axis')
@@ -62,7 +62,10 @@ Visio.Graphs.bubble = (config) ->
 
     data = parameters.map (parameter) ->
       achievement = parameter.selectedAchievement().result
+      iso = if parameter.get('country') then parameter.get('country').iso3 else null
       datum = {
+        id: parameter.get('id')
+        iso: iso
         budget: parameter.selectedBudget()
         achievement: achievement
         population: Math.random() * 1000000
@@ -76,14 +79,18 @@ Visio.Graphs.bubble = (config) ->
     x.domain([0, maxBudget])
 
     bubbles = g.selectAll('.bubble')
-      .data(data)
+      .data(data, (d) -> d.iso || d.id)
 
     bubbles.enter().append('circle')
     bubbles
       .attr('class', (d) ->
         return ['bubble'].join(' '))
+
+    bubbles
+      .transition()
+      .duration(Visio.Durations.FAST)
       .attr('r', (d) ->
-        return r(d.population))
+        return r(50000))
       .attr('cy', (d) ->
         return y(d.achievement))
       .attr('cx', (d) ->
