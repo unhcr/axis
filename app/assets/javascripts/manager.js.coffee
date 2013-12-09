@@ -2,7 +2,7 @@ class Visio.Models.Manager extends Backbone.Model
 
   initialize: () ->
     @set('db', new ydn.db.Storage(Visio.Constants.DB_NAME, Visio.Schema))
-    _.each @get('types'), (type) =>
+    _.each Visio.Types, (type) =>
       @get('selected')[type] = []
 
   defaults:
@@ -20,14 +20,6 @@ class Visio.Models.Manager extends Backbone.Model
     'syncTimestampId': 'sync_timestamp_id_'
     'yearList': [2012, 2013, 2014, 2015]
     'selected': {}
-    'types': [
-      Visio.Parameters.PLANS,
-      Visio.Parameters.PPGS,
-      Visio.Parameters.GOALS,
-      Visio.Parameters.OUTPUTS,
-      Visio.Parameters.PROBLEM_OBJECTIVES,
-      Visio.Parameters.INDICATORS,
-    ]
 
   year: () ->
     @get('date').getFullYear()
@@ -50,7 +42,7 @@ class Visio.Models.Manager extends Backbone.Model
   setSelected: () ->
     $navigation = $('#navigation')
 
-    _.each @get('types'), (type) =>
+    _.each Visio.Types, (type) =>
       @get('selected')[type] = []
 
     $navigation.find('.visio-check input:checked').each (idx, ele) =>
@@ -69,7 +61,7 @@ class Visio.Models.Manager extends Backbone.Model
 
   selectedIndicatorData: () ->
     return new Visio.Collections.IndicatorDatum(@get('indicator_data').filter((d) =>
-      return _.every @get('types'), (type) =>
+      return _.every Visio.Types, (type) =>
         _.include(@get('selected')[type], d.get("#{Inflection.singularize(type)}_id"))
     ))
 

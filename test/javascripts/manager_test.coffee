@@ -92,7 +92,7 @@ test('strategies', () ->
 test 'selectedIndicatorData', () ->
   selected = Visio.manager.get('selected')
 
-  _.each Visio.manager.get('types'), (type) ->
+  _.each Visio.Types, (type) ->
     selected[type] = [1,2,3]
 
   Visio.manager.get('indicator_data').reset([
@@ -126,11 +126,11 @@ test 'selectedIndicatorData', () ->
 test 'selected', () ->
   selected = Visio.manager.get('selected')
 
-  _.each Visio.manager.get('types'), (type) ->
+  _.each Visio.Types, (type) ->
     selected[type] = [1]
 
 
-  _.each Visio.manager.get('types'), (type) ->
+  _.each Visio.Types, (type) ->
     Visio.manager.get(type).reset([
       {
         id: 1

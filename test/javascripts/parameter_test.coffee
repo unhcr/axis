@@ -7,11 +7,11 @@ module 'Parameter',
 test 'selectedIndicatorData', () ->
   selected = Visio.manager.get('selected')
 
-  _.each Visio.manager.get('types'), (type) ->
+  _.each Visio.Types, (type) ->
     selected[type] = [1]
 
 
-  _.each Visio.manager.get('types'), (type) ->
+  _.each Visio.Types, (type) ->
     Visio.manager.get(type).reset([
       {
         id: 1
@@ -43,7 +43,7 @@ test 'selectedIndicatorData', () ->
     }
   ])
 
-  _.each Visio.manager.get('types'), (type) ->
+  _.each Visio.Types, (type) ->
     selected = Visio.manager.selected(type)
     strictEqual(selected.length, 1)
 
@@ -58,14 +58,14 @@ test 'selectedStrategyData', () ->
   strategy = { id: 17 }
 
 
-  _.each Visio.manager.get('types'), (type) ->
+  _.each Visio.Types, (type) ->
     strategy["#{type}_ids"] = [1]
 
 
   Visio.manager.get('strategies').reset([strategy])
   Visio.manager.set('strategy_id', Visio.manager.get('strategies').at(0).id)
 
-  _.each Visio.manager.get('types'), (type) ->
+  _.each Visio.Types, (type) ->
     Visio.manager.get(type).reset([
       {
         id: 1
@@ -97,7 +97,7 @@ test 'selectedStrategyData', () ->
     }
   ])
 
-  _.each Visio.manager.get('types'), (type) ->
+  _.each Visio.Types, (type) ->
     selected = Visio.manager.strategy().get("#{type}_ids")
     strictEqual(selected.length, 1)
 

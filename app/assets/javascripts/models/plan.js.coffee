@@ -28,14 +28,14 @@ class Visio.Models.Plan extends Visio.Models.Parameter
 
       ids = {}
 
-      _.each Visio.manager.get('types'), (type) =>
+      _.each Visio.Types, (type) =>
         if type == Visio.Parameters.PLANS
           ids["#{type}_ids"] = [@id]
         else
           ids["#{type}_ids"] = _.intersection.apply(null, strategies.pluck("#{type}_ids"))
 
       data = new Visio.Collections.IndicatorDatum(Visio.manager.get('indicator_data').filter((datum) ->
-          valid = _.every Visio.manager.get('types'), (type) =>
+          valid = _.every Visio.Types, (type) =>
             _.include(ids["#{type}_ids"], datum.get("#{Inflection.singularize(type)}_id"))
 
           return valid && !datum.get('is_performance')

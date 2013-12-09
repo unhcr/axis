@@ -17,7 +17,7 @@ class Visio.Models.Parameter extends Backbone.Model
 
   selectedIndicatorData: () ->
     return new Visio.Collections.IndicatorDatum(Visio.manager.get('indicator_data').filter((d) =>
-      return _.every Visio.manager.get('types'), (type) =>
+      return _.every Visio.Types, (type) =>
         ids = if @name == type then [@id] else Visio.manager.get('selected')[type]
 
         _.include ids, d.get("#{Inflection.singularize(type)}_id")))
@@ -28,7 +28,7 @@ class Visio.Models.Parameter extends Backbone.Model
 
   strategyIndicatorData: () ->
     return new Visio.Collections.IndicatorDatum(Visio.manager.get('indicator_data').filter((d) =>
-      return _.every Visio.manager.get('types'), (type) =>
+      return _.every Visio.Types, (type) =>
         ids = []
         if @name == type
           ids = [@id] if Visio.manager.strategy().include(type, @id)

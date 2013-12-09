@@ -4,7 +4,7 @@ class Visio.Views.NavigationView extends Backbone.View
 
   initialize: () ->
     # Set defaults for selected
-    _.each Visio.manager.get('types'), (type) ->
+    _.each Visio.Types, (type) ->
       if type != Visio.Parameters.PLANS
         Visio.manager.get('selected')[type] = Visio.manager.strategy().get("#{type}_ids")
       else
