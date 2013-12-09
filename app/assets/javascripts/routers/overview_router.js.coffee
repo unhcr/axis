@@ -37,7 +37,12 @@ class Visio.Routers.OverviewRouter extends Backbone.Router
       join_ids:
         strategy_id: Visio.manager.get('strategy_id')
 
-    $.when(Visio.manager.get('plans').fetchSynced(options),
+    $.when(Visio.manager.get('plans').fetchSynced(_.extend({}, options, {
+       options:
+         include:
+           counts: true
+           situation_analysis: true
+     })),
            Visio.manager.get('ppgs').fetchSynced(options),
            Visio.manager.get('goals').fetchSynced(options),
            Visio.manager.get('outputs').fetchSynced(options),

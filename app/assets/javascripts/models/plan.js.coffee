@@ -17,7 +17,7 @@ class Visio.Models.Plan extends Visio.Models.Parameter
 
   strategy_situation_analysis: () ->
     # Should be calculated once in manager
-    $checkedStrategies = $('.visio-check input:checked')
+    $checkedStrategies = $('.priority-country-filter .visio-check input:checked')
     if $checkedStrategies.length == 0
       # Just return analysis for entire plan
       return @get('situation_analysis')
