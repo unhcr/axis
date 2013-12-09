@@ -22,6 +22,13 @@ class Visio.Routers.OverviewRouter extends Backbone.Router
     ).fail (e) =>
       console.log e
 
+    Visio.manager.on 'change:date', () =>
+      @navigation.render()
+      Visio.manager.setSelected()
+      console.log Visio.manager.selected(Visio.Parameters.PLANS)
+      @achievementBudgetSingleYearView.render(true)
+
+
   setup: () ->
     options =
       join_ids:
