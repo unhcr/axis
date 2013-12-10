@@ -1,3 +1,4 @@
+.navigation-activation
 .container.full-width.ui-purple-theme
   .row
     .col-md-12.center-text.col-centered
@@ -38,5 +39,10 @@
 
     Visio.router = new Visio.Routers.OverviewRouter();
     Backbone.history.start();
+
+    $('.navigation-activation').on('mouseenter', function(e) {
+      $('.page').toggleClass('shift')
+    })
+
 
   });
