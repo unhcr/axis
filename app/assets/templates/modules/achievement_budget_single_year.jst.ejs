@@ -16,3 +16,23 @@
       </div>
   </div>
 </div>
+<div class="row">
+  <div class="col-md-8 col-centered">
+      <div class="col-md-1 scenerio">
+        <% _.each(Visio.Scenerios, function(scenerio) { %>
+        <div class="visio-check visio-check-yellow">
+          <input checked="checked" id="check-<%= scenerio %>" type="checkbox" value="<%= scenerio %>" />
+          <label for="check-<%= scenerio %>"><%= scenerio %></label>
+        </div>
+        <% }) %>
+      </div>
+      <div class="col-md-2 budget">
+        <% _.each(Visio.Budgets, function(budget) { %>
+        <div class="visio-check visio-check-yellow">
+          <input checked="checked" id="check-<%= budget %>" type="checkbox" value="<%= budget %>" />
+          <label for="check-<%= budget %>"><%= budget %></label>
+        </div>
+        <% }) %>
+      </div>
+  </div>
+</div>

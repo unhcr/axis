@@ -31,6 +31,8 @@ Visio.Graphs.bubble = (config) ->
     .domain([0, 1000000])
     .range([0, 20])
 
+  domain = null
+
   xAxis = d3.svg.axis()
     .scale(x)
     .orient('bottom')
@@ -81,7 +83,9 @@ Visio.Graphs.bubble = (config) ->
     data = data.filter (d) ->
       return d.budget && d.achievement
 
-    x.domain([0, maxBudget])
+    if !domain
+      domain = [0, maxBudget]
+      x.domain(domain)
 
     bubbles = g.selectAll('.bubble')
       .data(data, (d) -> d.iso || d.id)

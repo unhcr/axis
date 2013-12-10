@@ -2,6 +2,10 @@ class Visio.Views.AchievementBudgetSingleYearView extends Backbone.View
 
   template: JST['modules/achievement_budget_single_year']
 
+  events:
+    'click .scenerio .visio-check input': 'onClickScenerio'
+    'click .budget .visio-check input': 'onClickBudget'
+
   initialize: (options) ->
 
   render: (isRerender) ->
@@ -19,3 +23,23 @@ class Visio.Views.AchievementBudgetSingleYearView extends Backbone.View
     @bubble()
 
     @
+
+  onClickScenerio: (e) =>
+    $target = $(e.currentTarget)
+
+    if $target.is(':checked')
+      Visio.manager.get('scenerio_type')[$target.val()] = true
+    else
+      Visio.manager.get('scenerio_type')[$target.val()] = false
+
+    @render(true)
+
+  onClickBudget: (e) =>
+    $target = $(e.currentTarget)
+
+    if $target.is(':checked')
+      Visio.manager.get('budget_type')[$target.val()] = true
+    else
+      Visio.manager.get('budget_type')[$target.val()] = false
+
+    @render(true)
