@@ -65,8 +65,21 @@ class IndicatorDatum < ActiveRecord::Base
     Jbuilder.new do |json|
       json.extract! self, :baseline, :comp_target, :reversal, :standard, :stored_baseline, :threshold_green, :threshold_red, :yer, :myr, :is_performance, :year, :indicator_id, :output_id, :problem_objective_id, :goal_id, :ppg_id, :plan_id, :id
 
+      json.missing_budget self.missing_budget?
     end
 
+  end
+
+  def missing_budget?
+    budgets = Budget.where({
+      :plan_id => self.plan_id,
+      :ppg_id => self.ppg_id,
+      :goal_id => self.goal_id,
+      :output_id => self.output_id,
+      :problem_objective_id => self.problem_objective_id,
+    }).where('amount > 0')
+
+    budgets.empty?
   end
 
   def situation_analysis(reported_value = REPORTED_VALUES[:myr])
