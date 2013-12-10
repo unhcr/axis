@@ -456,11 +456,12 @@ button, input {
 
 .map-filter {
   margin-bottom: 1em;
+  margin-left: 1em;
 }
 
 .map-filters {
-  position: absolute;
   margin-left: 1em;
+  position: absolute;
   margin-top: 1em;
   z-index: 100;
 }
