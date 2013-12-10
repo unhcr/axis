@@ -11,6 +11,7 @@ task :clear => :environment do
   Output.delete_all
   Indicator.delete_all
   IndicatorDatum.delete_all
+  Budget.delete_all
 end
 
 task :fetch => :environment do
