@@ -18,7 +18,7 @@ class FocusParseTest < ActiveSupport::TestCase
     :outputs => 82,
     :operations => 139,
     :indicator_data => 208,
-    :budgets => 1160
+    :budgets => 403
   }
   include FocusParse
   def setup
@@ -167,6 +167,7 @@ class FocusParseTest < ActiveSupport::TestCase
     end
 
     assert_equal COUNTS[:budgets], Budget.count, "Budget count"
+    assert_equal 0, Budget.where('amount = 0').count
 
   end
 

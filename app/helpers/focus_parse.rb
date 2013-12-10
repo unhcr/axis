@@ -210,6 +210,7 @@ module FocusParse
               end
 
               budget_hash_list.each do |hash|
+                next if hash[:amount] == 0
                 attrs = {
                   :plan_id => plan.id,
                   :ppg_id => ppg.id,
@@ -263,6 +264,7 @@ module FocusParse
             end
 
             budget_hash_list.each do |hash|
+              next if hash[:amount] == 0
               attrs = {
                 :plan_id => plan.id,
                 :ppg_id => ppg.id,
