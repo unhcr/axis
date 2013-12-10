@@ -331,20 +331,20 @@ test 'budget', () ->
   Visio.manager.get('problem_objectives').reset([
     {
       id: 1
-      budget: 20
+      aol_staff_budget: 20
     },
     {
       id: 2
-      budget: 30
+      aol_staff_budget: 30
     }
   ])
 
-  budget = p.budget(Visio.manager.get('indicator_data'))
+  budget = Visio.manager.get('indicator_data').budget()
 
   strictEqual(50, budget)
 
   Visio.manager.get('indicator_data').get(1).set('problem_objective_id', 2)
 
-  budget = p.budget(Visio.manager.get('indicator_data'))
+  budget = Visio.manager.get('indicator_data').budget()
 
   strictEqual(30, budget)
