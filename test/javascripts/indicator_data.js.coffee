@@ -6,13 +6,13 @@ test 'achievement collection', () ->
   Visio.manager.get('outputs').reset([
     {
       id: 'present'
-      ol_budget: 40
+      budget: 40
     }
   ])
   Visio.manager.get('problem_objectives').reset([
     {
       id: 'present'
-      ol_budget: 40
+      budget: 40
     }
   ])
 
@@ -57,13 +57,13 @@ test 'achievement', () ->
   Visio.manager.get('outputs').reset([
     {
       id: 'present'
-      ol_budget: 40
+      budget: 40
     }
   ])
   Visio.manager.get('problem_objectives').reset([
     {
       id: 'present'
-      ol_budget: 40
+      budget: 40
     }
   ])
   datum = new Visio.Models.IndicatorDatum({

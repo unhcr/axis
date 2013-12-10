@@ -258,7 +258,8 @@ test 'strategy situation analysis', () ->
       indicators_ids: []
     }])
 
-  $('body').append('<div class="visio-check"><input type="checkbox" checked="checked" value="1" /><input checked="checked" value="2" type="checkbox"/></div>')
+  $('body').append('<div class="priority-country-filter"></div>')
+  $('.priority-country-filter').append('<div class="visio-check"><input type="checkbox" checked="checked" value="1" /><input checked="checked" value="2" type="checkbox"/></div>')
 
   result = p.strategy_situation_analysis()
   strictEqual(Visio.Algorithms.ALGO_RESULTS.fail, result.category)
