@@ -25,9 +25,33 @@ class Visio.Models.Parameter extends Backbone.Model
 
         _.include ids, d.get("#{Inflection.singularize(type)}_id")))
 
+  selectedBudgetData: () ->
+    return new Visio.Collections.Budget(Visio.manager.get('budgets').filter((d) =>
+      return _.every Visio.Types, (type) =>
+        return true if type == Visio.Parameters.INDICATORS
+
+        if @name == type
+          ids = [@id]
+        else if type == Visio.Parameters.OUTPUTS
+          ids = Visio.manager.get('selected')[type].concat([undefined])
+        else
+          ids = Visio.manager.get('selected')[type]
+
+        if !_.include ids, d.get("#{Inflection.singularize(type)}_id")
+          console.log ids
+          console.log type
+          console.log d
+
+        _.include ids, d.get("#{Inflection.singularize(type)}_id")))
+
+
   selectedAchievement: () ->
     data = @selectedIndicatorData()
     data.achievement()
+
+  selectedBudget: () ->
+    data = @selectedBudgetData()
+    data.budget()
 
   strategyIndicatorData: () ->
     return new Visio.Collections.IndicatorDatum(Visio.manager.get('indicator_data').filter((d) =>
@@ -40,10 +64,21 @@ class Visio.Models.Parameter extends Backbone.Model
 
         _.include ids, d.get("#{Inflection.singularize(type)}_id")))
 
-  strategyBudget: () ->
-    data = @strategyIndicatorData()
-    data.budget()
+  strategyBudgetData: () ->
+    return new Visio.Collections.Budget(Visio.manager.get('budgets').filter((d) =>
+      return _.every Visio.Types, (type) =>
+        if @name == type
+          ids = [@id] if Visio.manager.strategy().include(type, @id)
+        else if type == Visio.Parameters.OUTPUTS
+          ids = Visio.manager.strategy().get("#{type}_ids").concat([undefined])
+        else
+          ids = Visio.manager.strategy().get("#{type}_ids")
 
+        _.include ids, d.get("#{Inflection.singularize(type)}_id")))
+
+  strategyBudget: () ->
+    data = @strategyBudgetData()
+    data.budget()
 
   selectedBudget: () ->
     data = @selectedIndicatorData()

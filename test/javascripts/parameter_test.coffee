@@ -3,6 +3,74 @@ module 'Parameter',
   setup: () ->
     Visio.manager = new Visio.Models.Manager()
 
+test 'selectedBudgetData', () ->
+  selected = Visio.manager.get('selected')
+
+  _.each Visio.Types, (type) ->
+    selected[type] = [1]
+
+
+  _.each Visio.Types, (type) ->
+    Visio.manager.get(type).reset([
+      {
+        id: 1
+      },
+      {
+        id: 2
+      }
+    ])
+
+  Visio.manager.get('budgets').reset([
+
+    {
+      id: 'blue'
+      scenario: 'Above Operating Level'
+      budget_type: 'ADMIN'
+      amount: 100
+      plan_id: 1
+      ppg_id: 1
+      goal_id: 1
+      output_id: 1
+      problem_objective_id: 1
+    },
+    {
+      id: 'green'
+      scenario: 'Above Operating Level'
+      budget_type: 'ADMIN'
+      amount: 500
+      plan_id: 1
+      ppg_id: 1
+      goal_id: 1
+      output_id: undefined
+      problem_objective_id: 1
+    },
+    {
+      id: 'red'
+      scenario: 'Above Operating Level'
+      budget_type: 'ADMIN'
+      amount: 200
+      plan_id: 2
+      ppg_id: 1
+      goal_id: 2
+      problem_objective_id: 2
+    }
+  ])
+
+  _.each Visio.Types, (type) ->
+    selected = Visio.manager.selected(type)
+    strictEqual(selected.length, 1)
+
+    selected.each (d) ->
+      data = d.selectedBudgetData()
+
+      if type == Visio.Parameters.OUTPUTS
+        strictEqual(data.length, 1)
+      else
+        strictEqual(data.length, 2)
+        ok(data.get('green'))
+
+      ok(data.get('blue'))
+      ok(data instanceof Visio.Collections.Budget)
 
 test 'selectedIndicatorData', () ->
   selected = Visio.manager.get('selected')
