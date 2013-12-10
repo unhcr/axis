@@ -42,7 +42,7 @@ class Budget < ActiveRecord::Base
 
   def to_jbuilder(options = {})
     Jbuilder.new do |json|
-      json.extract! self, :budget_type, :scenario, :amount, :plan_id, :ppg_id, :goal_id, :output_id, :problem_objective_id
+      json.extract! self, :id, :budget_type, :scenario, :amount, :plan_id, :ppg_id, :goal_id, :output_id, :problem_objective_id
     end
   end
 
