@@ -17,7 +17,8 @@ class FocusParseTest < ActiveSupport::TestCase
     :indicators => 171,
     :outputs => 82,
     :operations => 139,
-    :indicator_data => 208
+    :indicator_data => 208,
+    :budgets => 1160
   }
   include FocusParse
   def setup
@@ -31,6 +32,7 @@ class FocusParseTest < ActiveSupport::TestCase
     Indicator.destroy_all
     IndicatorDatum.destroy_all
     Operation.destroy_all
+    Budget.delete_all
   end
 
   test "update" do
@@ -51,6 +53,7 @@ class FocusParseTest < ActiveSupport::TestCase
     assert_equal COUNTS[:problem_objectives], ProblemObjective.count, "ProblemObjective count"
     assert_equal COUNTS[:outputs], Output.count, "Output count"
     assert_equal COUNTS[:operations], Operation.count, "Operation count"
+    assert_equal COUNTS[:budgets], Budget.count, "Budget count"
 
     doc = Nokogiri::XML(file) do |config|
       config.noblanks.strict
@@ -136,15 +139,6 @@ class FocusParseTest < ActiveSupport::TestCase
       assert problem_objective.outputs.length <= Output.count
       assert problem_objective.indicators.length >= 0
       assert problem_objective.indicators.length <= Indicator.count
-
-      assert problem_objective.aol_admin_budget >= 0
-      assert problem_objective.ol_admin_budget >= 0
-      assert problem_objective.aol_partner_budget >= 0
-      assert problem_objective.ol_partner_budget >= 0
-      assert problem_objective.aol_project_budget >= 0
-      assert problem_objective.ol_project_budget >= 0
-      assert problem_objective.aol_staff_budget >= 0
-      assert problem_objective.ol_staff_budget >= 0
     end
 
     assert_equal COUNTS[:outputs], Output.count, "Output count"
@@ -153,15 +147,6 @@ class FocusParseTest < ActiveSupport::TestCase
     Output.all.each do |output|
       assert output.indicators.length >= 0
       assert output.indicators.length <= Indicator.count
-
-      assert output.aol_admin_budget >= 0
-      assert output.ol_admin_budget >= 0
-      assert output.aol_partner_budget >= 0
-      assert output.ol_partner_budget >= 0
-      assert output.aol_project_budget >= 0
-      assert output.ol_project_budget >= 0
-      assert output.aol_staff_budget >= 0
-      assert output.ol_staff_budget >= 0
     end
 
     assert_equal COUNTS[:indicators], Indicator.count, "Indicator count"
@@ -180,6 +165,8 @@ class FocusParseTest < ActiveSupport::TestCase
       assert !d.is_performance.nil?, "Must have a performance field"
       assert d.year, "Must be a year"
     end
+
+    assert_equal COUNTS[:budgets], Budget.count, "Budget count"
 
   end
 

@@ -2,8 +2,8 @@
 
 one:
   budget_type: MyString
-  scenerio: MyString
+  scenario: MyString
 
 two:
   budget_type: MyString
-  scenerio: MyString
+  scenario: MyString

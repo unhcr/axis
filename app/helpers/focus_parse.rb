@@ -213,14 +213,14 @@ module FocusParse
                 attrs = {
                   :plan_id => plan.id,
                   :ppg_id => ppg.id,
-                  :plan_id => goal.id,
+                  :goal_id => goal.id,
                   :output_id => output.id,
                   :problem_objective_id => problem_objective.id,
                   :scenario => hash[:scenario],
                   :budget_type => hash[:budget_type],
                 }
 
-                b = Budget.where(attrs)
+                b = Budget.where(attrs).first
                 b = Budget.new() unless b
 
                 b.plan = plan
@@ -266,14 +266,14 @@ module FocusParse
               attrs = {
                 :plan_id => plan.id,
                 :ppg_id => ppg.id,
-                :plan_id => goal.id,
+                :goal_id => goal.id,
                 :output_id => nil,
                 :problem_objective_id => problem_objective.id,
                 :scenario => hash[:scenario],
                 :budget_type => hash[:budget_type],
               }
 
-              b = Budget.where(attrs)
+              b = Budget.where(attrs).first
               b = Budget.new() unless b
 
               b.plan = plan
@@ -333,7 +333,7 @@ module FocusParse
 
   def budget_hash(list, scenario, budget_type)
     hashes = list.select do |hash|
-      return hash[:budget_type] == budget_type && hash[:scenario] == scenario
+      hash[:budget_type] == budget_type && hash[:scenario] == scenario
     end
     return hashes.first
   end
