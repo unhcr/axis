@@ -5,7 +5,7 @@ window.Visio =
   Routers: {}
   Utils: {}
   Graphs: {}
-  Scenerios:
+  Scenarios:
     OL: 'ol'
     AOL: 'aol'
   Budgets:
@@ -32,6 +32,7 @@ window.Visio =
     PROBLEM_OBJECTIVES: 'problem_objectives'
     INDICATORS: 'indicators'
     INDICATOR_DATA: 'indicator_data'
+    BUDGETS: 'budgets'
   Algorithms:
     SUCCESS_THRESHOLD: 0.66
     OK_THRESHOLD: 0.33

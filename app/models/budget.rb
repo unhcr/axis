@@ -1,5 +1,5 @@
 class Budget < ActiveRecord::Base
-  attr_accessible :budget_type, :scenerio, :amount
+  attr_accessible :budget_type, :scenario, :amount
 
   belongs_to :plan
   belongs_to :ppg

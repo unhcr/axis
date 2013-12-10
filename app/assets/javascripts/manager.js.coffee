@@ -5,8 +5,8 @@ class Visio.Models.Manager extends Backbone.Model
     _.each Visio.Types, (type) =>
       @get('selected')[type] = []
 
-    _.each Visio.Scenerios, (scenerio) =>
-      @get('scenerio_type')[scenerio] = true
+    _.each Visio.Scenarios, (scenario) =>
+      @get('scenario_type')[scenario] = true
 
     _.each Visio.Budgets, (budget) =>
       @get('budget_type')[budget] = true
@@ -27,7 +27,7 @@ class Visio.Models.Manager extends Backbone.Model
     'yearList': [2012, 2013, 2014, 2015]
     'selected': {}
     'aggregation_type': Visio.Parameters.OUTPUTS
-    'scenerio_type': {}
+    'scenario_type': {}
     'budget_type': {}
 
   year: (year) ->

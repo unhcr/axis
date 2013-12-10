@@ -18,11 +18,11 @@
 </div>
 <div class="row">
   <div class="col-md-8 col-centered">
-      <div class="col-md-1 scenerio">
-        <% _.each(Visio.Scenerios, function(scenerio) { %>
+      <div class="col-md-1 scenario">
+        <% _.each(Visio.Scenarios, function(scenario) { %>
         <div class="visio-check visio-check-yellow">
-          <input checked="checked" id="check-<%= scenerio %>" type="checkbox" value="<%= scenerio %>" />
-          <label for="check-<%= scenerio %>"><%= scenerio %></label>
+          <input checked="checked" id="check-<%= scenario %>" type="checkbox" value="<%= scenario %>" />
+          <label for="check-<%= scenario %>"><%= scenario %></label>
         </div>
         <% }) %>
       </div>
