@@ -37,11 +37,6 @@ class Visio.Models.Parameter extends Backbone.Model
         else
           ids = Visio.manager.get('selected')[type]
 
-        if !_.include ids, d.get("#{Inflection.singularize(type)}_id")
-          console.log ids
-          console.log type
-          console.log d
-
         _.include ids, d.get("#{Inflection.singularize(type)}_id")))
 
 
@@ -78,10 +73,6 @@ class Visio.Models.Parameter extends Backbone.Model
 
   strategyBudget: () ->
     data = @strategyBudgetData()
-    data.budget()
-
-  selectedBudget: () ->
-    data = @selectedIndicatorData()
     data.budget()
 
   toJSON: () ->
