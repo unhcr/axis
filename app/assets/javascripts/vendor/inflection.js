@@ -171,6 +171,10 @@ Inflection.pluralize = function (word) {
  * Returns the singular form of the word in the string.
  */
 Inflection.singularize = function (word) {
+    var ch = word[word.length - 1];
+    if (ch === 's')
+      return word.slice(0, word.length - 1);
+
     var wlc = word.toLowerCase();
 
     for (var i = 0; i < UNCOUNTABLES.length; i++) {
