@@ -11,6 +11,7 @@ class Output < ActiveRecord::Base
 
 
   has_many :indicator_data
+  has_many :budgets
 
 
   def budget

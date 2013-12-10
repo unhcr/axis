@@ -10,6 +10,8 @@ class Ppg < ActiveRecord::Base
   has_and_belongs_to_many :strategies, :uniq => true
 
   has_many :indicator_data
+  has_many :budgets
+
   def to_jbuilder(options = {})
     Jbuilder.new do |json|
       json.extract! self, :name, :id, :operation_name

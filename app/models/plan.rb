@@ -14,6 +14,7 @@ class Plan < ActiveRecord::Base
 
 
   has_many :indicator_data
+  has_many :budgets
 
   belongs_to :operation
   belongs_to :country
