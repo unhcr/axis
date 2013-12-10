@@ -98,6 +98,11 @@ Visio.Schema =
         autoIncrement: false
       },
       {
+        name: Visio.Parameters.BUDGETS + '_store'
+        keyPath: 'id'
+        autoIncrement: false
+      },
+      {
         name: Visio.Stores.MAP
         autoIncrement: false
       },
