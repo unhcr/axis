@@ -66,6 +66,7 @@ class Visio.Views.NavigationView extends Backbone.View
       Visio.manager.get('selected')[type] = _.union(Visio.manager.get('selected')[type], [id])
     else
       Visio.manager.get('selected')[type] = _.difference(Visio.manager.get('selected')[type], [id])
+    Visio.manager.trigger('change:selected')
 
   onClickOpen: (e) ->
     type = $(e.currentTarget).attr('data-type')
