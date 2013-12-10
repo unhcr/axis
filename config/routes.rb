@@ -34,6 +34,7 @@ Visio::Application.routes.draw do
   resources :goals
   resources :strategies
   resources :indicator_data
+  resources :budgets
 
   # Sample resource route with options:
   #   resources :products do
