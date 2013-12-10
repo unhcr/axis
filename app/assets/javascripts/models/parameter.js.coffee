@@ -40,26 +40,14 @@ class Visio.Models.Parameter extends Backbone.Model
 
         _.include ids, d.get("#{Inflection.singularize(type)}_id")))
 
-  budget: (data) ->
-    return null unless data
-
-    problem_objective_ids = _.uniq(data.pluck('problem_objective_id'))
-
-    problem_objectives = Visio.manager.get('problem_objectives').filter((p) ->
-      _.include(problem_objective_ids, p.id) )
-
-    _.reduce(problem_objectives,
-      (sum, p) -> return sum + p.get('budget'),
-      0)
-
   strategyBudget: () ->
     data = @strategyIndicatorData()
-    @budget(data)
+    data.budget()
 
 
   selectedBudget: () ->
     data = @selectedIndicatorData()
-    @budget(data)
+    data.budget()
 
   toJSON: () ->
     json = _.clone(this.attributes)

@@ -63,3 +63,16 @@ class Visio.Collections.IndicatorDatum extends Visio.Collections.Parameter
       category: category
       result: average
     }
+
+  budget: () ->
+    return null unless @length > 0
+
+    problem_objective_ids = _.uniq(@pluck('problem_objective_id'))
+
+    problem_objectives = Visio.manager.get('problem_objectives').filter((p) ->
+      _.include(problem_objective_ids, p.id) )
+
+    _.reduce(problem_objectives,
+      (sum, p) -> return sum + p.budget(),
+      0)
+
