@@ -6,13 +6,13 @@ window.Visio =
   Utils: {}
   Graphs: {}
   Scenarios:
-    OL: 'ol'
-    AOL: 'aol'
+    OL: 'Operating Level'
+    AOL: 'Above Operating Level'
   Budgets:
-    ADMIN: 'admin'
-    PARTNER: 'partner'
-    PROJECT: 'project'
-    STAFF: 'staff'
+    ADMIN: 'ADMIN'
+    PARTNER: 'PARTNER'
+    PROJECT: 'PROJECT'
+    STAFF: 'STAFF'
   Durations:
     FAST: 500
     MEDIUM: 1000
