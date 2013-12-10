@@ -25,6 +25,19 @@ class Strategy < ActiveRecord::Base
     return IndicatorDatum.synced_data(ids, synced_date, limit, where)
   end
 
+  def synced_budgets(synced_date = nil, limit = nil, where = {})
+    ids = {
+      :plan_ids => self.plan_ids,
+      :ppg_ids => self.ppg_ids,
+      :goal_ids => self.goal_ids,
+      :problem_objective_ids => self.problem_objective_ids,
+      :output_ids => self.output_ids,
+    }
+
+    return Budget.synced_budgets(ids, synced_date, limit, where)
+
+  end
+
   def to_jbuilder(options = {})
     Jbuilder.new do |json|
       json.extract! self, :name, :id
