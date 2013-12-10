@@ -1,5 +1,5 @@
 class Budget < ActiveRecord::Base
-  attr_accessible :budget_type, :scenario, :amount
+  attr_accessible :budget_type, :scenario, :amount, :plan_id, :ppg_id, :goal_id, :output_id, :problem_objective_id
 
   belongs_to :plan
   belongs_to :ppg
@@ -38,5 +38,15 @@ class Budget < ActiveRecord::Base
     end
 
     return synced_budgets
+  end
+
+  def to_jbuilder(options = {})
+    Jbuilder.new do |json|
+      json.extract! self, :budget_type, :scenario, :amount, :plan_id, :ppg_id, :goal_id, :output_id, :problem_objective_id
+    end
+  end
+
+  def as_json(options = {})
+    to_jbuilder(options).attributes!
   end
 end
