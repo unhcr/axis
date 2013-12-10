@@ -5,6 +5,14 @@ window.Visio =
   Routers: {}
   Utils: {}
   Graphs: {}
+  Scenerios:
+    OL: 'ol'
+    AOL: 'aol'
+  Budgets:
+    ADMIN: 'admin'
+    PARTNER: 'partner'
+    PROJECT: 'project'
+    STAFF: 'staff'
   Durations:
     FAST: 500
     MEDIUM: 1000
