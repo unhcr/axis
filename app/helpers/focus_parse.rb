@@ -187,94 +187,106 @@ module FocusParse
 
               end
 
-              xml_budget_lines.each do |xml_budget_line|
+              budget_hash_list = []
 
+              [AOL, OL].each do |scenario|
+                [ADMIN, PARTNER, PROJECT, STAFF].each do |budget_type|
+                  budget_hash_list << {
+                    :budget_type => budget_type,
+                    :scenario => scenario,
+                    :amount => 0
+                  }
+                end
+              end
+
+              xml_budget_lines.each do |xml_budget_line|
                 scenario = xml_budget_line.search('./scenario').text
                 amount = xml_budget_line.search('./amount').text.to_i
                 type = xml_budget_line.search('./type').text
 
-                if scenario == AOL
-                  if type == ADMIN
-                    output.aol_admin_budget += amount
-                    problem_objective.aol_admin_budget += amount
-                  elsif type == PARTNER
-                    output.aol_partner_budget += amount
-                    problem_objective.aol_partner_budget += amount
-                  elsif type == PROJECT
-                    output.aol_project_budget += amount
-                    problem_objective.aol_project_budget += amount
-                  elsif type == STAFF
-                    output.aol_staff_budget += amount
-                    problem_objective.aol_staff_budget += amount
-                  else
-                    p "Unidentified cost type: #{type}"
-                  end
-                elsif scenario == OL
-                  if type == ADMIN
-                    output.ol_admin_budget += amount
-                    problem_objective.ol_admin_budget += amount
-                  elsif type == PARTNER
-                    output.ol_partner_budget += amount
-                    problem_objective.ol_partner_budget += amount
-                  elsif type == PROJECT
-                    output.ol_project_budget += amount
-                    problem_objective.ol_project_budget += amount
-                  elsif type == STAFF
-                    output.ol_staff_budget += amount
-                    problem_objective.ol_staff_budget += amount
-                  else
-                    p "Unidentified cost type: #{type}"
-                  end
-                end
-
+                hash = budget_hash(budget_hash_list, scenario, type)
+                p "Unidentified cost type: #{type} | #{scenario}" unless hash
+                hash[:amount] += amount
               end
 
+              budget_hash_list.each do |hash|
+                attrs = {
+                  :plan_id => plan.id,
+                  :ppg_id => ppg.id,
+                  :plan_id => goal.id,
+                  :output_id => output.id,
+                  :problem_objective_id => problem_objective.id,
+                  :scenario => hash[:scenario],
+                  :budget_type => hash[:budget_type],
+                }
+
+                b = Budget.where(attrs)
+                b = Budget.new() unless b
+
+                b.plan = plan
+                b.ppg = ppg
+                b.goal = goal
+                b.output = output
+                b.problem_objective = problem_objective
+
+                b.amount = hash[:amount]
+                b.scenario = hash[:scenario]
+                b.budget_type = hash[:budget_type]
+                b.save
+              end
               output.save
               problem_objective.save
             end
 
             xml_budget_lines = xml_problem_objective.search('./budgetLines/BudgetLine')
 
+            budget_hash_list = []
+
+            [AOL, OL].each do |scenario|
+              [ADMIN, PARTNER, PROJECT, STAFF].each do |budget_type|
+                budget_hash_list << {
+                  :budget_type => budget_type,
+                  :scenario => scenario,
+                  :amount => 0
+                }
+              end
+            end
+
             xml_budget_lines.each do |xml_budget_line|
               scenario = xml_budget_line.search('./scenario').text
               amount = xml_budget_line.search('./amount').text.to_i
               type = xml_budget_line.search('./type').text
 
-              if scenario == AOL
-                if type == ADMIN
-                  output.aol_admin_budget += amount
-                  problem_objective.aol_admin_budget += amount
-                elsif type == PARTNER
-                  output.aol_partner_budget += amount
-                  problem_objective.aol_partner_budget += amount
-                elsif type == PROJECT
-                  output.aol_project_budget += amount
-                  problem_objective.aol_project_budget += amount
-                elsif type == STAFF
-                  output.aol_staff_budget += amount
-                  problem_objective.aol_staff_budget += amount
-                else
-                  p "Unidentified cost type: #{type}"
-                end
-              elsif scenario == OL
-                if type == ADMIN
-                  output.ol_admin_budget += amount
-                  problem_objective.ol_admin_budget += amount
-                elsif type == PARTNER
-                  output.ol_partner_budget += amount
-                  problem_objective.ol_partner_budget += amount
-                elsif type == PROJECT
-                  output.ol_project_budget += amount
-                  problem_objective.ol_project_budget += amount
-                elsif type == STAFF
-                  output.ol_staff_budget += amount
-                  problem_objective.ol_staff_budget += amount
-                else
-                  p "Unidentified cost type: #{type}"
-                end
-              end
-
+              hash = budget_hash(budget_hash_list, scenario, type)
+              p "Unidentified cost type: #{type} | #{scenario}" unless hash
+              hash[:amount] += amount
             end
+
+            budget_hash_list.each do |hash|
+              attrs = {
+                :plan_id => plan.id,
+                :ppg_id => ppg.id,
+                :plan_id => goal.id,
+                :output_id => nil,
+                :problem_objective_id => problem_objective.id,
+                :scenario => hash[:scenario],
+                :budget_type => hash[:budget_type],
+              }
+
+              b = Budget.where(attrs)
+              b = Budget.new() unless b
+
+              b.plan = plan
+              b.ppg = ppg
+              b.goal = goal
+              b.problem_objective = problem_objective
+
+              b.amount = hash[:amount]
+              b.scenario = hash[:scenario]
+              b.budget_type = hash[:budget_type]
+              b.save
+            end
+
             problem_objective.save
 
             # Impact indicators tied to objective
@@ -317,6 +329,13 @@ module FocusParse
       end
     end
 
+  end
+
+  def budget_hash(list, scenario, budget_type)
+    hashes = list.select do |hash|
+      return hash[:budget_type] == budget_type && hash[:scenario] == scenario
+    end
+    return hashes.first
   end
 
   def to_boolean(str)
