@@ -19,6 +19,7 @@ class Visio.Models.Manager extends Backbone.Model
     'problem_objectives': new Visio.Collections.ProblemObjective()
     'indicators': new Visio.Collections.Indicator()
     'indicator_data': new Visio.Collections.IndicatorDatum()
+    'budgets': new Visio.Collections.Budget()
     'strategies': new Visio.Collections.Strategy()
     'date': new Date()
     'db': null
