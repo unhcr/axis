@@ -7,17 +7,6 @@ class Visio.Models.IndicatorDatum extends Backbone.Model
 
   paramRoot: 'indicator_datum'
 
-  missingBudget: () ->
-    if @get('is_performance')
-      output = Visio.manager.get('outputs').findWhere({ id: @get('output_id') })
-      return true if !output || (output.get('budget') == 0 || !output.get('budget'))
-    else
-      problem_objective = Visio.manager.get('problem_objectives').findWhere(
-        id: @get('problem_objective_id'))
-      return true if !problem_objective ||
-        (problem_objective.get('budget') == 0 || !problem_objective.get('budget'))
-
-    return false
   situation_analysis: (reported_value) ->
     reported_value ||= Visio.Algorithms.REPORTED_VALUES.myr
     return Visio.Algorithms.ALGO_RESULTS.missing unless @get(reported_value)
