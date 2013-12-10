@@ -1,6 +1,6 @@
 class ProblemObjective < ActiveRecord::Base
   extend Parameter
-  attr_accessible :is_excluded, :objective_name, :problem_name, :ol_admin_budget, :ol_partner_budget, :ol_project_budget, :ol_staff_budget, :aol_admin_budget, :aol_partner_budget, :aol_project_budget, :aol_staff_budget
+  attr_accessible :is_excluded, :objective_name, :problem_name
 
   self.primary_key = :id
   has_many :indicator_data
@@ -14,16 +14,9 @@ class ProblemObjective < ActiveRecord::Base
   has_and_belongs_to_many :plans, :uniq => true
 
 
-  def budget
-    return self.ol_admin_budget + self.ol_staff_budget + self.ol_project_budget + self.ol_partner_budget +
-          self.aol_admin_budget + self.aol_staff_budget + self.aol_project_budget + self.aol_partner_budget
-  end
-
   def to_jbuilder(options = {})
     Jbuilder.new do |json|
-      json.extract! self, :objective_name, :problem_name, :id, :ol_admin_budget, :ol_partner_budget, :ol_project_budget, :ol_staff_budget, :aol_admin_budget, :aol_partner_budget, :aol_project_budget, :aol_staff_budget
-
-      json.budget self.budget
+      json.extract! self, :objective_name, :problem_name, :id
     end
   end
 

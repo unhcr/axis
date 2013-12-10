@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131210141545) do
+ActiveRecord::Schema.define(:version => 20131210161244) do
 
   create_table "budgets", :force => true do |t|
     t.string   "budget_type"
@@ -172,20 +172,12 @@ ActiveRecord::Schema.define(:version => 20131210141545) do
   end
 
   create_table "outputs", :id => false, :force => true do |t|
-    t.string   "id",                                    :null => false
+    t.string   "id",                            :null => false
     t.string   "name"
     t.string   "priority"
-    t.datetime "created_at",                            :null => false
-    t.datetime "updated_at",                            :null => false
-    t.boolean  "is_deleted",         :default => false
-    t.integer  "ol_admin_budget",    :default => 0
-    t.integer  "ol_partner_budget",  :default => 0
-    t.integer  "ol_project_budget",  :default => 0
-    t.integer  "ol_staff_budget",    :default => 0
-    t.integer  "aol_admin_budget",   :default => 0
-    t.integer  "aol_partner_budget", :default => 0
-    t.integer  "aol_project_budget", :default => 0
-    t.integer  "aol_staff_budget",   :default => 0
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+    t.boolean  "is_deleted", :default => false
   end
 
   create_table "outputs_plans", :id => false, :force => true do |t|
@@ -258,21 +250,13 @@ ActiveRecord::Schema.define(:version => 20131210141545) do
   end
 
   create_table "problem_objectives", :id => false, :force => true do |t|
-    t.string   "id",                                    :null => false
+    t.string   "id",                                :null => false
     t.string   "problem_name"
     t.string   "objective_name"
     t.boolean  "is_excluded"
-    t.datetime "created_at",                            :null => false
-    t.datetime "updated_at",                            :null => false
-    t.boolean  "is_deleted",         :default => false
-    t.integer  "ol_admin_budget",    :default => 0
-    t.integer  "ol_partner_budget",  :default => 0
-    t.integer  "ol_project_budget",  :default => 0
-    t.integer  "ol_staff_budget",    :default => 0
-    t.integer  "aol_admin_budget",   :default => 0
-    t.integer  "aol_partner_budget", :default => 0
-    t.integer  "aol_project_budget", :default => 0
-    t.integer  "aol_staff_budget",   :default => 0
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
+    t.boolean  "is_deleted",     :default => false
   end
 
   create_table "problem_objectives_rights_groups", :id => false, :force => true do |t|
