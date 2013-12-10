@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131210131605) do
+ActiveRecord::Schema.define(:version => 20131210141459) do
 
   create_table "budgets", :force => true do |t|
     t.string   "budget_type"
@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(:version => 20131210131605) do
     t.string   "problem_objective_id"
     t.datetime "created_at",                          :null => false
     t.datetime "updated_at",                          :null => false
+    t.boolean  "is_deleted"
   end
 
   create_table "countries", :force => true do |t|
