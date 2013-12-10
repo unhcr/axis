@@ -11,7 +11,20 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131209151531) do
+ActiveRecord::Schema.define(:version => 20131210131605) do
+
+  create_table "budgets", :force => true do |t|
+    t.string   "budget_type"
+    t.string   "scenario"
+    t.integer  "amount",               :default => 0
+    t.string   "plan_id"
+    t.string   "ppg_id"
+    t.string   "goal_id"
+    t.string   "output_id"
+    t.string   "problem_objective_id"
+    t.datetime "created_at",                          :null => false
+    t.datetime "updated_at",                          :null => false
+  end
 
   create_table "countries", :force => true do |t|
     t.text     "latlng"
