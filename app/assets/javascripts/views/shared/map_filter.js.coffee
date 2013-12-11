@@ -14,5 +14,5 @@ class Visio.Views.MapFilterView extends Backbone.View
 
       @$el.append @filterViews.el
 
-    $('header').after @el
+    $('.map-container').prepend @el
     @
