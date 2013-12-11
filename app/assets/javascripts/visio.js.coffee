@@ -5,6 +5,9 @@ window.Visio =
   Routers: {}
   Utils: {}
   Graphs: {}
+  AchievementTypes:
+    TARGET: 'comp_target'
+    STANDARD: 'standard'
   Scenarios:
     OL: 'Operating Level'
     AOL: 'Above Operating Level'

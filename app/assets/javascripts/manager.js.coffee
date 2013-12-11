@@ -23,6 +23,7 @@ class Visio.Models.Manager extends Backbone.Model
     'aggregation_type': Visio.Parameters.OUTPUTS
     'scenario_type': {}
     'budget_type': {}
+    'achievement_type': Visio.AchievementTypes.TARGET
 
   resetSelected: () ->
     _.each Visio.Types, (type) ->
