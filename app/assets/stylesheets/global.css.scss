@@ -55,6 +55,15 @@ p.small {
   font-size: .8em;
 }
 
+.content {
+  position: relative;
+}
+
+.inner-content {
+  border-left: $page-margin solid white;
+  border-right: $page-margin solid white;
+}
+
 .ui-big-number {
   color: $orange;
   font-size: 5em;
@@ -158,7 +167,7 @@ body, html {
   margin: .3em .8em;
 }
 
-.content {
+.list-content {
   margin-left: $content-margin;
   min-height: 400px;
 }
@@ -273,6 +282,7 @@ body, html {
 
 header {
   background-color: white;
+  border-bottom: 3px solid $primary-light;
 }
 
 .logo:before {
@@ -547,9 +557,6 @@ a {
 }
 .white-placeholder:-ms-input-placeholder { /* Internet Explorer 10+ */
     color:    $white;
-}
-#map {
-  border-top: 3px solid $primary-light;
 }
 
 .transparent {
@@ -992,12 +999,12 @@ input[type="radio"]:checked + label {
 }
 
 .navigation-activation-icon {
-  width: $navigation-activation-width;
-  height: $navigation-activation-width;
+  width: $page-margin;
+  height: $page-margin;
   position: absolute;
   top: 140px;
   background-image: url(/assets/visio-side_menu_icon.png);
-  background-size: $navigation-activation-width;
+  background-size: $page-margin;
   -moz-transition:top $faster-transition ease-out;
   -webkit-transition:top $faster-transition ease-out;
   -o-transition:top $faster-transition ease-out;
@@ -1008,7 +1015,7 @@ input[type="radio"]:checked + label {
 .navigation-activation {
   position: absolute;
   height: 100%;
-  width: $navigation-activation-width;
+  width: $page-margin;
   top: 0;
   left: 0;
   z-index: 10;
