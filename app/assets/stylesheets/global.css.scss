@@ -359,6 +359,10 @@ input:focus {
   margin: 0px !important;
 }
 
+.zero-max-height {
+  max-height: 0px !important;
+}
+
 button, input {
   padding: .2em .8em;
   line-height: 2em;
@@ -1022,10 +1026,11 @@ input[type="radio"]:checked + label {
 
 #global-search {
   overflow: hidden;
-  -moz-transition:height $medium-transition;
-  -webkit-transition:height $medium-transition;
-  -o-transition:height $medium-transition;
-  transition:height $medium-transition;
+  -moz-transition:max-height $medium-transition;
+  -webkit-transition:max-height $medium-transition;
+  -o-transition:max-height $medium-transition;
+  transition:max-height $medium-transition;
+  max-height: 50px;
 
 }
 
