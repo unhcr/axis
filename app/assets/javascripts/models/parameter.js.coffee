@@ -48,14 +48,16 @@ class Visio.Models.Parameter extends Backbone.Model
     data = @selectedBudgetData()
     data.budget()
 
-  strategyIndicatorData: () ->
+  strategyIndicatorData: (strategy) ->
+    strategy ||= Visio.manager.strategy()
+
     return new Visio.Collections.IndicatorDatum(Visio.manager.get('indicator_data').filter((d) =>
       return _.every Visio.Types, (type) =>
         ids = []
         if @name == type
-          ids = [@id] if Visio.manager.strategy().include(type, @id)
+          ids = [@id] if strategy.include(type, @id)
         else
-          ids = Visio.manager.strategy().get("#{type}_ids")
+          ids = strategy.get("#{type}_ids")
 
         _.include ids, d.get("#{Inflection.singularize(type)}_id")))
 
