@@ -4,14 +4,7 @@ class Visio.Views.NavigationView extends Backbone.View
 
   initialize: () ->
     # Set defaults for selected
-    _.each Visio.Types, (type) ->
-      if type != Visio.Parameters.PLANS
-        Visio.manager.get('selected')[type] = Visio.manager.strategy().get("#{type}_ids")
-      else
-        plans = Visio.manager.plans({ year: Visio.manager.year() })
-
-        Visio.manager.get('selected')[type] = _.intersection(Visio.manager.strategy().get("#{type}_ids"), plans.pluck('id'))
-
+    Visio.manager.resetSelected()
 
   events:
     'click .open': 'onClickOpen'

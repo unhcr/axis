@@ -2,14 +2,7 @@ class Visio.Models.Manager extends Backbone.Model
 
   initialize: () ->
     @set('db', new ydn.db.Storage(Visio.Constants.DB_NAME, Visio.Schema))
-    _.each Visio.Types, (type) =>
-      @get('selected')[type] = []
-
-    _.each Visio.Scenarios, (scenario) =>
-      @get('scenario_type')[scenario] = true
-
-    _.each Visio.Budgets, (budget) =>
-      @get('budget_type')[budget] = true
+    @resetBudgetDefaults()
 
   defaults:
     'plans': new Visio.Collections.Plan()
@@ -30,6 +23,27 @@ class Visio.Models.Manager extends Backbone.Model
     'aggregation_type': Visio.Parameters.OUTPUTS
     'scenario_type': {}
     'budget_type': {}
+
+  resetSelected: () ->
+    _.each Visio.Types, (type) ->
+      if type != Visio.Parameters.PLANS
+        Visio.manager.get('selected')[type] = Visio.manager.strategy().get("#{type}_ids")
+      else
+        plans = Visio.manager.plans({ year: Visio.manager.year() })
+
+        Visio.manager.get('selected')[type] = _.intersection(Visio.manager.strategy().get("#{type}_ids"), plans.pluck('id'))
+
+  resetBudgetDefaults: () ->
+    _.each Visio.Scenarios, (scenario) =>
+      @get('scenario_type')[scenario] = true
+
+    _.each Visio.Budgets, (budget) =>
+      @get('budget_type')[budget] = true
+
+  reset: () ->
+    @resetBudgetDefaults()
+    @resetSelected()
+    Visio.manager.trigger('change:selected')
 
   year: (year) ->
     return @get('date').getFullYear() if arguments.length == 0

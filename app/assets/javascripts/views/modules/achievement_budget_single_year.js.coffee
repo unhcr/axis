@@ -19,6 +19,14 @@ class Visio.Views.AchievementBudgetSingleYearView extends Backbone.View
 
       @bubble = Visio.Graphs.bubble(options)
 
+    _.each Visio.Scenarios, (scenario) =>
+      if Visio.manager.get('scenario_type')[scenario]
+        @$el.find("input[value='#{scenario}']").prop('checked', true)
+
+    _.each Visio.Budgets, (budget) =>
+      if Visio.manager.get('budget_type')[budget]
+        @$el.find("input[value='#{budget}']").prop('checked', true)
+
     @bubble.parameters(Visio.manager.selected(Visio.manager.get('aggregation_type')).models)
     @bubble()
 
