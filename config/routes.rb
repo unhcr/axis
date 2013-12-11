@@ -7,6 +7,7 @@ Visio::Application.routes.draw do
   get '/maphash' => 'application#mapMD5'
 
   get '/overview' => 'application#overview'
+  get '/global_search' => 'application#global_search'
 
   post '/test/user_setup' => 'test#user_setup'
   post '/test/user_teardown' => 'test#user_teardown'

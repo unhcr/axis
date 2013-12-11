@@ -40,4 +40,13 @@ class ApplicationController < ActionController::Base
     @strategy ||= Strategy.find(params[:strategy_id])
     render :layout => 'index'
   end
+
+  def global_search
+    query = "*#{(params[:query] || '*').split('').join('*')}*"
+
+    render :json => {
+      :indicators => Indicator.paged(query),
+      :operations => Operation.paged(query)
+    }
+  end
 end
