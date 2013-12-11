@@ -973,12 +973,12 @@ input[type="radio"]:checked + label {
 }
 
 .navigation-activation-icon {
-  width: 40px;
-  height: 40px;
+  width: $navigation-activation-width;
+  height: $navigation-activation-width;
   position: absolute;
   top: 140px;
   background-image: url(/assets/visio-side_menu_icon.png);
-  background-size: 40px;
+  background-size: $navigation-activation-width;
   -moz-transition:top $faster-transition ease-out;
   -webkit-transition:top $faster-transition ease-out;
   -o-transition:top $faster-transition ease-out;
@@ -989,7 +989,7 @@ input[type="radio"]:checked + label {
 .navigation-activation {
   position: absolute;
   height: 100%;
-  width: 40px;
+  width: $navigation-activation-width;
   top: 0;
   left: 0;
   z-index: 10;
