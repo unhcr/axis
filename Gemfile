@@ -16,6 +16,7 @@ gem 'haml-rails', '>= 0.3.4'
 gem "figaro"
 gem 'jbuilder'
 gem 'mysql2'
+gem 'tire'
 
 
 
