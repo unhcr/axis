@@ -4,9 +4,11 @@ class Visio.Views.SearchView extends Backbone.View
 
   initialize: (options) ->
     @render()
+    @throttledSearch = _.throttle @search, 300
 
   events:
     'blur input': 'onBlurSearch'
+    'keyup input': 'onKeyupSearch'
 
   render: () ->
     @$el.html @template()
@@ -21,3 +23,12 @@ class Visio.Views.SearchView extends Backbone.View
   onBlurSearch: () =>
     Visio.router.navigate '/'
     @hide()
+
+  search: (query) =>
+
+  onKeyupSearch: (e) =>
+
+    query = $(e.currentTarget).val()
+
+    @throttledSearch query
+
