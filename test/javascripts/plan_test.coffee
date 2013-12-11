@@ -267,7 +267,7 @@ test 'strategy situation analysis', () ->
   $('.visio-check').html('<input type="checkbox" checked="checked" value="1" /><input value="2" type="checkbox"/>')
 
   result = p.strategy_situation_analysis()
-  strictEqual(Visio.Algorithms.ALGO_RESULTS.ok, result.category)
+  strictEqual(Visio.Algorithms.ALGO_RESULTS.fail, result.category)
 
   Visio.manager.get('strategies').reset([{
       id: 1

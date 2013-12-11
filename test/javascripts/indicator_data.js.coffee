@@ -93,6 +93,7 @@ test 'achievement', () ->
     comp_target: 50
     reversal: true
     baseline: 20
+    missing_budget: false
   })
 
   strictEqual(1, datum.achievement())
