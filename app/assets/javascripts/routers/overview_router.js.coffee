@@ -36,6 +36,8 @@ class Visio.Routers.OverviewRouter extends Backbone.Router
     Visio.manager.on 'change:selected', () =>
       @achievementBudgetSingleYearView.render(true)
 
+    Visio.manager.on 'change:achievement_type', () =>
+      @achievementBudgetSingleYearView.render(true)
 
   setup: () ->
     options =
