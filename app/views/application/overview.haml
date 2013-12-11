@@ -1,4 +1,5 @@
 .navigation-activation
+  .navigation-activation-icon
 .container.full-width.ui-purple-theme
   .row
     .col-md-12.center-text.col-centered
@@ -31,6 +32,7 @@
 
 :javascript
   $(document).ready(function() {
+    $navigationIcon = $('.navigation-activation-icon');
 
     Visio.manager = new Visio.Models.Manager({
       strategy_id: #{@strategy.id},
@@ -41,7 +43,17 @@
     Backbone.history.start();
 
     $('.navigation-activation').on('mouseenter', function(e) {
-      $('.page').toggleClass('shift')
+      $('.page').addClass('shift');
+      $(e.currentTarget).addClass('zero-width');
+    })
+
+    $('#navigation').on('mouseleave', function(e) {
+      $('.page').removeClass('shift');
+      $('.navigation-activation').removeClass('zero-width');
+    })
+
+    $(document).scroll(function(e) {
+      $navigationIcon.css('top', $(document).scrollTop() + 140);
     })
 
 

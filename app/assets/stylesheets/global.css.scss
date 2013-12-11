@@ -972,11 +972,35 @@ input[type="radio"]:checked + label {
   height: 100%
 }
 
+.navigation-activation-icon {
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  top: 140px;
+  background-image: url(/assets/visio-side_menu_icon.png);
+  background-size: 40px;
+  -moz-transition:top $faster-transition ease-out;
+  -webkit-transition:top $faster-transition ease-out;
+  -o-transition:top $faster-transition ease-out;
+  transition:top $faster-transition ease-out;
+
+}
+
 .navigation-activation {
   position: absolute;
   height: 100%;
-  width: 60px;
+  width: 40px;
   top: 0;
   left: 0;
   z-index: 10;
+  background-color:white;
+  overflow: hidden;
+  -moz-transition:width $very-fast-transition ease-out;
+  -webkit-transition:width $very-fast-transition ease-out;
+  -o-transition:width $very-fast-transition ease-out;
+  transition:width $very-fast-transition ease-out;
+}
+
+.transparent {
+  opacity: 0 !important;
 }
