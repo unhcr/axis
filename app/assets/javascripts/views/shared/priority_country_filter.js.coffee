@@ -18,8 +18,9 @@ class Visio.Views.PriorityCountryFilterView extends Backbone.View
     @
 
   onChangeCheck: (e) ->
-    strategy_id = $(e.currentTarget).val()
-    Visio.manager.get('indicator_data').fetchSynced({ strategy_id: strategy_id }).done(() =>
+    options =
+      strategy_id: $(e.currentTarget).val()
+    Visio.manager.get('indicator_data').fetchSynced(options).done(() =>
       strategy_ids = @$el.find('.visio-check input:checked').map((i, ele) -> +$(ele).val())
       @filter(strategy_ids)
     )

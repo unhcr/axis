@@ -25,23 +25,19 @@ class Visio.Models.Plan extends Visio.Models.Parameter
       # Need to calculate based on strategy data
       strategy_ids = $checkedStrategies.map((i, ele) -> +$(ele).val())
       strategies = Visio.manager.strategies(strategy_ids)
+      data = new Visio.Collections.IndicatorDatum()
+      idSets = []
 
-      ids = {}
+      strategies.each (strategy) =>
+        d = @strategyIndicatorData(strategy)
+        idSets.push d.pluck('id')
+        data.add d.models, { silent: true }
 
-      _.each Visio.Types, (type) =>
-        if type == Visio.Parameters.PLANS
-          ids["#{type}_ids"] = [@id]
-        else
-          ids["#{type}_ids"] = _.intersection.apply(null, strategies.pluck("#{type}_ids"))
+      ids = _.intersection.apply(null, idSets)
+      data = new Visio.Collections.IndicatorDatum(data.filter((d) ->
+        _.include ids, d.id ))
 
-      data = new Visio.Collections.IndicatorDatum(Visio.manager.get('indicator_data').filter((datum) ->
-          valid = _.every Visio.Types, (type) =>
-            _.include(ids["#{type}_ids"], datum.get("#{Inflection.singularize(type)}_id"))
-
-          return valid && !datum.get('is_performance')
-        ))
-
-      data.situation_analysis()
+      return data.situation_analysis()
 
   fetchIndicators: () ->
     @fetchParameter(Visio.Parameters.INDICATORS)
