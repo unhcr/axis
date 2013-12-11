@@ -25,6 +25,13 @@ class Visio.Views.SearchView extends Backbone.View
     @hide()
 
   search: (query) =>
+    $.get('/global_search', { query: query }).done (response) =>
+      _.each response.operations, (operation) =>
+        @$el.find('.results').append operation.highlight.name[0]
+
+      _.each response.indicators, (indicator) =>
+        @$el.find('.results').append indicator.highlight.name[0]
+
 
   onKeyupSearch: (e) =>
 
