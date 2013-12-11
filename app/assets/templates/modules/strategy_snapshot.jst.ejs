@@ -1,53 +1,55 @@
 <div class="row strategy-snapshot">
-  <div class="col-md-2">
-    <div class="bold">Target Countries</div>
-    <br />
-    <div class="target-countries">
-      <div class="ui-blank-radio">
-        <input checked="checked" name="plan" type="radio" id="radio-all" value="all" />
-        <label for="radio-all">All</label>
+  <div class="col-md-8 col-centered">
+    <div class="col-md-2">
+      <div class="bold">Target Countries</div>
+      <br />
+      <div class="target-countries">
+        <div class="ui-blank-radio">
+          <input checked="checked" name="plan" type="radio" id="radio-all" value="all" />
+          <label for="radio-all">All</label>
+        </div>
+        <% for (var i = 0; i < targetPlans.length; i++) { %>
+        <div class="ui-blank-radio">
+          <input name="plan" type="radio" id="radio-<%= targetPlans[i].id %>" value="<%= targetPlans[i].id %>" />
+          <label for="radio-<%= targetPlans[i].id %>"><%= targetPlans[i].operation_name %></label>
+        </div>
+        <% } %>
       </div>
-      <% for (var i = 0; i < targetPlans.length; i++) { %>
-      <div class="ui-blank-radio">
-        <input name="plan" type="radio" id="radio-<%= targetPlans[i].id %>" value="<%= targetPlans[i].id %>" />
-        <label for="radio-<%= targetPlans[i].id %>"><%= targetPlans[i].operation_name %></label>
+    </div>
+    <div class="col-md-4">
+      <div class="ui-big-number expenditure center-text">
+        <span>95</span>%
       </div>
+      <div class="meter">
+        <span style="width: 95%"></span>
+      </div>
+      <div class="center-text">Total Spent for <span class="ui-primary-light">All Target Countries</span></div>
+      <br />
+      <br />
+      <div class="ui-big-number center-text budget">
+        $<span>200M</span>
+      </div>
+      <div class="center-text">Total Budget for <span class="ui-primary-light">All Target Countries</span></div>
+    </div>
+    <div class="col-md-3">
+      <div class="ui-big-number total-indicators center-text">
+        0
+      </div>
+      <div class="center-text">Total No. of Indicators for <span class="ui-primary-light">All&nbsp;Target&nbsp;Countries</span></div>
+      <br />
+      <br />
+      <div class="ui-primary-light">Impact Criticality</div>
+      <p class="small">
+        They use no images, just CSS3 fancies. Like a good little designer always does, they fall back to totally
+        acceptable experience. Here's what they look like in Opera 11 which supports some of the CSS3 used here
+        but not all.
+      </p>
+    </div>
+    <div class="col-md-3">
+      <% for (var i = 0; i < resultTypes.length; i++) { %>
+        <div class="<%= resultTypes[i] %>-circle circle inline-block"></div>
       <% } %>
     </div>
   </div>
-  <div class="col-md-4">
-    <div class="ui-big-number expenditure center-text">
-      <span>95</span>%
-    </div>
-    <div class="meter">
-      <span style="width: 95%"></span>
-    </div>
-    <div class="center-text">Total Spent for <span class="ui-primary-light">All Target Countries</span></div>
-    <br />
-    <br />
-    <div class="ui-big-number center-text budget">
-      $<span>200M</span>
-    </div>
-    <div class="center-text">Total Budget for <span class="ui-primary-light">All Target Countries</span></div>
-  </div>
-  <div class="col-md-3">
-    <div class="pull-left vertical-divider"></div>
-    <div class="ui-big-number total-indicators center-text">
-      0
-    </div>
-    <div class="center-text">Total No. of Indicators for <span class="ui-primary-light">All&nbsp;Target&nbsp;Countries</span></div>
-    <br />
-    <br />
-    <div class="ui-primary-light">Impact Criticality</div>
-    <p class="small">
-      They use no images, just CSS3 fancies. Like a good little designer always does, they fall back to totally
-      acceptable experience. Here's what they look like in Opera 11 which supports some of the CSS3 used here
-      but not all.
-    </p>
-  </div>
-  <div class="col-md-3">
-    <% for (var i = 0; i < resultTypes.length; i++) { %>
-      <div class="<%= resultTypes[i] %>-circle circle inline-block"></div>
-    <% } %>
-  </div>
 </div>
+
