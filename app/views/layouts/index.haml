@@ -10,30 +10,34 @@
   .page
     %header.container.full-width
       .row
-        .col-md-10.col-centered.center-text.zero-padding
+        .col-md-11.col-centered.center-text.zero-padding
           .col-md-4.extra-padding
-            %span.menu-btn.pull-left.ui-primary-light
-              .menu-icon
-                .menu-row
-                .menu-row
-                .menu-row
-          .col-md-4.center-text
-            %span.ui-small-header.logo
-              <span class="light">UNHCR</span><span class="bold">VISIO</span>
-          .col-md-4.extra-padding
-            %span.account-menu.pull-right
-              .small-item.ui-primary.pull-right
-                = link_to "Sign out", destroy_user_session_path, :method => :delete, :class => 'ui-primary'
-            .small-item.ui-primary.pull-right
+            .small-item.ui-primary.pull-left
               Ça va,
               %span.ui-primary-light
                 = current_user.firstname
+            %span.account-menu.pull-left
+              .small-item.ui-primary.pull-right
+                = link_to "Sign out", destroy_user_session_path, :method => :delete, :class => 'ui-primary'
+          .col-md-4.center-text
+            %span.ui-small-header.logo
+              <span class="light">UNHCR</span><span class="bold">VISIO</span>
+          .col-md-3.extra-padding
+            %span.menu-btn.pull-right.ui-primary-light
+              .menu-icon.menu-right
+                .menu-row
+                .menu-row
+                .menu-row
+          .col-md-1
+            %a.search-icon.pull-right{ :href => '/#search' }
+    #global-search.zero-height
     :javascript
       window.Visio.user = new Visio.Models.User(#{current_user.to_json.html_safe})
       $(document).ready(function() {
         $('.menu-icon').click(function(e) {
           Visio.router.navigate('/menu', { trigger: true })
         })
+
       })
 
     = yield

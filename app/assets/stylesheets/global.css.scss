@@ -870,6 +870,17 @@ a {
   overflow: auto;
 }
 
+.search-icon {
+  background-color: $primary-light;
+  height: $search-icon;
+  width: $search-icon;
+  border-radius: $search-icon;
+  -webkit-border-radius: $search-icon;
+  -moz-border-radius: $search-icon;
+  cursor: pointer;
+
+}
+
 .menu-icon {
   cursor: pointer;
   position: relative;
@@ -898,6 +909,10 @@ a {
   content: 'MENU';
   left: 1.5 * $menu-row;
   top: -2px;
+}
+
+.menu-icon.menu-right:before {
+  left: -54px;
 }
 
 .extra-padding {
@@ -1003,4 +1018,27 @@ input[type="radio"]:checked + label {
 
 .transparent {
   opacity: 0 !important;
+}
+
+#global-search {
+  overflow: hidden;
+  -moz-transition:height $medium-transition;
+  -webkit-transition:height $medium-transition;
+  -o-transition:height $medium-transition;
+  transition:height $medium-transition;
+
+}
+
+#global-search .container {
+  background-color: $bright-yellow;
+}
+
+#global-search .search-container {
+  padding: 6px 0;
+}
+
+#global-search input {
+  background-color: $bright-yellow;
+  font-size: 1.3em;
+  line-height: normal;
 }
