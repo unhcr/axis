@@ -24,8 +24,10 @@ test 'achievement collection', () ->
       is_performance: true
       myr: 50
       comp_target: 50
+      standard: 60
       reversal: false
       baseline: 20
+      missing_budget: false
     },
     {
       id: 'lisa'
@@ -34,8 +36,10 @@ test 'achievement collection', () ->
       is_performance: true
       myr: 50
       comp_target: 100
+      standard: 20
       reversal: false
       baseline: 25
+      missing_budget: false
     }
   ])
 
@@ -52,6 +56,20 @@ test 'achievement collection', () ->
 
   result = data.achievement()
   strictEqual(Visio.Algorithms.ALGO_RESULTS.low, result.category)
+
+  Visio.manager.set 'achievement_type', Visio.AchievementTypes.STANDARD
+  data.get('ben').set({
+    baseline: 20
+    is_performance: false
+  })
+  data.get('lisa').set({
+    is_performance: false
+    baseline: 40
+  })
+
+  result = data.achievement()
+  strictEqual(.875, result.result)
+  strictEqual(Visio.Algorithms.ALGO_RESULTS.high, result.category)
 
 test 'achievement', () ->
   Visio.manager.get('outputs').reset([

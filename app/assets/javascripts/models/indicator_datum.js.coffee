@@ -23,7 +23,7 @@ class Visio.Models.IndicatorDatum extends Backbone.Model
     reported_value ||= Visio.Algorithms.REPORTED_VALUES.myr
     achievement_type = Visio.manager.get('achievement_type')
 
-    return Visio.Algorithms.ALGO_RESULTS.missing if @get(reported_value) == undefined || @get(achievement_type) == undefined || @get('missing_budget')
+    return Visio.Algorithms.ALGO_RESULTS.missing if @get(reported_value) == undefined || @get(achievement_type) == undefined || @get('missing_budget') || @get('missing_budget') == undefined
 
     if @get('is_performance')
       result = +@get(reported_value) / +@get(achievement_type)
