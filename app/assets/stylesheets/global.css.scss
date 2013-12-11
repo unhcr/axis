@@ -1026,10 +1026,10 @@ input[type="radio"]:checked + label {
 
 #global-search {
   overflow: hidden;
-  -moz-transition:max-height $medium-transition;
-  -webkit-transition:max-height $medium-transition;
-  -o-transition:max-height $medium-transition;
-  transition:max-height $medium-transition;
+  -moz-transition:max-height $fast-transition;
+  -webkit-transition:max-height $fast-transition;
+  -o-transition:max-height $fast-transition;
+  transition:max-height $fast-transition;
   max-height: 50px;
 
 }
