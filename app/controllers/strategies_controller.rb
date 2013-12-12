@@ -2,11 +2,14 @@ class StrategiesController < ApplicationController
   def new
     @strategy = Strategy.new
     @operations = Operation.order(:name)
-    @ppgs = Ppg.order(:name)
-    @goals = Goal.order(:name)
-    @problem_objectives = ProblemObjective.order(:objective_name)
-    @outputs = Output.order(:name)
-    @indicators = Indicator.order(:name)
+    @params = {
+      :ppgs => Ppg.order(:name),
+      :goals => Goal.order(:name),
+      :problem_objectives => ProblemObjective.order(:objective_name),
+      :rights_groups => RightsGroup.order(:name),
+      :outputs => Output.order(:name),
+      :indicators => Indicator.order(:name),
+    }
   end
 
   def create

@@ -1,3 +1,4 @@
+- types = ['ppg', 'goal', 'rights_group', 'problem_objective', 'output', 'indicator']
 = form_for @strategy, url: {action: "create"}, html: {class: "form"} do |f|
   = f.text_field :name
 
@@ -6,50 +7,25 @@
   .check-boxes.operations
     - @operations.each do |o|
       .check-box
-        = check_box_tag "operations[#{o.id}]", o.id
+        = check_box_tag "operations[#{o.id}]", o.id, false, { :ptype => 'operation' }
         = label_tag("operations[#{o.id}]", o.name)
 
-  %p PPGs
-  <input type="text" class="strategy-search" data-search="ppgs" />
-  .check-boxes.ppgs
-    - @ppgs.each do |p|
-      .check-box
-        = check_box_tag "ppgs[#{p.id}]", p.id
-        = label_tag("ppgs[#{p.id}]", p.name)
+  - types.each_with_index do |type, index|
+    %p{ :class => "#{type}s" }
+      = type
+    <input type="text" class="strategy-search" data-search="#{type}s" />
+    .check-boxes{ :class => "#{type}s" }
+      .check-box.all
+        = check_box_tag "all-#{type}", "", false, { :ptype => "#{type}" }
+        = label_tag("all-#{type}", 'All')
 
-  %p Goals
-  <input type="text" class="strategy-search" data-search="goals" />
-  .check-boxes.goals
-    - @goals.each do |g|
-      .check-box
-        = check_box_tag "goals[#{g.id}]", g.id
-        = label_tag("goals[#{g.id}]", g.name)
-
-  %p Problem Objectives
-  <input type="text" class="strategy-search" data-search="problem-objectives" />
-  .check-boxes.problem-objectives
-    - @problem_objectives.each do |po|
-      .check-box
-        = check_box_tag "problem_objectives[#{po.id}]", po.id
-        = label_tag("problem_objectives[#{po.id}]", po.objective_name)
-
-  %p Outputs
-  <input type="text" class="strategy-search" data-search="outputs" />
-  .check-boxes.outputs
-    - @outputs.each do |o|
-      .check-box
-        = check_box_tag "outputs[#{o.id}]", o.id
-        = label_tag("outputs[#{o.id}]", o.name)
-
-  %p Indicators
-  <input type="text" class="strategy-search" data-search="indicators" />
-  .check-boxes.indicators
-    - @indicators.each do |i|
-      .check-box
-        = check_box_tag "indicators[#{i.id}]", i.id
-        = label_tag("indicators[#{i.id}]", i.name)
-
-
+      - @params[(type + 's').to_sym].each do |p|
+        .check-box.gone
+          - id_type = type == 'ppg' ? 'operation' : types[index - 1]
+          - options = { :ptype => type, :operation_ids => p.operation_ids }
+          - options[id_type + '_ids'] = p.send("#{id_type}_ids")
+          = check_box_tag "#{type}s[#{p.id}]", p.id, false, options
+          = label_tag("#{type}s[#{p.id}]", defined?(p.name) ? p.name : p.objective_name)
 
   = f.submit "Create"
 
@@ -71,6 +47,49 @@
         }
       })
 
+
+    })
+
+    var types = #{types}
+
+    $('.check-box input').change(function(e) {
+      type = $(e.currentTarget).attr('ptype')
+      ids = []
+      oids = []
+      $('.' + type + 's input:checked').each(function(idx, ele) {
+        ids.push($(ele).val())
+      })
+      $('.operations input:checked').each(function(idx, ele) {
+        oids.push($(ele).val())
+      })
+
+      index = types.indexOf(type)
+      if (index + 1 == types.length) return;
+
+      $('.' + types[index+1] + 's .check-box').not('.all').addClass('gone')
+      var found = $('')
+
+      _.each(ids, function(id) {
+
+        found = found.add($('.' + types[index+1] + 's input[' + type + '_ids~="' + id + '"]').parent())
+      })
+      if (type !== 'operation') {
+        _.each(oids, function(id) {
+          found.find('input[operation_ids~="' + id + '"]').parent().removeClass('gone')
+        })
+      } else {
+        found.removeClass('gone')
+      }
+
+    })
+
+    $('.check-box.all input').change(function(e) {
+
+      if ($(e.currentTarget).is(':checked')) {
+        type = $(e.currentTarget).attr('ptype')
+        $('.' + type + 's .check-box').not('.gone').find('input').prop('checked', true)
+        $('.' + type + 's .check-box').not('.gone, .all').find('input').trigger('change')
+      }
 
     })
 
