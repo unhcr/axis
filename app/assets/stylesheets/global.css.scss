@@ -73,6 +73,12 @@ p.small {
   font-size: 3.6em;
 }
 
+.ui-huge-number {
+  color: $bright-yellow;
+  font-size: 6em;
+  line-height: 1em;
+}
+
 .ui-primary-theme {
   background-color: $primary;
   color: $white;
@@ -1073,4 +1079,10 @@ input[type="radio"]:checked + label {
 .divider {
   border-top: 1px $divider-top solid;
   border-bottom: 1px $divider-bottom solid;
+}
+
+.target-country-count {
+  position: absolute;
+  left: -110px;
+  top: 60px
 }
