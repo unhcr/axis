@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131210161244) do
+ActiveRecord::Schema.define(:version => 20131212153416) do
 
   create_table "budgets", :force => true do |t|
     t.string   "budget_type"
@@ -202,7 +202,7 @@ ActiveRecord::Schema.define(:version => 20131210161244) do
     t.string   "operation_name"
     t.string   "name"
     t.integer  "year"
-    t.integer  "operation_id"
+    t.string   "operation_id"
     t.datetime "created_at",                        :null => false
     t.datetime "updated_at",                        :null => false
     t.boolean  "is_deleted",     :default => false
