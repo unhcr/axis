@@ -47,10 +47,12 @@ class Visio.Views.StrategySnapshotView extends Backbone.View
 
     if @model
       budget = @model.strategyBudget()
+      @$el.find('.js-operation-name').text @model.get('operation_name')
     else
       budget = @collection.where({ year: Visio.manager.year() }).reduce(
         (budget, p) -> return budget + p.strategyBudget(),
         0)
+      @$el.find('.js-operation-name').text 'All Target Countries'
 
     @updateMeter(Math.random(), budget)
 
@@ -65,7 +67,7 @@ class Visio.Views.StrategySnapshotView extends Backbone.View
 
     @update()
 
-  updateMeter: (percent, budget) ->
+  updateMeter: (percent, budget) =>
     console.log budget
     $expenditure = @$el.find('.expenditure span')
 

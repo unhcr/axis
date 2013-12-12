@@ -66,6 +66,11 @@ p.small {
 .inner-content {
   border-left: $page-margin solid white;
   border-right: $page-margin solid white;
+
+  .row {
+    max-width: $row-inner-width;
+    margin: 0 auto;
+  }
 }
 
 .ui-big-number {
@@ -987,6 +992,11 @@ a {
 
 .shift {
   left: $navigation-width;
+}
+
+input[type="radio"] + label {
+  cursor: pointer;
+  display: block;
 }
 
 input[type="radio"]:checked + label {
