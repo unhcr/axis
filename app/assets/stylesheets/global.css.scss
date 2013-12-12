@@ -55,6 +55,10 @@ p.small {
   font-size: .8em;
 }
 
+.text {
+  max-width: 800px;
+}
+
 .content {
   position: relative;
 }
@@ -879,6 +883,7 @@ a {
 .target-countries {
   max-height: 300px;
   overflow: auto;
+  font-size: 1.2em;
 }
 
 .search-icon {
@@ -1053,4 +1058,9 @@ input[type="radio"]:checked + label {
   background-color: $bright-yellow;
   font-size: 1.3em;
   line-height: normal;
+}
+
+.divider {
+  border-top: 1px red solid;
+  border-bottom: 1px blue solid;
 }
