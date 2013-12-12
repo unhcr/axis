@@ -1,12 +1,7 @@
-class Visio.Routers.IndexRouter extends Backbone.Router
+class Visio.Routers.IndexRouter extends Visio.Routers.GlobalRouter
 
   initialize: (options) ->
-    @menuView = new Visio.Views.MenuView()
-    $('body').append @menuView.el
-    @searchView = new Visio.Views.SearchView({
-      el: $('#global-search')
-    })
-
+    Visio.Routers.GlobalRouter.prototype.initialize.call(@)
     height = $(window).height() - $('header').height()
 
     @map = Visio.Graphs.map(
@@ -42,9 +37,6 @@ class Visio.Routers.IndexRouter extends Backbone.Router
 
   index: () ->
     console.log 'index'
-
-  search: () =>
-    @searchView.show()
 
   menu: () ->
     console.log 'menu'

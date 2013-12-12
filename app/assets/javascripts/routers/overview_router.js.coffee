@@ -1,8 +1,7 @@
-class Visio.Routers.OverviewRouter extends Backbone.Router
+class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
 
   initialize: (options) ->
-    @menuView = new Visio.Views.MenuView()
-    $('body').append @menuView.el
+    Visio.Routers.GlobalRouter.prototype.initialize.call(@)
 
     @setup().done(() =>
 
@@ -62,6 +61,7 @@ class Visio.Routers.OverviewRouter extends Backbone.Router
 
   routes:
     'menu' : 'menu'
+    'search': 'search'
     '*default': 'index'
 
   menu: () ->
