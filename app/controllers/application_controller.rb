@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
-  @@map = File.read("#{Rails.root}/public/world_50m.json")
+  @@map = File.read("#{Rails.root}/public/world_50m_topo.json")
   @@mapMD5 = Digest::MD5.hexdigest(@@map)
 
   def index

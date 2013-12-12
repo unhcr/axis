@@ -157,7 +157,7 @@ Visio.Graphs.map = (config) ->
 
 
   render.mapJSON = (mapJSON) ->
-    data = mapJSON.features
+    data = topojson.feature(mapJSON, mapJSON.objects.world_50m).features
 
   render.clearTooltips = () ->
     for key, value of views
