@@ -252,7 +252,7 @@ body.index {
 }
 
 .ui-medium-header {
-  font-size: 3em;
+  font-size: 2.2em;
   letter-spacing: -.02em;
 }
 
@@ -310,7 +310,12 @@ body.index {
 
 header {
   background-color: white;
-  border-bottom: 3px solid $primary-light;
+  border-bottom: 1px solid $primary-light;
+}
+
+header .logo {
+  margin-top: -10px;
+  margin-bottom: 10px;
 }
 
 .logo:before {
@@ -919,7 +924,10 @@ a {
   -webkit-border-radius: $search-icon;
   -moz-border-radius: $search-icon;
   cursor: pointer;
-
+  background-image: url(/assets/icons/search.png);
+  background-size: $search-icon / 2;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .menu-icon {
@@ -956,8 +964,13 @@ a {
   left: -54px;
 }
 
+.menu-btn {
+  margin-top: 4px;
+}
+
+
 .extra-padding {
-  padding-top: 30px
+  padding-top: 20px
 }
 
 .strategy-description {
