@@ -69,7 +69,7 @@ p.small {
 }
 
 .ui-big-number {
-  color: $orange;
+  color: $bright-yellow;
   font-size: 5em;
 }
 
@@ -94,6 +94,10 @@ p.small {
   font-weight: 300;
 }
 
+.ui-primary-soft-theme {
+  background-color: $primary-soft;
+  color: $white;
+}
 
 .ui-primary-medium-dark-theme {
   background-color: $primary-medium-dark;
@@ -974,7 +978,7 @@ a {
 }
 
 input[type="radio"]:checked + label {
-  color: $primary-light;
+  color: $bright-yellow;
 }
 
 .strategy-snapshot {
@@ -1061,6 +1065,6 @@ input[type="radio"]:checked + label {
 }
 
 .divider {
-  border-top: 1px red solid;
-  border-bottom: 1px blue solid;
+  border-top: 1px $divider-top solid;
+  border-bottom: 1px $divider-bottom solid;
 }
