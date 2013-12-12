@@ -4,6 +4,8 @@ class FocusParseTest < ActiveSupport::TestCase
 
   TESTFILE_PATH = "#{Rails.root}/test/files/"
   TESTFILE_NAME = "PlanTest.xml"
+  TESTFILE_NAME_2 = "PlanTest2.xml"
+  TESTFILE_NAME_DIFFERENT = "PlanTestDifferent.xml"
   UPDATED_TESTFILE_NAME = "UpdatedPlanTest.xml"
   TESTHEADER_NAME = "HeaderTest.xml"
   PLAN_TYPES = ['ONEPLAN']
@@ -33,6 +35,25 @@ class FocusParseTest < ActiveSupport::TestCase
     IndicatorDatum.destroy_all
     Operation.destroy_all
     Budget.delete_all
+  end
+
+  test "two separate plans" do
+    file = File.read(TESTFILE_PATH + TESTHEADER_NAME)
+    parse_header(file, PLAN_TYPES)
+
+    file = File.read(TESTFILE_PATH + TESTFILE_NAME)
+    parse_plan(file)
+
+    file2 = File.read(TESTFILE_PATH + TESTFILE_NAME_DIFFERENT)
+    parse_plan(file2)
+
+    Plan.all.each do |plan|
+      o = plan.operation
+      assert_equal 1, o.plans.length
+    end
+
+
+
   end
 
   test "update" do

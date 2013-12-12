@@ -16,6 +16,7 @@ class FocusFetchTest < ActiveSupport::TestCase
   end
 
   test "Fetching from FOCUS - max files 2" do
+    return if !ENV['LDAP_USERNAME'] || !ENV['LDAP_PASSWORD']
     ret = fetch(2)
 
     assert_equal 2, ret[:files_read]
