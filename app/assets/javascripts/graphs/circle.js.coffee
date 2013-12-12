@@ -7,7 +7,7 @@ Visio.Graphs.circle = (config) ->
 
   arc = d3.svg.arc()
     .startAngle(0)
-    .innerRadius((height / 2) - 8)
+    .innerRadius((height / 2) - 6.5)
     .outerRadius(height / 2)
 
   selection = config.selection

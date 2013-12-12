@@ -25,15 +25,15 @@ class Visio.Views.StrategySnapshotView extends Backbone.View
     _.each @resultTypes, (resultType) =>
       config =
         resultType: resultType
-        width: 110
-        height: 110
+        width: 85
+        height: 85
         selection: d3.select(".#{resultType}-circle")
         percent: Math.random()
         number: 45
         margin:
           top: 10
           bottom: 10
-          left: 10
+          left: 0
           right: 10
 
       @countCircles.push
@@ -68,7 +68,6 @@ class Visio.Views.StrategySnapshotView extends Backbone.View
   updateMeter: (percent, budget) ->
     console.log budget
     $expenditure = @$el.find('.expenditure span')
-    $budget = @$el.find('.budget')
 
     $expenditure.countTo(
       from: +$expenditure.text()

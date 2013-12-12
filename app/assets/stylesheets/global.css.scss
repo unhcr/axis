@@ -70,7 +70,7 @@ p.small {
 
 .ui-big-number {
   color: $bright-yellow;
-  font-size: 5em;
+  font-size: 3.6em;
 }
 
 .ui-primary-theme {
@@ -128,6 +128,7 @@ body, html {
   font-family: 'Lato', sans-serif;
   padding: 0;
   margin: 0;
+  font-size: 12px;
 
   -moz-transition:background-color $medium-transition;
   -webkit-transition:background-color $medium-transition;
@@ -153,6 +154,10 @@ body, html {
 
 .ui-bright {
   color: $bright;
+}
+
+.ui-bright-yellow {
+  color: $bright-yellow;
 }
 
 .ui-secondary {
@@ -237,7 +242,7 @@ body, html {
 }
 
 .ui-small-header {
-  font-size: 2em;
+  font-size: 1.7em;
   letter-spacing: -.02em;
 }
 
@@ -247,7 +252,7 @@ body, html {
 }
 
 .ui-large-header {
-  font-size: 4em;
+  font-size: 3.3em;
   letter-spacing: -.02em
 }
 
@@ -857,6 +862,7 @@ a {
 	-moz-border-radius: 25px;
 	-webkit-border-radius: 25px;
 	border-radius: 25px;
+  margin: 0 30px;
 }
 
 .meter > span {
