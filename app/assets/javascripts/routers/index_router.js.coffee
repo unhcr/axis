@@ -7,6 +7,8 @@ class Visio.Routers.IndexRouter extends Backbone.Router
       el: $('#global-search')
     })
 
+    height = $(window).height() - $('header').height()
+
     @map = Visio.Graphs.map(
       margin:
         top: 0
@@ -15,7 +17,7 @@ class Visio.Routers.IndexRouter extends Backbone.Router
         bottom: 0
       selection: d3.select '#map'
       width: $(window).width()
-      height: 500)
+      height: height)
 
 
     Visio.manager.on('change:date', () =>

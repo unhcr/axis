@@ -147,6 +147,10 @@ body, html {
   transition:background-color $medium-transition;
 }
 
+body.index {
+  overflow: hidden;
+}
+
 .session-container {
   position: relative;
 }
