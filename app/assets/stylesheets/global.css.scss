@@ -395,11 +395,11 @@ input:focus {
 }
 
 .zero-height {
-  max-height: 0px !important;
   height: 0px !important;
   padding-top: 0px !important;
   padding-bottom: 0px !important;
-  margin: 0px !important;
+  margin-top: 0px !important;
+  margin-bottom: 0px !important;
 }
 
 .zero-max-height {
@@ -595,10 +595,6 @@ a {
 }
 .white-placeholder:-ms-input-placeholder { /* Internet Explorer 10+ */
     color:    $white;
-}
-
-.transparent {
-  fill: transparent !important;
 }
 
 /* tooltip */
@@ -1117,4 +1113,12 @@ input[type="radio"]:checked + label {
   position: absolute;
   left: -110px;
   top: 60px
+}
+
+.results {
+  -moz-transition:height $fast-transition;
+  -webkit-transition:height $fast-transition;
+  -o-transition:height $fast-transition;
+  transition:height $fast-transition;
+  overflow: hidden;
 }

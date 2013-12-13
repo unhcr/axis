@@ -2,6 +2,8 @@ class Visio.Views.SearchView extends Backbone.View
 
   template: JST['shared/search']
 
+  itemTemplate: JST['shared/search_item']
+
   initialize: (options) ->
     @render()
     @throttledSearch = _.throttle @search, 300
@@ -23,18 +25,32 @@ class Visio.Views.SearchView extends Backbone.View
 
   hide: () ->
     @$el.addClass('zero-max-height')
+    @$el.find('.results').addClass 'gone zero-height'
 
   onBlurSearch: () =>
     Visio.router.navigate '/'
     @hide()
 
   search: (query) =>
+    searchTypes = ['indicators', 'operations']
     $.get('/global_search', { query: query }).done (response) =>
-      _.each response.operations, (operation) =>
-        @$el.find('.results').append operation.highlight.name[0]
+      $results = @$el.find('.results')
+      if _.any(searchTypes, (type) -> response[type].length > 0)
+        $results.removeClass 'gone zero-height'
+        $results.css 'height', $(window).height() - $results.offset().top
+      else
+        $results.addClass 'gone zero-height'
 
-      _.each response.indicators, (indicator) =>
-        @$el.find('.results').append indicator.highlight.name[0]
+      _.each searchTypes, (type) =>
+        html = ''
+        _.each response[type], (result) =>
+          html += @itemTemplate( result: result.highlight.name[0] )
+
+        if html
+          $results.find(".#{Inflection.singularize(type)}-results").html html
+          $results.find(".#{Inflection.singularize(type)}-results-container").removeClass 'gone zero-height'
+        else
+          $results.find(".#{Inflection.singularize(type)}-results-container").addClass 'gone zero-height'
 
 
   onKeyupSearch: (e) =>
