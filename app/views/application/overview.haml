@@ -1,42 +1,42 @@
 .navigation-activation.margin-left
   .navigation-activation-icon
+.container.full-width.toolbar
+  .row
+    .col-md-8.col-centered.ui-primary-light.zero-padding
+      .col-md-3.ui-purple.right-text.zero-padding
+        CHOOSE YOUR VIEW
+      .col-md-2.center-text.zero-padding
+        Budget
+      .col-md-2.center-text.zero-padding
+        Indicators
+      .col-md-2.center-text.zero-padding
+        Summary Stats
+      .col-md-3.right-text.zero-padding
+        2013
 
 .inner-content
-  .container.full-width.clearfix.toolbar
-    .row
-      .col-md-8.col-centered.ui-primary-light.zero-padding
-        .col-md-3.ui-purple.right-text.zero-padding
-          CHOOSE YOUR VIEW
-        .col-md-2.center-text.zero-padding
-          Budget
-        .col-md-2.center-text.zero-padding
-          Indicators
-        .col-md-2.center-text.zero-padding
-          Summary Stats
-        .col-md-3.right-text.zero-padding
-          2013
-
-  .container.full-width.ui-primary-soft-theme
-    .row
-      .col-md-8.col-centered.zero-padding
-        .col-md-12
-          .ui-large-header.light
-            = @strategy.name
-    .row
-      .col-md-8.col-centered.zero-padding
-        .col-md-12.light.strategy-description.text.zero-padding
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+  .collapsable-content{ :data => { 'top' => "max-height:0" } }
+    .container.full-width.ui-primary-soft-theme
+      .row
+        .col-md-8.col-centered.zero-padding
+          .col-md-12
+            .ui-large-header.light
+              = @strategy.name
+      .row
+        .col-md-8.col-centered.zero-padding
+          .col-md-12.light.strategy-description.text.zero-padding
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
 
-    .row
-      .col-md-8.col-centered.zero-padding
-        .col-md-12.light.ui-small-header
-          Overview
-  .divider
+      .row
+        .col-md-8.col-centered.zero-padding
+          .col-md-12.light.ui-small-header
+            Overview
+    .divider
 
-  .module-container
-    #strategy-snapshot.module.container.full-width.ui-primary-soft-theme
-    #achievement-budget-single-year.module.container.full-width
+    #strategy-snapshot.container.full-width.ui-primary-soft-theme
+
+  #achievement-budget-single-year.module.container.full-width
 
 :javascript
   $(document).ready(function() {
@@ -63,6 +63,7 @@
     $(document).scroll(function(e) {
       $navigationIcon.css('top', $(document).scrollTop() + 140);
     })
+
 
 
   });

@@ -64,6 +64,7 @@ p.small {
 }
 
 .inner-content {
+  margin-top: $min-toolbar-height;
   border-left: $page-margin solid white;
   border-right: $page-margin solid white;
 
@@ -103,6 +104,10 @@ p.small {
   padding-bottom: 4px;
   padding-top: 4px;
   font-weight: 300;
+}
+
+.collapsable-content {
+  overflow: hidden;
 }
 
 .ui-primary-soft-theme {
@@ -145,6 +150,29 @@ body, html {
   -webkit-transition:background-color $medium-transition;
   -o-transition:background-color $medium-transition;
   transition:background-color $medium-transition;
+}
+
+body.overview {
+  margin-top: $min-header-height;
+
+  header {
+    top: 0;
+    position: fixed;
+    z-index: 300;
+    min-height: $min-header-height;
+  }
+}
+
+body.layout-application {
+
+  header {
+    background-color: white;
+    border-bottom: 1px solid $primary-light;
+    .logo {
+      margin-top: -10px;
+      margin-bottom: 10px;
+    }
+  }
 }
 
 body.index {
@@ -312,15 +340,6 @@ body.index {
   pointer-events: none;
 }
 
-header {
-  background-color: white;
-  border-bottom: 1px solid $primary-light;
-}
-
-header .logo {
-  margin-top: -10px;
-  margin-bottom: 10px;
-}
 
 .logo:before {
   background-image: url(/assets/logo.png);
@@ -426,8 +445,6 @@ button, input {
 .inline-block {
   display: inline-block;
 }
-
-.module-
 
 .btn {
   border: none;
@@ -995,11 +1012,15 @@ a {
 }
 
 .toolbar {
+  margin-top: -$min-toolbar-height;
   background-color: white;
   padding: 12px 0;
+  position: fixed;
+  z-index: 300;
+  height: 42px;
 }
 
-.module-container {
+.module {
   background-color: $off-white;
 }
 
@@ -1135,4 +1156,8 @@ input[type="radio"]:checked + label {
     font-style: normal;
     color: $bright-yellow;
   }
+}
+
+#achievement-budget-single-year {
+  padding-bottom: 120px;
 }

@@ -21,6 +21,10 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
       @achievementBudgetSingleYearView.render()
 
       $('#navigation').removeClass('gone')
+      $('.collapsable-content').attr 'data-0', "max-height:#{$('.collapsable-content').height()}px"
+      skrollr.init(
+        forceHeight: false
+      )
     ).fail (e) =>
       console.log e
 

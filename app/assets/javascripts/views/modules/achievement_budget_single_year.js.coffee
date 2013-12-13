@@ -15,11 +15,11 @@ class Visio.Views.AchievementBudgetSingleYearView extends Backbone.View
       @$el.html @template()
       config =
         width: @$el.find('#bubble').width()
-        height: 400
+        height: 320
         selection: d3.select('#bubble')
         margin:
-          top: 20
-          bottom: 50
+          top: 10
+          bottom: 30
           left: 90
           right: 80
 
