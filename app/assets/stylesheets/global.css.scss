@@ -1027,6 +1027,7 @@ a {
 .page {
   position: absolute;
   right: 0;
+  left: 0;
   -moz-transition:left $very-fast-transition ease-out;
   -webkit-transition:left $very-fast-transition ease-out;
   -o-transition:left $very-fast-transition ease-out;
