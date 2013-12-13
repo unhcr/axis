@@ -3,6 +3,76 @@ module 'Parameter',
   setup: () ->
     Visio.manager = new Visio.Models.Manager()
 
+test 'strategyBudgetData', () ->
+  strategy = { id: 17 }
+
+
+  _.each Visio.Types, (type) ->
+    strategy["#{type}_ids"] = [1]
+
+
+  Visio.manager.get('strategies').reset([strategy])
+  Visio.manager.set('strategy_id', Visio.manager.get('strategies').at(0).id)
+
+  _.each Visio.Types, (type) ->
+    Visio.manager.get(type).reset([
+      {
+        id: 1
+      },
+      {
+        id: 2
+      }
+    ])
+
+  Visio.manager.get('budgets').reset([
+    {
+      id: 'green'
+      plan_id: 1
+      ppg_id: 1
+      goal_id: 1
+      problem_objective_id: 1
+      ol_admin_budget: 100
+    },
+    {
+      id: 'blue'
+      plan_id: 1
+      ppg_id: 1
+      goal_id: 1
+      output_id: 1
+      problem_objective_id: 1
+      ol_admin_budget: 100
+    },
+    {
+      id: 'red'
+      plan_id: 2
+      ppg_id: 1
+      goal_id: 2
+      output_id: 1
+      problem_objective_id: 2
+      ol_admin_budget: 100
+    }
+  ])
+
+  _.each Visio.Types, (type) ->
+    selected = Visio.manager.strategy().get("#{type}_ids")
+    strictEqual(selected.length, 1)
+
+    _.each selected, (id) ->
+      model = Visio.manager.get(type).get(id)
+      data = model.strategyBudgetData()
+
+      if type != Visio.Parameters.OUTPUTS
+        strictEqual(data.length, 2)
+        ok(data instanceof Visio.Collections.Budget)
+        ok(data.get('blue'))
+        ok(data.get('green'))
+      else
+        strictEqual(data.length, 1)
+        ok(data instanceof Visio.Collections.Budget)
+        ok(data.get('blue'))
+
+
+
 test 'selectedBudgetData', () ->
   selected = Visio.manager.get('selected')
 
@@ -122,7 +192,7 @@ test 'selectedIndicatorData', () ->
       ok(data instanceof Visio.Collections.IndicatorDatum)
       ok(data.get('blue'))
 
-test 'selectedStrategyData', () ->
+test 'strategyIndicatorData', () ->
   strategy = { id: 17 }
 
 
