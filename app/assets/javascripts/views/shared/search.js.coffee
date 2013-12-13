@@ -25,6 +25,7 @@ class Visio.Views.SearchView extends Backbone.View
 
   hide: () ->
     @$el.addClass('zero-max-height')
+    @$el.find('input').val('')
     @$el.find('.results').addClass 'gone zero-height'
 
   onBlurSearch: () =>
