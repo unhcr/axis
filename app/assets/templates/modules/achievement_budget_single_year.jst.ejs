@@ -21,20 +21,27 @@
 </div>
 <div class="row">
   <div class="col-md-8 col-centered">
-      <div class="col-md-1 scenario">
+      <div class="col-md-2 scenario">
         <% _.each(Visio.Scenarios, function(scenario) { %>
         <div class="visio-check visio-check-yellow">
-          <input checked="checked" id="check-<%= scenario %>" type="checkbox" value="<%= scenario %>" />
-          <label for="check-<%= scenario %>"><%= scenario %></label>
+          <% shortName = scenario == Visio.Scenarios.AOL ? 'AOL' : 'OL' %>
+          <input checked="checked" id="check-<%= shortName %>" type="checkbox" value="<%= scenario %>" />
+          <label for="check-<%= shortName %>"><%= shortName %></label>
         </div>
         <% }) %>
       </div>
-      <div class="col-md-2 budget">
-        <% _.each(Visio.Budgets, function(budget) { %>
-        <div class="visio-check visio-check-yellow">
-          <input checked="checked" id="check-<%= budget %>" type="checkbox" value="<%= budget %>" />
-          <label for="check-<%= budget %>"><%= budget %></label>
-        </div>
+      <div class="col-md-3 budget">
+        <% _.each(_.values(Visio.Budgets), function(budget, i, values) { %>
+        <% if (i % 2 === 0) { %>
+          <div class="col-md-<%= 12 / (values.length / 2) %> zero-padding">
+        <% } %>
+            <div class="visio-check visio-check-yellow">
+              <input checked="checked" id="check-<%= budget %>" type="checkbox" value="<%= budget %>" />
+              <label for="check-<%= budget %>"><%= budget %></label>
+            </div>
+        <% if (i % 2 == 1) { %>
+          </div>
+        <% } %>
         <% }) %>
       </div>
   </div>
