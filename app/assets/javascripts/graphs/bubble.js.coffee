@@ -1,10 +1,6 @@
 Visio.Graphs.bubble = (config) ->
 
-  margin =
-    top: 50,
-    bottom: 50,
-    left: 100,
-    right: 50
+  margin = config.margin
 
   width = config.width - margin.left - margin.right
   height = config.height - margin.top - margin.bottom

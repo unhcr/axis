@@ -12,12 +12,17 @@ class Visio.Views.AchievementBudgetSingleYearView extends Backbone.View
 
     if !isRerender
       @$el.html @template()
-      options =
-        width: 800
+      config =
+        width: @$el.find('#bubble').width()
         height: 400
         selection: d3.select('#bubble')
+        margin:
+          top: 20
+          bottom: 50
+          left: 90
+          right: 50
 
-      @bubble = Visio.Graphs.bubble(options)
+      @bubble = Visio.Graphs.bubble(config)
 
     _.each Visio.Scenarios, (scenario) =>
       if Visio.manager.get('scenario_type')[scenario]

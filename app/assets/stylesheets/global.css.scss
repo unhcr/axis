@@ -155,6 +155,10 @@ body.index {
   position: relative;
 }
 
+.ui-primary-soft {
+  color: $primary-soft;
+}
+
 .ui-purple {
   color: $purple;
 }
@@ -1022,8 +1026,7 @@ input[type="radio"]:checked + label {
 }
 
 .strategy-snapshot {
-  min-height: 360px;
-  height: 360px;
+  padding-bottom: 40px;
 }
 
 .vertical-divider {
