@@ -53,10 +53,22 @@ Visio.Graphs.bubble = (config) ->
   g.append('g')
     .attr('class', 'y axis')
     .attr('transform', 'translate(0,0)')
+    .append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 0)
+      .attr("x", -height)
+      .attr("dy", "-.21em")
+      .style("text-anchor", "start")
+      .text('Acheivement')
 
   g.append('g')
     .attr('class', 'x axis')
     .attr('transform', "translate(0,#{height})")
+    .append("text")
+      .attr("x", width + 10)
+      .attr("dy", "-.21em")
+      .style("text-anchor", "start")
+      .text('Budget')
 
   render = () ->
 

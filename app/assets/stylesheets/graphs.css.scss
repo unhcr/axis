@@ -19,11 +19,11 @@
     stroke: $primary-light;
   }
 
-  .y.axis g:first-child line {
+  .y.axis g:nth-of-type(-n+2) line {
     stroke: none
   }
 
-  .y.axis text {
+  .y.axis text, .x.axis > text {
     fill: $primary-light;
     font-size: 1.4em;
   }

@@ -20,7 +20,7 @@ class Visio.Views.AchievementBudgetSingleYearView extends Backbone.View
           top: 20
           bottom: 50
           left: 90
-          right: 50
+          right: 80
 
       @bubble = Visio.Graphs.bubble(config)
 
