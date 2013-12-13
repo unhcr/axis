@@ -37,7 +37,7 @@ class Visio.Views.SearchView extends Backbone.View
       $results = @$el.find('.results')
       if _.any(searchTypes, (type) -> response[type].length > 0)
         $results.removeClass 'gone zero-height'
-        $results.css 'height', $(window).height() - $results.offset().top
+        $results.css 'height', $(document).height() - $results.offset().top
       else
         $results.addClass 'gone zero-height'
 

@@ -154,6 +154,7 @@ body, html {
 
 body.overview {
   margin-top: $min-header-height;
+  overflow-x: hidden;
 
   header {
     top: 0;
@@ -585,7 +586,7 @@ button, input {
 
 .overlay {
   position: absolute;
-  z-index: 200;
+  z-index: 400;
 }
 
 a {
@@ -1112,6 +1113,7 @@ input[type="radio"]:checked + label {
   -o-transition:max-height $fast-transition;
   transition:max-height $fast-transition;
   max-height: 50px;
+  z-index: 400;
 
 }
 
