@@ -1122,3 +1122,14 @@ input[type="radio"]:checked + label {
   transition:height $fast-transition;
   overflow: hidden;
 }
+
+.search-item {
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 25px;
+
+  em {
+    font-style: normal;
+    color: $bright-yellow;
+  }
+}
