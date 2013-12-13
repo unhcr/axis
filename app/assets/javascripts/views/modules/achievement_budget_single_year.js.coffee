@@ -5,6 +5,7 @@ class Visio.Views.AchievementBudgetSingleYearView extends Backbone.View
   events:
     'click .scenario .visio-check input': 'onClickScenario'
     'click .budget .visio-check input': 'onClickBudget'
+    'change .achievement-type-toggle': 'onAchievementTypeChange'
 
   initialize: (options) ->
 
@@ -36,6 +37,14 @@ class Visio.Views.AchievementBudgetSingleYearView extends Backbone.View
     @bubble()
 
     @
+
+  onAchievementTypeChange: (e) =>
+    if Visio.manager.get('achievement_type') == Visio.AchievementTypes.TARGET
+      achievement_type = Visio.AchievementTypes.STANDARD
+    else
+      achievement_type = Visio.AchievementTypes.TARGET
+
+    Visio.manager.set 'achievement_type', achievement_type
 
   onClickScenario: (e) =>
     $target = $(e.currentTarget)
