@@ -37,6 +37,25 @@ class ApplicationControllerTest < ActionController::TestCase
 
   end
 
+  test 'global search 0 results on blank input' do
+
+    get :global_search
+
+    assert_response :success
+    r = JSON.parse(response.body)
+
+    assert_equal 0, r["operations"].length
+    assert_equal 0, r["indicators"].length
+
+    get :global_search, { :query => '' }
+
+    assert_response :success
+    r = JSON.parse(response.body)
+
+    assert_equal 0, r["operations"].length
+    assert_equal 0, r["indicators"].length
+  end
+
 
 
 end

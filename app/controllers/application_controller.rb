@@ -42,7 +42,10 @@ class ApplicationController < ActionController::Base
   end
 
   def global_search
-    query = "*#{(params[:query] || '*').split('').join('*')}*"
+    query = ''
+    if params[:query] && !params[:query].empty?
+      query = "*#{params[:query].split('').join('*')}*"
+    end
 
     render :json => {
       :indicators => Indicator.paged(query),
