@@ -50,13 +50,13 @@ asyncTest('getMap', () ->
     return Visio.manager.getMap().done((map) ->
       # Should retreive via ajax
       ok(map, 'Should have map')
-      strictEqual map.features.length, 306
+      strictEqual topojson.feature(map, map.objects.world_50m).features.length, 304
     ).done(() ->
       Visio.manager.getMap()
     ).done((map) ->
       # Should retreive local
       ok(map, 'Should have map')
-      strictEqual map.features.length, 306
+      strictEqual topojson.feature(map, map.objects.world_50m).features.length, 304
       start()
     )
   )

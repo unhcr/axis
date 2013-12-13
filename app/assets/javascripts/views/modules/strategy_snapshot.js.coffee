@@ -68,7 +68,6 @@ class Visio.Views.StrategySnapshotView extends Backbone.View
     @update()
 
   updateMeter: (percent, budget) =>
-    console.log budget
     $expenditure = @$el.find('.expenditure span')
 
     $expenditure.countTo(

@@ -64,9 +64,11 @@ class Visio.Models.Parameter extends Backbone.Model
   strategyBudgetData: () ->
     return new Visio.Collections.Budget(Visio.manager.get('budgets').filter((d) =>
       return _.every Visio.Types, (type) =>
+        return true if type == Visio.Parameters.INDICATORS
         if @name == type
           ids = [@id] if Visio.manager.strategy().include(type, @id)
         else if type == Visio.Parameters.OUTPUTS
+          # Add undefined because budget data can have an undefined output
           ids = Visio.manager.strategy().get("#{type}_ids").concat([undefined])
         else
           ids = Visio.manager.strategy().get("#{type}_ids")

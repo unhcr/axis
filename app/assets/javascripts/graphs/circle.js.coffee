@@ -49,7 +49,6 @@ Visio.Graphs.circle = (config) ->
           percent = i(t)
           foreground.attr('d', arc.endAngle(twoPi * percent)))
 
-    console.log text[0][0]
     $(text[0][0]).countTo
       from: oldNumber
       to: number
