@@ -145,4 +145,22 @@ test 'selected', () ->
     strictEqual(selected.length, 1)
     ok(selected.get(1))
 
+test 'plan', () ->
+  Visio.manager.get('plans').reset([
+    {
+      id: 'abc'
+      country: { iso3: 'ben' }
+      year: Visio.manager.year()
+    }
+    {
+      id: 'ben'
+      country: { iso3: 'aaa' }
+      year: Visio.manager.year()
+    }
+  ])
 
+  p = Visio.manager.plan('ben')
+  strictEqual p.id, 'ben'
+
+  p = Visio.manager.plan('aaa')
+  strictEqual p.id, 'ben'

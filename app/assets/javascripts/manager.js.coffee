@@ -89,16 +89,16 @@ class Visio.Models.Manager extends Backbone.Model
     ))
 
   plan: (idOrISO) ->
-    if idOrISO.length == 3
-      plan = @get('plans').find((p) =>
+    plan = @get('plans').get(idOrISO)
+
+    if !plan
+      plan = @get('plans').find (p) =>
         if p.get('country')
           p.get('country').iso3 == idOrISO && p.get('year') == @year()
         else
           false
-      )
-      return plan
-    else
-      return @get('plans').get(idOrISO)
+
+    return plan
 
   plans: (options) ->
     new Visio.Collections.Plan(@get('plans').where(options))
