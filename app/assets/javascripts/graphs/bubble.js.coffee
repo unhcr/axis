@@ -50,6 +50,11 @@ Visio.Graphs.bubble = (config) ->
     el: $('.bubble-info-container .bubble-info')
   })
 
+  voronoi = d3.geom.voronoi()
+    .clipExtent([[0, 0], [width, height]])
+    .x((d) -> x(d.budget))
+    .y((d) -> y(d.achievement))
+
   g.append('g')
     .attr('class', 'y axis')
     .attr('transform', 'translate(0,0)')
@@ -102,13 +107,6 @@ Visio.Graphs.bubble = (config) ->
     bubbles
       .attr('class', (d) ->
         return ['bubble'].join(' '))
-      .on('mouseenter', (d) ->
-        info.render(d)
-        info.show()
-      )
-      .on('mouseout', (d) ->
-        info.hide()
-      )
 
     bubbles
       .transition()
@@ -122,6 +120,20 @@ Visio.Graphs.bubble = (config) ->
 
     bubbles.exit().remove()
 
+    path = g.selectAll('.voronoi')
+      .data(voronoi(data))
+
+
+    path.enter().append("path")
+    path.attr("class", (d, i) -> "voronoi" )
+        .attr("d", polygon)
+        .on('mouseenter', (d) ->
+          info.render(d.point)
+          info.show()
+        )
+
+    path.exit().remove()
+
     g.select('.x.axis')
       .transition()
       .duration(duration)
@@ -132,6 +144,9 @@ Visio.Graphs.bubble = (config) ->
       .duration(duration)
       .call(yAxis)
       .attr('transform', 'translate(-20,0)')
+
+  polygon = (d) ->
+    "M" + d.join("L") + "Z"
 
   render.parameters = (_parameters) ->
     return if !arguments
