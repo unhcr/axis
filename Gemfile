@@ -17,6 +17,7 @@ gem "figaro"
 gem 'jbuilder'
 gem 'mysql2'
 gem 'tire'
+gem 'will_paginate', '~> 3.0'
 
 
 

@@ -162,6 +162,7 @@ GEM
       json (>= 1.8.0)
     warden (1.2.1)
       rack (>= 1.0)
+    will_paginate (3.0.4)
 
 PLATFORMS
   ruby
@@ -188,3 +189,4 @@ DEPENDENCIES
   sqlite3
   tire
   uglifier (>= 1.0.3)
+  will_paginate (~> 3.0)
