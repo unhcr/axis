@@ -164,6 +164,10 @@ Visio.Graphs.map = (config) ->
       value.close()
     views = {}
 
+  render.refreshTooltips = () ->
+    for key, value of views
+      value.render(true)
+
   svg.call zoom
 
 

@@ -9,6 +9,10 @@ class Visio.Views.SearchView extends Backbone.View
   events:
     'blur input': 'onBlurSearch'
     'keyup input': 'onKeyupSearch'
+    'transitionend': 'onTransitionEnd'
+    'MSTransitionEnd': 'onTransitionEnd'
+    'webkitTransitionEnd': 'onTransitionEnd'
+    'oTransitionEnd': 'onTransitionEnd'
 
   render: () ->
     @$el.html @template()
@@ -38,4 +42,8 @@ class Visio.Views.SearchView extends Backbone.View
     query = $(e.currentTarget).val()
 
     @throttledSearch query
+
+  onTransitionEnd: (e) =>
+    if Visio.router.map
+      Visio.router.map.refreshTooltips()
 
