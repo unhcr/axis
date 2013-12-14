@@ -132,3 +132,34 @@ test 'plan', () ->
 
   p = Visio.manager.plan('aaa')
   strictEqual p.id, 'ben'
+
+test 'resetSelected', () ->
+
+  strategy = { id: 17 }
+
+  _.each Visio.Types, (type) ->
+    strategy["#{type}_ids"] = {}
+    strategy["#{type}_ids"]['1'] = true
+    strategy["#{type}_ids"]['2'] = true
+
+  Visio.manager.get('strategies').reset([strategy])
+  Visio.manager.set('strategy_id', Visio.manager.get('strategies').at(0).id)
+
+  _.each Visio.Types, (type) ->
+    Visio.manager.get(type).reset([
+      {
+        id: 1
+        year: Visio.manager.year()
+      },
+      {
+        id: 2
+      }
+    ])
+
+  Visio.manager.resetSelected()
+
+  _.each Visio.Types, (type) ->
+    if type != Visio.Parameters.PLANS
+      strictEqual(_.keys(Visio.manager.get('selected')[type]).length, 2)
+    else
+      strictEqual(_.keys(Visio.manager.get('selected')[type]).length, 1)

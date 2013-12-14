@@ -32,8 +32,8 @@ class Visio.Models.Manager extends Backbone.Model
       if type != Visio.Parameters.PLANS
         _.extend Visio.manager.get('selected')[type], Visio.manager.strategy().get("#{type}_ids")
       else
-        plans = Visio.manager.strategy().plans({ year: Visio.manager.year() })
-        plans.each (plan) ->
+        plans = Visio.manager.strategy().plans().where({ year: Visio.manager.year() })
+        _.each plans, (plan) ->
           Visio.manager.get('selected')[type][plan.id] = true
     console.log Visio.manager.get('selected')
 
