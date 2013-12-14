@@ -8,7 +8,8 @@ test 'strategyBudgetData', () ->
 
 
   _.each Visio.Types, (type) ->
-    strategy["#{type}_ids"] = [1]
+    strategy["#{type}_ids"] = {}
+    strategy["#{type}_ids"]['1'] = true
 
 
   Visio.manager.get('strategies').reset([strategy])
@@ -46,18 +47,18 @@ test 'strategyBudgetData', () ->
       id: 'red'
       plan_id: 2
       ppg_id: 1
-      goal_id: 2
+      goal_id: 1
       output_id: 1
-      problem_objective_id: 2
+      problem_objective_id: 1
       ol_admin_budget: 100
     }
   ])
 
   _.each Visio.Types, (type) ->
     selected = Visio.manager.strategy().get("#{type}_ids")
-    strictEqual(selected.length, 1)
+    strictEqual(_.keys(selected).length, 1)
 
-    _.each selected, (id) ->
+    _.each _.keys(selected), (id) ->
       model = Visio.manager.get(type).get(id)
       data = model.strategyBudgetData()
 
@@ -77,7 +78,8 @@ test 'selectedBudgetData', () ->
   selected = Visio.manager.get('selected')
 
   _.each Visio.Types, (type) ->
-    selected[type] = [1]
+    selected[type] = {}
+    selected[type]['1'] = true
 
 
   _.each Visio.Types, (type) ->
@@ -146,7 +148,8 @@ test 'selectedIndicatorData', () ->
   selected = Visio.manager.get('selected')
 
   _.each Visio.Types, (type) ->
-    selected[type] = [1]
+    selected[type] = {}
+    selected[type]['1'] = true
 
 
   _.each Visio.Types, (type) ->
@@ -197,7 +200,8 @@ test 'strategyIndicatorData', () ->
 
 
   _.each Visio.Types, (type) ->
-    strategy["#{type}_ids"] = [1]
+    strategy["#{type}_ids"] = {}
+    strategy["#{type}_ids"]['1'] = true
 
 
   Visio.manager.get('strategies').reset([strategy])
@@ -237,9 +241,9 @@ test 'strategyIndicatorData', () ->
 
   _.each Visio.Types, (type) ->
     selected = Visio.manager.strategy().get("#{type}_ids")
-    strictEqual(selected.length, 1)
+    strictEqual(_.keys(selected).length, 1)
 
-    _.each selected, (id) ->
+    _.each _.keys(selected), (id) ->
       model = Visio.manager.get(type).get(id)
       data = model.strategyIndicatorData()
 

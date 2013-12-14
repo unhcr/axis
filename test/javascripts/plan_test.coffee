@@ -241,21 +241,21 @@ test 'strategy situation analysis', () ->
 
   Visio.manager.get('strategies').reset([{
       id: 1
-      plans_ids: [1]
-      goals_ids: [1]
-      ppgs_ids: [1]
-      outputs_ids: [1]
-      problem_objectives_ids: [1]
-      indicators_ids: [1]
+      plans_ids: { 1: true }
+      goals_ids: { 1: true }
+      ppgs_ids: { 1: true }
+      outputs_ids: { 1: true }
+      problem_objectives_ids: { 1: true }
+      indicators_ids: { 1: true }
     },
     {
       id: 2,
-      plans_ids: []
-      goals_ids: []
-      ppgs_ids: []
-      outputs_ids: []
-      problem_objectives_ids: []
-      indicators_ids: []
+      plans_ids: {}
+      goals_ids: {}
+      ppgs_ids: {}
+      outputs_ids: {}
+      problem_objectives_ids: {}
+      indicators_ids: {}
     }])
 
   $('body').append('<div class="priority-country-filter"></div>')
@@ -271,21 +271,21 @@ test 'strategy situation analysis', () ->
 
   Visio.manager.get('strategies').reset([{
       id: 1
-      plans_ids: ['abcd']
-      goals_ids: [1]
-      ppgs_ids: [1]
-      outputs_ids: [1]
-      problem_objectives_ids: [1]
-      indicators_ids: [1]
+      plans_ids: { 'abcd': true }
+      goals_ids: { 1: true }
+      ppgs_ids: { 1: true }
+      outputs_ids: { 1: true }
+      problem_objectives_ids: { 1: true }
+      indicators_ids: { 1: true }
     },
     {
       id: 2,
-      plans_ids: []
-      goals_ids: []
-      ppgs_ids: []
-      outputs_ids: []
-      problem_objectives_ids: []
-      indicators_ids: []
+      plans_ids: {}
+      goals_ids: {}
+      ppgs_ids: {}
+      outputs_ids: {}
+      problem_objectives_ids: {}
+      indicators_ids: {}
     }])
 
   result = p.strategy_situation_analysis()

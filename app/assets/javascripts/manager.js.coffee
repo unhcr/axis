@@ -79,11 +79,9 @@ class Visio.Models.Manager extends Backbone.Model
       @get('selected')[type][id] = true
 
   selected: (type) ->
-    ids = _.keys(@get('selected')[type])
-
     parameters = @get(type)
 
-    return new parameters.constructor(parameters.filter((p) -> return _.include(ids, p.id)) )
+    return new parameters.constructor(parameters.filter((p) => @get('selected')[type][p.id]) )
 
   plan: (idOrISO) ->
     plan = @get('plans').get(idOrISO)

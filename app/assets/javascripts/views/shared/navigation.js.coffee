@@ -56,9 +56,10 @@ class Visio.Views.NavigationView extends Backbone.View
     id = typeid[1]
 
     if $target.is(':checked')
-      Visio.manager.get('selected')[type] = _.union(Visio.manager.get('selected')[type], [id])
+      Visio.manager.get('selected')[type][id] = true
     else
-      Visio.manager.get('selected')[type] = _.difference(Visio.manager.get('selected')[type], [id])
+      delete Visio.manager.get('selected')[type][id]
+
     Visio.manager.trigger('change:selected')
 
   onClickOpen: (e) ->

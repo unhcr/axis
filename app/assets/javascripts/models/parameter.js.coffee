@@ -24,7 +24,7 @@ class Visio.Models.Parameter extends Backbone.Model
         id = d.get("#{Inflection.singularize(type)}_id")
 
         if @name == type
-          return @id == id
+          return @id == id && Visio.manager.get('selected')[type][id]
         else
           return Visio.manager.get('selected')[type][id]))
 
@@ -35,7 +35,7 @@ class Visio.Models.Parameter extends Backbone.Model
         id = d.get("#{Inflection.singularize(type)}_id")
 
         if @name == type
-          return @id == id
+          return @id == id && Visio.manager.get('selected')[type][id]
         else if type == Visio.Parameters.OUTPUTS
           return Visio.manager.get('selected')[type][id] || id == undefined
         else
@@ -57,7 +57,7 @@ class Visio.Models.Parameter extends Backbone.Model
         id = d.get("#{Inflection.singularize(type)}_id")
 
         if @name == type
-          return id == @id
+          return id == @id && strategy.get("#{type}_ids")[id]
         else
           return strategy.get("#{type}_ids")[id] ))
 
@@ -70,7 +70,7 @@ class Visio.Models.Parameter extends Backbone.Model
         id = d.get("#{Inflection.singularize(type)}_id")
 
         if @name == type
-          return @id == id
+          return id == @id && strategy.get("#{type}_ids")[id]
         else if type == Visio.Parameters.OUTPUTS
           # Add undefined because budget data can have an undefined output
           return strategy.get("#{type}_ids")[id] || id == undefined
