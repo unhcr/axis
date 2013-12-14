@@ -50,7 +50,10 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
       @strategySnapshotView.render()
 
       $('#navigation').removeClass('gone')
-      $('.collapsable-content').attr 'data-0', "max-height:#{$('.collapsable-content').height()}px"
+
+      $collapsable = $('.collapsable-content')
+      $collapsable.attr 'data-0', "max-height:#{$('.collapsable-content').height()}px"
+      $collapsable.attr "data-#{$('.collapsable-content').height()}", "max-height:0px"
       skrollr.init(
         forceHeight: false
       )
