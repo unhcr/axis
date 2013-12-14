@@ -15,6 +15,7 @@ class Visio.Models.Manager extends Backbone.Model
     'budgets': new Visio.Collections.Budget()
     'strategies': new Visio.Collections.Strategy()
     'date': new Date()
+    'setup': false
     'db': null
     'mapMD5': null
     'syncTimestampId': 'sync_timestamp_id_'

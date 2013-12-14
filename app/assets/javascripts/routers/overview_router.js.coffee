@@ -3,31 +3,6 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
   initialize: (options) ->
     Visio.Routers.GlobalRouter.prototype.initialize.call(@)
 
-    @setup().done(() =>
-
-      @navigation = new Visio.Views.NavigationView({
-        el: $('#navigation')
-      })
-      @navigation.render()
-
-      @strategySnapshotView = new Visio.Views.StrategySnapshotView(
-        el: $('#strategy-snapshot')
-      )
-      @strategySnapshotView.render()
-
-      @achievementBudgetSingleYearView = new Visio.Views.AchievementBudgetSingleYearView(
-        el: $('#achievement-budget-single-year')
-      )
-      @achievementBudgetSingleYearView.render()
-
-      $('#navigation').removeClass('gone')
-      $('.collapsable-content').attr 'data-0', "max-height:#{$('.collapsable-content').height()}px"
-      skrollr.init(
-        forceHeight: false
-      )
-    ).fail (e) =>
-      console.log e
-
     Visio.manager.on 'change:date', () =>
       @navigation.render()
       Visio.manager.setSelected()
@@ -43,6 +18,9 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
       @achievementBudgetSingleYearView.render(true)
 
   setup: () ->
+    # Return empty promise if we've setup already
+    $.Deferred.resolve().promise() if Visio.manager.get('setup')
+
     options =
       join_ids:
         strategy_id: Visio.manager.get('strategy_id')
@@ -60,18 +38,48 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
            Visio.manager.get('indicators').fetchSynced(options),
            Visio.manager.get('budgets').fetchSynced({ strategy_id: Visio.manager.get('strategy_id') })
            Visio.manager.get('indicator_data').fetchSynced({ strategy_id: Visio.manager.get('strategy_id') })
+    ).done(() ->
+      @navigation = new Visio.Views.NavigationView({
+        el: $('#navigation')
+      })
+      @navigation.render()
+
+      @strategySnapshotView = new Visio.Views.StrategySnapshotView(
+        el: $('#strategy-snapshot')
+      )
+      @strategySnapshotView.render()
+
+      $('#navigation').removeClass('gone')
+      $('.collapsable-content').attr 'data-0', "max-height:#{$('.collapsable-content').height()}px"
+      skrollr.init(
+        forceHeight: false
+      )
+      Visio.manager.set('setup', true)
     )
+
+
+
 
 
   routes:
     'menu' : 'menu'
     'search': 'search'
+    'absy': 'absy'
     '*default': 'index'
+
+  absy: () ->
+    @setup().done(() =>
+      @achievementBudgetSingleYearView = new Visio.Views.AchievementBudgetSingleYearView(
+        el: $('#achievement-budget-single-year')
+      )
+      @achievementBudgetSingleYearView.render()
+    ).fail (e) =>
+      console.log e
 
   menu: () ->
     console.log 'menu'
     @menuView.show()
 
 
-  index: () ->
-    console.log 'index'
+  index: () =>
+    @absy()
