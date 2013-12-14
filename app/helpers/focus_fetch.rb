@@ -17,8 +17,8 @@ module FocusFetch
     begin
       headers_zip = open("#{BASE_URL}#{HEADERS}?user=#{ENV['LDAP_USERNAME']}&type=#{Rails.application.class.parent_name}&ver=0.0.1",
          :http_basic_authentication => [ENV['LDAP_USERNAME'], ENV['LDAP_PASSWORD']])
-    rescue
-      puts 'Internet connection appears to be bad.'
+    rescue Exception => e
+      p e.message
       exit
     end
 
@@ -51,8 +51,8 @@ module FocusFetch
       begin
         plan_zip = open("#{BASE_URL}#{PLAN_PREFIX}#{id}#{PLAN_SUFFIX}?user=#{ENV['LDAP_USERNAME']}&type=#{Rails.application.class.parent_name}&ver=0.0.1",
                       :http_basic_authentication => [ENV['LDAP_USERNAME'], ENV['LDAP_PASSWORD']])
-      rescue
-        puts 'Internet connection appears to be bad.'
+      rescue Exception => e
+        p e.message
       end
 
       p "Parsing plan: #{PLAN_PREFIX + id + PLAN_SUFFIX}"
