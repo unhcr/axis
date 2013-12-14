@@ -6,7 +6,7 @@ class Visio.Models.Strategy extends Backbone.Model
 
   include: (type, id) ->
 
-    _.include(@get("#{type}_ids"), id)
+    @get("#{type}_ids")[id] != undefined
 
   initialize: (options) ->
     # Initialize helper functions

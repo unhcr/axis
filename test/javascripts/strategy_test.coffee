@@ -2,7 +2,7 @@ module 'Strategy'
 
 test('include parameter', () ->
   strategy = new Visio.Models.Strategy({
-    'indicators_ids': ['a', 'b', 'c']
+    'indicators_ids': {'a':true, 'b':true, 'c':true}
 
   })
 
