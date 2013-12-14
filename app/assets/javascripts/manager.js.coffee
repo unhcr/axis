@@ -28,12 +28,14 @@ class Visio.Models.Manager extends Backbone.Model
 
   resetSelected: () ->
     _.each Visio.Types, (type) ->
+      Visio.manager.get('selected')[type] = {}
       if type != Visio.Parameters.PLANS
-        Visio.manager.get('selected')[type] = Visio.manager.strategy().get("#{type}_ids")
+        _.extend Visio.manager.get('selected')[type], Visio.manager.strategy().get("#{type}_ids")
       else
-        plans = Visio.manager.plans({ year: Visio.manager.year() })
-
-        Visio.manager.get('selected')[type] = _.intersection(Visio.manager.strategy().get("#{type}_ids"), plans.pluck('id'))
+        plans = Visio.manager.strategy().plans({ year: Visio.manager.year() })
+        plans.each (plan) ->
+          Visio.manager.get('selected')[type][plan.id] = true
+    console.log Visio.manager.get('selected')
 
   resetBudgetDefaults: () ->
     _.each Visio.Scenarios, (scenario) =>
@@ -67,27 +69,21 @@ class Visio.Models.Manager extends Backbone.Model
     $navigation = $('#navigation')
 
     _.each Visio.Types, (type) =>
-      @get('selected')[type] = []
+      @get('selected')[type] = {}
 
     $navigation.find('.visio-check input:checked').each (idx, ele) =>
       typeid = $(ele).val().split('__')
 
       type = typeid[0]
       id = typeid[1]
-      @get('selected')[type].push id
+      @get('selected')[type][id] = true
 
   selected: (type) ->
-    ids = @get('selected')[type]
+    ids = _.keys(@get('selected')[type])
 
     parameters = @get(type)
 
     return new parameters.constructor(parameters.filter((p) -> return _.include(ids, p.id)) )
-
-  selectedIndicatorData: () ->
-    return new Visio.Collections.IndicatorDatum(@get('indicator_data').filter((d) =>
-      return _.every Visio.Types, (type) =>
-        _.include(@get('selected')[type], d.get("#{Inflection.singularize(type)}_id"))
-    ))
 
   plan: (idOrISO) ->
     plan = @get('plans').get(idOrISO)

@@ -43,12 +43,12 @@ class Strategy < ActiveRecord::Base
       json.extract! self, :name, :id
 
       if options[:include] && options[:include][:ids]
-        json.indicators_ids self.indicator_ids
-        json.goals_ids self.goal_ids
-        json.ppgs_ids self.ppg_ids
-        json.outputs_ids self.output_ids
-        json.plans_ids self.plan_ids
-        json.problem_objectives_ids self.problem_objective_ids
+        json.indicators_ids self.indicator_ids.inject({}) { |h, id| h[id] = true; h }
+        json.goals_ids self.goal_ids.inject({}) { |h, id| h[id] = true; h }
+        json.ppgs_ids self.ppg_ids.inject({}) { |h, id| h[id] = true; h }
+        json.outputs_ids self.output_ids.inject({}) { |h, id| h[id] = true; h }
+        json.plans_ids self.plan_ids.inject({}) { |h, id| h[id] = true; h }
+        json.problem_objectives_ids self.problem_objective_ids.inject({}) { |h, id| h[id] = true; h }
       end
     end
   end

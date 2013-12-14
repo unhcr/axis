@@ -58,9 +58,6 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
     )
 
 
-
-
-
   routes:
     'menu' : 'menu'
     'search': 'search'
