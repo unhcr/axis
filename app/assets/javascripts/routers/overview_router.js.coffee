@@ -19,7 +19,7 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
 
   setup: () ->
     # Return empty promise if we've setup already
-    $.Deferred.resolve().promise() if Visio.manager.get('setup')
+    return $.Deferred().resolve().promise() if Visio.manager.get('setup')
 
     options =
       join_ids:
