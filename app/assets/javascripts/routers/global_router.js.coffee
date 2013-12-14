@@ -11,3 +11,7 @@ class Visio.Routers.GlobalRouter extends Backbone.Router
   search: () =>
     $(document).scrollTop(0)
     @searchView.show()
+
+  menu: () =>
+    $(document).scrollTop(0)
+    @menuView.show()

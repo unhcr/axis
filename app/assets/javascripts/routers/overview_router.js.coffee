@@ -76,10 +76,5 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
     ).fail (e) =>
       console.log e
 
-  menu: () ->
-    console.log 'menu'
-    @menuView.show()
-
-
   index: () =>
     @absy()

@@ -38,10 +38,6 @@ class Visio.Routers.IndexRouter extends Visio.Routers.GlobalRouter
   index: () ->
     console.log 'index'
 
-  menu: () ->
-    console.log 'menu'
-    @menuView.show()
-
   setup: () =>
 
     options =
