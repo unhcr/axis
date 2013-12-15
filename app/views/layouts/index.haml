@@ -16,7 +16,7 @@
               Ça va,
               %span.ui-primary-light
                 = current_user.firstname
-            %span.account-menu.pull-left
+            .account-menu.pull-left
               .small-item.ui-primary.pull-right
                 = link_to "Sign out", destroy_user_session_path, :method => :delete, :class => 'ui-primary'
           .col-md-4.center-text
@@ -26,7 +26,7 @@
             .col-md-2.pull-right.zero-padding
               %a.search-icon.pull-right{ :href => '#search' }
             .col-md-2.pull-right.zero-padding
-              %span.menu-btn.pull-right.ui-primary-light
+              .menu-btn.pull-right.ui-primary-light
                 .menu-icon.menu-right
                   .menu-row
                   .menu-row
