@@ -5,3 +5,6 @@ class Visio.Models.User extends Backbone.Model
   urlRoot: '/users'
 
   paramRoot: 'user'
+
+  defaults:
+    'reset_local_db': false
