@@ -25,6 +25,7 @@ class Visio.Models.Manager extends Backbone.Model
     'syncTimestampId': 'sync_timestamp_id_'
     'yearList': [2012, 2013, 2014, 2015]
     'selected': {}
+    'selected_strategies': {}
     'aggregation_type': Visio.Parameters.OUTPUTS
     'scenario_type': {}
     'budget_type': {}
@@ -66,7 +67,7 @@ class Visio.Models.Manager extends Backbone.Model
       return @get('strategies')
 
     return new Visio.Collections.Strategy(@get('strategies').filter((strategy) ->
-      _.include(strategy_ids, strategy.id)
+      _.include(strategy_ids.map((i) -> +i), strategy.id)
     ))
 
   setSelected: () ->
