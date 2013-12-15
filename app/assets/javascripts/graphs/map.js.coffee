@@ -149,7 +149,7 @@ Visio.Graphs.map = (config) ->
   render.filterTooltips = (plan_ids) ->
     for key, value of views
       id = value.model.id
-      if (plan_ids == undefined || _.include(plan_ids, id))
+      if (plan_ids == undefined || _.include(plan_ids, id)) && value.isCurrentYear()
         value.show()
         value.render(false)
       else

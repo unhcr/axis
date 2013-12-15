@@ -41,7 +41,7 @@ class Visio.Views.MapTooltipView extends Backbone.View
 
       @$el.html @template({
         plan: @model.toJSON()
-        situation_analysis: @model.strategy_situation_analysis().category
+        situation_analysis: @model.strategySituationAnalysis().category
       })
 
     offset = $(@point).offset()
@@ -61,6 +61,10 @@ class Visio.Views.MapTooltipView extends Backbone.View
 
 
     @
+
+  isCurrentYear: () =>
+    @model.get('year') == Visio.manager.year()
+
 
   inBounds: (offset) =>
 
