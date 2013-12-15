@@ -6,6 +6,15 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :firstname, :lastname
-  # attr_accessible :title, :body
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :firstname, :lastname, :reset_local_db
+
+  def to_jbuilder(options = {})
+    Jbuilder.new do |json|
+      json.extract! self, :firstname, :lastname, :id, :reset_local_db
+    end
+  end
+
+  def as_json(options = {})
+    to_jbuilder(options).attributes!
+  end
 end
