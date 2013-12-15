@@ -24,16 +24,10 @@ class Visio.Models.Plan extends Visio.Models.Parameter
       # Need to calculate based on strategy data
       strategies = Visio.manager.strategies _.keys(Visio.manager.get('selected_strategies'))
       data = new Visio.Collections.IndicatorDatum()
-      idSets = []
 
       strategies.each (strategy) =>
         d = @strategyIndicatorData(strategy)
-        idSets.push d.pluck('id')
         data.add d.models, { silent: true }
-
-      ids = _.intersection.apply(null, idSets)
-      data = new Visio.Collections.IndicatorDatum(data.filter((d) ->
-        _.include ids, d.id ))
 
       return data.situation_analysis()
 
