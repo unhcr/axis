@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131212153416) do
+ActiveRecord::Schema.define(:version => 20131215184650) do
 
   create_table "budgets", :force => true do |t|
     t.string   "budget_type"
@@ -99,6 +99,8 @@ ActiveRecord::Schema.define(:version => 20131212153416) do
     t.boolean  "is_performance"
     t.integer  "year"
   end
+
+  add_index "indicator_data", ["plan_id", "ppg_id", "goal_id", "indicator_id"], :name => "by_ids"
 
   create_table "indicators", :id => false, :force => true do |t|
     t.string   "id",                                :null => false
@@ -289,10 +291,10 @@ ActiveRecord::Schema.define(:version => 20131212153416) do
   end
 
   create_table "users", :force => true do |t|
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
-    t.string   "email",                  :default => "", :null => false
-    t.string   "encrypted_password",     :default => "", :null => false
+    t.datetime "created_at",                                :null => false
+    t.datetime "updated_at",                                :null => false
+    t.string   "email",                  :default => "",    :null => false
+    t.string   "encrypted_password",     :default => "",    :null => false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
@@ -303,6 +305,7 @@ ActiveRecord::Schema.define(:version => 20131212153416) do
     t.string   "last_sign_in_ip"
     t.string   "firstname"
     t.string   "lastname"
+    t.boolean  "reset_local_db",         :default => false
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
