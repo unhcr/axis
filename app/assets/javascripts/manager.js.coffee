@@ -2,6 +2,10 @@ class Visio.Models.Manager extends Backbone.Model
 
   initialize: () ->
     @set('db', new ydn.db.Storage(Visio.Constants.DB_NAME, Visio.Schema))
+    if Visio.user.get('reset_local_db')
+      @get('db').clear(Visio.Schema.stores.map((store) -> store.name))
+      Visio.user.save({ reset_local_db: false })
+
     @resetBudgetDefaults()
 
   defaults:
