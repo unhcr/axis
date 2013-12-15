@@ -1,8 +1,7 @@
 module 'Plan',
   setup: () ->
-    stop()
+    Visio.user = new Visio.Models.User()
     Visio.manager = new Visio.Models.Manager()
-    start()
 
   teardown: () ->
     Visio.manager.get('db').clear()
@@ -236,7 +235,7 @@ test 'strategy situation analysis', () ->
 
 
 
-  result = p.strategy_situation_analysis()
+  result = p.strategySituationAnalysis()
   strictEqual(Visio.Algorithms.ALGO_RESULTS.success, result.category)
 
   Visio.manager.get('strategies').reset([{
@@ -258,15 +257,14 @@ test 'strategy situation analysis', () ->
       indicators_ids: {}
     }])
 
-  $('body').append('<div class="priority-country-filter"></div>')
-  $('.priority-country-filter').append('<div class="visio-check"><input type="checkbox" checked="checked" value="1" /><input checked="checked" value="2" type="checkbox"/></div>')
-
-  result = p.strategy_situation_analysis()
+  Visio.manager.get('selected_strategies')['1'] = true
+  Visio.manager.get('selected_strategies')['2'] = true
+  result = p.strategySituationAnalysis()
   strictEqual(Visio.Algorithms.ALGO_RESULTS.fail, result.category)
 
-  $('.visio-check').html('<input type="checkbox" checked="checked" value="1" /><input value="2" type="checkbox"/>')
+  delete Visio.manager.get('selected_strategies')['2']
 
-  result = p.strategy_situation_analysis()
+  result = p.strategySituationAnalysis()
   strictEqual(Visio.Algorithms.ALGO_RESULTS.fail, result.category)
 
   Visio.manager.get('strategies').reset([{
@@ -288,6 +286,6 @@ test 'strategy situation analysis', () ->
       indicators_ids: {}
     }])
 
-  result = p.strategy_situation_analysis()
+  result = p.strategySituationAnalysis()
   strictEqual(Visio.Algorithms.ALGO_RESULTS.ok, result.category)
 

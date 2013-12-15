@@ -2,6 +2,7 @@ module 'Manager',
 
   setup: () ->
     stop()
+    Visio.user = new Visio.Models.User()
     Visio.manager = new Visio.Models.Manager()
     start()
 
@@ -65,23 +66,23 @@ asyncTest('getMap', () ->
 test('strategies', () ->
   Visio.manager.get('strategies').reset([
     {
-      id: 'ben'
+      id: 1
     },
     {
-      id: 'lisa'
+      id: 2
     },
     {
-      id: 'jeff'
+      id: 3
     }
   ])
 
-  strategies = Visio.manager.strategies(['ben', 'lisa'])
+  strategies = Visio.manager.strategies([1, 2])
   strictEqual(strategies.length, 2)
   ok(strategies instanceof Visio.Collections.Strategy)
 
-  strategies = Visio.manager.strategies(['ben'])
+  strategies = Visio.manager.strategies([1])
   strictEqual(strategies.length, 1)
-  strictEqual(strategies.at(0).id, 'ben')
+  strictEqual(strategies.at(0).id, 1)
   ok(strategies instanceof Visio.Collections.Strategy)
 
   strategies = Visio.manager.strategies([])
