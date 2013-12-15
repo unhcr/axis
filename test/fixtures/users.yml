@@ -5,9 +5,13 @@
 # below each fixture, per the syntax in the comments below
 #
 one:
+  firstname: Ben
+  lastname: Rudolph
   email: apple@apple.com
 # column: value
 #
 two:
+  firstname: Brad
+  lastname: Pitt
   email: banana@banana.com
 #  column: value
