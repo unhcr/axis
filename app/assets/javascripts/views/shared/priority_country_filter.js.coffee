@@ -18,11 +18,16 @@ class Visio.Views.PriorityCountryFilterView extends Backbone.View
     @
 
   onChangeCheck: (e) ->
+    $target = $(e.currentTarget)
     options =
       strategy_id: $(e.currentTarget).val()
     Visio.manager.get('indicator_data').fetchSynced(options).done(() =>
-      strategy_ids = @$el.find('.visio-check input:checked').map((i, ele) -> +$(ele).val())
-      @filter(strategy_ids)
+      if $target.is(':checked')
+        Visio.manager.get('selected_strategies')[$target.val()] = true
+      else
+        delete Visio.manager.get('selected_strategies')[$target.val()]
+
+      @filter _.keys(Visio.manager.get('selected_strategies'))
     )
 
 
@@ -31,6 +36,9 @@ class Visio.Views.PriorityCountryFilterView extends Backbone.View
       Visio.router.map.filterTooltips()
       return
 
-    plan_ids = _.intersection.apply(null, Visio.manager.strategies(strategy_ids).pluck('plans_ids'))
+    strategies = Visio.manager.strategies(strategy_ids)
+
+    plan_ids = strategies.map (strategy) -> _.keys(strategy.get('plans_ids'))
+    plan_ids = _.intersection.apply(null, plan_ids)
 
     Visio.router.map.filterTooltips(plan_ids)

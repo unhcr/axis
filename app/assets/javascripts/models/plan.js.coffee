@@ -15,16 +15,14 @@ class Visio.Models.Plan extends Visio.Models.Parameter
 
   paramRoot: 'plan'
 
-  strategy_situation_analysis: () ->
-    # Should be calculated once in manager
-    $checkedStrategies = $('.priority-country-filter .visio-check input:checked')
-    if $checkedStrategies.length == 0
+  strategySituationAnalysis: () ->
+
+    if _.isEmpty Visio.manager.get('selected_strategies')
       # Just return analysis for entire plan
       return @get('situation_analysis')
     else
       # Need to calculate based on strategy data
-      strategy_ids = $checkedStrategies.map((i, ele) -> +$(ele).val())
-      strategies = Visio.manager.strategies(strategy_ids)
+      strategies = Visio.manager.strategies _.keys(Visio.manager.get('selected_strategies'))
       data = new Visio.Collections.IndicatorDatum()
       idSets = []
 
