@@ -10,14 +10,14 @@ class FetchMonitor < ActiveRecord::Base
     :not_found => 'not found'
   }
 
-  def validate
-    errors.add_to_base "You can only have one FetchMonitor" unless FetchMonitor.count == 0
+  validate do |monitor|
+    errors.add(:base, "You can only have one FetchMonitor") unless FetchMonitor.count == 0
   end
 
   def reset(ids)
-    self.starttime = Datetime.now
-
     self.mark_deleted
+
+    self.starttime = DateTime.now
     self.plans = ids.map { |id| { :id => id, :state => MONITOR_STATES[:incomplete] } }
 
     self.save
@@ -26,23 +26,19 @@ class FetchMonitor < ActiveRecord::Base
   def mark_deleted
     return unless self.starttime
 
-    Plan.where('updated_at < ?', self.starttime).update_attribute(:is_deleted, true)
-    Ppg.where('updated_at < ?', self.starttime).update_attribute(:is_deleted, true)
-    Goal.where('updated_at < ?', self.starttime).update_attribute(:is_deleted, true)
-    RightsGroup.where('updated_at < ?', self.starttime).update_attribute(:is_deleted, true)
-    ProblemObjective.where('updated_at < ?', self.starttime).update_attribute(:is_deleted, true)
-    Output.where('updated_at < ?', self.starttime).update_attribute(:is_deleted, true)
-    Indicator.where('updated_at < ?', self.starttime).update_attribute(:is_deleted, true)
-    IndicatorDatum.where('updated_at < ?', self.starttime).update_attribute(:is_deleted, true)
+    parameters = [Plan, Ppg, Goal, RightsGroup, ProblemObjective, Output, Indicator, IndicatorDatum, Budget]
 
-    Plan.where('updated_at >= ?', self.starttime).update_attribute(:is_deleted, false)
-    Ppg.where('updated_at >= ?', self.starttime).update_attribute(:is_deleted, false)
-    Goal.where('updated_at >= ?', self.starttime).update_attribute(:is_deleted, false)
-    RightsGroup.where('updated_at >= ?', self.starttime).update_attribute(:is_deleted, false)
-    ProblemObjective.where('updated_at >= ?', self.starttime).update_attribute(:is_deleted, false)
-    Output.where('updated_at >= ?', self.starttime).update_attribute(:is_deleted, false)
-    Indicator.where('updated_at >= ?', self.starttime).update_attribute(:is_deleted, false)
-    IndicatorDatum.where('updated_at >= ?', self.starttime).update_attribute(:is_deleted, false)
+    parameters.each do |parameter|
+      to_delete = parameter.where('updated_at < ?', self.starttime).all
+      to_undelete = parameter.where('updated_at >= ?', self.starttime).all
+
+      to_delete.each do |p|
+        p.update_attribute(:is_deleted, true)
+      end
+      to_undelete.each do |p|
+        p.update_attribute(:is_deleted, false)
+      end
+    end
   end
 
   def reset?
