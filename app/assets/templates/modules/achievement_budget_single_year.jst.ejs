@@ -24,7 +24,7 @@
     <div class="col-md-2">
       <label>Target</label>
       <% var isChecked = Visio.manager.get('achievement_type') == Visio.AchievementTypes.TARGET %>
-      <input type="checkbox" class="achievement-type-toggle" checked="<%= isChecked %>">
+      <input type="checkbox" class="achievement-type-toggle" <% if (isChecked) { %>checked<% } %> >
     </div>
     <div class="col-md-2 scenario">
       <% _.each(Visio.Scenarios, function(scenario) { %>
