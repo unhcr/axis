@@ -10,7 +10,7 @@
   #navigation.gone
   .page
     %header.container.full-width
-      .row
+      %section.row
         .col-md-11.col-centered.center-text.zero-padding
           .col-md-4.extra-padding
             .small-item.ui-primary.pull-left
@@ -32,6 +32,19 @@
                   .menu-row
                   .menu-row
                   .menu-row
+      %aside.container.full-width.toolbar
+        .row
+          .col-md-8.col-centered.ui-primary-light.zero-padding
+            .col-md-3.ui-purple.right-text.zero-padding
+              CHOOSE YOUR VIEW
+            .col-md-2.center-text.zero-padding
+              Budget
+            .col-md-2.center-text.zero-padding
+              Indicators
+            .col-md-2.center-text.zero-padding
+              Summary Stats
+            .col-md-3.right-text.zero-padding
+              2013
     #global-search.zero-max-height
     :javascript
       window.Visio.user = new Visio.Models.User(#{current_user.to_json.html_safe})

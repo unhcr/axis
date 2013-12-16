@@ -1,18 +1,5 @@
 .navigation-activation.margin-left
   .navigation-activation-icon
-.container.full-width.toolbar
-  .row
-    .col-md-8.col-centered.ui-primary-light.zero-padding
-      .col-md-3.ui-purple.right-text.zero-padding
-        CHOOSE YOUR VIEW
-      .col-md-2.center-text.zero-padding
-        Budget
-      .col-md-2.center-text.zero-padding
-        Indicators
-      .col-md-2.center-text.zero-padding
-        Summary Stats
-      .col-md-3.right-text.zero-padding
-        2013
 
 .inner-content
   .collapsable-content
@@ -64,6 +51,15 @@
       $navigationIcon.css('top', $(document).scrollTop() + 140);
     })
 
+    var headroom  = new Headroom(document.querySelector("header"), {
+      offset: $('header').height() + $('.toolbar').height(),
+      classes: {
+        unpinned: 'slideOutUp',
+        pinned : 'slideInDown',
+        initial : 'animated'
+      }
+    });
+    headroom.init();
 
 
   });

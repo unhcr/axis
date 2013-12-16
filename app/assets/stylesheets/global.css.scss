@@ -64,7 +64,7 @@ p.small {
 }
 
 .inner-content {
-  padding-top: $toolbar-height + $header-height;
+  border-top: ($toolbar-height + $header-height) white solid;
   border-left: $page-margin solid white;
   border-right: $page-margin solid white;
 
@@ -157,13 +157,13 @@ body.overview {
     top: 0;
     position: fixed;
     z-index: 300;
-    height: $header-height;
+    height: $header-height + $toolbar-height;
   }
 }
 
 body.layout-application {
 
-  header {
+  header section {
     background-color: white;
     border-bottom: 1px solid $primary-light;
     .logo {
@@ -1012,14 +1012,13 @@ a {
 .toolbar {
   background-color: white;
   padding: 12px 0;
-  position: fixed;
   z-index: 300;
-  top: $header-height;
   height: $toolbar-height;
 }
 
 .module {
   background-color: $off-white;
+  padding-bottom: 100px;
 }
 
 .page {
