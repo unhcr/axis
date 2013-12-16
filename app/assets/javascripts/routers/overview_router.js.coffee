@@ -70,7 +70,7 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
   absy: () ->
     @setup().done(() =>
       @achievementBudgetSingleYearView = new Visio.Views.AchievementBudgetSingleYearView(
-        el: $('#achievement-budget-single-year')
+        el: $('#absy')
       )
       @achievementBudgetSingleYearView.render()
     ).fail (e) =>
