@@ -46,6 +46,7 @@ class Visio.Routers.IndexRouter extends Visio.Routers.GlobalRouter
         include:
           counts: true
           situation_analysis: true
+    #NProgress.start()
     plans = Visio.manager.get('plans')
     plans.fetchSynced(options).done(() =>
       Visio.manager.set('plans', plans)
@@ -53,6 +54,7 @@ class Visio.Routers.IndexRouter extends Visio.Routers.GlobalRouter
         @map.mapJSON(map)
         @filterView = new Visio.Views.MapFilterView()
         @map()
+        #NProgress.done()
       )
     )
 

@@ -40,6 +40,14 @@
           Visio.router.navigate('/menu', { trigger: true })
         })
 
+        $(document).ajaxStart(function() {
+          NProgress.start()
+        });
+        $(document).ajaxStop(function() {
+          NProgress.done()
+        });
+
+
       })
     .content
       = yield
