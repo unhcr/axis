@@ -64,7 +64,7 @@ p.small {
 }
 
 .inner-content {
-  margin-top: $min-toolbar-height;
+  padding-top: $toolbar-height + $header-height;
   border-left: $page-margin solid white;
   border-right: $page-margin solid white;
 
@@ -153,14 +153,11 @@ body, html {
 }
 
 body.overview {
-  margin-top: $min-header-height;
-  overflow-x: hidden;
-
   header {
     top: 0;
     position: fixed;
     z-index: 300;
-    min-height: $min-header-height;
+    height: $header-height;
   }
 }
 
@@ -1013,12 +1010,12 @@ a {
 }
 
 .toolbar {
-  margin-top: -$min-toolbar-height;
   background-color: white;
   padding: 12px 0;
   position: fixed;
   z-index: 300;
-  height: 42px;
+  top: $header-height;
+  height: $toolbar-height;
 }
 
 .module {
