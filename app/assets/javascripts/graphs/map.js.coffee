@@ -51,9 +51,9 @@ Visio.Graphs.map = (config) ->
 
 
   zoomed = () ->
-    scale = if d3.event then d3.event.scale else zoom.scale()
+    scale = if d3.event && d3.event.scale then d3.event.scale else zoom.scale()
 
-    translate = if d3.event then d3.event.translate else zoom.translate()
+    translate = if d3.event && d3.event.translate then d3.event.translate else zoom.translate()
 
     deltaWidth = width - width / scale
     deltaHeight = height - height / scale
@@ -155,6 +155,10 @@ Visio.Graphs.map = (config) ->
       else
         value.hide()
 
+  render.pan = (dx, dy) ->
+    translate = zoom.translate()
+    zoom.translate [translate[0] + dx, translate[1] + dy]
+    zoomed()
 
   render.mapJSON = (mapJSON) ->
     data = topojson.feature(mapJSON, mapJSON.objects.world_50m).features

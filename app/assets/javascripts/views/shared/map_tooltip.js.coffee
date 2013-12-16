@@ -89,6 +89,32 @@ class Visio.Views.MapTooltipView extends Backbone.View
   expand: () ->
     @$el.find('.tooltip-content').removeClass('gone')
     @$el.find('.pin').addClass('pin-extra-large')
+
+
+    $content = @$el.find('.tooltip-content')
+    offset = $(@point).offset()
+    offset.left -= $content.width()
+    offset.top -= $content.height()
+    padding = 40
+
+    filterWidth = $('.map-filters').width()
+
+    @boundingRect ||= document.getElementById(@boundingId).getBoundingClientRect()
+
+    dy = 0
+    dx = 0
+    if @boundingRect.top > (offset.top - padding)
+      dy = @boundingRect.top - (offset.top - padding)
+
+    if @boundingRect.left > (offset.left - padding - filterWidth)
+      dx = @boundingRect.left - (offset.left - padding - filterWidth)
+
+    if @boundingRect.right < offset.left + $content.width() + padding
+      dx = @boundingRect.right - (offset.left + $content.width() + padding)
+      console.log dx
+
+    Visio.router.map.pan dx, dy
+
     @render(true)
 
   shrink: ()->
