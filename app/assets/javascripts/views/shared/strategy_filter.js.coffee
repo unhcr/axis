@@ -1,8 +1,8 @@
-class Visio.Views.PriorityCountryFilterView extends Backbone.View
+class Visio.Views.StrategyFilterView extends Backbone.View
 
-  className: 'priority-country-filter map-filter'
+  className: 'strategy-filter map-filter'
 
-  template: JST['shared/priority_country_filter']
+  template: JST['shared/strategy_filter']
 
   events:
     'change .visio-check input': 'onChangeCheck'
