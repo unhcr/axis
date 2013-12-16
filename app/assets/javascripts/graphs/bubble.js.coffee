@@ -96,7 +96,7 @@ Visio.Graphs.bubble = (config) ->
     data = data.filter (d) ->
       return d.budget && d.achievement
 
-    if !domain
+    if !domain || domain[1] < maxBudget || domain[1] > 2 * maxBudget
       domain = [0, maxBudget]
       x.domain(domain)
 
@@ -136,6 +136,7 @@ Visio.Graphs.bubble = (config) ->
 
     g.select('.x.axis')
       .transition()
+      .delay(duration)
       .duration(duration)
       .call(xAxis)
 
