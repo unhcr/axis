@@ -4,7 +4,31 @@ class FocusFetchTest < ActiveSupport::TestCase
   fixtures :all
   include FocusFetch
 
+  TESTHEADER_NAME = "DeletedHeaderTest.xml"
+  TESTFILE_PATH = "#{Rails.root}/test/files/"
+  TESTFILE_NAME = "PlanTest.xml"
+  DELETED_TESTFILE_NAME = "DeletedPlanTest.xml"
+
   TESTDATA_PATH = "#{Rails.root}/test/files/focus"
+
+  COUNTS = {
+    :plans => 1,
+    :ppgs => 3,
+    :goals => 3,
+    :rights_groups => 8,
+    :problem_objectives => 28,
+    :indicators => 171,
+    :outputs => 82,
+    :operations => 139,
+    :indicator_data => 208,
+    :budgets => 403
+  }
+
+  COUNTS_DELETED = {
+    :plans => 0,
+    :ppgs => 1,
+  }
+
   def setup
     # Change directory for testing
     set_data_dir(TESTDATA_PATH)
@@ -21,6 +45,34 @@ class FocusFetchTest < ActiveSupport::TestCase
 
     assert_equal 2, ret[:files_read]
     assert ret[:files_total] >= 2
+  end
+
+  test "Mark fetched deleted" do
+    Plan.delete_all
+    Ppg.delete_all
+    Goal.delete_all
+    RightsGroup.delete_all
+    ProblemObjective.delete_all
+    Output.delete_all
+    Indicator.delete_all
+    IndicatorDatum.delete_all
+    Operation.delete_all
+    Budget.delete_all
+
+    set_test_path("#{TESTFILE_PATH}#{TESTFILE_NAME}")
+    ret = fetch(1, 1.week, true)
+
+    assert_equal COUNTS[:plans], Plan.count
+    assert_equal COUNTS[:ppgs], Ppg.count
+
+
+    set_test_path("#{TESTFILE_PATH}#{DELETED_TESTFILE_NAME}")
+    ret = fetch(1, 1.week, true)
+
+    assert_equal COUNTS_DELETED[:plans], Plan.where(:is_deleted => true).count
+    assert_equal COUNTS_DELETED[:ppgs], Ppg.where(:is_deleted => true).count
+
+
   end
 
   test "find plan file" do

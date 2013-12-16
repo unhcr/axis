@@ -6,6 +6,7 @@ module FocusFetch
   PLAN_SUFFIX = '.zip'
 
   @@DIR = "#{Rails.root}/data/focus"
+  @@TEST_PATH = ''
 
   PLAN_TYPES = ['ONEPLAN']
 
@@ -13,8 +14,8 @@ module FocusFetch
   require 'zip'
   include FocusParse
 
-  def fetch(max_files = +1.0/0.0, expires = 1.week)
-    monitor = FetchMonitor.first
+  def fetch(max_files = +1.0/0.0, expires = 1.week, test = false)
+    monitor = FetchMonitor.first || FetchMonitor.create
 
     begin
       headers_zip = open("#{BASE_URL}#{HEADERS}?user=#{ENV['LDAP_USERNAME']}&type=#{Rails.application.class.parent_name}&ver=0.0.1",
@@ -36,7 +37,13 @@ module FocusFetch
       zip.each_with_index do |entry, index|
         raise 'More than one header file' if index > 0
 
-        r = parse_header(entry.get_input_stream)
+        input = entry.get_input_stream
+
+        if test
+          input = File.read(FocusFetchTest::TESTFILE_PATH + FocusFetchTest::TESTHEADER_NAME)
+        end
+
+        r = parse_header(input)
         ids = r[:ids]
         monitor.reset(ids) if monitor.reset?
 
@@ -66,12 +73,15 @@ module FocusFetch
           ret[:files_read] += 1
           zip.each_with_index do |entry, j|
             raise 'More than one plan file' if j > 0
+            input = entry.get_input_stream
+            if test
+              input = File.read(@@TEST_PATH)
+            end
 
-            parse_plan(entry.get_input_stream)
+            parse_plan(input)
           end
         end
       rescue Exception => e
-        Rails.logger.error "Error parsing plan with id: #{id} -- #{e.message}"
         monitor.set_state(id, FetchMonitor::MONITOR_STATES[:error])
         next
       end
@@ -86,6 +96,8 @@ module FocusFetch
 
 
     end
+    monitor.mark_deleted if monitor.reset?
+    require 'pry'; binding.pry
 
     return ret
 
@@ -120,6 +132,14 @@ module FocusFetch
     return current
 
 
+  end
+
+  def set_test_path(path)
+    @@TEST_PATH = path
+  end
+
+  def get_test_path
+    @@TEST_PATH
   end
 
   def set_data_dir(dir)

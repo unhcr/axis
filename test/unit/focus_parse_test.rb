@@ -4,6 +4,7 @@ class FocusParseTest < ActiveSupport::TestCase
 
   TESTFILE_PATH = "#{Rails.root}/test/files/"
   TESTFILE_NAME = "PlanTest.xml"
+  DELETED_TESTFILE_NAME = "DeletedPlanTest.xml"
   TESTFILE_NAME_2 = "PlanTest2.xml"
   TESTFILE_NAME_DIFFERENT = "PlanTestDifferent.xml"
   UPDATED_TESTFILE_NAME = "UpdatedPlanTest.xml"
