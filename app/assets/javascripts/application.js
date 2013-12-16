@@ -12,6 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require turbolinks
 //= require underscore
 //= require backbone
 //= require ./vendor/d3.v3

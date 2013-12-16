@@ -3,7 +3,7 @@
 .signup.session-container
 
 :javascript
-  $(document).ready(function() {
+  $(document).on('ready page:load', function() {
 
     Visio.router = new Visio.Routers.SplashRouter();
     Backbone.history.start();

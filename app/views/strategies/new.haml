@@ -30,7 +30,7 @@
   = f.submit "Create"
 
 :javascript
-  $(document).ready(function() {
+  $(document).on('ready page:load', function() {
 
     $('.strategy-search').on('keyup', function(e) {
       var query = $(e.currentTarget).val();
