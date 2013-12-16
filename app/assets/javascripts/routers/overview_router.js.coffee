@@ -21,6 +21,7 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
     # Return empty promise if we've setup already
     return $.Deferred().resolve().promise() if Visio.manager.get('setup')
 
+    @toolbarView = new Visio.Views.ToolbarView({ el: $('.toolbar') })
     options =
       join_ids:
         strategy_id: Visio.manager.get('strategy_id')
