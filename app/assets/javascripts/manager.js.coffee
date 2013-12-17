@@ -2,7 +2,7 @@ class Visio.Models.Manager extends Backbone.Model
 
   initialize: (options) ->
     @set('db', new ydn.db.Storage(Visio.Constants.DB_NAME, Visio.Schema))
-    console.log options
+    options ||= {}
 
     @get('db').addEventListener 'ready', (e) =>
       if Visio.user.get('reset_local_db')
