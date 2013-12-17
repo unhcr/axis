@@ -16,6 +16,7 @@ class Visio.Views.MapTooltipView extends Backbone.View
   events:
     'click .tooltip-close': 'onClickClose'
     'click .count': 'onCountClick'
+    'click .pin': 'onPinClick'
     'transitionend': 'onTransitionEnd'
     'MSTransitionEnd': 'onTransitionEnd'
     'webkitTransitionEnd': 'onTransitionEnd'
@@ -33,6 +34,11 @@ class Visio.Views.MapTooltipView extends Backbone.View
 
   onTransitionEnd: (e) ->
     @$el.removeClass('tooltip-transition')
+
+  onPinClick: (e) ->
+    return if !@model.get('country') || @isExpanded()
+    el = d3.select(".country.#{@model.get('country').iso3}")
+    el.on('click')(el.datum())
 
   render: (isRerender) ->
 
@@ -141,7 +147,9 @@ class Visio.Views.MapTooltipView extends Backbone.View
     @remove()
 
   onClickClose: (e) =>
+    e.stopPropagation()
     @shrink()
 
   onCountClick: (e) =>
+    e.stopPropagation()
     @shrink()

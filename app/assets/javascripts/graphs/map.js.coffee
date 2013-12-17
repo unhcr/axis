@@ -95,7 +95,7 @@ Visio.Graphs.map = (config) ->
     world.enter().append 'path'
 
     world.attr('class', (d) ->
-      ['country'].join(' '))
+      ['country', d.properties.adm0_a3].join(' '))
       .attr('d', path)
       .on('click', (d) ->
         iso3 = d.properties.adm0_a3
