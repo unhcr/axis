@@ -33,7 +33,7 @@
                   .menu-row
                   .menu-row
       %aside.container.full-width.toolbar.gone
-    #global-search.zero-max-height
+      #global-search.zero-max-height.row
     :javascript
       window.Visio.user = new Visio.Models.User(#{current_user.to_json.html_safe})
       $(document).on('ready page:load', function() {

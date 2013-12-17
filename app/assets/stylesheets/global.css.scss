@@ -159,6 +159,7 @@ body.overview {
     z-index: 300;
     height: $header-height + $toolbar-height;
   }
+
 }
 
 body.layout-application {
@@ -1109,7 +1110,6 @@ input[type="radio"]:checked + label {
   -o-transition:max-height $fast-transition;
   transition:max-height $fast-transition;
   max-height: 50px;
-  z-index: 400;
 
 }
 
