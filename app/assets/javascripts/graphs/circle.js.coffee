@@ -53,6 +53,7 @@ Visio.Graphs.circle = (config) ->
       from: oldNumber
       to: number
       speed: Visio.Durations.FAST
+      formatter: Visio.Utils.countToFormatter
 
     oldPercent = percent
     oldNumber = number

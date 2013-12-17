@@ -91,3 +91,6 @@ Visio.Utils.flash = ($ele, msg) ->
   $ele.addClass('flash')
 
   $ele.attr('placeholder', msg)
+
+Visio.Utils.countToFormatter = (value) ->
+  d3.format('d')(value.toFixed(0)) || 0

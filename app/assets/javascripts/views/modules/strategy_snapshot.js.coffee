@@ -81,6 +81,7 @@ class Visio.Views.StrategySnapshotView extends Backbone.View
       from: +$expenditure.text()
       to: d3.round(percent * 100)
       speed: Visio.Durations.FAST
+      formatter: Visio.Utils.countToFormatter
     )
     @$el.find('.budget').text "$#{Visio.Formats.SI(budget)}"
     @$el.find('.meter > span').attr('style', "width: #{percent * 100}%")
@@ -117,6 +118,7 @@ class Visio.Views.StrategySnapshotView extends Backbone.View
       from: +$totalIndicators.text()
       to: total
       speed: Visio.Durations.FAST
+      formatter: Visio.Utils.countToFormatter
     )
 
 
