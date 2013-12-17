@@ -64,53 +64,21 @@ Visio.Types = [
   ]
 
 Visio.Schema =
-    stores: [
-      {
-        name: Visio.Parameters.PLANS + '_store'
-        keyPath: 'id'
-        autoIncrement: false
-      },
-      {
-        name: Visio.Parameters.PPGS + '_store'
-        keyPath: 'id'
-        autoIncrement: false
-      },
-      {
-        name: Visio.Parameters.GOALS + '_store'
-        keyPath: 'id'
-        autoIncrement: false
-      },
-      {
-        name: Visio.Parameters.OUTPUTS + '_store'
-        keyPath: 'id'
-        autoIncrement: false
-      },
-      {
-        name: Visio.Parameters.PROBLEM_OBJECTIVES + '_store'
-        keyPath: 'id'
-        autoIncrement: false
-      },
-      {
-        name: Visio.Parameters.INDICATORS + '_store'
-        keyPath: 'id'
-        autoIncrement: false
-      },
-      {
-        name: Visio.Parameters.INDICATOR_DATA + '_store'
-        keyPath: 'id'
-        autoIncrement: false
-      },
-      {
-        name: Visio.Parameters.BUDGETS + '_store'
-        keyPath: 'id'
-        autoIncrement: false
-      },
-      {
-        name: Visio.Stores.MAP
-        autoIncrement: false
-      },
-      {
-        name: Visio.Stores.SYNC
-        autoIncrement: false
-      },
-    ]
+    stores: []
+
+_.each _.keys(Visio.Parameters), (parameter) ->
+  Visio.Schema.stores.push {
+    name: parameter + '_store'
+    keyPath: 'id'
+    autoIncrement: false
+  }
+
+Visio.Schema.stores.push {
+    name: Visio.Stores.MAP
+    autoIncrement: false
+  }
+
+Visio.Schema.stores.push {
+    name: Visio.Stores.SYNC
+    autoIncrement: false
+  }
