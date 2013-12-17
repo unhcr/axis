@@ -24,7 +24,7 @@ class Visio.Collections.Parameter extends Backbone.Collection
 
     if parameters.deleted.length > 0
       req.done((ids) =>
-        # Remove deleted plans
+        # Remove deleted params
         req = null
         _.each(parameters.deleted, (parameter) =>
           req = db.remove(@store(), parameter.id)
