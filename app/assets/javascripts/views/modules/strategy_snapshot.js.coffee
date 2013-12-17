@@ -2,6 +2,8 @@ class Visio.Views.StrategySnapshotView extends Backbone.View
 
   template: JST['modules/strategy_snapshot']
 
+  maxListLength: 10
+
   resultTypes: [
     Visio.Algorithms.ALGO_RESULTS.success,
     Visio.Algorithms.ALGO_RESULTS.ok,
@@ -14,12 +16,15 @@ class Visio.Views.StrategySnapshotView extends Backbone.View
 
   events:
     'change .ui-blank-radio > input': 'onChangePlan'
+    'click .js-show-all': 'onClickShowAll'
 
   render: () ->
 
     @$el.html @template(
       targetPlans: @collection.where({ year: Visio.manager.year() }).map (plan) -> plan.toJSON()
       resultTypes: @resultTypes
+      max: @maxListLength
+      cols: 3
     )
     @countCircles = []
     _.each @resultTypes, (resultType) =>
@@ -56,6 +61,8 @@ class Visio.Views.StrategySnapshotView extends Backbone.View
 
     @updateMeter(Math.random(), budget)
 
+  onClickShowAll: (e) ->
+    @$el.find('.js-extra-target-countries').toggleClass 'gone'
 
   onChangePlan: (e) ->
     id = $(e.currentTarget).val()
