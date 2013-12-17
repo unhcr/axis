@@ -55,9 +55,9 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
       $collapsable = $('.collapsable-content')
       $collapsable.attr 'data-0', "max-height:#{$('.collapsable-content').height()}px"
       $collapsable.attr "data-#{$('.collapsable-content').height()}", "max-height:0px"
-      skrollr.init(
-        forceHeight: false
-      )
+      #skrollr.init(
+      #  forceHeight: false
+      #)
       Visio.manager.set('setup', true)
     )
 
