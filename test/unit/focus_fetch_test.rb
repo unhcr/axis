@@ -27,6 +27,13 @@ class FocusFetchTest < ActiveSupport::TestCase
   COUNTS_DELETED = {
     :plans => 0,
     :ppgs => 1,
+    :goals => 1,
+    :outputs => 29,
+    :rights_groups => 0,
+    :problem_objectives => 6,
+    :indicator_data => 88,
+    :indicators => 51,
+    :budgets => 171
   }
 
   def setup
@@ -69,8 +76,24 @@ class FocusFetchTest < ActiveSupport::TestCase
     set_test_path("#{TESTFILE_PATH}#{DELETED_TESTFILE_NAME}")
     ret = fetch(1, 1.week, true)
 
-    assert_equal COUNTS_DELETED[:plans], Plan.where(:is_deleted => true).count
-    assert_equal COUNTS_DELETED[:ppgs], Ppg.where(:is_deleted => true).count
+    assert_equal COUNTS_DELETED[:plans],
+      Plan.where(:is_deleted => true).count, "Plan deleted count"
+    assert_equal COUNTS_DELETED[:ppgs],
+      Ppg.where(:is_deleted => true).count, "Ppg deleted count"
+    assert_equal COUNTS_DELETED[:goals],
+      Goal.where(:is_deleted => true).count, "Goal deleted count"
+    assert_equal COUNTS_DELETED[:outputs],
+      Output.where(:is_deleted => true).count, "Output deleted count"
+    assert_equal COUNTS_DELETED[:rights_groups],
+      RightsGroup.where(:is_deleted => true).count, "Rights group deleted count"
+    assert_equal COUNTS_DELETED[:indicator_data],
+      IndicatorDatum.where(:is_deleted => true).count, "Indicator data deleted count"
+    assert_equal COUNTS_DELETED[:problem_objectives],
+      ProblemObjective.where(:is_deleted => true).count, "Problem Objective deleted count"
+    assert_equal COUNTS_DELETED[:budgets],
+      Budget.where(:is_deleted => true).count, "Budget data deleted count"
+    assert_equal COUNTS_DELETED[:indicators],
+      Indicator.where(:is_deleted => true).count, "Indicator deleted count"
 
 
   end

@@ -97,7 +97,6 @@ module FocusFetch
 
     end
     monitor.mark_deleted if monitor.reset?
-    require 'pry'; binding.pry
 
     return ret
 
