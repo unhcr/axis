@@ -26,7 +26,6 @@ test('search', () ->
   strictEqual('yaybycy', models[0].get('name'))
 
   models = view.search('ab')
-  console.log models
   strictEqual(2, models.length)
 
   models = view.search('hhh')

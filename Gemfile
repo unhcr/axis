@@ -39,6 +39,7 @@ group :development, :test do
   gem 'single_test'
   gem 'random-word'
   gem 'simplecov', :require => false
+  gem 'teaspoon'
 end
 
 gem 'jquery-rails'
