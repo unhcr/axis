@@ -66,7 +66,7 @@ Visio.Types = [
 Visio.Schema =
     stores: []
 
-_.each _.keys(Visio.Parameters), (parameter) ->
+_.each _.values(Visio.Parameters), (parameter) ->
   Visio.Schema.stores.push {
     name: parameter + '_store'
     keyPath: 'id'
