@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OperationGroup ID="0L">
+  <name>World</name>
+  <subgroups>
+    <OperationGroup ID="I1LJ">
+      <name>Africa</name>
+      <subgroups>
+        <OperationGroup ID="I1L1">
+          <name>Central Africa and the Great Lakes</name>
+          <subgroups/>
+          <operations>
+            <OperationHeader ID="7WC">
+              <operationID>7ST</operationID>
+              <name>Congo</name>
+              <plans>
+                <PlanHeader ID="19c15e91-3b0e-4443-a6b3-a27906eefcee">
+                  <planID>ede7a713-ca3d-484a-8401-845968ab6efc</planID>
+                  <name>Operations Plan</name>
+                  <planningPeriod>2012</planningPeriod>
+                  <type>ONEPLAN</type>
+                </PlanHeader>
+              </plans>
+            </OperationHeader>
+          </operations>
+        </OperationGroup>
+      </subgroups>
+      <operations/>
+    </OperationGroup>
+  </subgroups>
+  <operations/>
+</OperationGroup>

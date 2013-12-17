@@ -4,7 +4,38 @@ class FocusFetchTest < ActiveSupport::TestCase
   fixtures :all
   include FocusFetch
 
+  TESTHEADER_NAME = "DeletedHeaderTest.xml"
+  TESTFILE_PATH = "#{Rails.root}/test/files/"
+  TESTFILE_NAME = "PlanTest.xml"
+  DELETED_TESTFILE_NAME = "DeletedPlanTest.xml"
+
   TESTDATA_PATH = "#{Rails.root}/test/files/focus"
+
+  COUNTS = {
+    :plans => 1,
+    :ppgs => 3,
+    :goals => 3,
+    :rights_groups => 8,
+    :problem_objectives => 28,
+    :indicators => 171,
+    :outputs => 82,
+    :operations => 139,
+    :indicator_data => 208,
+    :budgets => 403
+  }
+
+  COUNTS_DELETED = {
+    :plans => 0,
+    :ppgs => 1,
+    :goals => 1,
+    :outputs => 29,
+    :rights_groups => 0,
+    :problem_objectives => 6,
+    :indicator_data => 88,
+    :indicators => 51,
+    :budgets => 171
+  }
+
   def setup
     # Change directory for testing
     set_data_dir(TESTDATA_PATH)
@@ -21,6 +52,50 @@ class FocusFetchTest < ActiveSupport::TestCase
 
     assert_equal 2, ret[:files_read]
     assert ret[:files_total] >= 2
+  end
+
+  test "Mark fetched deleted" do
+    Plan.delete_all
+    Ppg.delete_all
+    Goal.delete_all
+    RightsGroup.delete_all
+    ProblemObjective.delete_all
+    Output.delete_all
+    Indicator.delete_all
+    IndicatorDatum.delete_all
+    Operation.delete_all
+    Budget.delete_all
+
+    set_test_path("#{TESTFILE_PATH}#{TESTFILE_NAME}")
+    ret = fetch(1, 1.week, true)
+
+    assert_equal COUNTS[:plans], Plan.count
+    assert_equal COUNTS[:ppgs], Ppg.count
+
+
+    set_test_path("#{TESTFILE_PATH}#{DELETED_TESTFILE_NAME}")
+    ret = fetch(1, 1.week, true)
+
+    assert_equal COUNTS_DELETED[:plans],
+      Plan.where(:is_deleted => true).count, "Plan deleted count"
+    assert_equal COUNTS_DELETED[:ppgs],
+      Ppg.where(:is_deleted => true).count, "Ppg deleted count"
+    assert_equal COUNTS_DELETED[:goals],
+      Goal.where(:is_deleted => true).count, "Goal deleted count"
+    assert_equal COUNTS_DELETED[:outputs],
+      Output.where(:is_deleted => true).count, "Output deleted count"
+    assert_equal COUNTS_DELETED[:rights_groups],
+      RightsGroup.where(:is_deleted => true).count, "Rights group deleted count"
+    assert_equal COUNTS_DELETED[:indicator_data],
+      IndicatorDatum.where(:is_deleted => true).count, "Indicator data deleted count"
+    assert_equal COUNTS_DELETED[:problem_objectives],
+      ProblemObjective.where(:is_deleted => true).count, "Problem Objective deleted count"
+    assert_equal COUNTS_DELETED[:budgets],
+      Budget.where(:is_deleted => true).count, "Budget data deleted count"
+    assert_equal COUNTS_DELETED[:indicators],
+      Indicator.where(:is_deleted => true).count, "Indicator deleted count"
+
+
   end
 
   test "find plan file" do

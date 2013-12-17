@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131216102515) do
+ActiveRecord::Schema.define(:version => 20131216131126) do
 
   create_table "budgets", :force => true do |t|
     t.string   "budget_type"
@@ -39,6 +39,13 @@ ActiveRecord::Schema.define(:version => 20131216102515) do
     t.string   "subregion"
     t.text     "un_names"
     t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "fetch_monitors", :force => true do |t|
+    t.datetime "starttime"
+    t.text     "plans"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
