@@ -1,10 +1,21 @@
 class Visio.Models.Manager extends Backbone.Model
 
-  initialize: () ->
+  initialize: (options) ->
     @set('db', new ydn.db.Storage(Visio.Constants.DB_NAME, Visio.Schema))
-    if Visio.user.get('reset_local_db')
-      @get('db').clear(Visio.Schema.stores.map((store) -> store.name))
-      Visio.user.save({ reset_local_db: false })
+    console.log options
+
+    @get('db').addEventListener 'ready', (e) =>
+      if Visio.user.get('reset_local_db')
+        @get('db').clear(Visio.Schema.stores.map((store) -> store.name))
+        Visio.user.save({ reset_local_db: false })
+
+      options.ready() if options.ready
+
+    @get('db').addEventListener 'fail', (e) =>
+      alert 'Your data will not be saved because offline storage is not actived. Try using a modern browser like Google Chrome'
+
+      console.error e.name
+      @set 'use_local_db', false
 
     @resetBudgetDefaults()
 
@@ -19,6 +30,7 @@ class Visio.Models.Manager extends Backbone.Model
     'budgets': new Visio.Collections.Budget()
     'strategies': new Visio.Collections.Strategy()
     'date': new Date()
+    'use_local_db': true
     'setup': false
     'db': null
     'mapMD5': null

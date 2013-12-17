@@ -31,35 +31,38 @@
 
     Visio.manager = new Visio.Models.Manager({
       strategy_id: #{@strategy.id},
-      strategies: new Visio.Collections.Strategy(#{@strategies.to_json.html_safe})
-    })
+      strategies: new Visio.Collections.Strategy(#{@strategies.to_json.html_safe}),
+      ready: function() {
+        Visio.router = new Visio.Routers.OverviewRouter();
+        Backbone.history.start();
 
-    Visio.router = new Visio.Routers.OverviewRouter();
-    Backbone.history.start();
+        $('.navigation-activation').on('mouseenter', function(e) {
+          $('.page').addClass('shift');
+          $(e.currentTarget).addClass('zero-width');
+        })
 
-    $('.navigation-activation').on('mouseenter', function(e) {
-      $('.page').addClass('shift');
-      $(e.currentTarget).addClass('zero-width');
-    })
+        $('#navigation').on('mouseleave', function(e) {
+          $('.page').removeClass('shift');
+          $('.navigation-activation').removeClass('zero-width');
+        })
 
-    $('#navigation').on('mouseleave', function(e) {
-      $('.page').removeClass('shift');
-      $('.navigation-activation').removeClass('zero-width');
-    })
+        $(document).scroll(function(e) {
+          $navigationIcon.css('top', $(document).scrollTop() + 140);
+        })
 
-    $(document).scroll(function(e) {
-      $navigationIcon.css('top', $(document).scrollTop() + 140);
-    })
+        var headroom  = new Headroom(document.querySelector("header"), {
+          offset: $('header').height() + $('.toolbar').height(),
+          classes: {
+            unpinned: 'slideOutUp',
+            pinned : 'slideInDown',
+            initial : 'animated'
+          }
+        });
+        headroom.init();
 
-    var headroom  = new Headroom(document.querySelector("header"), {
-      offset: $('header').height() + $('.toolbar').height(),
-      classes: {
-        unpinned: 'slideOutUp',
-        pinned : 'slideInDown',
-        initial : 'animated'
       }
     });
-    headroom.init();
+
 
 
   });
