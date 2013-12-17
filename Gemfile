@@ -38,6 +38,7 @@ group :development, :test do
   gem 'qunit-rails'
   gem 'single_test'
   gem 'random-word'
+  gem 'simplecov', :require => false
 end
 
 gem 'jquery-rails'
