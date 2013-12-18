@@ -122,3 +122,65 @@ test 'achievement', () ->
   datum.set('comp_target', 100)
 
   strictEqual(0, datum.achievement())
+
+test 'situation analysis', () ->
+  datum = new Visio.Models.IndicatorDatum({
+    id: 'ben'
+    output_id: 'present'
+    problem_objective_id: 'present'
+    is_performance: true
+    myr: 50
+    threshold_green: 60
+    threshold_red: 40
+  })
+
+  res = datum.situation_analysis()
+  strictEqual res, Visio.Algorithms.ALGO_RESULTS.ok
+
+  datum.set('myr', 60)
+  res = datum.situation_analysis()
+  strictEqual res, Visio.Algorithms.ALGO_RESULTS.success
+
+  datum.set('myr', 30)
+  res = datum.situation_analysis()
+  strictEqual res, Visio.Algorithms.ALGO_RESULTS.fail
+
+test 'situation analysis collection', () ->
+  data = new Visio.Collections.IndicatorDatum([{
+    id: 'ben'
+    output_id: 'present'
+    problem_objective_id: 'present'
+    is_performance: true
+    myr: 50
+    threshold_green: 60
+    threshold_red: 40
+  },{
+    id: 'lisa'
+    output_id: 'present'
+    problem_objective_id: 'present'
+    is_performance: true
+    myr: 50
+    threshold_green: 60
+    threshold_red: 40
+  }
+
+  ])
+
+  res = data.situation_analysis()
+  strictEqual res.category, Visio.Algorithms.ALGO_RESULTS.ok
+  strictEqual res.result, .5
+
+  data.at(0).set('myr', 60)
+  res = data.situation_analysis()
+  strictEqual res.category, Visio.Algorithms.ALGO_RESULTS.success
+
+  data.at(0).set('myr', 30)
+  res = data.situation_analysis()
+  strictEqual res.category, Visio.Algorithms.ALGO_RESULTS.fail
+
+  data = new Visio.Collections.IndicatorDatum()
+  res = data.situation_analysis()
+  strictEqual res.category, Visio.Algorithms.ALGO_RESULTS.fail
+  strictEqual res.result, 0
+
+

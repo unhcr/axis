@@ -31,6 +31,7 @@ class Visio.Collections.IndicatorDatum extends Visio.Collections.Parameter
     else if result >= Visio.Algorithms.OK_THRESHOLD
       category = Visio.Algorithms.ALGO_RESULTS.ok
 
+    result = if isNaN(result) then 0 else result
     return {
       result: result
       category: category
