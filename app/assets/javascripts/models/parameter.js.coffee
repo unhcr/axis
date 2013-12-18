@@ -49,6 +49,10 @@ class Visio.Models.Parameter extends Backbone.Model
     data = @selectedBudgetData()
     data.budget()
 
+  selectedSituationAnalysis: () ->
+    data = @selectedIndicatorData()
+    data.situation_analysis()
+
   strategyIndicatorData: (strategy) ->
     strategy ||= Visio.manager.strategy()
 

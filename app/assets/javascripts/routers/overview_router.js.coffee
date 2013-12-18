@@ -6,16 +6,16 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
     Visio.manager.on 'change:date', () =>
       @navigation.render()
       Visio.manager.setSelected()
-      @achievementBudgetSingleYearView.render(true)
+      @moduleView.render(true)
 
     Visio.manager.on 'change:aggregation_type', () =>
-      @achievementBudgetSingleYearView.render(true)
+      @moduleView.render(true)
 
     Visio.manager.on 'change:selected', () =>
-      @achievementBudgetSingleYearView.render(true)
+      @moduleView.render(true)
 
     Visio.manager.on 'change:achievement_type', () =>
-      @achievementBudgetSingleYearView.render(true)
+      @moduleView.render(true)
 
     @module = $('#module')
 
@@ -72,9 +72,10 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
     '*default': 'index'
 
   isy: () ->
-    @steup().done(() =>
-      @inidcatorSingleYearView ||= new Visio.Views.AchievementBudgetSingleYearView( el: @module)
-      @inidcatorSingleYearView.render()
+    @setup().done(() =>
+      @indicatorSingleYearView ||= new Visio.Views.IndicatorSingleYearView( el: @module )
+      @indicatorSingleYearView.render()
+      @moduleView = @indicatorSingleYearView
     ).fail (e) =>
       console.log e
 
@@ -83,6 +84,7 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
     @setup().done(() =>
       @achievementBudgetSingleYearView ||= new Visio.Views.AchievementBudgetSingleYearView( el: @module )
       @achievementBudgetSingleYearView.render()
+      @moduleView = @achievementBudgetSingleYearView
     ).fail (e) =>
       console.log e
 

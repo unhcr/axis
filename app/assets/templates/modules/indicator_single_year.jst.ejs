@@ -1,0 +1,9 @@
+<% parameters.each(function(parameter) { %>
+<div class="row">
+  <div class="col-md-8 col-centered">
+    <%= JSON.stringify(parameter.selectedSituationAnalysis(), null, ' ') %>
+    <%= parameter.toString() %>
+  </div>
+</div>
+
+<% }) %>
