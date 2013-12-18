@@ -139,4 +139,18 @@ class FocusFetchTest < ActiveSupport::TestCase
     assert_equal 0, old_names.length, 'There should be no old files left'
     assert !old_plan_name, 'Should not have found a file'
   end
+
+  test "server_params" do
+
+    params_string = server_params({ :random => 'param' })
+
+    hash = Hash[(params_string.split(';').map { |p| p.split('=') })]
+
+    assert_equal 'rudolph@unhcr.org', hash["user"], 'must have user'
+    assert hash["IP"], "must have ip"
+    assert hash["type"], "must have type"
+    assert hash["ver"], "must have version"
+    assert_equal 'param', hash["random"], 'optional param'
+
+  end
 end
