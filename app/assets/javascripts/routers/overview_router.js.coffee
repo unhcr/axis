@@ -17,6 +17,8 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
     Visio.manager.on 'change:achievement_type', () =>
       @achievementBudgetSingleYearView.render(true)
 
+    @module = $('#module')
+
   setup: () ->
     # Return empty promise if we've setup already
     return $.Deferred().resolve().promise() if Visio.manager.get('setup')
@@ -66,13 +68,20 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
     'menu' : 'menu'
     'search': 'search'
     'absy': 'absy'
+    'isy': 'isy'
     '*default': 'index'
+
+  isy: () ->
+    @steup().done(() =>
+      @inidcatorSingleYearView ||= new Visio.Views.AchievementBudgetSingleYearView( el: @module)
+      @inidcatorSingleYearView.render()
+    ).fail (e) =>
+      console.log e
+
 
   absy: () ->
     @setup().done(() =>
-      @achievementBudgetSingleYearView = new Visio.Views.AchievementBudgetSingleYearView(
-        el: $('#absy')
-      )
+      @achievementBudgetSingleYearView ||= new Visio.Views.AchievementBudgetSingleYearView( el: @module )
       @achievementBudgetSingleYearView.render()
     ).fail (e) =>
       console.log e
