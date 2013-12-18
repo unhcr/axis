@@ -13,15 +13,15 @@ class FocusParseTest < ActiveSupport::TestCase
 
   COUNTS = {
     :plans => 1,
-    :ppgs => 3,
-    :goals => 3,
+    :ppgs => 2,
+    :goals => 2,
     :rights_groups => 8,
-    :problem_objectives => 28,
-    :indicators => 171,
-    :outputs => 82,
+    :problem_objectives => 22,
+    :indicators => 120,
+    :outputs => 53,
     :operations => 139,
-    :indicator_data => 208,
-    :budgets => 403
+    :indicator_data => 120,
+    :budgets => 232
   }
   include FocusParse
   def setup
