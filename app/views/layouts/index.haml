@@ -9,16 +9,16 @@
 %body.ui-invert-theme{ :class => "#{controller.action_name} layout-#{controller.send(:_layout).virtual_path.name}" }
   #navigation.gone
   .page
-    %header.container.full-width
+    %header.container.full-width.ui-orange-theme
       %section.row
         .col-md-11.col-centered.center-text.zero-padding
           .col-md-4.extra-padding
-            .small-item.ui-primary.pull-left
+            .small-item.pull-left
               Ça va,
-              %span.ui-primary-light
+              %span.highlight
                 = current_user.firstname
             .account-menu.pull-left
-              .small-item.ui-primary.pull-right
+              .small-item.pull-right
                 = link_to "Sign out", destroy_user_session_path, :method => :delete, :class => 'ui-primary'
           .col-md-4.center-text
             .ui-medium-header.logo.zero-padding
@@ -27,7 +27,7 @@
             .col-md-2.pull-right.zero-padding
               %a.search-icon.pull-right{ :href => '#search' }
             .col-md-2.pull-right.zero-padding
-              .menu-btn.pull-right.ui-primary-light
+              .menu-btn.pull-right.highlight
                 .menu-icon.menu-right
                   .menu-row
                   .menu-row

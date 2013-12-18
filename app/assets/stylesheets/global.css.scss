@@ -88,7 +88,15 @@ p.small {
 .ui-primary-theme {
   background-color: $primary;
   color: $white;
+}
 
+.ui-orange-theme {
+  color: $white;
+  background-color: $orange;
+
+  .highlight {
+    color: $white;
+  }
 }
 
 .ui-primary-dark-theme {
@@ -126,8 +134,12 @@ p.small {
 }
 
 .ui-invert-theme {
-  background-color: $off-white;
+  background-color: white;
   color: $primary;
+
+  .highlight {
+    color: $primary-light;
+  }
 }
 
 .ui-purple-theme {
@@ -165,7 +177,6 @@ body.overview {
 body.layout-application {
 
   header section {
-    background-color: white;
     border-bottom: 1px solid $primary-light;
     .logo {
       margin-top: -10px;
