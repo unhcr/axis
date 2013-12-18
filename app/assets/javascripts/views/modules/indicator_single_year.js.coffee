@@ -7,8 +7,10 @@ class Visio.Views.IndicatorSingleYearView extends Backbone.View
   render: (isRerender) ->
 
     if !isRerender
+      parameters = Visio.manager.selected(Visio.manager.get('aggregation_type')).sortBy (p) ->
+        -p.selectedSituationAnalysis().result || 0
       @$el.html @template(
-        parameters: Visio.manager.selected(Visio.manager.get('aggregation_type'))
+        parameters: parameters
       )
 
 
