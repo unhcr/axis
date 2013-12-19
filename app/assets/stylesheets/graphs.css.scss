@@ -89,3 +89,16 @@
     fill: red;
   }
 }
+
+.bar.success {
+  fill: $success;
+}
+.bar.ok {
+  fill: $ok;
+}
+.bar.fail {
+  fill: $fail;
+}
+.bar.missing {
+  fill: $dark-gray;
+}
