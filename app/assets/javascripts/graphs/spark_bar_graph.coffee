@@ -31,7 +31,6 @@ Visio.Graphs.sparkBarGraph = (config) ->
 
 
   render = () ->
-    console.log data
 
     bars = g.selectAll('.bar').data(data)
     bars.enter().append('rect')
