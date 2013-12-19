@@ -169,18 +169,28 @@ test 'situation analysis collection', () ->
   res = data.situationAnalysis()
   strictEqual res.category, Visio.Algorithms.ALGO_RESULTS.ok
   strictEqual res.result, .5
+  strictEqual res.total, 2
+  strictEqual res.counts[Visio.Algorithms.ALGO_RESULTS.ok], 2
 
   data.at(0).set('myr', 60)
   res = data.situationAnalysis()
   strictEqual res.category, Visio.Algorithms.ALGO_RESULTS.success
+  strictEqual res.total, 2
+  strictEqual res.counts[Visio.Algorithms.ALGO_RESULTS.ok], 1
+  strictEqual res.counts[Visio.Algorithms.ALGO_RESULTS.success], 1
 
   data.at(0).set('myr', 30)
   res = data.situationAnalysis()
   strictEqual res.category, Visio.Algorithms.ALGO_RESULTS.fail
+  strictEqual res.total, 2
+  strictEqual res.counts[Visio.Algorithms.ALGO_RESULTS.ok], 1
+  strictEqual res.counts[Visio.Algorithms.ALGO_RESULTS.fail], 1
 
   data = new Visio.Collections.IndicatorDatum()
   res = data.situationAnalysis()
   strictEqual res.category, Visio.Algorithms.ALGO_RESULTS.fail
   strictEqual res.result, 0
+  strictEqual res.total, 0
+  strictEqual res.counts[Visio.Algorithms.ALGO_RESULTS.ok], 0
 
 

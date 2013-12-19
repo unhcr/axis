@@ -35,6 +35,8 @@ class Visio.Collections.IndicatorDatum extends Visio.Collections.Parameter
     return {
       result: result
       category: category
+      counts: counts
+      total: count
     }
 
   achievement: (reported_value) ->
