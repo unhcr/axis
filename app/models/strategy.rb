@@ -1,14 +1,20 @@
 class Strategy < ActiveRecord::Base
   attr_accessible :name
 
+  has_many :strategy_objectives
+
   has_and_belongs_to_many :operations, :uniq => true
   has_and_belongs_to_many :plans, :uniq => true
   has_and_belongs_to_many :ppgs, :uniq => true
-  has_and_belongs_to_many :goals, :uniq => true
+  has_and_belongs_to_many :goals, :uniq => true, :before_add => :belongs_to_strategy_objective
   has_and_belongs_to_many :rights_groups, :uniq => true
-  has_and_belongs_to_many :problem_objectives, :uniq => true
-  has_and_belongs_to_many :outputs, :uniq => true
-  has_and_belongs_to_many :indicators, :uniq => true
+  has_and_belongs_to_many :problem_objectives, :uniq => true, :before_add => :belongs_to_strategy_objective
+  has_and_belongs_to_many :outputs, :uniq => true, :before_add => :belongs_to_strategy_objective
+  has_and_belongs_to_many :indicators, :uniq => true, :before_add => :belongs_to_strategy_objective
+
+  def belongs_to_strategy_objective(assoc)
+    raise 'Association does not belong to a Strategy Objective' if assoc.strategy_objectectives.empty?
+  end
 
   # Get IndicatorData related to particular strategy
   def synced_data(synced_date = nil, limit = nil, where = {})
