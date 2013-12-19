@@ -142,7 +142,7 @@ class FocusFetchTest < ActiveSupport::TestCase
 
   test "server_params" do
 
-    params_string = server_params({ :random => 'param' })
+    params_string = server_params
 
     hash = Hash[(params_string.split(';').map { |p| p.split('=') })]
 
@@ -150,7 +150,6 @@ class FocusFetchTest < ActiveSupport::TestCase
     assert hash["IP"], "must have ip"
     assert hash["type"], "must have type"
     assert hash["ver"], "must have version"
-    assert_equal 'param', hash["random"], 'optional param'
 
   end
 end
