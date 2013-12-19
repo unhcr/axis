@@ -3,9 +3,7 @@
 one:
   name: MyString
   description: MyText
-  belongs_to: 
 
 two:
   name: MyString
   description: MyText
-  belongs_to: 
