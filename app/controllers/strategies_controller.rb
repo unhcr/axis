@@ -18,7 +18,6 @@ class StrategiesController < ApplicationController
       :description => params[:strategy][:description])
 
     s.operations << Operation.find(params[:strategy][:operations]) if params[:strategy][:operations]
-    require 'pry'; binding.pry
     s.plans << Plan.where(:operation_id => params[:strategy][:operations]) if params[:strategy][:operations]
     s.ppgs << Ppg.find((s.plans.map &:ppg_ids).flatten.uniq)
 
