@@ -38,7 +38,7 @@ class Visio.Models.Manager extends Backbone.Model
     'yearList': [2012, 2013, 2014, 2015]
     'selected': {}
     'selected_strategies': {}
-    'aggregation_type': Visio.Parameters.OUTPUTS
+    'aggregation_type': Visio.Parameters.PLANS
     'scenario_type': {}
     'budget_type': {}
     'achievement_type': Visio.AchievementTypes.TARGET
