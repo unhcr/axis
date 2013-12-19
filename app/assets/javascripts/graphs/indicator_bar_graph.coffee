@@ -8,6 +8,8 @@ Visio.Graphs.indicatorBarGraph = (config) ->
 
   duration = 500
 
+  isPerformance = false
+
   svg = selection.append('svg')
     .attr('width', config.width)
     .attr('height', config.height)
@@ -92,10 +94,15 @@ Visio.Graphs.indicatorBarGraph = (config) ->
       )
 
   render.data = (_data) ->
-    return data if arguments.length == 0
-    console.log _data
-    data = _data.where { is_performance: false }
+    return data unless arguments.length
+    data = _data.where { is_performance: isPerformance }
     render
+
+  render.isPerformance = (_isPerformance) ->
+    return _isPerformance unless arguments.length
+    isPerformance = _isPerformance
+    render
+
 
 
   render
