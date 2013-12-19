@@ -7,7 +7,7 @@ class Visio.Models.IndicatorDatum extends Backbone.Model
 
   paramRoot: 'indicator_datum'
 
-  situation_analysis: (reported_value) ->
+  situationAnalysis: (reported_value) ->
     reported_value ||= Visio.Algorithms.REPORTED_VALUES.myr
     return Visio.Algorithms.ALGO_RESULTS.missing unless @get(reported_value)
 

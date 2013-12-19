@@ -134,17 +134,17 @@ module FocusFetch
   end
 
   def server_url(file_path, params = {})
-    "#{BASE_URL}#{file_path}?#{server_params(params)}"
+    "#{BASE_URL}#{file_path}?#{server_params}"
   end
 
   def server_params(params = {})
-    params[:user] = ENV['LDAP_USERNAME']
-    params[:type] = Rails.application.class.parent_name
-    params[:ver] = '0.0.1'
     ip = Socket.ip_address_list.detect { |intf| intf.ipv4_private? }
-    params[:IP] = ip.ip_address if ip
 
-    (params.map { |key, value| "#{key}=#{value}" }).join(';')
+    params = "user=#{ENV['LDAP_USERNAME']};type=#{Rails.application.class.parent_name}"
+    params += ";IP=#{ip.ip_address}" if ip
+    params += ";ver=0.0.1"
+
+    params
   end
 
   def set_test_path(path)

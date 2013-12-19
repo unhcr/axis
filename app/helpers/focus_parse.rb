@@ -183,11 +183,21 @@ module FocusParse
                   d.output = output
                   d.operation = operation
                   d.indicator = indicator
-                  d.yer = xml_performance_indicator.search('./yearEndValue').text.to_i
-                  d.myr = xml_performance_indicator.search('./midYearValue').text.to_i
-                  d.standard = xml_performance_indicator.search('./standard').text.to_i
-                  d.baseline = xml_performance_indicator.search('./baseline').text.to_i
-                  d.comp_target = xml_performance_indicator.search('./compTarget').text.to_i
+                  yer = xml_performance_indicator.search('./yearEndValue').text
+                  d.yer = yer.empty? ? nil : yer.to_i
+
+                  myr = xml_performance_indicator.search('./midYearValue').text
+                  d.myr = myr.empty? ? nil : myr.to_i
+
+                  standard = xml_performance_indicator.search('./standard').text
+                  d.standard = standard.empty? ? nil : standard.to_i
+
+                  baseline = xml_performance_indicator.search('./baseline').text
+                  d.baseline = baseline.empty? ? nil : baseline.to_i
+
+                  comp_target = xml_performance_indicator.search('./compTarget').text
+                  d.comp_target = comp_target.empty? ? nil : comp_target.to_i
+
                   d.is_performance = true
                   d.year = plan.year
                 end).save
@@ -248,55 +258,7 @@ module FocusParse
             end
 
             xml_budget_lines = xml_problem_objective.search('./budgetLines/BudgetLine')
-
-            budget_hash_list = []
-
-            [AOL, OL].each do |scenario|
-              [ADMIN, PARTNER, PROJECT, STAFF].each do |budget_type|
-                budget_hash_list << {
-                  :budget_type => budget_type,
-                  :scenario => scenario,
-                  :amount => 0
-                }
-              end
-            end
-
-            xml_budget_lines.each do |xml_budget_line|
-              scenario = xml_budget_line.search('./scenario').text
-              amount = xml_budget_line.search('./amount').text.to_i
-              type = xml_budget_line.search('./type').text
-
-              hash = budget_hash(budget_hash_list, scenario, type)
-              p "Unidentified cost type: #{type} | #{scenario}" unless hash
-              hash[:amount] += amount
-            end
-
-            budget_hash_list.each do |hash|
-              next if hash[:amount] == 0
-              attrs = {
-                :plan_id => plan.id,
-                :ppg_id => ppg.id,
-                :goal_id => goal.id,
-                :output_id => nil,
-                :problem_objective_id => problem_objective.id,
-                :scenario => hash[:scenario],
-                :budget_type => hash[:budget_type],
-              }
-
-              b = Budget.where(attrs).first
-              b = Budget.new() unless b
-
-              b.plan = plan
-              b.ppg = ppg
-              b.goal = goal
-              b.problem_objective = problem_objective
-
-              b.amount = hash[:amount]
-              b.scenario = hash[:scenario]
-              b.budget_type = hash[:budget_type]
-              b.save
-              b.touch
-            end
+            p 'Budget without output!' if xml_budget_lines.length > 0
 
             problem_objective.save
 
@@ -324,11 +286,22 @@ module FocusParse
                 d.problem_objective = problem_objective
                 d.indicator = indicator
                 d.operation = operation
-                d.yer = xml_impact_indicator.search('./yearEndValue').text.to_i
-                d.myr = xml_impact_indicator.search('./midYearValue').text.to_i
-                d.standard = xml_impact_indicator.search('./standard').text.to_i
-                d.baseline = xml_impact_indicator.search('./baseline').text.to_i
-                d.comp_target = xml_impact_indicator.search('./compTarget').text.to_i
+
+                yer = xml_impact_indicator.search('./yearEndValue').text
+                d.yer = yer.empty? ? nil : yer.to_i
+
+                myr = xml_impact_indicator.search('./midYearValue').text
+                d.myr = myr.empty? ? nil : myr.to_i
+
+                standard = xml_impact_indicator.search('./standard').text
+                d.standard = standard.empty? ? nil : standard.to_i
+
+                baseline = xml_impact_indicator.search('./baseline').text
+                d.baseline = baseline.empty? ? nil : baseline.to_i
+
+                comp_target = xml_impact_indicator.search('./compTarget').text
+                d.comp_target = comp_target.empty? ? nil : comp_target.to_i
+
                 d.threshold_red = xml_impact_indicator.search('./thresholdRed').text.to_i
                 d.threshold_green = xml_impact_indicator.search('./thresholdGreen').text.to_i
                 d.is_performance = false

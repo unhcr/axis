@@ -13,14 +13,18 @@ class StrategyTest < ActiveSupport::TestCase
     @outputs = [outputs(:one)]
     @indicators = [indicators(:one)]
 
+    @so = strategy_objectives(:one)
+
+    @so.goals << @goals
+    @so.problem_objectives << @pos
+    @so.outputs << @outputs
+    @so.indicators << @indicators
+
     @s.plans << @plans
     @s.ppgs << @ppgs
     @s.rights_groups << @rights_groups
-    @s.goals << @goals
-    @s.problem_objectives << @pos
-    @s.outputs << @outputs
-    @s.indicators << @indicators
 
+    @s.strategy_objectives << @so
   end
 
   test "should get indicator data for strategy" do
@@ -94,7 +98,6 @@ class StrategyTest < ActiveSupport::TestCase
   end
 
   test "should get deleted data for strategy" do
-
     datum = IndicatorDatum.new()
     datum.plan = plans(:one)
     datum.ppg = ppgs(:one)
@@ -111,6 +114,35 @@ class StrategyTest < ActiveSupport::TestCase
     assert_equal 0, data[:updated].length
     assert_equal 0, data[:new].length
     assert_equal 1, data[:deleted].length
+  end
+
+  test "strategy objective should add params to strategy" do
+    assert_equal 1, @s.goals.length
+    assert_equal 1, @s.problem_objectives.length
+    assert_equal 1, @s.outputs.length
+    assert_equal 1, @s.indicators.length
+
+    @so.goals << goals(:two)
+    assert_equal 2, Strategy.find(@s.id).goals.length
+
+    @so2 = strategy_objectives(:two)
+    @so2.goals << goals(:three)
+
+    @s.strategy_objectives << @so2
+    assert_equal 3, Strategy.find(@s.id).goals.length
+
+    @so2.goals << goals(:two)
+    assert_equal 3, Strategy.find(@s.id).goals.length
+
+    @so2.goals.delete(goals(:three))
+    assert_equal 1, StrategyObjective.find(@so2.id).goals.length
+    assert_equal 2, Strategy.find(@s.id).goals.length
+
+    @so2.goals.destroy_all
+    @so.goals.destroy_all
+    assert_equal 0, Strategy.find(@s.id).goals.length
+
+
 
   end
 end

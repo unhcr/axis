@@ -53,6 +53,8 @@ class FocusParseTest < ActiveSupport::TestCase
       assert_equal 1, o.plans.length
     end
 
+    assert IndicatorDatum.where(:yer => nil).count > 0, 'There should be some nil yer'
+
 
 
   end
