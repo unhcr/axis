@@ -134,15 +134,15 @@ test 'situation analysis', () ->
     threshold_red: 40
   })
 
-  res = datum.situation_analysis()
+  res = datum.situationAnalysis()
   strictEqual res, Visio.Algorithms.ALGO_RESULTS.ok
 
   datum.set('myr', 60)
-  res = datum.situation_analysis()
+  res = datum.situationAnalysis()
   strictEqual res, Visio.Algorithms.ALGO_RESULTS.success
 
   datum.set('myr', 30)
-  res = datum.situation_analysis()
+  res = datum.situationAnalysis()
   strictEqual res, Visio.Algorithms.ALGO_RESULTS.fail
 
 test 'situation analysis collection', () ->
@@ -166,20 +166,20 @@ test 'situation analysis collection', () ->
 
   ])
 
-  res = data.situation_analysis()
+  res = data.situationAnalysis()
   strictEqual res.category, Visio.Algorithms.ALGO_RESULTS.ok
   strictEqual res.result, .5
 
   data.at(0).set('myr', 60)
-  res = data.situation_analysis()
+  res = data.situationAnalysis()
   strictEqual res.category, Visio.Algorithms.ALGO_RESULTS.success
 
   data.at(0).set('myr', 30)
-  res = data.situation_analysis()
+  res = data.situationAnalysis()
   strictEqual res.category, Visio.Algorithms.ALGO_RESULTS.fail
 
   data = new Visio.Collections.IndicatorDatum()
-  res = data.situation_analysis()
+  res = data.situationAnalysis()
   strictEqual res.category, Visio.Algorithms.ALGO_RESULTS.fail
   strictEqual res.result, 0
 

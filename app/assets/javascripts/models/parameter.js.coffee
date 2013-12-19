@@ -51,7 +51,7 @@ class Visio.Models.Parameter extends Backbone.Model
 
   selectedSituationAnalysis: () ->
     data = @selectedIndicatorData()
-    data.situation_analysis()
+    data.situationAnalysis()
 
   strategyIndicatorData: (strategy) ->
     strategy ||= Visio.manager.strategy()

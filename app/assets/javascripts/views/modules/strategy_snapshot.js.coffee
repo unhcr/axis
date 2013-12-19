@@ -131,7 +131,7 @@ class Visio.Views.StrategySnapshotView extends Backbone.View
     data = Visio.manager.get('indicator_data').where({ plan_id: plan.id })
 
     _.each(data, (d) ->
-      counts[d.situation_analysis()] += 1
+      counts[d.situationAnalysis()] += 1
     )
 
     counts

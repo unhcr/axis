@@ -29,7 +29,7 @@ class Visio.Models.Plan extends Visio.Models.Parameter
         d = @strategyIndicatorData(strategy)
         data.add d.models, { silent: true }
 
-      return data.situation_analysis()
+      return data.situationAnalysis()
 
   fetchIndicators: () ->
     @fetchParameter(Visio.Parameters.INDICATORS)

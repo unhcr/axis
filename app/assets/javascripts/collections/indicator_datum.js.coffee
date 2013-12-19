@@ -6,7 +6,7 @@ class Visio.Collections.IndicatorDatum extends Visio.Collections.Parameter
 
   url: '/indicator_data'
 
-  situation_analysis: (reported_value) ->
+  situationAnalysis: (reported_value) ->
     reported_value ||= Visio.Algorithms.REPORTED_VALUES.myr
 
     counts = {}
@@ -16,7 +16,7 @@ class Visio.Collections.IndicatorDatum extends Visio.Collections.Parameter
     counts[Visio.Algorithms.ALGO_RESULTS.missing] = 0
 
     @each((datum) ->
-      counts[datum.situation_analysis()] += 1
+      counts[datum.situationAnalysis()] += 1
     )
 
     count = counts[Visio.Algorithms.ALGO_RESULTS.success] +
