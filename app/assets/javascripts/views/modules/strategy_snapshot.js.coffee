@@ -89,7 +89,7 @@ class Visio.Views.StrategySnapshotView extends Backbone.View
   updateSituationAnalysis: (plan) =>
 
     if plan
-      counts = @situationAnalysisCounts(plan)
+      counts = plan.strategySituationAnalysis().counts
 
 
     else
@@ -98,7 +98,7 @@ class Visio.Views.StrategySnapshotView extends Backbone.View
         counts[resultType] = 0
 
       _.each(@collection.where({ year: Visio.manager.year() }), (plan) =>
-        result = @situationAnalysisCounts(plan)
+        result = plan.strategySituationAnalysis().counts
         _.each @resultTypes, (resultType) ->
           counts[resultType] += result[resultType])
 
@@ -120,9 +120,3 @@ class Visio.Views.StrategySnapshotView extends Backbone.View
       speed: Visio.Durations.FAST
       formatter: Visio.Utils.countToFormatter
     )
-
-
-
-  situationAnalysisCounts: (plan) =>
-    data = new Visio.Collections.IndicatorDatum(Visio.manager.get('indicator_data').where({ plan_id: plan.id }))
-    data.situationAnalysis().counts
