@@ -53,16 +53,21 @@ class Strategy < ActiveRecord::Base
   end
 
   def to_jbuilder(options = {})
+    options[:include] ||= {}
     Jbuilder.new do |json|
-      json.extract! self, :name, :id
+      json.extract! self, :name, :id, :description
 
-      if options[:include] && options[:include][:ids]
+      if options[:include][:ids]
         json.indicators_ids self.indicator_ids.inject({}) { |h, id| h[id] = true; h }
         json.goals_ids self.goal_ids.inject({}) { |h, id| h[id] = true; h }
         json.ppgs_ids self.ppg_ids.inject({}) { |h, id| h[id] = true; h }
         json.outputs_ids self.output_ids.inject({}) { |h, id| h[id] = true; h }
         json.plans_ids self.plan_ids.inject({}) { |h, id| h[id] = true; h }
         json.problem_objectives_ids self.problem_objective_ids.inject({}) { |h, id| h[id] = true; h }
+      end
+
+      if options[:include][:strategy_objectives]
+        json.strategy_objectives self.strategy_objectives
       end
     end
   end
