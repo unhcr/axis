@@ -1,5 +1,5 @@
 class Strategy < ActiveRecord::Base
-  attr_accessible :name
+  attr_accessible :name, :description
 
   has_many :strategy_objectives, :before_add => :add_strategy_objective_parameters
 
