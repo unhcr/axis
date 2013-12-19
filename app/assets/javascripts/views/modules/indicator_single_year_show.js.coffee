@@ -28,7 +28,8 @@ class Visio.Views.IndicatorSingleYearShowView extends Backbone.View
     'click .js-parameter': 'onClickParameter'
 
   onClickParameter: (e) ->
-    $container = @$el.find('.js-data')
-    $container.toggleClass 'gone'
+    $container = @$el.find '.js-data'
+    $('.js-data').not($container).addClass 'zero-max-height'
+    $container.toggleClass 'zero-max-height'
 
-    @graph() unless $container.hasClass 'gone'
+    @graph() unless $container.hasClass 'zero-max-height'
