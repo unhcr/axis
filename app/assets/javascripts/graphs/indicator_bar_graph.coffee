@@ -70,9 +70,9 @@ Visio.Graphs.indicatorBarGraph = (config) ->
         center.enter().append('line')
         center.attr('class', 'center')
           .attr('x1', barWidth / 2)
-          .attr('y1', (d) -> y(d.get('yer')))
+          .attr('y1', (d) -> if reversed then y(d.get(progress.start)) else y(d.get(progress.end)))
           .attr('x2', barWidth / 2)
-          .attr('y2', (d) -> y(d.get('comp_target')))
+          .attr('y2', (d) -> y(d.get(Visio.Algorithms.GOAL_TYPES.target)))
 
       )
 
