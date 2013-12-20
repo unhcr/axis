@@ -150,8 +150,13 @@ Visio.Graphs.bubble = (config) ->
     "M" + d.join("L") + "Z"
 
   render.parameters = (_parameters) ->
-    return if !arguments
+    return parameters unless arguments.length
     parameters = _parameters
+    return render
+
+  render.width = (_width) ->
+    return width unless arguments.length
+    width = _width
     return render
 
   return render

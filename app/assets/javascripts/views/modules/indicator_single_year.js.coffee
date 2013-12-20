@@ -5,6 +5,7 @@ class Visio.Views.IndicatorSingleYearView extends Backbone.View
   initialize: (options) ->
     @views = {}
 
+  className: 'module'
 
   render: (isRerender) ->
     if !isRerender

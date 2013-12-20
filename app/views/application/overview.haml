@@ -29,6 +29,7 @@
 :javascript
   $(document).on('ready page:load', function() {
     var $navigationIcon = $('.navigation-activation-icon');
+    var $toolbar = $('.toolbar')
     var headerHeight = $('header').height();
 
     $('.navigation-activation').on('mouseenter', function(e) {
@@ -45,9 +46,10 @@
       var scrollTop = $(document).scrollTop()
       $navigationIcon.css('top', scrollTop + 140);
       if (scrollTop > headerHeight) {
-        $('.toolbar').addClass('fixed-top');
+        if (!$toolbar.hasClass('fixed-top'))
+          $toolbar.addClass('fixed-top');
       } else {
-        $('.toolbar').removeClass('fixed-top');
+        $toolbar.removeClass('fixed-top');
       }
 
 

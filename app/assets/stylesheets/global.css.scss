@@ -1050,9 +1050,12 @@ a {
   top: 0;
 }
 
-.module {
-  background-color: $off-white;
-  padding-bottom: 100px;
+.module:before {
+  display: block;
+  content: ' ';
+  margin-top: -$toolbar-height;
+  height: $toolbar-height;
+  visibility: hidden;
 }
 
 .page {
@@ -1198,6 +1201,7 @@ input[type="radio"]:checked + label {
 
 #module {
   background-color: $off-white;
+  min-height: 800px;
 }
 
 .data-container {
