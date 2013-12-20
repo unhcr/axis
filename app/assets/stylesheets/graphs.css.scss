@@ -76,6 +76,9 @@
 .indicator-bar-graph {
   .box {
     fill: green;
+    line {
+      stroke: $dark-gray;
+    }
   }
   .box.reversed {
     fill: red;
