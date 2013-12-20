@@ -37,9 +37,13 @@ Visio.Graphs.indicatorBarGraph = (config) ->
 
   render = () ->
 
+
     boxes = g.selectAll('g.box').data(data)
     boxes.enter().append('g')
     boxes.attr('class', 'box')
+      .sort(sort)
+      .transition()
+      .duration(duration)
       .attr('transform', (d, i) ->
         'translate(' + x(i) + ', 0)'
       )
@@ -56,7 +60,11 @@ Visio.Graphs.indicatorBarGraph = (config) ->
           classes = ['box']
           classes.push 'reversed' if reversed
           classes.join ' '
-        ).attr('x', 0)
+        )
+
+        box.transition()
+          .duration(duration)
+          .attr('x', 0)
           .attr('y', (d) ->
             if reversed
               return y(d.get(progress.end) + barHeight)
@@ -69,12 +77,16 @@ Visio.Graphs.indicatorBarGraph = (config) ->
         center = bar.selectAll('.center').data([d])
         center.enter().append('line')
         center.attr('class', 'center')
+        center.transition()
+          .duration(duration)
           .attr('x1', barWidth / 2)
           .attr('y1', (d) -> if reversed then y(d.get(progress.start)) else y(d.get(progress.end)))
           .attr('x2', barWidth / 2)
           .attr('y2', (d) -> y(d.get(Visio.Algorithms.GOAL_TYPES.target)))
 
       )
+
+    boxes.exit().remove()
 
   render.data = (_data) ->
     return data unless arguments.length
@@ -97,6 +109,15 @@ Visio.Graphs.indicatorBarGraph = (config) ->
     goalType = _goalType
     render
 
+  sort = (a, b) ->
+    reversedA = if a.get(progress.start) > a.get(progress.end) then -1 else 1
+    reversedB = if b.get(progress.start) > b.get(progress.end) then -1 else 1
+    (reversedA * scaledBarHeight(a)) - (reversedB * scaledBarHeight(b))
+
+  scaledBarHeight = (d) ->
+    y.domain [0, +d.get(goalType)]
+    v = Math.abs(+d.get(progress.start) - +d.get(progress.end))
+    y(v)
 
 
   render

@@ -498,10 +498,14 @@ button, input {
 .ui-tab-radio label {
   display: block;
   cursor: pointer;
+  text-align: center;
+  line-height: 28px;
 }
 
 .ui-tab-radio input[type="radio"]:checked + label {
   color: $orange;
+  border: 1px solid $light-gray;
+  border-bottom: none;
 }
 
 .visio-check input {
@@ -1237,4 +1241,8 @@ input[type="radio"]:checked + label {
 [data-prefix]:before {
   content: attr(data-prefix) ': ';
   display: inline;
+}
+
+.tabs {
+  border-bottom: 1px solid $light-gray;
 }
