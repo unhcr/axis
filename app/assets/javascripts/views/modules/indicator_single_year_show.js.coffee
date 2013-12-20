@@ -5,7 +5,7 @@ class Visio.Views.IndicatorSingleYearShowView extends Backbone.View
   className: 'isy-container'
 
   events:
-    'click .js-parameter': 'onClickParameter'
+    'click': 'onClickParameter'
     'mouseenter .box': 'onMouseenterBox'
     'transitionend': 'onTransitionEnd'
     'MSTransitionEnd': 'onTransitionEnd'

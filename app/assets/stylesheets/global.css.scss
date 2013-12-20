@@ -1084,6 +1084,11 @@ a {
   transition:max-height $fast-transition;
 }
 
+.isy-container:hover {
+  background-color: white;
+  cursor: pointer;
+}
+
 .isy-container.open {
   background-color: white;
 
@@ -1246,3 +1251,4 @@ input[type="radio"]:checked + label {
 .tabs {
   border-bottom: 1px solid $light-gray;
 }
+
