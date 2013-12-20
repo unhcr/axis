@@ -8,7 +8,7 @@ Visio.Graphs.indicatorBarGraph = (config) ->
 
   duration = 500
 
-  isPerformance = false
+  isPerformance = true
 
   svg = selection.append('svg')
     .attr('width', config.width)
@@ -24,8 +24,13 @@ Visio.Graphs.indicatorBarGraph = (config) ->
     .range([0, width])
 
   y = d3.scale.linear()
-    .domain([0, 100])
     .range([height, 0])
+
+  progress =
+    start: Visio.Algorithms.REPORTED_VALUES.baseline
+    end: Visio.Algorithms.REPORTED_VALUES.myr
+
+  goalType = Visio.Algorithms.GOAL_TYPES.target
 
   data = []
 
@@ -41,44 +46,22 @@ Visio.Graphs.indicatorBarGraph = (config) ->
       .each((d, i) ->
         bar = d3.select @
 
-        reversed = d.get('baseline') > d.get('myr')
-        barHeight = Math.abs(d.get('baseline') - d.get('myr'))
-        console.log barHeight
-        console.log '---'
-        console.log d.get('baseline')
-        console.log d.get('myr')
-        console.log d.get('yer')
-        myrBox = bar.selectAll('.myrBox').data([d])
-        myrBox.enter().append('rect')
-        myrBox.attr('class', (d) ->
-          classes = ['myrBox']
+        y.domain [0, +d.get(goalType)]
+
+        reversed = d.get(progress.start) > d.get(progress.end)
+        barHeight = Math.abs(d.get(progress.start) - d.get(progress.end))
+        box = bar.selectAll('.box').data([d])
+        box.enter().append('rect')
+        box.attr('class', (d) ->
+          classes = ['box']
           classes.push 'reversed' if reversed
           classes.join ' '
         ).attr('x', 0)
           .attr('y', (d) ->
             if reversed
-              return y(d.get('myr') + barHeight)
+              return y(d.get(progress.end) + barHeight)
             else
-              return y(d.get('baseline') + barHeight)
-          ).attr('width', barWidth)
-          .attr('height', (d) ->
-            return y(0) - y(barHeight))
-
-
-        reversed = d.get('myr') > d.get('yer')
-        barHeight = Math.abs(d.get('myr') - d.get('yer'))
-        yerBox = bar.selectAll('.yerBox').data([d])
-        yerBox.enter().append('rect')
-        yerBox.attr('class', (d) ->
-          classes = ['yerBox']
-          classes.push 'reversed' if reversed
-          classes.join ' '
-        ).attr('x', 0)
-          .attr('y', (d) ->
-            if reversed
-              return y(d.get('yer') + barHeight)
-            else
-              return y(d.get('myr') + barHeight)
+              return y(d.get(progress.start) + barHeight)
           ).attr('width', barWidth)
           .attr('height', (d) ->
             return y(0) - y(barHeight))
@@ -99,8 +82,19 @@ Visio.Graphs.indicatorBarGraph = (config) ->
     render
 
   render.isPerformance = (_isPerformance) ->
-    return _isPerformance unless arguments.length
+    return isPerformance unless arguments.length
     isPerformance = _isPerformance
+    goal = Visio.Algorithms.GOAL_VALUES.target if isPerformance
+    render
+
+  render.progress = (_progress) ->
+    return progress unless arguments.length
+    progress = _progress
+    render
+
+  render.goalType = (_goalType) ->
+    return goalType unless arguments.length
+    goalType = _goalType
     render
 
 

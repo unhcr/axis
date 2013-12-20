@@ -22,7 +22,7 @@ class Visio.Views.IndicatorSingleYearShowView extends Backbone.View
       width: 100
     }
 
-  render: () ->
+  render: ->
     @$el.html @template({ parameter: @model })
     @config.selection = d3.select(@el).select('.indicator-bar-graph')
     @indicatorBarGraph = Visio.Graphs.indicatorBarGraph(@config)
@@ -34,8 +34,16 @@ class Visio.Views.IndicatorSingleYearShowView extends Backbone.View
 
     @
 
-  graph: () ->
+  graph: ->
     @indicatorBarGraph.data @model.selectedIndicatorData()
+    @indicatorBarGraph()
+
+  changeProgress: (progress) ->
+    @indicatorBarGraph.progress progress
+    @indicatorBarGraph()
+
+  changeIsPerformance: (isPerformance) ->
+    @indicatorBarGraph.isPerformance isPerformance
     @indicatorBarGraph()
 
   events:

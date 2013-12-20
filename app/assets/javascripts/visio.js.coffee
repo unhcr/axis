@@ -53,6 +53,11 @@ window.Visio =
     REPORTED_VALUES:
       myr: 'myr'
       yer: 'yer'
+      baseline: 'baseline'
+
+    GOAL_TYPES:
+      standard: 'standard'
+      target: 'comp_target'
 
 Visio.Types = [
     Visio.Parameters.PLANS,

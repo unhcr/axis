@@ -74,18 +74,10 @@
 }
 
 .indicator-bar-graph {
-  .myrBox {
-    fill: green;
-    opacity: .5;
-  }
-  .myrBox.reversed {
-    fill: red;
-  }
-
-  .yerBox {
+  .box {
     fill: green;
   }
-  .yerBox.reversed {
+  .box.reversed {
     fill: red;
   }
 }
