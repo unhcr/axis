@@ -9,6 +9,8 @@ class Visio.Views.IndicatorSingleYearShowView extends Backbone.View
       margin:
         top: 10
         bottom: 10
+        left: 10
+        right: 10
       width: 400
       height: 300
     }
