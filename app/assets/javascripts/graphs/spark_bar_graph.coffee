@@ -1,5 +1,8 @@
 Visio.Graphs.sparkBarGraph = (config) ->
+  negativeLength = 2
   margin = config.margin
+  margin.left = 0
+  margin.right = negativeLength
 
   width = config.width - margin.left - margin.right
 
@@ -38,7 +41,7 @@ Visio.Graphs.sparkBarGraph = (config) ->
       ['bar', d.key].join ' ' )
       .attr('x', (d) -> x(d.value))
       .attr('y', (d, i) -> y(i * barWidth) - barWidth)
-      .attr('width', (d) -> x(0) - x(d.value))
+      .attr('width', (d) -> if d.value then x(0) - x(d.value) else negativeLength)
       .attr('height', barWidth)
 
     bars.exit().remove()
