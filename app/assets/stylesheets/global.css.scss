@@ -64,7 +64,6 @@ p.small {
 }
 
 .inner-content {
-  border-top: ($toolbar-height + $header-height) white solid;
   border-left: $page-margin solid white;
   border-right: $page-margin solid white;
 
@@ -180,15 +179,6 @@ body.splash {
   -o-transition:background-color $medium-transition;
   transition:background-color $medium-transition;
 
-}
-
-body.overview {
-  header {
-    top: 0;
-    position: fixed;
-    z-index: 300;
-    height: $header-height + $toolbar-height;
-  }
 }
 
 body.layout-application {
@@ -1053,6 +1043,11 @@ a {
   padding: 12px 0;
   z-index: 300;
   height: $toolbar-height;
+}
+
+.fixed-top {
+  position: fixed;
+  top: 0;
 }
 
 .module {

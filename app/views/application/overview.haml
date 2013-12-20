@@ -2,6 +2,7 @@
   .navigation-activation-icon
 
 .inner-content
+  %aside.container.full-width.toolbar.gone
   .collapsable-content
     .container.full-width.ui-primary-soft-theme
       .row
@@ -27,7 +28,31 @@
 
 :javascript
   $(document).on('ready page:load', function() {
-    $navigationIcon = $('.navigation-activation-icon');
+    var $navigationIcon = $('.navigation-activation-icon');
+    var headerHeight = $('header').height();
+
+    $('.navigation-activation').on('mouseenter', function(e) {
+      $('.page').addClass('shift');
+      $(e.currentTarget).addClass('zero-width');
+    })
+
+    $('#navigation').on('mouseleave', function(e) {
+      $('.page').removeClass('shift');
+      $('.navigation-activation').removeClass('zero-width');
+    })
+
+    $(document).scroll(function(e) {
+      var scrollTop = $(document).scrollTop()
+      $navigationIcon.css('top', scrollTop + 140);
+      if (scrollTop > headerHeight) {
+        $('.toolbar').addClass('fixed-top');
+      } else {
+        $('.toolbar').removeClass('fixed-top');
+      }
+
+
+
+    })
 
     Visio.manager = new Visio.Models.Manager({
       strategy_id: #{@strategy.id},
@@ -35,30 +60,6 @@
       ready: function() {
         Visio.router = new Visio.Routers.OverviewRouter();
         Backbone.history.start();
-
-        $('.navigation-activation').on('mouseenter', function(e) {
-          $('.page').addClass('shift');
-          $(e.currentTarget).addClass('zero-width');
-        })
-
-        $('#navigation').on('mouseleave', function(e) {
-          $('.page').removeClass('shift');
-          $('.navigation-activation').removeClass('zero-width');
-        })
-
-        $(document).scroll(function(e) {
-          $navigationIcon.css('top', $(document).scrollTop() + 140);
-        })
-
-        var headroom  = new Headroom(document.querySelector("header"), {
-          offset: $('header').height() + $('.toolbar').height(),
-          classes: {
-            unpinned: 'slideOutUp',
-            pinned : 'slideInDown',
-            initial : 'animated'
-          }
-        });
-        headroom.init();
 
       }
     });
