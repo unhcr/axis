@@ -29,7 +29,7 @@ class Visio.Models.Manager extends Backbone.Model
     'indicator_data': new Visio.Collections.IndicatorDatum()
     'budgets': new Visio.Collections.Budget()
     'strategies': new Visio.Collections.Strategy()
-    'date': new Date()
+    'date': new Date(2012, 1)
     'use_local_db': true
     'setup': false
     'db': null

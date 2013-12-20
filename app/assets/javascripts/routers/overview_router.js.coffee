@@ -44,7 +44,7 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
            Visio.manager.get('indicators').fetchSynced(options),
            Visio.manager.get('budgets').fetchSynced({ strategy_id: Visio.manager.get('strategy_id') })
            Visio.manager.get('indicator_data').fetchSynced({ strategy_id: Visio.manager.get('strategy_id') })
-    ).done(() ->
+    ).done(() =>
       @navigation = new Visio.Views.NavigationView({
         el: $('#navigation')
       })

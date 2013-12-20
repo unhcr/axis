@@ -88,8 +88,8 @@ Visio.Graphs.indicatorBarGraph = (config) ->
     render
 
   render.progress = (_progress) ->
-    return progress unless arguments.length
-    progress = _progress
+    return [progress.start, progress.end].join('-') unless arguments.length
+    progress = { start: _progress.split('-')[0], end: _progress.split('-')[1] }
     render
 
   render.goalType = (_goalType) ->

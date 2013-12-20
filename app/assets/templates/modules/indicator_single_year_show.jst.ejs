@@ -14,6 +14,16 @@
       </div>
     </div>
     <div class="row data-container">
+      <div class="col-md-9 tabs">
+        <% _.each(_.values(Visio.ProgressTypes), function(type) { %>
+        <div class="col-md-3">
+          <div class="ui-tab-radio">
+            <input id="progress-<%= type + '-' + parameter.id %>" name="<%= parameter.id %>" type="radio" value="<%= type %>" />
+            <label for="progress-<%= type + '-' + parameter.id %>"><%= Visio.Utils.progressTypeToName(type) %></label>
+          </div>
+        </div>
+        <% }) %>
+      </div>
       <figure class='indicator-bar-graph'></figure>
     </div>
   </div>

@@ -11,6 +11,7 @@ class Visio.Views.IndicatorSingleYearShowView extends Backbone.View
     'MSTransitionEnd': 'onTransitionEnd'
     'webkitTransitionEnd': 'onTransitionEnd'
     'oTransitionEnd': 'onTransitionEnd'
+    'change .tabs input': 'onChangeProgress'
 
 
   initialize: (options) ->
@@ -43,6 +44,8 @@ class Visio.Views.IndicatorSingleYearShowView extends Backbone.View
     @sparkBarGraph.data @model.selectedSituationAnalysis()
     @sparkBarGraph()
 
+    @$el.find("#progress-#{@indicatorBarGraph.progress()}-#{@model.id}").prop 'checked', true
+
     @toolbarHeight or= $('.toolbar').height()
 
     @
@@ -50,6 +53,10 @@ class Visio.Views.IndicatorSingleYearShowView extends Backbone.View
   graph: ->
     @indicatorBarGraph.data @model.selectedIndicatorData()
     @indicatorBarGraph()
+
+  onChangeProgress: (e) ->
+    console.log 'change'
+    @changeProgress($(e.currentTarget).val())
 
   changeProgress: (progress) ->
     @indicatorBarGraph.progress progress

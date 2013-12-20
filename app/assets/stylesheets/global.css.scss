@@ -491,6 +491,19 @@ button, input {
   display: none;
 }
 
+.ui-tab-radio input {
+  display: none;
+}
+
+.ui-tab-radio label {
+  display: block;
+  cursor: pointer;
+}
+
+.ui-tab-radio input[type="radio"]:checked + label {
+  color: $orange;
+}
+
 .visio-check input {
   display: none;
 }
