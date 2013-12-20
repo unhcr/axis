@@ -38,7 +38,7 @@ Visio.Graphs.indicatorBarGraph = (config) ->
   render = () ->
 
 
-    boxes = g.selectAll('g.box').data(data)
+    boxes = g.selectAll('g.box').data(data.where({ is_performance: isPerformance }))
     boxes.enter().append('g')
     boxes.attr('class', 'box')
       .sort(sort)
@@ -90,7 +90,7 @@ Visio.Graphs.indicatorBarGraph = (config) ->
 
   render.data = (_data) ->
     return data unless arguments.length
-    data = _data.where { is_performance: isPerformance }
+    data = _data
     render
 
   render.isPerformance = (_isPerformance) ->

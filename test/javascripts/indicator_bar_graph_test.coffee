@@ -28,11 +28,11 @@ test 'data', ->
   ])
 
   @graph.data(data)
-  strictEqual @graph.data().length, 2
+  strictEqual @graph.data().length, 3
 
   @graph.isPerformance(false)
   @graph.data(data)
-  strictEqual @graph.data().length, 1
+  strictEqual @graph.data().length, 3
 
 test 'progress', ->
 
