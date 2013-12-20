@@ -84,6 +84,16 @@ Visio.Graphs.indicatorBarGraph = (config) ->
           .attr('x2', barWidth / 2)
           .attr('y2', (d) -> y(d.get(Visio.Algorithms.GOAL_TYPES.target)))
 
+        whisker = bar.selectAll('.whisker').data([d])
+        whisker.enter().append('line')
+        whisker.attr('class', 'whisker')
+        whisker.transition()
+          .duration(duration)
+          .attr('x1', 2)
+          .attr('y1', (d) -> y(d.get(Visio.Algorithms.GOAL_TYPES.target)))
+          .attr('x2', barWidth - 2)
+          .attr('y2', (d) -> y(d.get(Visio.Algorithms.GOAL_TYPES.target)))
+
       )
 
     boxes.exit().remove()
