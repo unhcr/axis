@@ -4,6 +4,15 @@ class Visio.Views.IndicatorSingleYearShowView extends Backbone.View
 
   className: 'isy-container'
 
+  events:
+    'click .js-parameter': 'onClickParameter'
+    'mouseenter .box': 'onMouseenterBox'
+    'transitionend': 'onTransitionEnd'
+    'MSTransitionEnd': 'onTransitionEnd'
+    'webkitTransitionEnd': 'onTransitionEnd'
+    'oTransitionEnd': 'onTransitionEnd'
+
+
   initialize: (options) ->
     @config = {
       margin:
@@ -50,16 +59,15 @@ class Visio.Views.IndicatorSingleYearShowView extends Backbone.View
     @indicatorBarGraph.isPerformance isPerformance
     @indicatorBarGraph()
 
-  events:
-    'click .js-parameter': 'onClickParameter'
-    'transitionend': 'onTransitionEnd'
-    'MSTransitionEnd': 'onTransitionEnd'
-    'webkitTransitionEnd': 'onTransitionEnd'
-    'oTransitionEnd': 'onTransitionEnd'
-
   isOpen: =>
     @$el.hasClass 'open'
 
+  onMouseenterBox: (e) ->
+    d = d3.select(e.currentTarget).datum()
+
+    containerTypes = ['ppg', 'goal', 'indicator']
+    _.each containerTypes, (type) =>
+      @$el.find(".js-#{type}-container").text Visio.manager.get("#{type}s").get(d.get("#{type}_id"))
 
   onTransitionEnd: (e) ->
     if @isOpen()

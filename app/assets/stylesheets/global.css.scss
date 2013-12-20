@@ -1221,3 +1221,7 @@ input[type="radio"]:checked + label {
   min-height: 800px;
 }
 
+[data-prefix]:before {
+  content: attr(data-prefix) ': ';
+  display: inline;
+}
