@@ -12,13 +12,18 @@ class BudgetsControllerTest < ActionController::TestCase
     @outputs = [outputs(:one)]
     @indicators = [indicators(:one)]
 
+    @so = strategy_objectives(:one)
+
+    @so.goals << @goals
+    @so.problem_objectives << @pos
+    @so.outputs << @outputs
+    @so.indicators << @indicators
+
     @s.plans << @plans
     @s.ppgs << @ppgs
     @s.rights_groups << @rights_groups
-    @s.goals << @goals
-    @s.problem_objectives << @pos
-    @s.outputs << @outputs
 
+    @s.strategy_objectives << @so
   end
 
   test "should get no budget data" do

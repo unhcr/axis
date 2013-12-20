@@ -1,0 +1,21 @@
+<figure class="spark-bar-graph pull-right"></figure>
+<div class="row">
+  <div class="col-md-8 col-centered">
+    <div class="row js-parameter">
+      <% situationAnalysis = parameter.selectedSituationAnalysis(); %>
+      <div class="col-md-2">
+        <div class="pin pin-medium pin-<%= situationAnalysis.category %>">
+          <div class="pin-tip"></div>
+          <div class="pin-body"></div>
+        </div>
+      </div>
+      <div class="col-md-8 ui-medium-header">
+        <%= parameter.toString() %>
+      </div>
+    </div>
+    <div class="row zero-max-height js-data data-container">
+      <figure class='indicator-bar-graph'></figure>
+      HELLO
+    </div>
+  </div>
+</div>

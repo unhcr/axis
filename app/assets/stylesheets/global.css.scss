@@ -140,6 +140,9 @@ p.small {
   .highlight {
     color: $primary-light;
   }
+  a {
+    color: $primary-light;
+  }
 }
 
 .ui-purple-theme {
@@ -600,6 +603,8 @@ button, input {
 
 a {
   color: white;
+  cursor: pointer;
+  text-decoration: none;
 }
 
 ::-webkit-input-placeholder { /* WebKit browsers */
@@ -1170,4 +1175,17 @@ input[type="radio"]:checked + label {
 
 #achievement-budget-single-year {
   padding-bottom: 120px;
+}
+
+#module {
+  background-color: $off-white;
+}
+
+.data-container {
+  max-height: 420px;
+  overflow: hidden;
+  -moz-transition:max-height $fast-transition;
+  -webkit-transition:max-height $fast-transition;
+  -o-transition:max-height $fast-transition;
+  transition:max-height $fast-transition;
 }

@@ -49,6 +49,10 @@ class Visio.Models.Parameter extends Backbone.Model
     data = @selectedBudgetData()
     data.budget()
 
+  selectedSituationAnalysis: () ->
+    data = @selectedIndicatorData()
+    data.situationAnalysis()
+
   strategyIndicatorData: (strategy) ->
     strategy ||= Visio.manager.strategy()
 
@@ -80,6 +84,10 @@ class Visio.Models.Parameter extends Backbone.Model
   strategyBudget: () ->
     data = @strategyBudgetData()
     data.budget()
+
+  strategySituationAnalysis: () ->
+    data = @strategyIndicatorData()
+    data.situationAnalysis()
 
   toJSON: () ->
     json = _.clone(this.attributes)

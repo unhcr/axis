@@ -3,19 +3,24 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
   initialize: (options) ->
     Visio.Routers.GlobalRouter.prototype.initialize.call(@)
 
+    selectedStrategies = {}
+    selectedStrategies[Visio.manager.strategy().id] = true
+    Visio.manager.set 'selected_strategies', selectedStrategies
     Visio.manager.on 'change:date', () =>
       @navigation.render()
       Visio.manager.setSelected()
-      @achievementBudgetSingleYearView.render(true)
+      @moduleView.render(true)
 
     Visio.manager.on 'change:aggregation_type', () =>
-      @achievementBudgetSingleYearView.render(true)
+      @moduleView.render(true)
 
     Visio.manager.on 'change:selected', () =>
-      @achievementBudgetSingleYearView.render(true)
+      @moduleView.render(true)
 
     Visio.manager.on 'change:achievement_type', () =>
-      @achievementBudgetSingleYearView.render(true)
+      @moduleView.render(true)
+
+    @module = $('#module')
 
   setup: () ->
     # Return empty promise if we've setup already
@@ -66,14 +71,23 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
     'menu' : 'menu'
     'search': 'search'
     'absy': 'absy'
+    'isy': 'isy'
     '*default': 'index'
+
+  isy: () ->
+    @setup().done(() =>
+      @indicatorSingleYearView ||= new Visio.Views.IndicatorSingleYearView( el: @module )
+      @indicatorSingleYearView.render()
+      @moduleView = @indicatorSingleYearView
+    ).fail (e) =>
+      console.log e
+
 
   absy: () ->
     @setup().done(() =>
-      @achievementBudgetSingleYearView = new Visio.Views.AchievementBudgetSingleYearView(
-        el: $('#absy')
-      )
+      @achievementBudgetSingleYearView ||= new Visio.Views.AchievementBudgetSingleYearView( el: @module )
       @achievementBudgetSingleYearView.render()
+      @moduleView = @achievementBudgetSingleYearView
     ).fail (e) =>
       console.log e
 

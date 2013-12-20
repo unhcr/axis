@@ -6,7 +6,7 @@ class Visio.Collections.IndicatorDatum extends Visio.Collections.Parameter
 
   url: '/indicator_data'
 
-  situation_analysis: (reported_value) ->
+  situationAnalysis: (reported_value) ->
     reported_value ||= Visio.Algorithms.REPORTED_VALUES.myr
 
     counts = {}
@@ -16,7 +16,7 @@ class Visio.Collections.IndicatorDatum extends Visio.Collections.Parameter
     counts[Visio.Algorithms.ALGO_RESULTS.missing] = 0
 
     @each((datum) ->
-      counts[datum.situation_analysis()] += 1
+      counts[datum.situationAnalysis()] += 1
     )
 
     count = counts[Visio.Algorithms.ALGO_RESULTS.success] +
@@ -31,9 +31,12 @@ class Visio.Collections.IndicatorDatum extends Visio.Collections.Parameter
     else if result >= Visio.Algorithms.OK_THRESHOLD
       category = Visio.Algorithms.ALGO_RESULTS.ok
 
+    result = if isNaN(result) then 0 else result
     return {
       result: result
       category: category
+      counts: counts
+      total: count
     }
 
   achievement: (reported_value) ->
