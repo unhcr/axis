@@ -1050,7 +1050,7 @@ a {
   top: 0;
 }
 
-.module:before {
+.module:before, .isy-container:before {
   display: block;
   content: ' ';
   margin-top: -$toolbar-height;

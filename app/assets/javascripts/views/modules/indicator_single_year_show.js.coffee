@@ -2,6 +2,8 @@ class Visio.Views.IndicatorSingleYearShowView extends Backbone.View
 
   template: JST['modules/indicator_single_year_show']
 
+  className: 'isy-container'
+
   initialize: (options) ->
     @config = {
       margin:
@@ -48,6 +50,18 @@ class Visio.Views.IndicatorSingleYearShowView extends Backbone.View
 
   events:
     'click .js-parameter': 'onClickParameter'
+    'transitionend': 'onTransitionEnd'
+    'MSTransitionEnd': 'onTransitionEnd'
+    'webkitTransitionEnd': 'onTransitionEnd'
+    'oTransitionEnd': 'onTransitionEnd'
+
+  isOpen: =>
+    not @$el.find('.js-data').hasClass 'zero-max-height'
+
+
+  onTransitionEnd: (e) ->
+    if @isOpen()
+      $(document).scrollTop @$el.offset().top
 
   onClickParameter: (e) ->
     $container = @$el.find '.js-data'
