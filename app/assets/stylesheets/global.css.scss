@@ -1050,12 +1050,29 @@ a {
   top: 0;
 }
 
-.module:before, .isy-container:before {
+.module:before {
   display: block;
   content: ' ';
   margin-top: -$toolbar-height;
   height: $toolbar-height;
   visibility: hidden;
+}
+
+.data-container {
+  max-height: 0px;
+  overflow: hidden;
+  -moz-transition:max-height $fast-transition;
+  -webkit-transition:max-height $fast-transition;
+  -o-transition:max-height $fast-transition;
+  transition:max-height $fast-transition;
+}
+
+.isy-container.open {
+  background-color: white;
+
+  .data-container {
+    max-height: 420px;
+  }
 }
 
 .page {
@@ -1204,11 +1221,3 @@ input[type="radio"]:checked + label {
   min-height: 800px;
 }
 
-.data-container {
-  max-height: 420px;
-  overflow: hidden;
-  -moz-transition:max-height $fast-transition;
-  -webkit-transition:max-height $fast-transition;
-  -o-transition:max-height $fast-transition;
-  transition:max-height $fast-transition;
-}

@@ -32,6 +32,8 @@ class Visio.Views.IndicatorSingleYearShowView extends Backbone.View
     @sparkBarGraph.data @model.selectedSituationAnalysis()
     @sparkBarGraph()
 
+    @toolbarHeight or= $('.toolbar').height()
+
     @
 
   graph: ->
@@ -54,16 +56,15 @@ class Visio.Views.IndicatorSingleYearShowView extends Backbone.View
     'oTransitionEnd': 'onTransitionEnd'
 
   isOpen: =>
-    not @$el.find('.js-data').hasClass 'zero-max-height'
+    @$el.hasClass 'open'
 
 
   onTransitionEnd: (e) ->
     if @isOpen()
-      $(document).scrollTop @$el.offset().top
+      $(document).scrollTop @$el.offset().top - @toolbarHeight
 
   onClickParameter: (e) ->
-    $container = @$el.find '.js-data'
-    $('.js-data').not($container).addClass 'zero-max-height'
-    $container.toggleClass 'zero-max-height'
+    $('.isy-container').not(@$el).removeClass 'open'
+    @$el.toggleClass 'open'
 
-    @graph() unless $container.hasClass 'zero-max-height'
+    @graph() if @isOpen()
