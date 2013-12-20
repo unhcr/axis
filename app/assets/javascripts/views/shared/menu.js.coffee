@@ -4,6 +4,8 @@ class Visio.Views.MenuView extends Backbone.View
 
   className: 'container full-width menu gone overlay'
 
+  hiddenClass: 'gone'
+
   initialize: (options) ->
     @render()
 
@@ -15,7 +17,13 @@ class Visio.Views.MenuView extends Backbone.View
     @
 
   show: () ->
-    @$el.removeClass('gone')
+    @$el.removeClass(@hiddenClass)
+    $('body').removeClass('ui-invert-theme').addClass('ui-orange-theme')
 
   hide: () ->
-    @$el.addClass('gone')
+    @$el.addClass(@hiddenClass)
+    $('body').removeClass('ui-orange-theme').addClass('ui-invert-theme')
+
+  isHidden: () ->
+    @$el.hasClass(@hiddenClass)
+

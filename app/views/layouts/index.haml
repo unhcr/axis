@@ -9,7 +9,7 @@
 %body.ui-invert-theme{ :class => "#{controller.action_name} layout-#{controller.send(:_layout).virtual_path.name}" }
   #navigation.gone
   .page
-    %header.container.full-width.ui-orange-theme
+    %header.container.full-width
       %section.row
         .col-md-11.col-centered.center-text.zero-padding
           .col-md-4.extra-padding
@@ -19,7 +19,7 @@
                 = current_user.firstname
             .account-menu.pull-left
               .small-item.pull-right
-                = link_to "Sign out", destroy_user_session_path, :method => :delete, :class => 'ui-primary'
+                = link_to "Sign out", destroy_user_session_path, :method => :delete
           .col-md-4.center-text
             .ui-medium-header.logo.zero-padding
               <span class="light">UNHCR</span><span class="bold">NOVA</span>
