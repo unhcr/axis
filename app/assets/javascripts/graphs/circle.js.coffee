@@ -59,12 +59,12 @@ Visio.Graphs.circle = (config) ->
     oldNumber = number
 
   render.percent = (_percent) =>
-    return percent if !arguments
+    return percent unless arguments.length
     percent = _percent || 0
     return render
 
   render.number = (_number) =>
-    return number if !arguments
+    return number unless arguments.length
     number = if _.isNumber(_number) then _number else '?'
     return render
 
