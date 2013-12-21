@@ -55,7 +55,7 @@ asyncTest('fetchSyncedPlans', () ->
       include:
         counts: true
 
-  spy = sinon.stub $, 'get', (url, options) ->
+  sinon.stub $, 'get', (url, options) ->
     if options.synced_timestamp
       return {
         new: []
@@ -82,8 +82,10 @@ asyncTest('fetchSyncedPlans', () ->
   ).done(() ->
     ok $.get.calledTwice, 'Should have called twice'
     ok $.get.args[1][1].synced_timestamp, 'Should fetch timestamp from local db'
+    $.get.restore()
     start()
   )
+
 )
 
 asyncTest('fetchSyncedPlans for different years', () ->
@@ -91,18 +93,32 @@ asyncTest('fetchSyncedPlans for different years', () ->
 
   initialCount = 0
 
+  sinon.stub $, 'get', (url, options) ->
+    if +options.year == 2012
+      return {
+        new: [{ id: 'ben' }]
+        updated: []
+        deleted: []
+      }
+    else
+      {
+        new: [{ id: 20 }, { id: 'abc-efg' }]
+        updated: []
+        deleted: []
+      }
+
   options =
     year: (new Date()).getFullYear()
 
   p.fetchSynced(options).done(() ->
-    ok(p.models.length > 0, 'Should have greater than 0 plans')
-    initialCount = p.models.length
+    strictEqual(p.models.length, 2, 'Should have two plans')
     # Change year
     Visio.manager.year(2012)
     options.year = Visio.manager.year()
     return p.fetchSynced(options)
   ).done(() ->
-    ok(p.models.length > initialCount)
+    ok not $.get.args[1][1].synced_timestamp, 'Should not have synced_timestamp for different year'
+    $.get.restore()
     start()
   )
 
