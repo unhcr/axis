@@ -142,88 +142,23 @@ test('find plan', () ->
   ok(!plan, 'Must not have plan')
 )
 
-asyncTest('fetchIndicators', () ->
+asyncTest 'fetchParameter', ->
 
+  sinon.stub $, 'get', (url, options) ->
+    return {
+      new: [{ id: 'hi' }, { id: 'abc-def' }]
+      updated: []
+      deleted: []
+    }
   p = new Visio.Models.Plan({ id: '26be980c-62af-44ab-877b-de7309fa4a18', name: 'ben' })
 
-  strictEqual(p.id, '26be980c-62af-44ab-877b-de7309fa4a18')
-  strictEqual(p.get('name'), 'ben')
-
-  p.fetchIndicators().done((id) ->
-    strictEqual(p.id, id)
-    p.getSynced().done((record) ->
-      strictEqual(p.get('indicators').length, record.indicators.length)
-      start()
-    )
-  )
-
-)
-
-asyncTest('fetchPpgs', () ->
-
-  p = new Visio.Models.Plan({ id: '26be980c-62af-44ab-877b-de7309fa4a18', name: 'ben' })
-
-  strictEqual(p.id, '26be980c-62af-44ab-877b-de7309fa4a18')
-  strictEqual(p.get('name'), 'ben')
-
-  p.fetchPpgs().done((id) ->
-    strictEqual(p.id, id)
-    p.getSynced().done((record) ->
-      strictEqual(p.get('ppgs').length, record.ppgs.length)
-      start()
-    )
-  )
-
-)
-
-asyncTest('fetchOutputs', () ->
-
-  p = new Visio.Models.Plan({ id: '26be980c-62af-44ab-877b-de7309fa4a18', name: 'ben' })
-
-  strictEqual(p.id, '26be980c-62af-44ab-877b-de7309fa4a18')
-  strictEqual(p.get('name'), 'ben')
-
-  p.fetchOutputs().done((id) ->
-    strictEqual(p.id, id)
-    p.getSynced().done((record) ->
-      strictEqual(p.get('outputs').length, record.outputs.length)
-      start()
-    )
-  )
-
-)
-asyncTest('fetchProblemObjectives', () ->
-
-  p = new Visio.Models.Plan({ id: '26be980c-62af-44ab-877b-de7309fa4a18', name: 'ben' })
-
-  strictEqual(p.id, '26be980c-62af-44ab-877b-de7309fa4a18')
-  strictEqual(p.get('name'), 'ben')
-
-  p.fetchProblemObjectives().done((id) ->
-    strictEqual(p.id, id)
-    p.getSynced().done((record) ->
-      strictEqual(p.get('problem_objectives').length, record.problem_objectives.length)
-      start()
-    )
-  )
-
-)
-asyncTest('fetchGoals', () ->
-
-  p = new Visio.Models.Plan({ id: '26be980c-62af-44ab-877b-de7309fa4a18', name: 'ben' })
-
-  strictEqual(p.id, '26be980c-62af-44ab-877b-de7309fa4a18')
-  strictEqual(p.get('name'), 'ben')
-
-  p.fetchGoals().done((id) ->
-    strictEqual(p.id, id)
-    p.getSynced().done((record) ->
-      strictEqual(p.get('goals').length, record.goals.length)
-      start()
-    )
-  )
-
-)
+  _.each Visio.Types, (type, i) ->
+    if type != Visio.Parameters.PLANS
+      p.fetchParameter(type).done ->
+        strictEqual p.get(type).length, 2
+        if i == Visio.Types.length - 1
+          $.get.restore()
+          start()
 
 test 'strategy situation analysis', () ->
   p = new Visio.Models.Plan({ id: 'abcd', name: 'ben', situation_analysis:

@@ -31,33 +31,12 @@ class Visio.Models.Plan extends Visio.Models.Parameter
 
       return data.situationAnalysis()
 
-  fetchIndicators: () ->
-    @fetchParameter(Visio.Parameters.INDICATORS)
-
-  fetchPpgs: () ->
-    @fetchParameter(Visio.Parameters.PPGS)
-
-  fetchOutputs: () ->
-    @fetchParameter(Visio.Parameters.OUTPUTS)
-
-  fetchProblemObjectives: () ->
-    @fetchParameter(Visio.Parameters.PROBLEM_OBJECTIVES)
-
-  fetchGoals: () ->
-    @fetchParameter(Visio.Parameters.GOALS)
-
   fetchParameter: (type) ->
 
     options =
       join_ids:
         plan_id: @id
-    $.get("/#{type}", options
-    ).then((parameters) =>
-      # Never any sync date so it'll only have new ones
-      @get(type).reset(parameters.new)
-
-      @setSynced()
-    )
+    @get(type).fetchSynced(options)
 
   toString: () ->
     @get('operation_name')
