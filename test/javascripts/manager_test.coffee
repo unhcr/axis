@@ -87,7 +87,7 @@ test('strategies', () ->
 
   strategies = Visio.manager.strategies([])
   strictEqual(strategies.length, 3)
-  ok(strategies instanceof Visio.Collections.Strategy)
+  ok(strategies instanceof Visio.Collections.Strategy, "Must be instance of Strategy. Was: #{strategies.contructor}")
 )
 
 test 'selected', () ->
