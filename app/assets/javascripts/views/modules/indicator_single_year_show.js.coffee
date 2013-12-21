@@ -78,9 +78,15 @@ class Visio.Views.IndicatorSingleYearShowView extends Backbone.View
 
   onTransitionEnd: (e) ->
     if @isOpen()
-      $(document).scrollTop @$el.offset().top - @toolbarHeight
+      $.scrollTo @$el,
+        duration: 100
+        offset:
+          top: -@toolbarHeight
+          left: 0
+
 
   onClickParameter: (e) ->
+
     $('.isy-container').not(@$el).removeClass 'open'
     @$el.toggleClass 'open'
 
