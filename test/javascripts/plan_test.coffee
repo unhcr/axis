@@ -55,20 +55,33 @@ asyncTest('fetchSyncedPlans', () ->
       include:
         counts: true
 
+  spy = sinon.stub $, 'get', (url, options) ->
+    if options.synced_timestamp
+      return {
+        new: []
+        updated: []
+        deleted: []
+      }
+    else
+      {
+        new: [{ id: 20 }, { id: 'abc-efg' }]
+        updated: []
+        deleted: []
+      }
+
+
 
   p.fetchSynced(options).done(() ->
-    ok(p.models.length > 0, 'Should have greater than 0 plans')
+    strictEqual(p.models.length, 2, 'Should have 2 models')
     p.each((model) ->
       ok(model.get('id'), 'Each model should have id')
-      ok(_.isNumber(model.get('indicators_count')), 'Each model should have i count')
-      ok(_.isNumber(model.get('ppgs_count')), 'Each model should have ppg count')
-      ok(_.isNumber(model.get('goals_count')), 'Each model should have goal count')
-      ok(_.isNumber(model.get('outputs_count')), 'Each model should have o count')
-      ok(_.isNumber(model.get('problem_objectives_count')), 'Each model should have po count')
     )
-    return p.fetchSynced()
+    ok not $.get.calledTwice, 'Should not have called twice'
+    ok $.get.calledOnce, 'Should have called once'
+    return p.fetchSynced(options)
   ).done(() ->
-    #TODO Need to check to ensure that it hasn't recomputed all plans
+    ok $.get.calledTwice, 'Should have called twice'
+    ok $.get.args[1][1].synced_timestamp, 'Should fetch timestamp from local db'
     start()
   )
 )
