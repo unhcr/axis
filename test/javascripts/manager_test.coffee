@@ -45,21 +45,24 @@ asyncTest('setSyncDate with different ids', () ->
 )
 
 asyncTest('getMap', () ->
-  $.when($.get('/maphash')).then((response) ->
-    Visio.manager.set('mapMD5', response.mapMD5)
+  Visio.manager.set 'mapMD5', 'abc123'
+
+  sinon.stub $, 'get', (url, options) ->
+    if url == '/map'
+      return { object: 'my map object' }
+
+  Visio.manager.getMap().done((map) ->
+    # Should retreive via ajax
+    ok $.get.calledOnce, 'Should have been called once at this point'
+    ok(map, 'Should have map')
   ).done(() ->
-    return Visio.manager.getMap().done((map) ->
-      # Should retreive via ajax
-      ok(map, 'Should have map')
-      strictEqual topojson.feature(map, map.objects.world_50m).features.length, 304
-    ).done(() ->
-      Visio.manager.getMap()
-    ).done((map) ->
-      # Should retreive local
-      ok(map, 'Should have map')
-      strictEqual topojson.feature(map, map.objects.world_50m).features.length, 304
-      start()
-    )
+    Visio.manager.getMap()
+  ).done((map) ->
+    # Should retreive local
+    ok $.get.calledOnce, 'Should not have been called a second time'
+    ok(map, 'Should have map')
+    $.get.restore()
+    start()
   )
 )
 
