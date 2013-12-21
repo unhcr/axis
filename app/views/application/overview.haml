@@ -33,6 +33,7 @@
     var headerHeight = $('header').height();
 
     $('.navigation-activation').on('mouseenter', function(e) {
+      if (!Visio.manager.get('setup')) return;
       $('.page').addClass('shift');
       $(e.currentTarget).addClass('zero-width');
     })
