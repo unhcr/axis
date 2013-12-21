@@ -8,11 +8,6 @@ Visio::Application.routes.draw do
   get '/overview' => 'application#overview'
   get '/global_search' => 'application#global_search'
 
-  post '/test/user_setup' => 'test#user_setup'
-  post '/test/user_teardown' => 'test#user_teardown'
-  get '/test/current_user' => 'test#get_current_user'
-
-
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
