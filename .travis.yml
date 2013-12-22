@@ -3,9 +3,12 @@ rvm:
   - 1.9.3
 env:
   - DB=mysql
+  - DISPLAY=":99.0"
 script:
   - RAILS_ENV=test bundle exec rake --trace db:migrate test
+  - RAILS_ENV=test teaspoon -q --coverage-reports=cobertura --format=tap
 before_script:
   - mysql -e 'create database projects_test'
+  - 'sh -e /etc/init.d/xvfb start'
 services:
   - elasticsearch
