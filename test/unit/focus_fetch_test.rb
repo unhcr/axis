@@ -56,45 +56,47 @@ class FocusFetchTest < ActiveSupport::TestCase
   end
 
   test "Mark fetched deleted" do
-    Plan.delete_all
-    Ppg.delete_all
-    Goal.delete_all
-    RightsGroup.delete_all
-    ProblemObjective.delete_all
-    Output.delete_all
-    Indicator.delete_all
-    IndicatorDatum.delete_all
-    Operation.delete_all
-    Budget.delete_all
+    if ENV['LDAP_USERNAME'] && ENV['LDAP_PASSWORD']
+      Plan.delete_all
+      Ppg.delete_all
+      Goal.delete_all
+      RightsGroup.delete_all
+      ProblemObjective.delete_all
+      Output.delete_all
+      Indicator.delete_all
+      IndicatorDatum.delete_all
+      Operation.delete_all
+      Budget.delete_all
 
-    set_test_path("#{TESTFILE_PATH}#{TESTFILE_NAME}")
-    ret = fetch(1, 1.week, true)
+      set_test_path("#{testfile_path}#{testfile_name}")
+      ret = fetch(1, 1.week, true)
 
-    assert_equal COUNTS[:plans], Plan.count
-    assert_equal COUNTS[:ppgs], Ppg.count
+      assert_equal counts[:plans], plan.count
+      assert_equal counts[:ppgs], ppg.count
 
 
-    set_test_path("#{TESTFILE_PATH}#{DELETED_TESTFILE_NAME}")
-    ret = fetch(1, 1.week, true)
+      set_test_path("#{testfile_path}#{deleted_testfile_name}")
+      ret = fetch(1, 1.week, true)
 
-    assert_equal COUNTS_DELETED[:plans],
-      Plan.where(:is_deleted => true).count, "Plan deleted count"
-    assert_equal COUNTS_DELETED[:ppgs],
-      Ppg.where(:is_deleted => true).count, "Ppg deleted count"
-    assert_equal COUNTS_DELETED[:goals],
-      Goal.where(:is_deleted => true).count, "Goal deleted count"
-    assert_equal COUNTS_DELETED[:outputs],
-      Output.where(:is_deleted => true).count, "Output deleted count"
-    assert_equal COUNTS_DELETED[:rights_groups],
-      RightsGroup.where(:is_deleted => true).count, "Rights group deleted count"
-    assert_equal COUNTS_DELETED[:indicator_data],
-      IndicatorDatum.where(:is_deleted => true).count, "Indicator data deleted count"
-    assert_equal COUNTS_DELETED[:problem_objectives],
-      ProblemObjective.where(:is_deleted => true).count, "Problem Objective deleted count"
-    assert_equal COUNTS_DELETED[:budgets],
-      Budget.where(:is_deleted => true).count, "Budget data deleted count"
-    assert_equal COUNTS_DELETED[:indicators],
-      Indicator.where(:is_deleted => true).count, "Indicator deleted count"
+      assert_equal counts_deleted[:plans],
+        plan.where(:is_deleted => true).count, "plan deleted count"
+      assert_equal counts_deleted[:ppgs],
+        ppg.where(:is_deleted => true).count, "ppg deleted count"
+      assert_equal counts_deleted[:goals],
+        goal.where(:is_deleted => true).count, "goal deleted count"
+      assert_equal counts_deleted[:outputs],
+        output.where(:is_deleted => true).count, "output deleted count"
+      assert_equal counts_deleted[:rights_groups],
+        rightsgroup.where(:is_deleted => true).count, "rights group deleted count"
+      assert_equal counts_deleted[:indicator_data],
+        indicatordatum.where(:is_deleted => true).count, "indicator data deleted count"
+      assert_equal counts_deleted[:problem_objectives],
+        problemobjective.where(:is_deleted => true).count, "problem objective deleted count"
+      assert_equal counts_deleted[:budgets],
+        budget.where(:is_deleted => true).count, "budget data deleted count"
+      assert_equal counts_deleted[:indicators],
+        indicator.where(:is_deleted => true).count, "Indicator deleted count"
+    end
 
 
   end
@@ -142,6 +144,7 @@ class FocusFetchTest < ActiveSupport::TestCase
   end
 
   test "server_params" do
+    ENV['LDAP_USERNAME'] = 'rudolph@unhcr.org'
 
     params_string = server_params
 
@@ -151,6 +154,7 @@ class FocusFetchTest < ActiveSupport::TestCase
     assert hash["IP"], "must have ip"
     assert hash["type"], "must have type"
     assert hash["ver"], "must have version"
+    ENV['LDAP_USERNAME'] = nil
 
   end
 end
