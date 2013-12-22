@@ -3,19 +3,24 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
   initialize: (options) ->
     Visio.Routers.GlobalRouter.prototype.initialize.call(@)
 
+    selectedStrategies = {}
+    selectedStrategies[Visio.manager.strategy().id] = true
+    Visio.manager.set 'selected_strategies', selectedStrategies
     Visio.manager.on 'change:date', () =>
       @navigation.render()
       Visio.manager.setSelected()
-      @achievementBudgetSingleYearView.render(true)
+      @moduleView.render(true)
 
     Visio.manager.on 'change:aggregation_type', () =>
-      @achievementBudgetSingleYearView.render(true)
+      @moduleView.render(true)
 
     Visio.manager.on 'change:selected', () =>
-      @achievementBudgetSingleYearView.render(true)
+      @moduleView.render(true)
 
     Visio.manager.on 'change:achievement_type', () =>
-      @achievementBudgetSingleYearView.render(true)
+      @moduleView.render(true)
+
+    @module = $('#module')
 
   setup: () ->
     # Return empty promise if we've setup already
@@ -39,7 +44,7 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
            Visio.manager.get('indicators').fetchSynced(options),
            Visio.manager.get('budgets').fetchSynced({ strategy_id: Visio.manager.get('strategy_id') })
            Visio.manager.get('indicator_data').fetchSynced({ strategy_id: Visio.manager.get('strategy_id') })
-    ).done(() ->
+    ).done(() =>
       @navigation = new Visio.Views.NavigationView({
         el: $('#navigation')
       })
@@ -66,14 +71,28 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
     'menu' : 'menu'
     'search': 'search'
     'absy': 'absy'
+    'isy': 'isy'
     '*default': 'index'
+
+  isy: () ->
+    @setup().done(() =>
+      @indicatorSingleYearView ||= new Visio.Views.IndicatorSingleYearView()
+      @module.html @indicatorSingleYearView.render().el
+      @moduleView = @indicatorSingleYearView
+      $('.toolbar').addClass('fixed-top')
+      $(document).scrollTop @moduleView.$el.offset().top
+    ).fail (e) =>
+      console.log e
+
 
   absy: () ->
     @setup().done(() =>
-      @achievementBudgetSingleYearView = new Visio.Views.AchievementBudgetSingleYearView(
-        el: $('#absy')
-      )
-      @achievementBudgetSingleYearView.render()
+      @achievementBudgetSingleYearView ||= new Visio.Views.AchievementBudgetSingleYearView()
+      @module.html @achievementBudgetSingleYearView.el
+      @moduleView = @achievementBudgetSingleYearView
+      @moduleView.render()
+      $('.toolbar').addClass('fixed-top')
+      $(document).scrollTop @moduleView.$el.offset().top
     ).fail (e) =>
       console.log e
 

@@ -29,7 +29,7 @@ class Visio.Models.Manager extends Backbone.Model
     'indicator_data': new Visio.Collections.IndicatorDatum()
     'budgets': new Visio.Collections.Budget()
     'strategies': new Visio.Collections.Strategy()
-    'date': new Date()
+    'date': new Date(2012, 1)
     'use_local_db': true
     'setup': false
     'db': null
@@ -38,7 +38,7 @@ class Visio.Models.Manager extends Backbone.Model
     'yearList': [2012, 2013, 2014, 2015]
     'selected': {}
     'selected_strategies': {}
-    'aggregation_type': Visio.Parameters.OUTPUTS
+    'aggregation_type': Visio.Parameters.PLANS
     'scenario_type': {}
     'budget_type': {}
     'achievement_type': Visio.AchievementTypes.TARGET

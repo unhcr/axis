@@ -13,27 +13,27 @@ class FocusFetchTest < ActiveSupport::TestCase
 
   COUNTS = {
     :plans => 1,
-    :ppgs => 3,
-    :goals => 3,
+    :ppgs => 2,
+    :goals => 2,
     :rights_groups => 8,
-    :problem_objectives => 28,
-    :indicators => 171,
-    :outputs => 82,
+    :problem_objectives => 22,
+    :indicators => 120,
+    :outputs => 53,
     :operations => 139,
-    :indicator_data => 208,
-    :budgets => 403
+    :indicator_data => 120,
+    :budgets => 232
   }
 
   COUNTS_DELETED = {
     :plans => 0,
     :ppgs => 1,
     :goals => 1,
-    :outputs => 29,
+    :outputs => 4,
     :rights_groups => 0,
-    :problem_objectives => 6,
-    :indicator_data => 88,
-    :indicators => 51,
-    :budgets => 171
+    :problem_objectives => 1,
+    :indicator_data => 7,
+    :indicators => 7,
+    :budgets => 12
   }
 
   def setup
@@ -138,5 +138,18 @@ class FocusFetchTest < ActiveSupport::TestCase
     old_names = Dir.glob(filename_glob(id_old))
     assert_equal 0, old_names.length, 'There should be no old files left'
     assert !old_plan_name, 'Should not have found a file'
+  end
+
+  test "server_params" do
+
+    params_string = server_params
+
+    hash = Hash[(params_string.split(';').map { |p| p.split('=') })]
+
+    assert_equal 'rudolph@unhcr.org', hash["user"], 'must have user'
+    assert hash["IP"], "must have ip"
+    assert hash["type"], "must have type"
+    assert hash["ver"], "must have version"
+
   end
 end

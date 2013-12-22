@@ -321,7 +321,7 @@ hr {
   position: relative;
   min-height: 1px;
   padding-right: 4px;
-  padding-top: 15px;
+  padding-top: 10px;
 }
 
 .col-xs-1:last-child, .col-sm-1:last-child, .col-md-1:last-child, .col-lg-1:last-child, .col-xs-2:last-child, .col-sm-2:last-child, .col-md-2:last-child, .col-lg-2:last-child, .col-xs-3:last-child, .col-sm-3:last-child, .col-md-3:last-child, .col-lg-3:last-child, .col-xs-4:last-child, .col-sm-4:last-child, .col-md-4:last-child, .col-lg-4:last-child, .col-xs-5:last-child, .col-sm-5:last-child, .col-md-5:last-child, .col-lg-5:last-child, .col-xs-6:last-child, .col-sm-6:last-child, .col-md-6:last-child, .col-lg-6:last-child, .col-xs-7:last-child, .col-sm-7:last-child, .col-md-7:last-child, .col-lg-7:last-child, .col-xs-8:last-child, .col-sm-8:last-child, .col-md-8:last-child, .col-lg-8:last-child, .col-xs-9:last-child, .col-sm-9:last-child, .col-md-9:last-child, .col-lg-9:last-child, .col-xs-10:last-child, .col-sm-10:last-child, .col-md-10:last-child, .col-lg-10:last-child, .col-xs-11:last-child, .col-sm-11:last-child, .col-md-11:last-child, .col-lg-11:last-child, .col-xs-12:last-child, .col-sm-12:last-child, .col-md-12:last-child, .col-lg-12 {

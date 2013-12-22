@@ -6,6 +6,9 @@ one:
 two:
   name: Football
 
+three:
+  name: Baseball
+
 deleted:
   name: Football
   is_deleted: true

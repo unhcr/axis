@@ -18,7 +18,7 @@ module FocusFetch
     monitor = FetchMonitor.first || FetchMonitor.create
 
     begin
-      headers_zip = open("#{BASE_URL}#{HEADERS}?user=#{ENV['LDAP_USERNAME']}&type=#{Rails.application.class.parent_name}&ver=0.0.1",
+      headers_zip = open(server_url(HEADERS),
          :http_basic_authentication => [ENV['LDAP_USERNAME'], ENV['LDAP_PASSWORD']])
     rescue Exception => e
       Rails.logger.fatal "Failed fetching header file: #{e.message}"
@@ -59,7 +59,7 @@ module FocusFetch
       Rails.logger.debug "Skipping #{id}" and next if find_plan_file(id, expires) && monitor.complete?(id)
 
       begin
-        plan_zip = open("#{BASE_URL}#{PLAN_PREFIX}#{id}#{PLAN_SUFFIX}?user=#{ENV['LDAP_USERNAME']}&type=#{Rails.application.class.parent_name}&ver=0.0.1",
+        plan_zip = open("#{server_url("#{PLAN_PREFIX}#{id}#{PLAN_SUFFIX}")}",
                       :http_basic_authentication => [ENV['LDAP_USERNAME'], ENV['LDAP_PASSWORD']])
       rescue Exception => e
         Rails.logger.error "Failed fetching #{id} -- e.message"
@@ -131,6 +131,20 @@ module FocusFetch
     return current
 
 
+  end
+
+  def server_url(file_path, params = {})
+    "#{BASE_URL}#{file_path}?#{server_params}"
+  end
+
+  def server_params(params = {})
+    ip = Socket.ip_address_list.detect { |intf| intf.ipv4_private? }
+
+    params = "user=#{ENV['LDAP_USERNAME']};type=#{Rails.application.class.parent_name}"
+    params += ";IP=#{ip.ip_address}" if ip
+    params += ";ver=0.0.1"
+
+    params
   end
 
   def set_test_path(path)

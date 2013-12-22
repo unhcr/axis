@@ -2,6 +2,8 @@ class Visio.Views.AchievementBudgetSingleYearView extends Backbone.View
 
   template: JST['modules/achievement_budget_single_year']
 
+  className: 'module'
+
   events:
     'click .scenario .visio-check input': 'onClickScenario'
     'click .budget .visio-check input': 'onClickBudget'
@@ -16,7 +18,7 @@ class Visio.Views.AchievementBudgetSingleYearView extends Backbone.View
       config =
         width: @$el.find('#bubble').width()
         height: 320
-        selection: d3.select('#bubble')
+        selection: d3.select(@el).select('#bubble')
         margin:
           top: 10
           bottom: 30

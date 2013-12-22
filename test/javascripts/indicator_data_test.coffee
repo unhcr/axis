@@ -122,3 +122,75 @@ test 'achievement', () ->
   datum.set('comp_target', 100)
 
   strictEqual(0, datum.achievement())
+
+test 'situation analysis', () ->
+  datum = new Visio.Models.IndicatorDatum({
+    id: 'ben'
+    output_id: 'present'
+    problem_objective_id: 'present'
+    is_performance: true
+    myr: 50
+    threshold_green: 60
+    threshold_red: 40
+  })
+
+  res = datum.situationAnalysis()
+  strictEqual res, Visio.Algorithms.ALGO_RESULTS.ok
+
+  datum.set('myr', 60)
+  res = datum.situationAnalysis()
+  strictEqual res, Visio.Algorithms.ALGO_RESULTS.success
+
+  datum.set('myr', 30)
+  res = datum.situationAnalysis()
+  strictEqual res, Visio.Algorithms.ALGO_RESULTS.fail
+
+test 'situation analysis collection', () ->
+  data = new Visio.Collections.IndicatorDatum([{
+    id: 'ben'
+    output_id: 'present'
+    problem_objective_id: 'present'
+    is_performance: true
+    myr: 50
+    threshold_green: 60
+    threshold_red: 40
+  },{
+    id: 'lisa'
+    output_id: 'present'
+    problem_objective_id: 'present'
+    is_performance: true
+    myr: 50
+    threshold_green: 60
+    threshold_red: 40
+  }
+
+  ])
+
+  res = data.situationAnalysis()
+  strictEqual res.category, Visio.Algorithms.ALGO_RESULTS.ok
+  strictEqual res.result, .5
+  strictEqual res.total, 2
+  strictEqual res.counts[Visio.Algorithms.ALGO_RESULTS.ok], 2
+
+  data.at(0).set('myr', 60)
+  res = data.situationAnalysis()
+  strictEqual res.category, Visio.Algorithms.ALGO_RESULTS.success
+  strictEqual res.total, 2
+  strictEqual res.counts[Visio.Algorithms.ALGO_RESULTS.ok], 1
+  strictEqual res.counts[Visio.Algorithms.ALGO_RESULTS.success], 1
+
+  data.at(0).set('myr', 30)
+  res = data.situationAnalysis()
+  strictEqual res.category, Visio.Algorithms.ALGO_RESULTS.fail
+  strictEqual res.total, 2
+  strictEqual res.counts[Visio.Algorithms.ALGO_RESULTS.ok], 1
+  strictEqual res.counts[Visio.Algorithms.ALGO_RESULTS.fail], 1
+
+  data = new Visio.Collections.IndicatorDatum()
+  res = data.situationAnalysis()
+  strictEqual res.category, Visio.Algorithms.ALGO_RESULTS.fail
+  strictEqual res.result, 0
+  strictEqual res.total, 0
+  strictEqual res.counts[Visio.Algorithms.ALGO_RESULTS.ok], 0
+
+

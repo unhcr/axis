@@ -53,7 +53,19 @@ window.Visio =
     REPORTED_VALUES:
       myr: 'myr'
       yer: 'yer'
+      baseline: 'baseline'
 
+    GOAL_TYPES:
+      standard: 'standard'
+      target: 'comp_target'
+
+Visio.ProgressTypes =
+  BASELINE_MYR:
+    "#{Visio.Algorithms.REPORTED_VALUES.baseline}-#{Visio.Algorithms.REPORTED_VALUES.myr}"
+  BASELINE_YER:
+    "#{Visio.Algorithms.REPORTED_VALUES.baseline}-#{Visio.Algorithms.REPORTED_VALUES.yer}"
+  MYR_YER:
+    "#{Visio.Algorithms.REPORTED_VALUES.myr}-#{Visio.Algorithms.REPORTED_VALUES.yer}"
 Visio.Types = [
     Visio.Parameters.PLANS,
     Visio.Parameters.PPGS,

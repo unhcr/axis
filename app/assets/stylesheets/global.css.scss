@@ -64,7 +64,6 @@ p.small {
 }
 
 .inner-content {
-  border-top: ($toolbar-height + $header-height) white solid;
   border-left: $page-margin solid white;
   border-right: $page-margin solid white;
 
@@ -88,7 +87,26 @@ p.small {
 .ui-primary-theme {
   background-color: $primary;
   color: $white;
+}
 
+.ui-orange-theme {
+  color: $white;
+  background-color: $orange;
+
+  .logo:before {
+    background-image: url(/assets/logo_white.png);
+  }
+
+
+  .menu-icon {
+    .menu-row {
+      background-color: $white;
+    }
+  }
+
+  .highlight {
+    color: $white;
+  }
 }
 
 .ui-primary-dark-theme {
@@ -126,8 +144,16 @@ p.small {
 }
 
 .ui-invert-theme {
-  background-color: $off-white;
+  background-color: white;
   color: $primary;
+
+  .highlight {
+    color: $primary-light;
+  }
+
+  a {
+    color: $primary-light;
+  }
 }
 
 .ui-purple-theme {
@@ -145,31 +171,32 @@ body, html {
   padding: 0;
   margin: 0;
   font-size: 12px;
+}
 
+body.splash {
   -moz-transition:background-color $medium-transition;
   -webkit-transition:background-color $medium-transition;
   -o-transition:background-color $medium-transition;
   transition:background-color $medium-transition;
-}
 
-body.overview {
-  header {
-    top: 0;
-    position: fixed;
-    z-index: 300;
-    height: $header-height + $toolbar-height;
-  }
 }
 
 body.layout-application {
 
   header section {
-    background-color: white;
     border-bottom: 1px solid $primary-light;
     .logo {
       margin-top: -10px;
       margin-bottom: 10px;
     }
+  }
+}
+
+header {
+  background-color: inherit;
+
+  section {
+    background-color: inherit;
   }
 }
 
@@ -464,6 +491,23 @@ button, input {
   display: none;
 }
 
+.ui-tab-radio input {
+  display: none;
+}
+
+.ui-tab-radio label {
+  display: block;
+  cursor: pointer;
+  text-align: center;
+  line-height: 28px;
+}
+
+.ui-tab-radio input[type="radio"]:checked + label {
+  color: $orange;
+  border: 1px solid $light-gray;
+  border-bottom: none;
+}
+
 .visio-check input {
   display: none;
 }
@@ -588,6 +632,8 @@ button, input {
 
 a {
   color: white;
+  cursor: pointer;
+  text-decoration: none;
 }
 
 ::-webkit-input-placeholder { /* WebKit browsers */
@@ -652,6 +698,7 @@ a {
 
   .operation {
     padding-left: $content-margin;
+    padding-right: $content-margin;
     padding-bottom: 15px;
     padding-top: 8px;
     font-weight: 300;
@@ -1016,15 +1063,46 @@ a {
   height: $toolbar-height;
 }
 
-.module {
-  background-color: $off-white;
-  padding-bottom: 100px;
+.fixed-top {
+  position: fixed;
+  top: 0;
+}
+
+.module:before {
+  display: block;
+  content: ' ';
+  margin-top: -$toolbar-height;
+  height: $toolbar-height;
+  visibility: hidden;
+}
+
+.data-container {
+  max-height: 0px;
+  overflow: hidden;
+  -moz-transition:max-height $fast-transition;
+  -webkit-transition:max-height $fast-transition;
+  -o-transition:max-height $fast-transition;
+  transition:max-height $fast-transition;
+}
+
+.isy-container:hover {
+  background-color: white;
+  cursor: pointer;
+}
+
+.isy-container.open {
+  background-color: white;
+
+  .data-container {
+    max-height: 420px;
+  }
 }
 
 .page {
   position: absolute;
   right: 0;
   left: 0;
+  background-color: inherit;
   -moz-transition:left $very-fast-transition ease-out;
   -webkit-transition:left $very-fast-transition ease-out;
   -o-transition:left $very-fast-transition ease-out;
@@ -1066,7 +1144,8 @@ input[type="radio"]:checked + label {
 
 .menu {
   background-color: $orange;
-  height: 100%
+  height: 100%;
+  border-top: 1px solid $white;
 }
 
 .navigation-activation-icon {
@@ -1109,7 +1188,6 @@ input[type="radio"]:checked + label {
   -o-transition:max-height $fast-transition;
   transition:max-height $fast-transition;
   max-height: 50px;
-  z-index: 400;
 
 }
 
@@ -1160,3 +1238,18 @@ input[type="radio"]:checked + label {
 #achievement-budget-single-year {
   padding-bottom: 120px;
 }
+
+#module {
+  background-color: $off-white;
+  min-height: 800px;
+}
+
+[data-prefix]:before {
+  content: attr(data-prefix) ': ';
+  display: inline;
+}
+
+.tabs {
+  border-bottom: 1px solid $light-gray;
+}
+

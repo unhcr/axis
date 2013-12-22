@@ -72,3 +72,32 @@
   fill: transparent;
   stroke: black;
 }
+
+.indicator-bar-graph {
+  .box {
+    fill: green;
+    line {
+      stroke: $dark-gray;
+    }
+  }
+  .box.reversed {
+    fill: red;
+  }
+}
+
+.spark-bar-graph {
+  margin-right: -2px;
+}
+
+.bar.success {
+  fill: $success;
+}
+.bar.ok {
+  fill: $ok;
+}
+.bar.fail {
+  fill: $fail;
+}
+.bar.missing {
+  fill: $dark-gray;
+}
