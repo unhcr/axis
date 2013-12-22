@@ -17,6 +17,7 @@ Teaspoon.setup do |config|
   config.driver              = "selenium" # available: phantomjs, selenium
   #config.server              = nil # defaults to Rack::Server
 
+  config.asset_paths = ["test/javascripts/support", "test/javascripts", "test/javascripts/stylesheets"]
   # Behaviors
   #config.server_timeout      = 20 # timeout for starting the server
   #config.server_port         = nil # defaults to any open port unless specified

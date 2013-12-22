@@ -1,4 +1,4 @@
-#= support/sinon
+#= require support/sinon
 #= require application
 
 
