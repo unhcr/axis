@@ -40,7 +40,8 @@ group :development, :test do
   gem 'random-word'
   gem 'simplecov', :require => false
   gem 'teaspoon'
-  gem 'selenium-webdriver', '~> 2.35.1'
+  gem 'single_test'
+  gem 'selenium-webdriver', '~> 2.38.0'
 end
 
 gem 'jquery-rails'
