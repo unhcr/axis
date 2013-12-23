@@ -47,7 +47,7 @@ Visio.Graphs.bubble = (config) ->
   parameters = config.parameters || []
 
   info = new Visio.Views.BubbleInfoView({
-    el: $('.bubble-info-container .bubble-info')
+    el: $('.info-container .bubble-info')
   })
 
   voronoi = d3.geom.voronoi()
