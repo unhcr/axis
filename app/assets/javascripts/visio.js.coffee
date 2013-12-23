@@ -75,6 +75,14 @@ Visio.Types = [
     Visio.Parameters.INDICATORS,
   ]
 
+Visio.AggregationTypes = [
+    Visio.Parameters.PLANS,
+    Visio.Parameters.PPGS,
+    Visio.Parameters.GOALS,
+    Visio.Parameters.OUTPUTS,
+    Visio.Parameters.PROBLEM_OBJECTIVES,
+  ]
+
 Visio.Schema =
     stores: []
 

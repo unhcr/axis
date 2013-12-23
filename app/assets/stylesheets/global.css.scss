@@ -51,6 +51,11 @@
   animation: flash 1000ms 1;
 }
 
+ul {
+  padding: 0;
+  margin: 0
+}
+
 p.small {
   font-size: .8em;
 }
@@ -550,7 +555,7 @@ button, input {
   cursor: pointer;
 }
 
-.dropdown {
+/*.dropdown {
   overflow: hidden;
   max-height: 300px;
   -moz-transition:max-height $medium-transition;
@@ -559,7 +564,7 @@ button, input {
   transition:max-height $medium-transition;
   margin-top: 4px;
 
-}
+}*/
 
 .dropdown-item {
   border-bottom: 1px solid $white;

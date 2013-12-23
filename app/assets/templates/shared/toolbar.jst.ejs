@@ -1,7 +1,15 @@
 <div class="row">
   <div class="col-md-8 col-centered ui-primary-light zero-padding">
-    <div class="col-md-3 ui-purple right-text zero-padding">
-      CHOOSE YOUR VIEW
+    <div class="col-md-2 ui-purple right-text zero-padding">
+      Aggregate by
+    </div>
+    <div class="col-md-2 ui-purple right-text zero-padding">
+      <select class="dropdown">
+        <% _.each(Visio.AggregationTypes, function(type) { %>
+        <option  <% if (type === Visio.manager.get('aggregation_type')) { %>selected<% }
+        %>value="aggregation_type:<%= type %>"><%= type %></option>
+        <% }) %>
+      </select>
     </div>
     <a href="#absy" class="col-md-2 center-text zero-padding">
       Budget
@@ -12,8 +20,12 @@
     <a class="col-md-2 center-text zero-padding">
       Summary Stats
     </a>
-    <div class="col-md-3 right-text zero-padding">
-      2013
+    <div class="col-md-2 right-text zero-padding">
+      <select class="dropdown">
+        <% _.each(Visio.manager.get('yearList'), function(year) { %>
+        <option  <% if (year === Visio.manager.get('year')) { %>selected<% } %> value="year:<%= year %>"><%= year %></option>
+        <% }) %>
+      </select>
     </div>
   </div>
 </div>
