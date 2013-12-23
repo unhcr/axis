@@ -2,8 +2,8 @@
 %html
   %head
     %title Visio
-    = stylesheet_link_tag    "application", :media => "all", "data-turbolinks-track" => true
-    = javascript_include_tag "application", "data-turbolinks-track" => true
+    = stylesheet_link_tag    "application", :media => "all"
+    = javascript_include_tag "application"
     = csrf_meta_tags
   %body.ui-primary-theme{ :class => "#{controller.action_name} layout-#{controller.send(:_layout).virtual_path.name}" }
 
