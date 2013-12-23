@@ -4,9 +4,10 @@ describe FocusFetch do
   fixtures :all
   include FocusFetch
 
-  TESTHEADER_NAME = "DeletedHeaderTest.xml"
-  TESTFILE_PATH = "#{Rails.root}/test/files/"
-  TESTFILE_NAME = "PlanTest.xml"
+  TESTHEADER_NAME = "HeaderTest.zip"
+  TESTFILE_PATH = "/files/"
+  TESTFILE_NAME = "PlanTest.zip"
+  TESTFILE_NAME_2 = "PlanTest2.zip"
   DELETED_TESTFILE_NAME = "DeletedPlanTest.xml"
 
   TESTDATA_PATH = "#{Rails.root}/test/files/focus"
@@ -48,17 +49,10 @@ describe FocusFetch do
   it "should fetch 2 files from focus" do
     zip_name = 'archive.zip'
 
-    stub_request(:any, /.*/).to_return do |request|
-      response = nil
-      if request.uri.to_s.include? FocusFetch::HEADERS
-        require 'pry'; binding.pry
-        response = File.read("#{Rails.root}/test/files/#{zip_name}")
-      elsif request.uri.to_s.include? FocusFetch::PLAN_PREFIX
-        response = File.read("#{Rails.root}/test/files/archive_plan.zip")
-      end
-      {:body => response, :status => 200}
-    end
-
+    allow(self).to receive(:open).and_return(
+      fixture_file_upload("#{TESTFILE_PATH}#{TESTHEADER_NAME}", 'application/zip'),
+      fixture_file_upload("#{TESTFILE_PATH}#{TESTFILE_NAME}", 'application/zip'),
+      fixture_file_upload("#{TESTFILE_PATH}#{TESTFILE_NAME_2}", 'application/zip'))
 
     ret = fetch(2)
 

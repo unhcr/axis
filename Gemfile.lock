@@ -28,7 +28,6 @@ GEM
     activesupport (3.2.11)
       i18n (~> 0.6)
       multi_json (~> 1.0)
-    addressable (2.3.5)
     ansi (1.4.3)
     arel (3.0.3)
     atomic (1.1.14)
@@ -49,8 +48,6 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.6.3)
-    crack (0.4.1)
-      safe_yaml (~> 0.9.0)
     devise (3.2.2)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.1)
@@ -161,7 +158,6 @@ GEM
       rspec-mocks (= 3.0.0.beta1)
     rspec-support (3.0.0.beta1)
     rubyzip (1.1.0)
-    safe_yaml (0.9.7)
     sass (3.2.13)
     sass-rails (3.2.6)
       railties (~> 3.2.0)
@@ -210,9 +206,6 @@ GEM
       json (>= 1.8.0)
     warden (1.2.3)
       rack (>= 1.0)
-    webmock (1.16.1)
-      addressable (>= 2.2.7)
-      crack (>= 0.3.2)
     websocket (1.0.7)
     will_paginate (3.0.5)
 
@@ -247,5 +240,4 @@ DEPENDENCIES
   teaspoon
   tire
   uglifier (>= 1.0.3)
-  webmock
   will_paginate (~> 3.0)

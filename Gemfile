@@ -42,7 +42,6 @@ group :development, :test do
   gem 'selenium-webdriver', '~> 2.38.0'
   gem 'rspec-rails', '~> 3.0.0.beta'
   gem 'mocha', :require => false
-  gem 'webmock'
 end
 
 gem 'jquery-rails'
