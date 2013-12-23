@@ -3,8 +3,8 @@
   %head
     %title Visio
     %meta{ :charset => "utf-8" }
-    = stylesheet_link_tag    "application", :media => "all", "data-turbolinks-track" => true
-    = javascript_include_tag "application", "data-turbolinks-track" => true
+    = stylesheet_link_tag    "application", :media => "all"
+    = javascript_include_tag "application"
     = csrf_meta_tags
 %body.ui-invert-theme{ :class => "#{controller.action_name} layout-#{controller.send(:_layout).virtual_path.name}" }
   #navigation.gone
@@ -35,7 +35,7 @@
       #global-search.zero-max-height.row
     :javascript
       window.Visio.user = new Visio.Models.User(#{current_user.to_json.html_safe})
-      $(document).on('ready page:load', function() {
+      $(document).ready(function() {
         $('.menu-icon').click(function(e) {
           Visio.router.navigate('/menu', { trigger: true })
         })

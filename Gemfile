@@ -18,9 +18,7 @@ gem 'jbuilder'
 gem 'mysql2'
 gem 'tire'
 gem 'will_paginate', '~> 3.0'
-gem 'turbolinks'
 gem 'normalize-rails'
-
 
 
 # Gems used only for assets and not required
@@ -61,4 +59,3 @@ gem 'jquery-rails'
 # To use debugger
 # gem 'debugger'
 gem 'pry'
-
