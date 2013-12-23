@@ -7,15 +7,11 @@ class ProblemObjectiveTest < ActiveSupport::TestCase
   end
 
   test "synced models no date" do
-    i = [problem_objectives(:one), problem_objectives(:two)]
-
-    i.map(&:save)
-
     models = ProblemObjective.synced_models
 
     assert_equal 0, models[:deleted].count
     assert_equal 0, models[:updated].count
-    assert_equal 3, models[:new].count
+    assert_equal 2, models[:new].count
   end
 
   test "synced model with date" do

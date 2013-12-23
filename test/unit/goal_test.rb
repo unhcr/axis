@@ -10,7 +10,7 @@ class GoalTest < ActiveSupport::TestCase
 
     assert_equal 0, models[:deleted].count
     assert_equal 0, models[:updated].count
-    assert_equal 4, models[:new].count
+    assert_equal 3, models[:new].count
   end
 
   test "synced model with date" do

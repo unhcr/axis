@@ -15,15 +15,11 @@ class PlanTest < ActiveSupport::TestCase
   end
 
   test "synced models no date" do
-    p = [plans(:one), plans(:two)]
-
-    p.map(&:save)
-
     models = Plan.synced_models
 
     assert_equal 0, models[:deleted].count
     assert_equal 0, models[:updated].count
-    assert_equal 3, models[:new].count
+    assert_equal 2, models[:new].count
   end
 
   test "synced model with date" do

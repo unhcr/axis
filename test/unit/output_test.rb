@@ -7,15 +7,12 @@ class OutputTest < ActiveSupport::TestCase
   end
 
   test "synced models no date" do
-    i = [outputs(:one), outputs(:two)]
-
-    i.map(&:save)
-
     models = Output.synced_models
 
     assert_equal 0, models[:deleted].count
     assert_equal 0, models[:updated].count
-    assert_equal 3, models[:new].count
+    assert_equal 2, models[:new].count
+    assert_equal 1, Output.where(:is_deleted => true).count
   end
 
   test "synced model with date" do

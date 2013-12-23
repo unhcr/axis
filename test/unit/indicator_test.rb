@@ -2,15 +2,11 @@ require 'test_helper'
 
 class IndicatorTest < ActiveSupport::TestCase
   test "synced models no date" do
-    i = [indicators(:one), indicators(:two)]
-
-    i.map(&:save)
-
     models = Indicator.synced_models
 
     assert_equal 0, models[:deleted].count
     assert_equal 0, models[:updated].count
-    assert_equal 4, models[:new].count
+    assert_equal 3, models[:new].count
   end
 
   test "synced model with date" do
