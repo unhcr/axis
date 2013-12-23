@@ -47,7 +47,7 @@ class Visio.Collections.IndicatorDatum extends Visio.Collections.Parameter
     @each (datum) ->
       result = datum.achievement(reported_value)
 
-      results.push(result) unless result == Visio.Algorithms.ALGO_RESULTS.missing
+      results.push(result) unless result == Visio.Algorithms.ALGO_RESULTS.missing or isNaN(result)
 
     average = _.reduce(results,
       (sum, num) -> return sum + num,
