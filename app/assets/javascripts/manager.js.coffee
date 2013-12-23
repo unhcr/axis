@@ -19,6 +19,10 @@ class Visio.Models.Manager extends Backbone.Model
 
     @resetBudgetDefaults()
 
+    # Automatically change date if we change year
+    @on 'change:year', =>
+      @year(@get('year'))
+
   defaults:
     'plans': new Visio.Collections.Plan()
     'ppgs': new Visio.Collections.Ppg()
