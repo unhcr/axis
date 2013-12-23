@@ -1098,6 +1098,11 @@ a {
   }
 }
 
+.isy-container.disabled {
+  pointer-events: none;
+  opacity: .7;
+}
+
 .page {
   position: absolute;
   right: 0;

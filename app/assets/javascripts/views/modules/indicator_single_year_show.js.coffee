@@ -35,13 +35,16 @@ class Visio.Views.IndicatorSingleYearShowView extends Backbone.View
     }
 
   render: ->
-    @$el.html @template({ parameter: @model })
+    situationAnalysis = @model.selectedSituationAnalysis()
+
+    @$el.html @template({ parameter: @model, situationAnalysis: situationAnalysis })
+    @$el.addClass 'disabled' if situationAnalysis.total == 0
     @config.selection = d3.select(@el).select('.indicator-bar-graph')
     @indicatorBarGraph = Visio.Graphs.indicatorBarGraph(@config)
 
     @sparkConfig.selection = d3.select(@el).select('.spark-bar-graph')
     @sparkBarGraph = Visio.Graphs.sparkBarGraph(@sparkConfig)
-    @sparkBarGraph.data @model.selectedSituationAnalysis()
+    @sparkBarGraph.data situationAnalysis
     @sparkBarGraph()
 
     @$el.find("#progress-#{@indicatorBarGraph.progress()}-#{@model.id}").prop 'checked', true
@@ -55,7 +58,6 @@ class Visio.Views.IndicatorSingleYearShowView extends Backbone.View
     @indicatorBarGraph()
 
   onChangeProgress: (e) ->
-    console.log 'change'
     @changeProgress($(e.currentTarget).val())
 
   changeProgress: (progress) ->
