@@ -34,19 +34,41 @@ class Visio.Views.IndicatorSingleYearShowView extends Backbone.View
       width: 100
     }
 
-  render: ->
+  render: (isRerender) ->
     situationAnalysis = @model.selectedSituationAnalysis()
 
-    @$el.html @template({ parameter: @model, situationAnalysis: situationAnalysis })
-    @$el.addClass 'disabled' if situationAnalysis.total == 0
-    @config.selection = d3.select(@el).select('.indicator-bar-graph')
-    @indicatorBarGraph = Visio.Graphs.indicatorBarGraph(@config)
+    if !isRerender
+      @$el.html @template({ parameter: @model })
 
-    @sparkConfig.selection = d3.select(@el).select('.spark-bar-graph')
-    @sparkBarGraph = Visio.Graphs.sparkBarGraph(@sparkConfig)
+      # Initialize the indicator bar graph
+      @config.selection = d3.select(@el).select('.indicator-bar-graph')
+      @indicatorBarGraph = Visio.Graphs.indicatorBarGraph(@config)
+
+      # Initialize the side spark bar graph
+      @sparkConfig.selection = d3.select(@el).select('.spark-bar-graph')
+      @sparkBarGraph = Visio.Graphs.sparkBarGraph(@sparkConfig)
+
+    category = if situationAnalysis.total == 0 then 'white' else situationAnalysis.category
+
+    # Remove any previous category class from pin
+    @$el.find('.pin').removeClass () ->
+      classes = _.values(Visio.Algorithms.ALGO_RESULTS).map (result) -> 'pin-' + result
+      classes.join ' '
+
+    # Add recomputed category class
+    @$el.find('.pin').addClass "pin-#{category}"
+
+    if situationAnalysis.total == 0
+      @$el.addClass 'disabled'
+    else
+      @$el.removeClass 'disabled'
+
     @sparkBarGraph.data situationAnalysis
     @sparkBarGraph()
 
+    @graph()
+
+    # Select the type of progress to see
     @$el.find("#progress-#{@indicatorBarGraph.progress()}-#{@model.id}").prop 'checked', true
 
     @toolbarHeight or= $('.toolbar').height()

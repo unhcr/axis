@@ -1,7 +1,7 @@
 class Plan < ActiveRecord::Base
   extend Parameter
 
-  attr_accessible :name, :operation_name, :year
+  attr_accessible :name, :operation_name, :year, :operation_id
 
   self.primary_key = :id
   has_and_belongs_to_many :ppgs, :uniq => true
@@ -23,7 +23,7 @@ class Plan < ActiveRecord::Base
 
   def to_jbuilder(options = {})
     Jbuilder.new do |json|
-      json.extract! self, :name, :operation_name, :year, :id
+      json.extract! self, :name, :operation_name, :year, :id, :operation_id
 
       if options[:include]
 

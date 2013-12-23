@@ -11,6 +11,7 @@ class Visio.Views.IndicatorSingleYearView extends Backbone.View
     if !isRerender
       @$el.html @template()
 
+
     parameters = Visio.manager.selected(Visio.manager.get('aggregation_type')).sortBy (p) ->
       -p.selectedSituationAnalysis().result || 0
 
@@ -22,6 +23,12 @@ class Visio.Views.IndicatorSingleYearView extends Backbone.View
     _.each parameters, @addOne
 
   addOne: (parameter) =>
-    @views[parameter.id] = new Visio.Views.IndicatorSingleYearShowView({ model: parameter })
-    @$el.append @views[parameter.id].render().el
+    isRerender = false
+    view_id = parameter.get('operation_id') || parameter.id
+    if @views[view_id]
+      @views[view_id].model = parameter
+      isRerender = true
+    else
+      @views[view_id] = new Visio.Views.IndicatorSingleYearShowView({ model: parameter })
+    @$el.append @views[view_id].render(isRerender).el
 
