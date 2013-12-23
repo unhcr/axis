@@ -28,7 +28,7 @@
               %a.search-icon.pull-right{ :href => '#search' }
             .col-md-2.pull-right.zero-padding
               .menu-btn.pull-right.highlight
-                .menu-icon.menu-right
+                %a.menu-icon.menu-right{ :href => '#menu' }
                   .menu-row
                   .menu-row
                   .menu-row
@@ -36,10 +36,6 @@
     :javascript
       window.Visio.user = new Visio.Models.User(#{current_user.to_json.html_safe})
       $(document).ready(function() {
-        $('.menu-icon').click(function(e) {
-          Visio.router.navigate('/menu', { trigger: true })
-        })
-
         $(document).ajaxStart(function() {
           NProgress.start()
         });

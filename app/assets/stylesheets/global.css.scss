@@ -998,6 +998,7 @@ a {
 }
 
 .menu-icon {
+  display: block;
   cursor: pointer;
   position: relative;
   .menu-row {
@@ -1030,11 +1031,6 @@ a {
 .menu-icon.menu-right:before {
   left: -54px;
 }
-
-.menu-btn {
-  margin-top: 4px;
-}
-
 
 .extra-padding {
   padding-top: 20px
