@@ -1,8 +1,7 @@
-<div class="current-year ui-line-item-theme"><%= Visio.manager.year() %></div>
-<ul class="dropdown zero-height">
+<select class="dropdown">
   <% for (var i = 0; i < years.length; i ++) { %>
-    <li data-year="<%= years[i] %>" class="dropdown-item year ui-line-item-theme">
+    <option value="year:<%= years[i] %>" class="ui-line-item-theme">
       <%= years[i] %>
-    </li>
+    </option>
   <% } %>
 </ul>

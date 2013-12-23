@@ -8,20 +8,18 @@ class Visio.Views.YearFilterView extends Backbone.View
 
     @render()
 
-  events:
-    'click .year': 'onClickYear'
-    'click .current-year': 'onClickCurrentYear'
-
   render: () ->
     @$el.html @template(years: Visio.manager.get('yearList'))
+    $selects = @$el.find('select')
+
+    $selects.easyDropDown
+      cutOff: 10,
+      wrapperClass: 'dropdown'
+      onChange: @onChangeYear
+
     @
 
-  onClickYear: (e) ->
-    year = +$(e.currentTarget).attr('data-year')
-    Visio.manager.year(year)
-    @$el.find('.current-year').text year
-    @$el.find('.dropdown').toggleClass('zero-height')
-
-  onClickCurrentYear: (e) ->
-    @$el.find('.dropdown').toggleClass('zero-height')
-
+  onChangeYear: (selected) ->
+    attribute = selected.value.split(':')[0]
+    value = selected.value.split(':')[1]
+    Visio.manager.set attribute, value
