@@ -61,3 +61,8 @@ test 'render', ->
 
   _.each Visio.manager.selected(Visio.Parameters.PPGS).pluck('id'), (id) =>
     ok _.include(_.keys(@view.views), id)
+
+  Visio.manager.set 'aggregation_type', Visio.Parameters.PLANS
+  @view.render()
+  strictEqual _.keys(@view.views).length, 2
+  ok Visio.manager.get Visio.Parameters.PLANS
