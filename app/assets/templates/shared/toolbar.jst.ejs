@@ -6,7 +6,7 @@
     <div class="col-md-2 ui-purple right-text zero-padding">
       <select class="dropdown">
         <% _.each(Visio.AggregationTypes, function(type) { %>
-        <option  <% if (type === Visio.manager.get('aggregation_type')) { %>selected<% }
+        <option  <% if (type === Visio.manager.get('aggregation_type')) { %>selected <% }
         %>value="aggregation_type:<%= type %>"><%= type %></option>
         <% }) %>
       </select>
