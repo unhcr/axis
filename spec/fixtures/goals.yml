@@ -1,0 +1,14 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: Soccer
+
+two:
+  name: Football
+
+three:
+  name: Baseball
+
+deleted:
+  name: Football
+  is_deleted: true

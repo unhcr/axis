@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  problem_name: Women
+  objective_name: Get one
+  is_excluded: false
+
+two:
+  problem_name: Men
+  objective_name: Grow some
+  is_excluded: false
+
+deleted:
+  problem_name: Nerds
+  objective_name: Get some
+  is_excluded: false
+  is_deleted: true

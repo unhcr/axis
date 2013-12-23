@@ -1,0 +1,14 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: ComingOut
+  priority: Partial
+
+two:
+  name: ComingIn
+  priority: Partial
+
+deleted:
+  name: Georgia
+  priority: Suck
+  is_deleted: true

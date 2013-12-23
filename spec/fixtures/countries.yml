@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  iso3: BEN
+  un_names: [blue, red, green, death march]
+
+two:
+  un_names: [congo]
+  iso3: COG

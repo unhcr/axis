@@ -1,0 +1,22 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: People in school
+  is_performance: false
+  is_gsp: false
+
+two:
+  name: People on my pool
+  is_performance: true
+  is_gsp: false
+
+deleted:
+  name: Slayers
+  is_performance: false
+  is_gsp: false
+  is_deleted: true
+
+impact:
+  name: My baby
+  is_performance: false
+  is_gsp: false

@@ -61,6 +61,7 @@ module FocusFetch
       begin
         plan_zip = open("#{server_url("#{PLAN_PREFIX}#{id}#{PLAN_SUFFIX}")}",
                       :http_basic_authentication => [ENV['LDAP_USERNAME'], ENV['LDAP_PASSWORD']])
+        require 'pry'; binding.pry
       rescue Exception => e
         Rails.logger.error "Failed fetching #{id} -- e.message"
         monitor.set_state(id, FetchMonitor::MONITOR_STATES[:error])

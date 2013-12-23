@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: Refugees
+
+two:
+  name: IDPs
+
+deleted:
+  name: Men
+  is_deleted: true

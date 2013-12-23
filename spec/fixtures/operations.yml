@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: Kenya
+  years: [2012]
+
+two:
+  name: Ethiopia
+  years: [2012, 2013]

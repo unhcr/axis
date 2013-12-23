@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  standard: 1
+  reversal: false
+  comp_target: 1
+  yer: 20
+  myr: 8
+  baseline: 1
+  stored_baseline: 1
+  threshold_green: 10
+  threshold_red: 5
+
+two:
+  standard: 1
+  reversal: false
+  comp_target: 1
+  yer: 30
+  myr: 21
+  baseline: 1
+  stored_baseline: 1
+  threshold_green: 40
+  threshold_red: 20
