@@ -9,7 +9,7 @@ module Parameter
       synced_models[:updated] = self.where('created_at < ? and updated_at >= ? and is_deleted = false', synced_date, synced_date).where(where).limit(limit)
       synced_models[:deleted] = self.where('is_deleted = true and updated_at >= ?', synced_date).where(where).limit(limit)
     else
-      synced_models[:new] = self.where(where).limit(limit)
+      synced_models[:new] = self.where(:is_deleted => false).where(where).limit(limit)
       synced_models[:updated] = synced_models[:deleted] = self.limit(0)
     end
 
