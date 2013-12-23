@@ -5,7 +5,7 @@ class Visio.Models.Manager extends Backbone.Model
     options ||= {}
 
     @get('db').addEventListener 'ready', (e) =>
-      if Visio.user.get('reset_local_db')
+      if Visio.user && Visio.user.get('reset_local_db')
         @get('db').clear(Visio.Schema.stores.map((store) -> store.name))
         Visio.user.save({ reset_local_db: false })
 

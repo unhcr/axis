@@ -115,3 +115,7 @@ class Visio.Views.IndicatorSingleYearShowView extends Backbone.View
     @$el.toggleClass 'open'
 
     @graph() if @isOpen()
+
+  close: ->
+    @unbind()
+    @remove()

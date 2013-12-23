@@ -22,13 +22,22 @@ class Visio.Views.IndicatorSingleYearView extends Backbone.View
   addAll: (parameters) =>
     _.each parameters, @addOne
 
+    ids = parameters.map (p) => @getViewId(p)
+    # Close all other views
+    for id, view of @views
+      unless _.include(ids, id)
+        view.close()
+        delete @views[id]
+
   addOne: (parameter) =>
     isRerender = false
-    view_id = parameter.get('operation_id') || parameter.id
-    if @views[view_id]
-      @views[view_id].model = parameter
+    vid = @getViewId(parameter)
+    if @views[vid]
+      @views[vid].model = parameter
       isRerender = true
     else
-      @views[view_id] = new Visio.Views.IndicatorSingleYearShowView({ model: parameter })
-    @$el.append @views[view_id].render(isRerender).el
+      @views[vid] = new Visio.Views.IndicatorSingleYearShowView({ model: parameter })
+    @$el.append @views[vid].render(isRerender).el
 
+  getViewId: (parameter) =>
+    parameter.get('operation_id') || parameter.id

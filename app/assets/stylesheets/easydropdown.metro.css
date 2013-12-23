@@ -47,9 +47,8 @@
 .dropdown:after{
 	content: 'ↆ';
 	position: absolute;
-	right: 3px;
-	bottom: 3px;
-	top: 2px;
+	right: 0px;
+	top: .5em;
 	width: 30px;
 	background: transparent;
 }
