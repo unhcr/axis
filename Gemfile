@@ -41,7 +41,6 @@ group :development, :test do
   gem 'single_test'
   gem 'selenium-webdriver', '~> 2.38.0'
   gem 'rspec-rails', '~> 3.0.0.beta'
-  gem 'mocha', :require => false
 end
 
 gem 'jquery-rails'

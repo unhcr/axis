@@ -6,7 +6,6 @@ module FocusFetch
   PLAN_SUFFIX = '.zip'
 
   @@DIR = "#{Rails.root}/data/focus"
-  @@TEST_PATH = ''
 
   PLAN_TYPES = ['ONEPLAN']
 
@@ -14,7 +13,7 @@ module FocusFetch
   require 'zip'
   include FocusParse
 
-  def fetch(max_files = +1.0/0.0, expires = 1.week, test = false)
+  def fetch(max_files = +1.0/0.0, expires = 1.week)
     monitor = FetchMonitor.first || FetchMonitor.create
 
     begin
@@ -38,10 +37,6 @@ module FocusFetch
         raise 'More than one header file' if index > 0
 
         input = entry.get_input_stream
-
-        if test
-          input = File.read(FocusFetchTest::TESTFILE_PATH + FocusFetchTest::TESTHEADER_NAME)
-        end
 
         r = parse_header(input)
         ids = r[:ids]
@@ -74,9 +69,6 @@ module FocusFetch
           zip.each_with_index do |entry, j|
             raise 'More than one plan file' if j > 0
             input = entry.get_input_stream
-            if test
-              input = File.read(@@TEST_PATH)
-            end
 
             parse_plan(input)
           end
@@ -145,14 +137,6 @@ module FocusFetch
     params += ";ver=0.0.1"
 
     params
-  end
-
-  def set_test_path(path)
-    @@TEST_PATH = path
-  end
-
-  def get_test_path
-    @@TEST_PATH
   end
 
   def set_data_dir(dir)
