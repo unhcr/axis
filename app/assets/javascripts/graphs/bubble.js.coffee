@@ -46,6 +46,8 @@ Visio.Graphs.bubble = (config) ->
 
   parameters = config.parameters || []
 
+  entered = false
+
   info = new Visio.Views.BubbleInfoView({
     el: $('.info-container .bubble-info')
   })
@@ -128,8 +130,13 @@ Visio.Graphs.bubble = (config) ->
     path.attr("class", (d, i) -> "voronoi" )
         .attr("d", polygon)
         .on('mouseenter', (d) ->
+          entered = true
+          # Hack for when we move from one to voronoi to another to which fires enter, enter, out in Chrome
+          window.setTimeout(( -> entered = false), 50)
           info.render(d.point)
           info.show()
+        ).on('mouseout', (d) ->
+          info.hide() if info and not entered
         )
 
     path.exit().remove()
