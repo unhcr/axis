@@ -83,11 +83,10 @@ Visio.Graphs.bubble = (config) ->
 
     data = parameters.map (parameter) ->
       achievement = parameter.selectedAchievement().result
-      iso = if parameter.get('country') then parameter.get('country').iso3 else null
       datum = {
-        id: parameter.get('id')
+        id: parameter.get 'id'
         name: parameter.toString()
-        iso: iso
+        operation_id: parameter.get 'operation_id'
         budget: parameter.selectedBudget()
         achievement: achievement
         population: Math.random() * 1000000
@@ -103,12 +102,12 @@ Visio.Graphs.bubble = (config) ->
       x.domain(domain)
 
     bubbles = g.selectAll('.bubble')
-      .data(data, (d) -> d.iso || d.id)
+      .data(data, (d) -> d.operation_id || d.id)
 
     bubbles.enter().append('circle')
     bubbles
       .attr('class', (d) ->
-        return ['bubble'].join(' '))
+        return ['bubble', "id-#{d.operation_id || d.id }"].join(' '))
 
     bubbles
       .transition()
@@ -135,8 +134,11 @@ Visio.Graphs.bubble = (config) ->
           window.setTimeout(( -> entered = false), 50)
           info.render(d.point)
           info.show()
+          g.select(".bubble.id-#{d.point.operation_id || d.point.id}").classed 'focus', true
         ).on('mouseout', (d) ->
           info.hide() if info and not entered
+          g.select(".bubble.id-#{d.point.operation_id || d.point.id}").classed 'focus', false
+
         )
 
     path.exit().remove()

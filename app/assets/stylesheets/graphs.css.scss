@@ -11,6 +11,9 @@
 }
 
 #bubble {
+  .bubble.focus {
+    fill: red;
+  }
   .axis path {
     fill: none;
   }
@@ -70,7 +73,6 @@
 
 .voronoi {
   fill: transparent;
-  stroke: black;
 }
 
 .indicator-bar-graph {

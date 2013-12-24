@@ -104,3 +104,5 @@ Visio.Utils.progressTypeToName = (type) ->
     return 'MYR-YER'
 
   return ''
+
+Visio.Utils.commaNumber = d3.format(',d')
