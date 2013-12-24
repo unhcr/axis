@@ -52,6 +52,14 @@ Visio.Graphs.indicatorBarGraph = (config) ->
 
         y.domain [0, +d.get(goalType)]
 
+        container = bar.selectAll('.bar-container').data([d])
+        container.enter().append('rect')
+        container.attr('width', barWidth)
+          .attr('height', height)
+          .attr('x', 0)
+          .attr('y', 0)
+          .attr('class', 'bar-container')
+
         reversed = d.get(progress.start) > d.get(progress.end)
         barHeight = Math.abs(d.get(progress.start) - d.get(progress.end))
         box = bar.selectAll('.box').data([d])
