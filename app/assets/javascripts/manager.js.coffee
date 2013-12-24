@@ -56,7 +56,6 @@ class Visio.Models.Manager extends Backbone.Model
         plans = Visio.manager.strategy().plans().where({ year: Visio.manager.year() })
         _.each plans, (plan) ->
           Visio.manager.get('selected')[type][plan.id] = true
-    console.log Visio.manager.get('selected')
 
   resetBudgetDefaults: () ->
     _.each Visio.Scenarios, (scenario) =>
