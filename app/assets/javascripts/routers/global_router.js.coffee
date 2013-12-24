@@ -14,4 +14,5 @@ class Visio.Routers.GlobalRouter extends Backbone.Router
 
   menu: () =>
     $(document).scrollTop(0)
-    @menuView.show()
+    if @menuView.isHidden() then @menuView.show() else @menuView.hide()
+    Visio.router.navigate '/'
