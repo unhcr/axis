@@ -49,11 +49,17 @@
 	position: absolute;
 	right: 0px;
 	top: .5em;
-	width: 30px;
 	background: transparent;
+  display: inline-block;
+  margin-right: 10px;
 }
 
 .dropdown.focus:after{
+  -webkit-transform: rotate(180deg);
+  -moz-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  transform: rotate(180deg);
 }
 
 /* CARAT */
