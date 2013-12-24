@@ -59,6 +59,7 @@ Visio.Graphs.indicatorBarGraph = (config) ->
           .attr('x', 0)
           .attr('y', 0)
           .attr('class', 'bar-container')
+        container.exit().remove()
 
         reversed = d.get(progress.start) > d.get(progress.end)
         barHeight = Math.abs(d.get(progress.start) - d.get(progress.end))
@@ -81,6 +82,7 @@ Visio.Graphs.indicatorBarGraph = (config) ->
           ).attr('width', barWidth)
           .attr('height', (d) ->
             return y(0) - y(barHeight))
+        box.exit().remove()
 
         center = bar.selectAll('.center').data([d])
         center.enter().append('line')
@@ -91,6 +93,7 @@ Visio.Graphs.indicatorBarGraph = (config) ->
           .attr('y1', (d) -> if reversed then y(d.get(progress.start)) else y(d.get(progress.end)))
           .attr('x2', barWidth / 2)
           .attr('y2', (d) -> y(d.get(Visio.Algorithms.GOAL_TYPES.target)))
+        center.exit().remove()
 
         whisker = bar.selectAll('.whisker').data([d])
         whisker.enter().append('line')
@@ -101,6 +104,7 @@ Visio.Graphs.indicatorBarGraph = (config) ->
           .attr('y1', (d) -> y(d.get(Visio.Algorithms.GOAL_TYPES.target)))
           .attr('x2', barWidth - 2)
           .attr('y2', (d) -> y(d.get(Visio.Algorithms.GOAL_TYPES.target)))
+        whisker.exit().remove()
 
       )
 
