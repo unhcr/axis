@@ -84,9 +84,6 @@
     fill: red;
   }
 
-  .bar-container {
-    fill: transparent;
-  }
 }
 
 .spark-bar-graph {
@@ -104,4 +101,8 @@
 }
 .bar.missing {
   fill: $dark-gray;
+}
+
+.graph-container {
+  fill: transparent;
 }
