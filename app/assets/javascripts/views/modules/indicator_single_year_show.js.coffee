@@ -60,6 +60,7 @@ class Visio.Views.IndicatorSingleYearShowView extends Backbone.View
 
     if situationAnalysis.total == 0
       @$el.addClass 'disabled'
+      @shrink()
     else
       @$el.removeClass 'disabled'
 
@@ -92,6 +93,12 @@ class Visio.Views.IndicatorSingleYearShowView extends Backbone.View
 
   isOpen: =>
     @$el.hasClass 'open'
+
+  expand: =>
+    @$el.addClass 'open'
+
+  shrink: =>
+    @$el.removeClass 'open'
 
   onMouseenterBox: (e) ->
     d = d3.select(e.currentTarget).datum()
