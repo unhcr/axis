@@ -27,6 +27,15 @@ window.Visio =
   Stores:
     MAP: 'map'
     SYNC: 'sync_date'
+  ParameterClass:
+    PLANS: 'Plan'
+    PPGS: 'Ppg'
+    GOALS: 'Goal'
+    OUTPUTS: 'Output'
+    PROBLEM_OBJECTIVES: 'ProblemObjective'
+    INDICATORS: 'Indicator'
+    INDICATOR_DATA: 'IndicatorDatum'
+    BUDGETS: 'Budget'
   Parameters:
     PLANS: 'plans'
     PPGS: 'ppgs'

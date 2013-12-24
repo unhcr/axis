@@ -143,3 +143,34 @@ class Visio.Models.Manager extends Backbone.Model
     ).done(() =>
       db.get(Visio.Stores.MAP, @get('mapMD5'))
     )
+
+  validate: (attrs, options) ->
+    unless _.every(_.values(Visio.Parameters), (type) ->
+        attrs[type] instanceof Visio.Collections[Visio.ParameterClass[type.toUpperCase()]])
+
+      throw "Collection of has a mismatched collection type"
+
+    unless _.include attrs.yearList, attrs.date.getFullYear()
+      throw "Current year: #{attrs.date.getFullYear()}, is not in current year list #{attrs.yearList}"
+
+    unless _.include Visio.AggregationTypes, attrs.aggregation_type
+      throw "Current aggregation_type: #{attrs.aggregation_type}, is not a valid aggregation type"
+
+    unless _.include _.values(Visio.AchievementTypes), attrs.achievement_type
+      throw "Current achievement_type: #{attrs.achievement_type}, is not a valid achievement type"
+
+  set: (key, val, options) ->
+    # Default validation on set
+    options or= {}
+
+    if typeof key == 'object'
+      options = val
+      options.validate = true unless options.validate
+      Backbone.Model.prototype.set.apply @, [key, options]
+    else
+      options.validate = true unless options.validate
+      Backbone.Model.prototype.set.apply @, [key, val, options]
+
+
+
+

@@ -167,3 +167,30 @@ test 'resetSelected', () ->
       strictEqual(_.keys(Visio.manager.get('selected')[type]).length, 2)
     else
       strictEqual(_.keys(Visio.manager.get('selected')[type]).length, 1)
+
+test 'validation', ->
+
+  throws(
+    () ->
+      Visio.manager.set(Visio.Parameters.PLANS, new Visio.Collections.Ppg())
+    , /mismatched/, 'Raise a mismatch error')
+
+  throws(
+    () ->
+      Visio.manager.set(Visio.Parameters.PLANS, undefined)
+    , /mismatched/, 'Raise a mismatch error')
+
+  throws(
+    () ->
+      Visio.manager.year(1990)
+    , /year/, 'Raise a wrong year error')
+
+  throws(
+    () ->
+      Visio.manager.set('aggregation_type', 'abcdef')
+    , /aggregation_type/, 'Raise a wrong aggregation_type error')
+
+  throws(
+    () ->
+      Visio.manager.set('achievement_type', 'abcdef')
+    , /achievement_type/, 'Raise a wrong achievement_type error')
