@@ -2,54 +2,54 @@ class Visio.Models.Parameter extends Visio.Models.Syncable
 
   selectedIndicatorData: () ->
     return new Visio.Collections.IndicatorDatum(Visio.manager.get('indicator_data').filter((d) =>
-      return _.every Visio.Types, (type) =>
-        id = d.get("#{Inflection.singularize(type)}_id")
+      return _.every _.values(Visio.Parameters), (hash) =>
+        id = d.get("#{hash.singular}_id")
 
-        if @name == type
-          return @id == id && Visio.manager.get('selected')[type][id]
+        if @name == hash.plural
+          return @id == id && Visio.manager.get('selected')[hash.plural][id]
         else
-          return Visio.manager.get('selected')[type][id]))
+          return Visio.manager.get('selected')[hash.plural][id]))
 
   selectedBudgetData: () ->
     return new Visio.Collections.Budget(Visio.manager.get('budgets').filter((d) =>
-      return _.every Visio.Types, (type) =>
-        return true if type == Visio.Parameters.INDICATORS
-        id = d.get("#{Inflection.singularize(type)}_id")
+      return _.every _.values(Visio.Parameters), (hash) =>
+        return true if hash.plural == Visio.Parameters.INDICATORS.plural
+        id = d.get("#{hash.singular}_id")
 
-        if @name == type
-          return @id == id && Visio.manager.get('selected')[type][id]
-        else if type == Visio.Parameters.OUTPUTS
-          return Visio.manager.get('selected')[type][id] || id == undefined
+        if @name == hash.plural
+          return @id == id && Visio.manager.get('selected')[hash.plural][id]
+        else if hash.plural == Visio.Parameters.OUTPUTS.plural
+          return Visio.manager.get('selected')[hash.plural][id] || id == undefined
         else
-          return Visio.manager.get('selected')[type][id] ))
+          return Visio.manager.get('selected')[hash.plural][id] ))
 
   strategyIndicatorData: (strategy) ->
     strategy ||= Visio.manager.strategy()
 
     return new Visio.Collections.IndicatorDatum(Visio.manager.get('indicator_data').filter((d) =>
-      return _.every Visio.Types, (type) =>
-        id = d.get("#{Inflection.singularize(type)}_id")
+      return _.every _.values(Visio.Parameters), (hash) =>
+        id = d.get("#{hash.singular}_id")
 
-        if @name == type
-          return id == @id && strategy.get("#{type}_ids")[id]
+        if @name == hash.plural
+          return id == @id && strategy.get("#{hash.singular}_ids")[id]
         else
-          return strategy.get("#{type}_ids")[id] ))
+          return strategy.get("#{hash.singular}_ids")[id] ))
 
   strategyBudgetData: (strategy) ->
     strategy ||= Visio.manager.strategy()
 
     return new Visio.Collections.Budget(Visio.manager.get('budgets').filter((d) =>
-      return _.every Visio.Types, (type) =>
-        return true if type == Visio.Parameters.INDICATORS
-        id = d.get("#{Inflection.singularize(type)}_id")
+      return _.every _.values(Visio.Parameters), (hash) =>
+        return true if hash.plural == Visio.Parameters.INDICATORS.plural
+        id = d.get("#{hash.singular}_id")
 
         if @name == type
-          return id == @id && strategy.get("#{type}_ids")[id]
-        else if type == Visio.Parameters.OUTPUTS
+          return id == @id && strategy.get("#{hash.singular}_ids")[id]
+        else if hash.plural == Visio.Parameters.OUTPUTS.pural
           # Add undefined because budget data can have an undefined output
-          return strategy.get("#{type}_ids")[id] || id == undefined
+          return strategy.get("#{hash.singular}_ids")[id] || id == undefined
         else
-          return strategy.get("#{type}_ids")[id] ))
+          return strategy.get("#{hash.singular}_ids")[id] ))
 
   strategyBudget: () ->
     data = @strategyBudgetData()
