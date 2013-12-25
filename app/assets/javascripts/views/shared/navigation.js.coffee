@@ -44,7 +44,7 @@ class Visio.Views.NavigationView extends Backbone.View
       ]))
 
     @$el.find('.visio-check input:checked').each (idx, ele) =>
-      typeid = $(ele).val().split('__')
+      typeid = $(ele).val().split(Visio.Constants.SEPARATOR)
 
       type = typeid[0]
       id = typeid[1]
@@ -53,7 +53,7 @@ class Visio.Views.NavigationView extends Backbone.View
   onChangeSelection: (e) ->
     $target = $(e.currentTarget)
 
-    typeid = $target.val().split('__')
+    typeid = $target.val().split(Visio.Constants.SEPARATOR)
 
     type = typeid[0]
     id = typeid[1]

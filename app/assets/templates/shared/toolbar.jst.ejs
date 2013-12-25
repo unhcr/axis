@@ -7,7 +7,7 @@
       <select class="dropdown">
         <% _.each(Visio.AggregationTypes, function(hash) { %>
         <option  <% if (hash.plural === Visio.manager.get('aggregation_type')) { %>selected <% }
-        %>value="aggregation_type:<%= hash.plural %>"><%= hash.human %></option>
+        %>value="aggregation_type<%= Visio.Constants.SEPARATOR + hash.plural %>"><%= hash.human %></option>
         <% }) %>
       </select>
     </div>
@@ -23,7 +23,8 @@
     <div class="col-md-2 zero-padding">
       <select class="dropdown">
         <% _.each(Visio.manager.get('yearList'), function(year) { %>
-        <option  <% if (year === Visio.manager.get('year')) { %>selected<% } %> value="year:<%= year %>"><%= year %></option>
+        <option  <% if (year === Visio.manager.get('year')) { %>selected<% } %> value="year<%=
+        Visio.Constants.SEPARATOR + year %>"><%= year %></option>
         <% }) %>
       </select>
     </div>

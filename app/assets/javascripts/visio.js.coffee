@@ -24,6 +24,7 @@ window.Visio =
     PERCENT: d3.format(".0%")
   Constants:
     DB_NAME: 'visio'
+    SEPARATOR: '___'
   Stores:
     MAP: 'map'
     SYNC: 'sync_date'
@@ -100,11 +101,11 @@ window.Visio =
 
 Visio.ProgressTypes =
   BASELINE_MYR:
-    "#{Visio.Algorithms.REPORTED_VALUES.baseline}-#{Visio.Algorithms.REPORTED_VALUES.myr}"
+    "#{Visio.Algorithms.REPORTED_VALUES.baseline}#{Visio.Constants.SEPARATOR}#{Visio.Algorithms.REPORTED_VALUES.myr}"
   BASELINE_YER:
-    "#{Visio.Algorithms.REPORTED_VALUES.baseline}-#{Visio.Algorithms.REPORTED_VALUES.yer}"
+    "#{Visio.Algorithms.REPORTED_VALUES.baseline}#{Visio.Constants.SEPARATOR}#{Visio.Algorithms.REPORTED_VALUES.yer}"
   MYR_YER:
-    "#{Visio.Algorithms.REPORTED_VALUES.myr}-#{Visio.Algorithms.REPORTED_VALUES.yer}"
+    "#{Visio.Algorithms.REPORTED_VALUES.myr}#{Visio.Constants.SEPARATOR}#{Visio.Algorithms.REPORTED_VALUES.yer}"
 
 Visio.AggregationTypes = [
     Visio.Parameters.PLANS,
