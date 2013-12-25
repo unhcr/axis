@@ -12,7 +12,17 @@
 
 #bubble {
   .bubble.focus {
+    fill: black;
+  }
+  .trail {
+    stroke: black;
+    stroke-dasharray: 5 5;
+    pointer-events: none;
+  }
+  .bubble {
     fill: red;
+    opacity: .5;
+    pointer-events: none;
   }
   .axis path {
     fill: none;
@@ -109,7 +119,3 @@
   fill: transparent;
 }
 
-.trail {
-  stroke: black;
-  stroke-dasharray: 5 5;
-}

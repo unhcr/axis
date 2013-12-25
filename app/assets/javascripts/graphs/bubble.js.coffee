@@ -125,7 +125,7 @@ Visio.Graphs.bubble = (config) ->
       .transition()
       .duration(Visio.Durations.FAST)
       .attr('r', (d) ->
-        return r(50000))
+        return r(800000))
       .attr('cy', (d) ->
         return y(d.achievement))
       .attr('cx', (d) ->
