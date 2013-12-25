@@ -78,6 +78,11 @@ test('strategies', () ->
       id: 3
     }
   ])
+  ok not Visio.manager.strategy()
+  Visio.manager.set('strategy_id', 1)
+
+  ok Visio.manager.strategy()
+  strictEqual Visio.manager.strategy().id, 1
 
   strategies = Visio.manager.strategies([1, 2])
   strictEqual(strategies.length, 2)
