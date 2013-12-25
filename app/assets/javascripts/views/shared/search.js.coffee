@@ -33,25 +33,25 @@ class Visio.Views.SearchView extends Backbone.View
     @hide()
 
   search: (query) =>
-    searchTypes = ['indicators', 'operations']
+    searchTypes = [Visio.Parameters.INDICATORS, Visio.Syncables.OPERATIONS]
     $.get('/global_search', { query: query }).done (response) =>
       $results = @$el.find('.results')
-      if _.any(searchTypes, (type) -> response[type].length > 0)
+      if _.any(searchTypes, (hash) -> response[hash.plural].length > 0)
         $results.removeClass 'gone zero-height'
         $results.css 'height', $(document).height() - $results.offset().top
       else
         $results.addClass 'gone zero-height'
 
-      _.each searchTypes, (type) =>
+      _.each searchTypes, (hash) =>
         html = ''
-        _.each response[type], (result) =>
+        _.each response[hash.plural], (result) =>
           html += @itemTemplate( result: result.highlight.name[0] )
 
         if html
-          $results.find(".#{Inflection.singularize(type)}-results").html html
-          $results.find(".#{Inflection.singularize(type)}-results-container").removeClass 'gone zero-height'
+          $results.find(".#{hash.singular}-results").html html
+          $results.find(".#{hash.singular}-results-container").removeClass 'gone zero-height'
         else
-          $results.find(".#{Inflection.singularize(type)}-results-container").addClass 'gone zero-height'
+          $results.find(".#{hash.singular}-results-container").addClass 'gone zero-height'
 
 
   onKeyupSearch: (e) =>

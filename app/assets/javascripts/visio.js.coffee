@@ -70,6 +70,11 @@ window.Visio =
       plural: 'budgets'
       className: 'Budget'
       human: 'Budget'
+    OPERATIONS:
+      singular: 'operation'
+      plural: 'operations'
+      className: 'Operation'
+      human: 'Operation'
   Algorithms:
     SUCCESS_THRESHOLD: 0.66
     OK_THRESHOLD: 0.33
