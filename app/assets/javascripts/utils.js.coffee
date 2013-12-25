@@ -82,16 +82,6 @@ Visio.Utils.parseTransform = (string) ->
     scale: scale || 1
   }
 
-Visio.Utils.flash = ($ele, msg) ->
-  $ele.removeClass('flash')
-
-  # Cause a redraw
-  $ele[0].offsetWidth = $ele[0].offsetWidth
-
-  $ele.addClass('flash')
-
-  $ele.attr('placeholder', msg)
-
 Visio.Utils.countToFormatter = (value) ->
   d3.format('d')(value.toFixed(0)) || 0
 
