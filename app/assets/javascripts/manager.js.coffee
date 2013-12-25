@@ -103,9 +103,6 @@ class Visio.Models.Manager extends Backbone.Model
 
     return plan
 
-  plans: (options) ->
-    new Visio.Collections.Plan(@get('plans').where(options))
-
   getSyncDate: (id) ->
     db = @get('db')
     db.get(Visio.Stores.SYNC, id)

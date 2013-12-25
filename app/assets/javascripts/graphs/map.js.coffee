@@ -112,7 +112,8 @@ Visio.Graphs.map = (config) ->
           expanded.expand()
       )
 
-    centerData = Visio.manager.plans({ year: Visio.manager.year() }).filter((d) -> d.get('country'))
+    centerData = Visio.manager.get(Visio.Parameters.PLANS.plural).filter (plan) ->
+      plan.get('country') && plan.get('year') == Visio.manager.year()
 
     centers = g.selectAll('.center')
       .data(centerData, (d) -> d.id)
