@@ -2,7 +2,7 @@ class Visio.Collections.Ppg extends Visio.Collections.Parameter
 
   model: Visio.Models.Ppg
 
-  name: Visio.Parameters.PPGS
+  name: Visio.Parameters.PPGS.plural
 
   url: '/ppgs'
 

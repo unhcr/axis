@@ -2,7 +2,7 @@ class Visio.Collections.IndicatorDatum extends Visio.Collections.Syncable
 
   model: Visio.Models.IndicatorDatum
 
-  name: Visio.Parameters.INDICATOR_DATA
+  name: Visio.Syncables.INDICATOR_DATA.plural
 
   url: '/indicator_data'
 
