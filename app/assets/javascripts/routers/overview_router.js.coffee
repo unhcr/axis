@@ -8,7 +8,6 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
     Visio.manager.set 'selected_strategies', selectedStrategies
     Visio.manager.on 'change:date', () =>
       @navigation.render()
-      Visio.manager.setSelected()
       @moduleView.render(true)
 
     Visio.manager.on 'change:aggregation_type', () =>
@@ -99,4 +98,3 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
 
   scrollToModule: () =>
     $('.toolbar').addClass('fixed-top')
-    $(document).scrollTop @moduleView.$el.offset().top

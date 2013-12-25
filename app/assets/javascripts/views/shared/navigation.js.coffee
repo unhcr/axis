@@ -11,6 +11,8 @@ class Visio.Views.NavigationView extends Backbone.View
     'change .visio-check input': 'onChangeSelection'
 
   render: () ->
+    _.each _.values(Visio.Parameters), (hash) =>
+      Visio.manager.get('selected')[hash.plural] = {}
 
     @$el.html(@template(
       strategy: Visio.manager.strategy()
@@ -40,6 +42,13 @@ class Visio.Views.NavigationView extends Backbone.View
           hash: Visio.Parameters.INDICATORS
         }
       ]))
+
+    @$el.find('.visio-check input:checked').each (idx, ele) =>
+      typeid = $(ele).val().split('__')
+
+      type = typeid[0]
+      id = typeid[1]
+      Visio.manager.get('selected')[type][id] = true
 
   onChangeSelection: (e) ->
     $target = $(e.currentTarget)
