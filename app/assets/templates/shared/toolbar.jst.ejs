@@ -5,9 +5,9 @@
     </div>
     <div class="col-md-2 ui-purple zero-padding">
       <select class="dropdown">
-        <% _.each(Visio.AggregationTypes, function(type) { %>
-        <option  <% if (type === Visio.manager.get('aggregation_type')) { %>selected <% }
-        %>value="aggregation_type:<%= type %>"><%= type %></option>
+        <% _.each(Visio.AggregationTypes, function(hash) { %>
+        <option  <% if (hash.plural === Visio.manager.get('aggregation_type')) { %>selected <% }
+        %>value="aggregation_type:<%= hash.plural %>"><%= hash.human %></option>
         <% }) %>
       </select>
     </div>

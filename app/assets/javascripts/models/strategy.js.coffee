@@ -10,12 +10,12 @@ class Visio.Models.Strategy extends Backbone.Model
 
   initialize: (options) ->
     # Initialize helper functions
-    _.each Visio.Types, (type) =>
-      @[type] = () =>
-        ids = _.keys(@get("#{type}_ids"))
-        parameters = Visio.manager.get(type)
+    _.each _.values(Visio.Parameters), (hash) =>
+      @[hash.plural] = () =>
+        ids = _.keys(@get("#{hash.singular}_ids"))
+        parameters = Visio.manager.get(hash.plural)
         return new parameters.constructor(parameters.filter (model) =>
-          @get("#{type}_ids")[model.id])
+          @get("#{hash.singular}_ids")[model.id])
 
 
 

@@ -64,7 +64,7 @@ class Visio.Routers.IndexRouter extends Visio.Routers.GlobalRouter
 
     @listView = new Visio.Views.ParameterListView(
       model: Visio.manager.plan(plan_id)
-      type: type || Visio.Parameters.INDICATORS
+      type: type || Visio.Parameters.INDICATORS.plural
     )
 
     $('header').after(@listView.el)

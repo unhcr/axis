@@ -39,7 +39,7 @@ class Visio.Views.StrategyFilterView extends Backbone.View
 
     strategies = Visio.manager.strategies(strategy_ids)
 
-    plan_ids = strategies.map (strategy) -> _.keys(strategy.get('plans_ids'))
+    plan_ids = strategies.map (strategy) -> _.keys(strategy.get("#{Visio.Parameters.PLANS.singular}_ids"))
     plan_ids = _.intersection.apply(null, plan_ids)
 
     Visio.router.map.filterTooltips(plan_ids)

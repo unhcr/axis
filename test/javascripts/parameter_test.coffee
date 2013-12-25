@@ -8,16 +8,16 @@ test 'strategyBudgetData', () ->
   strategy = { id: 17 }
 
 
-  _.each Visio.Types, (type) ->
-    strategy["#{type}_ids"] = {}
-    strategy["#{type}_ids"]['1'] = true
+  _.each _.values(Visio.Parameters), (hash) ->
+    strategy["#{hash.singular}_ids"] = {}
+    strategy["#{hash.singular}_ids"]['1'] = true
 
 
   Visio.manager.get('strategies').reset([strategy])
   Visio.manager.set('strategy_id', Visio.manager.get('strategies').at(0).id)
 
-  _.each Visio.Types, (type) ->
-    Visio.manager.get(type).reset([
+  _.each _.values(Visio.Parameters), (hash) ->
+    Visio.manager.get(hash.plural).reset([
       {
         id: 1
       },
@@ -55,15 +55,15 @@ test 'strategyBudgetData', () ->
     }
   ])
 
-  _.each Visio.Types, (type) ->
-    selected = Visio.manager.strategy().get("#{type}_ids")
+  _.each _.values(Visio.Parameters), (hash) ->
+    selected = Visio.manager.strategy().get("#{hash.singular}_ids")
     strictEqual(_.keys(selected).length, 1)
 
     _.each _.keys(selected), (id) ->
-      model = Visio.manager.get(type).get(id)
+      model = Visio.manager.get(hash.plural).get(id)
       data = model.strategyBudgetData()
 
-      if type != Visio.Parameters.OUTPUTS
+      if hash.plural != Visio.Parameters.OUTPUTS.plural
         strictEqual(data.length, 2)
         ok(data instanceof Visio.Collections.Budget)
         ok(data.get('blue'))
@@ -78,13 +78,13 @@ test 'strategyBudgetData', () ->
 test 'selectedBudgetData', () ->
   selected = Visio.manager.get('selected')
 
-  _.each Visio.Types, (type) ->
-    selected[type] = {}
-    selected[type]['1'] = true
+  _.each _.values(Visio.Parameters), (hash) ->
+    selected[hash.plural] = {}
+    selected[hash.plural]['1'] = true
 
 
-  _.each Visio.Types, (type) ->
-    Visio.manager.get(type).reset([
+  _.each _.values(Visio.Parameters), (hash) ->
+    Visio.manager.get(hash.plural).reset([
       {
         id: 1
       },
@@ -129,14 +129,14 @@ test 'selectedBudgetData', () ->
     }
   ])
 
-  _.each Visio.Types, (type) ->
-    selected = Visio.manager.selected(type)
+  _.each _.values(Visio.Parameters), (hash) ->
+    selected = Visio.manager.selected(hash.plural)
     strictEqual(selected.length, 1)
 
     selected.each (d) ->
       data = d.selectedBudgetData()
 
-      if type == Visio.Parameters.OUTPUTS
+      if hash.plural == Visio.Parameters.OUTPUTS.plural
         strictEqual(data.length, 1)
       else
         strictEqual(data.length, 2)
@@ -148,13 +148,13 @@ test 'selectedBudgetData', () ->
 test 'selectedIndicatorData', () ->
   selected = Visio.manager.get('selected')
 
-  _.each Visio.Types, (type) ->
-    selected[type] = {}
-    selected[type]['1'] = true
+  _.each _.values(Visio.Parameters), (hash) ->
+    selected[hash.plural] = {}
+    selected[hash.plural]['1'] = true
 
 
-  _.each Visio.Types, (type) ->
-    Visio.manager.get(type).reset([
+  _.each _.values(Visio.Parameters), (hash) ->
+    Visio.manager.get(hash.plural).reset([
       {
         id: 1
       },
@@ -185,8 +185,8 @@ test 'selectedIndicatorData', () ->
     }
   ])
 
-  _.each Visio.Types, (type) ->
-    selected = Visio.manager.selected(type)
+  _.each _.values(Visio.Parameters), (hash) ->
+    selected = Visio.manager.selected(hash.plural)
     strictEqual(selected.length, 1)
 
     selected.each (d) ->
@@ -200,16 +200,16 @@ test 'strategyIndicatorData', () ->
   strategy = { id: 17 }
 
 
-  _.each Visio.Types, (type) ->
-    strategy["#{type}_ids"] = {}
-    strategy["#{type}_ids"]['1'] = true
+  _.each _.values(Visio.Parameters), (hash) ->
+    strategy["#{hash.singular}_ids"] = {}
+    strategy["#{hash.singular}_ids"]['1'] = true
 
 
   Visio.manager.get('strategies').reset([strategy])
   Visio.manager.set('strategy_id', Visio.manager.get('strategies').at(0).id)
 
-  _.each Visio.Types, (type) ->
-    Visio.manager.get(type).reset([
+  _.each _.values(Visio.Parameters), (hash) ->
+    Visio.manager.get(hash.plural).reset([
       {
         id: 1
       },
@@ -240,12 +240,12 @@ test 'strategyIndicatorData', () ->
     }
   ])
 
-  _.each Visio.Types, (type) ->
-    selected = Visio.manager.strategy().get("#{type}_ids")
+  _.each _.values(Visio.Parameters), (hash) ->
+    selected = Visio.manager.strategy().get("#{hash.singular}_ids")
     strictEqual(_.keys(selected).length, 1)
 
     _.each _.keys(selected), (id) ->
-      model = Visio.manager.get(type).get(id)
+      model = Visio.manager.get(hash.plural).get(id)
       data = model.strategyIndicatorData()
 
       strictEqual(data.length, 1)
@@ -253,8 +253,8 @@ test 'strategyIndicatorData', () ->
       ok(data.get('blue'))
 
  test 'toString', () ->
-  _.each Visio.Types, (type) ->
-    Visio.manager.get(type).reset([
+  _.each _.values(Visio.Parameters), (hash) ->
+    Visio.manager.get(hash.plural).reset([
       {
         id: 1
         name: 'ben'
@@ -263,16 +263,16 @@ test 'strategyIndicatorData', () ->
       }
     ])
 
-  _.each Visio.Types, (type) ->
-    parameters = Visio.manager.get(type)
+  _.each _.values(Visio.Parameters), (hash) ->
+    parameters = Visio.manager.get(hash.plural)
 
     p = parameters.at(0)
 
-    if type == Visio.Parameters.PLANS
+    if hash.plural == Visio.Parameters.PLANS.plural
       strictEqual p.toString(), 'lisa'
-    else if type == Visio.Parameters.PPGS
+    else if hash.plural == Visio.Parameters.PPGS.plural
       strictEqual p.toString(), '[lisa] ben'
-    else if type == Visio.Parameters.PROBLEM_OBJECTIVES
+    else if hash.plural == Visio.Parameters.PROBLEM_OBJECTIVES.plural
       strictEqual p.toString(), 'george'
     else
       strictEqual p.toString(), 'ben'

@@ -4,7 +4,7 @@ class Visio.Models.Budget extends Visio.Models.Syncable
 
   paramRoot: 'budget'
 
-  name: Visio.Parameters.BUDGETS
+  name: Visio.Syncables.BUDGETS.plural
 
   budget: () ->
     if Visio.manager.get('scenario_type')[@get('scenario')] &&

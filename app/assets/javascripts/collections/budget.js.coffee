@@ -2,7 +2,7 @@ class Visio.Collections.Budget extends Visio.Collections.Syncable
 
   model: Visio.Models.Budget
 
-  name: Visio.Parameters.BUDGETS
+  name: Visio.Syncables.BUDGETS.plural
 
   url: '/budgets'
 

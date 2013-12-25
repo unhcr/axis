@@ -27,24 +27,49 @@ window.Visio =
   Stores:
     MAP: 'map'
     SYNC: 'sync_date'
-  ParameterClass:
-    PLANS: 'Plan'
-    PPGS: 'Ppg'
-    GOALS: 'Goal'
-    OUTPUTS: 'Output'
-    PROBLEM_OBJECTIVES: 'ProblemObjective'
-    INDICATORS: 'Indicator'
-    INDICATOR_DATA: 'IndicatorDatum'
-    BUDGETS: 'Budget'
   Parameters:
-    PLANS: 'plans'
-    PPGS: 'ppgs'
-    GOALS: 'goals'
-    OUTPUTS: 'outputs'
-    PROBLEM_OBJECTIVES: 'problem_objectives'
-    INDICATORS: 'indicators'
-    INDICATOR_DATA: 'indicator_data'
-    BUDGETS: 'budgets'
+    PLANS:
+      singular: 'plan'
+      plural: 'plans'
+      className: 'Plan'
+      human: 'Plan'
+    PPGS:
+      singular: 'ppg'
+      plural: 'ppgs'
+      className: 'Ppg'
+      human: 'PPG'
+    GOALS:
+      singular: 'goal'
+      plural: 'goals'
+      className: 'Goal'
+      human: 'Goal'
+    INDICATORS:
+      singular: 'indicator'
+      plural: 'indicators'
+      className: 'Indicator'
+      human: 'Indicator'
+    OUTPUTS:
+      singular: 'output'
+      plural: 'outputs'
+      className: 'Output'
+      human: 'Output'
+    PROBLEM_OBJECTIVES:
+      singular: 'problem_objective'
+      plural: 'problem_objectives'
+      className: 'ProblemObjective'
+      human: 'Objective'
+
+  Syncables:
+    INDICATOR_DATA:
+      singular: 'indicator_datum'
+      plural: 'indicator_data'
+      className: 'IndicatorDatum'
+      human: 'Indicator Datum'
+    BUDGETS:
+      singular: 'budget'
+      plural: 'budgets'
+      className: 'Budget'
+      human: 'Budget'
   Algorithms:
     SUCCESS_THRESHOLD: 0.66
     OK_THRESHOLD: 0.33
@@ -75,14 +100,6 @@ Visio.ProgressTypes =
     "#{Visio.Algorithms.REPORTED_VALUES.baseline}-#{Visio.Algorithms.REPORTED_VALUES.yer}"
   MYR_YER:
     "#{Visio.Algorithms.REPORTED_VALUES.myr}-#{Visio.Algorithms.REPORTED_VALUES.yer}"
-Visio.Types = [
-    Visio.Parameters.PLANS,
-    Visio.Parameters.PPGS,
-    Visio.Parameters.GOALS,
-    Visio.Parameters.OUTPUTS,
-    Visio.Parameters.PROBLEM_OBJECTIVES,
-    Visio.Parameters.INDICATORS,
-  ]
 
 Visio.AggregationTypes = [
     Visio.Parameters.PLANS,
@@ -95,9 +112,16 @@ Visio.AggregationTypes = [
 Visio.Schema =
     stores: []
 
-_.each _.values(Visio.Parameters), (parameter) ->
+_.each _.values(Visio.Parameters), (hash) ->
   Visio.Schema.stores.push {
-    name: parameter + '_store'
+    name: hash.plural + '_store'
+    keyPath: 'id'
+    autoIncrement: false
+  }
+
+_.each _.values(Visio.Syncables), (hash) ->
+  Visio.Schema.stores.push {
+    name: hash.plural + '_store'
     keyPath: 'id'
     autoIncrement: false
   }

@@ -4,5 +4,5 @@ class Visio.Models.Goal extends Visio.Models.Parameter
 
   paramRoot: 'goal'
 
-  name: Visio.Parameters.GOALS
+  name: Visio.Parameters.GOALS.plural
 

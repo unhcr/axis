@@ -17,33 +17,27 @@ class Visio.Views.NavigationView extends Backbone.View
       parameters: [
         {
           data: new Visio.Collections.Plan(Visio.manager.strategy().plans().where({ year: Visio.manager.year() }))
-          name: 'Operations'
-          type: Visio.Parameters.PLANS
+          hash: Visio.Parameters.PLANS
         },
         {
           data: Visio.manager.strategy().ppgs()
-          name: 'PPGs'
-          type: Visio.Parameters.PPGS
+          hash: Visio.Parameters.PPGS
         },
         {
           data: Visio.manager.strategy().goals()
-          name: 'Goals'
-          type: Visio.Parameters.GOALS
+          hash: Visio.Parameters.GOALS
         },
         {
           data: Visio.manager.strategy().problem_objectives()
-          name: 'Objectives'
-          type: Visio.Parameters.PROBLEM_OBJECTIVES
+          hash: Visio.Parameters.PROBLEM_OBJECTIVES
         },
         {
           data: Visio.manager.strategy().outputs()
-          name: 'Outputs'
-          type: Visio.Parameters.OUTPUTS
+          hash: Visio.Parameters.OUTPUTS
         },
         {
           data: Visio.manager.strategy().indicators()
-          name: 'Indicators'
-          type: Visio.Parameters.INDICATORS
+          hash: Visio.Parameters.INDICATORS
         }
       ]))
 

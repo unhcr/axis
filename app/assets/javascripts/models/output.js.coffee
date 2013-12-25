@@ -7,4 +7,4 @@ class Visio.Models.Output extends Visio.Models.Parameter
 
   paramRoot: 'output'
 
-  name: Visio.Parameters.OUTPUTS
+  name: Visio.Parameters.OUTPUTS.plural
