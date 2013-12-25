@@ -54,7 +54,7 @@ class Visio.Views.AchievementBudgetSingleYearView extends Backbone.View
     else
       delete Visio.manager.get('scenario_type')[$target.val()]
 
-    @render(true)
+    Visio.manager.trigger('change:scenario_type')
 
   onClickBudget: (e) =>
     $target = $(e.currentTarget)
@@ -64,4 +64,4 @@ class Visio.Views.AchievementBudgetSingleYearView extends Backbone.View
     else
       delete Visio.manager.get('budget_type')[$target.val()]
 
-    @render(true)
+    Visio.manager.trigger('change:budget_type')
