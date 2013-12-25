@@ -4,19 +4,12 @@ class Visio.Views.ParameterListView extends Backbone.View
 
   className: 'parameter-list container full-width overlay'
 
-  tabs: [{
-      type: Visio.Parameters.INDICATORS
-      name: 'Indicators'
-    }, {
-      type: Visio.Parameters.PROBLEM_OBJECTIVES
-      name: 'Objectives-Outputs'
-    }, {
-      type: Visio.Parameters.GOALS
-      name: 'Goals'
-    }, {
-      type: Visio.Parameters.PPGS
-      name: 'PPG'
-    }]
+  tabs: [
+      Visio.Parameters.INDICATORS,
+      Visio.Parameters.PROBLEM_OBJECTIVES,
+      Visio.Parameters.GOALS,
+      Visio.Parameters.PPGS
+    ]
 
   minItems: 10
 
@@ -37,7 +30,7 @@ class Visio.Views.ParameterListView extends Backbone.View
     @$el.html @template(
       plan: @model.toJSON()
       tabs: @tabs
-      tab: _.findWhere(@tabs, { type: @type })
+      tab: _.findWhere(@tabs, { plural: @type })
     )
 
     @items(@type)
@@ -60,9 +53,9 @@ class Visio.Views.ParameterListView extends Backbone.View
     @$el.find('.selected').removeClass('selected')
     @$el.find(".#{type}").addClass('selected')
 
-    tab = _.findWhere(@tabs, { type: type })
+    tab = _.findWhere(@tabs, { plural: type })
 
-    @$el.find('.parameter-search').attr('placeholder', "Search #{tab.name}")
+    @$el.find('.parameter-search').attr('placeholder', "Search #{tab.human}")
 
     @items(type)
 

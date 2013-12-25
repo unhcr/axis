@@ -17,7 +17,7 @@ test('search', () ->
     }])
   view = new Visio.Views.ParameterListView({
     model: plan
-    type: Visio.Parameters.INDICATORS
+    type: Visio.Parameters.INDICATORS.plural
   })
 
   models = view.search('abc')

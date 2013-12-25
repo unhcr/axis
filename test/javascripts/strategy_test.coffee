@@ -2,7 +2,7 @@ module 'Strategy'
 
 test('include parameter', () ->
   strategy = new Visio.Models.Strategy({
-    'indicators_ids': {'a':true, 'b':true, 'c':true}
+    'indicator_ids': {'a':true, 'b':true, 'c':true}
 
   })
 
@@ -10,13 +10,13 @@ test('include parameter', () ->
     id: 'b'
   })
 
-  ok(strategy.include(Visio.Parameters.INDICATORS, i.id))
+  ok(strategy.include(Visio.Parameters.INDICATORS.singular, i.id))
 
   i = new Visio.Models.Indicator({
     id: 'd'
   })
 
-  ok(!strategy.include(Visio.Parameters.INDICATORS, i.id))
+  ok(!strategy.include(Visio.Parameters.INDICATORS.singular, i.id))
 )
 
 

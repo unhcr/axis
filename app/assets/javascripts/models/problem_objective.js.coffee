@@ -1,8 +1,5 @@
 class Visio.Models.ProblemObjective extends Visio.Models.Parameter
 
-  constructor: () ->
-    Backbone.Model.apply(@, arguments)
-
   urlRoot: '/problem_objectives'
 
   paramRoot: 'problem_objective'
@@ -10,4 +7,4 @@ class Visio.Models.ProblemObjective extends Visio.Models.Parameter
   toString: () ->
     return @get('objective_name')
 
-  name: Visio.Parameters.PROBLEM_OBJECTIVES
+  name: Visio.Parameters.PROBLEM_OBJECTIVES.plural

@@ -96,14 +96,14 @@ test('strategies', () ->
 test 'selected', () ->
   selected = Visio.manager.get('selected')
 
-  _.each Visio.Types, (type) ->
-    selected[type] = {}
-    selected[type]['1'] = true
+  _.each _.values(Visio.Parameters), (hash) ->
+    selected[hash.plural] = {}
+    selected[hash.plural]['1'] = true
 
   Visio.manager.set 'selected', selected
 
-  _.each Visio.Types, (type) ->
-    Visio.manager.get(type).reset([
+  _.each _.values(Visio.Parameters), (hash) ->
+    Visio.manager.get(hash.plural).reset([
       {
         id: 1
       },
@@ -111,9 +111,9 @@ test 'selected', () ->
         id: 2
       }
     ])
-    selected = Visio.manager.selected(type)
+    selected = Visio.manager.selected(hash.plural)
 
-    ok(selected instanceof Visio.manager.get(type).constructor)
+    ok(selected instanceof Visio.manager.get(hash.plural).constructor)
     strictEqual(selected.length, 1)
     ok(selected.get(1))
 
@@ -141,16 +141,16 @@ test 'resetSelected', () ->
 
   strategy = { id: 17 }
 
-  _.each Visio.Types, (type) ->
-    strategy["#{type}_ids"] = {}
-    strategy["#{type}_ids"]['1'] = true
-    strategy["#{type}_ids"]['2'] = true
+  _.each _.values(Visio.Parameters), (hash) ->
+    strategy["#{hash.singular}_ids"] = {}
+    strategy["#{hash.singular}_ids"]['1'] = true
+    strategy["#{hash.singular}_ids"]['2'] = true
 
   Visio.manager.get('strategies').reset([strategy])
   Visio.manager.set('strategy_id', Visio.manager.get('strategies').at(0).id)
 
-  _.each Visio.Types, (type) ->
-    Visio.manager.get(type).reset([
+  _.each _.values(Visio.Parameters), (hash) ->
+    Visio.manager.get(hash.plural).reset([
       {
         id: 1
         year: Visio.manager.year()
@@ -162,22 +162,22 @@ test 'resetSelected', () ->
 
   Visio.manager.resetSelected()
 
-  _.each Visio.Types, (type) ->
-    if type != Visio.Parameters.PLANS
-      strictEqual(_.keys(Visio.manager.get('selected')[type]).length, 2)
+  _.each _.values(Visio.Parameters), (hash) ->
+    if hash.plural != Visio.Parameters.PLANS.plural
+      strictEqual(_.keys(Visio.manager.get('selected')[hash.plural]).length, 2)
     else
-      strictEqual(_.keys(Visio.manager.get('selected')[type]).length, 1)
+      strictEqual(_.keys(Visio.manager.get('selected')[hash.plural]).length, 1)
 
 test 'validation', ->
 
   throws(
     () ->
-      Visio.manager.set(Visio.Parameters.PLANS, new Visio.Collections.Ppg())
+      Visio.manager.set(Visio.Parameters.PLANS.plural, new Visio.Collections.Ppg())
     , /mismatched/, 'Raise a mismatch error')
 
   throws(
     () ->
-      Visio.manager.set(Visio.Parameters.PLANS, undefined)
+      Visio.manager.set(Visio.Parameters.PLANS.plural, undefined)
     , /mismatched/, 'Raise a mismatch error')
 
   throws(

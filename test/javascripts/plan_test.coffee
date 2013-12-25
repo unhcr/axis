@@ -152,11 +152,11 @@ asyncTest 'fetchParameter', ->
     }
   p = new Visio.Models.Plan({ id: '26be980c-62af-44ab-877b-de7309fa4a18', name: 'ben' })
 
-  _.each Visio.Types, (type, i) ->
-    if type != Visio.Parameters.PLANS
-      p.fetchParameter(type).done ->
-        strictEqual p.get(type).length, 2
-        if i == Visio.Types.length - 1
+  _.each _.values(Visio.Parameters), (hash, i) ->
+    if hash.plural != Visio.Parameters.PLANS.plural
+      p.fetchParameter(hash.plural).done ->
+        strictEqual p.get(hash.plural).length, 2
+        if i == _.values(Visio.Parameters).length - 1
           $.get.restore()
           start()
 
@@ -204,21 +204,21 @@ test 'strategy situation analysis', () ->
 
   Visio.manager.get('strategies').reset([{
       id: 1
-      plans_ids: { 1: true }
-      goals_ids: { 1: true }
-      ppgs_ids: { 1: true }
-      outputs_ids: { 1: true }
-      problem_objectives_ids: { 1: true }
-      indicators_ids: { 1: true }
+      plan_ids: { 1: true }
+      goal_ids: { 1: true }
+      ppg_ids: { 1: true }
+      output_ids: { 1: true }
+      problem_objective_ids: { 1: true }
+      indicator_ids: { 1: true }
     },
     {
       id: 2,
-      plans_ids: {}
-      goals_ids: {}
-      ppgs_ids: {}
-      outputs_ids: {}
-      problem_objectives_ids: {}
-      indicators_ids: {}
+      plan_ids: {}
+      goal_ids: {}
+      ppg_ids: {}
+      output_ids: {}
+      problem_objective_ids: {}
+      indicator_ids: {}
     }])
 
   Visio.manager.get('selected_strategies')['1'] = true
@@ -233,21 +233,21 @@ test 'strategy situation analysis', () ->
 
   Visio.manager.get('strategies').reset([{
       id: 1
-      plans_ids: { 'abcd': true }
-      goals_ids: { 1: true }
-      ppgs_ids: { 1: true }
-      outputs_ids: { 1: true }
-      problem_objectives_ids: { 1: true }
-      indicators_ids: { 1: true }
+      plan_ids: { 'abcd': true }
+      goal_ids: { 1: true }
+      ppg_ids: { 1: true }
+      output_ids: { 1: true }
+      problem_objective_ids: { 1: true }
+      indicator_ids: { 1: true }
     },
     {
       id: 2,
-      plans_ids: {}
-      goals_ids: {}
-      ppgs_ids: {}
-      outputs_ids: {}
-      problem_objectives_ids: {}
-      indicators_ids: {}
+      plan_ids: {}
+      goal_ids: {}
+      ppg_ids: {}
+      output_ids: {}
+      problem_objective_ids: {}
+      indicator_ids: {}
     }])
 
   result = p.strategySituationAnalysis()

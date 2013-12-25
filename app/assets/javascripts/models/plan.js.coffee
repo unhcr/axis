@@ -9,7 +9,7 @@ class Visio.Models.Plan extends Visio.Models.Parameter
       goals: new Visio.Collections.Goal(attrs.goals)
     )
 
-  name: Visio.Parameters.PLANS
+  name: Visio.Parameters.PLANS.plural
 
   urlRoot: '/plans'
 

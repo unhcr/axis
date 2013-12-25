@@ -43,9 +43,9 @@ class Visio.Models.Parameter extends Visio.Models.Syncable
         return true if hash.plural == Visio.Parameters.INDICATORS.plural
         id = d.get("#{hash.singular}_id")
 
-        if @name == type
+        if @name == hash.plural
           return id == @id && strategy.get("#{hash.singular}_ids")[id]
-        else if hash.plural == Visio.Parameters.OUTPUTS.pural
+        else if hash.plural == Visio.Parameters.OUTPUTS.plural
           # Add undefined because budget data can have an undefined output
           return strategy.get("#{hash.singular}_ids")[id] || id == undefined
         else

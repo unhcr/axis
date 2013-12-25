@@ -112,16 +112,16 @@ Visio.AggregationTypes = [
 Visio.Schema =
     stores: []
 
-_.each _.values(Visio.Parameters), (type) ->
+_.each _.values(Visio.Parameters), (hash) ->
   Visio.Schema.stores.push {
-    name: type + '_store'
+    name: hash.plural + '_store'
     keyPath: 'id'
     autoIncrement: false
   }
 
-_.each _.values(Visio.Syncables), (type) ->
+_.each _.values(Visio.Syncables), (hash) ->
   Visio.Schema.stores.push {
-    name: type + '_store'
+    name: hash.plural + '_store'
     keyPath: 'id'
     autoIncrement: false
   }

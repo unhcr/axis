@@ -11,7 +11,8 @@
     <div class="col-md-4 ui-small-header ui-primary-light zero-padding"><%= plan.operation_name.toUpperCase() %></div>
     <div class="tabs col-md-8 zero-padding">
       <% for (var i = 0; i < tabs.length; i ++) { %>
-      <span data-type="<%= tabs[i].type %>" class="ui-primary-light <% if (tabs[i].type == tab.type) { %>selected<% } %> tab pull-right <%= tabs[i].type %>"><%= tabs[i].name %></span>
+      <span data-type="<%= tabs[i].plural %>" class="ui-primary-light <% if (tabs[i].plural == tab.plural) {
+        %>selected<% } %> tab pull-right <%= tabs[i].plural %>"><%= tabs[i].human %></span>
       <% } %>
     </div>
   </div>
@@ -22,7 +23,7 @@
 <div class="list-content">
   <div class="row">
     <div class="col-md-8 col-centered">
-      <input type="text" placeholder="Search <%= tab.name %>"class="pull-right white-placeholder parameter-search" />
+      <input type="text" placeholder="Search <%= tab.human %>"class="pull-right white-placeholder parameter-search" />
     </div>
   </div>
   <div class="row">

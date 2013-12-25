@@ -42,20 +42,21 @@ class Visio.Models.Manager extends Backbone.Model
     'yearList': [2012, 2013, 2014, 2015]
     'selected': {}
     'selected_strategies': {}
-    'aggregation_type': Visio.Parameters.PLANS
+    'aggregation_type': Visio.Parameters.PLANS.plural
     'scenario_type': {}
     'budget_type': {}
     'achievement_type': Visio.AchievementTypes.TARGET
 
   resetSelected: () ->
-    _.each Visio.Types, (type) ->
-      Visio.manager.get('selected')[type] = {}
-      if type != Visio.Parameters.PLANS
-        _.extend Visio.manager.get('selected')[type], Visio.manager.strategy().get("#{type}_ids")
+    _.each _.values(Visio.Parameters), (hash) ->
+      Visio.manager.get('selected')[hash.plural] = {}
+      if hash.singular != Visio.Parameters.PLANS.singular
+        _.extend Visio.manager.get('selected')[hash.plural],
+          Visio.manager.strategy().get("#{hash.singular}_ids")
       else
         plans = Visio.manager.strategy().plans().where({ year: Visio.manager.year() })
         _.each plans, (plan) ->
-          Visio.manager.get('selected')[type][plan.id] = true
+          Visio.manager.get('selected')[hash.plural][plan.id] = true
 
   resetBudgetDefaults: () ->
     _.each Visio.Scenarios, (scenario) =>
@@ -88,8 +89,8 @@ class Visio.Models.Manager extends Backbone.Model
   setSelected: () ->
     $navigation = $('#navigation')
 
-    _.each Visio.Types, (type) =>
-      @get('selected')[type] = {}
+    _.each _.values(Visio.Parameters), (hash) =>
+      @get('selected')[hash.plural] = {}
 
     $navigation.find('.visio-check input:checked').each (idx, ele) =>
       typeid = $(ele).val().split('__')
@@ -144,15 +145,15 @@ class Visio.Models.Manager extends Backbone.Model
     )
 
   validate: (attrs, options) ->
-    unless _.every(_.values(Visio.Parameters), (type) ->
-        attrs[type] instanceof Visio.Collections[Visio.ParameterClass[type.toUpperCase()]])
+    unless _.every(_.values(Visio.Parameters), (hash) ->
+        attrs[hash.plural] instanceof Visio.Collections[hash.className])
 
       throw "Collection of has a mismatched collection type"
 
     unless _.include attrs.yearList, attrs.date.getFullYear()
       throw "Current year: #{attrs.date.getFullYear()}, is not in current year list #{attrs.yearList}"
 
-    unless _.include Visio.AggregationTypes, attrs.aggregation_type
+    unless _.include Visio.AggregationTypes.map((d) -> d.plural), attrs.aggregation_type
       throw "Current aggregation_type: #{attrs.aggregation_type}, is not a valid aggregation type"
 
     unless _.include _.values(Visio.AchievementTypes), attrs.achievement_type
