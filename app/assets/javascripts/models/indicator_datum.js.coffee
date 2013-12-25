@@ -1,7 +1,4 @@
-class Visio.Models.IndicatorDatum extends Backbone.Model
-
-  constructor: () ->
-    Backbone.Model.apply(@, arguments)
+class Visio.Models.IndicatorDatum extends Visio.Models.Syncable
 
   urlRoot: '/indicator_data'
 

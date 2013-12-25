@@ -1,4 +1,4 @@
-class Visio.Models.Budget extends Visio.Models.Parameter
+class Visio.Models.Budget extends Visio.Models.Syncable
 
   urlRoot: '/budgets'
 

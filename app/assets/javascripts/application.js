@@ -16,6 +16,8 @@
 //= require backbone
 //= require ./vendor/d3.v3
 //= require visio
+//= require ./collections/syncable
+//= require ./models/syncable
 //= require ./collections/parameter
 //= require ./models/parameter
 //= require_tree ../templates

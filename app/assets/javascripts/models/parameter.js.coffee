@@ -1,22 +1,4 @@
-class Visio.Models.Parameter extends Backbone.Model
-
-  store: () ->
-    @name + '_store'
-
-  keyPath: 'id'
-
-  toString: () ->
-    return @get('name')
-
-  setSynced: () ->
-    db = Visio.manager.get('db')
-    db.put({
-      name: @store()
-      keyPath: @keyPath }, @toJSON())
-
-  getSynced: () ->
-    db = Visio.manager.get('db')
-    db.get(@store(), @id)
+class Visio.Models.Parameter extends Visio.Models.Syncable
 
   selectedIndicatorData: () ->
     return new Visio.Collections.IndicatorDatum(Visio.manager.get('indicator_data').filter((d) =>
@@ -40,18 +22,6 @@ class Visio.Models.Parameter extends Backbone.Model
           return Visio.manager.get('selected')[type][id] || id == undefined
         else
           return Visio.manager.get('selected')[type][id] ))
-
-  selectedAchievement: () ->
-    data = @selectedIndicatorData()
-    data.achievement()
-
-  selectedBudget: () ->
-    data = @selectedBudgetData()
-    data.budget()
-
-  selectedSituationAnalysis: () ->
-    data = @selectedIndicatorData()
-    data.situationAnalysis()
 
   strategyIndicatorData: (strategy) ->
     strategy ||= Visio.manager.strategy()
@@ -89,11 +59,15 @@ class Visio.Models.Parameter extends Backbone.Model
     data = @strategyIndicatorData()
     data.situationAnalysis()
 
-  toJSON: () ->
-    json = _.clone(this.attributes)
+  selectedAchievement: () ->
+    data = @selectedIndicatorData()
+    data.achievement()
 
-    for attr, value of json
-      if json[attr] instanceof Backbone.Model || json[attr] instanceof Backbone.Collection
-        json[attr] = json[attr].toJSON()
-    json
+  selectedBudget: () ->
+    data = @selectedBudgetData()
+    data.budget()
+
+  selectedSituationAnalysis: () ->
+    data = @selectedIndicatorData()
+    data.situationAnalysis()
 

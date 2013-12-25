@@ -1,4 +1,4 @@
-class Visio.Collections.Budget extends Visio.Collections.Parameter
+class Visio.Collections.Budget extends Visio.Collections.Syncable
 
   model: Visio.Models.Budget
 
