@@ -6,8 +6,8 @@ class Visio.Collections.IndicatorDatum extends Visio.Collections.Syncable
 
   url: '/indicator_data'
 
-  situationAnalysis: (reported_value) ->
-    reported_value ||= Visio.Algorithms.REPORTED_VALUES.myr
+  situationAnalysis: (reported) ->
+    reported ||= Visio.Algorithms.REPORTED_VALUES.myr
 
     counts = {}
     counts[Visio.Algorithms.ALGO_RESULTS.success] = 0
@@ -39,13 +39,13 @@ class Visio.Collections.IndicatorDatum extends Visio.Collections.Syncable
       total: count
     }
 
-  achievement: (reported_value) ->
+  achievement: (reported) ->
     return { category: null, result: null } if @length == 0
-    reported_value ||= Visio.Algorithms.REPORTED_VALUES.myr
+    reported ||= Visio.Algorithms.REPORTED_VALUES.myr
     results = []
 
     @each (datum) ->
-      result = datum.achievement(reported_value)
+      result = datum.achievement(reported)
 
       results.push(result) unless result == Visio.Algorithms.ALGO_RESULTS.missing or isNaN(result)
 
@@ -55,7 +55,7 @@ class Visio.Collections.IndicatorDatum extends Visio.Collections.Syncable
 
     category = Visio.Algorithms.ALGO_RESULTS.low
 
-    divisor = if reported_value == Visio.Algorithms.REPORTED_VALUES.yer then 1 else 2
+    divisor = if reported == Visio.Algorithms.REPORTED_VALUES.yer then 1 else 2
 
     if average >= Visio.Algorithms.HIGH_THRESHOLD / divisor
       category = Visio.Algorithms.ALGO_RESULTS.high
