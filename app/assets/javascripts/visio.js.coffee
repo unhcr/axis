@@ -19,6 +19,7 @@ window.Visio =
   Durations:
     FAST: 500
     MEDIUM: 1000
+    SLOW: 2000
   Formats:
     SI: d3.format('0.3s')
     PERCENT: d3.format(".0%")

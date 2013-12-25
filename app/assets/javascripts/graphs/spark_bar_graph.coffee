@@ -8,8 +8,6 @@ Visio.Graphs.sparkBarGraph = (config) ->
 
   selection = config.selection
 
-  duration = 500
-
   barWidth = config.barWidth || 10
 
   height = barWidth * 4
@@ -39,6 +37,7 @@ Visio.Graphs.sparkBarGraph = (config) ->
     bars.enter().append('rect')
     bars.attr('class', (d) ->
       ['bar', d.key].join ' ' )
+    bars.transition().duration(Visio.Durations.FAST)
       .attr('x', (d) -> x(d.value))
       .attr('y', (d, i) -> y(i * barWidth) - barWidth)
       .attr('width', (d) -> if d.value then x(0) - x(d.value) else negativeLength)
