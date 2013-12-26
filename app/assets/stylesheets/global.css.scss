@@ -300,11 +300,13 @@ body.index {
   border-bottom: 1px solid $white;
 }
 
-.divider.primary {
+.divider-primary {
+  border: none;
   border-bottom: 1px solid $primary;
 }
 
-.divider.primary-light {
+.divider-primary-light {
+  border: none;
   border-bottom: 1px solid $primary-light;
 }
 
@@ -1257,9 +1259,5 @@ input[type="radio"]:checked + label {
 [data-prefix]:before {
   content: attr(data-prefix) ': ';
   display: inline;
-}
-
-.tabs {
-  border-bottom: 1px solid $light-gray;
 }
 
