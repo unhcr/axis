@@ -3,8 +3,6 @@ class Visio.Views.NavigationView extends Backbone.View
   template: JST['shared/navigation']
 
   initialize: () ->
-    # Set defaults for selected
-    Visio.manager.resetSelected()
 
   events:
     'click .open': 'onClickOpen'

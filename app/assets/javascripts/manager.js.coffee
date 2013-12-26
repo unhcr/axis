@@ -47,16 +47,16 @@ class Visio.Models.Manager extends Backbone.Model
     'budget_type': {}
     'achievement_type': Visio.AchievementTypes.TARGET
 
-  resetSelected: () ->
+  resetSelectedDefaults: () ->
     _.each _.values(Visio.Parameters), (hash) ->
       Visio.manager.get('selected')[hash.plural] = {}
-      if hash.singular != Visio.Parameters.PLANS.singular
-        _.extend Visio.manager.get('selected')[hash.plural],
-          Visio.manager.strategy().get("#{hash.singular}_ids")
-      else
+      if hash.singular == Visio.Parameters.PLANS.singular
         plans = Visio.manager.strategy().plans().where({ year: Visio.manager.year() })
         _.each plans, (plan) ->
           Visio.manager.get('selected')[hash.plural][plan.id] = true
+      else
+        _.extend Visio.manager.get('selected')[hash.plural],
+          Visio.manager.strategy().get("#{hash.singular}_ids")
 
   resetBudgetDefaults: () ->
     _.each Visio.Scenarios, (scenario) =>
@@ -67,7 +67,7 @@ class Visio.Models.Manager extends Backbone.Model
 
   reset: () ->
     @resetBudgetDefaults()
-    @resetSelected()
+    @resetSelectedDefaults()
     Visio.manager.trigger('change:selected')
 
   year: (year) ->
