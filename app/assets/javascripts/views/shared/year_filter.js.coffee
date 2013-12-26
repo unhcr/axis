@@ -14,7 +14,7 @@ class Visio.Views.YearFilterView extends Backbone.View
 
     $selects.easyDropDown
       cutOff: 10,
-      wrapperClass: 'dropdown'
+      wrapperClass: 'dropdown dropdown-black'
       onChange: @onChangeYear
 
     @

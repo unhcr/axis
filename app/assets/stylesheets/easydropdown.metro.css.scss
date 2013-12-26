@@ -1,4 +1,5 @@
 /* --- EASYDROPDOWN METRO THEME --- */
+@import "variables.css.scss";
 
 /* PREFIXED CSS */
 
@@ -62,39 +63,13 @@
   transform: rotate(180deg);
 }
 
-/* CARAT */
-
-.dropdown .carat,
-.dropdown .carat:after{
-	content: '';
-	position: absolute;
-	right: 10px;
-	top: 50%;
-	margin-top: -4px;
-	z-index: 2;
-
-	-webkit-transform-origin: 50% 20%;
-	-moz-transform-origin: 50% 20%;
-	-ms-transform-origin: 50% 20%;
-	transform-origin: 50% 20%;
-
+.dropdown.dropdown-black {
+	background: $black;
+  color: white;
 }
 
-.dropdown .carat:after{
-	margin-top: -10px;
-	right: -8px;
-}
-
-.dropdown:hover .carat:after{
-}
-
-.dropdown.focus .carat{
-}
-
-.dropdown.focus .carat:after{
-}
-
-.dropdown.open .carat{
+.dropdown.dropdown-black:hover {
+  background: black;
 }
 
 /* OLD SELECT (HIDDEN) */
@@ -137,6 +112,12 @@
 	white-space: nowrap;
 }
 
+.dropdown.dropdown-black {
+  .selected, li {
+    color: white;
+  }
+}
+
 .dropdown .selected::after{
 	content: '';
 	position: absolute;
@@ -167,6 +148,14 @@
 
 .dropdown:hover div{
 	background: white;
+}
+
+.dropdown.dropdown-black div {
+  background: $black;
+}
+
+.dropdown.dropdown-black:hover div {
+  background: $black;
 }
 
 /* Height is adjusted by JS on open */
@@ -218,6 +207,10 @@
 	padding: 8px 12px;
 }
 
+.dropdown.dropdown-black li {
+  border-top: 1px white solid;
+}
+
 /* .focus class is also added on hover */
 
 .dropdown li.focus{
@@ -230,4 +223,14 @@
 .dropdown li.active{
 	background: #0180d1;
 	color: #fff;
+}
+
+.dropdown.dropdown-black {
+  li.focus {
+    background: black;
+  }
+
+  li.active {
+    background: black;
+  }
 }
