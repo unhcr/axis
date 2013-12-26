@@ -1216,6 +1216,10 @@ input[type="radio"]:checked + label {
   border-bottom: 1px $divider-bottom solid;
 }
 
+.divider-white {
+  border-bottom: 1px $white solid;
+}
+
 .target-country-count {
   position: absolute;
   left: -110px;
