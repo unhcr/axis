@@ -129,6 +129,10 @@ p.small {
   font-weight: 300;
 }
 
+.tooltip-content a.ui-line-item-theme {
+  color: $white;
+}
+
 .collapsable-content {
   overflow: hidden;
 }
