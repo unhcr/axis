@@ -142,7 +142,7 @@ test 'plan', () ->
   p = Visio.manager.plan('aaa')
   strictEqual p.id, 'ben'
 
-test 'resetSelected', () ->
+test 'resetSelectedDefaults', () ->
 
   strategy = { id: 17 }
 
@@ -165,7 +165,7 @@ test 'resetSelected', () ->
       }
     ])
 
-  Visio.manager.resetSelected()
+  Visio.manager.resetSelectedDefaults()
 
   _.each _.values(Visio.Parameters), (hash) ->
     if hash.plural != Visio.Parameters.PLANS.plural
