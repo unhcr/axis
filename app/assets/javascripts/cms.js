@@ -21,9 +21,11 @@
 //= require ./collections/parameter
 //= require ./models/parameter
 //= require_tree ../templates
+//= require ./models/strategy_objective
 //= require_tree ./models
 //= require_tree ./collections
 //= require_tree ./views/cms
 //= require_tree ./routers
 //= require_tree ./helpers
 //= require_tree ./vendor
+//= require_tree ./cms_vendor
