@@ -67,4 +67,21 @@ class PpgTest < ActiveSupport::TestCase
 
     assert_equal 2, models[:new].count
   end
+
+  test "synced models with join_ids overlap" do
+    i = [ppgs(:one), ppgs(:two), ppgs(:deleted)]
+    s = plans(:one)
+    s2 = plans(:two)
+
+    i[0].plans << s
+    i[0].plans << s2
+    i[1].plans << s2
+
+    i.map(&:save)
+
+    models = Ppg.synced_models(Time.now - 3.days, { :plan_id => [s.id, s2.id] })
+
+    assert_equal 2, models[:new].count
+
+  end
 end
