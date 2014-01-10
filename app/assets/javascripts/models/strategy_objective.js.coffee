@@ -21,3 +21,6 @@ class Visio.Models.StrategyObjective extends Backbone.Model
   defaults:
     'name': ''
     'description': ''
+
+  toString: ->
+    @get 'name'

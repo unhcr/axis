@@ -15,6 +15,10 @@ class Visio.Models.Strategy extends Backbone.Model
       type: 'Text'
     description:
       type: 'TextArea'
+    strategyObjectives:
+      type: 'List'
+      itemType: 'NestedModel'
+      model: Visio.Models.StrategyObjective
 
   include: (type, id) ->
 
