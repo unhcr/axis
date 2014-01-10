@@ -1,7 +1,7 @@
 class Visio.Routers.StrategyCMSRouter extends Backbone.Router
 
   initialize: (options) ->
-    @strategies = options.strategies
+    @strategies = Visio.manager.strategies()
     @$content = $('.cms-content')
 
   routes:

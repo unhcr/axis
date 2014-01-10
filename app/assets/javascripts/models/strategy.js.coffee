@@ -15,6 +15,9 @@ class Visio.Models.Strategy extends Backbone.Model
       type: 'Text'
     description:
       type: 'TextArea'
+    operations:
+      type: 'Checkboxes'
+      options: []
     strategyObjectives:
       type: 'List'
       itemType: 'NestedModel'
