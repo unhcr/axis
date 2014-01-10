@@ -17,6 +17,24 @@ class Visio.Models.StrategyObjective extends Backbone.Model
       type: 'Text'
     description:
       type: 'TextArea'
+    goals:
+      type: 'Checkboxes'
+      options: (callback) ->
+        goals = new Visio.Collections.Goal()
+        goals.fetchSynced().done ->
+          callback(goals)
+    problem_objectives:
+      type: 'Checkboxes'
+      options: (callback) ->
+        callback(new Visio.Collections.ProblemObjective())
+    outputs:
+      type: 'Checkboxes'
+      options: (callback) ->
+        callback(new Visio.Collections.Output())
+    indicators:
+      type: 'Checkboxes'
+      options: (callback) ->
+        callback(new Visio.Collections.Indicator())
 
   defaults:
     'name': ''

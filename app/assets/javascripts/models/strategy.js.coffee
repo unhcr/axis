@@ -6,7 +6,13 @@ class Visio.Models.Strategy extends Backbone.Model
 
   constructor: ->
     @operations = new Visio.Collections.Operation()
-    @strategyObjectives = new Visio.Collections.StrategyObjective()
+    @strategy_objectives = new Visio.Collections.StrategyObjective()
+
+    @schema.strategyObjectives =
+      type: 'List'
+      itemType: 'NestedModel'
+      model: Visio.Models.StrategyObjective
+
 
     Backbone.Model.apply @, arguments
 
@@ -18,10 +24,6 @@ class Visio.Models.Strategy extends Backbone.Model
     operations:
       type: 'Checkboxes'
       options: []
-    strategyObjectives:
-      type: 'List'
-      itemType: 'NestedModel'
-      model: Visio.Models.StrategyObjective
 
   include: (type, id) ->
 
