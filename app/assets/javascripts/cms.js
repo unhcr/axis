@@ -21,11 +21,9 @@
 //= require ./collections/parameter
 //= require ./models/parameter
 //= require_tree ../templates
-//= require_tree ./views
-//= require_tree ./routers
-//= require_tree ./helpers
 //= require_tree ./models
 //= require_tree ./collections
+//= require_tree ./views/cms
+//= require_tree ./routers
+//= require_tree ./helpers
 //= require_tree ./vendor
-//= require_tree ./graphs
-//= require manager

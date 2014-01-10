@@ -12,6 +12,12 @@ class Visio.Models.StrategyObjective extends Backbone.Model
 
   paramRoot: 'strategy_objective'
 
+  schema:
+    name:
+      type: 'Text'
+    description:
+      type: 'TextArea'
+
   defaults:
     'name': ''
     'description': ''

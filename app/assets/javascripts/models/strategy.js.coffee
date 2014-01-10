@@ -10,6 +10,12 @@ class Visio.Models.Strategy extends Backbone.Model
 
     Backbone.Model.apply @, arguments
 
+  schema:
+    name:
+      type: 'Text'
+    description:
+      type: 'TextArea'
+
   include: (type, id) ->
 
     @get("#{type}_ids")[id] != undefined

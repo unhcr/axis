@@ -2,8 +2,8 @@
 %html
   %head
     %title Visio
-    = stylesheet_link_tag    "application", :media => "all"
-    = javascript_include_tag "application"
+    = stylesheet_link_tag    "cms", :media => "all"
+    = javascript_include_tag "cms"
     = csrf_meta_tags
   %body{ :class => "#{controller.action_name} layout-#{controller.send(:_layout).virtual_path.name}" }
 

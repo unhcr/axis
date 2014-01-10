@@ -10,5 +10,6 @@
  *
  *= require_self
  *= require normalize-rails
- *= require_tree .
+ *= require_tree ./shared
+ *= require_tree ./application
  */

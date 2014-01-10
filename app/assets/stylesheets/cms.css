@@ -10,7 +10,7 @@
  *
  *= require_self
  *= require normalize-rails
- *= require_true ./shared
- *= require_true ./cms
+ *= require_tree ./shared
+ *= require_tree ./cms
  */
 

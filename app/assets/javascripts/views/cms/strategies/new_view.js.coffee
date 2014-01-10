@@ -6,7 +6,9 @@ class Visio.Views.StrategyCMSNewView extends Backbone.View
     @render()
 
   render: ->
-    @$el.html @template(strategy: @model.toJSON())
+    form = new Backbone.Form
+      model: @model
+    @$el.html form.render().el
 
   save: ->
     @model.save()
