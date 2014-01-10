@@ -1,12 +1,14 @@
 Visio::Application.routes.draw do
   devise_for :users, :controllers => {:sessions => 'sessions', :registrations => 'registrations' }
 
+  # Application
   get '/splash' => 'application#splash'
-
   get '/map' => 'application#map'
-
   get '/overview' => 'application#overview'
   get '/global_search' => 'application#global_search'
+
+  # CMS
+  get '/cms/strategies' => 'cms#strategies'
 
 
   # The priority is based upon order of creation:

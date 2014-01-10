@@ -1,1 +1,11 @@
 .cms-content
+
+:javascript
+  $(document).ready(function() {
+
+    Visio.router = new Visio.Routers.StrategyCMSRouter({
+      strategies: new Visio.Collections.Strategy(#{@strategies.to_json.html_safe}),
+    });
+    Backbone.history.start();
+
+  });
