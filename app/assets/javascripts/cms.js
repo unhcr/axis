@@ -21,8 +21,11 @@
 //= require ./collections/parameter
 //= require ./models/parameter
 //= require_tree ../templates
-//= require ./models/strategy_objective
-//= require_tree ./models
+//= require_tree ./models/parameters
+//= require_tree ./models/syncables
+//= require_tree ./collections/parameters
+//= require_tree ./collections/syncables
+//= require_tree ./models/
 //= require_tree ./collections
 //= require_tree ./views/cms
 //= require_tree ./routers
