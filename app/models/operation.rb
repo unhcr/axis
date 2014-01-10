@@ -1,6 +1,7 @@
 class Operation < ActiveRecord::Base
   self.primary_key = :id
 
+  extend Parameter
   include Tire::Model::Search
   include Tire::Model::Callbacks
   extend Searchable
