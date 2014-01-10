@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131219143127) do
+ActiveRecord::Schema.define(:version => 20140110163022) do
 
   create_table "budgets", :force => true do |t|
     t.string   "budget_type"
@@ -73,6 +73,11 @@ ActiveRecord::Schema.define(:version => 20131219143127) do
   create_table "goals_ppgs", :id => false, :force => true do |t|
     t.string "goal_id", :null => false
     t.string "ppg_id",  :null => false
+  end
+
+  create_table "goals_problem_objectives", :id => false, :force => true do |t|
+    t.string "goal_id",              :null => false
+    t.string "problem_objective_id", :null => false
   end
 
   create_table "goals_rights_groups", :id => false, :force => true do |t|

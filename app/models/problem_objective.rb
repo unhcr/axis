@@ -13,6 +13,7 @@ class ProblemObjective < ActiveRecord::Base
   has_and_belongs_to_many :strategies, :uniq => true
   has_and_belongs_to_many :strategy_objectives, :uniq => true
   has_and_belongs_to_many :plans, :uniq => true
+  has_and_belongs_to_many :goals, :uniq => true
 
 
   def to_jbuilder(options = {})
