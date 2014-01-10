@@ -4,6 +4,12 @@ class Visio.Models.Strategy extends Backbone.Model
 
   paramRoot: 'strategy'
 
+  constructor: ->
+    @operations = new Visio.Collections.Operation()
+    @strategyObjectives = new Visio.Collections.StrategyObjective()
+
+    Backbone.Model.apply @, arguments
+
   include: (type, id) ->
 
     @get("#{type}_ids")[id] != undefined
