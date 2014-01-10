@@ -1,4 +1,4 @@
-class Visio.Routers.StrategyCMSNewView extends Backbone.View
+class Visio.Views.StrategyCMSNewView extends Backbone.View
 
   template: JST['cms/strategies/edit']
 
