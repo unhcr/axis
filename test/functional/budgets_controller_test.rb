@@ -27,7 +27,7 @@ class BudgetsControllerTest < ActionController::TestCase
   end
 
   test "should get no budget data" do
-    get :index
+    get :synced
 
     assert_response :success
 
@@ -47,7 +47,7 @@ class BudgetsControllerTest < ActionController::TestCase
     datum.output = outputs(:one)
     datum.save
 
-    get :index, { :strategy_id => @s.id }
+    get :synced, { :strategy_id => @s.id }
 
     assert_response :success
 

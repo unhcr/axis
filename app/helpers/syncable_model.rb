@@ -1,4 +1,4 @@
-module Parameter
+module SyncableModel
 
   def synced_models(synced_date = nil, join_ids = {}, limit = nil, where = {})
     synced_models = {}
@@ -31,3 +31,4 @@ module Parameter
   end
 
 end
+

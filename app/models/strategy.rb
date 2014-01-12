@@ -24,22 +24,7 @@ class Strategy < ActiveRecord::Base
     raise 'Association does not belong to a Strategy Objective' if assoc.strategy_objectives.empty?
   end
 
-  # Get IndicatorData related to particular strategy
-  def synced_data(synced_date = nil, limit = nil, where = {})
-
-    ids = {
-      :plan_ids => self.plan_ids,
-      :ppg_ids => self.ppg_ids,
-      :goal_ids => self.goal_ids,
-      :problem_objective_ids => self.problem_objective_ids,
-      :output_ids => self.output_ids,
-      :indicator_ids => self.indicator_ids,
-    }
-
-    return IndicatorDatum.synced_data(ids, synced_date, limit, where)
-  end
-
-  def synced_budgets(synced_date = nil, limit = nil, where = {})
+  def synced(resource, synced_date = nil, limit = nil, where = {})
     ids = {
       :plan_ids => self.plan_ids,
       :ppg_ids => self.ppg_ids,
@@ -48,8 +33,9 @@ class Strategy < ActiveRecord::Base
       :output_ids => self.output_ids,
     }
 
-    return Budget.synced_budgets(ids, synced_date, limit, where)
+    ids[:indicator_ids] = self.indicator_ids if resource == IndicatorDatum
 
+    resource.synced(ids, synced_date, limit, where)
   end
 
   def to_jbuilder(options = {})

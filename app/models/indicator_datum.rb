@@ -27,7 +27,7 @@ class IndicatorDatum < ActiveRecord::Base
   OK_THRESHOLD = 0.33
 
 
-  def self.synced_data(ids = {}, synced_date = nil, limit = nil, where = {})
+  def self.synced(ids = {}, synced_date = nil, limit = nil, where = {})
 
     synced_data = {}
 

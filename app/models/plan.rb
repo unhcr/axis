@@ -1,5 +1,5 @@
 class Plan < ActiveRecord::Base
-  extend Parameter
+  extend SyncableModel
 
   attr_accessible :name, :operation_name, :year, :operation_id
 

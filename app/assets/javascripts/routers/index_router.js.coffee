@@ -41,7 +41,8 @@ class Visio.Routers.IndexRouter extends Visio.Routers.GlobalRouter
   setup: () =>
 
     options =
-      year: Visio.manager.year()
+      where:
+        year: Visio.manager.year()
       options:
         include:
           counts: true
