@@ -2,9 +2,9 @@ require 'test_helper'
 
 class PlansControllerTest < ActionController::TestCase
 
-  test 'plans index should get passed in year' do
+  test 'plans synced should get passed in year' do
 
-    get :index, { :year => 2012 }
+    get :synced, { :where => { :year => 2012 } }
 
 
     r = JSON.parse(response.body)
@@ -15,12 +15,12 @@ class PlansControllerTest < ActionController::TestCase
     assert_equal plans[0]["year"], 2012
   end
 
-  test 'plans index should get counts' do
+  test 'plans synced should get counts' do
     p = Plan.where(:year => 2012).first
     p.ppgs << ppgs(:one)
     p.save
 
-    get :index, { :year => 2012, :options => { :include => { :counts => true } } }
+    get :synced, { :where => { :year => 2012 }, :options => { :include => { :counts => true } } }
 
 
     r = JSON.parse(response.body)
@@ -38,7 +38,7 @@ class PlansControllerTest < ActionController::TestCase
     assert_equal 0, plan["outputs_count"]
   end
 
-  test 'plans index should get situation analysis' do
+  test 'plans synced should get situation analysis' do
 
     p = Plan.where(:year => 2012).first
     p.indicators << indicators(:impact)
@@ -51,7 +51,7 @@ class PlansControllerTest < ActionController::TestCase
     p.indicators[0].save
     p.save
 
-    get :index, { :year => 2012, :options => { :include => { :situation_analysis => true } } }
+    get :synced, { :where => { :year => 2012 }, :options => { :include => { :situation_analysis => true } } }
 
 
     r = JSON.parse(response.body)
