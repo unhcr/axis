@@ -39,7 +39,7 @@ class Visio.Collections.Syncable extends Backbone.Collection
     db = Visio.manager.get('db')
     options ||= {}
 
-    url ||= @url
+    url ||= "#{@url}/synced"
 
     timestampId = "#{url}#{JSON.stringify(options)}".hashCode()
 

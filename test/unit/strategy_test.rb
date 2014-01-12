@@ -39,7 +39,7 @@ class StrategyTest < ActiveSupport::TestCase
     datum.indicator = indicators(:one)
     datum.save
 
-    data = @s.synced_data
+    data = @s.synced(IndicatorDatum)
     assert_equal 1, data[:new].length
     assert_equal 0, data[:updated].length
     assert_equal 0, data[:deleted].length
@@ -56,7 +56,7 @@ class StrategyTest < ActiveSupport::TestCase
     datum.indicator = indicators(:one)
     datum.save
 
-    data = @s.synced_data
+    data = @s.synced(IndicatorDatum)
     assert_equal 0, data[:new].length
     assert_equal 0, data[:updated].length
     assert_equal 0, data[:deleted].length
@@ -72,7 +72,7 @@ class StrategyTest < ActiveSupport::TestCase
     datum.indicator = indicators(:one)
     datum.save
 
-    data = @s.synced_data
+    data = @s.synced(IndicatorDatum)
     assert_equal 1, data[:new].length
     assert_equal 0, data[:updated].length
     assert_equal 0, data[:deleted].length
@@ -91,7 +91,7 @@ class StrategyTest < ActiveSupport::TestCase
     datum.created_at = Time.now - 1.week
     datum.save
 
-    data = @s.synced_data(Time.now - 3.days)
+    data = @s.synced(IndicatorDatum, Time.now - 3.days)
     assert_equal 1, data[:updated].length
     assert_equal 0, data[:new].length
     assert_equal 0, data[:deleted].length
@@ -110,7 +110,7 @@ class StrategyTest < ActiveSupport::TestCase
     datum.is_deleted = true
     datum.save
 
-    data = @s.synced_data(Time.now - 3.days)
+    data = @s.synced(IndicatorDatum, Time.now - 3.days)
     assert_equal 0, data[:updated].length
     assert_equal 0, data[:new].length
     assert_equal 1, data[:deleted].length

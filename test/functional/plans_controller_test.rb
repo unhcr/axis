@@ -2,9 +2,9 @@ require 'test_helper'
 
 class PlansControllerTest < ActionController::TestCase
 
-  test 'plans index should get passed in year' do
+  test 'plans synced should get passed in year' do
 
-    get :index, { :year => 2012 }
+    get :synced, { :where => { :year => 2012 } }
 
 
     r = JSON.parse(response.body)
@@ -15,12 +15,12 @@ class PlansControllerTest < ActionController::TestCase
     assert_equal plans[0]["year"], 2012
   end
 
-  test 'plans index should get counts' do
+  test 'plans synced should get counts' do
     p = Plan.where(:year => 2012).first
     p.ppgs << ppgs(:one)
     p.save
 
-    get :index, { :year => 2012, :options => { :include => { :counts => true } } }
+    get :synced, { :where => { :year => 2012 }, :options => { :include => { :counts => true } } }
 
 
     r = JSON.parse(response.body)
@@ -38,7 +38,7 @@ class PlansControllerTest < ActionController::TestCase
     assert_equal 0, plan["outputs_count"]
   end
 
-  test 'plans index should get situation analysis' do
+  test 'plans synced should get situation analysis' do
 
     p = Plan.where(:year => 2012).first
     p.indicators << indicators(:impact)
@@ -51,7 +51,7 @@ class PlansControllerTest < ActionController::TestCase
     p.indicators[0].save
     p.save
 
-    get :index, { :year => 2012, :options => { :include => { :situation_analysis => true } } }
+    get :synced, { :where => { :year => 2012 }, :options => { :include => { :situation_analysis => true } } }
 
 
     r = JSON.parse(response.body)
@@ -63,6 +63,35 @@ class PlansControllerTest < ActionController::TestCase
     plan = plans[0]
 
     assert_equal IndicatorDatum::ALGO_RESULTS[:ok], plan["situation_analysis"]["category"]
+  end
 
+  test 'index should get all plans' do
+    get :index
+
+    plans = JSON.parse(response.body)
+
+    assert_response :success
+    assert_equal 3, plans.count
+  end
+
+  test 'index should get all 2012 plans' do
+    get :index, { :where => { :year => 2012 } }
+
+    plans = JSON.parse(response.body)
+
+    assert_response :success
+    assert_equal 1, plans.count
+    assert_equal plans[0]["year"], 2012
+  end
+
+  test 'index should get one page of plans' do
+    Plan.per_page = 1
+
+    get :index, { :page => 1 }
+
+    plans = JSON.parse(response.body)
+
+    assert_response :success
+    assert_equal 1, plans.count
   end
 end

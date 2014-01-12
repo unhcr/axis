@@ -1,5 +1,5 @@
 class Goal < ActiveRecord::Base
-  extend Parameter
+  extend SyncableModel
   attr_accessible :name
 
   self.primary_key  = :id

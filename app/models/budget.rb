@@ -7,7 +7,7 @@ class Budget < ActiveRecord::Base
   belongs_to :output
   belongs_to :problem_objective
 
-  def self.synced_budgets(ids = {}, synced_date = nil, limit = nil, where = {})
+  def self.synced(ids = {}, synced_date = nil, limit = nil, where = {})
 
     synced_budgets = {}
 

@@ -1,4 +1,4 @@
-module Parameter
+module SyncableModel
 
   def synced_models(synced_date = nil, join_ids = {}, limit = nil, where = {})
     synced_models = {}
@@ -18,10 +18,11 @@ module Parameter
         join_ids.each do |id_name, value|
           name = id_name.to_s.sub(/_id[s]*/, '')
           join_table = [self.table_name, name.pluralize].sort.join('_')
+          table_name_singular = self.table_name.singularize
           synced_models[key] = query.joins(
-            "inner join (select * from #{join_table} where
+            "inner join (select distinct(#{table_name_singular}_id) from #{join_table} where
             #{id_name.to_s.singularize} in ('#{Array(value).join("','")}')) as #{join_table}_rel
-            on #{self.table_name}.id = #{join_table}_rel.#{self.table_name.singularize}_id")
+            on #{self.table_name}.id = #{join_table}_rel.#{table_name_singular}_id")
         end
       end
     end
@@ -30,3 +31,4 @@ module Parameter
   end
 
 end
+

@@ -28,7 +28,7 @@ class IndicatorDataControllerTest < ActionController::TestCase
   end
 
   test "should get no indicator data" do
-    get :index
+    get :synced
 
     assert_response :success
 
@@ -50,7 +50,7 @@ class IndicatorDataControllerTest < ActionController::TestCase
     datum.indicator = indicators(:one)
     datum.save
 
-    get :index, { :strategy_id => @s.id }
+    get :synced, { :strategy_id => @s.id }
 
     assert_response :success
 

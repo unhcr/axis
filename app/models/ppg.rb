@@ -1,5 +1,5 @@
 class Ppg < ActiveRecord::Base
-  extend Parameter
+  extend SyncableModel
   attr_accessible :name, :population_type, :population_type_id, :operation_name
 
   self.primary_key = :id

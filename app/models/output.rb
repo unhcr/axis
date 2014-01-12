@@ -1,5 +1,5 @@
 class Output < ActiveRecord::Base
-  extend Parameter
+  extend SyncableModel
   attr_accessible :name, :priority
   self.primary_key = :id
   has_and_belongs_to_many :indicators, :uniq => true
