@@ -1,4 +1,5 @@
 class PlansController < ApplicationController
+  include SyncableParameter
 
   def index
     year = params[:year]
