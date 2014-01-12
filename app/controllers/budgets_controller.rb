@@ -6,7 +6,7 @@ class BudgetsController < ApplicationController
     if params[:strategy_id]
       strategy = Strategy.find(params[:strategy_id])
 
-      render :json => strategy.synced_budgets(synced_date)
+      render :json => strategy.synced(Budget, synced_date)
     else
       render :json => { :new => [], :updated => [], :deleted => [] }
     end

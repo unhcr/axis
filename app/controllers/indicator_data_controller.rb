@@ -7,7 +7,7 @@ class IndicatorDataController < ApplicationController
     if params[:strategy_id]
       strategy = Strategy.find(params[:strategy_id])
 
-      render :json => strategy.synced_data(synced_date)
+      render :json => strategy.synced(IndicatorDatum, synced_date)
     else
       render :json => { :new => [], :updated => [], :deleted => [] }
     end
