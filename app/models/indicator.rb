@@ -1,7 +1,7 @@
 class Indicator < ActiveRecord::Base
   self.primary_key  = :id
 
-  extend Parameter
+  extend SyncableModel
   include Tire::Model::Search
   include Tire::Model::Callbacks
   extend Searchable
