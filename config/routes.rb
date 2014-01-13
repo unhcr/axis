@@ -23,6 +23,7 @@ Visio::Application.routes.draw do
   # This route can be invoked with purchase_url(:id => product.id)
 
   # Sample resource route (maps HTTP verbs to controller actions automatically):
+  syncable_resources :operations
   syncable_resources :plans
   syncable_resources :indicators
   syncable_resources :ppgs
