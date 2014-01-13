@@ -15,20 +15,36 @@ module SyncableModel
 
     if join_ids
       synced_models.each do |key, query|
-        join_ids.each do |id_name, value|
-          name = id_name.to_s.sub(/_id[s]*/, '')
-          join_table = [self.table_name, name.pluralize].sort.join('_')
-          table_name_singular = self.table_name.singularize
-          synced_models[key] = query.joins(
-            "inner join (select distinct(#{table_name_singular}_id) from #{join_table} where
-            #{id_name.to_s.singularize} in ('#{Array(value).join("','")}')) as #{join_table}_rel
-            on #{self.table_name}.id = #{join_table}_rel.#{table_name_singular}_id")
-        end
+        synced_models[key] = join_habtm(query, join_ids)
       end
     end
 
-    return synced_models
+    synced_models
   end
+
+  def models(join_ids, page = nil, where = {})
+    models = self.where(where)
+    models = models.page unless page.nil?
+    models = join_habtm(models, join_ids) if join_ids
+
+    models
+  end
+
+  private
+
+    def join_habtm(query, join_ids)
+      join_ids.each do |id_name, value|
+        name = id_name.to_s.sub(/_id[s]*/, '')
+        join_table = [self.table_name, name.pluralize].sort.join('_')
+        table_name_singular = self.table_name.singularize
+        query = query.joins(
+          "inner join (select distinct(#{table_name_singular}_id) from #{join_table} where
+          #{id_name.to_s.singularize} in ('#{Array(value).join("','")}')) as #{join_table}_rel
+          on #{self.table_name}.id = #{join_table}_rel.#{table_name_singular}_id")
+      end
+
+      query
+    end
 
 end
 
