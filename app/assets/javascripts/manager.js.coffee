@@ -24,6 +24,7 @@ class Visio.Models.Manager extends Backbone.Model
       @year(@get('year'))
 
   defaults:
+    'operations': new Visio.Collections.Operation()
     'plans': new Visio.Collections.Plan()
     'ppgs': new Visio.Collections.Ppg()
     'goals': new Visio.Collections.Goal()
