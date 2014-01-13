@@ -18,29 +18,40 @@ class Visio.Views.StrategyCMSNewView extends Backbone.View
 
     @$el.html @template()
     @$el.find('.form').html @form.render().el
-    @form.fields.strategyObjectives.editor.form.on 'open', (editor) ->
+    @form.fields.strategy_objectives.editor.form.on 'open', (editor) ->
       modalForm = editor.modalForm
 
-      modalForm.on 'goals:change', ->
-        ids = modalForm.fields.goals.getValue()
-        problemObjectives = new Visio.Collections.ProblemObjective()
+      # These fields depend on each other
+      cascadingFields = [
+        Visio.Parameters.GOALS,
+        Visio.Parameters.PROBLEM_OBJECTIVES,
+        Visio.Parameters.OUTPUTS,
+        Visio.Parameters.INDICATORS,
+      ]
 
-        modalForm.fields.problem_objectives.editor.setOptions (callback) ->
-          if _.isEmpty(ids)
-            callback(problemObjectives)
-          else
-            problemObjectives.fetchSynced(
-              join_ids:
-                goal_ids: ids
-            ).done ->
-              alert(problemObjectives.length)
-              callback(problemObjectives)
+      _.each cascadingFields, (field, idx, list) ->
+        modalForm.on "#{field.plural}:change", ->
+          ids = modalForm.fields[field.plural].getValue()
+          followingField = list[idx + 1]
+          return unless followingField
+          collection = new Visio.Collections[followingField.className]()
 
+          modalForm.fields[followingField.plural].editor.setOptions (callback) ->
+            if _.isEmpty(ids)
+              callback(collection)
+            else
+              data = { join_ids: {} }
+              data.join_ids["#{field.singular}_ids"] = ids
 
+              collection.fetch(data: data).done ->
+                callback(collection)
 
   onCommit: ->
-    console.log 'sasd'
+    @model.save(strategy: @form.getValue()).done (response, msg, xhr) ->
+      if msg == 'success'
+        Visio.router.navigate '/', { trigger: true }
+      else
+        alert(msg)
 
 
-  save: ->
-    @model.save()
+

@@ -8,7 +8,7 @@ class Visio.Models.Strategy extends Backbone.Model
     @operations = new Visio.Collections.Operation()
     @strategy_objectives = new Visio.Collections.StrategyObjective()
 
-    @schema.strategyObjectives =
+    @schema.strategy_objectives =
       type: 'List'
       itemType: 'NestedModel'
       model: Visio.Models.StrategyObjective
