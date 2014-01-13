@@ -1,4 +1,6 @@
 <% _.each(strategies, function(strategy) { %>
-<div><%= strategy.name %></div>
+<div>
+  <a href="#edit/<%= strategy.id %>"><%= strategy.name %></a>
+</div>
 <% }) %>
 <a href="#new" class="new" style="color:black">+ Strategy</a>
