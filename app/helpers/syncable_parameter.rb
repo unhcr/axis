@@ -12,10 +12,6 @@ module SyncableParameter
   end
 
   def index
-    results = resource.where(params[:where])
-    results = params[:page].present? ? results.page(params[:page]) : results.all
-    render :json => results.as_json(params[:options])
+    render :json => resource.models(params[:join_ids], params[:page], params[:where])
   end
 end
-
-
