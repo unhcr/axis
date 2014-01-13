@@ -1,7 +1,7 @@
 class CmsController < ApplicationController
 
   def strategies
-    @strategies = Strategy.all
+    @strategies = Strategy.includes(:operations, :strategy_objectives).all
     render :layout => 'cms'
   end
 end
