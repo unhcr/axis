@@ -27,7 +27,6 @@ class Visio.Views.StrategyCMSNewView extends Backbone.View
       # These fields depend on each other
       cascadingFields = [
         Visio.Parameters.GOALS,
-        Visio.SkippedParameters.RIGHTS_GROUPS
         Visio.Parameters.PROBLEM_OBJECTIVES,
         Visio.Parameters.OUTPUTS,
         Visio.Parameters.INDICATORS,
