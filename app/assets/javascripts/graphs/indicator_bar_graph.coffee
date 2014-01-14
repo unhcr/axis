@@ -110,7 +110,7 @@ Visio.Graphs.indicatorBarGraph = (config) ->
         container.on 'mouseout', (d) ->
           box.selectAll('.circle').data([])
             .exit().transition().duration(Visio.Durations.VERY_FAST).attr('r', 0).remove()
-          box.selectAll('.label').remove()
+          g.selectAll('.label').remove()
 
         container.exit().remove()
 
