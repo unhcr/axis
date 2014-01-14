@@ -40,19 +40,20 @@ class Visio.Views.StrategyCMSNewView extends Backbone.View
 
         collection = new Visio.Collections[field.className]()
 
-        # Should show items if they are selected (exception is goals since we always show all)
+        # Should show items if they are selected (exception is first since we always show all)
         data = join_ids: {}
         isPreviousSelection = false
         if previousField
           data.join_ids["#{previousField.singular}_ids"] =
-            _.map modalForm.fields[previousField.plural].value, (model) -> model.id
+            _.map modalForm.fields[previousField.plural].value, (modelOrId) -> modelOrId.id || modelOrId
           isPreviousSelection = data.join_ids["#{previousField.singular}_ids"].length > 0
 
         # Nothing previously selected so just load empty (unless it's the first field)
         if isPreviousSelection or idx == 0
           collection.fetch(data: data).done =>
             formField.editor.setOptions (callback) -> callback(collection)
-            selected = new Visio.Collections[field.className](formField.value)
+            selected = new Visio.Collections[field.className](
+              _.map(formField.value, (modelOrId) -> if _.isObject(modelOrId) then return modelOrId else return modelOrId))
             formField.editor.setSelected @selectedIndexes(collection, selected)
         else
           formField.editor.setOptions (callback) -> callback(collection)
@@ -65,17 +66,18 @@ class Visio.Views.StrategyCMSNewView extends Backbone.View
           collection = new Visio.Collections[followingField.className]()
 
           modalForm.fields[followingField.plural].editor.setOptions (callback) =>
-            selected = new Visio.Collections[field.className](formField.value)
+            followingFormField = modalForm.fields[followingField.plural]
+            selected = new Visio.Collections[followingField.className](followingFormField.value)
             if _.isEmpty(ids)
               callback(collection)
-              formField.editor.setSelected @selectedIndexes(collection, selected)
+              followingFormField.editor.setSelected @selectedIndexes(collection, selected)
             else
               data = join_ids: {}
               data.join_ids["#{field.singular}_ids"] = ids
 
               collection.fetch(data: data).done =>
                 callback(collection)
-                formField.editor.setSelected @selectedIndexes(collection, selected)
+                followingFormField.editor.setSelected @selectedIndexes(collection, selected)
 
   onCommit: ->
     @model.save(strategy: @form.getValue()).done (response, msg, xhr) ->
