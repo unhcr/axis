@@ -25,12 +25,12 @@ Visio::Application.routes.draw do
   # Sample resource route (maps HTTP verbs to controller actions automatically):
   syncable_resources :operations
   syncable_resources :plans
-  syncable_resources :indicators
   syncable_resources :ppgs
-  syncable_resources :outputs
-  syncable_resources :problem_objectives
   syncable_resources :goals
-  syncable_resources :indicator_data
+  syncable_resources :rights_groups
+  syncable_resources :problem_objectives
+  syncable_resources :outputs
+  syncable_resources :indicators
   syncable_resources :budgets
   resources :strategies
   resources :users

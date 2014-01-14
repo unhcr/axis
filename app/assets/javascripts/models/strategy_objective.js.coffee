@@ -26,6 +26,10 @@ class Visio.Models.StrategyObjective extends Backbone.Model
       type: 'Checkboxes'
       options: (callback) =>
         callback(new Visio.Collections.Goal())
+    rights_groups:
+      type: 'Checkboxes'
+      options: (callback) =>
+        callback(new Visio.Collections.RightsGroup())
     problem_objectives:
       type: 'Checkboxes'
       options: (callback) ->
