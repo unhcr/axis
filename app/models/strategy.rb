@@ -55,7 +55,12 @@ class Strategy < ActiveRecord::Base
       if options[:include][:strategy_objectives]
         json.strategy_objectives self.strategy_objectives
       end
+      json.operations self.operations if options[:include][:operations]
     end
+  end
+
+  def to_json(options = {})
+    to_jbuilder(options).target!
   end
 
   def as_json(options = {})

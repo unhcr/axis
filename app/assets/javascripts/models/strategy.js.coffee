@@ -4,11 +4,33 @@ class Visio.Models.Strategy extends Backbone.Model
 
   paramRoot: 'strategy'
 
+  constructor: ->
+
+    @schema.strategy_objectives =
+      type: 'List'
+      itemType: 'NestedModel'
+      model: Visio.Models.StrategyObjective
+
+
+    Backbone.Model.apply @, arguments
+
+  schema:
+    name:
+      type: 'Text'
+    description:
+      type: 'TextArea'
+    operations:
+      type: 'Checkboxes'
+      options: []
+
   include: (type, id) ->
 
     @get("#{type}_ids")[id] != undefined
 
   initialize: (options) ->
+    options or= {}
+    @set('operations', new Visio.Collections.Operation((options.operations || [])))
+
     # Initialize helper functions
     _.each _.values(Visio.Parameters), (hash) =>
       @[hash.plural] = () =>

@@ -1,0 +1,17 @@
+.cms-content
+
+:javascript
+  $(document).ready(function() {
+
+    Visio.manager = new Visio.Models.Manager({
+      strategies: new Visio.Collections.Strategy(#{@strategies.to_json(:include => {
+        :strategy_objectives => true,
+        :operations => true
+      }).html_safe}),
+      ready: function() {
+        Visio.router = new Visio.Routers.StrategyCMSRouter();
+        Backbone.history.start();
+      }
+    })
+
+  });

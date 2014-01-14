@@ -61,6 +61,13 @@ window.Visio =
       className: 'ProblemObjective'
       human: 'Objective'
 
+  SkippedParameters:
+    RIGHTS_GROUPS:
+      singular: 'rights_group'
+      plural: 'rights_groups'
+      className: 'RightsGroup'
+      human: 'Rights Groups'
+
   Syncables:
     INDICATOR_DATA:
       singular: 'indicator_datum'

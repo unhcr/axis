@@ -142,6 +142,9 @@ module FocusParse
             unless plan.problem_objectives.include? problem_objective
               plan.problem_objectives << problem_objective
             end
+            unless goal.problem_objectives.include? problem_objective
+              goal.problem_objectives << problem_objective
+            end
 
             xml_outputs.each do |xml_output|
               # Must be performance indicators if part of output

@@ -41,6 +41,20 @@ class PlanTest < ActiveSupport::TestCase
     assert_equal p[2].operation_name, models[:deleted][0].operation_name
   end
 
+  test "models with join_ids" do
+    i = [plans(:one), plans(:two), plans(:deleted)]
+    s = strategies(:one)
+
+    i[1].strategies << s
+
+    i.map(&:save)
+
+    models = Plan.models({ :strategy_id => s.id })
+
+    assert_equal 1, models.count
+    assert_equal i[1].name, models[0].name
+  end
+
   test "synced models with join_ids" do
     i = [plans(:one), plans(:two), plans(:deleted)]
     s = strategies(:one)

@@ -1,12 +1,14 @@
 Visio::Application.routes.draw do
   devise_for :users, :controllers => {:sessions => 'sessions', :registrations => 'registrations' }
 
+  # Application
   get '/splash' => 'application#splash'
-
   get '/map' => 'application#map'
-
   get '/overview' => 'application#overview'
   get '/global_search' => 'application#global_search'
+
+  # CMS
+  get '/cms/strategies' => 'cms#strategies'
 
 
   # The priority is based upon order of creation:
@@ -21,12 +23,14 @@ Visio::Application.routes.draw do
   # This route can be invoked with purchase_url(:id => product.id)
 
   # Sample resource route (maps HTTP verbs to controller actions automatically):
+  syncable_resources :operations
   syncable_resources :plans
-  syncable_resources :indicators
   syncable_resources :ppgs
-  syncable_resources :outputs
-  syncable_resources :problem_objectives
   syncable_resources :goals
+  syncable_resources :rights_groups
+  syncable_resources :problem_objectives
+  syncable_resources :outputs
+  syncable_resources :indicators
   syncable_resources :indicator_data
   syncable_resources :budgets
   resources :strategies
