@@ -1,12 +1,17 @@
 class Visio.Models.StrategyObjective extends Backbone.Model
 
   constructor: ->
-    @problemObjectives = new Visio.Collections.ProblemObjective()
-    @outputs = new Visio.Collections.Output()
-    @goals = new Visio.Collections.Goal()
-    @indicators = new Visio.Collections.Indicator()
-
     Backbone.Model.apply @, arguments
+
+  initialize: (options) ->
+    @set(Visio.Parameters.GOALS.plural,
+      new Visio.Collections.Goal((options[Visio.Parameters.GOALS.plural] || [])))
+    @set(Visio.Parameters.PROBLEM_OBJECTIVES.plural,
+      new Visio.Collections.ProblemObjective((options[Visio.Parameters.PROBLEM_OBJECTIVES.plural] || [])))
+    @set(Visio.Parameters.OUTPUTS.plural,
+      new Visio.Collections.Output((options[Visio.Parameters.OUTPUTS.plural] || [])))
+    @set(Visio.Parameters.INDICATORS.plural,
+      new Visio.Collections.Indicator((options[Visio.Parameters.INDICATORS.plural] || [])))
 
   urlRoot: '/strategy_objectives'
 
@@ -19,10 +24,8 @@ class Visio.Models.StrategyObjective extends Backbone.Model
       type: 'TextArea'
     goals:
       type: 'Checkboxes'
-      options: (callback) ->
-        goals = new Visio.Collections.Goal()
-        goals.fetchSynced().done ->
-          callback(goals)
+      options: (callback) =>
+        callback(new Visio.Collections.Goal())
     problem_objectives:
       type: 'Checkboxes'
       options: (callback) ->
@@ -42,3 +45,4 @@ class Visio.Models.StrategyObjective extends Backbone.Model
 
   toString: ->
     @get 'name'
+

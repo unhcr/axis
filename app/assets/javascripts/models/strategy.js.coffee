@@ -5,8 +5,6 @@ class Visio.Models.Strategy extends Backbone.Model
   paramRoot: 'strategy'
 
   constructor: ->
-    @operations = new Visio.Collections.Operation()
-    @strategy_objectives = new Visio.Collections.StrategyObjective()
 
     @schema.strategy_objectives =
       type: 'List'
@@ -30,6 +28,9 @@ class Visio.Models.Strategy extends Backbone.Model
     @get("#{type}_ids")[id] != undefined
 
   initialize: (options) ->
+    options or= {}
+    @set('operations', new Visio.Collections.Operation((options.operations || [])))
+
     # Initialize helper functions
     _.each _.values(Visio.Parameters), (hash) =>
       @[hash.plural] = () =>

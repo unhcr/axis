@@ -9,8 +9,11 @@ class Visio.Views.StrategyCMSNewView extends Backbone.View
     @form = new Backbone.Form
       model: @model
 
-    @model.operations.fetchSynced().done =>
-      @form.fields.operations.editor.setOptions @model.operations
+    Visio.manager.get('operations').fetchSynced().done =>
+      @form.fields.operations.editor.setOptions Visio.manager.get('operations')
+
+      @form.fields.operations.editor.setSelected(
+        @selectedIndexes Visio.manager.get('operations'), @model.get('operations'))
 
     @render()
 
@@ -18,7 +21,7 @@ class Visio.Views.StrategyCMSNewView extends Backbone.View
 
     @$el.html @template()
     @$el.find('.form').html @form.render().el
-    @form.fields.strategy_objectives.editor.form.on 'open', (editor) ->
+    @form.fields.strategy_objectives.editor.form.on 'open', (editor) =>
       modalForm = editor.modalForm
 
       # These fields depend on each other
@@ -29,22 +32,50 @@ class Visio.Views.StrategyCMSNewView extends Backbone.View
         Visio.Parameters.INDICATORS,
       ]
 
-      _.each cascadingFields, (field, idx, list) ->
-        modalForm.on "#{field.plural}:change", ->
+      _.each cascadingFields, (field, idx, list) =>
+        # Set initial selected
+        followingField = list[idx + 1]
+        previousField = list[idx - 1]
+        formField = modalForm.fields[field.plural]
+
+        collection = new Visio.Collections[field.className]()
+
+        # Should show items if they are selected (exception is goals since we always show all)
+        data = join_ids: {}
+        isPreviousSelection = false
+        if previousField
+          data.join_ids["#{previousField.singular}_ids"] =
+            _.map modalForm.fields[previousField.plural].value, (model) -> model.id
+          isPreviousSelection = data.join_ids["#{previousField.singular}_ids"].length > 0
+
+        # Nothing previously selected so just load empty (unless it's the first field)
+        if isPreviousSelection or idx == 0
+          collection.fetch(data: data).done =>
+            formField.editor.setOptions (callback) -> callback(collection)
+            selected = new Visio.Collections[field.className](formField.value)
+            formField.editor.setSelected @selectedIndexes(collection, selected)
+        else
+          formField.editor.setOptions (callback) -> callback(collection)
+
+        return unless followingField
+
+        # Setup cascading selection
+        modalForm.on "#{field.plural}:change", =>
           ids = modalForm.fields[field.plural].getValue()
-          followingField = list[idx + 1]
-          return unless followingField
           collection = new Visio.Collections[followingField.className]()
 
-          modalForm.fields[followingField.plural].editor.setOptions (callback) ->
+          modalForm.fields[followingField.plural].editor.setOptions (callback) =>
+            selected = new Visio.Collections[field.className](formField.value)
             if _.isEmpty(ids)
               callback(collection)
+              formField.editor.setSelected @selectedIndexes(collection, selected)
             else
-              data = { join_ids: {} }
+              data = join_ids: {}
               data.join_ids["#{field.singular}_ids"] = ids
 
-              collection.fetch(data: data).done ->
+              collection.fetch(data: data).done =>
                 callback(collection)
+                formField.editor.setSelected @selectedIndexes(collection, selected)
 
   onCommit: ->
     @model.save(strategy: @form.getValue()).done (response, msg, xhr) ->
@@ -52,6 +83,15 @@ class Visio.Views.StrategyCMSNewView extends Backbone.View
         Visio.router.navigate '/', { trigger: true }
       else
         alert(msg)
+
+  selectedIndexes: (collection, selectedCollection) ->
+    selectedIndexes = []
+    ids = collection.pluck 'id'
+
+    selectedCollection.each (model) ->
+      selectedIndexes.push ids.indexOf(model.id)
+
+    selectedIndexes
 
 
 
