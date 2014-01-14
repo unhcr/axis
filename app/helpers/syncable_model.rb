@@ -24,7 +24,7 @@ module SyncableModel
 
   def models(join_ids, page = nil, where = {})
     models = self.where(where)
-    models = models.page unless page.nil?
+    models = models.page(page) unless page.nil?
     models = join_habtm(models, join_ids) if join_ids
 
     models
