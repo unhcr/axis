@@ -44,4 +44,11 @@ class StrategiesController < ApplicationController
 
     render :json => { :strategy => s.as_json({ :include => { :strategy_objectives => true } }) }
   end
+
+  def destroy
+    s = Strategy.find(params[:id])
+    s = s.destroy
+
+    render :json => s
+  end
 end

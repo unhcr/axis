@@ -8,6 +8,7 @@ class Visio.Routers.StrategyCMSRouter extends Backbone.Router
     'index': 'index'
     'new': 'new'
     'edit/:id': 'edit'
+    'destroy/:id': 'destroy'
     'show/:id': 'show'
     '*default': 'index'
 
@@ -30,3 +31,9 @@ class Visio.Routers.StrategyCMSRouter extends Backbone.Router
     @editView = new Visio.Views.StrategyCMSNewView
       model: @strategies.get(id)
       el: @$content
+
+  destroy: (id) ->
+    @strategies.get(id).destroy().done =>
+
+      @navigate '/', { trigger: true }
+
