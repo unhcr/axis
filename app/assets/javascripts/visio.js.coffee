@@ -17,6 +17,7 @@ window.Visio =
     PROJECT: 'PROJECT'
     STAFF: 'STAFF'
   Durations:
+    VERY_FAST: 100
     FAST: 500
     MEDIUM: 1000
     SLOW: 2000

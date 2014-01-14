@@ -39,7 +39,6 @@ Visio.Graphs.indicatorBarGraph = (config) ->
 
   render = () ->
 
-
     boxes = g.selectAll('g.box').data(data.where({ is_performance: isPerformance }))
     boxes.enter().append('g')
     boxes.attr('class', 'box')
@@ -51,6 +50,9 @@ Visio.Graphs.indicatorBarGraph = (config) ->
       )
       .each((d, i) ->
         box = d3.select @
+        baseline = d.get(Visio.Algorithms.REPORTED_VALUES.baseline)
+
+        metrics = [Visio.Algorithms.REPORTED_VALUES.myr, Visio.Algorithms.REPORTED_VALUES.yer]
 
         y.domain [0, +d.get(goalType)]
 
@@ -61,11 +63,57 @@ Visio.Graphs.indicatorBarGraph = (config) ->
           .attr('x', 0)
           .attr('y', 0)
           .attr('class', 'bar-container')
+
+        container.on 'mouseover', (d) ->
+          y.domain [0, +d.get(goalType)]
+          circles = box.selectAll('.circle').data(_.values(Visio.Algorithms.REPORTED_VALUES))
+          circles.enter().append('circle')
+          circles.attr('r', 0)
+            .attr('cx', barWidth)
+            .attr('cy', (reportedValue) -> y(d.get(reportedValue)))
+            .attr('class', 'circle')
+          circles.transition()
+            .duration(Visio.Durations.VERY_FAST)
+            .attr('r', barWidth / 2)
+
+          # can't be in box svg since it need to be top level element
+          labels = g.selectAll('.label').data(_.values(Visio.Algorithms.REPORTED_VALUES))
+          labels.enter().append('g')
+
+          labels
+            .attr('class', 'label')
+            .attr('transform', (type) ->
+              i = $(g.selectAll('.box')[0]).index(box[0][0])
+              "translate(#{x(i) + barWidth * 3}, #{y(d.get(type))})"
+            ).each (p) ->
+              label = d3.select @
+
+              tag = label.selectAll('.tag').data([p])
+              tag.enter().append('rect')
+              tag.attr('x', 0)
+                .attr('y', -10)
+                .attr('width', 80)
+                .attr('height', 20)
+                .attr('rx', 5)
+                .attr('ry', 5)
+                .attr('class', (type) -> ['tag', "#{type}-tag"].join(' '))
+
+              texts = label.selectAll('.text').data([p])
+              texts.enter().append('text')
+              texts.attr('x', 10)
+                .attr('y', 10)
+                .attr('dy', '-.3em')
+                .attr('class', 'text')
+                .text("#{Visio.Formats.SI(d.get(p))} " + p)
+
+
+        container.on 'mouseout', (d) ->
+          box.selectAll('.circle').data([])
+            .exit().transition().duration(Visio.Durations.VERY_FAST).attr('r', 0).remove()
+          box.selectAll('.label').remove()
+
         container.exit().remove()
 
-        baseline = d.get(Visio.Algorithms.REPORTED_VALUES.baseline)
-
-        metrics = [Visio.Algorithms.REPORTED_VALUES.myr, Visio.Algorithms.REPORTED_VALUES.yer]
         _.each metrics, (metric, idx) ->
           value = d.get(metric)
 

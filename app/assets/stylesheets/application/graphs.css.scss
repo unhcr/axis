@@ -94,6 +94,7 @@
   }
   .bar {
     stroke: white;
+    pointer-events: none;
   }
   .bar-container {
     fill: $off-white;
@@ -101,10 +102,26 @@
   .box {
     line {
       stroke: $dark-gray;
+      pointer-events: none;
     }
   }
   .box.reversed {
     fill: red;
+  }
+
+  .circle {
+    fill: white;
+    stroke: black;
+    stroke-width: 3px;
+    pointer-events: none;
+  }
+
+  .text {
+    fill: white;
+  }
+
+  .label {
+    pointer-events: none;
   }
 
 }
