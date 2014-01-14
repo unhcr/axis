@@ -101,20 +101,20 @@ Visio.Graphs.bubble = (config) ->
       domain = [0, maxBudget]
       x.domain(domain)
 
-    trails = g.selectAll('.trail').data(data, (d) -> d.operation_id || d.id)
-    trails.enter().append('line')
-      .attr('x1', (d) -> x(d.budget))
-      .attr('y1', (d) -> y(d.achievement))
-    trails
-      .attr('class', (d) ->
-        return ['trail'].join(' '))
-    trails.transition()
-      .duration(Visio.Durations.FAST)
-      .attr('x1', (d) -> x(d3.select(@).attr('previous-x2') || d.budget))
-      .attr('y1', (d) -> y(d3.select(@).attr('previous-y2') || d.achievement))
-      .attr('x2', (d) -> d3.select(@).attr('previous-x2', d.budget); x(d.budget))
-      .attr('y2', (d) -> d3.select(@).attr('previous-y2', d.achievement); y(d.achievement))
-    trails.exit().remove()
+    # trails = g.selectAll('.trail').data(data, (d) -> d.operation_id || d.id)
+    # trails.enter().append('line')
+    #   .attr('x1', (d) -> x(d.budget))
+    #   .attr('y1', (d) -> y(d.achievement))
+    # trails
+    #   .attr('class', (d) ->
+    #     return ['trail'].join(' '))
+    # trails.transition()
+    #   .duration(Visio.Durations.FAST)
+    #   .attr('x1', (d) -> x(d3.select(@).attr('previous-x2') || d.budget))
+    #   .attr('y1', (d) -> y(d3.select(@).attr('previous-y2') || d.achievement))
+    #   .attr('x2', (d) -> d3.select(@).attr('previous-x2', d.budget); x(d.budget))
+    #   .attr('y2', (d) -> d3.select(@).attr('previous-y2', d.achievement); y(d.achievement))
+    # trails.exit().remove()
 
     bubbles = g.selectAll('.bubble').data(data, (d) -> d.operation_id || d.id)
     bubbles.enter().append('circle')
