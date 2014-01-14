@@ -1,7 +1,7 @@
 class RegistrationsController < Devise::RegistrationsController
 
   def create
-    build_resource
+    build_resource sign_up_params
 
     notice = nil
 
