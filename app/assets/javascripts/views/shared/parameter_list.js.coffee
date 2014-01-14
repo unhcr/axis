@@ -34,7 +34,6 @@ class Visio.Views.ParameterListView extends Backbone.View
     )
 
     @items(@type)
-
     @
 
   onClickTab: (e) ->
@@ -48,14 +47,14 @@ class Visio.Views.ParameterListView extends Backbone.View
     $(e.currentTarget).removeClass('full-width')
 
   switchTab: (type) ->
-    Visio.router.navigate("/#{@model.id}/#{type}")
+    Visio.router.navigate "/#{@model.id}/#{type}"
 
     @$el.find('.selected').removeClass('selected')
     @$el.find(".#{type}").addClass('selected')
 
     tab = _.findWhere(@tabs, { plural: type })
 
-    @$el.find('.parameter-search').attr('placeholder', "Search #{tab.human}")
+    @$el.find('.parameter-search').attr 'placeholder', "Search #{tab.human}"
 
     @items(type)
 
