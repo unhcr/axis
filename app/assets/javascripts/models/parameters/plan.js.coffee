@@ -36,7 +36,7 @@ class Visio.Models.Plan extends Visio.Models.Parameter
     options =
       join_ids:
         plan_id: @id
-    @get(type).fetchSynced(options)
+    @get(type).fetch(data: options)
 
   toString: () ->
     @get('operation_name')

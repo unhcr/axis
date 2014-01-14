@@ -142,24 +142,6 @@ test('find plan', () ->
   ok(!plan, 'Must not have plan')
 )
 
-asyncTest 'fetchParameter', ->
-
-  sinon.stub $, 'get', (url, options) ->
-    return {
-      new: [{ id: 'hi' }, { id: 'abc-def' }]
-      updated: []
-      deleted: []
-    }
-  p = new Visio.Models.Plan({ id: '26be980c-62af-44ab-877b-de7309fa4a18', name: 'ben' })
-
-  _.each _.values(Visio.Parameters), (hash, i) ->
-    if hash.plural != Visio.Parameters.PLANS.plural
-      p.fetchParameter(hash.plural).done ->
-        strictEqual p.get(hash.plural).length, 2
-        if i == _.values(Visio.Parameters).length - 1
-          $.get.restore()
-          start()
-
 test 'strategy situation analysis', () ->
   p = new Visio.Models.Plan({ id: 'abcd', name: 'ben', situation_analysis:
     {
