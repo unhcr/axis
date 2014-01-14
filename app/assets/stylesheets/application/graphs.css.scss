@@ -86,8 +86,19 @@
 }
 
 .indicator-bar-graph {
+  .myr-bar {
+    fill: deepskyblue;
+  }
+  .yer-bar {
+    fill: cornflowerblue;
+  }
+  .bar {
+    stroke: white;
+  }
+  .bar-container {
+    fill: $off-white;
+  }
   .box {
-    fill: green;
     line {
       stroke: $dark-gray;
     }

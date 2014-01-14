@@ -4,6 +4,7 @@ Visio.Graphs.indicatorBarGraph = (config) ->
   width = config.width - margin.left - margin.right
   height = config.height - margin.top - margin.bottom
 
+
   selection = config.selection
 
   duration = 500
@@ -18,9 +19,10 @@ Visio.Graphs.indicatorBarGraph = (config) ->
     .attr('transform', "translate(#{margin.left}, #{margin.top})")
 
   barWidth = 10
+  barMargin = 8
 
   x = d3.scale.linear()
-    .domain([0, 30])
+    .domain([0, width / ((2 * barWidth) + barMargin)])
     .range([0, width])
 
   y = d3.scale.linear()
@@ -48,61 +50,74 @@ Visio.Graphs.indicatorBarGraph = (config) ->
         'translate(' + x(i) + ', 0)'
       )
       .each((d, i) ->
-        bar = d3.select @
+        box = d3.select @
 
         y.domain [0, +d.get(goalType)]
 
-        container = bar.selectAll('.graph-container').data([d])
+        container = box.selectAll('.bar-container').data([d])
         container.enter().append('rect')
-        container.attr('width', barWidth)
+        container.attr('width', barWidth * 2)
           .attr('height', height)
           .attr('x', 0)
           .attr('y', 0)
-          .attr('class', 'graph-container')
+          .attr('class', 'bar-container')
         container.exit().remove()
 
-        reversed = d.get(progress.start) > d.get(progress.end)
-        barHeight = Math.abs(d.get(progress.start) - d.get(progress.end))
-        box = bar.selectAll('.box').data([d])
-        box.enter().append('rect')
-        box.attr('class', (d) ->
-          classes = ['box']
-          classes.push 'reversed' if reversed
-          classes.join ' '
-        )
+        baseline = d.get(Visio.Algorithms.REPORTED_VALUES.baseline)
 
-        box.transition()
-          .duration(duration)
-          .attr('x', 0)
-          .attr('y', (d) ->
-            if reversed
-              return y(d.get(progress.end) + barHeight)
-            else
-              return y(d.get(progress.start) + barHeight)
-          ).attr('width', barWidth)
-          .attr('height', (d) ->
-            return y(0) - y(barHeight))
-        box.exit().remove()
+        metrics = [Visio.Algorithms.REPORTED_VALUES.myr, Visio.Algorithms.REPORTED_VALUES.yer]
+        _.each metrics, (metric, idx) ->
+          value = d.get(metric)
 
-        center = bar.selectAll('.center').data([d])
+
+          reversed = baseline > value
+          barHeight = Math.abs(baseline - value)
+          bars = box.selectAll(".#{metric}-bar").data([d])
+          bars.enter().append('rect')
+          bars.attr('class', (d) ->
+            classes = ["#{metric}-bar", 'bar']
+            classes.push 'reversed' if reversed
+            classes.join ' '
+          ).attr('x', idx * barWidth)
+
+          bars.transition()
+            .duration(duration)
+            .attr('y', (d) ->
+              if reversed
+                return y(value + barHeight)
+              else
+                return y(baseline + barHeight)
+            ).attr('width', barWidth)
+            .attr('height', (d) ->
+              return y(0) - y(barHeight))
+          bars.exit().remove()
+
+        max = d3.max metrics, (metric) ->
+          +d.get(metric)
+
+        reversed = baseline > max
+
+        box.classed 'reversed', reversed
+
+        center = box.selectAll('.center').data([d])
         center.enter().append('line')
         center.attr('class', 'center')
         center.transition()
           .duration(duration)
-          .attr('x1', barWidth / 2)
-          .attr('y1', (d) -> if reversed then y(d.get(progress.start)) else y(d.get(progress.end)))
-          .attr('x2', barWidth / 2)
+          .attr('x1', barWidth)
+          .attr('y1', (d) -> if reversed then y(baseline) else y(max))
+          .attr('x2', barWidth)
           .attr('y2', (d) -> y(d.get(Visio.Algorithms.GOAL_TYPES.target)))
         center.exit().remove()
 
-        whisker = bar.selectAll('.whisker').data([d])
+        whisker = box.selectAll('.whisker').data([d])
         whisker.enter().append('line')
         whisker.attr('class', 'whisker')
         whisker.transition()
           .duration(duration)
-          .attr('x1', 2)
+          .attr('x1', barWidth / 2 + 2)
           .attr('y1', (d) -> y(d.get(Visio.Algorithms.GOAL_TYPES.target)))
-          .attr('x2', barWidth - 2)
+          .attr('x2', 1.5 * barWidth - 2)
           .attr('y2', (d) -> y(d.get(Visio.Algorithms.GOAL_TYPES.target)))
         whisker.exit().remove()
 
