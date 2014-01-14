@@ -51,7 +51,7 @@ module FocusFetch
       break if i >= max_files
 
       # If we have a decently recent pull of file skip
-      Rails.logger.debug "Skipping #{id}" and next if find_plan_file(id, expires) && monitor.complete?(id)
+      p "Skipping #{id}" and next if find_plan_file(id, expires) && monitor.complete?(id)
 
       begin
         plan_zip = open("#{server_url("#{PLAN_PREFIX}#{id}#{PLAN_SUFFIX}")}",
@@ -62,7 +62,7 @@ module FocusFetch
         next
       end
 
-      Rails.logger.debug "Parsing plan: #{PLAN_PREFIX + id + PLAN_SUFFIX}"
+      p "Parsing plan: #{PLAN_PREFIX + id + PLAN_SUFFIX}"
       begin
         Zip::File.open(plan_zip) do |zip|
           ret[:files_read] += 1
