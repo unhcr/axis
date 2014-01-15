@@ -81,7 +81,7 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
 
   isy: (skipScrollTo) ->
     @setup().done(() =>
-      @indicatorSingleYearView ||= new Visio.Views.IndicatorSingleYearView()
+      @indicatorSingleYearView = new Visio.Views.IndicatorSingleYearView()
       @module.html @indicatorSingleYearView.render().el
       @moduleView = @indicatorSingleYearView
       @scrollToModule() unless skipScrollTo
@@ -91,7 +91,7 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
 
   absy: (skipScrollTo) ->
     @setup().done(() =>
-      @achievementBudgetSingleYearView ||= new Visio.Views.AchievementBudgetSingleYearView()
+      @achievementBudgetSingleYearView = new Visio.Views.AchievementBudgetSingleYearView()
       @module.html @achievementBudgetSingleYearView.el
       @moduleView = @achievementBudgetSingleYearView
       @moduleView.render()
