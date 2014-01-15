@@ -60,9 +60,9 @@ Visio.Graphs.indicatorBarGraph = (config) ->
 
         container = box.selectAll('.bar-container').data([d])
         container.enter().append('rect')
-        container.attr('width', barWidth * 2 + barMargin)
+        container.attr('width', barWidth * 2)
           .attr('height', height + barMargin)
-          .attr('x', -barMargin / 2)
+          .attr('x', 0)
           .attr('y', -barMargin / 2)
           .attr('class', () ->
             classList = ['bar-container']
