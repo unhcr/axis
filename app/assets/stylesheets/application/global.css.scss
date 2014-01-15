@@ -102,6 +102,9 @@ p.small {
     background-image: url(/assets/logo_white.png);
   }
 
+  .search-icon {
+    background-color: transparent;
+  }
 
   .menu-icon {
     .menu-row {
@@ -257,6 +260,19 @@ body.index {
   margin: .3em 1.5em;
 }
 
+.medium-item, {
+  padding: .5em;
+
+  a {
+    display: block;
+  }
+
+  a:hover {
+    color: $yellow;
+    text-decoration: none;
+  }
+}
+
 .small-item, .tab {
   margin: .3em .8em;
 }
@@ -307,6 +323,11 @@ body.index {
 .divider-stack {
   border-top: 1px $divider-top solid;
   border-bottom: 1px $divider-bottom solid;
+}
+
+.divider-stack-orange {
+  border-top: 1px $orange-dark solid;
+  border-bottom: 1px $orange-light solid;
 }
 
 .divider-white {
