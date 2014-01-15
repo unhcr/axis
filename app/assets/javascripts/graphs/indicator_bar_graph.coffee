@@ -59,11 +59,14 @@ Visio.Graphs.indicatorBarGraph = (config) ->
 
         container = box.selectAll('.bar-container').data([d])
         container.enter().append('rect')
-        container.attr('width', barWidth * 2)
-          .attr('height', height)
-          .attr('x', 0)
-          .attr('y', 0)
-          .attr('class', 'bar-container')
+        container.attr('width', barWidth * 2 + barMargin)
+          .attr('height', height + barMargin)
+          .attr('x', -barMargin / 2)
+          .attr('y', -barMargin / 2)
+          .attr('class', () ->
+            classList = ['bar-container']
+            classList.push 'inconsistent' unless d.isConsistent()
+            return classList.join ' ')
 
         container.on 'mouseover', (d) ->
           y.domain [0, +d.get(goalType)]
@@ -132,9 +135,9 @@ Visio.Graphs.indicatorBarGraph = (config) ->
           bars = box.selectAll(".#{metric}-bar").data([d])
           bars.enter().append('rect')
           bars.attr('class', (d) ->
-            classes = ["#{metric}-bar", 'bar']
-            classes.push 'reversed' if reversed
-            classes.join ' '
+            classList = ["#{metric}-bar", 'bar']
+            classList.push 'reversed' if reversed
+            classList.join ' '
           ).attr('x', idx * barWidth)
 
           bars.transition()
@@ -207,7 +210,6 @@ Visio.Graphs.indicatorBarGraph = (config) ->
     y.domain [0, +d.get(goalType)]
     v = Math.abs(+d.get(progress.start) - +d.get(progress.end))
     y(v)
-
 
   render
 

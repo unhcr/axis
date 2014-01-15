@@ -4,6 +4,15 @@ class Visio.Models.IndicatorDatum extends Visio.Models.Syncable
 
   paramRoot: 'indicator_datum'
 
+  isConsistent: ->
+    baseline = @get Visio.Algorithms.REPORTED_VALUES.baseline
+    myr = @get Visio.Algorithms.REPORTED_VALUES.myr
+    yer = @get Visio.Algorithms.REPORTED_VALUES.yer
+
+    return myr >= baseline and
+      (yer >= myr or not _.isNumber(yer))
+
+
   situationAnalysis: (reported) ->
     reported ||= Visio.Algorithms.REPORTED_VALUES.myr
     return Visio.Algorithms.ALGO_RESULTS.missing unless @get(reported)

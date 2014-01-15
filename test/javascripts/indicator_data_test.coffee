@@ -194,3 +194,21 @@ test 'situation analysis collection', () ->
   strictEqual res.counts[Visio.Algorithms.ALGO_RESULTS.ok], 0
 
 
+test 'isConsistent', () ->
+  datum = new Visio.Models.IndicatorDatum({
+    baseline: 0
+    myr: 10
+    yer: 20
+  })
+
+  ok datum.isConsistent(datum), 'Should be consistent'
+
+  datum.set 'baseline', 20
+  ok !datum.isConsistent(datum), 'Should not be consistent'
+
+  datum.set 'baseline', 0
+  datum.set 'yer', 5
+  ok !datum.isConsistent(datum), 'Should not be consistent'
+
+  datum.set 'yer', null
+  ok datum.isConsistent(datum), 'Should be consistent'

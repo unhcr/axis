@@ -99,15 +99,16 @@
   .bar-container {
     fill: $off-white;
   }
+  .bar-container.inconsistent {
+    fill: red;
+  }
   .box {
     line {
       stroke: $dark-gray;
       pointer-events: none;
     }
   }
-  .box.reversed {
-    fill: red;
-  }
+
 
   .circle {
     fill: white;
