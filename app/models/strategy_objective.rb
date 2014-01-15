@@ -27,7 +27,7 @@ class StrategyObjective < ActiveRecord::Base
 
   def to_jbuilder(options = {})
     Jbuilder.new do |json|
-      json.extract! self, :name, :id, :description
+      json.extract! self, :name, :id, :description, :strategy_id
 
       json.goals self.goals
       json.problem_objectives self.problem_objectives

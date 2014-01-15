@@ -3,6 +3,7 @@ class Visio.Models.Parameter extends Visio.Models.Syncable
   selectedIndicatorData: () ->
     return new Visio.Collections.IndicatorDatum(Visio.manager.get('indicator_data').filter((d) =>
       return _.every _.values(Visio.Parameters), (hash) =>
+        return true if hash == Visio.Parameters.STRATEGY_OBJECTIVES
         id = d.get("#{hash.singular}_id")
 
         if @name == hash.plural
@@ -13,7 +14,8 @@ class Visio.Models.Parameter extends Visio.Models.Syncable
   selectedBudgetData: () ->
     return new Visio.Collections.Budget(Visio.manager.get('budgets').filter((d) =>
       return _.every _.values(Visio.Parameters), (hash) =>
-        return true if hash.plural == Visio.Parameters.INDICATORS.plural
+        return true if hash.plural == Visio.Parameters.INDICATORS.plural or
+          hash == Visio.Parameters.STRATEGY_OBJECTIVES
         id = d.get("#{hash.singular}_id")
 
         if @name == hash.plural
@@ -28,6 +30,7 @@ class Visio.Models.Parameter extends Visio.Models.Syncable
 
     return new Visio.Collections.IndicatorDatum(Visio.manager.get('indicator_data').filter((d) =>
       return _.every _.values(Visio.Parameters), (hash) =>
+        return true if hash == Visio.Parameters.STRATEGY_OBJECTIVES
         id = d.get("#{hash.singular}_id")
 
         if @name == hash.plural
@@ -40,7 +43,8 @@ class Visio.Models.Parameter extends Visio.Models.Syncable
 
     return new Visio.Collections.Budget(Visio.manager.get('budgets').filter((d) =>
       return _.every _.values(Visio.Parameters), (hash) =>
-        return true if hash.plural == Visio.Parameters.INDICATORS.plural
+        return true if hash.plural == Visio.Parameters.INDICATORS.plural or
+          hash == Visio.Parameters.STRATEGY_OBJECTIVES
         id = d.get("#{hash.singular}_id")
 
         if @name == hash.plural

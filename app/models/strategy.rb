@@ -50,6 +50,7 @@ class Strategy < ActiveRecord::Base
         json.output_ids self.output_ids.inject({}) { |h, id| h[id] = true; h }
         json.plan_ids self.plan_ids.inject({}) { |h, id| h[id] = true; h }
         json.problem_objective_ids self.problem_objective_ids.inject({}) { |h, id| h[id] = true; h }
+        json.strategy_objective_ids self.strategy_objective_ids.inject({}) { |h, id| h[id] = true; h }
       end
 
       if options[:include][:strategy_objectives]

@@ -61,6 +61,11 @@ window.Visio =
       plural: 'problem_objectives'
       className: 'ProblemObjective'
       human: 'Objective'
+    STRATEGY_OBJECTIVES:
+      singular: 'strategy_objective'
+      plural: 'strategy_objectives'
+      className: 'StrategyObjective'
+      human: 'Strategy Objective'
 
   SkippedParameters:
     RIGHTS_GROUPS:
@@ -122,6 +127,7 @@ Visio.AggregationTypes = [
     Visio.Parameters.GOALS,
     Visio.Parameters.OUTPUTS,
     Visio.Parameters.PROBLEM_OBJECTIVES,
+    Visio.Parameters.STRATEGY_OBJECTIVES,
   ]
 
 Visio.Schema =

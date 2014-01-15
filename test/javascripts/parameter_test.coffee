@@ -34,6 +34,7 @@ test 'strategyBudgetData', () ->
       goal_id: 1
       problem_objective_id: 1
       ol_admin_budget: 100
+      strategy_objective_ids: [1]
     },
     {
       id: 'blue'
@@ -43,6 +44,7 @@ test 'strategyBudgetData', () ->
       output_id: 1
       problem_objective_id: 1
       ol_admin_budget: 100
+      strategy_objective_ids: [1, 2]
     },
     {
       id: 'red'
@@ -52,15 +54,20 @@ test 'strategyBudgetData', () ->
       output_id: 1
       problem_objective_id: 1
       ol_admin_budget: 100
+      strategy_objective_ids: [2]
     }
   ])
 
   _.each _.values(Visio.Parameters), (hash) ->
     selected = Visio.manager.strategy().get("#{hash.singular}_ids")
-    strictEqual(_.keys(selected).length, 1)
+    selectedArr = _.keys selected
 
-    _.each _.keys(selected), (id) ->
+    strictEqual(selectedArr.length, 1)
+
+    _.each selectedArr, (id) ->
       model = Visio.manager.get(hash.plural).get(id)
+      if hash == Visio.Parameters.STRATEGY_OBJECTIVES
+        console.log 'suckit'
       data = model.strategyBudgetData()
 
       if hash.plural != Visio.Parameters.OUTPUTS.plural

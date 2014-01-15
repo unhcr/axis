@@ -34,6 +34,7 @@ class Visio.Models.Manager extends Backbone.Model
     'indicator_data': new Visio.Collections.IndicatorDatum()
     'budgets': new Visio.Collections.Budget()
     'strategies': new Visio.Collections.Strategy()
+    'strategy_objectives': new Visio.Collections.StrategyObjective()
     'date': new Date(2012, 1)
     'use_local_db': true
     'setup': false
@@ -89,6 +90,9 @@ class Visio.Models.Manager extends Backbone.Model
 
   selected: (type) ->
     parameters = @get(type)
+
+    if type == Visio.Parameters.STRATEGY_OBJECTIVES.plural
+      return new parameters.constructor(parameters.filter((p) => p.get('strategy_id') == @strategy().id))
 
     return new parameters.constructor(parameters.filter((p) => @get('selected')[type][p.id]) )
 
