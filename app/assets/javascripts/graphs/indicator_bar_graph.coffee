@@ -184,11 +184,6 @@ Visio.Graphs.indicatorBarGraph = (config) ->
     goal = Visio.Algorithms.GOAL_VALUES.target if isPerformance
     render
 
-  render.progress = (_progress) ->
-    return [progress.start, progress.end].join(Visio.Constants.SEPARATOR) unless arguments.length
-    progress = { start: _progress.split(Visio.Constants.SEPARATOR)[0], end: _progress.split(Visio.Constants.SEPARATOR)[1] }
-    render
-
   render.goalType = (_goalType) ->
     return goalType unless arguments.length
     goalType = _goalType
