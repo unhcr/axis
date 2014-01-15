@@ -101,7 +101,14 @@
   .bar-container.inconsistent {
     fill: $alert-red;
   }
+  .box.faded {
+    opacity: .4;
+  }
   .box {
+    -moz-transition:opacity $medium-transition;
+    -webkit-transition:opacity $medium-transition;
+    -o-transition:opacity $medium-transition;
+    transition:opacity $medium-transition;
     line {
       stroke: $dark-gray;
       pointer-events: none;

@@ -70,6 +70,9 @@ Visio.Graphs.indicatorBarGraph = (config) ->
             return classList.join ' ')
 
         container.on 'mouseover', (d) ->
+          g.selectAll('.box').classed 'faded', true
+          box.classed 'faded', false
+
           y.domain [0, +d.get(goalType)]
           circles = box.selectAll('.circle').data(_.values(Visio.Algorithms.REPORTED_VALUES))
           circles.enter().append('circle')
@@ -121,6 +124,7 @@ Visio.Graphs.indicatorBarGraph = (config) ->
 
 
         container.on 'mouseout', (d) ->
+          g.selectAll('.box').classed 'faded', false
           box.selectAll('.circle').data([])
             .exit().transition().duration(Visio.Durations.VERY_FAST).attr('r', 0).remove()
           g.selectAll('.label').remove()
