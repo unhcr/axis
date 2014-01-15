@@ -33,6 +33,7 @@ test 'strategyBudgetData', () ->
       ppg_id: 1
       goal_id: 1
       problem_objective_id: 1
+      output_id: null
       ol_admin_budget: 100
     },
     {
@@ -114,7 +115,7 @@ test 'selectedBudgetData', () ->
       plan_id: 1
       ppg_id: 1
       goal_id: 1
-      output_id: undefined
+      output_id: null
       problem_objective_id: 1
     },
     {
@@ -192,9 +193,26 @@ test 'selectedIndicatorData', () ->
     selected.each (d) ->
       data = d.selectedIndicatorData()
 
-      strictEqual(data.length, 1)
+      strictEqual(data.length, 1, "Failed length for #{hash.plural}")
       ok(data instanceof Visio.Collections.IndicatorDatum)
       ok(data.get('blue'))
+
+  Visio.manager.get('indicator_data').get('blue').set('output_id', null)
+
+  _.each _.values(Visio.Parameters), (hash) ->
+    selected = Visio.manager.selected(hash.plural)
+    strictEqual(selected.length, 1)
+
+    selected.each (d) ->
+      data = d.selectedIndicatorData()
+
+      if hash.plural == Visio.Parameters.OUTPUTS.plural
+        strictEqual(data.length, 0)
+        ok(data instanceof Visio.Collections.IndicatorDatum)
+      else
+        strictEqual(data.length, 1, "Failed length for #{hash.plural}")
+        ok(data instanceof Visio.Collections.IndicatorDatum)
+        ok(data.get('blue'))
 
 test 'strategyIndicatorData', () ->
   strategy = { id: 17 }
@@ -248,7 +266,7 @@ test 'strategyIndicatorData', () ->
       model = Visio.manager.get(hash.plural).get(id)
       data = model.strategyIndicatorData()
 
-      strictEqual(data.length, 1)
+      strictEqual(data.length, 1, "Failed length for #{hash.plural}")
       ok(data instanceof Visio.Collections.IndicatorDatum)
       ok(data.get('blue'))
 
