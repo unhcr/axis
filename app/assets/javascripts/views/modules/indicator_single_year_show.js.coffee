@@ -11,9 +11,11 @@ class Visio.Views.IndicatorSingleYearShowView extends Backbone.View
     'MSTransitionEnd': 'onTransitionEnd'
     'webkitTransitionEnd': 'onTransitionEnd'
     'oTransitionEnd': 'onTransitionEnd'
+    'change .goal-type': 'onGoalTypeChange'
+    'change .is-performance': 'onIsPerformanceChange'
 
   initialize: (options) ->
-    @config = {
+    @config =
       margin:
         top: 10
         bottom: 10
@@ -21,16 +23,14 @@ class Visio.Views.IndicatorSingleYearShowView extends Backbone.View
         right: 10
       width: 800
       height: 300
-    }
 
-    @sparkConfig = {
+    @sparkConfig =
       margin:
         left: 0
         right: 10
         top: 20
         bottom: 0
       width: 100
-    }
 
   render: (isRerender) ->
     situationAnalysis = @model.selectedSituationAnalysis()
@@ -70,6 +70,17 @@ class Visio.Views.IndicatorSingleYearShowView extends Backbone.View
     @toolbarHeight or= $('.toolbar').height()
 
     @
+
+  onGoalTypeChange: (e) ->
+    $target = $(e.currentTarget)
+    if $target.is ':checked'
+      @indicatorBarGraph.goalType(Visio.Algorithms.GOAL_TYPES.target)()
+    else
+      @indicatorBarGraph.goalType(Visio.Algorithms.GOAL_TYPES.standard)()
+
+  onIsPerformanceChange: (e) ->
+    $target = $(e.currentTarget)
+    @indicatorBarGraph.isPerformance($target.is(':checked'))()
 
   graph: ->
     @indicatorBarGraph.data @model.selectedIndicatorData()
