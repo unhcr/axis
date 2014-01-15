@@ -40,7 +40,8 @@ Visio.Graphs.indicatorBarGraph = (config) ->
   # Rendering
   render = () ->
 
-    boxes = g.selectAll('g.box').data(data.where({ is_performance: isPerformance }))
+    boxes = g.selectAll('g.box').data data.where({ is_performance: isPerformance }), (d) ->
+      d.id
     boxes.enter().append('g')
     boxes.attr('class', 'box')
       .sort(sort)
@@ -56,6 +57,7 @@ Visio.Graphs.indicatorBarGraph = (config) ->
         metrics = [Visio.Algorithms.REPORTED_VALUES.myr, Visio.Algorithms.REPORTED_VALUES.yer]
 
         y.domain [0, +d.get(goalType)]
+        console.log y.domain()
 
         container = box.selectAll('.bar-container').data([d])
         container.enter().append('rect')
