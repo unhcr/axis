@@ -94,8 +94,8 @@ Visio.Graphs.bubble = (config) ->
       maxBudget = datum.budget if datum.budget > maxBudget
       return datum
 
-    data = data.filter (d) ->
-      return d.budget && d.achievement
+    #data = data.filter (d) ->
+    #  return d.budget && d.achievement
 
     if !domain || domain[1] < maxBudget || domain[1] > 2 * maxBudget
       domain = [0, maxBudget]
@@ -168,6 +168,7 @@ Visio.Graphs.bubble = (config) ->
       .attr('transform', 'translate(-20,0)')
 
   polygon = (d) ->
+    return "M0 0" unless d
     "M" + d.join("L") + "Z"
 
   render.parameters = (_parameters) ->
