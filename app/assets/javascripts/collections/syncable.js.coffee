@@ -4,7 +4,7 @@ class Visio.Collections.Syncable extends Backbone.Collection
 
   keyPath: 'id'
 
-  limit: 3000
+  limit: 10000
 
   store: () ->
     @name + '_store'
