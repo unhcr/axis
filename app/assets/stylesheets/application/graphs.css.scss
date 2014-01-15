@@ -86,10 +86,10 @@
 
 .indicator-bar-graph {
   .myr-bar {
-    fill: deepskyblue;
+    fill: $purple-dark;
   }
   .yer-bar {
-    fill: cornflowerblue;
+    fill: $lightblue;
   }
   .bar {
     stroke: white;
@@ -99,9 +99,16 @@
     fill: $off-white;
   }
   .bar-container.inconsistent {
-    fill: red;
+    fill: $alert-red;
+  }
+  .box.faded {
+    opacity: .4;
   }
   .box {
+    -moz-transition:opacity $medium-transition;
+    -webkit-transition:opacity $medium-transition;
+    -o-transition:opacity $medium-transition;
+    transition:opacity $medium-transition;
     line {
       stroke: $dark-gray;
       pointer-events: none;
