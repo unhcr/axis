@@ -77,7 +77,8 @@ Visio.Graphs.indicatorBarGraph = (config) ->
             .attr('r', barWidth / 2)
 
           # can't be in box svg since it need to be top level element
-          labels = g.selectAll('.label').data(_.values(Visio.Algorithms.REPORTED_VALUES))
+          labels = g.selectAll('.label')
+            .data(_.values(Visio.Algorithms.REPORTED_VALUES).concat(Visio.Algorithms.GOAL_TYPES.target))
           labels.enter().append('g')
 
           labels
