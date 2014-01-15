@@ -28,7 +28,6 @@ Visio.Graphs.indicatorBarGraph = (config) ->
 
   y = d3.scale.linear()
     .range([height, 0])
-    .clamp(true)
 
   progress =
     start: Visio.Algorithms.REPORTED_VALUES.baseline
@@ -198,7 +197,7 @@ Visio.Graphs.indicatorBarGraph = (config) ->
   render.isPerformance = (_isPerformance) ->
     return isPerformance unless arguments.length
     isPerformance = _isPerformance
-    goal = Visio.Algorithms.GOAL_VALUES.target if isPerformance
+    goal = Visio.Algorithms.GOAL_TYPES.target if isPerformance
     render
 
   render.goalType = (_goalType) ->
