@@ -11,19 +11,19 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
       @moduleView.render(true)
 
     Visio.manager.on 'change:aggregation_type', () =>
-      @moduleView.render(true)
+      @moduleView.render true
 
     Visio.manager.on 'change:selected', () =>
-      @moduleView.render(true)
+      @moduleView.render true
 
     Visio.manager.on 'change:achievement_type', () =>
-      @moduleView.render(true)
+      @moduleView.render true
 
     Visio.manager.on 'change:scenario_type', () =>
-      @moduleView.render(true)
+      @moduleView.render true
 
     Visio.manager.on 'change:budget_type', () =>
-      @moduleView.render(true)
+      @moduleView.render true
 
     @module = $('#module')
 

@@ -12,7 +12,7 @@
 
 #bubble {
   .bubble.focus {
-    fill: black;
+    fill: $orange;
   }
   .trail {
     stroke: black;
@@ -20,8 +20,7 @@
     pointer-events: none;
   }
   .bubble {
-    fill: red;
-    opacity: .5;
+    fill: $yellow-green;
     pointer-events: none;
   }
   .axis path {

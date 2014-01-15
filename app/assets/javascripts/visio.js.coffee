@@ -35,32 +35,32 @@ window.Visio =
       singular: 'plan'
       plural: 'plans'
       className: 'Plan'
-      human: 'Plan'
+      human: 'Operations'
     PPGS:
       singular: 'ppg'
       plural: 'ppgs'
       className: 'Ppg'
-      human: 'PPG'
+      human: 'PPGs'
     GOALS:
       singular: 'goal'
       plural: 'goals'
       className: 'Goal'
-      human: 'Goal'
+      human: 'Goals'
     INDICATORS:
       singular: 'indicator'
       plural: 'indicators'
       className: 'Indicator'
-      human: 'Indicator'
+      human: 'Indicators'
     OUTPUTS:
       singular: 'output'
       plural: 'outputs'
       className: 'Output'
-      human: 'Output'
+      human: 'Outputs'
     PROBLEM_OBJECTIVES:
       singular: 'problem_objective'
       plural: 'problem_objectives'
       className: 'ProblemObjective'
-      human: 'Objective'
+      human: 'Objectives'
     STRATEGY_OBJECTIVES:
       singular: 'strategy_objective'
       plural: 'strategy_objectives'
