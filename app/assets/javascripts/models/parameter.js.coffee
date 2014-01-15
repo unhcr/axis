@@ -1,59 +1,55 @@
 class Visio.Models.Parameter extends Visio.Models.Syncable
 
-  selectedIndicatorData: () ->
-    return new Visio.Collections.IndicatorDatum(Visio.manager.get('indicator_data').filter((d) =>
+  selectedData: (type) ->
+    return new Visio.Collections[type.className](Visio.manager.get(type.plural).filter((d) =>
       return _.every _.values(Visio.Parameters), (hash) =>
-        return true if hash == Visio.Parameters.STRATEGY_OBJECTIVES
+
+        # Skip indicator if it's a budget
+        if type.plural == Visio.Syncables.BUDGETS.plural
+          return true if hash.plural == Visio.Parameters.INDICATORS.plural
         id = d.get("#{hash.singular}_id")
 
+        isSelected = Visio.manager.get('selected')[hash.plural][id]
+
         if @name == hash.plural
-          return @id == id && Visio.manager.get('selected')[hash.plural][id]
+          return @id == id and isSelected
+        else if hash.plural == Visio.Parameters.OUTPUTS.plural
+          return isSelected or not id?
         else
-          return Visio.manager.get('selected')[hash.plural][id]))
+          return isSelected ))
+
+  selectedIndicatorData: () ->
+    @selectedData(Visio.Syncables.INDICATOR_DATA)
 
   selectedBudgetData: () ->
-    return new Visio.Collections.Budget(Visio.manager.get('budgets').filter((d) =>
+    @selectedData(Visio.Syncables.BUDGETS)
+
+  strategyData: (type, strategy) ->
+    strategy or= Visio.manager.strategy()
+
+    return new Visio.Collections[type.className](Visio.manager.get(type.plural).filter((d) =>
       return _.every _.values(Visio.Parameters), (hash) =>
-        return true if hash.plural == Visio.Parameters.INDICATORS.plural or
-          hash == Visio.Parameters.STRATEGY_OBJECTIVES
+        # Skip indicator if it's a budget
+        if type.plural == Visio.Syncables.BUDGETS.plural
+          return true if hash.plural == Visio.Parameters.INDICATORS.plural
+
         id = d.get("#{hash.singular}_id")
 
+        isSelected = strategy.get("#{hash.singular}_ids")[id]
+
         if @name == hash.plural
-          return @id == id && Visio.manager.get('selected')[hash.plural][id]
+          return id == @id && isSelected
         else if hash.plural == Visio.Parameters.OUTPUTS.plural
-          return Visio.manager.get('selected')[hash.plural][id] || id == undefined
+          # Add null/undefined because budget data can have an undefined output
+          return isSelected or not id?
         else
-          return Visio.manager.get('selected')[hash.plural][id] ))
+          return isSelected ))
 
   strategyIndicatorData: (strategy) ->
-    strategy ||= Visio.manager.strategy()
-
-    return new Visio.Collections.IndicatorDatum(Visio.manager.get('indicator_data').filter((d) =>
-      return _.every _.values(Visio.Parameters), (hash) =>
-        return true if hash == Visio.Parameters.STRATEGY_OBJECTIVES
-        id = d.get("#{hash.singular}_id")
-
-        if @name == hash.plural
-          return id == @id && strategy.get("#{hash.singular}_ids")[id]
-        else
-          return strategy.get("#{hash.singular}_ids")[id] ))
+    @strategyData(Visio.Syncables.INDICATOR_DATA, strategy)
 
   strategyBudgetData: (strategy) ->
-    strategy ||= Visio.manager.strategy()
-
-    return new Visio.Collections.Budget(Visio.manager.get('budgets').filter((d) =>
-      return _.every _.values(Visio.Parameters), (hash) =>
-        return true if hash.plural == Visio.Parameters.INDICATORS.plural or
-          hash == Visio.Parameters.STRATEGY_OBJECTIVES
-        id = d.get("#{hash.singular}_id")
-
-        if @name == hash.plural
-          return id == @id && strategy.get("#{hash.singular}_ids")[id]
-        else if hash.plural == Visio.Parameters.OUTPUTS.plural
-          # Add undefined because budget data can have an undefined output
-          return strategy.get("#{hash.singular}_ids")[id] || id == undefined
-        else
-          return strategy.get("#{hash.singular}_ids")[id] ))
+    @strategyData(Visio.Syncables.BUDGETS, strategy)
 
   strategyBudget: () ->
     data = @strategyBudgetData()

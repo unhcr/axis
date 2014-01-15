@@ -34,6 +34,10 @@ test 'data', ->
   @graph.data(data)
   strictEqual @graph.data().length, 3
 
+  @graph.isPerformance(true)
+  @graph.data(data)
+  strictEqual @graph.data().length, 3
+
 test 'render', ->
   data = new Visio.Collections.IndicatorDatum([
     {
