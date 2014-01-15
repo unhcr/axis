@@ -34,15 +34,6 @@ test 'data', ->
   @graph.data(data)
   strictEqual @graph.data().length, 3
 
-test 'progress', ->
-
-  p = @graph.progress()
-  strictEqual p, Visio.ProgressTypes.BASELINE_MYR
-
-  @graph.progress Visio.ProgressTypes.MYR_YER
-  p = @graph.progress()
-  strictEqual p, Visio.ProgressTypes.MYR_YER
-
 test 'render', ->
   data = new Visio.Collections.IndicatorDatum([
     {
