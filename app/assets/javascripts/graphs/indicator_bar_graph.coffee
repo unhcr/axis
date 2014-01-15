@@ -1,9 +1,10 @@
 Visio.Graphs.indicatorBarGraph = (config) ->
+
+  # Variable Declaration
   margin = config.margin
 
   width = config.width - margin.left - margin.right
   height = config.height - margin.top - margin.bottom
-
 
   selection = config.selection
 
@@ -36,7 +37,7 @@ Visio.Graphs.indicatorBarGraph = (config) ->
 
   data = []
 
-
+  # Rendering
   render = () ->
 
     boxes = g.selectAll('g.box').data(data.where({ is_performance: isPerformance }))
@@ -93,19 +94,26 @@ Visio.Graphs.indicatorBarGraph = (config) ->
               tag.enter().append('rect')
               tag.attr('x', 0)
                 .attr('y', -10)
-                .attr('width', 80)
+                .attr('width', 200)
                 .attr('height', 20)
                 .attr('rx', 5)
                 .attr('ry', 5)
-                .attr('class', (type) -> ['tag', "#{type}-tag"].join(' '))
+                .attr('class', (type) -> ['tag', "tag-#{type}"].join(' '))
 
               texts = label.selectAll('.text').data([p])
               texts.enter().append('text')
               texts.attr('x', 10)
                 .attr('y', 10)
-                .attr('dy', '-.3em')
+                .attr('dy', '-.43em')
                 .attr('class', 'text')
-                .text("#{Visio.Formats.SI(d.get(p))} " + p)
+                .text () ->
+                  humanGoal = Visio.Utils.humanMetric(goalType)
+                  if p != goalType
+                    percent = d.get(p) / +d.get(goalType)
+                    humanMetric = Visio.Utils.humanMetric(p)
+                    return "#{humanMetric} is #{Visio.Formats.PERCENT(percent)} of the #{humanGoal}"
+                  else
+                    return "#{humanGoal} is #{d.get(goalType)}"
 
 
         container.on 'mouseout', (d) ->

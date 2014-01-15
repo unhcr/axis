@@ -96,3 +96,17 @@ Visio.Utils.progressTypeToName = (type) ->
   return ''
 
 Visio.Utils.commaNumber = d3.format(',d')
+
+Visio.Utils.humanMetric = (metric) ->
+  if metric == Visio.Algorithms.REPORTED_VALUES.myr
+    return 'MYR'
+  else if metric == Visio.Algorithms.REPORTED_VALUES.yer
+    return 'YER'
+  else if metric == Visio.Algorithms.REPORTED_VALUES.baseline
+    return 'Baseline'
+  else if metric == Visio.Algorithms.GOAL_TYPES.target
+    return 'Target'
+  else if metric == Visio.Algorithms.GOAL_TYPES.standard
+    return 'Standard'
+  else
+    return 'N/A'

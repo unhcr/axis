@@ -124,6 +124,16 @@
     pointer-events: none;
   }
 
+  .tag.tag-myr {
+    fill: $primary-medium;
+  }
+  .tag.tag-yer, .tag.tag-comp_target {
+    fill: $primary-light;
+  }
+  .tag.tag-baseline {
+    fill: $primary-dark;
+  }
+
 }
 
 .spark-bar-graph {
