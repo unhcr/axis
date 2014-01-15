@@ -94,8 +94,8 @@ Visio.Graphs.bubble = (config) ->
       maxBudget = datum.budget if datum.budget > maxBudget
       return datum
 
-    #data = data.filter (d) ->
-    #  return d.budget && d.achievement
+    data = data.filter (d) ->
+      return d.budget && d.achievement
 
     if !domain || domain[1] < maxBudget || domain[1] > 2 * maxBudget
       domain = [0, maxBudget]
