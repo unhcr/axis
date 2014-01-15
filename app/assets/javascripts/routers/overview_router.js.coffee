@@ -8,6 +8,7 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
     Visio.manager.set 'selected_strategies', selectedStrategies
     Visio.manager.on 'change:date', () =>
       @navigation.render()
+      @strategySnapshotView.render()
       @moduleView.render(true)
 
     Visio.manager.on 'change:aggregation_type', () =>
