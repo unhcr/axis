@@ -300,8 +300,17 @@ body.index {
 }
 
 .divider {
-  padding: 0;
+  padding: 2px 0;
   border-bottom: 1px solid $white;
+}
+
+.divider-stack {
+  border-top: 1px $divider-top solid;
+  border-bottom: 1px $divider-bottom solid;
+}
+
+.divider-white {
+  border-bottom: 1px $white solid;
 }
 
 .divider-primary {
@@ -1217,14 +1226,6 @@ input[type="radio"]:checked + label {
   line-height: normal;
 }
 
-.divider {
-  border-top: 1px $divider-top solid;
-  border-bottom: 1px $divider-bottom solid;
-}
-
-.divider-white {
-  border-bottom: 1px $white solid;
-}
 
 .target-country-count {
   position: absolute;
@@ -1263,5 +1264,6 @@ input[type="radio"]:checked + label {
 [data-prefix]:before {
   content: attr(data-prefix) ': ';
   display: inline;
+  font-weight: bold;
 }
 
