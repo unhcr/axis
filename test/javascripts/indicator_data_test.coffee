@@ -128,7 +128,7 @@ test 'situation analysis', () ->
     id: 'ben'
     output_id: 'present'
     problem_objective_id: 'present'
-    is_performance: true
+    is_performance: false
     myr: 50
     threshold_green: 60
     threshold_red: 40
@@ -145,12 +145,15 @@ test 'situation analysis', () ->
   res = datum.situationAnalysis()
   strictEqual res, Visio.Algorithms.ALGO_RESULTS.fail
 
+  datum.set 'is_performance', true
+  throws datum.situationAnalysis, 'Should throw an error'
+
 test 'situation analysis collection', () ->
   data = new Visio.Collections.IndicatorDatum([{
     id: 'ben'
     output_id: 'present'
     problem_objective_id: 'present'
-    is_performance: true
+    is_performance: false
     myr: 50
     threshold_green: 60
     threshold_red: 40
@@ -158,7 +161,7 @@ test 'situation analysis collection', () ->
     id: 'lisa'
     output_id: 'present'
     problem_objective_id: 'present'
-    is_performance: true
+    is_performance: false
     myr: 50
     threshold_green: 60
     threshold_red: 40
@@ -186,12 +189,28 @@ test 'situation analysis collection', () ->
   strictEqual res.counts[Visio.Algorithms.ALGO_RESULTS.ok], 1
   strictEqual res.counts[Visio.Algorithms.ALGO_RESULTS.fail], 1
 
+  data2 = data.clone()
+  data2.remove(data2.get('lisa'))
+
+  data.get('lisa').set 'is_performance', true
+
+  res = data.situationAnalysis()
+  res2 = data2.situationAnalysis()
+
+  strictEqual res.category, res2.category, 'Each category should be the same'
+  strictEqual res.result, res2.result, 'Each results shoudl be the same'
+  strictEqual res.total, res2.total, 'Each total should be the same'
+  strictEqual res.counts[Visio.Algorithms.ALGO_RESULTS.ok],
+              res2.counts[Visio.Algorithms.ALGO_RESULTS.ok], 'Counts should be the same'
+
   data = new Visio.Collections.IndicatorDatum()
   res = data.situationAnalysis()
   strictEqual res.category, Visio.Algorithms.ALGO_RESULTS.fail
   strictEqual res.result, 0
   strictEqual res.total, 0
   strictEqual res.counts[Visio.Algorithms.ALGO_RESULTS.ok], 0
+
+
 
 
 test 'isConsistent', () ->

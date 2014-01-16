@@ -14,6 +14,8 @@ class Visio.Models.IndicatorDatum extends Visio.Models.Syncable
 
 
   situationAnalysis: (reported) ->
+    if @get 'is_performance'
+      throw 'Calculating situation analysis on performance indicator. Undefined behavior.'
     reported ||= Visio.Algorithms.REPORTED_VALUES.myr
     return Visio.Algorithms.ALGO_RESULTS.missing unless @get(reported)
 
