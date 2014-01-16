@@ -108,6 +108,14 @@ class Visio.Models.Manager extends Backbone.Model
 
     return plan
 
+  # Returns plan ids from selected strategies
+  selectedStrategyPlanIds: () ->
+    strategyIds = _.keys @get('selected_strategies')
+    strategies = @strategies strategyIds
+
+    planIds = strategies.map (strategy) -> _.keys(strategy.get("#{Visio.Parameters.PLANS.singular}_ids"))
+    planIds = _.intersection.apply(null, planIds)
+
   getSyncDate: (id) ->
     db = @get('db')
     db.get(Visio.Stores.SYNC, id)
@@ -159,7 +167,3 @@ class Visio.Models.Manager extends Backbone.Model
     else
       options.validate = true unless options.validate
       Backbone.Model.prototype.set.apply @, [key, val, options]
-
-
-
-

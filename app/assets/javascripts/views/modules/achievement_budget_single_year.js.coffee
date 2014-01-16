@@ -4,6 +4,8 @@ class Visio.Views.AchievementBudgetSingleYearView extends Backbone.View
 
   className: 'module'
 
+  id: 'absy'
+
   events:
     'click .scenario .visio-check input': 'onClickScenario'
     'click .budget .visio-check input': 'onClickBudget'

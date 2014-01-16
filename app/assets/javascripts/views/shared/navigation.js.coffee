@@ -9,44 +9,23 @@ class Visio.Views.NavigationView extends Backbone.View
     'change .visio-check input': 'onChangeSelection'
 
   render: () ->
-    _.each _.values(Visio.Parameters), (hash) =>
-      Visio.manager.get('selected')[hash.plural] = {}
 
-    @$el.html(@template(
+    parameters = []
+
+    _.each _.values(Visio.Parameters), (hash) ->
+      if hash == Visio.Parameters.PLANS
+        data = new Visio.Collections.Plan(
+          Visio.manager.strategy()[hash.plural]().where({ year: Visio.manager.year() }))
+      else
+        data = Visio.manager.strategy()[hash.plural]()
+
+      parameters.push
+        data: data
+        hash: hash
+
+    @$el.html @template(
       strategy: Visio.manager.strategy()
-      parameters: [
-        {
-          data: new Visio.Collections.Plan(Visio.manager.strategy().plans().where({ year: Visio.manager.year() }))
-          hash: Visio.Parameters.PLANS
-        },
-        {
-          data: Visio.manager.strategy().ppgs()
-          hash: Visio.Parameters.PPGS
-        },
-        {
-          data: Visio.manager.strategy().goals()
-          hash: Visio.Parameters.GOALS
-        },
-        {
-          data: Visio.manager.strategy().problem_objectives()
-          hash: Visio.Parameters.PROBLEM_OBJECTIVES
-        },
-        {
-          data: Visio.manager.strategy().outputs()
-          hash: Visio.Parameters.OUTPUTS
-        },
-        {
-          data: Visio.manager.strategy().indicators()
-          hash: Visio.Parameters.INDICATORS
-        }
-      ]))
-
-    @$el.find('.visio-check input:checked').each (idx, ele) =>
-      typeid = $(ele).val().split(Visio.Constants.SEPARATOR)
-
-      type = typeid[0]
-      id = typeid[1]
-      Visio.manager.get('selected')[type][id] = true
+      parameters: parameters)
 
   onChangeSelection: (e) ->
     $target = $(e.currentTarget)

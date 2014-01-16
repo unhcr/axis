@@ -5,8 +5,17 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
 
     selectedStrategies = {}
     selectedStrategies[Visio.manager.strategy().id] = true
+
+
     Visio.manager.set 'selected_strategies', selectedStrategies
     Visio.manager.on 'change:date', () =>
+      # Need to get select plans from next year
+      oldPlans = Visio.manager.selected('plans')
+      newPlans = oldPlans.getPlansForDifferentYear(Visio.manager.year())
+      ids = newPlans.pluck 'id'
+
+      Visio.manager.get('selected')['plans'] = _.object ids, ids.map -> true
+
       @navigation.render()
       @strategySnapshotView.render()
       @moduleView.render(true)
@@ -52,6 +61,9 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
            Visio.manager.get('budgets').fetchSynced({ strategy_id: Visio.manager.get('strategy_id') })
            Visio.manager.get('indicator_data').fetchSynced({ strategy_id: Visio.manager.get('strategy_id') })
     ).done(() =>
+      # Initialize selected to be strategy
+      Visio.manager.resetSelectedDefaults()
+
       @navigation = new Visio.Views.NavigationView({
         el: $('#navigation')
       })

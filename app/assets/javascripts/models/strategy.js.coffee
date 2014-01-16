@@ -25,7 +25,7 @@ class Visio.Models.Strategy extends Backbone.Model
 
   include: (type, id) ->
 
-    @get("#{type}_ids")[id] != undefined
+    @get("#{type}_ids")[id]?
 
   initialize: (options) ->
     options or= {}

@@ -6,6 +6,7 @@ class Visio.Views.ParameterListView extends Backbone.View
 
   tabs: [
       Visio.Parameters.INDICATORS,
+      Visio.Parameters.OUTPUTS,
       Visio.Parameters.PROBLEM_OBJECTIVES,
       Visio.Parameters.GOALS,
       Visio.Parameters.PPGS

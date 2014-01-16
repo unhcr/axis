@@ -113,7 +113,7 @@ Visio.Graphs.map = (config) ->
       )
 
     centerData = Visio.manager.get(Visio.Parameters.PLANS.plural).filter (plan) ->
-      plan.get('country') && plan.get('year') == Visio.manager.year()
+      plan.get('country') and plan.get('year') == Visio.manager.year()
 
     centers = g.selectAll('.center')
       .data(centerData, (d) -> d.id)
@@ -150,7 +150,7 @@ Visio.Graphs.map = (config) ->
   render.filterTooltips = (plan_ids) ->
     for key, value of views
       id = value.model.id
-      if (plan_ids == undefined || _.include(plan_ids, id)) && value.isCurrentYear()
+      if (not plan_ids? || _.isEmpty(plan_ids) || _.include(plan_ids, id)) && value.isCurrentYear()
         value.show()
         value.render(false)
       else

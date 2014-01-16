@@ -6,15 +6,24 @@
   <div class="ui-accordion-container">
   <% for (var p = 0; p < parameters.length; p++) { %>
     <div class="ui-accordion">
-      <div data-type="<%= parameters[p].hash.plural %>" class="name open ui-extra-small-header
-        ui-line-item-theme"><%= parameters[p].hash.human.toUpperCase() %></div>
-      <div data-type="<%= parameters[p].hash.plural %>" class="ui-accordion-content <%=
-        parameters[p].hash.plural %>">
+      <div data-type="<%= parameters[p].hash.plural %>"
+           class="name open ui-extra-small-header ui-line-item-theme">
+           <%= parameters[p].hash.human.toUpperCase() %>
+       </div>
+
+       <div data-type="<%= parameters[p].hash.plural %>"
+         class="ui-accordion-content <%= parameters[p].hash.plural %>">
+
         <% for (var i = 0; i < parameters[p].data.length; i ++) { %>
+
         <div class="visio-check visio-check-yellow ui-line-item-theme">
-          <input value="<%= parameters[p].hash.plural + Visio.Constants.SEPARATOR + parameters[p].data.at(i).id %>" <% if
-          (strategy.include(parameters[p].hash.singular, parameters[p].data.at(i).id)) { %>checked="checked"<% } %>
-          type="checkbox" id="check_<%= parameters[p].data.at(i).id %>"/>
+
+          <input value="<%= parameters[p].hash.plural + Visio.Constants.SEPARATOR + parameters[p].data.at(i).id %>"
+          <% if (Visio.manager.get('selected')
+                  [parameters[p].hash.plural][parameters[p].data.at(i).id]) { %>
+                checked="checked"
+              <% } %>
+              type="checkbox" id="check_<%= parameters[p].data.at(i).id %>"/>
 
           <label for="check_<%= parameters[p].data.at(i).id %>"><%= parameters[p].data.at(i).toString() %></label>
         </div>

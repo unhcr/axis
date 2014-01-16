@@ -40,3 +40,10 @@ class Visio.Models.Plan extends Visio.Models.Parameter
 
   toString: () ->
     @get('operation_name')
+
+  getPlanForDifferentYear: (year) ->
+    return @ if @get('year') == year
+
+    return Visio.manager.get(@name).findWhere
+      year: year
+      operation_id: @get 'operation_id'

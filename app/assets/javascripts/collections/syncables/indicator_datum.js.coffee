@@ -7,6 +7,7 @@ class Visio.Collections.IndicatorDatum extends Visio.Collections.Syncable
   url: '/indicator_data'
 
   situationAnalysis: (reported) ->
+
     reported ||= Visio.Algorithms.REPORTED_VALUES.myr
 
     counts = {}
@@ -16,7 +17,7 @@ class Visio.Collections.IndicatorDatum extends Visio.Collections.Syncable
     counts[Visio.Algorithms.ALGO_RESULTS.missing] = 0
 
     @each((datum) ->
-      counts[datum.situationAnalysis()] += 1
+      counts[datum.situationAnalysis()] += 1 unless datum.get 'is_performance'
     )
 
     count = counts[Visio.Algorithms.ALGO_RESULTS.success] +

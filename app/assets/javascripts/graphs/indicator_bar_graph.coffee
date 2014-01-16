@@ -57,7 +57,6 @@ Visio.Graphs.indicatorBarGraph = (config) ->
         metrics = [Visio.Algorithms.REPORTED_VALUES.myr, Visio.Algorithms.REPORTED_VALUES.yer]
 
         y.domain [0, +d.get(goalType)]
-        console.log y.domain()
 
         container = box.selectAll('.bar-container').data([d])
         container.enter().append('rect')
