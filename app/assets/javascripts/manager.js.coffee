@@ -92,7 +92,7 @@ class Visio.Models.Manager extends Backbone.Model
     parameters = @get(type)
 
     if type == Visio.Parameters.STRATEGY_OBJECTIVES.plural
-      return new parameters.constructor(parameters.filter((p) => p.get('strategy_id') == @strategy().id))
+      return @strategy()[type]()
 
     return new parameters.constructor(parameters.filter((p) => @get('selected')[type][p.id]) )
 
