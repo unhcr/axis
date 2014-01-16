@@ -107,6 +107,8 @@ GEM
       coderay (~> 1.0)
       method_source (~> 0.8)
       slop (~> 3.4)
+    pry-rails (0.3.2)
+      pry (>= 0.9.10)
     qunit-rails (0.0.4)
       railties (>= 3.2.3)
     rack (1.4.5)
@@ -223,6 +225,7 @@ DEPENDENCIES
   nokogiri
   normalize-rails
   pry
+  pry-rails
   qunit-rails
   rails (= 3.2.11)
   random-word

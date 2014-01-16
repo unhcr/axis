@@ -41,6 +41,8 @@ group :development, :test do
   gem 'single_test'
   gem 'selenium-webdriver', '~> 2.38.0'
   gem 'rspec-rails', '~> 3.0.0.beta'
+  gem 'pry-rails'
+  gem 'pry'
 end
 
 gem 'jquery-rails'
@@ -59,4 +61,3 @@ gem 'jquery-rails'
 
 # To use debugger
 # gem 'debugger'
-gem 'pry'
