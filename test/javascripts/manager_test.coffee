@@ -1,10 +1,8 @@
 module 'Manager',
 
   setup: () ->
-    stop()
     Visio.user = new Visio.Models.User()
     Visio.manager = new Visio.Models.Manager()
-    start()
 
   teardown: () ->
     Visio.manager.get('db').clear()
@@ -172,6 +170,38 @@ test 'resetSelectedDefaults', () ->
       strictEqual(_.keys(Visio.manager.get('selected')[hash.plural]).length, 2)
     else
       strictEqual(_.keys(Visio.manager.get('selected')[hash.plural]).length, 1)
+
+test 'selectedStrategyPlanIds', ->
+  strategies = [
+    { id: 1, plan_ids: { 1: true , 2: true } },
+    { id: 2, plan_ids: { 2: true, 3: true } },
+    { id: 3, plan_ids: { 4: true } }]
+  selectedStrategies = {}
+  plans = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }]
+  Visio.manager.get('strategies').reset(strategies)
+  Visio.manager.get('plans').reset([plans])
+  Visio.manager.set('selected_strategies', selectedStrategies)
+
+  ids = Visio.manager.selectedStrategyPlanIds()
+  strictEqual ids.length, 0, 'Should have no plan ids for no selected strategies'
+
+  selectedStrategies[strategies[0].id] = true
+  Visio.manager.set('selected_strategies', selectedStrategies)
+
+  ids = Visio.manager.selectedStrategyPlanIds()
+  Visio.manager.set('selected_strategies', selectedStrategies)
+  strictEqual ids.length, _.keys(strategies[0].plan_ids).length
+  _.each ids, (id) ->
+    ok _.include _.keys(strategies[0].plan_ids), id
+
+  selectedStrategies[strategies[1].id] = true
+  Visio.manager.set('selected_strategies', selectedStrategies)
+  ids = Visio.manager.selectedStrategyPlanIds()
+  strictEqual ids.length, _.intersection(_.keys(strategies[0].plan_ids),
+                                         _.keys(strategies[1].plan_ids)).length
+  _.each ids, (id) ->
+    ok _.include _.intersection(_.keys(strategies[0].plan_ids),
+                                _.keys(strategies[1].plan_ids)), id
 
 test 'validation', ->
 

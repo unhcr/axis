@@ -15,17 +15,17 @@ class Visio.Routers.IndexRouter extends Visio.Routers.GlobalRouter
       height: height)
 
 
-    Visio.manager.on('change:date', () =>
+    Visio.manager.on 'change:date', () =>
       options =
         options:
           include:
             counts: true
             situation_analysis: true
-      Visio.manager.get('plans').fetchSynced(options).done(() =>
+      Visio.manager.get('plans').fetchSynced(options).done () =>
         @map.clearTooltips()
         @map()
-      )
-    )
+        @map.filterTooltips Visio.manager.selectedStrategyPlanIds()
+
     @setup()
 
 
