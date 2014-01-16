@@ -3,6 +3,7 @@ module 'Parameter',
   setup: () ->
     Visio.user = new Visio.Models.User()
     Visio.manager = new Visio.Models.Manager()
+    Visio.manager.year(2012)
     strategy = { id: 17 }
     _.each _.values(Visio.Parameters), (hash) =>
       strategy["#{hash.singular}_ids"] = {}
@@ -33,6 +34,7 @@ module 'Parameter',
         output_id: null
         ol_admin_budget: 100
         strategy_objective_ids: [1]
+        year: 2012
       },
       {
         id: 'blue'
@@ -43,6 +45,7 @@ module 'Parameter',
         problem_objective_id: 1
         ol_admin_budget: 100
         strategy_objective_ids: [1, 2]
+        year: 2012
       },
       {
         id: 'red'
@@ -53,7 +56,8 @@ module 'Parameter',
         problem_objective_id: 1
         ol_admin_budget: 100
         strategy_objective_ids: [2]
-      }
+        year: 2012
+      },
     ])
 
     Visio.manager.get('indicator_data').reset([
@@ -67,6 +71,7 @@ module 'Parameter',
         problem_objective_id: 1
         indicator_id: 1
         strategy_objective_ids: [1]
+        year: 2012
       },
       {
         id: 'red'
@@ -77,6 +82,18 @@ module 'Parameter',
         problem_objective_id: 2
         indicator_id: 1
         strategy_objective_ids: [2]
+        year: 2012
+      },
+      {
+        id: 'purple'
+        plan_id: 3
+        ppg_id: 1
+        goal_id: 2
+        output_id: 1
+        problem_objective_id: 2
+        indicator_id: 1
+        strategy_objective_ids: [1]
+        year: 2014
       }
     ])
 
