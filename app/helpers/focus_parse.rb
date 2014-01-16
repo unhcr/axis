@@ -253,6 +253,7 @@ module FocusParse
                 b.amount = hash[:amount]
                 b.scenario = hash[:scenario]
                 b.budget_type = hash[:budget_type]
+                b.year = plan.year
                 b.save
                 b.touch
               end
