@@ -1187,7 +1187,9 @@ input[type="radio"]:checked + label {
 .menu {
   background-color: $orange;
   height: 100%;
-  border-top: 1px solid $white;
+  -webkit-box-shadow: inset 0px 5px 23px -11px rgba(50, 50, 50, 0.75);
+  -moz-box-shadow: inset 0px 5px 23px -11px rgba(50, 50, 50, 0.75);
+  box-shadow: inset 0px 5px 23px -11px rgba(50, 50, 50, 0.75);
 }
 
 .navigation-activation-icon {
