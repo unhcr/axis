@@ -127,6 +127,8 @@ class Visio.Models.Manager extends Backbone.Model
     db.put(Visio.Stores.SYNC, { synced_timestamp: +d }, id)
 
   getMap: () ->
+    return $.get '/map' unless @get('use_local_db')
+
     db = @get('db')
     assert(@get('mapMD5'))
 
