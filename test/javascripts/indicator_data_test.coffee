@@ -72,6 +72,11 @@ test 'achievement collection', () ->
   strictEqual(.875, result.result)
   strictEqual(Visio.Algorithms.ALGO_RESULTS.high, result.category)
 
+  data = new Visio.Collections.IndicatorDatum()
+  result = data.achievement()
+  ok not result.category
+  ok not result.result
+
 test 'achievement', () ->
   Visio.manager.get('outputs').reset([
     {
