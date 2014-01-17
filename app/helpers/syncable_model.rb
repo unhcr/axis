@@ -1,7 +1,11 @@
 module SyncableModel
+  def init_found_at
+    self.found_at = Time.now
+  end
 
   def self.included(base)
     base.extend(ClassMethods)
+    base.before_create :init_found_at
   end
 
   def found

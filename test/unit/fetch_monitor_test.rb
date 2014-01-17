@@ -36,7 +36,7 @@ class FetchMonitorTest < ActiveSupport::TestCase
     m.reset ids
 
     sleep 1
-    Plan.all.each &:touch
+    Plan.all.each &:found
 
     m.reset ids
 
@@ -47,6 +47,7 @@ class FetchMonitorTest < ActiveSupport::TestCase
 
   test "reset - should mark as deleted" do
     plans = [plans(:one), plans(:two)]
+    plans.map &:found
     ids = plans.map &:id
 
     m = fetch_monitors(:one)
