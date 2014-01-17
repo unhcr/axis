@@ -56,7 +56,7 @@ class Visio.Views.IndicatorSingleYearShowView extends Backbone.View
     # Add recomputed category class
     @$el.find('.pin').addClass "pin-#{category}"
 
-    if situationAnalysis.total == 0
+    if @model.selectedIndicatorData().length == 0
       @$el.addClass 'disabled'
       @shrink()
     else
