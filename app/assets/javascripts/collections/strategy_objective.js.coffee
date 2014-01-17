@@ -1,4 +1,4 @@
-class Visio.Collections.StrategyObjective extends Backbone.Collection
+class Visio.Collections.StrategyObjective extends Visio.Collections.Parameter
 
   model: Visio.Models.StrategyObjective
 

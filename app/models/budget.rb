@@ -1,5 +1,6 @@
 class Budget < ActiveRecord::Base
-  attr_accessible :budget_type, :scenario, :amount, :plan_id, :ppg_id, :goal_id, :output_id, :problem_objective_id
+  attr_accessible :budget_type, :scenario, :amount, :plan_id, :ppg_id, :goal_id, :output_id,
+    :problem_objective_id, :year
 
   belongs_to :plan
   belongs_to :ppg
@@ -42,7 +43,14 @@ class Budget < ActiveRecord::Base
 
   def to_jbuilder(options = {})
     Jbuilder.new do |json|
-      json.extract! self, :id, :budget_type, :scenario, :amount, :plan_id, :ppg_id, :goal_id, :output_id, :problem_objective_id
+      json.extract! self, :id, :budget_type, :scenario, :amount, :plan_id, :ppg_id, :goal_id, :output_id,
+        :problem_objective_id, :year
+
+      strategy_objective_ids = self.goal.strategy_objective_ids &
+        self.problem_objective.strategy_objective_ids &
+        self.output.strategy_objective_ids
+
+      json.strategy_objective_ids strategy_objective_ids
     end
   end
 

@@ -42,4 +42,5 @@ class Visio.Views.IndicatorSingleYearView extends Backbone.View
     @$el.append @views[viewId].render(isRerender).el
 
   getViewId: (parameter) =>
-    parameter.get('operation_id') || parameter.id
+    # id must be string since we're comparing to key in hash which is always string
+    (parameter.get('operation_id') || parameter.id).toString()

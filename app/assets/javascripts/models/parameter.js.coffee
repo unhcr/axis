@@ -3,6 +3,7 @@ class Visio.Models.Parameter extends Visio.Models.Syncable
   selectedData: (type) ->
     return new Visio.Collections[type.className](Visio.manager.get(type.plural).filter((d) =>
       return _.every _.values(Visio.Parameters), (hash) =>
+        return true if hash.plural == Visio.Parameters.STRATEGY_OBJECTIVES.plural
 
         # Skip indicator if it's a budget
         if type.plural == Visio.Syncables.BUDGETS.plural
@@ -29,6 +30,7 @@ class Visio.Models.Parameter extends Visio.Models.Syncable
 
     return new Visio.Collections[type.className](Visio.manager.get(type.plural).filter((d) =>
       return _.every _.values(Visio.Parameters), (hash) =>
+        return true if hash.plural == Visio.Parameters.STRATEGY_OBJECTIVES.plural
         # Skip indicator if it's a budget
         if type.plural == Visio.Syncables.BUDGETS.plural
           return true if hash.plural == Visio.Parameters.INDICATORS.plural

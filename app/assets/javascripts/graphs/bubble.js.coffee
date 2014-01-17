@@ -168,6 +168,7 @@ Visio.Graphs.bubble = (config) ->
       .attr('transform', 'translate(-20,0)')
 
   polygon = (d) ->
+    return "M0 0" unless d
     "M" + d.join("L") + "Z"
 
   render.parameters = (_parameters) ->

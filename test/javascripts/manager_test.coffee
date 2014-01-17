@@ -98,6 +98,8 @@ test('strategies', () ->
 
 test 'selected', () ->
   selected = Visio.manager.get('selected')
+  Visio.manager.get('strategies').reset([{ id: 3, strategy_objective_ids: {1:true} }])
+  Visio.manager.set('strategy_id', 3)
 
   _.each _.values(Visio.Parameters), (hash) ->
     selected[hash.plural] = {}
@@ -114,6 +116,10 @@ test 'selected', () ->
         id: 2
       }
     ])
+
+    if hash == Visio.Parameters.STRATEGY_OBJECTIVES
+      Visio.manager.get(hash.plural).get(1).set('strategy_id', 3)
+
     selected = Visio.manager.selected(hash.plural)
 
     ok(selected instanceof Visio.manager.get(hash.plural).constructor)
