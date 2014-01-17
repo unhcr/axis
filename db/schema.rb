@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140116213504) do
+ActiveRecord::Schema.define(:version => 20140117103424) do
 
   create_table "budgets", :force => true do |t|
     t.string   "budget_type"
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(:version => 20140116213504) do
     t.datetime "updated_at",                              :null => false
     t.boolean  "is_deleted",           :default => false
     t.integer  "year"
+    t.datetime "found_at"
   end
 
   add_index "budgets", ["created_at", "updated_at"], :name => "index_budgets_on_created_at_and_updated_at"
@@ -58,6 +59,7 @@ ActiveRecord::Schema.define(:version => 20140116213504) do
     t.datetime "created_at",                    :null => false
     t.datetime "updated_at",                    :null => false
     t.boolean  "is_deleted", :default => false
+    t.datetime "found_at"
   end
 
   create_table "goals_operations", :id => false, :force => true do |t|
@@ -121,6 +123,7 @@ ActiveRecord::Schema.define(:version => 20140116213504) do
     t.integer  "myr"
     t.boolean  "is_performance"
     t.integer  "year"
+    t.datetime "found_at"
   end
 
   add_index "indicator_data", ["created_at", "updated_at"], :name => "index_indicator_data_on_created_at_and_updated_at"
@@ -135,6 +138,7 @@ ActiveRecord::Schema.define(:version => 20140116213504) do
     t.datetime "created_at",                        :null => false
     t.datetime "updated_at",                        :null => false
     t.boolean  "is_deleted",     :default => false
+    t.datetime "found_at"
   end
 
   create_table "indicators_operations", :id => false, :force => true do |t|
@@ -176,6 +180,7 @@ ActiveRecord::Schema.define(:version => 20140116213504) do
     t.datetime "created_at",                    :null => false
     t.datetime "updated_at",                    :null => false
     t.boolean  "is_deleted", :default => false
+    t.datetime "found_at"
   end
 
   create_table "operations_outputs", :id => false, :force => true do |t|
@@ -215,6 +220,7 @@ ActiveRecord::Schema.define(:version => 20140116213504) do
     t.datetime "created_at",                    :null => false
     t.datetime "updated_at",                    :null => false
     t.boolean  "is_deleted", :default => false
+    t.datetime "found_at"
   end
 
   create_table "outputs_plans", :id => false, :force => true do |t|
@@ -249,6 +255,7 @@ ActiveRecord::Schema.define(:version => 20140116213504) do
     t.datetime "updated_at",                        :null => false
     t.boolean  "is_deleted",     :default => false
     t.integer  "country_id"
+    t.datetime "found_at"
   end
 
   create_table "plans_ppgs", :id => false, :force => true do |t|
@@ -284,6 +291,7 @@ ActiveRecord::Schema.define(:version => 20140116213504) do
     t.string   "population_type"
     t.string   "population_type_id"
     t.string   "operation_name"
+    t.datetime "found_at"
   end
 
   create_table "ppgs_strategies", :id => false, :force => true do |t|
@@ -304,6 +312,7 @@ ActiveRecord::Schema.define(:version => 20140116213504) do
     t.datetime "created_at",                        :null => false
     t.datetime "updated_at",                        :null => false
     t.boolean  "is_deleted",     :default => false
+    t.datetime "found_at"
   end
 
   create_table "problem_objectives_rights_groups", :id => false, :force => true do |t|
@@ -459,6 +468,7 @@ ActiveRecord::Schema.define(:version => 20140116213504) do
     t.datetime "created_at",                    :null => false
     t.datetime "updated_at",                    :null => false
     t.boolean  "is_deleted", :default => false
+    t.datetime "found_at"
   end
 
   create_table "rights_groups_strategies", :id => false, :force => true do |t|

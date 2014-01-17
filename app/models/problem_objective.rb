@@ -1,5 +1,5 @@
 class ProblemObjective < ActiveRecord::Base
-  extend SyncableModel
+  include SyncableModel
   attr_accessible :is_excluded, :objective_name, :problem_name
 
   self.primary_key = :id

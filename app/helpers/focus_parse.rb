@@ -69,7 +69,7 @@ module FocusParse
       p.id = xml_plan.attribute('ID').value
 
     end).save
-    plan.touch
+    plan.found
 
     unless plan.country
       match_plan_to_country(plan)
@@ -89,7 +89,7 @@ module FocusParse
         p.population_type_id = xml_ppg.search('./typeID').text
         p.operation_name = operation.name
       end).save
-      ppg.touch
+      ppg.found
 
       plan.ppgs << ppg unless plan.ppgs.include? ppg
       operation.ppgs << ppg unless operation.ppgs.include? ppg
@@ -103,7 +103,7 @@ module FocusParse
           g.name = xml_goal.search('./name').text
           g.id = xml_goal.attribute('RFID').value
         end).save
-        goal.touch
+        goal.found
 
         ppg.goals << goal unless ppg.goals.include? goal
         operation.goals << goal unless operation.goals.include? goal
@@ -116,7 +116,7 @@ module FocusParse
             rg.name = xml_rights_group.search('./name').text
             rg.id = xml_rights_group.attribute('RFID').value
           end).save
-          rights_group.touch
+          rights_group.found
 
           goal.rights_groups << rights_group unless goal.rights_groups.include? rights_group
           operation.rights_groups << rights_group unless operation.rights_groups.include? rights_group
@@ -131,7 +131,7 @@ module FocusParse
               po.is_excluded = to_boolean(xml_problem_objective.search('./isExcluded').text)
               po.id = xml_problem_objective.attribute('RFID').value
             end).save
-            problem_objective.touch
+            problem_objective.found
 
             unless rights_group.problem_objectives.include? problem_objective
               rights_group.problem_objectives << problem_objective
@@ -156,7 +156,7 @@ module FocusParse
                 o.priority = xml_output.search('./priority').text
                 o.id = xml_output.attribute('RFID').value
               end).save
-              output.touch
+              output.found
 
               problem_objective.outputs << output unless problem_objective.outputs.include? output
               operation.outputs << output unless operation.outputs.include? output
@@ -169,7 +169,7 @@ module FocusParse
                   i.is_gsp = to_boolean(xml_performance_indicator.search('isGSP').text)
                   i.id = xml_performance_indicator.attribute('RFID').value
                 end).save
-                indicator.touch
+                indicator.found
 
                 output.indicators << indicator unless output.indicators.include? indicator
                 operation.indicators << indicator unless operation.indicators.include? indicator
@@ -204,7 +204,7 @@ module FocusParse
                   d.is_performance = true
                   d.year = plan.year
                 end).save
-                datum.touch
+                datum.found
               end
 
               budget_hash_list = []
@@ -255,7 +255,7 @@ module FocusParse
                 b.budget_type = hash[:budget_type]
                 b.year = plan.year
                 b.save
-                b.touch
+                b.found
               end
               output.save
               problem_objective.save
@@ -275,7 +275,7 @@ module FocusParse
                 i.is_gsp = to_boolean(xml_impact_indicator.search('isGSP').text)
                 i.id = xml_impact_indicator.attribute('RFID').value
               end).save
-              indicator.touch
+              indicator.found
 
               problem_objective.indicators << indicator unless problem_objective.indicators.include? indicator
               operation.indicators << indicator unless operation.indicators.include? indicator
@@ -311,7 +311,7 @@ module FocusParse
                 d.is_performance = false
                 d.year = plan.year
               end).save
-              datum.touch
+              datum.found
 
             end
           end

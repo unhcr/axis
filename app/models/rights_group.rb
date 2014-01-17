@@ -1,5 +1,5 @@
 class RightsGroup < ActiveRecord::Base
-  extend SyncableModel
+  include SyncableModel
   attr_accessible :name
 
   self.primary_key = :id

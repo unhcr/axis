@@ -1,4 +1,6 @@
 class Budget < ActiveRecord::Base
+  include SyncableModel
+
   attr_accessible :budget_type, :scenario, :amount, :plan_id, :ppg_id, :goal_id, :output_id,
     :problem_objective_id, :year
 
@@ -8,7 +10,7 @@ class Budget < ActiveRecord::Base
   belongs_to :output
   belongs_to :problem_objective
 
-  def self.synced(ids = {}, synced_date = nil, limit = nil, where = {})
+  def self.synced_models(ids = {}, synced_date = nil, limit = nil, where = {})
 
     synced_budgets = {}
 

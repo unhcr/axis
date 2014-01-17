@@ -29,14 +29,14 @@ class FetchMonitor < ActiveRecord::Base
     parameters = [Plan, Ppg, Goal, RightsGroup, ProblemObjective, Output, Indicator, IndicatorDatum, Budget]
 
     parameters.each do |parameter|
-      to_delete = parameter.where('updated_at < ?', self.starttime).all
-      to_undelete = parameter.where('updated_at >= ?', self.starttime).all
+      to_delete = parameter.where('found_at < ?', self.starttime).all
+      to_undelete = parameter.where('found_at >= ?', self.starttime).all
 
       to_delete.each do |p|
-        p.update_attribute(:is_deleted, true)
+        p.update_column(:is_deleted, true)
       end
       to_undelete.each do |p|
-        p.update_attribute(:is_deleted, false)
+        p.update_column(:is_deleted, false)
       end
     end
   end

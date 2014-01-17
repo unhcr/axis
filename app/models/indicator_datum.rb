@@ -1,4 +1,6 @@
 class IndicatorDatum < ActiveRecord::Base
+  include SyncableModel
+
   attr_accessible :baseline, :comp_target, :reversal, :standard, :stored_baseline, :threshold_green, :threshold_red, :yer, :myr, :is_performance, :year, :id
 
   self.primary_key = :id
@@ -27,7 +29,7 @@ class IndicatorDatum < ActiveRecord::Base
   OK_THRESHOLD = 0.33
 
 
-  def self.synced(ids = {}, synced_date = nil, limit = nil, where = {})
+  def self.synced_models(ids = {}, synced_date = nil, limit = nil, where = {})
 
     synced_data = {}
 

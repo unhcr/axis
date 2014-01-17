@@ -35,7 +35,7 @@ class Strategy < ActiveRecord::Base
 
     ids[:indicator_ids] = self.indicator_ids if resource == IndicatorDatum
 
-    resource.synced(ids, synced_date, limit, where)
+    resource.synced_models(ids, synced_date, limit, where)
   end
 
   def to_jbuilder(options = {})

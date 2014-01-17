@@ -66,6 +66,8 @@ class FocusParseTest < ActiveSupport::TestCase
     file = File.read(TESTFILE_PATH + TESTFILE_NAME)
     parse_plan(file)
 
+    timestamp = Time.now
+
     updated_file = File.read(TESTFILE_PATH + UPDATED_TESTFILE_NAME)
     parse_plan(updated_file)
 
@@ -79,6 +81,28 @@ class FocusParseTest < ActiveSupport::TestCase
     assert_equal COUNTS[:operations], Operation.count, "Operation count"
     assert_equal COUNTS[:budgets], Budget.count, "Budget count"
 
+    [Goal, RightsGroup, ProblemObjective, Indicator].each do |resource|
+      models = resource.synced_models(timestamp)
+      assert_equal 1, models[:updated].count, "#{resource} updated wrong number of resources"
+    end
+    [Plan, Output].each do |resource|
+      models = resource.synced_models(timestamp)
+      assert_equal 0, models[:updated].count, "#{resource} updated wrong number of resources"
+    end
+    ids = {}
+    [Plan, Ppg, Goal, ProblemObjective, Output, Indicator].each do |resource|
+      ids["#{resource.table_name.singularize}_ids".to_sym] = resource.all.map(&:id)
+    end
+    [Budget].each do |resource|
+      models = resource.synced_models(ids, timestamp)
+      assert_equal 0, models[:updated].count, "#{resource} updated wrong number of resources"
+    end
+    [IndicatorDatum].each do |resource|
+      models = resource.synced_models(ids, timestamp)
+      assert_equal 1, models[:updated].count, "#{resource} updated wrong number of resources"
+    end
+
+
     doc = Nokogiri::XML(file) do |config|
       config.noblanks.strict
     end
@@ -90,7 +114,6 @@ class FocusParseTest < ActiveSupport::TestCase
       :element_order => false,
       :normalize_whitespace => true })
 
-    assert_equal 2014, Plan.first.year
     assert Goal.where(:name => 'Voluntary return Changed').first
     assert RightsGroup.where(:name => 'Basic Needs and Essential Services Changed').first
     assert ProblemObjective.where(:problem_name => 'Self reliance and livelihoods insufficient for protection and solutions Changed').first

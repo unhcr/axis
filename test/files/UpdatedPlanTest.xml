@@ -2,7 +2,7 @@
 <Plan ID="ede7a713-ca3d-484a-8401-845968ab6efc">
   <operation>Congo</operation>
   <operationID>7ST</operationID>
-  <year>2014</year>
+  <year>2012</year>
   <name>Operations Plan</name>
   <ppgs>
     <PPG ID="5ad88721-d4bc-412c-91bf-d668edd41e55" POPGRPID="LQJW">
@@ -62,7 +62,7 @@
                           <name># of PoC receiving production kits or inputs for agriculture/livestock/fisheries activities Changed</name>
                           <standard>0</standard>
                           <reversal>false</reversal>
-                          <compTarget>150</compTarget>
+                          <compTarget>200</compTarget>
                           <midYearValue>0</midYearValue>
                           <yearEndValue>0</yearEndValue>
                           <storedBaseline>0</storedBaseline>
