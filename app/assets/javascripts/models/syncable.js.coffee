@@ -13,16 +13,6 @@ class Visio.Models.Syncable extends Backbone.Model
         json[attr] = json[attr].toJSON()
     json
 
-  setSynced: () ->
-    db = Visio.manager.get('db')
-    db.put({
-      name: @store()
-      keyPath: @keyPath }, @toJSON())
-
-  getSynced: () ->
-    db = Visio.manager.get('db')
-    db.get(@store(), @id)
-
   toString: () ->
     return @get('name')
 

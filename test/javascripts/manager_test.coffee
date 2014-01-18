@@ -7,7 +7,7 @@ module 'Manager',
   teardown: () ->
     Visio.manager.get('db').clear()
 
-asyncTest('getLastSync', () ->
+asyncTest 'getLastSync', () ->
   id = 'ben'
   Visio.manager.setSyncDate(id).done((key) ->
     return Visio.manager.getSyncDate(id)
@@ -15,8 +15,6 @@ asyncTest('getLastSync', () ->
     ok(record.synced_timestamp, 'Should have a sync date')
     start()
   )
-
-)
 
 asyncTest('setLastSync', () ->
   s = new Date()
@@ -42,7 +40,7 @@ asyncTest('setSyncDate with different ids', () ->
 
 )
 
-asyncTest('getMap', () ->
+asyncTest 'getMap', ->
   Visio.manager.set 'mapMD5', 'abc123'
 
   sinon.stub $, 'get', (url, options) ->
@@ -62,7 +60,29 @@ asyncTest('getMap', () ->
     $.get.restore()
     start()
   )
-)
+
+asyncTest 'getMap - no local storage', ->
+  Visio.manager.set 'use_local_db', false
+
+  sinon.stub $, 'get', (url, options) ->
+    if url == '/map'
+      return $.Deferred().resolve({ object: 'my map object' }).promise()
+
+  Visio.manager.getMap().done((map) ->
+    ok $.get.calledOnce, 'Should have been called once at this point'
+    ok(map, 'Should have map')
+    strictEqual map.object, 'my map object'
+  ).done( ->
+    Visio.manager.getMap()
+  ).done((map) ->
+    ok $.get.calledTwice, 'Should have been called twice at this point'
+    ok map, 'Should have map'
+    strictEqual map.object, 'my map object'
+    $.get.restore()
+    start()
+  )
+
+
 
 test('strategies', () ->
   Visio.manager.get('strategies').reset([

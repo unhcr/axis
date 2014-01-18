@@ -94,4 +94,30 @@ class PlansControllerTest < ActionController::TestCase
     assert_response :success
     assert_equal 1, plans.count
   end
+
+  test 'index should get plans with situation analysis' do
+
+    p = Plan.where(:year => 2012).first
+    p.indicators << indicators(:impact)
+
+    datum = indicator_data(:one)
+
+    p.indicator_data << datum
+    p.indicators[0].indicator_data << datum
+
+    p.indicators[0].save
+    p.save
+
+    get :index, { :where => { :year => 2012 }, :options => { :include => { :situation_analysis => true } } }
+
+
+    plans = JSON.parse(response.body)
+
+    assert_response :success
+    assert_equal 1, plans.count
+
+    plan = plans[0]
+
+    assert_equal IndicatorDatum::ALGO_RESULTS[:ok], plan["situation_analysis"]["category"]
+  end
 end

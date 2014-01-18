@@ -41,6 +41,8 @@ class Visio.Collections.Syncable extends Backbone.Collection
 
     url ||= "#{@url}/synced"
 
+    return @fetch(data: options) unless Visio.manager.get 'use_local_db'
+
     timestampId = "#{url}#{JSON.stringify(options)}".hashCode()
 
     $.when(Visio.manager.getSyncDate(timestampId)).then((record) =>
