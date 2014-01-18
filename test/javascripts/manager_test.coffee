@@ -7,7 +7,7 @@ module 'Manager',
   teardown: () ->
     Visio.manager.get('db').clear()
 
-asyncTest('getLastSync', () ->
+asyncTest 'getLastSync', () ->
   id = 'ben'
   Visio.manager.setSyncDate(id).done((key) ->
     return Visio.manager.getSyncDate(id)
@@ -15,8 +15,6 @@ asyncTest('getLastSync', () ->
     ok(record.synced_timestamp, 'Should have a sync date')
     start()
   )
-
-)
 
 asyncTest('setLastSync', () ->
   s = new Date()
