@@ -9,11 +9,11 @@ module 'Syncable',
     Visio.manager.get('db').clear()
 
 asyncTest 'fetchSynced', ->
-  expect @syncables.length * 2
+  expect @syncables.length * 3
 
   sinon.stub $, 'get', (url, options) ->
     if options.synced_timestamp
-      return { new: [], updated: [{ id: 20, attr: 'dummy' }], deleted: [] }
+      return { new: [], updated: [{ id: 20, attr: 'dummy' }], deleted: [{ id: 'abc-efg' }] }
     else
       return { new: [{ id: 20 }, { id: 'abc-efg' }], updated: [], deleted: [] }
 
@@ -27,6 +27,7 @@ asyncTest 'fetchSynced', ->
 
       return collection.fetchSynced()
     ).done =>
+      strictEqual collection.models.length, 1, "#{syncable.human} should have 1 models"
       strictEqual collection.get(20).get('attr'), 'dummy', "#{syncable.human} should have updated collection"
       count += 1
       if count == @syncables.length
