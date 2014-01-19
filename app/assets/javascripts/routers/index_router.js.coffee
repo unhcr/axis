@@ -28,7 +28,6 @@ class Visio.Routers.IndexRouter extends Visio.Routers.GlobalRouter
 
     @setup()
 
-
   routes:
     'search': 'search'
     'menu': 'menu'
