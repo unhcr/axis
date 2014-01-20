@@ -23,6 +23,17 @@ class Visio.Models.Strategy extends Backbone.Model
       type: 'Checkboxes'
       options: []
 
+  defaults:
+    'name': 'Generic Strategy'
+    'description': 'Saving lives everyday'
+    'plan_ids': {}
+    'ppg_ids': {}
+    'output_ids': {}
+    'goal_ids': {}
+    'indicator_ids': {}
+    'problem_objective_ids': {}
+    'strategy_objective_ids': {}
+
   include: (type, id) ->
 
     @get("#{type}_ids")[id]?

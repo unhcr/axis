@@ -34,6 +34,10 @@ module 'ISY',
     @view = new Visio.Views.IndicatorSingleYearView()
 
 
+  teardown: ->
+    Visio.manager.get('db').clear()
+
+
 test 'getViewId', ->
   p = Visio.manager.plan 'ben'
 
@@ -66,3 +70,28 @@ test 'render', ->
   @view.render()
   strictEqual _.keys(@view.views).length, 2
   ok Visio.manager.get Visio.Parameters.PLANS.plural
+
+test 'sort', ->
+  sinon.stub Visio.Models.Plan.prototype, 'selectedIndicatorData', ->
+    if @id == 'ben'
+      return new Visio.Collections.IndicatorDatum([{ id: 1 }, { id: 2 }, { id: 3 }])
+    else if @id == 'g'
+      return new Visio.Collections.IndicatorDatum([{ id: 4 }, { id: 5 }])
+    else
+      return new Visio.Collections.IndicatorDatum([{ id: 6 }])
+
+  sinon.stub Visio.Collections.IndicatorDatum.prototype, 'situationAnalysis', ->
+    analysis = { result: 1, total: 1 }
+    if @length == 3
+      analysis.result = 2
+    else if @length == 2
+      analysis.total = 2
+    return analysis
+
+  models = Visio.manager.get('plans').models.sort(@view.sort)
+
+  strictEqual models[0].id, 'ben', 'Highest result should be first'
+  strictEqual models[1].id, 'g', 'Next should be broken by total'
+
+  Visio.Models.Plan.prototype.selectedIndicatorData.restore()
+  Visio.Collections.IndicatorDatum.prototype.situationAnalysis.restore()

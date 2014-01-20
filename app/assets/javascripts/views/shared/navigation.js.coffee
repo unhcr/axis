@@ -13,6 +13,8 @@ class Visio.Views.NavigationView extends Backbone.View
     parameters = []
 
     _.each _.values(Visio.Parameters), (hash) ->
+      return if hash == Visio.Parameters.STRATEGY_OBJECTIVES
+
       if hash == Visio.Parameters.PLANS
         data = new Visio.Collections.Plan(
           Visio.manager.strategy()[hash.plural]().where({ year: Visio.manager.year() }))

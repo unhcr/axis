@@ -46,48 +46,6 @@ asyncTest('setSyncedPlans', () ->
 
 )
 
-asyncTest('fetchSyncedPlans', () ->
-
-  p = new Visio.Collections.Plan()
-
-  options =
-    options:
-      include:
-        counts: true
-
-  sinon.stub $, 'get', (url, options) ->
-    if options.synced_timestamp
-      return {
-        new: []
-        updated: []
-        deleted: []
-      }
-    else
-      {
-        new: [{ id: 20 }, { id: 'abc-efg' }]
-        updated: []
-        deleted: []
-      }
-
-
-
-  p.fetchSynced(options).done(() ->
-    strictEqual(p.models.length, 2, 'Should have 2 models')
-    p.each((model) ->
-      ok(model.get('id'), 'Each model should have id')
-    )
-    ok not $.get.calledTwice, 'Should not have called twice'
-    ok $.get.calledOnce, 'Should have called once'
-    return p.fetchSynced(options)
-  ).done(() ->
-    ok $.get.calledTwice, 'Should have called twice'
-    ok $.get.args[1][1].synced_timestamp, 'Should fetch timestamp from local db'
-    $.get.restore()
-    start()
-  )
-
-)
-
 asyncTest('fetchSyncedPlans for different years', () ->
   p = new Visio.Collections.Plan()
 
@@ -266,7 +224,6 @@ test 'getPlansForDifferentyear', () ->
   oldPlansCollection = new Visio.Collections.Plan(oldPlans)
 
   newPlansCollection = oldPlansCollection.getPlansForDifferentYear(2013)
-  console.log newPlansCollection
   strictEqual newPlansCollection.length, 2
   newPlansCollection.each (plan) ->
     strictEqual plan.get('year'), 2013
