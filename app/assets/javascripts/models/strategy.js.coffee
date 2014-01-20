@@ -26,6 +26,13 @@ class Visio.Models.Strategy extends Backbone.Model
   defaults:
     'name': 'Generic Strategy'
     'description': 'Saving lives everyday'
+    'plan_ids': {}
+    'ppg_ids': {}
+    'output_ids': {}
+    'goal_ids': {}
+    'indicator_ids': {}
+    'problem_objective_ids': {}
+    'strategy_objective_ids': {}
 
   include: (type, id) ->
 
