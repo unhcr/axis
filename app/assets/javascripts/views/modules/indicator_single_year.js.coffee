@@ -14,8 +14,8 @@ class Visio.Views.IndicatorSingleYearView extends Backbone.View
       @$el.html @template()
 
 
-    parameters = Visio.manager.selected(Visio.manager.get('aggregation_type')).sortBy (p) ->
-      -p.selectedSituationAnalysis().result || 0
+    parameters = Visio.manager.selected(Visio.manager.get('aggregation_type')).models.sort @sort
+
 
     @addAll(parameters)
     @
@@ -44,3 +44,17 @@ class Visio.Views.IndicatorSingleYearView extends Backbone.View
   getViewId: (parameter) =>
     # id must be string since we're comparing to key in hash which is always string
     (parameter.get('operation_id') || parameter.id).toString()
+
+  sort: (parameterA, parameterB) ->
+    dataA = parameterA.selectedIndicatorData()
+    dataB = parameterB.selectedIndicatorData()
+
+    analysisA = dataA.situationAnalysis()
+    analysisB = dataB.situationAnalysis()
+
+    if analysisA.result != analysisB.result
+      return analysisB.result - analysisA.result
+    else if analysisA.total != analysisB.total
+      return analysisB.total - analysisA.total
+
+    dataB.length - dataA.length
