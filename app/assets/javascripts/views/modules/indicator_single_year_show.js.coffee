@@ -107,7 +107,7 @@ class Visio.Views.IndicatorSingleYearShowView extends Backbone.View
       @$el.find(".js-#{type}-container").text Visio.manager.get("#{type}s").get(d.get("#{type}_id"))
 
   onTransitionEnd: (e) ->
-    if @isOpen()
+    if @isOpen() and e.originalEvent.propertyName == 'max-height'
       $.scrollTo @$el,
         duration: 100
         offset:
