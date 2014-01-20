@@ -224,7 +224,6 @@ test 'getPlansForDifferentyear', () ->
   oldPlansCollection = new Visio.Collections.Plan(oldPlans)
 
   newPlansCollection = oldPlansCollection.getPlansForDifferentYear(2013)
-  console.log newPlansCollection
   strictEqual newPlansCollection.length, 2
   newPlansCollection.each (plan) ->
     strictEqual plan.get('year'), 2013
