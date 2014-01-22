@@ -26,10 +26,3 @@ test:
   database: projects_test
   host: localhost
   username: root
-
-production:
-  adapter: mysql2
-  database: projects_production
-  username: deploy
-  pool: 5
-  timeout: 5000
