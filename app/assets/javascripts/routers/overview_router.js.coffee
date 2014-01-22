@@ -90,31 +90,39 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
     'menu' : 'menu'
     'search': 'search'
     'absy': 'absy'
+    'absy/:year': 'absy'
     'isy': 'isy'
+    'isy/:year': 'isy'
     '*default': 'index'
 
-  isy: (skipScrollTo) ->
+  isy: (year) ->
+    Visio.manager.year year, { silent: true } if year?
+
     @setup().done(() =>
       @indicatorSingleYearView = new Visio.Views.IndicatorSingleYearView()
       @module.html @indicatorSingleYearView.render().el
       @moduleView = @indicatorSingleYearView
-      @scrollToModule() unless skipScrollTo
+
+      if $('header').height() < $(document).scrollTop()
+        $('.toolbar').addClass('fixed-top')
     ).fail (e) =>
       console.log e
 
 
-  absy: (skipScrollTo) ->
+  absy: (year) ->
+    Visio.manager.year year, { silent: true } if year?
+
     @setup().done(() =>
       @achievementBudgetSingleYearView = new Visio.Views.AchievementBudgetSingleYearView()
       @module.html @achievementBudgetSingleYearView.el
       @moduleView = @achievementBudgetSingleYearView
       @moduleView.render()
-      @scrollToModule() unless skipScrollTo
+
+      if $('header').height() < $(document).scrollTop()
+        $('.toolbar').addClass('fixed-top')
     ).fail (e) =>
       console.log e
 
   index: () =>
-    @absy(true)
+    @absy()
 
-  scrollToModule: () =>
-    $('.toolbar').addClass('fixed-top')
