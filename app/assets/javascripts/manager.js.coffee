@@ -72,9 +72,9 @@ class Visio.Models.Manager extends Backbone.Model
     @resetSelectedDefaults()
     Visio.manager.trigger('change:selected')
 
-  year: (year) ->
+  year: (year, options) ->
     return @get('date').getFullYear() if arguments.length == 0
-    @set('date', new Date(year, 1))
+    @set { date: new Date(year, 1) }, options || {}
 
   strategy: () ->
     return unless @get('strategies') && @get('strategy_id')

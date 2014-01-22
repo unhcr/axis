@@ -23,7 +23,7 @@
     <div class="col-md-2 zero-padding">
       <select class="dropdown">
         <% _.each(Visio.manager.get('yearList'), function(year) { %>
-        <option  <% if (year === Visio.manager.get('year')) { %>selected<% } %> value="year<%=
+        <option  <% if (year === Visio.manager.year()) { %>selected<% } %> value="year<%=
         Visio.Constants.SEPARATOR + year %>"><%= year %></option>
         <% }) %>
       </select>
