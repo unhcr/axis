@@ -1,16 +1,17 @@
 require 'bundler/capistrano'
 require "capistrano-rbenv"
+load 'deploy/assets'
 set :rbenv_ruby_version, "1.9.3-p484"
 set :rbenv_repository, "https://github.com/sstephenson/rbenv.git"
 
 set :application, "visio"
 
 
-load 'deploy/assets'
 
 # Deploy from your local Git repo by cloning and uploading a tarball
-set :scm, :git
-set :repository,  "git@github.com:unhcr/visio.git"
+set :scm, :none
+set :repository, "."
+set :local_repository, "."
 require '/Users/benrudolph/Dropbox/credientials/capcreds-unhcr.rb'
 set :deploy_via, :copy
 set :branch, "master"
@@ -47,8 +48,15 @@ end
 task :query_interactive do
   run "[[ $- == *i* ]] && echo 'Interactive' || echo 'Not interactive'"
 end
+
 task :query_login do
   run "shopt -q login_shell && echo 'Login shell' || echo 'Not login shell'"
-  run "wget www.google.com"
 end
+
+namespace :db do
+  task :config, :except => { :no_release => true }, :role => :app do
+    run "cp -f ~/database.yml #{release_path}/config/database.yml"
+  end
+end
+after "deploy:finalize_update", "db:config"
 
