@@ -3,14 +3,18 @@ module MsrpFetch
   ANT_BUILD_ERBNAME = 'build.xml.erb'
   ANT_BUILD_NAME = 'build.xml'
   FINAL_FILENAME = 'generated_expenses.csv'
-  FIELDS = %W[HCR_BUDGET_REF	HCR_ABC	HCR_PRODUCT	HCR_PROGRAM_CODE	HCR_CLASS_FLD	BUDGET_TYPE	PLAN_TYPE	BUDGETCOMPONENT	ACCOUNT	SITES_ID	COSTCENTRE	CURRENCY_CD	PARTNERID	ACTORID	POPULATIONGROUPID	POPULATIONGROUP	RFOUTPUTID	RFGOALID	GOAL	PLANNINGYEAR	OPERATIONID	OPERATION	BDGCATEGORYID	PLANID	PRJPOPULATIONGROUPID	GOALID	RIGHTSGROUPID	OBJECTIVEID	OUTPUTID	EXPENSES_USD	EXPENSES_LC]
+  FIELDS = %W[planid planningyear goalid rightsgroupid objectiveid outputid populationgroupid budget_type budgetcomponent]
+  GROUP_BY = %W[planid planningyear goalid rightsgroupid objectiveid outputid populationgroupid budget_type budgetcomponent]
 
   @@ANT_BUILD_FILEPATH = ANT_TEMPLATE_FILEPATH
+
+  include MsrpParse
 
   def generate_build(limit = nil)
     config = {
       :limit => limit,
-      :fields => FIELDS
+      :fields => FIELDS,
+      :group_by => GROUP_BY
     }
     build = AntBuild.new(config)
     build_erb = ERB.new(File.read("#{ANT_TEMPLATE_FILEPATH}/#{ANT_BUILD_ERBNAME}"))
@@ -33,6 +37,21 @@ module MsrpFetch
       end
       final.close
     end
+
+    return "#{@@ANT_BUILD_FILEPATH}/#{FINAL_FILENAME}"
+  end
+
+  def fetch(limit = nil)
+    p '[0/3] Generating build'
+    generate_build(limit)
+
+    p '[1/3] Building'
+    filename = build
+
+    p '[2/3] Parsing'
+
+    parse(filename)
+    p '[3/3] Complete'
   end
 
   def set_build_dir(dir)
