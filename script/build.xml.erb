@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir="." name="AXIS" >
+  <target name="<%= @config[:name] %>">
+    <sql
+      driver="oracle.jdbc.OracleDriver"
+      url="<%= @config[:db_url] %>"
+      userid="FOCUS_READER"
+      password="Inquirer9"
+      print="true"
+      showheaders="false"
+      showtrailers="false"
+      output="<%= @config[:output] %>">
+      <classpath>
+        <pathelement location="<%= @config[:location] %>"/>
+      </classpath>
+      <![CDATA[
+      SELECT * FROM
+        ( SELECT <%= @config[:fields].join(',') %> FROM FOCUS_BI.BI_EXPENSES WHERE plan_type = 'P-8' )
+        <% unless @config[:limit].nil? %>
+        WHERE rownum <= <%= @config[:limit] %>
+        <% end %>
+      ]]>
+    </sql>
+  </target>
+</project>
+
