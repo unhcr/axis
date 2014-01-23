@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140123111843) do
+ActiveRecord::Schema.define(:version => 20140123165250) do
 
   create_table "budgets", :force => true do |t|
     t.string   "budget_type"
@@ -47,6 +47,27 @@ ActiveRecord::Schema.define(:version => 20140123111843) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  create_table "expenditures", :force => true do |t|
+    t.string   "budget_type"
+    t.string   "scenario"
+    t.integer  "amount",               :default => 0
+    t.string   "plan_id"
+    t.string   "ppg_id"
+    t.string   "goal_id"
+    t.string   "output_id"
+    t.string   "problem_objective_id"
+    t.integer  "year"
+    t.boolean  "is_deleted",           :default => false
+    t.datetime "found_at"
+    t.datetime "created_at",                              :null => false
+    t.datetime "updated_at",                              :null => false
+  end
+
+  add_index "expenditures", ["created_at", "updated_at"], :name => "index_expenditures_on_created_at_and_updated_at"
+  add_index "expenditures", ["created_at"], :name => "index_expenditures_on_created_at"
+  add_index "expenditures", ["is_deleted"], :name => "index_expenditures_on_is_deleted"
+  add_index "expenditures", ["updated_at"], :name => "index_expenditures_on_updated_at"
 
   create_table "fetch_monitors", :force => true do |t|
     t.datetime "starttime"
