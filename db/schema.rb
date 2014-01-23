@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140117103424) do
+ActiveRecord::Schema.define(:version => 20140123111843) do
 
   create_table "budgets", :force => true do |t|
     t.string   "budget_type"
@@ -32,7 +32,9 @@ ActiveRecord::Schema.define(:version => 20140117103424) do
   add_index "budgets", ["created_at", "updated_at"], :name => "index_budgets_on_created_at_and_updated_at"
   add_index "budgets", ["created_at"], :name => "index_budgets_on_created_at"
   add_index "budgets", ["is_deleted"], :name => "index_budgets_on_is_deleted"
+  add_index "budgets", ["output_id"], :name => "index_budgets_on_output_id"
   add_index "budgets", ["plan_id", "ppg_id", "goal_id"], :name => "index_budgets_on_plan_id_and_ppg_id_and_goal_id"
+  add_index "budgets", ["problem_objective_id"], :name => "index_budgets_on_problem_objective_id"
 
   create_table "countries", :force => true do |t|
     t.text     "latlng"
@@ -128,6 +130,7 @@ ActiveRecord::Schema.define(:version => 20140117103424) do
 
   add_index "indicator_data", ["created_at", "updated_at"], :name => "index_indicator_data_on_created_at_and_updated_at"
   add_index "indicator_data", ["created_at"], :name => "index_indicator_data_on_created_at"
+  add_index "indicator_data", ["indicator_id"], :name => "index_indicator_data_on_indicator_id"
   add_index "indicator_data", ["is_deleted"], :name => "index_indicator_data_on_is_deleted"
 
   create_table "indicators", :id => false, :force => true do |t|
