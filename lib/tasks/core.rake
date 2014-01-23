@@ -14,7 +14,22 @@ task :clear => :environment do
   Budget.delete_all
 end
 
-task :fetch => :environment do
+task :msrp_fetch => :environment do
+  n = ENV['n']
+  n = n.to_i if n.nil?
+
+  p 'Fetching MSRP data'
+
+  include MsrpFetch
+
+  fetch n
+
+  p 'Finished fetching'
+
+
+end
+
+task :focus_fetch => :environment do
 
   n = ENV['n']
 
