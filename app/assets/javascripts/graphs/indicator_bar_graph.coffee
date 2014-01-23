@@ -28,6 +28,7 @@ Visio.Graphs.indicatorBarGraph = (config) ->
 
   y = d3.scale.linear()
     .range([height, 0])
+    .clamp(true)
 
   progress =
     start: Visio.Algorithms.REPORTED_VALUES.baseline
