@@ -15,7 +15,10 @@
       </classpath>
       <![CDATA[
       SELECT * FROM
-        ( SELECT <%= @config[:fields].join(',') %> FROM FOCUS_BI.BI_EXPENSES WHERE plan_type = 'P-8' )
+          ( SELECT <%= @config[:fields].join(',') %>, sum(expenses_usd) as amount
+          FROM FOCUS_BI.BI_EXPENSES
+          WHERE plan_type = 'P-8'
+          GROUP BY <%= @config[:group_by].join(',') %>)
         <% unless @config[:limit].nil? %>
         WHERE rownum <= <%= @config[:limit] %>
         <% end %>
