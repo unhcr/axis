@@ -18,3 +18,5 @@
 /config/application.yml
 
 coverage
+/script/generated_*
+/script/build.xml

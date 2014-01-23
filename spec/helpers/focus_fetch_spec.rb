@@ -45,7 +45,7 @@ describe FocusFetch do
   end
 
   after(:all) do
-    FileUtils.rm_rf("#{TESTDATA_PATH}/.", secure: true)
+    FileUtils.rm_rf("#{TESTDATA_PATH}/.", :secure => true)
     FileUtils.touch("#{TESTDATA_PATH}/.gitignore")
   end
 
