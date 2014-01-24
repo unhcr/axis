@@ -33,6 +33,7 @@ Visio::Application.routes.draw do
   syncable_resources :indicators
   syncable_resources :indicator_data
   syncable_resources :budgets
+  syncable_resources :expenditures
   resources :strategy_objectives
   resources :strategies
   resources :users
