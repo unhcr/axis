@@ -13,6 +13,9 @@ module SyncableModel
   end
 
   module ClassMethods
+    # To be overloaded for eager joining
+    def loaded; self; end
+
     def models(join_ids, page = nil, where = {})
       models = self.where(where)
       models = models.page(page) unless page.nil?
@@ -24,13 +27,15 @@ module SyncableModel
     def synced_models(synced_date = nil, join_ids = {}, limit = nil, where = {})
       synced_models = {}
 
-      if synced_date
-        synced_models[:new] = self.where('created_at >= ? and is_deleted = false', synced_date).where(where).limit(limit)
+      loaded = self.loaded
 
-        synced_models[:updated] = self.where('created_at < ? and updated_at >= ? and is_deleted = false', synced_date, synced_date).where(where).limit(limit)
-        synced_models[:deleted] = self.where('is_deleted = true and updated_at >= ?', synced_date).where(where).limit(limit)
+      if synced_date
+        synced_models[:new] = loaded.where('created_at >= ? and is_deleted = false', synced_date).where(where).limit(limit)
+
+        synced_models[:updated] = loaded.where('created_at < ? and updated_at >= ? and is_deleted = false', synced_date, synced_date).where(where).limit(limit)
+        synced_models[:deleted] = loaded.where('is_deleted = true and updated_at >= ?', synced_date).where(where).limit(limit)
       else
-        synced_models[:new] = self.where(:is_deleted => false).where(where).limit(limit)
+        synced_models[:new] = loaded.where(:is_deleted => false).where(where).limit(limit)
         synced_models[:updated] = synced_models[:deleted] = self.limit(0)
       end
 

@@ -13,6 +13,7 @@ class IndicatorDatum < ActiveRecord::Base
   belongs_to :plan
   belongs_to :operation
 
+
   ALGO_RESULTS = {
     :success => 'success',
     :ok => 'ok',
@@ -28,6 +29,11 @@ class IndicatorDatum < ActiveRecord::Base
   SUCCESS_THRESHOLD = 0.66
   OK_THRESHOLD = 0.33
 
+  def self.loaded
+    includes({ :goal => :strategy_objectives,
+               :problem_objective => :strategy_objectives,
+               :output => :strategy_objectives})
+  end
 
   def self.synced_models(ids = {}, synced_date = nil, limit = nil, where = {})
 
@@ -39,22 +45,24 @@ class IndicatorDatum < ActiveRecord::Base
       (problem_objective_id IN ('#{(ids[:problem_objective_ids] || []).join("','")}') OR output_id IN ('#{(ids[:output_ids] || []).join("','")}')) AND
       indicator_id IN ('#{(ids[:indicator_ids] || []).join("','")}')"
 
+    indicator_data = IndicatorDatum.loaded
+
     if synced_date
-      synced_data[:new] = IndicatorDatum.where("#{query_string} AND
+      synced_data[:new] = indicator_data.where("#{query_string} AND
         created_at >= :synced_date AND
         is_deleted = false", { :synced_date => synced_date })
           .where(where).limit(limit)
-      synced_data[:updated] = IndicatorDatum.where("#{query_string} AND
+      synced_data[:updated] = indicator_data.where("#{query_string} AND
         created_at < :synced_date AND
         updated_at >= :synced_date AND
         is_deleted = false", { :synced_date => synced_date })
           .where(where).limit(limit)
-      synced_data[:deleted] = IndicatorDatum.where("#{query_string} AND
+      synced_data[:deleted] = indicator_data.where("#{query_string} AND
         updated_at >= :synced_date AND
         is_deleted = true", { :synced_date => synced_date })
           .where(where).limit(limit)
     else
-      synced_data[:new] = IndicatorDatum.where("#{query_string} AND is_deleted = false")
+      synced_data[:new] = indicator_data.where("#{query_string} AND is_deleted = false")
         .where(where).limit(limit)
       synced_data[:updated] = synced_data[:deleted] = IndicatorDatum.limit(0)
     end

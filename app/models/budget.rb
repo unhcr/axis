@@ -10,6 +10,12 @@ class Budget < ActiveRecord::Base
   belongs_to :output
   belongs_to :problem_objective
 
+  def self.loaded
+    includes({ :goal => :strategy_objectives,
+               :problem_objective => :strategy_objectives,
+               :output => :strategy_objectives})
+  end
+
   def self.synced_models(ids = {}, synced_date = nil, limit = nil, where = {})
 
     synced_budgets = {}
@@ -20,22 +26,24 @@ class Budget < ActiveRecord::Base
       goal_id IN ('#{(ids[:goal_ids] || []).join("','")}') AND
       (problem_objective_id IN ('#{(ids[:problem_objective_ids] || []).join("','")}') OR output_id IN ('#{(ids[:output_ids] || []).join("','")}'))"
 
+    budgets = Budget.loaded
+
     if synced_date
-      synced_budgets[:new] = Budget.where("#{query_string} AND
+      synced_budgets[:new] = budgets.where("#{query_string} AND
         created_at >= :synced_date AND
         is_deleted = false", { :synced_date => synced_date })
           .where(where).limit(limit)
-      synced_budgets[:updated] = Budget.where("#{query_string} AND
+      synced_budgets[:updated] = budgets.where("#{query_string} AND
         created_at < :synced_date AND
         updated_at >= :synced_date AND
         is_deleted = false", { :synced_date => synced_date })
           .where(where).limit(limit)
-      synced_budgets[:deleted] = Budget.where("#{query_string} AND
+      synced_budgets[:deleted] = budgets.where("#{query_string} AND
         updated_at >= :synced_date AND
         is_deleted = true", { :synced_date => synced_date })
           .where(where).limit(limit)
     else
-      synced_budgets[:new] = Budget.where("#{query_string} AND is_deleted = false")
+      synced_budgets[:new] = budgets.where("#{query_string} AND is_deleted = false")
         .where(where).limit(limit)
       synced_budgets[:updated] = synced_budgets[:deleted] = Budget.limit(0)
     end
