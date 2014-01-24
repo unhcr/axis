@@ -1,4 +1,4 @@
-module 'Budget',
+module 'Expenditure',
   setup: () ->
     Visio.user = new Visio.Models.User()
     Visio.manager = new Visio.Models.Manager()
@@ -6,9 +6,10 @@ module 'Budget',
   teardown: ->
     Visio.manager.get('db').clear()
 
+
 test 'amount', () ->
 
-  budgets = new Visio.Collections.Budget([
+  expenditures = new Visio.Collections.Expenditure([
     {
       id: 'r'
       amount: 10
@@ -30,13 +31,14 @@ test 'amount', () ->
 
   ])
 
-  total = budgets.amount()
+  total = expenditures.amount()
   strictEqual(total, 60)
 
   Visio.manager.get('scenario_type')[Visio.Scenarios.OL] = false
-  total = budgets.amount()
+  total = expenditures.amount()
   strictEqual(total, 40)
 
   Visio.manager.get('budget_type')[Visio.Budgets.PROJECT] = false
-  total = budgets.amount()
+  total = expenditures.amount()
   strictEqual(total, 10)
+

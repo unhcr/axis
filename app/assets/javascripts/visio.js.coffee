@@ -85,6 +85,11 @@ window.Visio =
       plural: 'budgets'
       className: 'Budget'
       human: 'Budget'
+    EXPENDITURES:
+      singular: 'expenditure'
+      plural: 'expenditures'
+      className: 'Expenditure'
+      human: 'Expenditure'
     OPERATIONS:
       singular: 'operation'
       plural: 'operations'

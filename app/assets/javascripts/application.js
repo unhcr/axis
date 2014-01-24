@@ -20,6 +20,8 @@
 //= require ./models/syncable
 //= require ./collections/parameter
 //= require ./models/parameter
+//= require ./collections/syncables/cost_type
+//= require ./models/syncables/cost_type
 //= require_tree ../templates
 //= require_tree ./views
 //= require_tree ./routers

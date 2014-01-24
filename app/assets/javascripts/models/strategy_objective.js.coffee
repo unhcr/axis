@@ -46,18 +46,17 @@ class Visio.Models.StrategyObjective extends Visio.Models.Parameter
   toString: ->
     @get 'name'
 
-  selectedIndicatorData: ->
-    return new Visio.Collections.IndicatorDatum(Visio.manager.get('indicator_data').filter((d) =>
-      _.include(d.get("#{Visio.Parameters.STRATEGY_OBJECTIVES.singular}_ids"), @id) and
-        d.get('year') == Visio.manager.year()))
 
-  strategyIndicatorData: ->
-    @selectedIndicatorData()
-
-  selectedBudgetData: ->
-    return new Visio.Collections.Budget(Visio.manager.get('budgets').filter((d) =>
+  selectedData: (type) ->
+    return new Visio.Collections[type.className](Visio.manager.get(type.plural).filter((d) =>
       _.include(d.get("#{Visio.Parameters.STRATEGY_OBJECTIVES.singular}_ids"), @id) and
         d.get('year') == Visio.manager.year()))
 
   strategyBudgetData: ->
-    @selectedBudgetData()
+    @selectedData(Visio.Syncables.BUDGETS)
+
+  strategyExpenditureData: ->
+    @selectedData(Visio.Syncables.EXPENDITURES)
+
+  strategyIndicatorData: ->
+    @selectedData(Visio.Syncables.INDICATOR_DATA)

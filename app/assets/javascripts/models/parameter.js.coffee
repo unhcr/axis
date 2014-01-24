@@ -6,7 +6,7 @@ class Visio.Models.Parameter extends Visio.Models.Syncable
         return true if hash.plural == Visio.Parameters.STRATEGY_OBJECTIVES.plural
 
         # Skip indicator if it's a budget
-        if type.plural == Visio.Syncables.BUDGETS.plural
+        if type.plural == Visio.Syncables.BUDGETS.plural or type.plural == Visio.Syncables.EXPENDITURES.plural
           return true if hash.plural == Visio.Parameters.INDICATORS.plural
         id = d.get("#{hash.singular}_id")
 
@@ -25,6 +25,9 @@ class Visio.Models.Parameter extends Visio.Models.Syncable
   selectedBudgetData: () ->
     @selectedData(Visio.Syncables.BUDGETS)
 
+  selectedExpenditureData: () ->
+    @selectedData(Visio.Syncables.EXPENDITURES)
+
   strategyData: (type, strategy) ->
     strategy or= Visio.manager.strategy()
 
@@ -32,7 +35,7 @@ class Visio.Models.Parameter extends Visio.Models.Syncable
       return _.every _.values(Visio.Parameters), (hash) =>
         return true if hash.plural == Visio.Parameters.STRATEGY_OBJECTIVES.plural
         # Skip indicator if it's a budget
-        if type.plural == Visio.Syncables.BUDGETS.plural
+        if type.plural == Visio.Syncables.BUDGETS.plural or type.plural == Visio.Syncables.EXPENDITURES.plural
           return true if hash.plural == Visio.Parameters.INDICATORS.plural
 
         id = d.get("#{hash.singular}_id")
@@ -53,9 +56,16 @@ class Visio.Models.Parameter extends Visio.Models.Syncable
   strategyBudgetData: (strategy) ->
     @strategyData(Visio.Syncables.BUDGETS, strategy)
 
+  strategyExpenditureData: (strategy) ->
+    @strategyData(Visio.Syncables.EXPENDITURES, strategy)
+
+  strategyExpenditure: ->
+    data = @strategyExpenditureData()
+    data.amount()
+
   strategyBudget: () ->
     data = @strategyBudgetData()
-    data.budget()
+    data.amount()
 
   strategySituationAnalysis: () ->
     data = @strategyIndicatorData()
@@ -67,9 +77,13 @@ class Visio.Models.Parameter extends Visio.Models.Syncable
 
   selectedBudget: () ->
     data = @selectedBudgetData()
-    data.budget()
+    data.amount()
 
   selectedSituationAnalysis: () ->
     data = @selectedIndicatorData()
     data.situationAnalysis()
+
+  selectedExpenditure: ->
+    data = @selectedExpenditureData()
+    data.amount()
 

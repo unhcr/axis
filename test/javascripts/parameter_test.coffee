@@ -24,7 +24,7 @@ module 'Parameter',
         models[0].strategy_id = strategy.id
       Visio.manager.get(hash.plural).reset(models)
 
-    Visio.manager.get('budgets').reset([
+    Visio.manager.get('expenditures').reset([
       {
         id: 'green'
         plan_id: 1
@@ -33,7 +33,7 @@ module 'Parameter',
         problem_objective_id: 1
         output_id: null
         ol_admin_budget: 100
-        strategy_objective_ids: [1]
+        strategy_objective_ids: [2]
         year: 2012
       },
       {
@@ -55,7 +55,43 @@ module 'Parameter',
         output_id: 1
         problem_objective_id: 1
         ol_admin_budget: 100
+        strategy_objective_ids: [1]
+        year: 2012
+      },
+    ])
+
+    Visio.manager.get('budgets').reset([
+      {
+        id: 'green'
+        plan_id: 1
+        ppg_id: 1
+        goal_id: 1
+        problem_objective_id: 1
+        output_id: null
+        ol_admin_budget: 100
         strategy_objective_ids: [2]
+        year: 2012
+      },
+      {
+        id: 'blue'
+        plan_id: 1
+        ppg_id: 1
+        goal_id: 1
+        output_id: 1
+        problem_objective_id: 1
+        ol_admin_budget: 100
+        strategy_objective_ids: [1, 2]
+        year: 2012
+      },
+      {
+        id: 'red'
+        plan_id: 2
+        ppg_id: 1
+        goal_id: 1
+        output_id: 1
+        problem_objective_id: 1
+        ol_admin_budget: 100
+        strategy_objective_ids: [1]
         year: 2012
       },
     ])
@@ -97,6 +133,55 @@ module 'Parameter',
       }
     ])
 
+test 'strategyExpenditureData', () ->
+  nParams = _.values(Visio.Parameters).length
+  expect((4 * (nParams- 1) + 3 + nParams ))
+
+  _.each _.values(Visio.Parameters), (hash) ->
+    selected = Visio.manager.strategy().get("#{hash.singular}_ids")
+    selectedArr = _.keys selected
+
+    if hash == Visio.Parameters.STRATEGY_OBJECTIVES
+      console.log hash
+
+    strictEqual(selectedArr.length, 1)
+
+    _.each selectedArr, (id) ->
+      model = Visio.manager.get(hash.plural).get(id)
+      data = model.strategyExpenditureData()
+
+      if hash.plural != Visio.Parameters.OUTPUTS.plural
+        strictEqual(data.length, 2)
+        ok(data instanceof Visio.Collections.Expenditure)
+        ok(data.get('blue'))
+        foundId = if hash == Visio.Parameters.STRATEGY_OBJECTIVES then 'red' else 'green'
+        ok(data.get(foundId))
+      else
+        strictEqual(data.length, 1)
+        ok(data instanceof Visio.Collections.Expenditure)
+        ok(data.get('blue'))
+
+
+
+test 'selectedExpenditureData', () ->
+
+  _.each _.values(Visio.Parameters), (hash) ->
+    selected = Visio.manager.selected(hash.plural)
+    strictEqual selected.length, 1, "There should be 1 #{hash.human} selected"
+
+    selected.each (d) ->
+      data = d.selectedExpenditureData()
+
+      if hash.plural == Visio.Parameters.OUTPUTS.plural
+        strictEqual data.length, 1, 'There should 1 be output'
+      else
+        strictEqual data.length, 2, "There should 2 be #{hash.human}"
+        foundId = if hash == Visio.Parameters.STRATEGY_OBJECTIVES then 'red' else 'green'
+        ok(data.get(foundId))
+
+      ok(data.get('blue'))
+      ok(data instanceof Visio.Collections.Expenditure)
+
 test 'strategyBudgetData', () ->
 
   _.each _.values(Visio.Parameters), (hash) ->
@@ -113,7 +198,8 @@ test 'strategyBudgetData', () ->
         strictEqual(data.length, 2)
         ok(data instanceof Visio.Collections.Budget)
         ok(data.get('blue'))
-        ok(data.get('green'))
+        foundId = if hash == Visio.Parameters.STRATEGY_OBJECTIVES then 'red' else 'green'
+        ok(data.get(foundId))
       else
         strictEqual(data.length, 1)
         ok(data instanceof Visio.Collections.Budget)
@@ -134,7 +220,8 @@ test 'selectedBudgetData', () ->
         strictEqual data.length, 1, 'There should 1 be output'
       else
         strictEqual data.length, 2, "There should 2 be #{hash.human}"
-        ok(data.get('green'))
+        foundId = if hash == Visio.Parameters.STRATEGY_OBJECTIVES then 'red' else 'green'
+        ok(data.get(foundId))
 
       ok(data.get('blue'))
       ok(data instanceof Visio.Collections.Budget)

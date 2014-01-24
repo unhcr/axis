@@ -33,6 +33,7 @@ class Visio.Models.Manager extends Backbone.Model
     'indicators': new Visio.Collections.Indicator()
     'indicator_data': new Visio.Collections.IndicatorDatum()
     'budgets': new Visio.Collections.Budget()
+    'expenditures': new Visio.Collections.Expenditure()
     'strategies': new Visio.Collections.Strategy()
     'strategy_objectives': new Visio.Collections.StrategyObjective()
     'date': new Date(2012, 1)
@@ -48,6 +49,7 @@ class Visio.Models.Manager extends Backbone.Model
     'scenario_type': {}
     'budget_type': {}
     'achievement_type': Visio.AchievementTypes.TARGET
+    'cost_type': Visio.Syncables.BUDGETS
 
   resetSelectedDefaults: () ->
     _.each _.values(Visio.Parameters), (hash) ->
