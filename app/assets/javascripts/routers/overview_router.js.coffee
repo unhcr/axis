@@ -35,6 +35,9 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
     Visio.manager.on 'change:budget_type', () =>
       @moduleView.render true
 
+    Visio.manager.on 'change:amount_type', =>
+      @moduleView.render true
+
     @module = $('#module')
 
   setup: () ->

@@ -54,7 +54,7 @@ Visio.Graphs.bubble = (config) ->
 
   voronoi = d3.geom.voronoi()
     .clipExtent([[0, 0], [width, height]])
-    .x((d) -> x(d.budget))
+    .x((d) -> x(d.amount))
     .y((d) -> y(d.achievement))
 
   g.append('g')
@@ -79,7 +79,7 @@ Visio.Graphs.bubble = (config) ->
 
   render = () ->
 
-    maxBudget = 0
+    maxAmount = 0
 
     data = parameters.map (parameter) ->
       achievement = parameter.selectedAchievement().result
@@ -87,18 +87,18 @@ Visio.Graphs.bubble = (config) ->
         id: parameter.get 'id'
         name: parameter.toString()
         operation_id: parameter.get 'operation_id'
-        budget: parameter.selectedBudget()
+        amount: parameter["selected#{Visio.manager.get('amount_type').className}"]()
         achievement: achievement
         population: Math.random() * 1000000
       }
-      maxBudget = datum.budget if datum.budget > maxBudget
+      maxAmount = datum.amount if datum.amount > maxAmount
       return datum
 
     data = data.filter (d) ->
-      return d.budget && d.achievement
+      return d.amount && d.achievement
 
-    if !domain || domain[1] < maxBudget || domain[1] > 2 * maxBudget
-      domain = [0, maxBudget]
+    if !domain || domain[1] < maxAmount || domain[1] > 2 * maxAmount
+      domain = [0, maxAmount]
       x.domain(domain)
 
     # trails = g.selectAll('.trail').data(data, (d) -> d.operation_id || d.id)
@@ -129,7 +129,7 @@ Visio.Graphs.bubble = (config) ->
       .attr('cy', (d) ->
         return y(d.achievement))
       .attr('cx', (d) ->
-        return x(d.budget))
+        return x(d.amount))
 
     bubbles.exit().transition().duration(Visio.Durations.FAST).attr('r', 0).remove()
 
