@@ -21,10 +21,11 @@ task :msrp_fetch => :environment do
   p 'Fetching MSRP data'
 
   include MsrpFetch
+  start = Time.now
 
   fetch n
 
-  p 'Finished fetching'
+  p "Finished fetching MSRP data in: #{Time.now - start}"
 
 
 end
@@ -38,9 +39,10 @@ task :focus_fetch => :environment do
   p 'Fetching FOCUS data'
 
   include FocusFetch
+  start = Time.now
 
   ret = fetch n
-  p 'Finished fetching'
+  p "Finished fetching FOCUS data in: #{Time.now - start}"
   p '-----------------'
   p "Files Read: #{ret[:files_read]}"
   p "Files Total: #{ret[:files_total]}"
