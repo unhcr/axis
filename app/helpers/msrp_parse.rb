@@ -10,21 +10,22 @@ module MsrpParse
 
   def parse(csv_filename)
 
+    fields = MsrpFetch::FIELDS
+    fields[:amount] = 'amount'
+
     CSV.foreach(csv_filename, :headers => true) do |row|
 
       attrs = {
-        :plan_id => row['planid'],
-        :ppg_id => row['populationgroupid'],
-        :goal_id => row['goalid'],
-        :problem_objective_id => row['objectiveid'],
-        :output_id => row['outputid'],
-        :year => row['planningyear'],
+        :plan_id => row[fields[:plan_id]],
+        :ppg_id => row[fields[:ppg_id]],
+        :goal_id => row[fields[:goal_id]],
+        :problem_objective_id => row[fields[:problem_objective_id]],
+        :output_id => row[fields[:output_id]],
+        :year => row[fields[:year]],
       }
 
-      raw_budget_type = row['budget_type']
-      raw_scenario = row['budgetcomponent']
-
-      attrs[:budget_type]
+      raw_budget_type = row[fields[:budget_type]]
+      raw_scenario = row[fields[:scenario]]
 
       if raw_budget_type == 'UNHCR_ADMIN'
         attrs[:budget_type] = ADMIN
@@ -45,11 +46,13 @@ module MsrpParse
 
       e = Expenditure.where(attrs).first
       if e
-        e.amount = row['amount']
+        e.amount = row[fields[:amount]]
         e.save
         e.found
       else
-        Expenditure.create(attrs)
+        e = Expenditure.new(attrs)
+        e.amount = row[fields[:amount]]
+        e.save
       end
     end
 

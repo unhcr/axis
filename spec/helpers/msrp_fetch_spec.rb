@@ -60,7 +60,7 @@ describe MsrpFetch do
     filename.should eq("#{TESTDATA_PATH}/#{MsrpFetch::FINAL_FILENAME}")
     lines = File.readlines("#{TESTDATA_PATH}/#{MsrpFetch::FINAL_FILENAME}")
     lines.length.should eq(1)
-    lines[0].gsub(/\s+/, '').should eq(MsrpFetch::FIELDS.join(',').gsub(/\s+/, ''))
+    lines[0].gsub(/\s+/, '').should eq((MsrpFetch::FIELDS.values << :amount).join(',').gsub(/\s+/, ''))
   end
 
 end

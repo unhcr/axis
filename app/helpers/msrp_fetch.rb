@@ -3,8 +3,17 @@ module MsrpFetch
   ANT_BUILD_ERBNAME = 'build.xml.erb'
   ANT_BUILD_NAME = 'build.xml'
   FINAL_FILENAME = 'generated_expenses.csv'
-  FIELDS = %W[planid planningyear goalid rightsgroupid objectiveid outputid populationgroupid budget_type budgetcomponent]
-  GROUP_BY = %W[planid planningyear goalid rightsgroupid objectiveid outputid populationgroupid budget_type budgetcomponent]
+  FIELDS = {
+    :plan_id => 'b1.planid',
+    :year => 'b1.planningyear',
+    :goal_id => 'b1.rfgoalid',
+    :problem_objective_id => 'b2.rfproblemobjectiveid',
+    :output_id => 'b1.rfoutputid',
+    :ppg_id => 'b1.populationgroupid',
+    :budget_type => 'b1.budget_type',
+    :scenario => 'b1.budgetcomponent'
+  }
+  GROUP_BY = FIELDS
 
   @@ANT_BUILD_FILEPATH = ANT_TEMPLATE_FILEPATH
 
@@ -13,8 +22,8 @@ module MsrpFetch
   def generate_build(limit = nil)
     config = {
       :limit => limit,
-      :fields => FIELDS,
-      :group_by => GROUP_BY
+      :fields => FIELDS.values,
+      :group_by => GROUP_BY.values
     }
     build = AntBuild.new(config)
     build_erb = ERB.new(File.read("#{ANT_TEMPLATE_FILEPATH}/#{ANT_BUILD_ERBNAME}"))
@@ -31,7 +40,7 @@ module MsrpFetch
     Dir.chdir @@ANT_BUILD_FILEPATH
     output = system("ant #{AntBuild::BUILD_NAME}")
     File.open(FINAL_FILENAME, 'w') do |final|
-      final.puts FIELDS.join(',')
+      final.puts (FIELDS.values << :amount).join(',')
       File.foreach(AntBuild::OUTPUT_FILEPATH) do |line|
         final.puts line
       end

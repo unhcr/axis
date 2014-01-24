@@ -16,7 +16,8 @@
       <![CDATA[
       SELECT * FROM
           ( SELECT <%= @config[:fields].join(',') %>, sum(expenses_usd) as amount
-          FROM FOCUS_BI.BI_EXPENSES
+          FROM FOCUS_BI.BI_EXPENSES b1 inner join FOCUS_BI.BI_OBJECTIVE b2
+          ON b1.objectiveid = b2.objectiveid
           WHERE plan_type = 'P-8'
           GROUP BY <%= @config[:group_by].join(',') %>)
         <% unless @config[:limit].nil? %>
