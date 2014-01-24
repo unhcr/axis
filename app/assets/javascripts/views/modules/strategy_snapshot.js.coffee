@@ -52,14 +52,18 @@ class Visio.Views.StrategySnapshotView extends Backbone.View
 
     if @model
       budget = @model.strategyBudget()
+      expenditure = @model.strategyExpenditure()
       @$el.find('.js-operation-name').text @model.get('operation_name')
     else
       budget = @collection.where({ year: Visio.manager.year() }).reduce(
         (budget, p) -> return budget + p.strategyBudget(),
         0)
+      expenditure = @collection.where({ year: Visio.manager.year() }).reduce(
+        (expenditure, p) -> return expenditure + p.strategyExpenditure(),
+        0)
       @$el.find('.js-operation-name').text 'All Target Countries'
 
-    @updateMeter(Math.random(), budget)
+    @updateMeter(expenditure / budget, budget)
 
   onClickShowAll: (e) ->
     @$el.find('.js-extra-target-countries').toggleClass 'gone'
