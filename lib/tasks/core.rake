@@ -16,7 +16,7 @@ end
 
 task :msrp_fetch => :environment do
   n = ENV['n']
-  n = n.to_i if n.nil?
+  n = n.to_i unless n.nil?
 
   p 'Fetching MSRP data'
 
