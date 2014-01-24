@@ -49,7 +49,7 @@ class Visio.Models.Manager extends Backbone.Model
     'scenario_type': {}
     'budget_type': {}
     'achievement_type': Visio.AchievementTypes.TARGET
-    'cost_type': Visio.Syncables.BUDGETS
+    'amount_type': Visio.Syncables.BUDGETS
 
   resetSelectedDefaults: () ->
     _.each _.values(Visio.Parameters), (hash) ->

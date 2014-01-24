@@ -20,8 +20,8 @@
 //= require ./models/syncable
 //= require ./collections/parameter
 //= require ./models/parameter
-//= require ./collections/syncables/cost_type
-//= require ./models/syncables/cost_type
+//= require ./collections/syncables/amount_type
+//= require ./models/syncables/amount_type
 //= require_tree ../templates
 //= require_tree ./models/parameters
 //= require_tree ./models/syncables

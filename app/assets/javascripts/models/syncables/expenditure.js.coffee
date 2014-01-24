@@ -1,4 +1,4 @@
-class Visio.Models.Expenditure extends Visio.Models.CostType
+class Visio.Models.Expenditure extends Visio.Models.AmountType
 
   urlRoot: '/expenditures'
 

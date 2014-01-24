@@ -1,4 +1,4 @@
-class Visio.Collections.CostType extends Visio.Collections.Syncable
+class Visio.Collections.AmountType extends Visio.Collections.Syncable
 
   amount: () ->
     total = 0

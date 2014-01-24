@@ -1,4 +1,4 @@
-class Visio.Models.CostType extends Visio.Models.Syncable
+class Visio.Models.AmountType extends Visio.Models.Syncable
 
   amount: ->
     if Visio.manager.get('scenario_type')[@get('scenario')] &&

@@ -1,4 +1,4 @@
-class Visio.Collections.Budget extends Visio.Collections.CostType
+class Visio.Collections.Budget extends Visio.Collections.AmountType
 
   model: Visio.Models.Budget
 
