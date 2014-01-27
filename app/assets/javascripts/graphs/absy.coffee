@@ -1,4 +1,4 @@
-Visio.Graphs.bubble = (config) ->
+Visio.Graphs.absy = (config) ->
 
   margin = config.margin
 

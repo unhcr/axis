@@ -40,7 +40,7 @@ class Visio.Views.IndicatorSingleYearShowView extends Backbone.View
 
       # Initialize the indicator bar graph
       @config.selection = d3.select(@el).select('.indicator-bar-graph')
-      @indicatorBarGraph = Visio.Graphs.indicatorBarGraph(@config)
+      @indicatorBarGraph = Visio.Graphs.isy @config
 
       # Initialize the side spark bar graph
       @sparkConfig.selection = d3.select(@el).select('.spark-bar-graph')

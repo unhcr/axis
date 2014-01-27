@@ -27,7 +27,7 @@ class Visio.Views.AchievementBudgetSingleYearView extends Backbone.View
           left: 90
           right: 80
 
-      @bubble = Visio.Graphs.bubble(config)
+      @bubble = Visio.Graphs.absy(config)
 
     _.each _.keys(Visio.manager.get('scenario_type')), (scenario) =>
       @$el.find("input[value='#{scenario}']").prop('checked', true)
