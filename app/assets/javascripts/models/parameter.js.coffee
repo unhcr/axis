@@ -60,32 +60,51 @@ class Visio.Models.Parameter extends Visio.Models.Syncable
     @strategyData(Visio.Syncables.EXPENDITURES, strategy)
 
   strategyExpenditure: ->
+    return @get 'cache.strategyExpenditure' if @get('cache.strategyExpenditure')?
     data = @strategyExpenditureData()
-    data.amount()
+    @set 'cache.strategyExpenditure', data.amount()
+    @get 'cache.strategyExpenditure'
 
   strategyBudget: () ->
+    return @get 'cache.strategyBudget' if @get('cache.strategyBudget')? and not Visio.manager.get 'bust_cache'
     data = @strategyBudgetData()
-    data.amount()
+    @set 'cache.strategyBudget', data.amount()
+    @get 'cache.strategyBudget'
 
   strategySituationAnalysis: () ->
+    if @get('cache.strategySituationAnalysis')? and not Visio.manager.get 'bust_cache'
+      return @get 'cache.strategySituationAnalysis'
     data = @strategyIndicatorData()
-    data.situationAnalysis()
+    @set 'cache.strategySituationAnalysis', data.situationAnalysis()
+    @get 'cache.strategySituationAnalysis'
 
   selectedAchievement: () ->
+    if @get('cache.selectedAchievement')? and not Visio.manager.get 'bust_cache'
+      return @get 'cache.selectedAchievement'
     data = @selectedIndicatorData()
-    data.achievement()
+    @set 'cache.selectedAchievement', data.achievement()
+    @get 'cache.selectedAchievement'
 
   selectedBudget: () ->
+    if @get('cache.selectedBudget')? and not Visio.manager.get 'bust_cache'
+      return @get 'cache.selectedBudget'
     data = @selectedBudgetData()
-    data.amount()
+    @set 'cache.selectedBudget', data.amount()
+    @get 'cache.selectedBudget'
 
   selectedSituationAnalysis: () ->
+    if @get('cache.selectedSituationAnalysis')? and not Visio.manager.get 'bust_cache'
+      return @get 'cache.selectedSituationAnalysis'
     data = @selectedIndicatorData()
-    data.situationAnalysis()
+    @set 'cache.selectedSiutationAnalysis', data.amount()
+    @get 'cache.selectedSiutationAnalysis'
 
   selectedExpenditure: ->
+    if @get('cache.selectedExpenditure')? and not Visio.manager.get 'bust_cache'
+      return @get 'cache.selectedExpenditure'
     data = @selectedExpenditureData()
-    data.amount()
+    @set 'cache.selectedExpenditure', data.amount()
+    @get 'cache.selectedExpenditure'
 
   refId: ->
     @id
