@@ -585,6 +585,25 @@ button, input {
   border: 3px solid $yellow;
 }
 
+.visio-check-vertical {
+  display: inline-block;
+  margin-top: 1em;
+}
+
+.visio-check-vertical label {
+  display: inline-block;
+  width: 2em;
+  text-align: center;
+}
+
+.visio-check-vertical label:before {
+  float: none;
+  display: block;
+  position: relative;
+  margin: 0 auto;
+  top: -1em;
+}
+
 .dropdown-item:hover, .count:hover {
   background-color: black;
   text-decoration: none;
@@ -1302,6 +1321,15 @@ input[type="radio"]:checked + label {
 
   .overlay-header {
     text-align: center;
+  }
+
+  figure {
+    border: 1px solid $dark-gray;
+  }
+
+  figcaption {
+    border: 1px solid $dark-gray;
+    border-top: none;
   }
 
 }
