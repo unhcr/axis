@@ -97,7 +97,19 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
     'absy/:year': 'absy'
     'isy': 'isy'
     'isy/:year': 'isy'
+    'export/:figure/:figureId': 'export'
     '*default': 'index'
+
+  export: (figure, figureId) ->
+    @navigation '/', { trigger: true } unless Visio.FigureInstances[figureId]?
+    @setup().done =>
+      model = new Visio.Models.ExportModule
+        figure: Visio.Figures[figure]
+        state: Visio.manager.state()
+        data: Visio.FigureInstances[figureId].data()
+
+      @exportView = new Visio.Views.ExportModule( model: model)
+      $('.content').append(@exportView.el)
 
   isy: (year) ->
     Visio.manager.year year, { silent: true } if year?

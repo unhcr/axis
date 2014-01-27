@@ -12,6 +12,7 @@ Visio.Figures.absy = (config) ->
   svg = selection.append('svg')
     .attr('width', config.width)
     .attr('height', config.height)
+    .attr('class', 'absy-figure')
 
   g = svg.append('g')
     .attr('transform', "translate(#{margin.left}, #{margin.top})")
@@ -44,7 +45,7 @@ Visio.Figures.absy = (config) ->
     .innerTickSize(14)
     .tickPadding(20)
 
-  parameters = config.parameters || []
+  data = config.data || []
 
   entered = false
 
@@ -81,7 +82,7 @@ Visio.Figures.absy = (config) ->
 
     maxAmount = 0
 
-    data = parameters.map (parameter) ->
+    filtered= data.map (parameter) ->
       achievement = parameter.selectedAchievement().result
       datum = {
         id: parameter.get 'id'
@@ -94,7 +95,7 @@ Visio.Figures.absy = (config) ->
       maxAmount = datum.amount if datum.amount > maxAmount
       return datum
 
-    data = data.filter (d) ->
+    filtered = filtered.filter (d) ->
       return d.amount && d.achievement
 
     if !domain || domain[1] < maxAmount || domain[1] > 2 * maxAmount
@@ -116,7 +117,7 @@ Visio.Figures.absy = (config) ->
     #   .attr('y2', (d) -> d3.select(@).attr('previous-y2', d.achievement); y(d.achievement))
     # trails.exit().remove()
 
-    bubbles = g.selectAll('.bubble').data(data, (d) -> d.operation_id || d.id)
+    bubbles = g.selectAll('.bubble').data(filtered, (d) -> d.operation_id || d.id)
     bubbles.enter().append('circle')
     bubbles
       .attr('class', (d) ->
@@ -134,7 +135,7 @@ Visio.Figures.absy = (config) ->
     bubbles.exit().transition().duration(Visio.Durations.FAST).attr('r', 0).remove()
 
     path = g.selectAll('.voronoi')
-      .data(voronoi(data))
+      .data(voronoi(filtered))
 
 
     path.enter().append("path")
@@ -171,9 +172,9 @@ Visio.Figures.absy = (config) ->
     return "M0 0" unless d
     "M" + d.join("L") + "Z"
 
-  render.parameters = (_parameters) ->
-    return parameters unless arguments.length
-    parameters = _parameters
+  render.data = (_data) ->
+    return data unless arguments.length
+    data = _data
     return render
 
   render.width = (_width) ->

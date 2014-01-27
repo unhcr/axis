@@ -40,11 +40,11 @@ class Visio.Views.IndicatorSingleYearShowView extends Backbone.View
 
       # Initialize the indicator bar graph
       @config.selection = d3.select(@el).select('.indicator-bar-graph')
-      @indicatorBarGraph = Visio.Figures.isy @config
+      Visio.FigureInstances[@isyFigureId()] = Visio.Figures.isy @config
 
       # Initialize the side spark bar graph
       @sparkConfig.selection = d3.select(@el).select('.spark-bar-graph')
-      @sparkBarGraph = Visio.Figures.sparkBarGraph(@sparkConfig)
+      Visio.FigureInstances[@sparkFigureId()] = Visio.Figures.sparkBarGraph(@sparkConfig)
 
     category = if situationAnalysis.total == 0 then 'white' else situationAnalysis.category
 
@@ -62,8 +62,8 @@ class Visio.Views.IndicatorSingleYearShowView extends Backbone.View
     else
       @$el.removeClass 'disabled'
 
-    @sparkBarGraph.data situationAnalysis
-    @sparkBarGraph()
+    Visio.FigureInstances[@sparkFigureId()].data situationAnalysis
+    Visio.FigureInstances[@sparkFigureId()]()
 
     @graph()
 
@@ -74,21 +74,21 @@ class Visio.Views.IndicatorSingleYearShowView extends Backbone.View
   onGoalTypeChange: (e) ->
     $target = $(e.currentTarget)
     if $target.is ':checked'
-      @indicatorBarGraph.goalType(Visio.Algorithms.GOAL_TYPES.target)()
+      Visio.FigureInstances[@isyFigureId()].goalType(Visio.Algorithms.GOAL_TYPES.target)()
     else
-      @indicatorBarGraph.goalType(Visio.Algorithms.GOAL_TYPES.standard)()
+      Visio.FigureInstances[@isyFigureId()].goalType(Visio.Algorithms.GOAL_TYPES.standard)()
 
   onIsPerformanceChange: (e) ->
     $target = $(e.currentTarget)
-    @indicatorBarGraph.isPerformance($target.is(':checked'))()
+    Visio.FigureInstances[@isyFigureId()].isPerformance($target.is(':checked'))()
 
   graph: ->
-    @indicatorBarGraph.data @model.selectedIndicatorData()
-    @indicatorBarGraph()
+    Visio.FigureInstances[@isyFigureId()].data @model.selectedIndicatorData()
+    Visio.FigureInstances[@isyFigureId()]()
 
   changeIsPerformance: (isPerformance) ->
-    @indicatorBarGraph.isPerformance isPerformance
-    @indicatorBarGraph()
+    Visio.FigureInstances[@isyFigureId()].isPerformance isPerformance
+    Visio.FigureInstances[@isyFigureId()]()
 
   isOpen: =>
     @$el.hasClass 'open'
@@ -122,6 +122,14 @@ class Visio.Views.IndicatorSingleYearShowView extends Backbone.View
 
     @graph() if @isOpen()
 
+  isyFigureId: =>
+    "isy-#{@model.id}"
+
+  sparkFigureId: =>
+    "spark-#{@model.id}"
+
   close: ->
+    delete Visio.FigureInstances[@isyFigureId()]
+    delete Visio.FigureInstances[@sparkFigureId()]
     @unbind()
     @remove()
