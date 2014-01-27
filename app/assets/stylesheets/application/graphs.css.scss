@@ -14,6 +14,10 @@
   .bubble.focus {
     fill: $orange;
   }
+
+  .bubble.active {
+    fill: $primary-dark;
+  }
   .trail {
     stroke: black;
     stroke-dasharray: 5 5;

@@ -6,7 +6,17 @@
     </section>
     <section class="overlay-content export-figure">
       <figure></figure>
-      <figcaption></figcaption>
+      <figcaption>
+
+        <% _.each(data, function(d) { %>
+        <% if (d.index >= 0) { %>
+          <div class="visio-check visio-check-vertical">
+            <input value="<%= d.index %>" type="checkbox" id="datum-<%= d.index %>" />
+            <label for="datum-<%= d.index %>"><%= d.index %></label>
+          </div>
+        <% } %>
+        <% }) %>
+      </figcaption>
     </section>
     <section class="export-settings">
       <div class="ui-small-header">Customize Your Document</div>
