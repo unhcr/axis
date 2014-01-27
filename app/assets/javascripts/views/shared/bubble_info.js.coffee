@@ -5,7 +5,7 @@ class Visio.Views.BubbleInfoView extends Backbone.View
   initialize: (options) ->
 
   render: (datum) ->
-    @$el.html @template(datum)
+    @$el.html @template({ datum: datum })
 
   show: () ->
     @$el.removeClass('gone')
