@@ -1,4 +1,4 @@
-Visio.Graphs.map = (config) ->
+Visio.Figures.map = (config) ->
   margin = config.margin
   width = config.width - margin.left - margin.right
   height = config.height - margin.top - margin.bottom

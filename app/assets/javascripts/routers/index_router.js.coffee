@@ -4,7 +4,7 @@ class Visio.Routers.IndexRouter extends Visio.Routers.GlobalRouter
     Visio.Routers.GlobalRouter.prototype.initialize.call(@)
     height = $(window).height() - $('header').height()
 
-    @map = Visio.Graphs.map(
+    @map = Visio.Figures.map(
       margin:
         top: 0
         left: 0

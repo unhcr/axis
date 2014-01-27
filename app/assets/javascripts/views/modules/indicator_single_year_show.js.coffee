@@ -40,11 +40,11 @@ class Visio.Views.IndicatorSingleYearShowView extends Backbone.View
 
       # Initialize the indicator bar graph
       @config.selection = d3.select(@el).select('.indicator-bar-graph')
-      @indicatorBarGraph = Visio.Graphs.isy @config
+      @indicatorBarGraph = Visio.Figures.isy @config
 
       # Initialize the side spark bar graph
       @sparkConfig.selection = d3.select(@el).select('.spark-bar-graph')
-      @sparkBarGraph = Visio.Graphs.sparkBarGraph(@sparkConfig)
+      @sparkBarGraph = Visio.Figures.sparkBarGraph(@sparkConfig)
 
     category = if situationAnalysis.total == 0 then 'white' else situationAnalysis.category
 

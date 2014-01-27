@@ -1,4 +1,4 @@
-Visio.Graphs.sparkBarGraph = (config) ->
+Visio.Figures.sparkBarGraph = (config) ->
   negativeLength = 2
   margin = config.margin
   margin.left = 0

@@ -1,4 +1,4 @@
-Visio.Graphs.absy = (config) ->
+Visio.Figures.absy = (config) ->
 
   margin = config.margin
 

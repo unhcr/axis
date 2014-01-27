@@ -1,4 +1,4 @@
-Visio.Graphs.isy = (config) ->
+Visio.Figures.isy = (config) ->
 
   # Variable Declaration
   margin = config.margin

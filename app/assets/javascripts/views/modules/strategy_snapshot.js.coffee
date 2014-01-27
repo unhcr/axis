@@ -42,7 +42,7 @@ class Visio.Views.StrategySnapshotView extends Backbone.View
           right: 10
 
       @countCircles.push
-        circle: Visio.Graphs.circle(config)
+        circle: Visio.Figures.circle(config)
         type: resultType
 
     @update()
