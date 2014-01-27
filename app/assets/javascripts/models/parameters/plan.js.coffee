@@ -47,3 +47,6 @@ class Visio.Models.Plan extends Visio.Models.Parameter
     return Visio.manager.get(@name).findWhere
       year: year
       operation_id: @get 'operation_id'
+
+  refId: ->
+    @get('operation_id')
