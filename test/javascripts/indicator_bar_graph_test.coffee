@@ -1,7 +1,7 @@
 module 'Indicator Bar Graph',
   setup: ->
     @el = $('<div></div>')[0]
-    @graph = Visio.Graphs.indicatorBarGraph(
+    @graph = Visio.Figures.isy(
       margin:
         left: 0
         right: 0

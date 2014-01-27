@@ -1,7 +1,7 @@
 module 'Circle',
   setup: ->
     @el = $('<div></div>')[0]
-    @circle = Visio.Graphs.circle(
+    @circle = Visio.Figures.circle(
       margin:
         top: 0
         bottom: 0
