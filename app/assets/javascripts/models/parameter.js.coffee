@@ -90,3 +90,6 @@ class Visio.Models.Parameter extends Visio.Models.Syncable
   refId: ->
     @id
 
+  selectedAmount: ->
+    # Either Budget or Expenditure
+    @["selected#{Visio.manager.get('amount_type').className}"]()
