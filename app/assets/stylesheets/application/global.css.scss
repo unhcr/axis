@@ -69,8 +69,8 @@ p.small {
 }
 
 .inner-content {
-  border-left: $page-margin solid white;
-  border-right: $page-margin solid white;
+  border-left: $page-margin solid $off-white;
+  border-right: $page-margin solid $off-white;
 
   .row {
     max-width: $row-inner-width;
@@ -156,7 +156,7 @@ p.small {
 }
 
 .ui-invert-theme {
-  background-color: white;
+  background-color: $off-white;
   color: $primary;
 
   .highlight {
@@ -1094,7 +1094,7 @@ a {
 }
 
 .toolbar {
-  background-color: white;
+  background-color: $off-white;
   padding: 12px 0;
   z-index: 300;
   height: $toolbar-height;
@@ -1213,7 +1213,7 @@ input[type="radio"]:checked + label {
   top: 0;
   left: 0;
   z-index: 10;
-  background-color:white;
+  background-color: $off-white;
   overflow: hidden;
   -moz-transition:width $very-fast-transition ease-out;
   -webkit-transition:width $very-fast-transition ease-out;
@@ -1280,7 +1280,7 @@ input[type="radio"]:checked + label {
 }
 
 #module {
-  background-color: $off-white;
+  background-color: white;
   min-height: 800px;
 }
 
