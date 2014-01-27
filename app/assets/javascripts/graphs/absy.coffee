@@ -30,6 +30,8 @@ Visio.Figures.absy = (config) ->
 
   domain = null
 
+  isExport = config.isExport || false
+
   xAxis = d3.svg.axis()
     .scale(x)
     .orient('bottom')
@@ -55,8 +57,8 @@ Visio.Figures.absy = (config) ->
 
   voronoi = d3.geom.voronoi()
     .clipExtent([[0, 0], [width, height]])
-    .x((d) -> x(d.amount))
-    .y((d) -> y(d.achievement))
+    .x((d) -> x(d.selectedAmount()))
+    .y((d) -> y(d.selectedAchievement().result))
 
   g.append('g')
     .attr('class', 'y axis')
@@ -80,23 +82,8 @@ Visio.Figures.absy = (config) ->
 
   render = () ->
 
-    maxAmount = 0
-
-    filtered= data.map (parameter) ->
-      achievement = parameter.selectedAchievement().result
-      datum = {
-        id: parameter.get 'id'
-        name: parameter.toString()
-        operation_id: parameter.get 'operation_id'
-        amount: parameter["selected#{Visio.manager.get('amount_type').className}"]()
-        achievement: achievement
-        population: Math.random() * 1000000
-      }
-      maxAmount = datum.amount if datum.amount > maxAmount
-      return datum
-
-    filtered = filtered.filter (d) ->
-      return d.amount && d.achievement
+    filtered = data.filter Visio.Figures.absy.filterFn
+    maxAmount = d3.max data, (d) -> d.selectedAmount()
 
     if !domain || domain[1] < maxAmount || domain[1] > 2 * maxAmount
       domain = [0, maxAmount]
@@ -117,20 +104,20 @@ Visio.Figures.absy = (config) ->
     #   .attr('y2', (d) -> d3.select(@).attr('previous-y2', d.achievement); y(d.achievement))
     # trails.exit().remove()
 
-    bubbles = g.selectAll('.bubble').data(filtered, (d) -> d.operation_id || d.id)
+    bubbles = g.selectAll('.bubble').data(filtered, (d) -> d.refId())
     bubbles.enter().append('circle')
     bubbles
       .attr('class', (d) ->
-        return ['bubble', "id-#{d.operation_id || d.id }"].join(' '))
+        return ['bubble', "id-#{d.refId()}"].join(' '))
     bubbles
       .transition()
       .duration(Visio.Durations.FAST)
       .attr('r', (d) ->
         return r(600000))
       .attr('cy', (d) ->
-        return y(d.achievement))
+        return y(d.selectedAchievement().result))
       .attr('cx', (d) ->
-        return x(d.amount))
+        return x(d.selectedAmount()))
 
     bubbles.exit().transition().duration(Visio.Durations.FAST).attr('r', 0).remove()
 
@@ -147,11 +134,13 @@ Visio.Figures.absy = (config) ->
           window.setTimeout(( -> entered = false), 50)
           info.render(d.point)
           info.show()
-          g.select(".bubble.id-#{d.point.operation_id || d.point.id}").classed 'focus', true
+          g.select(".bubble.id-#{d.point.refId()}").classed 'focus', true
         ).on('mouseout', (d) ->
           info.hide() if info and not entered
-          g.select(".bubble.id-#{d.point.operation_id || d.point.id}").classed 'focus', false
+          g.select(".bubble.id-#{d.point.refId()}").classed 'focus', false
 
+        ).on('click', (d) ->
+          $.publish 'absy.select', [d.point]
         )
 
     path.exit().remove()
@@ -168,6 +157,12 @@ Visio.Figures.absy = (config) ->
       .call(yAxis)
       .attr('transform', 'translate(-20,0)')
 
+  select = (e, d) ->
+    bubble = g.select(".bubble.id-#{d.refId()}")
+    isActive = bubble.classed 'active'
+    bubble.classed 'active', not isActive
+
+
   polygon = (d) ->
     return "M0 0" unless d
     "M" + d.join("L") + "Z"
@@ -182,6 +177,8 @@ Visio.Figures.absy = (config) ->
     width = _width
     return render
 
+  $.subscribe 'absy.select', select
   return render
 
-
+Visio.Figures.absy.filterFn = (d) ->
+  return d.selectedAmount() && d.selectedAchievement().result

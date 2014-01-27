@@ -87,3 +87,6 @@ class Visio.Models.Parameter extends Visio.Models.Syncable
     data = @selectedExpenditureData()
     data.amount()
 
+  refId: ->
+    @id
+

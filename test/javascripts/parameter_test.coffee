@@ -295,4 +295,13 @@ test 'toString', () ->
     else
       strictEqual p.toString(), 'ben'
 
+test 'refId', ->
+  _.each _.values(Visio.Parameters), (hash) ->
+    model = Visio.manager.get(hash.plural).at(0)
+
+    if hash == Visio.Parameters.PLANS
+      model.set('operation_id', 2)
+      strictEqual model.get('operation_id'), model.refId()
+    else
+      strictEqual model.id, model.refId()
 
