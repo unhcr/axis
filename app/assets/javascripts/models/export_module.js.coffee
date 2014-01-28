@@ -8,7 +8,7 @@ class Visio.Models.ExportModule extends Backbone.Model
     figure: null
 
     # Custom settings for the visualization
-    settings: {}
+    state: {}
 
     # Whether or not to include the contributing parameters
     includeParameterList: false
@@ -16,5 +16,5 @@ class Visio.Models.ExportModule extends Backbone.Model
     # Whether or not to include explanations of the algorithms
     includeExplaination: false
 
-    # Needs a way to get data
+    # Data for exporting
     data: null
