@@ -22,9 +22,11 @@ class Visio.Routers.IndexRouter extends Visio.Routers.GlobalRouter
             counts: true
             situation_analysis: true
       Visio.manager.get('plans').fetchSynced(options).done () =>
+        Visio.manager.set 'bustCache', true
         Visio.FigureInstances['map'].clearTooltips()
         Visio.FigureInstances['map']()
         Visio.FigureInstances['map'].filterTooltips Visio.manager.selectedStrategyPlanIds()
+        Visio.manager.set 'bustCache', false
 
     @setup()
 

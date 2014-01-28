@@ -2,6 +2,7 @@ module 'Indicator Data',
   setup: () ->
     Visio.user = new Visio.Models.User()
     Visio.manager = new Visio.Models.Manager()
+    Visio.manager.set 'bust_cache', true
 
 test 'achievement collection', () ->
   Visio.manager.get('outputs').reset([
