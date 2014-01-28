@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140123165250) do
+ActiveRecord::Schema.define(:version => 20140128125102) do
 
   create_table "budgets", :force => true do |t|
     t.string   "budget_type"
@@ -68,6 +68,18 @@ ActiveRecord::Schema.define(:version => 20140123165250) do
   add_index "expenditures", ["created_at"], :name => "index_expenditures_on_created_at"
   add_index "expenditures", ["is_deleted"], :name => "index_expenditures_on_is_deleted"
   add_index "expenditures", ["updated_at"], :name => "index_expenditures_on_updated_at"
+
+  create_table "export_modules", :force => true do |t|
+    t.text     "state"
+    t.string   "title"
+    t.text     "description"
+    t.boolean  "include_parameter_list", :default => false
+    t.boolean  "include_explaination",   :default => false
+    t.text     "data"
+    t.datetime "created_at",                                :null => false
+    t.datetime "updated_at",                                :null => false
+    t.integer  "user_id"
+  end
 
   create_table "fetch_monitors", :force => true do |t|
     t.datetime "starttime"

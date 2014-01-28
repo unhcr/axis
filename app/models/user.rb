@@ -8,6 +8,8 @@ class User < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, :firstname, :lastname, :reset_local_db
 
+  has_many :export_modules
+
   def to_jbuilder(options = {})
     Jbuilder.new do |json|
       json.extract! self, :firstname, :lastname, :id, :reset_local_db

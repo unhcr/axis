@@ -8,10 +8,10 @@ class Visio.Models.ExportModule extends Backbone.Model
     state: {}
 
     # Whether or not to include the contributing parameters
-    includeParameterList: false
+    include_parameter_list: false
 
     # Whether or not to include explanations of the algorithms
-    includeExplaination: false
+    include_explaination: false
 
     # Data for exporting
     data: null
