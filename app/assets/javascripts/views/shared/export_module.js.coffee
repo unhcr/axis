@@ -29,7 +29,7 @@ class Visio.Views.ExportModule extends Backbone.View
 
     @$el.html @template( data: @model.get('data') )
     @config.selection = d3.select(@el).select('.export-figure figure')
-    @figure = @model.get('figure')(@config)
+    @figure = @model.figure()(@config)
 
 
     @figure.data @model.get('data')

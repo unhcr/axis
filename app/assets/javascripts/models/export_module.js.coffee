@@ -4,9 +4,6 @@ class Visio.Models.ExportModule extends Backbone.Model
     title: 'My Awesome New Visualization'
     description: 'Description'
 
-    # Visualization function
-    figure: null
-
     # Custom settings for the visualization
     state: {}
 
@@ -18,3 +15,6 @@ class Visio.Models.ExportModule extends Backbone.Model
 
     # Data for exporting
     data: null
+
+  figure: ->
+    Visio.Figures[@get 'figureType']
