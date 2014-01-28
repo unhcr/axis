@@ -18,6 +18,6 @@
 /config/application.yml
 
 coverage
-/script/generated_*
-/script/build.xml
+/script/msrp/generated_*
+/script/msrp/build.xml
 /public/reports/pdf/*.pdf

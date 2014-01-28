@@ -1,5 +1,5 @@
 module MsrpFetch
-  ANT_TEMPLATE_FILEPATH = "#{Rails.root}/script"
+  ANT_TEMPLATE_FILEPATH = "#{Rails.root}/script/msrp"
   ANT_BUILD_ERBNAME = 'build.xml.erb'
   ANT_BUILD_NAME = 'build.xml'
   FINAL_FILENAME = 'generated_expenses.csv'
