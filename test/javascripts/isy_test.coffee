@@ -8,6 +8,7 @@ module 'ISY',
       aggregation_type: Visio.Parameters.PLANS.plural
     })
     Visio.manager.year(2012)
+    Visio.manager.set 'bust_cache', true
     Visio.manager.get(Visio.Parameters.PLANS.plural).reset([
       {
         id: 'ben'

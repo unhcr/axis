@@ -60,51 +60,54 @@ class Visio.Models.Parameter extends Visio.Models.Syncable
     @strategyData(Visio.Syncables.EXPENDITURES, strategy)
 
   strategyExpenditure: ->
-    return @get 'cache.strategyExpenditure' if @get('cache.strategyExpenditure')?
+    return @get 'cache.strategyExpenditure' if @useCache 'strategyExpenditure'
     data = @strategyExpenditureData()
     @set 'cache.strategyExpenditure', data.amount()
     @get 'cache.strategyExpenditure'
 
   strategyBudget: () ->
-    return @get 'cache.strategyBudget' if @get('cache.strategyBudget')? and not Visio.manager.get 'bust_cache'
+    return @get 'cache.strategyBudget' if @useCache 'strategyBudget'
     data = @strategyBudgetData()
     @set 'cache.strategyBudget', data.amount()
     @get 'cache.strategyBudget'
 
   strategySituationAnalysis: () ->
-    if @get('cache.strategySituationAnalysis')? and not Visio.manager.get 'bust_cache'
+    if @useCache 'strategySituationAnalysis'
       return @get 'cache.strategySituationAnalysis'
     data = @strategyIndicatorData()
     @set 'cache.strategySituationAnalysis', data.situationAnalysis()
     @get 'cache.strategySituationAnalysis'
 
   selectedAchievement: () ->
-    if @get('cache.selectedAchievement')? and not Visio.manager.get 'bust_cache'
+    if @useCache 'selectedAchievement'
       return @get 'cache.selectedAchievement'
     data = @selectedIndicatorData()
     @set 'cache.selectedAchievement', data.achievement()
     @get 'cache.selectedAchievement'
 
   selectedBudget: () ->
-    if @get('cache.selectedBudget')? and not Visio.manager.get 'bust_cache'
+    if @useCache 'selectedBudget'
       return @get 'cache.selectedBudget'
     data = @selectedBudgetData()
     @set 'cache.selectedBudget', data.amount()
     @get 'cache.selectedBudget'
 
   selectedSituationAnalysis: () ->
-    if @get('cache.selectedSituationAnalysis')? and not Visio.manager.get 'bust_cache'
+    if @useCache 'selectedSituationAnalysis'
       return @get 'cache.selectedSituationAnalysis'
     data = @selectedIndicatorData()
-    @set 'cache.selectedSiutationAnalysis', data.amount()
-    @get 'cache.selectedSiutationAnalysis'
+    @set 'cache.selectedSituationAnalysis', data.situationAnalysis()
+    @get 'cache.selectedSituationAnalysis'
 
   selectedExpenditure: ->
-    if @get('cache.selectedExpenditure')? and not Visio.manager.get 'bust_cache'
+    if @useCache 'selectedExpenditure'
       return @get 'cache.selectedExpenditure'
     data = @selectedExpenditureData()
     @set 'cache.selectedExpenditure', data.amount()
     @get 'cache.selectedExpenditure'
+
+  useCache: (key) ->
+    @get("cache.#{key}")? and not Visio.manager.get 'bust_cache'
 
   refId: ->
     @id

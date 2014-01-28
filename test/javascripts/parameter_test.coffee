@@ -3,6 +3,7 @@ module 'Parameter',
   setup: () ->
     Visio.user = new Visio.Models.User()
     Visio.manager = new Visio.Models.Manager()
+    Visio.manager.set 'bust_cache', true
     Visio.manager.year(2012)
     strategy = { id: 17 }
     _.each _.values(Visio.Parameters), (hash) =>
@@ -140,9 +141,6 @@ test 'strategyExpenditureData', () ->
   _.each _.values(Visio.Parameters), (hash) ->
     selected = Visio.manager.strategy().get("#{hash.singular}_ids")
     selectedArr = _.keys selected
-
-    if hash == Visio.Parameters.STRATEGY_OBJECTIVES
-      console.log hash
 
     strictEqual(selectedArr.length, 1)
 
@@ -305,3 +303,57 @@ test 'refId', ->
     else
       strictEqual model.id, model.refId()
 
+test 'caching', ->
+  Visio.manager.set 'bust_cache', false
+  keys = [
+    'strategyExpenditure',
+    'strategyBudget',
+    'strategySituationAnalysis',
+    'selectedAchievement',
+    'selectedBudget',
+    'selectedSituationAnalysis',
+    'selectedExpenditure'
+  ]
+
+  data =
+    'Budget': new Visio.Collections.Budget([])
+    'Indicator': new Visio.Collections.IndicatorDatum([])
+    'Expenditure': new Visio.Collections.Expenditure([])
+  parameter = Visio.manager.get(Visio.Parameters.OUTPUTS.plural).at(0)
+
+  _.each ['Budget', 'Indicator', 'Expenditure'], (dataType) ->
+    switch dataType
+      when 'Budget', 'Expenditure'
+        sinon.stub data[dataType], 'amount', () -> 10
+      when 'Indicator'
+        sinon.stub data[dataType], 'achievement', () -> 10
+        sinon.stub data[dataType], 'situationAnalysis', () -> 10
+
+    _.each ['selected', 'strategy'], (selectorType) ->
+      sinon.stub parameter,  selectorType + dataType + 'Data', () ->
+        return data[dataType]
+
+
+  _.each keys, (key) ->
+    result = parameter[key]()
+    strictEqual result, 10, 'Initially shouldnot use cache'
+
+  _.each ['Budget', 'Indicator', 'Expenditure'], (dataType) ->
+    switch dataType
+      when 'Budget', 'Expenditure'
+        data[dataType].amount.restore()
+        sinon.stub data[dataType], 'amount', () -> 20
+      when 'Indicator'
+        data[dataType].achievement.restore()
+        data[dataType].situationAnalysis.restore()
+        sinon.stub data[dataType], 'achievement', () -> 20
+        sinon.stub data[dataType], 'situationAnalysis', () -> 20
+
+  _.each keys, (key) ->
+    result = parameter[key]()
+    strictEqual result, 10, 'Should use cache for: ' + key
+
+  Visio.manager.set 'bust_cache', true
+  _.each keys, (key) ->
+    result = parameter[key]()
+    strictEqual result, 20, 'When bust_cache is set, do not use cache'
