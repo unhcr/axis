@@ -6,6 +6,7 @@ class Visio.Views.ExportModule extends Backbone.View
 
   events:
     'change figcaption input': 'onSelectionChange'
+    'click .export': 'onClickExport'
 
   initialize: (options) ->
     $(document).scrollTop(0)
@@ -51,4 +52,23 @@ class Visio.Views.ExportModule extends Backbone.View
 
     # Toggle if it's check or not
     $input.prop 'checked', not checked
+
+  onClickExport: ->
+    statusCodes =
+      200: =>
+        window.location.assign @model.pdfUrl()
+      504: ->
+       console.log "Shit's beeing wired"
+      503: (jqXHR, textStatus, errorThrown) =>
+        wait = parseInt jqXHR.getResponseHeader('Retry-After')
+        setTimeout =>
+          $.ajax
+            url: @model.pdfUrl()
+            statusCode: statusCodes
+        , wait * 3000
+
+    @model.save().then =>
+      $.ajax
+        url: @model.pdfUrl()
+        statusCode: statusCodes
 

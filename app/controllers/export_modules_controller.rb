@@ -12,4 +12,9 @@ class ExportModulesController < ApplicationController
   def index
     render :json => current_user.export_modules
   end
+
+  def pdf
+    @export_module = ExportModule.find(current_user.export_modules.find(params[:id]))
+    render :layout => 'report'
+  end
 end

@@ -19,6 +19,15 @@ module Visio
     OpenURI::Buffer.send :remove_const, 'StringMax' if OpenURI::Buffer.const_defined?('StringMax')
     OpenURI::Buffer.const_set 'StringMax', 0
 
+    require 'shrimp'
+    config.middleware.use Shrimp::Middleware, :cache_ttl => 3600, :out_path => "#{Rails.root}/public/reports/pdf"
+
+    Shrimp.configure do |config|
+      config.margin = '0cm'
+      config.rendering_time = 3000
+    end
+
+
     # Custom directories with classes and modules you want to be autoloadable.
     # config.autoload_paths += %W(#{config.root}/extras)
 

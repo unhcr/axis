@@ -20,3 +20,4 @@
 coverage
 /script/generated_*
 /script/build.xml
+/public/reports/pdf/*.pdf

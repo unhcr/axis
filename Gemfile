@@ -4,6 +4,10 @@ gem 'rails', '3.2.13'
 gem 'nokogiri'
 gem 'equivalent-xml'
 gem 'rubyzip'
+gem 'pdfkit'
+gem 'quoth'
+gem 'shrimp'
+gem 'pony'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
