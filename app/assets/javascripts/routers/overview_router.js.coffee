@@ -106,7 +106,7 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
         figureType: figureType
         figure: Visio.Figures[figureType]
         state: Visio.manager.state()
-        data: Visio.FigureInstances[figureId].data()
+        data: Visio.FigureInstances[figureId].data().filter Visio.Figures[figureType].filterFn
 
       @exportView = new Visio.Views.ExportModule( model: model)
       $('.content').append(@exportView.el)

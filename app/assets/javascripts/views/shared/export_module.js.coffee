@@ -20,16 +20,12 @@ class Visio.Views.ExportModule extends Backbone.View
       height: 300
       isExport: true
 
-    $.subscribe "#{@model.get('figureType')}.select", @select
+    $.subscribe "select", @select
     @render()
 
   render: ->
 
-    i = 0
-    for datum in @model.get 'data'
-      if Visio.Figures[@model.get('figureType')].filterFn datum
-        datum.index = i
-        i += 1
+    datum.index = i for datum, i in @model.get 'data'
 
     @$el.html @template( data: @model.get('data') )
     @config.selection = d3.select(@el).select('.export-figure figure')
@@ -46,7 +42,7 @@ class Visio.Views.ExportModule extends Backbone.View
     d = _.find @model.get('data'), (d) ->
       d.index == +$target.val()
 
-    $.publish "#{@model.get('figureType')}.select", [d.toJSON()]
+    $.publish "select.#{@model.get('figureType')}", [d]
 
 
   select: (e, d) =>
