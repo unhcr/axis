@@ -50,6 +50,7 @@ class Visio.Models.Manager extends Backbone.Model
     'budget_type': {}
     'achievement_type': Visio.AchievementTypes.TARGET
     'amount_type': Visio.Syncables.BUDGETS
+    'bust_cache': false
 
   resetSelectedDefaults: () ->
     _.each _.values(Visio.Parameters), (hash) ->
@@ -74,9 +75,9 @@ class Visio.Models.Manager extends Backbone.Model
     @resetSelectedDefaults()
     Visio.manager.trigger('change:selected')
 
-  year: (year, options) ->
+  year: (_year, options) ->
     return @get('date').getFullYear() if arguments.length == 0
-    @set { date: new Date(year, 1) }, options || {}
+    @set { date: new Date(_year, 1) }, options || {}
 
   strategy: () ->
     return unless @get('strategies') && @get('strategy_id')
@@ -171,3 +172,23 @@ class Visio.Models.Manager extends Backbone.Model
     else
       options.validate = true unless options.validate
       Backbone.Model.prototype.set.apply @, [key, val, options]
+
+  state: (_state) ->
+    if _state?
+      @set 'selected', _state.selected
+      @set.year _state.year
+      @set.set 'achievement_type', _state.achievement_type
+      @set.set 'scenario_type', _state.scenario_type
+      @set.set 'budget_type', _state.budget_type
+      @set.set 'amount_type', _state.amount_type
+      return _state
+    else
+      return {
+        selected: @get 'selected'
+        year: @year()
+        achievement_type: @get 'achievement_type'
+        scenario_type: @get 'scenario_type'
+        budget_type: @get 'budget_type'
+        amount_type: @get 'amount_type'
+      }
+

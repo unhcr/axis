@@ -1,4 +1,4 @@
-Visio.Graphs.circle = (config) ->
+Visio.Figures.circle = (config) ->
   margin = config.margin
 
   width = config.width - margin.left - margin.right

@@ -60,30 +60,58 @@ class Visio.Models.Parameter extends Visio.Models.Syncable
     @strategyData(Visio.Syncables.EXPENDITURES, strategy)
 
   strategyExpenditure: ->
+    return @get 'cache.strategyExpenditure' if @useCache 'strategyExpenditure'
     data = @strategyExpenditureData()
-    data.amount()
+    @set 'cache.strategyExpenditure', data.amount()
+    @get 'cache.strategyExpenditure'
 
   strategyBudget: () ->
+    return @get 'cache.strategyBudget' if @useCache 'strategyBudget'
     data = @strategyBudgetData()
-    data.amount()
+    @set 'cache.strategyBudget', data.amount()
+    @get 'cache.strategyBudget'
 
   strategySituationAnalysis: () ->
+    if @useCache 'strategySituationAnalysis'
+      return @get 'cache.strategySituationAnalysis'
     data = @strategyIndicatorData()
-    data.situationAnalysis()
+    @set 'cache.strategySituationAnalysis', data.situationAnalysis()
+    @get 'cache.strategySituationAnalysis'
 
   selectedAchievement: () ->
+    if @useCache 'selectedAchievement'
+      return @get 'cache.selectedAchievement'
     data = @selectedIndicatorData()
-    data.achievement()
+    @set 'cache.selectedAchievement', data.achievement()
+    @get 'cache.selectedAchievement'
 
   selectedBudget: () ->
+    if @useCache 'selectedBudget'
+      return @get 'cache.selectedBudget'
     data = @selectedBudgetData()
-    data.amount()
+    @set 'cache.selectedBudget', data.amount()
+    @get 'cache.selectedBudget'
 
   selectedSituationAnalysis: () ->
+    if @useCache 'selectedSituationAnalysis'
+      return @get 'cache.selectedSituationAnalysis'
     data = @selectedIndicatorData()
-    data.situationAnalysis()
+    @set 'cache.selectedSituationAnalysis', data.situationAnalysis()
+    @get 'cache.selectedSituationAnalysis'
 
   selectedExpenditure: ->
+    if @useCache 'selectedExpenditure'
+      return @get 'cache.selectedExpenditure'
     data = @selectedExpenditureData()
-    data.amount()
+    @set 'cache.selectedExpenditure', data.amount()
+    @get 'cache.selectedExpenditure'
 
+  useCache: (key) ->
+    @get("cache.#{key}")? and not Visio.manager.get 'bust_cache'
+
+  refId: ->
+    @id
+
+  selectedAmount: ->
+    # Either Budget or Expenditure
+    @["selected#{Visio.manager.get('amount_type').className}"]()

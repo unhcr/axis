@@ -1,5 +1,6 @@
 <div class="col-md-8 col-centered">
   <div class="row ui-small-header"><%= name %></div>
-  <div class="row"><%= Visio.manager.get('amount_type').human %>: $<%= Visio.Utils.commaNumber(amount) %></div>
-  <div class="row">Achievement: <%= Math.round(100 * achievement) %></div>
+  <div class="row"><%= Visio.manager.get('amount_type').human %>: $<%=
+    Visio.Utils.commaNumber(datum.selectedAmount()) %></div>
+  <div class="row">Achievement: <%= Math.round(100 * datum.selectedAchievement().result) %></div>
 </div>

@@ -4,7 +4,10 @@ window.Visio =
   Views: {}
   Routers: {}
   Utils: {}
-  Graphs: {}
+  Figures: {}
+
+  # Actual instances of figures
+  FigureInstances: {}
   AchievementTypes:
     TARGET: 'comp_target'
     STANDARD: 'standard'

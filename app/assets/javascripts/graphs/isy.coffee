@@ -1,4 +1,4 @@
-Visio.Graphs.indicatorBarGraph = (config) ->
+Visio.Figures.isy = (config) ->
 
   # Variable Declaration
   margin = config.margin

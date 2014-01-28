@@ -10,6 +10,7 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
     Visio.manager.set 'selected_strategies', selectedStrategies
     Visio.manager.on 'change:date', () =>
       # Need to get select plans from next year
+      Visio.manager.set 'bust_cache', true
       oldPlans = Visio.manager.selected('plans')
       newPlans = oldPlans.getPlansForDifferentYear(Visio.manager.year())
       ids = newPlans.pluck 'id'
@@ -19,24 +20,19 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
       @navigation.render()
       @strategySnapshotView.render()
       @moduleView.render(true)
+      Visio.manager.set 'bust_cache', false
 
-    Visio.manager.on 'change:aggregation_type', () =>
-      @moduleView.render true
-
-    Visio.manager.on 'change:selected', () =>
-      @moduleView.render true
-
-    Visio.manager.on 'change:achievement_type', () =>
-      @moduleView.render true
-
-    Visio.manager.on 'change:scenario_type', () =>
-      @moduleView.render true
-
-    Visio.manager.on 'change:budget_type', () =>
-      @moduleView.render true
-
-    Visio.manager.on 'change:amount_type', =>
-      @moduleView.render true
+    Visio.manager.on [
+      'change:aggregation_type',
+      'change:selected',
+      'change:achievement',
+      'change:scenario_type',
+      'change:budget_type',
+      'change:amount_type'].join(' ')
+      , () =>
+        Visio.manager.set 'bust_cache', true
+        @moduleView.render true
+        Visio.manager.set 'bust_cache', false
 
     @module = $('#module')
 
@@ -97,7 +93,23 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
     'absy/:year': 'absy'
     'isy': 'isy'
     'isy/:year': 'isy'
+    'export/:figureType/:figureId': 'export'
     '*default': 'index'
+
+  export: (figureType, figureId) ->
+    unless Visio.FigureInstances[figureId]?
+      @navigate '/', { trigger: true }
+      return
+
+    @setup().done =>
+      model = new Visio.Models.ExportModule
+        figureType: figureType
+        figure: Visio.Figures[figureType]
+        state: Visio.manager.state()
+        data: Visio.FigureInstances[figureId].data().filter Visio.Figures[figureType].filterFn
+
+      @exportView = new Visio.Views.ExportModule( model: model)
+      $('.content').append(@exportView.el)
 
   isy: (year) ->
     Visio.manager.year year, { silent: true } if year?

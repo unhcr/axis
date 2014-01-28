@@ -16,7 +16,7 @@ class Visio.Views.AchievementBudgetSingleYearView extends Backbone.View
   render: (isRerender) ->
 
     if !isRerender
-      @$el.html @template()
+      @$el.html @template( figureId: 'absy' )
       config =
         width: @$el.find('#bubble').width()
         height: 320
@@ -27,7 +27,7 @@ class Visio.Views.AchievementBudgetSingleYearView extends Backbone.View
           left: 90
           right: 80
 
-      @bubble = Visio.Graphs.bubble(config)
+      Visio.FigureInstances['absy'] = Visio.Figures.absy(config)
 
     _.each _.keys(Visio.manager.get('scenario_type')), (scenario) =>
       @$el.find("input[value='#{scenario}']").prop('checked', true)
@@ -35,8 +35,8 @@ class Visio.Views.AchievementBudgetSingleYearView extends Backbone.View
     _.each _.keys(Visio.manager.get('budget_type')), (budget) =>
       @$el.find("input[value='#{budget}']").prop('checked', true)
 
-    @bubble.parameters(Visio.manager.selected(Visio.manager.get('aggregation_type')).models)
-    @bubble()
+    Visio.FigureInstances['absy'].data(Visio.manager.selected(Visio.manager.get('aggregation_type')).models)
+    Visio.FigureInstances['absy']()
 
     @
 

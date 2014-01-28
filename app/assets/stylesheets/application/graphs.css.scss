@@ -10,9 +10,13 @@
   stroke: $map-background;
 }
 
-#bubble {
+.absy-figure {
   .bubble.focus {
     fill: $orange;
+  }
+
+  .bubble.active {
+    fill: $primary-dark;
   }
   .trail {
     stroke: black;

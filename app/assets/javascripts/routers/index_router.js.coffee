@@ -4,7 +4,7 @@ class Visio.Routers.IndexRouter extends Visio.Routers.GlobalRouter
     Visio.Routers.GlobalRouter.prototype.initialize.call(@)
     height = $(window).height() - $('header').height()
 
-    @map = Visio.Graphs.map(
+    Visio.FigureInstances['map'] = Visio.Figures.map(
       margin:
         top: 0
         left: 0
@@ -22,9 +22,11 @@ class Visio.Routers.IndexRouter extends Visio.Routers.GlobalRouter
             counts: true
             situation_analysis: true
       Visio.manager.get('plans').fetchSynced(options).done () =>
-        @map.clearTooltips()
-        @map()
-        @map.filterTooltips Visio.manager.selectedStrategyPlanIds()
+        Visio.manager.set 'bustCache', true
+        Visio.FigureInstances['map'].clearTooltips()
+        Visio.FigureInstances['map']()
+        Visio.FigureInstances['map'].filterTooltips Visio.manager.selectedStrategyPlanIds()
+        Visio.manager.set 'bustCache', false
 
     @setup()
 
@@ -48,12 +50,12 @@ class Visio.Routers.IndexRouter extends Visio.Routers.GlobalRouter
           situation_analysis: true
     #NProgress.start()
     Visio.manager.getMap().done((map) =>
-      @map.mapJSON(map)
+      Visio.FigureInstances['map'].mapJSON(map)
       @filterView = new Visio.Views.MapFilterView()
-      @map()
+      Visio.FigureInstances['map']()
       Visio.manager.get('plans').fetchSynced(options)
     ).done =>
-      @map()
+      Visio.FigureInstances['map']()
 
   list: (plan_id, type) ->
 
