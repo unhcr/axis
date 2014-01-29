@@ -16,6 +16,7 @@
 
 # Ignore application configuration
 /config/application.yml
+/config/capistrano_credentials.rb
 
 coverage
 /script/msrp/generated_*

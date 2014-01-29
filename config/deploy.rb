@@ -16,7 +16,7 @@ set :application, "visio"
 set :scm, :none
 set :repository, "."
 set :local_repository, "."
-require '/Users/benrudolph/Dropbox/credientials/capcreds-unhcr.rb'
+require './config/capistrano_credentials.rb'
 set :deploy_via, :copy
 set :branch, "master"
 set :rails_env,     "production"
