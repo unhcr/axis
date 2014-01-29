@@ -8,6 +8,7 @@ gem 'pdfkit'
 gem 'quoth'
 gem 'shrimp'
 gem 'pony'
+gem 'whenever', :require => false
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'

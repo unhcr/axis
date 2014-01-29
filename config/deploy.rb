@@ -1,5 +1,8 @@
 require 'bundler/capistrano'
 require "capistrano-rbenv"
+
+set:whenever_command, 'bundle exec whenever'
+require 'whenever/capistrano'
 load 'deploy/assets'
 set :rbenv_ruby_version, "1.9.3-p484"
 set :rbenv_repository, "https://github.com/sstephenson/rbenv.git"
@@ -59,4 +62,5 @@ namespace :db do
   end
 end
 after "deploy:finalize_update", "db:config"
+after "deploy", "whenever"
 
