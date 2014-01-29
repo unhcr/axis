@@ -15,6 +15,7 @@ module 'ABSY Figure',
     sinon.stub @d, 'selectedAchievement', -> { result: 10 }
 
   teardown: ->
+    $.unsubscribe('select.absy')
     @d.selectedAmount.restore()
     @d.selectedAchievement.restore()
 

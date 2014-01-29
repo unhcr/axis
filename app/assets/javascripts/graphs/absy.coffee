@@ -124,7 +124,6 @@ Visio.Figures.absy = (config) ->
     path = g.selectAll('.voronoi')
       .data(voronoi(filtered))
 
-
     path.enter().append("path")
     path.attr("class", (d, i) -> "voronoi" )
         .attr("d", polygon)
@@ -164,7 +163,7 @@ Visio.Figures.absy = (config) ->
 
 
   polygon = (d) ->
-    return "M0 0" unless d
+    return "M0 0" unless d.length
     "M" + d.join("L") + "Z"
 
   render.data = (_data) ->
