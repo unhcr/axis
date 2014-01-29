@@ -17,7 +17,7 @@ class Visio.Models.ExportModule extends Backbone.Model
     data: null
 
   figure: ->
-    Visio.Figures[@get 'figureType']
+    Visio.Figures[@get 'figure_type']
 
   urlRoot: '/export_modules'
 

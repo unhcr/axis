@@ -178,6 +178,9 @@ Visio.Figures.absy = (config) ->
     width = _width
     return render
 
+  render.unsubscribe = ->
+    $.unsubscribe "select.#{figureId}.figure"
+
   $.subscribe "select.#{figureId}.figure", select
   return render
 

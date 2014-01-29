@@ -1,4 +1,4 @@
-module 'Indicator Bar Graph',
+module 'ISY Figure',
   setup: ->
     @el = $('<div></div>')[0]
     @graph = Visio.Figures.isy(
@@ -10,6 +10,29 @@ module 'Indicator Bar Graph',
       width: 100
       height: 100
       selection: d3.select(@el))
+
+test 'filterFn', ->
+  ok Visio.Figures.isy.filterFn
+  ok Visio.Figures.isy.filterFn instanceof Function
+  data = new Visio.Collections.IndicatorDatum([
+    {
+      id: 'ben'
+      is_performance: false
+    },
+    {
+      id: 'jeff'
+      is_performance: true
+    },
+    {
+      id: 'lisa'
+      is_performance: true
+    }
+  ])
+
+  @graph.isPerformance(true)
+  filtered = _.filter data.models, Visio.Figures.isy.filterFn.bind(@graph)
+  strictEqual filtered.length, 2
+
 
 test 'data', ->
   data = new Visio.Collections.IndicatorDatum([
@@ -27,16 +50,19 @@ test 'data', ->
     }
   ])
 
-  @graph.data(data)
+  @graph.data(data.models)
   strictEqual @graph.data().length, 3
+  ok @graph.data() instanceof Array
 
   @graph.isPerformance(false)
-  @graph.data(data)
+  @graph.data(data.models)
   strictEqual @graph.data().length, 3
+  ok @graph.data() instanceof Array
 
   @graph.isPerformance(true)
-  @graph.data(data)
+  @graph.data(data.models)
   strictEqual @graph.data().length, 3
+  ok @graph.data() instanceof Array
 
 test 'render', ->
   data = new Visio.Collections.IndicatorDatum([
@@ -70,7 +96,7 @@ test 'render', ->
   ])
 
   @graph.isPerformance(false)
-  @graph.data(data)
+  @graph.data(data.models)
   @graph()
 
   ok $(@el).find('.box').length, 1

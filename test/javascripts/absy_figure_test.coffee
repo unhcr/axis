@@ -32,6 +32,8 @@ test 'render', ->
   ok d3.selectAll('.bubble').length, 0
 
 test 'filterFn', ->
+  ok Visio.Figures.absy.filterFn
+  ok Visio.Figures.absy.filterFn instanceof Function
 
   ok Visio.Figures.absy.filterFn(@d), 'Should not be filtered'
 

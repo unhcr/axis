@@ -23,7 +23,6 @@ class Visio.Views.ExportModule extends Backbone.View
       figureId: @model.get('figure_id')
 
     $.subscribe "select.#{@model.get('figure_id')}", @select
-    @render()
 
   render: ->
 
@@ -73,4 +72,10 @@ class Visio.Views.ExportModule extends Backbone.View
       $.ajax
         url: @model.pdfUrl()
         statusCode: statusCodes
+
+  close: ->
+    $.unsubscribe "select.#{@model.get('figure_id')}"
+    @figure.unsubscribe()
+    @unbind()
+    @remove()
 

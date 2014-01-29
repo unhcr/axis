@@ -110,7 +110,7 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
           Visio.Figures[figureType].filterFn.bind(Visio.FigureInstances[figureId]))
 
       @exportView = new Visio.Views.ExportModule( model: model)
-      $('.content').append(@exportView.el)
+      $('.content').append(@exportView.render().el)
 
   isy: (year) ->
     Visio.manager.year year, { silent: true } if year?

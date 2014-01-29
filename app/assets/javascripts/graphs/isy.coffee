@@ -39,7 +39,7 @@ Visio.Figures.isy = (config) ->
 
   goalType = Visio.Algorithms.GOAL_TYPES.target
 
-  data = []
+  data = config.data || []
 
   # Rendering
   render = () ->
@@ -213,6 +213,9 @@ Visio.Figures.isy = (config) ->
     return goalType unless arguments.length
     goalType = _goalType
     render
+
+  render.unsubscribe = ->
+    $.unsubscribe "select.#{figureId}.figure"
 
   select = (e, d) ->
     box = g.select(".box-#{d.id}")
