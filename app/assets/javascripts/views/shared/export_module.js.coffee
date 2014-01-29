@@ -20,8 +20,9 @@ class Visio.Views.ExportModule extends Backbone.View
       width: 600
       height: 300
       isExport: true
+      figureId: @model.get('figure_id')
 
-    $.subscribe "select", @select
+    $.subscribe "select.#{@model.get('figure_id')}", @select
     @render()
 
   render: ->
@@ -39,11 +40,12 @@ class Visio.Views.ExportModule extends Backbone.View
     @
 
   onSelectionChange: (e) ->
+    e.preventDefault()
     $target = $(e.currentTarget)
     d = _.find @model.get('data'), (d) ->
       d.index == +$target.val()
 
-    $.publish "select.#{@model.get('figureType')}", [d]
+    $.publish "select.#{@model.get('figure_id')}.figure", [d]
 
 
   select: (e, d) =>

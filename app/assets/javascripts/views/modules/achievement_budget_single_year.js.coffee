@@ -21,6 +21,7 @@ class Visio.Views.AchievementBudgetSingleYearView extends Backbone.View
         width: @$el.find('#bubble').width()
         height: 320
         selection: d3.select(@el).select('#bubble')
+        figureId: 'absy'
         margin:
           top: 10
           bottom: 30

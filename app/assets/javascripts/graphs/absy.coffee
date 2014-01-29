@@ -2,6 +2,8 @@ Visio.Figures.absy = (config) ->
 
   margin = config.margin
 
+  figureId = config.figureId
+
   width = config.width - margin.left - margin.right
   height = config.height - margin.top - margin.bottom
 
@@ -139,7 +141,7 @@ Visio.Figures.absy = (config) ->
           g.select(".bubble.id-#{d.point.refId()}").classed 'focus', false
 
         ).on('click', (d) ->
-          $.publish 'select', [d.point]
+          $.publish "select.#{figureId}", [d.point]
         )
 
     path.exit().remove()
@@ -176,7 +178,7 @@ Visio.Figures.absy = (config) ->
     width = _width
     return render
 
-  $.subscribe 'select.absy', select
+  $.subscribe "select.#{figureId}.figure", select
   return render
 
 Visio.Figures.absy.filterFn = (d) ->

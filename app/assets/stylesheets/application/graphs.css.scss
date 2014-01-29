@@ -88,7 +88,7 @@
   fill: transparent;
 }
 
-.indicator-bar-graph {
+.isy-figure {
   .myr-bar {
     fill: $purple-dark;
   }
@@ -107,6 +107,10 @@
   }
   .box.faded {
     opacity: .4;
+  }
+  .box.active {
+    stroke: black;
+    stroke-width: 1px;
   }
   .box {
     -moz-transition:opacity $medium-transition;

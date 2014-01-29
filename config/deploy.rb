@@ -1,11 +1,12 @@
 require 'bundler/capistrano'
 require "capistrano-rbenv"
 
-set:whenever_command, 'bundle exec whenever'
+set :whenever_command, 'bundle exec whenever'
 require 'whenever/capistrano'
 load 'deploy/assets'
 set :rbenv_ruby_version, "1.9.3-p484"
 set :rbenv_repository, "https://github.com/sstephenson/rbenv.git"
+set :bundle_flags, "--deployment --quiet --binstubs"
 
 set :application, "visio"
 

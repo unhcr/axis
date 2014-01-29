@@ -3,6 +3,8 @@ Visio.Figures.isy = (config) ->
   # Variable Declaration
   margin = config.margin
 
+  figureId = config.figureId
+
   width = config.width - margin.left - margin.right
   height = config.height - margin.top - margin.bottom
 
@@ -15,6 +17,7 @@ Visio.Figures.isy = (config) ->
   svg = selection.append('svg')
     .attr('width', config.width)
     .attr('height', config.height)
+    .attr('class', 'isy-figure')
 
   g = svg.append('g')
     .attr('transform', "translate(#{margin.left}, #{margin.top})")
@@ -41,10 +44,12 @@ Visio.Figures.isy = (config) ->
   # Rendering
   render = () ->
 
-    boxes = g.selectAll('g.box').data data.where({ is_performance: isPerformance }), (d) ->
+    filtered = _.filter data, Visio.Figures.isy.filterFn.bind(render)
+
+    boxes = g.selectAll('g.box').data filtered, (d) ->
       d.id
     boxes.enter().append('g')
-    boxes.attr('class', 'box')
+    boxes.attr('class', (d) -> ['box', "box-#{d.id}"].join(' '))
       .sort(sort)
       .transition()
       .duration(duration)
@@ -188,6 +193,8 @@ Visio.Figures.isy = (config) ->
         whisker.exit().remove()
 
       )
+    boxes.on 'click', (d) ->
+      $.publish "select.#{figureId}", [d]
 
     boxes.exit().remove()
 
@@ -207,6 +214,11 @@ Visio.Figures.isy = (config) ->
     goalType = _goalType
     render
 
+  select = (e, d) ->
+    box = g.select(".box-#{d.id}")
+    isActive = box.classed 'active'
+    box.classed 'active', not isActive
+
   sort = (a, b) ->
     reversedA = if a.get(progress.start) > a.get(progress.end) then -1 else 1
     reversedB = if b.get(progress.start) > b.get(progress.end) then -1 else 1
@@ -217,5 +229,8 @@ Visio.Figures.isy = (config) ->
     v = Math.abs(+d.get(progress.start) - +d.get(progress.end))
     y(v)
 
+  $.subscribe "select.#{figureId}.figure", select
   render
 
+Visio.Figures.isy.filterFn = (d) ->
+  d.get('is_performance') == @isPerformance()

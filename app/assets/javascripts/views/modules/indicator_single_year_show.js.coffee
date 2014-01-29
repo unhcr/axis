@@ -23,6 +23,7 @@ class Visio.Views.IndicatorSingleYearShowView extends Backbone.View
         right: 10
       width: 800
       height: 300
+      figureId: @isyFigureId()
 
     @sparkConfig =
       margin:
@@ -36,7 +37,7 @@ class Visio.Views.IndicatorSingleYearShowView extends Backbone.View
     situationAnalysis = @model.selectedSituationAnalysis()
 
     if !isRerender
-      @$el.html @template({ parameter: @model })
+      @$el.html @template({ parameter: @model, figureId: @isyFigureId() })
 
       # Initialize the indicator bar graph
       @config.selection = d3.select(@el).select('.indicator-bar-graph')
@@ -83,7 +84,7 @@ class Visio.Views.IndicatorSingleYearShowView extends Backbone.View
     Visio.FigureInstances[@isyFigureId()].isPerformance($target.is(':checked'))()
 
   graph: ->
-    Visio.FigureInstances[@isyFigureId()].data @model.selectedIndicatorData()
+    Visio.FigureInstances[@isyFigureId()].data @model.selectedIndicatorData().models
     Visio.FigureInstances[@isyFigureId()]()
 
   changeIsPerformance: (isPerformance) ->
