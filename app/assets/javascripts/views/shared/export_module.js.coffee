@@ -28,7 +28,7 @@ class Visio.Views.ExportModule extends Backbone.View
 
     datum.index = i for datum, i in @model.get 'data'
 
-    @$el.html @template( data: @model.get('data') )
+    @$el.html @template( model: @model.toJSON() )
     @config.selection = d3.select(@el).select('.export-figure figure')
     @figure = @model.figure()(@config)
 
@@ -67,6 +67,9 @@ class Visio.Views.ExportModule extends Backbone.View
             url: @model.pdfUrl()
             statusCode: statusCodes
         , wait * 3000
+
+    formArray = @$el.find('.export-settings form').serializeArray()
+    _.each formArray, (formObj) => @model.set formObj.name, formObj.value
 
     @model.save().then =>
       $.ajax

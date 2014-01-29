@@ -1,14 +1,14 @@
 <div class="row">
   <div class="col-md-8 col-centered">
-    <section class="overlay-header">
+    <section class="overlay-header row">
       <h1>Create a PDF.</h1>
       <h3>Select Indicators.</h3>
     </section>
-    <section class="overlay-content export-figure">
+    <section class="overlay-content export-figure row">
       <figure></figure>
       <figcaption>
 
-        <% _.each(data, function(d) { %>
+        <% _.each(model.data, function(d) { %>
         <% if (d.index >= 0) { %>
           <div class="visio-check visio-check-vertical">
             <input value="<%= d.index %>" type="checkbox" id="datum-<%= d.index %>" />
@@ -18,8 +18,12 @@
         <% }) %>
       </figcaption>
     </section>
-    <section class="export-settings">
+    <section class="export-settings row">
       <div class="ui-small-header">Customize Your Document</div>
+      <form>
+        <input type="text" placeholder="<%= model.title %>" name="title" value=""/>
+        <textarea rows="5" cols="20" placeholder="<%= model.description %>" name="description"></textarea>
+      </form>
       <button class="export">Export</button>
     </section>
   </div>
