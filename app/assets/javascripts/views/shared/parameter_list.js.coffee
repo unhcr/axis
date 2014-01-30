@@ -1,6 +1,6 @@
 class Visio.Views.ParameterListView extends Backbone.View
 
-  template: JST['parameter_list/list']
+  template: HAML['parameter_list/list']
 
   className: 'parameter-list container full-width overlay'
 
@@ -31,7 +31,7 @@ class Visio.Views.ParameterListView extends Backbone.View
     @$el.html @template(
       plan: @model.toJSON()
       tabs: @tabs
-      tab: _.findWhere(@tabs, { plural: @type })
+      selectedTab: _.findWhere(@tabs, { plural: @type })
     )
 
     @items(@type)
@@ -78,8 +78,7 @@ class Visio.Views.ParameterListView extends Backbone.View
       @$el.find('.items').html items.join(' ')
 
   item: (parameter, index) =>
-    JST['parameter_list/item'](
-      parameter: parameter.toJSON())
+    HAML['parameter_list/item'](parameter: parameter)
 
   onParameterSearch: (e) =>
     query = $(e.currentTarget).val()

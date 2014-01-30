@@ -1,8 +1,8 @@
 class Visio.Views.SearchView extends Backbone.View
 
-  template: JST['shared/search']
+  template: HAML['shared/search']
 
-  itemTemplate: JST['shared/search_item']
+  itemTemplate: HAML['shared/search_item']
 
   initialize: (options) ->
     @render()

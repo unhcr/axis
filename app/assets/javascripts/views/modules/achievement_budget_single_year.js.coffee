@@ -1,6 +1,6 @@
 class Visio.Views.AchievementBudgetSingleYearView extends Backbone.View
 
-  template: JST['modules/achievement_budget_single_year']
+  template: HAML['modules/achievement_budget_single_year']
 
   className: 'module'
 

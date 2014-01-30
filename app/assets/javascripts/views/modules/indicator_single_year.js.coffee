@@ -1,6 +1,6 @@
 class Visio.Views.IndicatorSingleYearView extends Backbone.View
 
-  template: JST['modules/indicator_single_year']
+  template: HAML['modules/indicator_single_year']
 
   initialize: (options) ->
     @views = {}

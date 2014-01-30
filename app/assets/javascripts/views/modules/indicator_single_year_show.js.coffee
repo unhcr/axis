@@ -1,6 +1,6 @@
 class Visio.Views.IndicatorSingleYearShowView extends Backbone.View
 
-  template: JST['modules/indicator_single_year_show']
+  template: HAML['modules/indicator_single_year_show']
 
   className: 'isy-container'
 

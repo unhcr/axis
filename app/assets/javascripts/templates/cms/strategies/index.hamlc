@@ -1,0 +1,6 @@
+<% _.each(strategies, function(strategy) { %>
+%div
+  %a{:href => "#edit/<%= strategy.id %>"} <%= strategy.name %>
+  %a{:href => "#destroy/<%= strategy.id %>"} X
+<% }) %>
+%a.new{:href => "#new", :style => "color:black"} + Strategy

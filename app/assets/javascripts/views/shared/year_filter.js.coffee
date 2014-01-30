@@ -2,14 +2,14 @@ class Visio.Views.YearFilterView extends Backbone.View
 
   className: 'year-filter map-filter'
 
-  template: JST['shared/year_filter']
+  template: HAML['shared/year_filter']
 
   initialize: (options) ->
 
     @render()
 
   render: () ->
-    @$el.html @template(years: Visio.manager.get('yearList'))
+    @$el.html @template({ years: Visio.manager.get('yearList') })
     $selects = @$el.find('select')
 
     $selects.easyDropDown

@@ -1,6 +1,6 @@
 class Visio.Views.StrategyCMSNewView extends Backbone.View
 
-  template: JST['cms/strategies/edit']
+  template: HAML['cms/strategies/edit']
 
   events:
     'click .commit': 'onCommit'

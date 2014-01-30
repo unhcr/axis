@@ -2,7 +2,7 @@ class Visio.Views.StrategyFilterView extends Backbone.View
 
   className: 'strategy-filter map-filter'
 
-  template: JST['shared/strategy_filter']
+  template: HAML['shared/strategy_filter']
 
   events:
     'change .visio-check input': 'onChangeCheck'

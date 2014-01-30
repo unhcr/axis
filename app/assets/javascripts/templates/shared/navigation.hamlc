@@ -1,0 +1,20 @@
+.navigation-container
+  .header
+  .save-filters
+  .ui-accordion-container
+    - _.each context.parameters, (p) ->
+      .ui-accordion
+        .name.open.ui-extra-small-header.ui-line-item-theme{ :data => { :type => "#{p.hash.plural}"} }
+          = p.hash.human.toUpperCase()
+        .ui-accordion-content{ :class => p.hash.plural,
+                               :data => { :type => p.hash.plural } }
+
+          - p.data.each (d) ->
+            .visio-check.visio-check-yellow.ui-line-item-theme
+              %input{
+                :value => p.hash.plural + Visio.Constants.SEPARATOR + d.id,
+                :checked => Visio.manager.get('selected')[p.hash.plural][d.id],
+                :type => 'checkbox',
+                :id => "check_#{d.id}" }
+              %label{ :for => "check_#{d.id}" }
+                = d.toString()

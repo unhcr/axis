@@ -1,6 +1,6 @@
 class Visio.Views.MenuView extends Backbone.View
 
-  template: JST['shared/menu']
+  template: HAML['shared/menu']
 
   className: 'container full-width menu gone overlay'
 

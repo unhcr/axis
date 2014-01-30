@@ -1,6 +1,6 @@
 class Visio.Views.D3Tooltip extends Backbone.View
 
-  baseTemplate: JST['tooltips/base']
+  baseTemplate: HAML['tooltips/base']
 
   className: 'd3-floating-tooltip'
 
@@ -14,7 +14,7 @@ class Visio.Views.D3Tooltip extends Backbone.View
   left: -> 0
 
   initialize: ->
-    @childTemplate = window.JST["tooltips/#{@name}"]
+    @childTemplate = window.HAML["tooltips/#{@name}"]
     @render()
 
   render: ->

@@ -1,0 +1,17 @@
+.container.isy-tooltip.full-width
+  .row.ui-orange
+    .col-md-6
+      = Visio.manager.year()
+    .col-md-6
+      - if (context.model.get('is_performance'))
+        PERFORMANCE
+      - else
+        IMPACT
+      INDICATOR
+  - _.each [Visio.Parameters.PPGS, Visio.Parameters.GOALS, Visio.Parameters.INDICATORS], (hash) ->
+    .row
+      .col-md-12
+        .ui-primary
+          = hash.human.toUpperCase()
+        .ui-primary-light
+          = context.model[hash.singular]().get('name')

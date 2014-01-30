@@ -27,6 +27,13 @@ module Visio
       config.rendering_time = 3000
     end
 
+    if defined? ::HamlCoffeeAssets
+      config.hamlcoffee.dependencies = { '_' => 'underscore', :hc => 'hamlcoffee_amd', 'Visio' => 'Visio' }
+      config.hamlcoffee.context = false
+      config.hamlcoffee.namespace = 'window.HAML'
+
+    end
+
 
     # Custom directories with classes and modules you want to be autoloadable.
     # config.autoload_paths += %W(#{config.root}/extras)

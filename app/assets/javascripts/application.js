@@ -13,8 +13,10 @@
 //= require jquery
 //= require jquery_ujs
 //= require underscore
+//= require hamlcoffee
 //= require backbone
 //= require ./vendor/d3.v3
+//= require_tree ./templates
 //= require visio
 //= require ./collections/syncable
 //= require ./models/syncable
@@ -22,7 +24,6 @@
 //= require ./models/parameter
 //= require ./collections/syncables/amount_type
 //= require ./models/syncables/amount_type
-//= require_tree ../templates
 //= require_tree ./views
 //= require_tree ./routers
 //= require_tree ./helpers

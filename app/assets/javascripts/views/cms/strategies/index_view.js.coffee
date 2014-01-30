@@ -1,6 +1,6 @@
 class Visio.Views.StrategyCMSIndexView extends Backbone.View
 
-  template: JST['cms/strategies/index']
+  template: HAML['cms/strategies/index']
 
   initialize: ->
     @render()

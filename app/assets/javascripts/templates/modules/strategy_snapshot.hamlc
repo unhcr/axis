@@ -1,0 +1,59 @@
+.strategy-snapshot
+  .row
+    .col-md-8.col-centered
+      .target-country-count.center-text
+        .ui-huge-number
+          = context.targetPlans.length
+        %div Target Countries
+      .col-md-3
+        .target-countries
+          .ui-blank-radio
+            %input#radio-all{
+              :checked => "checked",
+              :name => "plan",
+              :type => "radio",
+              :value => "all"}
+            %label{:for => "radio-all"} All
+          - _.each context.targetPlans, (plan) ->
+            .ui-blank-radio
+              %input{
+                :id => "radio-#{plan.id}",
+                :name => "plan",
+                :type => "radio",
+                :value => "#{plan.id}"}
+              %label{
+                :for => "radio-#{plan.id}"}
+                = plan.operation_name
+
+        - if context.targetPlans.length > context.max
+          %button.js-show-all.btn Show All
+      .col-md-9
+        .row
+          .col-md-4
+            .ui-big-number.total-indicators.center-text
+              0
+            .center-text
+              .row Total No. of Indicators for
+              .row.ui-bright-yellow.js-operation-name All&nbsp;Target&nbsp;Countries
+          .col-md-7.zero-padding
+            - _.each context.resultTypes, (result) ->
+              .circle.col-md-3.zero-padding{:class => "#{result}-circle"}
+        .row
+          .col-md-4
+            .ui-big-number.expenditure.center-text
+              %span 95
+              = '%'
+            .meter
+              %span{:style => "width: 95%"}
+            .center-text
+              .row Total Spent for
+              .ui-bright-yellow.row.js-operation-name All Target Countries
+          .col-md-4
+            .ui-big-number.center-text.budget
+              $
+              %span 200M
+            .center-text
+              .row Total Budget for
+              .row.ui-bright-yellow.js-operation-name All Target Countries
+  .row.js-extra-target-countries.gone
+    .col-md-8.col-centered

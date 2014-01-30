@@ -1,0 +1,31 @@
+%figure.spark-bar-graph.pull-right
+.row
+  .col-md-8.col-centered
+    .row.js-parameter
+      .col-md-2
+        .pin.pin-medium
+          .pin-tip
+          .pin-body
+      .col-md-8.ui-medium-header
+        = context.parameter.toString()
+        .counts
+    .row.data-container
+      .col-md-9.tabs
+      %figure.indicator-bar-graph
+%aside.container.full-width.ui-primary-soft-theme.data-container
+  .row
+    .col-md-8.col-centered
+      .col-md-8.zero-padding
+        %a{:href => "#/export/isy/#{context.figureId}"} export
+        .row.js-ppg-container{ :data => { :prefix => "PPG" } }
+        .row.js-goal-container{ :data => { :prefix => "Goal" } }
+        .row.divider-white
+        .row.bold Indicator
+        .row.js-indicator-container
+      .col-md-4.zero-padding
+        .row
+          %input.goal-type{:checked => "", :type => "checkbox", :value => "comp_target"}
+          %label Target
+        .row
+          %input.is-performance{:checked => "", :type => "checkbox", :value => "true"}
+          %label isPerformance

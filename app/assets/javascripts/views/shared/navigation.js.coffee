@@ -1,6 +1,6 @@
 class Visio.Views.NavigationView extends Backbone.View
 
-  template: JST['shared/navigation']
+  template: HAML['shared/navigation']
 
   initialize: () ->
 

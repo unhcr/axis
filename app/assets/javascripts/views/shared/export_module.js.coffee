@@ -2,7 +2,7 @@ class Visio.Views.ExportModule extends Backbone.View
 
   className: 'overview-overlay'
 
-  template: JST['shared/export_module']
+  template: HAML['shared/export_module']
 
   events:
     'change figcaption input': 'onSelectionChange'

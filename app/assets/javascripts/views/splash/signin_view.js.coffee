@@ -1,6 +1,6 @@
 class Visio.Views.SigninView extends Backbone.View
 
-  template: JST['splash/signin']
+  template: HAML['splash/signin']
 
   events:
     'click .signin' : 'onClickSignin'

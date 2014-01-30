@@ -1,6 +1,6 @@
 class Visio.Views.MapTooltipView extends Backbone.View
 
-  template: JST['shared/map_tooltip']
+  template: HAML['shared/map_tooltip']
 
   className: 'tooltip tooltip-transition'
 
@@ -10,6 +10,14 @@ class Visio.Views.MapTooltipView extends Backbone.View
     @render()
 
   boundingId: 'map'
+
+  parameters: [
+    Visio.Parameters.PPGS,
+    Visio.Parameters.GOALS,
+    Visio.Parameters.OUTPUTS,
+    Visio.Parameters.PROBLEM_OBJECTIVES,
+    Visio.Parameters.OUTPUTS
+  ]
 
   boundingRect: null
 
@@ -48,6 +56,7 @@ class Visio.Views.MapTooltipView extends Backbone.View
       @$el.html @template({
         plan: @model.toJSON()
         situationAnalysisCategory: @model.strategySituationAnalysis().category
+        parameters: @parameters
       })
 
     offset = $(@point).offset()
@@ -119,7 +128,7 @@ class Visio.Views.MapTooltipView extends Backbone.View
       dx = @boundingRect.right - (offset.left + $content.width() + padding)
       console.log dx
 
-    Visio.router.map.pan dx, dy
+    Visio.FigureInstances.map.pan dx, dy
 
     @render(true)
 

@@ -1,6 +1,6 @@
 class Visio.Views.StrategySnapshotView extends Backbone.View
 
-  template: JST['modules/strategy_snapshot']
+  template: HAML['modules/strategy_snapshot']
 
   maxListLength: 10
 

@@ -1,0 +1,7 @@
+.col-md-8.col-centered
+  .row.ui-small-header
+    = context.name
+  .row
+    = Visio.manager.get('amount_type').human + ': $' + Visio.Utils.commaNumber(context.datum.selectedAmount())
+  .row
+    = "Achievement: #{Math.round(100 * context.datum.selectedAchievement().result)}"

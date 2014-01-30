@@ -89,6 +89,10 @@ GEM
       activesupport (>= 3.1, < 4.1)
       haml (>= 3.1, < 4.1)
       railties (>= 3.1, < 4.1)
+    haml_coffee_assets (1.16.0)
+      coffee-script (~> 2.0)
+      sprockets (~> 2.0)
+      tilt (~> 1.1)
     hashr (0.0.22)
     highline (1.6.19)
     hike (1.2.3)
@@ -246,9 +250,11 @@ DEPENDENCIES
   coffee-rails (~> 3.2.1)
   devise
   equivalent-xml
+  execjs
   figaro
   haml
   haml-rails (>= 0.3.4)
+  haml_coffee_assets
   jbuilder
   jquery-rails
   mysql2

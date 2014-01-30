@@ -1,6 +1,6 @@
 class Visio.Views.BubbleInfoView extends Backbone.View
 
-  template: JST['shared/bubble_info']
+  template: HAML['shared/bubble_info']
 
   initialize: (options) ->
 
