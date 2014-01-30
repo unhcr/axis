@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140129105842) do
+ActiveRecord::Schema.define(:version => 20140130172439) do
 
   create_table "budgets", :force => true do |t|
     t.string   "budget_type"
@@ -91,11 +91,10 @@ ActiveRecord::Schema.define(:version => 20140129105842) do
     t.text     "description"
     t.boolean  "include_parameter_list", :default => false
     t.boolean  "include_explaination",   :default => false
-    t.text     "data"
+    t.text     "figure_config"
     t.datetime "created_at",                                :null => false
     t.datetime "updated_at",                                :null => false
     t.integer  "user_id"
-    t.string   "figure_id"
     t.string   "figure_type"
   end
 

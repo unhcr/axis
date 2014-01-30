@@ -24,7 +24,7 @@ class ExportModulesControllerTest < ActionController::TestCase
 
                     }
                   },
-        :data => [{ :value => 1 }]
+        :figure_config => { :data => [{ :value => 1 }] }
       }
     }
 
@@ -36,8 +36,7 @@ class ExportModulesControllerTest < ActionController::TestCase
     assert_equal '2012', m.state['year'], 'Year should be 2012'
     assert_equal 'a type', m.state['amount_type'], 'Amount type should "a type"'
     assert m.state['selected']['plan_ids']['abc'], 'plan_id abc should be true'
-    assert_equal 1, m.data.length
-    assert_equal '1', m.data[0]['value']
+    assert_equal '1', m.figure_config['data'][0]['value']
     assert_equal m.user.id, @user.id, 'Should belong to the user signed in'
     assert_equal m.include_parameter_list, false, 'Default parameter list value'
     assert_equal m.include_explaination, false, 'Default explaination value'
@@ -59,7 +58,7 @@ class ExportModulesControllerTest < ActionController::TestCase
 
                     }
                   },
-        :data => [{ :value => 1 }]
+        :figure_config => { :data => [{ :value => 1 }] }
       }
     }
 
