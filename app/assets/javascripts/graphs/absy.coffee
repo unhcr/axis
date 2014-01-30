@@ -7,7 +7,7 @@ Visio.Figures.absy = (config) ->
   width = config.width - margin.left - margin.right
   height = config.height - margin.top - margin.bottom
 
-  selection = config.selection
+  selection = config.selection || d3.select($('<div></div>')[0])
 
   duration = 500
 
@@ -84,7 +84,7 @@ Visio.Figures.absy = (config) ->
 
   render = () ->
 
-    filtered = data.filter Visio.Figures.absy.filterFn
+    filtered = data.filter render.filterFn
     maxAmount = d3.max data, (d) -> d.selectedAmount()
 
     if !domain || domain[1] < maxAmount || domain[1] > 2 * maxAmount
@@ -181,8 +181,25 @@ Visio.Figures.absy = (config) ->
   render.unsubscribe = ->
     $.unsubscribe "select.#{figureId}.figure"
 
+  render.exportId = ->
+    return figureId + '_export'
+
+  render.filterFn = (d) ->
+    return d.selectedAmount() && d.selectedAchievement().result
+
+  render.el = () ->
+    return selection.node()
+
+  render.sortFn = (a, b) -> 0
+
+  render.config = ->
+    return {
+      margin: margin
+      width: config.width
+      height: config.height
+      data: data
+    }
+
   $.subscribe "select.#{figureId}.figure", select
   return render
 
-Visio.Figures.absy.filterFn = (d) ->
-  return d.selectedAmount() && d.selectedAchievement().result

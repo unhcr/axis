@@ -13,7 +13,6 @@ class Visio.Models.IndicatorDatum extends Visio.Models.Syncable
 
   getParameter: (parameterHash) ->
     id = @get "#{parameterHash.singular}_id"
-    console.log Visio.manager.get(parameterHash.plural).get(id)
     Visio.manager.get(parameterHash.plural).get(id)
 
   isConsistent: ->

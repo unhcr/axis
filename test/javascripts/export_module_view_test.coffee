@@ -4,7 +4,6 @@ module 'Export Module View',
     Visio.manager = new Visio.Models.Manager()
     figureType = 'isy'
     @figureId = 'myid-export'
-    @el = $('<div></div>')[0]
     @data = new Visio.Collections.IndicatorDatum([
         {
           id: 'ben'
@@ -40,18 +39,18 @@ module 'Export Module View',
         bottom: 0
       width: 100
       height: 100
-      selection: d3.select(@el)
       data: @data.models
-      figureId: @figureId
+      isExport: true
+      isPerformance: true
 
     Visio.FigureInstances[@figureId] = Visio.Figures[figureType](config)
+    config.figureId = Visio.FigureInstances[@figureId].exportId()
 
     @model = new Visio.Models.ExportModule
       figure_type: figureType
-      figure_id: @figureId + '-export'
       state: Visio.manager.state()
-      data: Visio.FigureInstances[@figureId].data().filter(
-        Visio.Figures[figureType].filterFn.bind(Visio.FigureInstances[@figureId]))
+      figure_config: config
+
     @exportView = new Visio.Views.ExportModule( model: @model)
 
   teardown: ->
@@ -62,22 +61,24 @@ module 'Export Module View',
 test 'render', ->
   @exportView.render()
 
-  strictEqual $(@exportView.el).find('figcaption input').length,
-    @data.where( is_performance: @exportView.figure.isPerformance()).length
+  strictEqual $(@exportView.el).find('figcaption input').length, 2
+  strictEqual $(@exportView.el).find('figure .box').length, 2
 
 test 'select', ->
   @exportView.render()
-  d = _.find @model.get('data'), (d) -> d.index == 0
+  d = _.find @model.get('figure_config').data, (d) -> d.index == 0
+  strictEqual $(@exportView.el).find('figcaption input').length, 2
+  strictEqual $(@exportView.el).find('figure .box').length, 2
 
-  $.publish "select.#{@model.get('figure_id')}", [d]
+  $.publish "select.#{@model.get('figure_config').figureId}", [d]
   strictEqual @exportView.$el.find(':checked').length, 1, 'Should make one active'
   strictEqual @exportView.$el.find('figure .active').length, 1, 'Should make one active in isy figure'
 
-  $.publish "select.#{@model.get('figure_id')}", [d]
+  $.publish "select.#{@model.get('figure_config').figureId}", [d]
   strictEqual @exportView.$el.find(':checked').length, 0, 'Should toggle it off'
   strictEqual @exportView.$el.find('figure .active').length, 0, 'Should toggle off active in isy figure'
 
-  $.publish "select.#{@model.get('figure_id')}.figure", [d]
+  $.publish "select.#{@model.get('figure_config').figureId}.figure", [d]
   strictEqual @exportView.$el.find(':checked').length, 0, 'Should not affect view'
   strictEqual @exportView.$el.find('figure .active').length, 1, 'Should toggle on active in isy figure'
 

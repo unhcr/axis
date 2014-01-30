@@ -32,20 +32,18 @@ test 'render', ->
   ok d3.selectAll('.bubble').length, 0
 
 test 'filterFn', ->
-  ok Visio.Figures.absy.filterFn
-  ok Visio.Figures.absy.filterFn instanceof Function
 
-  ok Visio.Figures.absy.filterFn(@d), 'Should not be filtered'
+  ok @figure.filterFn(@d), 'Should not be filtered'
 
   @d.selectedAmount.restore()
   sinon.stub @d, 'selectedAmount', -> 0
-  ok not Visio.Figures.absy.filterFn(@d), 'Should be filtered'
+  ok not @figure.filterFn(@d), 'Should be filtered'
 
   @d.selectedAmount.restore()
   @d.selectedAchievement.restore()
   sinon.stub @d, 'selectedAmount', -> 10
   sinon.stub @d, 'selectedAchievement', -> { result: undefined }
-  ok not Visio.Figures.absy.filterFn(@d), 'Should be filtered'
+  ok not @figure.filterFn(@d), 'Should be filtered'
 
 
 test 'select', ->
@@ -56,3 +54,13 @@ test 'select', ->
 
   $.publish('select.absy', [@d])
   ok d3.select(@el).selectAll('.active').length, 1, 'Should have one active bubble'
+
+test 'el', ->
+  @figure.data [@d]
+  @figure()
+
+  ok @figure.el() != '', 'Figure should have something in it'
+
+  $(@el).html ''
+
+  strictEqual @figure.el().innerHTML, '', 'Figure should be empty'

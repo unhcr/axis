@@ -1,12 +1,13 @@
 .row
   .col-md-8.col-centered
     %section.overlay-header.row
+      %a.close Close
       %h1 Create a PDF.
       %h3 Select Indicators.
     %section.overlay-content.export-figure.row
       %figure
       %figcaption
-        - _.each context.model.data, (d) ->
+        - _.each context.filtered, (d) ->
           - if d.index?
             .visio-check.visio-check-vertical
               %input{
@@ -14,7 +15,7 @@
                 :type => "checkbox",
                 :value => "#{d.index}"}
               %label{:for => "datum-#{d.index}"}
-                = d.index
+                = d.index + 1
     %section.export-settings.row
       .ui-small-header Customize Your Document
       %form

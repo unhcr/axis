@@ -102,12 +102,12 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
       return
 
     @setup().done =>
+      figure = Visio.FigureInstances[figureId]
+      config = $.extend { figureId: figure.exportId(), isExport: true }, figure.config()
       model = new Visio.Models.ExportModule
         figure_type: figureType
-        figure_id: figureId + '-export'
         state: Visio.manager.state()
-        data: Visio.FigureInstances[figureId].data().filter(
-          Visio.Figures[figureType].filterFn.bind(Visio.FigureInstances[figureId]))
+        figure_config: config
 
       @exportView = new Visio.Views.ExportModule( model: model)
       $('.content').append(@exportView.render().el)

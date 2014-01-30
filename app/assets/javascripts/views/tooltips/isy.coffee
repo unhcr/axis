@@ -18,7 +18,6 @@ class Visio.Views.IsyTooltip extends Visio.Views.D3Tooltip
       return @$figureEl.offset().left + @offset
 
   initialize: (options) ->
-    console.log options
     @figure = options.figure
     @$figureEl = options.$figureEl
     @isyIndex = options.index

@@ -19,6 +19,8 @@ class Visio.Models.ExportModule extends Backbone.Model
   figure: ->
     Visio.Figures[@get 'figure_type']
 
+  figure_config: {}
+
   urlRoot: '/export_modules'
 
   pdfUrl: ->

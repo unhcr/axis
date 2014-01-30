@@ -8,13 +8,13 @@ Visio.Figures.isy = (config) ->
   width = config.width - margin.left - margin.right
   height = config.height - margin.top - margin.bottom
 
-  selection = config.selection
+  selection = if config.selection? then config.selection else d3.select($('<div></div>')[0])
 
   duration = 500
 
   tooltip = null
 
-  isPerformance = true
+  isPerformance = if config.isPerformance? then config.isPerformance else true
 
   svg = selection.append('svg')
     .attr('width', config.width)
@@ -39,20 +39,23 @@ Visio.Figures.isy = (config) ->
     start: Visio.Algorithms.REPORTED_VALUES.baseline
     end: Visio.Algorithms.REPORTED_VALUES.myr
 
-  goalType = Visio.Algorithms.GOAL_TYPES.target
+  goalType = config.goalType || Visio.Algorithms.GOAL_TYPES.target
 
   data = config.data || []
 
   # Rendering
   render = () ->
 
-    filtered = _.filter data, Visio.Figures.isy.filterFn.bind(render)
+    filtered = _.filter data, render.filterFn
+    console.log filtered
+    console.log selection.node()
 
     boxes = g.selectAll('g.box').data filtered, (d) ->
       d.id
     boxes.enter().append('g')
+    console.log g.node()
     boxes.attr('class', (d) -> ['box', "box-#{d.id}"].join(' '))
-      .sort(sort)
+      .sort(sortFn)
       .transition()
       .duration(duration)
       .attr('transform', (d, i) ->
@@ -205,6 +208,7 @@ Visio.Figures.isy = (config) ->
     boxes.on 'click', (d) ->
       $.publish "select.#{figureId}", [d]
 
+    console.log g.node()
     boxes.exit().remove()
 
   render.data = (_data) ->
@@ -236,12 +240,34 @@ Visio.Figures.isy = (config) ->
   render.unsubscribe = ->
     $.unsubscribe "select.#{figureId}.figure"
 
+  render.config = ->
+    return {
+      margin: margin
+      width: config.width
+      height: config.height
+      goalType: goalType
+      isPerformance: isPerformance
+      data: data
+    }
+
+  render.exportId = ->
+    return figureId + '_export'
+
+  render.filterFn = (d) ->
+    d.get('is_performance') == isPerformance
+
+  render.el = () ->
+    return selection.node()
+
+  render.exportId = ->
+    return figureId + '_export'
+
   select = (e, d) ->
     box = g.select(".box-#{d.id}")
     isActive = box.classed 'active'
     box.classed 'active', not isActive
 
-  sort = (a, b) ->
+  sortFn = (a, b) ->
     reversedA = if a.get(progress.start) > a.get(progress.end) then -1 else 1
     reversedB = if b.get(progress.start) > b.get(progress.end) then -1 else 1
     (reversedA * scaledBarHeight(a)) - (reversedB * scaledBarHeight(b))
@@ -254,5 +280,3 @@ Visio.Figures.isy = (config) ->
   $.subscribe "select.#{figureId}.figure", select
   render
 
-Visio.Figures.isy.filterFn = (d) ->
-  d.get('is_performance') == @isPerformance()

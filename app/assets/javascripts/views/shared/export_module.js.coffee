@@ -7,44 +7,34 @@ class Visio.Views.ExportModule extends Backbone.View
   events:
     'change figcaption input': 'onSelectionChange'
     'click .export': 'onClickExport'
+    'click .close': 'onClose'
 
   initialize: (options) ->
     $(document).scrollTop(0)
+    @config = @model.get 'figure_config'
 
-    @config =
-      margin:
-        top: 30
-        bottom: 30
-        left: 90
-        right: 80
-      width: 600
-      height: 300
-      isExport: true
-      figureId: @model.get('figure_id')
-
-    $.subscribe "select.#{@model.get('figure_id')}", @select
+    $.subscribe "select.#{@config.figureId}", @select
 
   render: ->
 
-    datum.index = i for datum, i in @model.get 'data'
 
-    @$el.html @template( model: @model.toJSON() )
-    @config.selection = d3.select(@el).select('.export-figure figure')
     @figure = @model.figure()(@config)
 
+    filtered = _.chain(@config.data).filter(@figure.filterFn).sort(@figure.sortFn).value()
+    datum.index = i for datum, i in filtered
 
-    @figure.data @model.get('data')
-
+    @$el.html @template( model: @model.toJSON(), filtered: filtered )
+    @$el.find('.export-figure figure').html @figure.el()
     @figure()
     @
 
   onSelectionChange: (e) ->
     e.preventDefault()
     $target = $(e.currentTarget)
-    d = _.find @model.get('data'), (d) ->
+    d = _.find @config.data, (d) ->
       d.index == +$target.val()
 
-    $.publish "select.#{@model.get('figure_id')}.figure", [d]
+    $.publish "select.#{@config.figureId}.figure", [d]
 
 
   select: (e, d) =>
@@ -75,6 +65,10 @@ class Visio.Views.ExportModule extends Backbone.View
       $.ajax
         url: @model.pdfUrl()
         statusCode: statusCodes
+
+  onClose: ->
+    @close()
+    Visio.router.navigate '/' + @model.get 'figure_type', { trigger: true }
 
   close: ->
     $.unsubscribe "select.#{@model.get('figure_id')}"
