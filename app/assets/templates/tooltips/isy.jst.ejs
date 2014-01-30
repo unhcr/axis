@@ -1,0 +1,16 @@
+<div class="container isy-tooltip full-width">
+  <div class="row ui-orange">
+    <div class="col-md-6"><%= Visio.manager.year() %></div>
+    <div class="col-md-6"><% if (model.get('is_performance')) { %>PERFORMANCE<% } else { %>IMPACT
+      <% } %> INDICATOR </div>
+  </div>
+
+  <% _.each([Visio.Parameters.PPGS, Visio.Parameters.GOALS, Visio.Parameters.INDICATORS], function(hash) { %>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="ui-primary"><%= hash.human.toUpperCase() %></div>
+        <div class="ui-primary-light"><%= model[hash.singular]().get('name') %></div>
+      </div>
+    </div>
+  <% }) %>
+</div>

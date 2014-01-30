@@ -4,6 +4,18 @@ class Visio.Models.IndicatorDatum extends Visio.Models.Syncable
 
   paramRoot: 'indicator_datum'
 
+  plan: -> @getParameter(Visio.Parameters.PLANS)
+  ppg: -> @getParameter(Visio.Parameters.PPGS)
+  goal: -> @getParameter(Visio.Parameters.GOALS)
+  indicator: -> @getParameter(Visio.Parameters.INDICATORS)
+  output: -> @getParameter(Visio.Parameters.OUTPUTS)
+  problem_objective: -> @getParameter(Visio.Parameters.PROBLEM_OBJECTIVES)
+
+  getParameter: (parameterHash) ->
+    id = @get "#{parameterHash.singular}_id"
+    console.log Visio.manager.get(parameterHash.plural).get(id)
+    Visio.manager.get(parameterHash.plural).get(id)
+
   isConsistent: ->
     baseline = @get Visio.Algorithms.REPORTED_VALUES.baseline
     myr = @get Visio.Algorithms.REPORTED_VALUES.myr

@@ -12,6 +12,8 @@ Visio.Figures.isy = (config) ->
 
   duration = 500
 
+  tooltip = null
+
   isPerformance = true
 
   svg = selection.append('svg')
@@ -79,6 +81,12 @@ Visio.Figures.isy = (config) ->
           g.selectAll('.box').classed 'faded', true
           box.classed 'faded', false
 
+          tooltip = new Visio.Views.IsyTooltip
+            figure: render
+            '$figureEl': $(box[0][0])
+            isyIndex: i
+            model: d
+
           y.domain [0, +d.get(goalType)]
           circles = box.selectAll('.circle').data(_.values(Visio.Algorithms.REPORTED_VALUES))
           circles.enter().append('circle')
@@ -107,7 +115,7 @@ Visio.Figures.isy = (config) ->
               tag.enter().append('rect')
               tag.attr('x', 0)
                 .attr('y', -10)
-                .attr('width', 200)
+                .attr('width', 100)
                 .attr('height', 20)
                 .attr('rx', 5)
                 .attr('ry', 5)
@@ -124,12 +132,13 @@ Visio.Figures.isy = (config) ->
                   if p != goalType
                     percent = d.get(p) / +d.get(goalType)
                     humanMetric = Visio.Utils.humanMetric(p)
-                    return "#{humanMetric} is #{Visio.Formats.PERCENT(percent)} of the #{humanGoal}"
+                    return "#{Visio.Formats.PERCENT(percent)} #{humanMetric}"
                   else
                     return "#{humanGoal} is #{d.get(goalType)}"
 
 
         container.on 'mouseout', (d) ->
+          tooltip.close() if tooltip
           g.selectAll('.box').classed 'faded', false
           box.selectAll('.circle').data([])
             .exit().transition().duration(Visio.Durations.VERY_FAST).attr('r', 0).remove()
@@ -212,6 +221,16 @@ Visio.Figures.isy = (config) ->
   render.goalType = (_goalType) ->
     return goalType unless arguments.length
     goalType = _goalType
+    render
+
+  render.x = (_x) ->
+    return x unless arguments.length
+    x = _x
+    render
+
+  render.width = (_width) ->
+    return width unless arguments.length
+    width = _width
     render
 
   render.unsubscribe = ->

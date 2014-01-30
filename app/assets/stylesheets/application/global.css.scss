@@ -220,6 +220,10 @@ body.index {
   position: relative;
 }
 
+.ui-orange {
+  color: $orange;
+}
+
 .ui-primary-soft {
   color: $primary-soft;
 }
@@ -1332,4 +1336,18 @@ input[type="radio"]:checked + label {
     border-top: none;
   }
 
+}
+
+.d3-floating-tooltip {
+  position: absolute;
+  z-index: 100;
+
+  .isy-tooltip .row {
+    background-color: white;
+    border: 1px $dark-gray solid;
+    border-bottom: none;
+  }
+  .isy-tooltip .row:last-child {
+    border-bottom: 1px $dark-gray solid;
+  }
 }
