@@ -49,10 +49,8 @@ Visio.Figures.bmy = (config) ->
 
   render = ->
 
-    filtered = _.chain(data).filter(render.filterFn).sort(render.sortFn).reduce(render.reduceFn, []).value()
+    filtered = render.filtered(data)
     y.domain [0, d3.max(_.flatten(filtered), (d) -> d.amount)]
-
-    console.log filtered
 
     lines = g.selectAll('.budget-line').data(filtered)
     lines.enter().append 'path'
@@ -61,19 +59,18 @@ Visio.Figures.bmy = (config) ->
       .attr('d', lineFn)
       .attr('class', (d) -> ['budget-line'].join(' '))
 
-  render.filterFn = -> true
-
   render.data = (_data) ->
     return data unless arguments.length
     data = _data
     render
 
-  render.sortFn = (a, b) -> a.get 'year' - b.get 'year'
+  render.filtered = (_data) ->
+    _.chain(_data).reduce(reduceFn, []).value()
 
   render.el = () ->
     return selection.node()
 
-  render.reduceFn = (memo, budget) ->
+  reduceFn = (memo, budget) ->
     budget.set 'year', Visio.manager.get('yearList')[Math.floor(Math.random() * 4)] unless budget.get('year')?
     lineData = _.find memo, (array) -> array.budgetType == budget.get 'budget_type'
     unless lineData

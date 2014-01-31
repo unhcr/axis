@@ -100,6 +100,16 @@ class Visio.Models.Manager extends Backbone.Model
 
     return new parameters.constructor(parameters.filter((p) => @get('selected')[type][p.id]) )
 
+  isSelected: (type, id, isAnyYear) ->
+    return @get('selected')[type][id] if not isAnyYear or Visio.Parameters.PLANS.plural != type
+
+    plan = @get(type).get(id)
+    ids = _.chain(@get('yearList')).map((year) ->
+      newPlan = plan.getPlanForDifferentYear(year)
+      return if newPlan then newPlan.id else null).compact().value()
+
+    return _.any ids, (id) => @get('selected')[type][id]
+
   plan: (idOrISO) ->
     plan = @get('plans').get(idOrISO)
 

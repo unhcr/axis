@@ -16,9 +16,9 @@ module 'BMY Figure',
   teardown: ->
     @d.selectedBudgetData.restore()
 
-test 'reduceFn', ->
+test 'filtered', ->
 
-  memo = _.reduce @budgets.models, @figure.reduceFn, []
+  memo = @figure.filtered @budgets.models
 
   strictEqual memo.length, 2, 'Should have two lines'
   ok _.find memo, ((array) -> array.budgetType == Visio.Budgets.ADMIN), 'One line should have ADMIN type'

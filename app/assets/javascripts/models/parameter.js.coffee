@@ -1,6 +1,6 @@
 class Visio.Models.Parameter extends Visio.Models.Syncable
 
-  selectedData: (type) ->
+  selectedData: (type, isAnyYear = false) ->
     return new Visio.Collections[type.className](Visio.manager.get(type.plural).filter((d) =>
       return _.every _.values(Visio.Parameters), (hash) =>
         return true if hash.plural == Visio.Parameters.STRATEGY_OBJECTIVES.plural
@@ -8,25 +8,32 @@ class Visio.Models.Parameter extends Visio.Models.Syncable
         # Skip indicator if it's a budget
         if type.plural == Visio.Syncables.BUDGETS.plural or type.plural == Visio.Syncables.EXPENDITURES.plural
           return true if hash.plural == Visio.Parameters.INDICATORS.plural
-        id = d.get("#{hash.singular}_id")
 
-        isSelected = Visio.manager.get('selected')[hash.plural][id]
+        if isAnyYear and hash == Visio.Parameters.PLANS
+          pid = d.get("#{hash.singular}_id")
+          id = Visio.manager.get(hash.plural).get(pid).get('operation_id')
+        else
+          id = d.get("#{hash.singular}_id")
+
+
+        isSelected = Visio.manager.isSelected(hash.plural, pid || id, isAnyYear)
+        parameterId = if isAnyYear then @refId() else @id
 
         if @name == hash.plural
-          return @id == id and isSelected
+          return parameterId == id and isSelected
         else if hash.plural == Visio.Parameters.OUTPUTS.plural
           return isSelected or not id?
         else
           return isSelected ))
 
-  selectedIndicatorData: () ->
-    @selectedData(Visio.Syncables.INDICATOR_DATA)
+  selectedIndicatorData: (isAnyYear = false) ->
+    @selectedData(Visio.Syncables.INDICATOR_DATA, isAnyYear)
 
-  selectedBudgetData: () ->
-    @selectedData(Visio.Syncables.BUDGETS)
+  selectedBudgetData: (isAnyYear = false) ->
+    @selectedData(Visio.Syncables.BUDGETS, isAnyYear)
 
-  selectedExpenditureData: () ->
-    @selectedData(Visio.Syncables.EXPENDITURES)
+  selectedExpenditureData: (isAnyYear = false) ->
+    @selectedData(Visio.Syncables.EXPENDITURES, isAnyYear)
 
   strategyData: (type, strategy) ->
     strategy or= Visio.manager.strategy()

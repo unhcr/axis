@@ -52,6 +52,7 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
            situation_analysis: true
      })),
            Visio.manager.get('ppgs').fetchSynced(options),
+           Visio.manager.get('operations').fetchSynced(),
            Visio.manager.get('goals').fetchSynced(options),
            Visio.manager.get('outputs').fetchSynced(options),
            Visio.manager.get('problem_objectives').fetchSynced(options),

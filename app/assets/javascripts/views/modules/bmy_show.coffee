@@ -26,6 +26,9 @@ class Visio.Views.BmyShowView extends Visio.Views.AccordionShowView
 
   render: (isRerender) ->
 
+    if @model.toString() == 'Malaysia'
+      console.log 'que'
+
     unless isRerender
       @$el.html @template( parameter: @model, figureId: @bmyFigureId() )
       @$el.find('.bmy-figure').html Visio.FigureInstances[@bmyFigureId()].el()
@@ -35,7 +38,7 @@ class Visio.Views.BmyShowView extends Visio.Views.AccordionShowView
 
 
   drawFigures: ->
-    Visio.FigureInstances[@bmyFigureId()].data @model.selectedBudgetData().models
+    Visio.FigureInstances[@bmyFigureId()].data @model.selectedBudgetData(true).models
     Visio.FigureInstances[@bmyFigureId()]()
 
   bmyFigureId: =>

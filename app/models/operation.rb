@@ -20,6 +20,10 @@ class Operation < ActiveRecord::Base
   has_and_belongs_to_many :goals, :uniq => true
   has_and_belongs_to_many :ppgs, :uniq => true
 
+  def loaded
+    includes([:plan_ids])
+  end
+
   def to_indexed_json
     Jbuilder.encode do |json|
       json.extract! self, :name, :id
@@ -29,6 +33,7 @@ class Operation < ActiveRecord::Base
   def to_jbuilder(options = {})
     Jbuilder.new do |json|
       json.extract! self, :name, :id, :years
+      json.plan_ids self.plan_ids
     end
   end
 
