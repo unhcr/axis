@@ -1,6 +1,6 @@
-class Visio.Views.AchievementBudgetSingleYearView extends Backbone.View
+class Visio.Views.AbsyView extends Backbone.View
 
-  template: HAML['modules/achievement_budget_single_year']
+  template: HAML['modules/absy']
 
   className: 'module'
 
@@ -12,23 +12,23 @@ class Visio.Views.AchievementBudgetSingleYearView extends Backbone.View
     'change .achievement-type-toggle': 'onAchievementTypeChange'
 
   initialize: (options) ->
+    @config =
+      width: 600
+      height: 320
+      figureId: 'absy'
+      margin:
+        top: 10
+        bottom: 30
+        left: 90
+        right: 80
+    Visio.FigureInstances['absy'] = Visio.Figures.absy(@config)
 
   render: (isRerender) ->
 
     if !isRerender
       @$el.html @template( figureId: 'absy' )
-      config =
-        width: @$el.find('#bubble').width()
-        height: 320
-        selection: d3.select(@el).select('#bubble')
-        figureId: 'absy'
-        margin:
-          top: 10
-          bottom: 30
-          left: 90
-          right: 80
+      @$el.find('#bubble').html Visio.FigureInstances['absy'].el()
 
-      Visio.FigureInstances['absy'] = Visio.Figures.absy(config)
 
     _.each _.keys(Visio.manager.get('scenario_type')), (scenario) =>
       @$el.find("input[value='#{scenario}']").prop('checked', true)

@@ -3,7 +3,8 @@ module 'Parameter',
   setup: () ->
     Visio.user = new Visio.Models.User()
     Visio.manager = new Visio.Models.Manager()
-    Visio.manager.set 'bust_cache', true
+    Visio.manager.set 'use_cache', false
+    Visio.manager.get('operations').reset([{ id: 'o', plan_ids: [1, 2] }])
     Visio.manager.year(2012)
     strategy = { id: 17 }
     _.each _.values(Visio.Parameters), (hash) =>
@@ -23,6 +24,10 @@ module 'Parameter',
       models = [{ id: 1 }, { id: 2 }]
       if hash == Visio.Parameters.STRATEGY_OBJECTIVES
         models[0].strategy_id = strategy.id
+      if hash == Visio.Parameters.PLANS
+        _.each models, (model) -> model.operation_id = 'o'
+        models[0].year = 2012
+        models[1].year = 2013
       Visio.manager.get(hash.plural).reset(models)
 
     Visio.manager.get('expenditures').reset([
@@ -59,6 +64,17 @@ module 'Parameter',
         strategy_objective_ids: [1]
         year: 2012
       },
+      {
+        id: 'yellow'
+        plan_id: 2
+        ppg_id: 1
+        goal_id: 1
+        output_id: 1
+        problem_objective_id: 1
+        ol_admin_budget: 100
+        strategy_objective_ids: [1]
+        year: 2013
+      }
     ])
 
     Visio.manager.get('budgets').reset([
@@ -95,6 +111,17 @@ module 'Parameter',
         strategy_objective_ids: [1]
         year: 2012
       },
+      {
+        id: 'yellow'
+        plan_id: 2
+        ppg_id: 1
+        goal_id: 1
+        output_id: 1
+        problem_objective_id: 1
+        ol_admin_budget: 100
+        strategy_objective_ids: [1]
+        year: 2013
+      }
     ])
 
     Visio.manager.get('indicator_data').reset([
@@ -131,6 +158,17 @@ module 'Parameter',
         indicator_id: 1
         strategy_objective_ids: [1]
         year: 2014
+      },
+      {
+        id: 'yellow'
+        plan_id: 2
+        ppg_id: 1
+        goal_id: 1
+        output_id: 1
+        problem_objective_id: 1
+        ol_admin_budget: 100
+        strategy_objective_ids: [1]
+        year: 2013
       }
     ])
 
@@ -204,6 +242,27 @@ test 'strategyBudgetData', () ->
         ok(data.get('blue'))
 
 
+test 'selectedBudgetData - allYears', () ->
+  _.each _.values(Visio.Parameters), (hash) ->
+    selected = Visio.manager.selected(hash.plural)
+    strictEqual selected.length, 1, "There should be 1 #{hash.human} selected"
+
+    selected.each (d) ->
+      data = d.selectedBudgetData(true)
+
+      if hash.plural == Visio.Parameters.OUTPUTS.plural
+        strictEqual data.length, 3, 'There should 3 be output'
+      # Haven't implemented strategy all years
+      else if hash.plural == Visio.Parameters.STRATEGY_OBJECTIVES.plural
+        strictEqual data.length, 2, 'There should 2 be Strategy Objectives'
+        ok(data.get('red'))
+      else
+        console.log data
+        strictEqual data.length, 4, "There should 4 be #{hash.human}"
+        ok(data.get('green'))
+
+      ok(data.get('blue'))
+      ok(data instanceof Visio.Collections.Budget)
 
 test 'selectedBudgetData', () ->
 
@@ -304,7 +363,7 @@ test 'refId', ->
       strictEqual model.id, model.refId()
 
 test 'caching', ->
-  Visio.manager.set 'bust_cache', false
+  Visio.manager.set 'use_cache', true
   keys = [
     'strategyExpenditure',
     'strategyBudget',

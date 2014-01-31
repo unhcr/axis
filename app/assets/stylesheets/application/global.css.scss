@@ -1145,12 +1145,12 @@ a {
   transition:max-height $fast-transition;
 }
 
-.isy-container:hover {
+.accordion-show-container:hover {
   background-color: white;
   cursor: pointer;
 }
 
-.isy-container.open {
+.accordion-show-container.open {
   background-color: white;
 
   .data-container {
@@ -1158,7 +1158,7 @@ a {
   }
 }
 
-.isy-container.disabled {
+.accordion-show-container.disabled {
   pointer-events: none;
   opacity: .7;
 }

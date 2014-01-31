@@ -10,7 +10,14 @@
   stroke: $map-background;
 }
 
-.absy-figure {
+.svg-bmy-figure {
+  path {
+    stroke: black;
+    fill: none;
+  }
+}
+
+.svg-absy-figure {
   .bubble.focus {
     fill: $orange;
   }
@@ -88,7 +95,7 @@
   fill: transparent;
 }
 
-.isy-figure {
+.svg-isy-figure {
   .myr-bar {
     fill: $purple-dark;
   }

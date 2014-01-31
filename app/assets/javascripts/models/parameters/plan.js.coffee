@@ -44,9 +44,12 @@ class Visio.Models.Plan extends Visio.Models.Parameter
   getPlanForDifferentYear: (year) ->
     return @ if @get('year') == year
 
-    return Visio.manager.get(@name).findWhere
-      year: year
-      operation_id: @get 'operation_id'
+    operation = Visio.manager.get('operations').get(@get('operation_id'))
+    plan = null
+    _.each operation.get('plan_ids'), (id) =>
+      p = Visio.manager.get(@name).get(id)
+      plan = p if p.get('year') == year
+    return plan
 
   refId: ->
     @get('operation_id')

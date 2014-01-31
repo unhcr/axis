@@ -14,7 +14,7 @@ Visio.Figures.absy = (config) ->
   svg = selection.append('svg')
     .attr('width', config.width)
     .attr('height', config.height)
-    .attr('class', 'absy-figure')
+    .attr('class', 'svg-absy-figure')
 
   g = svg.append('g')
     .attr('transform', "translate(#{margin.left}, #{margin.top})")
@@ -53,10 +53,7 @@ Visio.Figures.absy = (config) ->
 
   entered = false
 
-  info = new Visio.Views.BubbleInfoView({
-    el: $('.info-container .bubble-info')
-  })
-
+  info = null
   voronoi = d3.geom.voronoi()
     .clipExtent([[0, 0], [width, height]])
     .x((d) -> x(d.selectedAmount()))
@@ -131,6 +128,9 @@ Visio.Figures.absy = (config) ->
         .attr("d", polygon)
         .on('mouseenter', (d) ->
           entered = true
+          info or= new Visio.Views.BubbleInfoView({
+            el: $('.info-container .bubble-info')
+          })
           # Hack for when we move from one to voronoi to another to which fires enter, enter, out in Chrome
           window.setTimeout(( -> entered = false), 50)
           info.render(d.point)

@@ -228,6 +228,20 @@ test 'selectedStrategyPlanIds', ->
   _.each ids, (id) ->
     ok _.include _.intersection(_.keys(strategies[0].plan_ids),
                                 _.keys(strategies[1].plan_ids)), id
+test 'isSelected', ->
+  Visio.manager.get('operations').reset([{ id: 'ben', plan_ids: ['a', 'b'] }])
+  Visio.manager.get('plans').reset([
+    { id: 'a', operation_id: 'ben', year: 2012 }
+    { id: 'b', operation_id: 'ben', year: 2013 }
+  ])
+  Visio.manager.set('selected', { plans: { a: true } })
+
+  ok Visio.manager.isSelected('plans', 'a'), 'a should be selected'
+  ok Visio.manager.isSelected('plans', 'a', false), 'a should be selected'
+  ok Visio.manager.isSelected('plans', 'a', true), 'a should be selected'
+  ok not Visio.manager.isSelected('plans', 'b'), 'b should not be selected'
+  ok not Visio.manager.isSelected('plans', 'b', false), 'b should not be selected'
+  ok Visio.manager.isSelected('plans', 'b', true), 'b should be selected'
 
 test 'validation', ->
 

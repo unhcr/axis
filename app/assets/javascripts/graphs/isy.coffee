@@ -19,7 +19,7 @@ Visio.Figures.isy = (config) ->
   svg = selection.append('svg')
     .attr('width', config.width)
     .attr('height', config.height)
-    .attr('class', 'isy-figure')
+    .attr('class', 'svg-isy-figure')
 
   g = svg.append('g')
     .attr('transform', "translate(#{margin.left}, #{margin.top})")

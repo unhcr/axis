@@ -195,6 +195,7 @@ test 'strategy situation analysis', () ->
 
 test 'getPlanForDifferentYear', () ->
 
+  Visio.manager.get('operations').reset([{ id: 'ben', plan_ids: [1,2] }])
   plans = [{ id: 1, operation_id: 'ben', year: 2012 },
            { id: 2, operation_id: 'ben', year: 2013 }]
   Visio.manager.get('plans').reset(plans)
@@ -214,6 +215,7 @@ test 'getPlanForDifferentYear', () ->
 
 
 test 'getPlansForDifferentyear', () ->
+  Visio.manager.get('operations').reset([{ id: 'ben', plan_ids: [1,3] }, { id: 'lisa', plan_ids: [2,4] }])
   oldPlans = [{ id: 1, operation_id: 'ben', year: 2012 },
               { id: 2, operation_id: 'lisa', year: 2012 }]
   newPlans = [{ id: 3, operation_id: 'ben', year: 2013 },
