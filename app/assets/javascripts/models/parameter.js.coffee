@@ -107,7 +107,7 @@ class Visio.Models.Parameter extends Visio.Models.Syncable
     @get 'cache.selectedExpenditure'
 
   useCache: (key) ->
-    @get("cache.#{key}")? and not Visio.manager.get 'bust_cache'
+    @get("cache.#{key}")? and Visio.manager.get('use_cache') and not Visio.manager.get 'bust_cache'
 
   refId: ->
     @id

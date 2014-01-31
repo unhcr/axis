@@ -3,7 +3,7 @@ module 'Parameter',
   setup: () ->
     Visio.user = new Visio.Models.User()
     Visio.manager = new Visio.Models.Manager()
-    Visio.manager.set 'bust_cache', true
+    Visio.manager.set 'use_cache', false
     Visio.manager.year(2012)
     strategy = { id: 17 }
     _.each _.values(Visio.Parameters), (hash) =>
@@ -304,7 +304,7 @@ test 'refId', ->
       strictEqual model.id, model.refId()
 
 test 'caching', ->
-  Visio.manager.set 'bust_cache', false
+  Visio.manager.set 'use_cache', true
   keys = [
     'strategyExpenditure',
     'strategyBudget',

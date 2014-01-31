@@ -1,8 +1,8 @@
-class Visio.Views.IndicatorSingleYearShowView extends Backbone.View
+class Visio.Views.IsyShowView extends Visio.Views.AccordionShowView
 
-  template: HAML['modules/indicator_single_year_show']
+  template: HAML['modules/isy_show']
 
-  className: 'isy-container'
+  className: 'isy-container accordion-show-container'
 
   events:
     'click .js-parameter': 'onClickParameter'
@@ -66,7 +66,7 @@ class Visio.Views.IndicatorSingleYearShowView extends Backbone.View
     Visio.FigureInstances[@sparkFigureId()].data situationAnalysis
     Visio.FigureInstances[@sparkFigureId()]()
 
-    @graph()
+    @drawFigures()
 
     @toolbarHeight or= $('.toolbar').height()
 
@@ -83,22 +83,13 @@ class Visio.Views.IndicatorSingleYearShowView extends Backbone.View
     $target = $(e.currentTarget)
     Visio.FigureInstances[@isyFigureId()].isPerformance($target.is(':checked'))()
 
-  graph: ->
+  drawFigures: ->
     Visio.FigureInstances[@isyFigureId()].data @model.selectedIndicatorData().models
     Visio.FigureInstances[@isyFigureId()]()
 
   changeIsPerformance: (isPerformance) ->
     Visio.FigureInstances[@isyFigureId()].isPerformance isPerformance
     Visio.FigureInstances[@isyFigureId()]()
-
-  isOpen: =>
-    @$el.hasClass 'open'
-
-  expand: =>
-    @$el.addClass 'open'
-
-  shrink: =>
-    @$el.removeClass 'open'
 
   onMouseenterBox: (e) ->
     d = d3.select(e.currentTarget).datum()
@@ -107,30 +98,12 @@ class Visio.Views.IndicatorSingleYearShowView extends Backbone.View
     _.each containerTypes, (type) =>
       @$el.find(".js-#{type}-container").text Visio.manager.get("#{type}s").get(d.get("#{type}_id"))
 
-  onTransitionEnd: (e) ->
-    if @isOpen() and e.originalEvent.propertyName == 'max-height'
-      $.scrollTo @$el,
-        duration: 100
-        offset:
-          top: -@toolbarHeight
-          left: 0
-
-
-  onClickParameter: (e) ->
-
-    $('.isy-container').not(@$el).removeClass 'open'
-    @$el.toggleClass 'open'
-
-    @graph() if @isOpen()
-
   isyFigureId: =>
     "isy-#{@model.id}"
 
   sparkFigureId: =>
     "spark-#{@model.id}"
 
-  close: ->
+  removeInstances: =>
     delete Visio.FigureInstances[@isyFigureId()]
     delete Visio.FigureInstances[@sparkFigureId()]
-    @unbind()
-    @remove()

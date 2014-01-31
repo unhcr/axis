@@ -89,11 +89,9 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
   routes:
     'menu' : 'menu'
     'search': 'search'
-    'absy': 'absy'
-    'absy/:year': 'absy'
-    'isy': 'isy'
-    'isy/:year': 'isy'
     'export/:figureType/:figureId': 'export'
+    ':figureType/:year': 'figure'
+    ':figureType': 'figure'
     '*default': 'index'
 
   export: (figureType, figureId) ->
@@ -112,28 +110,15 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
       @exportView = new Visio.Views.ExportModule( model: model)
       $('.content').append(@exportView.render().el)
 
-  isy: (year) ->
+  figure: (figureType, year) ->
     Visio.manager.year year, { silent: true } if year?
-
     @setup().done(() =>
-      @indicatorSingleYearView = new Visio.Views.IndicatorSingleYearView()
-      @module.html @indicatorSingleYearView.render().el
-      @moduleView = @indicatorSingleYearView
+      viewClass = figureType[0].toUpperCase() + figureType.slice(1) + 'View'
 
-      if $('header').height() < $(document).scrollTop()
-        $('.toolbar').addClass('fixed-top')
-    ).fail (e) =>
-      console.log e
+      @figureView.close() if @figureView
+      @moduleView = new Visio.Views[viewClass]()
 
-
-  absy: (year) ->
-    Visio.manager.year year, { silent: true } if year?
-
-    @setup().done(() =>
-      @achievementBudgetSingleYearView = new Visio.Views.AchievementBudgetSingleYearView()
-      @module.html @achievementBudgetSingleYearView.el
-      @moduleView = @achievementBudgetSingleYearView
-      @moduleView.render()
+      @module.html @moduleView.render().el
 
       if $('header').height() < $(document).scrollTop()
         $('.toolbar').addClass('fixed-top')
@@ -141,5 +126,5 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
       console.log e
 
   index: () =>
-    @absy()
+    @figure('absy')
 

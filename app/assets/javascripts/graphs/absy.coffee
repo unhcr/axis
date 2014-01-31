@@ -14,7 +14,7 @@ Visio.Figures.absy = (config) ->
   svg = selection.append('svg')
     .attr('width', config.width)
     .attr('height', config.height)
-    .attr('class', 'absy-figure')
+    .attr('class', 'svg-absy-figure')
 
   g = svg.append('g')
     .attr('transform', "translate(#{margin.left}, #{margin.top})")
