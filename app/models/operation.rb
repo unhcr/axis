@@ -12,6 +12,8 @@ class Operation < ActiveRecord::Base
 
   has_many :plans
   has_many :indicator_data
+  has_many :budgets
+  has_many :expenditures
 
   has_and_belongs_to_many :indicators, :uniq => true
   has_and_belongs_to_many :outputs, :uniq => true

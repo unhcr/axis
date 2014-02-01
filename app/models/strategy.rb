@@ -44,6 +44,7 @@ class Strategy < ActiveRecord::Base
       json.extract! self, :name, :id, :description
 
       if options[:include][:ids]
+        json.operation_ids self.operation_ids.inject({}) { |h, id| h[id] = true; h }
         json.indicator_ids self.indicator_ids.inject({}) { |h, id| h[id] = true; h }
         json.goal_ids self.goal_ids.inject({}) { |h, id| h[id] = true; h }
         json.ppg_ids self.ppg_ids.inject({}) { |h, id| h[id] = true; h }

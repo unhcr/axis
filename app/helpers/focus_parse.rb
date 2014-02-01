@@ -249,6 +249,7 @@ module FocusParse
                 b.goal = goal
                 b.output = output
                 b.problem_objective = problem_objective
+                b.operation = operation
 
                 b.amount = hash[:amount]
                 b.scenario = hash[:scenario]

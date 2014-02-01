@@ -1,7 +1,7 @@
 class IndicatorDatum < ActiveRecord::Base
   include SyncableModel
 
-  attr_accessible :baseline, :comp_target, :reversal, :standard, :stored_baseline, :threshold_green, :threshold_red, :yer, :myr, :is_performance, :year, :id
+  attr_accessible :baseline, :comp_target, :reversal, :standard, :stored_baseline, :threshold_green, :threshold_red, :yer, :myr, :is_performance, :year, :id, :opeartion_id
 
   self.primary_key = :id
   belongs_to :indicator
@@ -73,7 +73,7 @@ class IndicatorDatum < ActiveRecord::Base
 
   def to_jbuilder(options = {})
     Jbuilder.new do |json|
-      json.extract! self, :baseline, :comp_target, :reversal, :standard, :stored_baseline, :threshold_green, :threshold_red, :yer, :myr, :is_performance, :year, :indicator_id, :output_id, :problem_objective_id, :goal_id, :ppg_id, :plan_id, :id
+      json.extract! self, :baseline, :comp_target, :reversal, :standard, :stored_baseline, :threshold_green, :threshold_red, :yer, :myr, :is_performance, :year, :indicator_id, :output_id, :problem_objective_id, :goal_id, :ppg_id, :plan_id, :id, :operation_id
 
       json.missing_budget self.missing_budget?
       json.strategy_objective_ids self.strategy_objective_ids
