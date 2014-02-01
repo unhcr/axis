@@ -33,7 +33,7 @@ class Visio.Views.SearchView extends Backbone.View
     @hide()
 
   search: (query) =>
-    searchTypes = [Visio.Parameters.INDICATORS, Visio.Syncables.OPERATIONS]
+    searchTypes = [Visio.Parameters.INDICATORS, Visio.Parameters.OPERATIONS]
     $.get('/global_search', { query: query }).done (response) =>
       $results = @$el.find('.results')
       if _.any(searchTypes, (hash) -> response[hash.plural].length > 0)

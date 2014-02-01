@@ -9,14 +9,7 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
 
     Visio.manager.set 'selected_strategies', selectedStrategies
     Visio.manager.on 'change:date', () =>
-      # Need to get select plans from next year
       Visio.manager.set 'bust_cache', true
-      oldPlans = Visio.manager.selected('plans')
-      newPlans = oldPlans.getPlansForDifferentYear(Visio.manager.year())
-      ids = newPlans.pluck 'id'
-
-      Visio.manager.get('selected')['plans'] = _.object ids, ids.map -> true
-
       @navigation.render()
       @strategySnapshotView.render()
       @moduleView.render(true)
@@ -45,14 +38,8 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
       join_ids:
         strategy_id: Visio.manager.get('strategy_id')
 
-    $.when(Visio.manager.get('plans').fetchSynced(_.extend({}, options, {
-       options:
-         include:
-           counts: true
-           situation_analysis: true
-     })),
-           Visio.manager.get('ppgs').fetchSynced(options),
-           Visio.manager.get('operations').fetchSynced(),
+    $.when(Visio.manager.get('ppgs').fetchSynced(options),
+           Visio.manager.get('operations').fetchSynced(options),
            Visio.manager.get('goals').fetchSynced(options),
            Visio.manager.get('outputs').fetchSynced(options),
            Visio.manager.get('problem_objectives').fetchSynced(options),

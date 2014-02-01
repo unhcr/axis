@@ -112,7 +112,7 @@ Visio.Figures.map = (config) ->
           expanded.expand()
       )
 
-    centerData = Visio.manager.get(Visio.Parameters.PLANS.plural).filter (plan) ->
+    centerData = Visio.manager.get(Visio.Syncables.PLANS.plural).filter (plan) ->
       plan.get('country') and plan.get('year') == Visio.manager.year()
 
     centers = g.selectAll('.center')

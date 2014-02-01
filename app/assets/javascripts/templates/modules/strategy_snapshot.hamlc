@@ -3,7 +3,7 @@
     .col-md-8.col-centered
       .target-country-count.center-text
         .ui-huge-number
-          = context.targetPlans.length
+          = context.targetOperations.length
         %div Target Countries
       .col-md-3
         .target-countries
@@ -14,18 +14,18 @@
               :type => "radio",
               :value => "all"}
             %label{:for => "radio-all"} All
-          - _.each context.targetPlans, (plan) ->
+          - _.each context.targetOperations, (operation) ->
             .ui-blank-radio
               %input{
-                :id => "radio-#{plan.id}",
+                :id => "radio-#{operation.id}",
                 :name => "plan",
                 :type => "radio",
-                :value => "#{plan.id}"}
+                :value => "#{operation.id}"}
               %label{
-                :for => "radio-#{plan.id}"}
-                = plan.operation_name
+                :for => "radio-#{operation.id}"}
+                = operation.name
 
-        - if context.targetPlans.length > context.max
+        - if context.targetOperations.length > context.max
           %button.js-show-all.btn Show All
       .col-md-9
         .row

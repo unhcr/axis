@@ -1,30 +1,31 @@
 class Visio.Models.Parameter extends Visio.Models.Syncable
 
-  selectedData: (type, isAnyYear = false) ->
-    return new Visio.Collections[type.className](Visio.manager.get(type.plural).filter((d) =>
+  data: (type, idHash, isAnyYear = false) ->
+    condition = {}
+    condition["#{@name.singular}_id"] = @id
+    data = Visio.manager.get(type.plural).where(condition)
+
+    data = _.filter data, (d) =>
       return _.every _.values(Visio.Parameters), (hash) =>
-        return true if hash.plural == Visio.Parameters.STRATEGY_OBJECTIVES.plural
+        return true if @name.plural == hash.plural
+
+        # Must be current year if we are specifying year
+        return false if not isAnyYear and Visio.manager.year() != d.get('year')
+
 
         # Skip indicator if it's a budget
-        if type.plural == Visio.Syncables.BUDGETS.plural or type.plural == Visio.Syncables.EXPENDITURES.plural
+        if type.plural == Visio.Syncables.BUDGETS.plural or
+           type.plural == Visio.Syncables.EXPENDITURES.plural
           return true if hash.plural == Visio.Parameters.INDICATORS.plural
 
-        if isAnyYear and hash == Visio.Parameters.PLANS
-          pid = d.get("#{hash.singular}_id")
-          id = Visio.manager.get(hash.plural).get(pid).get('operation_id')
-        else
-          id = d.get("#{hash.singular}_id")
+        id = d.get("#{hash.singular}_id")
 
+        # If output_id is missing that's ok
+        return true if not id? and hash = Visio.Parameters.OUTPUTS
 
-        isSelected = Visio.manager.isSelected(hash.plural, pid || id, isAnyYear)
-        parameterId = if isAnyYear then @refId() else @id
+        idHash[hash.plural][id]
 
-        if @name == hash.plural
-          return parameterId == id and isSelected
-        else if hash.plural == Visio.Parameters.OUTPUTS.plural
-          return isSelected or not id?
-        else
-          return isSelected ))
+    return new Visio.Collections[type.className](data)
 
   selectedIndicatorData: (isAnyYear = false) ->
     @selectedData(Visio.Syncables.INDICATOR_DATA, isAnyYear)
@@ -35,27 +36,18 @@ class Visio.Models.Parameter extends Visio.Models.Syncable
   selectedExpenditureData: (isAnyYear = false) ->
     @selectedData(Visio.Syncables.EXPENDITURES, isAnyYear)
 
-  strategyData: (type, strategy) ->
+  selectedData: (type, isAnyYear = false) ->
+    @data type, Visio.manager.get('selected'), isAnyYear
+
+  strategyData: (type, strategy, isAnyYear = false) ->
     strategy or= Visio.manager.strategy()
+    idHash = {}
 
-    return new Visio.Collections[type.className](Visio.manager.get(type.plural).filter((d) =>
-      return _.every _.values(Visio.Parameters), (hash) =>
-        return true if hash.plural == Visio.Parameters.STRATEGY_OBJECTIVES.plural
-        # Skip indicator if it's a budget
-        if type.plural == Visio.Syncables.BUDGETS.plural or type.plural == Visio.Syncables.EXPENDITURES.plural
-          return true if hash.plural == Visio.Parameters.INDICATORS.plural
+    _.each _.values(Visio.Parameters), (hash) ->
+      idHash[hash.plural] = strategy.get("#{hash.singular}_ids")
 
-        id = d.get("#{hash.singular}_id")
+    @data type, idHash, isAnyYear
 
-        isSelected = strategy.get("#{hash.singular}_ids")[id]
-
-        if @name == hash.plural
-          return id == @id && isSelected
-        else if hash.plural == Visio.Parameters.OUTPUTS.plural
-          # Add null/undefined because budget data can have an undefined output
-          return isSelected or not id?
-        else
-          return isSelected ))
 
   strategyIndicatorData: (strategy) ->
     @strategyData(Visio.Syncables.INDICATOR_DATA, strategy)

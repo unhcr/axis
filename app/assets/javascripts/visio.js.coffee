@@ -34,11 +34,6 @@ window.Visio =
     MAP: 'map'
     SYNC: 'sync_date'
   Parameters:
-    PLANS:
-      singular: 'plan'
-      plural: 'plans'
-      className: 'Plan'
-      human: 'Operations'
     PPGS:
       singular: 'ppg'
       plural: 'ppgs'
@@ -69,6 +64,11 @@ window.Visio =
       plural: 'strategy_objectives'
       className: 'StrategyObjective'
       human: 'Strategy Objective'
+    OPERATIONS:
+      singular: 'operation'
+      plural: 'operations'
+      className: 'Operation'
+      human: 'Operation'
 
   SkippedParameters:
     RIGHTS_GROUPS:
@@ -78,6 +78,11 @@ window.Visio =
       human: 'Rights Groups'
 
   Syncables:
+    PLANS:
+      singular: 'plan'
+      plural: 'plans'
+      className: 'Plan'
+      human: 'Operations'
     INDICATOR_DATA:
       singular: 'indicator_datum'
       plural: 'indicator_data'
@@ -93,11 +98,6 @@ window.Visio =
       plural: 'expenditures'
       className: 'Expenditure'
       human: 'Expenditure'
-    OPERATIONS:
-      singular: 'operation'
-      plural: 'operations'
-      className: 'Operation'
-      human: 'Operation'
   Algorithms:
     SUCCESS_THRESHOLD: 0.66
     OK_THRESHOLD: 0.33
@@ -130,7 +130,7 @@ Visio.ProgressTypes =
     "#{Visio.Algorithms.REPORTED_VALUES.myr}#{Visio.Constants.SEPARATOR}#{Visio.Algorithms.REPORTED_VALUES.yer}"
 
 Visio.AggregationTypes = [
-    Visio.Parameters.PLANS,
+    Visio.Parameters.OPERATIONS,
     Visio.Parameters.PPGS,
     Visio.Parameters.GOALS,
     Visio.Parameters.OUTPUTS,

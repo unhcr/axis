@@ -45,7 +45,7 @@ class Visio.Models.Manager extends Backbone.Model
     'yearList': [2012, 2013, 2014, 2015]
     'selected': {}
     'selected_strategies': {}
-    'aggregation_type': Visio.Parameters.PLANS.plural
+    'aggregation_type': Visio.Parameters.OPERATIONS.plural
     'scenario_type': {}
     'budget_type': {}
     'achievement_type': Visio.AchievementTypes.TARGET
@@ -56,13 +56,8 @@ class Visio.Models.Manager extends Backbone.Model
   resetSelectedDefaults: () ->
     _.each _.values(Visio.Parameters), (hash) ->
       Visio.manager.get('selected')[hash.plural] = {}
-      if hash.singular == Visio.Parameters.PLANS.singular
-        plans = Visio.manager.strategy().plans().where({ year: Visio.manager.year() })
-        _.each plans, (plan) ->
-          Visio.manager.get('selected')[hash.plural][plan.id] = true
-      else
-        _.extend Visio.manager.get('selected')[hash.plural],
-          Visio.manager.strategy().get("#{hash.singular}_ids")
+      _.extend Visio.manager.get('selected')[hash.plural],
+        Visio.manager.strategy().get("#{hash.singular}_ids")
 
   resetBudgetDefaults: () ->
     _.each Visio.Scenarios, (scenario) =>
@@ -101,14 +96,7 @@ class Visio.Models.Manager extends Backbone.Model
     return new parameters.constructor(parameters.filter((p) => @get('selected')[type][p.id]) )
 
   isSelected: (type, id, isAnyYear) ->
-    return @get('selected')[type][id] if not isAnyYear or Visio.Parameters.PLANS.plural != type
-
-    plan = @get(type).get(id)
-    ids = _.chain(@get('yearList')).map((year) ->
-      newPlan = plan.getPlanForDifferentYear(year)
-      return if newPlan then newPlan.id else null).compact().value()
-
-    return _.any ids, (id) => @get('selected')[type][id]
+    return @get('selected')[type][id]
 
   plan: (idOrISO) ->
     plan = @get('plans').get(idOrISO)
@@ -127,7 +115,7 @@ class Visio.Models.Manager extends Backbone.Model
     strategyIds = _.keys @get('selected_strategies')
     strategies = @strategies strategyIds
 
-    planIds = strategies.map (strategy) -> _.keys(strategy.get("#{Visio.Parameters.PLANS.singular}_ids"))
+    planIds = strategies.map (strategy) -> _.keys(strategy.get("#{Visio.Syncables.PLANS.singular}_ids"))
     planIds = _.intersection.apply(null, planIds)
 
   getSyncDate: (id) ->

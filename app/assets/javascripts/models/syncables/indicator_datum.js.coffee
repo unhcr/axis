@@ -4,7 +4,7 @@ class Visio.Models.IndicatorDatum extends Visio.Models.Syncable
 
   paramRoot: 'indicator_datum'
 
-  plan: -> @getParameter(Visio.Parameters.PLANS)
+  operation: -> @getParameter(Visio.Parameters.OPERATIONS)
   ppg: -> @getParameter(Visio.Parameters.PPGS)
   goal: -> @getParameter(Visio.Parameters.GOALS)
   indicator: -> @getParameter(Visio.Parameters.INDICATORS)

@@ -12,16 +12,17 @@ class Visio.Views.StrategySnapshotView extends Backbone.View
   ]
 
   initialize: (options) ->
-    @collection = Visio.manager.strategy().plans()
+    @collection = Visio.manager.strategy().operations()
+    console.log @collection
 
   events:
-    'change .ui-blank-radio > input': 'onChangePlan'
+    'change .ui-blank-radio > input': 'onChangeOperation'
     'click .js-show-all': 'onClickShowAll'
 
   render: () ->
 
     @$el.html @template(
-      targetPlans: @collection.where({ year: Visio.manager.year() }).map (plan) -> plan.toJSON()
+      targetOperations: @collection.toJSON()
       resultTypes: @resultTypes
       max: @maxListLength
       cols: 3
@@ -55,10 +56,10 @@ class Visio.Views.StrategySnapshotView extends Backbone.View
       expenditure = @model.strategyExpenditure()
       @$el.find('.js-operation-name').text @model.get('operation_name')
     else
-      budget = @collection.where({ year: Visio.manager.year() }).reduce(
+      budget = @collection.reduce(
         (budget, p) -> return budget + p.strategyBudget(),
         0)
-      expenditure = @collection.where({ year: Visio.manager.year() }).reduce(
+      expenditure = @collection.reduce(
         (expenditure, p) -> return expenditure + p.strategyExpenditure(),
         0)
       @$el.find('.js-operation-name').text 'All Target Countries'
@@ -68,7 +69,7 @@ class Visio.Views.StrategySnapshotView extends Backbone.View
   onClickShowAll: (e) ->
     @$el.find('.js-extra-target-countries').toggleClass 'gone'
 
-  onChangePlan: (e) ->
+  onChangeOperation: (e) ->
     id = $(e.currentTarget).val()
 
     if id == 'all'
@@ -90,10 +91,10 @@ class Visio.Views.StrategySnapshotView extends Backbone.View
     @$el.find('.budget').text "$#{Visio.Formats.SI(budget)}"
     @$el.find('.meter > span').attr('style', "width: #{percent * 100}%")
 
-  updateSituationAnalysis: (plan) =>
+  updateSituationAnalysis: (operation) =>
 
-    if plan
-      counts = plan.strategySituationAnalysis().counts
+    if operation
+      counts = operation.strategySituationAnalysis().counts
 
 
     else
@@ -101,10 +102,10 @@ class Visio.Views.StrategySnapshotView extends Backbone.View
       _.each @resultTypes, (resultType) ->
         counts[resultType] = 0
 
-      _.each(@collection.where({ year: Visio.manager.year() }), (plan) =>
-        result = plan.strategySituationAnalysis().counts
+      @collection.each (operation) =>
+        result = operation.strategySituationAnalysis().counts
         _.each @resultTypes, (resultType) ->
-          counts[resultType] += result[resultType])
+          counts[resultType] += result[resultType]
 
     total = 0
     for resultType, count of counts
