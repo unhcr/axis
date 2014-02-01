@@ -92,7 +92,7 @@ class Visio.Views.ParameterListView extends Backbone.View
     re = new RegExp('.*' + query.split('').join('.*') + '.*', 'g')
 
     @model.get(@type).filter((parameter) ->
-      name = parameter.get('name') || parameter.get('objective_name')
+      name = parameter.toString()
       return name.search(re) != -1
     )
 
