@@ -193,45 +193,4 @@ test 'strategy situation analysis', () ->
   result = p.strategySituationAnalysis()
   strictEqual(Visio.Algorithms.ALGO_RESULTS.ok, result.category)
 
-test 'getPlanForDifferentYear', () ->
-
-  Visio.manager.get('operations').reset([{ id: 'ben', plan_ids: [1,2] }])
-  plans = [{ id: 1, operation_id: 'ben', year: 2012 },
-           { id: 2, operation_id: 'ben', year: 2013 }]
-  Visio.manager.get('plans').reset(plans)
-  plan = Visio.manager.get('plans').at 0
-
-  strictEqual plan.get('year'), 2012, 'Start year should be 2012'
-
-  newPlan = plan.getPlanForDifferentYear 2013
-
-  ok newPlan, 'Should have found a year'
-  strictEqual newPlan.get('year'), 2013, 'Year should be 2013'
-  strictEqual newPlan.get('operation_id'), 'ben', 'Should have proper operation_id'
-
-  newPlan = plan.getPlanForDifferentYear 2014
-
-  ok not newPlan, 'No plan found for 2014'
-
-
-test 'getPlansForDifferentyear', () ->
-  Visio.manager.get('operations').reset([{ id: 'ben', plan_ids: [1,3] }, { id: 'lisa', plan_ids: [2,4] }])
-  oldPlans = [{ id: 1, operation_id: 'ben', year: 2012 },
-              { id: 2, operation_id: 'lisa', year: 2012 }]
-  newPlans = [{ id: 3, operation_id: 'ben', year: 2013 },
-              { id: 4, operation_id: 'lisa', year: 2013 }]
-
-  Visio.manager.get('plans').reset(oldPlans.concat(newPlans))
-
-  oldPlansCollection = new Visio.Collections.Plan(oldPlans)
-
-  newPlansCollection = oldPlansCollection.getPlansForDifferentYear(2013)
-  strictEqual newPlansCollection.length, 2
-  newPlansCollection.each (plan) ->
-    strictEqual plan.get('year'), 2013
-
-
-
-
-
 

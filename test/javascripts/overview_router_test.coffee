@@ -30,12 +30,12 @@ asyncTest 'setup', ->
   Visio.router.setup().done( ->
     ok Visio.manager.get('setup'), 'Should be setup'
     # subtract 2 because we call fetch on Strategy Objective and we don't fetch operations
-    strictEqual $.get.callCount, _.keys(Visio.Parameters).length + _.keys(Visio.Syncables).length - 1
+    strictEqual $.get.callCount, _.keys(Visio.Parameters).length + _.keys(Visio.Syncables).length - 2
     return Visio.router.setup()
   ).done ->
     ok Visio.manager.get('setup'), 'Should be setup'
     strictEqual $.get.callCount,
-      _.keys(Visio.Parameters).length + _.keys(Visio.Syncables).length - 1,
+      _.keys(Visio.Parameters).length + _.keys(Visio.Syncables).length - 2,
       'Should not fetch again after setup'
     start()
 

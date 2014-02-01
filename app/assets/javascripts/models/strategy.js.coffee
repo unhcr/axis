@@ -26,7 +26,7 @@ class Visio.Models.Strategy extends Backbone.Model
   defaults:
     'name': 'Generic Strategy'
     'description': 'Saving lives everyday'
-    'plan_ids': {}
+    'operation_ids': {}
     'ppg_ids': {}
     'output_ids': {}
     'goal_ids': {}
@@ -42,9 +42,11 @@ class Visio.Models.Strategy extends Backbone.Model
     options or= {}
     @set('operations', new Visio.Collections.Operation((options.operations || [])))
 
+    console.log @.toJSON()
     # Initialize helper functions
     _.each _.values(Visio.Parameters), (hash) =>
       @[hash.plural] = () =>
+        console.log hash.plural
         ids = _.keys(@get("#{hash.singular}_ids"))
         parameters = Visio.manager.get(hash.plural)
         return new parameters.constructor(parameters.filter (model) =>

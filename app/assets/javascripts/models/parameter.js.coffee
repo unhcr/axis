@@ -1,12 +1,23 @@
 class Visio.Models.Parameter extends Visio.Models.Syncable
 
   data: (type, idHash, isAnyYear = false) ->
-    condition = {}
-    condition["#{@name.singular}_id"] = @id
-    data = Visio.manager.get(type.plural).where(condition)
+    # Return empty collection since indicators do not have budgets or expenditures
+    if (type.plural == Visio.Syncables.BUDGETS.plural or
+       type.plural == Visio.Syncables.EXPENDITURES.plural) and
+       @name == Visio.Parameters.INDICATORS
+      return new Visio.Collections[type.className]()
 
+    if @name == Visio.Parameters.STRATEGY_OBJECTIVES
+      data = Visio.manager.get(type.plural).filter((d) => _.include d.get("#{@name.singular}_ids"), @id)
+    else
+      condition = {}
+      condition["#{@name.singular}_id"] = @id
+      data = Visio.manager.get(type.plural).where(condition)
+
+    console.log idHash
     data = _.filter data, (d) =>
       return _.every _.values(Visio.Parameters), (hash) =>
+
         return true if @name.plural == hash.plural
 
         # Must be current year if we are specifying year
@@ -14,14 +25,23 @@ class Visio.Models.Parameter extends Visio.Models.Syncable
 
 
         # Skip indicator if it's a budget
-        if type.plural == Visio.Syncables.BUDGETS.plural or
-           type.plural == Visio.Syncables.EXPENDITURES.plural
-          return true if hash.plural == Visio.Parameters.INDICATORS.plural
+        if (type.plural == Visio.Syncables.BUDGETS.plural or
+           type.plural == Visio.Syncables.EXPENDITURES.plural) and
+           hash.plural == Visio.Parameters.INDICATORS.plural
+          return true
+
+
+        # One of strategy objective ids must be selected
+        if hash == Visio.Parameters.STRATEGY_OBJECTIVES
+          ids = d.get("#{hash.singular}_ids")
+          return _.any ids, (id) -> idHash[hash.plural][id]
+
 
         id = d.get("#{hash.singular}_id")
 
         # If output_id is missing that's ok
         return true if not id? and hash = Visio.Parameters.OUTPUTS
+
 
         idHash[hash.plural][id]
 

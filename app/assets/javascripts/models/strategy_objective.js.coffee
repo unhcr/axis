@@ -13,6 +13,8 @@ class Visio.Models.StrategyObjective extends Visio.Models.Parameter
     @set(Visio.Parameters.INDICATORS.plural,
       new Visio.Collections.Indicator((options[Visio.Parameters.INDICATORS.plural] || [])))
 
+  name: Visio.Parameters.STRATEGY_OBJECTIVES
+
   urlRoot: '/strategy_objectives'
 
   paramRoot: 'strategy_objective'
@@ -46,17 +48,3 @@ class Visio.Models.StrategyObjective extends Visio.Models.Parameter
   toString: ->
     @get 'name'
 
-
-  selectedData: (type) ->
-    return new Visio.Collections[type.className](Visio.manager.get(type.plural).filter((d) =>
-      _.include(d.get("#{Visio.Parameters.STRATEGY_OBJECTIVES.singular}_ids"), @id) and
-        d.get('year') == Visio.manager.year()))
-
-  strategyBudgetData: ->
-    @selectedData(Visio.Syncables.BUDGETS)
-
-  strategyExpenditureData: ->
-    @selectedData(Visio.Syncables.EXPENDITURES)
-
-  strategyIndicatorData: ->
-    @selectedData(Visio.Syncables.INDICATOR_DATA)

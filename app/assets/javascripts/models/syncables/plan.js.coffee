@@ -41,15 +41,5 @@ class Visio.Models.Plan extends Visio.Models.Syncable
   toString: () ->
     @get('operation_name')
 
-  getPlanForDifferentYear: (year) ->
-    return @ if @get('year') == year
-
-    operation = Visio.manager.get('operations').get(@get('operation_id'))
-    plan = null
-    _.each operation.get('plan_ids'), (id) =>
-      p = Visio.manager.get(@name).get(id)
-      plan = p if p.get('year') == year
-    return plan
-
   refId: ->
     @get('operation_id')

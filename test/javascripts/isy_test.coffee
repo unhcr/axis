@@ -2,28 +2,22 @@ module 'ISY',
   setup: ->
     Visio.manager = new Visio.Models.Manager({
       selected:
-        plans: { ben: true, lisa: true }
+        operations: { ben: true, lisa: true }
         ppgs: { abc: true, def: true }
         goals: { a: true, b: true }
-      aggregation_type: Visio.Parameters.PLANS.plural
+      aggregation_type: Visio.Parameters.OPERATIONS.plural
     })
     Visio.manager.year(2012)
     Visio.manager.set 'use_cache', false
-    Visio.manager.get(Visio.Parameters.PLANS.plural).reset([
+    Visio.manager.get(Visio.Parameters.OPERATIONS.plural).reset([
       {
         id: 'ben'
-        operation_id: 'tex'
-        year: 2012
       },
       {
         id: 'lisa'
-        operation_id: 'ill'
-        year: 2012
       },
       {
         id: 'g'
-        operation_id: 'ill'
-        year: 2013
       }
     ])
     Visio.manager.get(Visio.Parameters.PPGS.plural).reset([
@@ -58,13 +52,13 @@ test 'render', ->
   _.each Visio.manager.selected(Visio.Parameters.PPGS.plural).pluck('id'), (id) =>
     ok _.include(_.keys(@view.views), id)
 
-  Visio.manager.set 'aggregation_type', Visio.Parameters.PLANS.plural
+  Visio.manager.set 'aggregation_type', Visio.Parameters.OPERATIONS.plural
   @view.render()
   strictEqual _.keys(@view.views).length, 2
-  ok Visio.manager.get Visio.Parameters.PLANS.plural
+  ok Visio.manager.get Visio.Parameters.OPERATIONS.plural
 
 test 'sort', ->
-  sinon.stub Visio.Models.Plan.prototype, 'selectedIndicatorData', ->
+  sinon.stub Visio.Models.Operation.prototype, 'selectedIndicatorData', ->
     if @id == 'ben'
       return new Visio.Collections.IndicatorDatum([{ id: 1 }, { id: 2 }, { id: 3 }])
     else if @id == 'g'
@@ -80,10 +74,10 @@ test 'sort', ->
       analysis.total = 2
     return analysis
 
-  models = Visio.manager.get('plans').models.sort(@view.sort)
+  models = Visio.manager.get('operations').models.sort(@view.sort)
 
   strictEqual models[0].id, 'ben', 'Highest result should be first'
   strictEqual models[1].id, 'g', 'Next should be broken by total'
 
-  Visio.Models.Plan.prototype.selectedIndicatorData.restore()
+  Visio.Models.Operation.prototype.selectedIndicatorData.restore()
   Visio.Collections.IndicatorDatum.prototype.situationAnalysis.restore()
