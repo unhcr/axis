@@ -1,8 +1,8 @@
-class Visio.Collections.Plan extends Visio.Collections.Parameter
+class Visio.Collections.Plan extends Visio.Collections.Syncable
 
   model: Visio.Models.Plan
 
-  name: Visio.Parameters.PLANS.plural
+  name: Visio.Syncables.PLANS
 
   url: '/plans'
 

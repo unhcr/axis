@@ -1,10 +1,10 @@
-class Visio.Collections.Operation extends Visio.Collections.Syncable
+class Visio.Collections.Operation extends Visio.Collections.Parameter
 
   model: Visio.Models.Operation
 
   url: '/operations'
 
-  name: Visio.Syncables.OPERATIONS.plural
+  name: Visio.Parameters.OPERATIONS
 
   comparator: (a, b) ->
     aName = a.toString()

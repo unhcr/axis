@@ -4,4 +4,4 @@ class Visio.Models.Expenditure extends Visio.Models.AmountType
 
   paramRoot: 'expenditure'
 
-  name: Visio.Syncables.EXPENDITURES.plural
+  name: Visio.Syncables.EXPENDITURES

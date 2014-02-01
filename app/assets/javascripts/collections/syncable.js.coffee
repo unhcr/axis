@@ -7,7 +7,7 @@ class Visio.Collections.Syncable extends Backbone.Collection
   limit: 10000
 
   store: () ->
-    @name + '_store'
+    @name.plural + '_store'
 
   setSynced: (parameters, timestampId) ->
     db = Visio.manager.get('db')

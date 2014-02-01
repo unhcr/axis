@@ -4,4 +4,4 @@ class Visio.Models.Budget extends Visio.Models.AmountType
 
   paramRoot: 'budget'
 
-  name: Visio.Syncables.BUDGETS.plural
+  name: Visio.Syncables.BUDGETS

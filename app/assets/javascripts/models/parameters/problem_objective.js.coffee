@@ -7,4 +7,4 @@ class Visio.Models.ProblemObjective extends Visio.Models.Parameter
   toString: () ->
     return @get('objective_name')
 
-  name: Visio.Parameters.PROBLEM_OBJECTIVES.plural
+  name: Visio.Parameters.PROBLEM_OBJECTIVES

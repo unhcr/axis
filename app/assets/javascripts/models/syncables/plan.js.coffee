@@ -1,4 +1,4 @@
-class Visio.Models.Plan extends Visio.Models.Parameter
+class Visio.Models.Plan extends Visio.Models.Syncable
 
   initialize: (attrs, options) ->
     @set(
@@ -9,7 +9,7 @@ class Visio.Models.Plan extends Visio.Models.Parameter
       goals: new Visio.Collections.Goal(attrs.goals)
     )
 
-  name: Visio.Parameters.PLANS.plural
+  name: Visio.Syncables.PLANS
 
   urlRoot: '/plans'
 
