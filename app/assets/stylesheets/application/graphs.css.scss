@@ -15,6 +15,9 @@
     stroke: black;
     fill: none;
   }
+  .budget-line.active {
+    stroke: red;
+  }
 }
 
 .svg-absy-figure {

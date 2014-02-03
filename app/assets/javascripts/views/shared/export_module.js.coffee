@@ -20,10 +20,10 @@ class Visio.Views.ExportModule extends Backbone.View
 
     @figure = @model.figure()(@config)
 
-    filtered = @figure.filtered(@config.data)
-    datum.index = i for datum, i in filtered
+    @filtered = @figure.filtered(@config.data)
+    datum.index = i for datum, i in @filtered
 
-    @$el.html @template( model: @model.toJSON(), filtered: filtered )
+    @$el.html @template( model: @model.toJSON(), filtered: @filtered )
     @$el.find('.export-figure figure').html @figure.el()
     @figure()
     @
@@ -31,7 +31,7 @@ class Visio.Views.ExportModule extends Backbone.View
   onSelectionChange: (e) ->
     e.preventDefault()
     $target = $(e.currentTarget)
-    d = _.find @config.data, (d) ->
+    d = _.find @filtered, (d) ->
       d.index == +$target.val()
 
     $.publish "select.#{@config.figureId}.figure", [d]

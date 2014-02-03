@@ -34,7 +34,7 @@ Visio.Figures.bmy = (config) ->
     .y((d) -> return y(d.amount))
     .clipExtent([[-margin.left, -margin.top], [width + margin.right, height + margin.bottom]])
 
-
+  filtered = []
   isExport = config.isExport || false
 
   #xAxis = d3.svg.axis()
@@ -63,13 +63,15 @@ Visio.Figures.bmy = (config) ->
     lines
       .each((d) -> d.sort((a, b) -> a.year - b.year))
       .attr('d', lineFn)
-      .attr('class', (d) -> ['budget-line'].join(' '))
+      .attr('class', (d) -> ['budget-line', "budget-line-#{d.budgetType}"].join(' '))
 
     console.log _.flatten(filtered)
     voronoi = g.selectAll('.voronoi').data(voronoiFn(_.flatten(filtered)))
     voronoi.enter().append('path')
     voronoi.attr('class', (d, i) -> 'voronoi')
       .attr('d', polygon)
+      .on('click', (d) ->
+        $.publish "select.#{figureId}", [d.point])
     voronoi.exit().remove()
 
   render.data = (_data) ->
@@ -95,6 +97,11 @@ Visio.Figures.bmy = (config) ->
       data: data
     }
 
+  select = (e, d) ->
+    line = g.select(".budget-line-#{d.budgetType}")
+    isActive = line.classed 'active'
+    line.classed 'active', not isActive
+
   render.exportId = ->
     figureId + '_export'
 
@@ -117,4 +124,5 @@ Visio.Figures.bmy = (config) ->
     datum.amount += budget.get 'amount'
     return memo
 
-  return render
+  $.subscribe "select.#{figureId}.figure", select
+  render
