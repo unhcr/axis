@@ -6,6 +6,11 @@
       %h3 Select Indicators.
     %section.overlay-content.export-figure.row
       %figure
+    %section.export-selections.row
+      %h4 Make Your Selections.
+      .ui-small-header LABEL
+      %div
+        = "Select up 10 [something] to export. Simply click the checkboxes."
       %figcaption
         - _.each context.filtered, (d) ->
           - if d.index?
@@ -17,7 +22,7 @@
               %label{:for => "datum-#{d.index}"}
                 = d.index + 1
     %section.export-settings.row
-      .ui-small-header Customize Your Document
+      %h4 The Details
       %form
         %input{
           :name => "title",
@@ -29,4 +34,6 @@
           :name => "description",
           :placeholder => context.model.description,
           :rows => "5"}
+    %section.row
+      %h4 Go Time.
       %button.export Export

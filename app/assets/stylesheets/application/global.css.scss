@@ -1321,19 +1321,36 @@ input[type="radio"]:checked + label {
   top: 0;
   margin-left: $page-margin;
   margin-right: $page-margin;
+  .row {
+    max-width: $row-inner-width;
+    margin: 0 auto;
+  }
 
+}
+
+.export-module {
   .overlay-header {
     text-align: center;
   }
 
+  h4 {
+    text-align: left;
+    display: block;
+    border-bottom: 1px solid $primary-light;
+    color: $orange;
+    font-size: 2em;
+  }
+
+  .export-selections {
+    text-align: center
+  }
+
   figure {
-    border: 1px solid $dark-gray;
   }
 
   figcaption {
-    border: 1px solid $dark-gray;
-    border-top: none;
   }
+
 
 }
 

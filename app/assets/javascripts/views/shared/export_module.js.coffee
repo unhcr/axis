@@ -1,6 +1,6 @@
 class Visio.Views.ExportModule extends Backbone.View
 
-  className: 'overview-overlay'
+  className: 'overview-overlay export-module'
 
   template: HAML['shared/export_module']
 
