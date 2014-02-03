@@ -10,14 +10,39 @@
   stroke: $map-background;
 }
 
+line {
+  shape-rendering: crispEdges;
+}
+
 .svg-bmy-figure {
   .budget-line {
     stroke: black;
     fill: none;
+    stroke-width: 2px;
   }
   .budget-line.active {
     stroke: red;
   }
+  .budget-line-ADMIN {
+    stroke: blue;
+  }
+  .budget-line-STAFF {
+    stroke: red;
+  }
+  .budget-line-PROJECT {
+    stroke: green;
+  }
+  .budget-line-PARTNER {
+    stroke: $orange;
+  }
+
+  .axis line {
+    stroke: black;
+  }
+}
+
+.axis path {
+  fill: none;
 }
 
 .svg-absy-figure {
@@ -36,9 +61,6 @@
   .bubble {
     fill: $yellow-green;
     pointer-events: none;
-  }
-  .axis path {
-    fill: none;
   }
 
   .y.axis line {

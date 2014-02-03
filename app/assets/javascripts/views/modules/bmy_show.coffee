@@ -15,10 +15,10 @@ class Visio.Views.BmyShowView extends Visio.Views.AccordionShowView
     @config =
       margin:
         top: 10
-        bottom: 10
-        left: 10
-        right: 10
-      width: 800
+        bottom: 80
+        left: 120
+        right: 40
+      width: 650
       height: 300
       figureId: @bmyFigureId()
 

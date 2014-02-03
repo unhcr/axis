@@ -20,7 +20,7 @@ class Visio.Views.ExportModule extends Backbone.View
 
     @figure = @model.figure()(@config)
 
-    @filtered = @figure.filtered(@config.data)
+    @filtered = @figure.filtered @config.data
     datum.index = i for datum, i in @filtered
 
     @$el.html @template( model: @model.toJSON(), filtered: @filtered )

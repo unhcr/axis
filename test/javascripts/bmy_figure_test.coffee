@@ -4,6 +4,7 @@ module 'BMY Figure',
     Visio.user = new Visio.Models.User()
     Visio.manager = new Visio.Models.Manager()
     @figure = Visio.Figures.bmy(
+      showTotal: false
       margin:
         left: 0
         right: 0
@@ -35,3 +36,13 @@ test 'render', ->
   @figure()
 
   strictEqual $(@figure.el()).find('.budget-line').length, 2, 'Should have drawn 2 budget lines'
+
+test 'showTotal', ->
+  memo = @figure.filtered @budgets.models
+  strictEqual memo.length, 2, 'Should have two lines'
+
+  @figure.showTotal true
+  memo = @figure.filtered @budgets.models
+  strictEqual memo.length, 3, 'Should have three lines (one more for total)'
+  ok _.findWhere(memo, { budgetType: 'total' }), 'Should have total array'
+

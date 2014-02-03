@@ -17,7 +17,7 @@ Visio.Figures.bmy = (config) ->
     .attr('transform', "translate(#{margin.left}, #{margin.top})")
 
   x = d3.scale.ordinal()
-    .rangeBands([0, width])
+    .rangePoints([0, width])
     .domain(Visio.manager.get('yearList'))
 
   y = d3.scale.linear()
@@ -26,6 +26,8 @@ Visio.Figures.bmy = (config) ->
   lineFn = d3.svg.line()
     .x((d) -> x(d.year))
     .y((d) -> y(d.amount))
+
+  showTotal = if config.showTotal? then config.showTotal else true
 
   domain = null
 
@@ -37,21 +39,30 @@ Visio.Figures.bmy = (config) ->
   filtered = []
   isExport = config.isExport || false
 
-  #xAxis = d3.svg.axis()
-  #  .scale(x)
-  #  .orient('bottom')
-  #  .tickFormat(d3.format('s'))
-  #  .ticks(6)
-  #  .innerTickSize(14)
+  xAxis = d3.svg.axis()
+    .scale(x)
+    .orient('bottom')
+    .ticks(6)
+    .innerTickSize(14)
 
-  #yAxis = d3.svg.axis()
-  #  .scale(y)
-  #  .orient('left')
-  #  .ticks(5)
-  #  .innerTickSize(14)
-  #  .tickPadding(20)
+  yAxis = d3.svg.axis()
+    .scale(y)
+    .orient('left')
+    .ticks(5)
+    .innerTickSize(14)
+    .tickPadding(20)
 
   data = config.data || []
+
+  g.append('g')
+    .attr('class', 'y axis')
+    .attr('transform', 'translate(0,0)')
+    .append("text")
+
+  g.append('g')
+    .attr('class', 'x axis')
+    .attr('transform', "translate(0,#{height})")
+    .append("text")
 
   render = ->
 
@@ -65,7 +76,6 @@ Visio.Figures.bmy = (config) ->
       .attr('d', lineFn)
       .attr('class', (d) -> ['budget-line', "budget-line-#{d.budgetType}"].join(' '))
 
-    console.log _.flatten(filtered)
     voronoi = g.selectAll('.voronoi').data(voronoiFn(_.flatten(filtered)))
     voronoi.enter().append('path')
     voronoi.attr('class', (d, i) -> 'voronoi')
@@ -73,6 +83,18 @@ Visio.Figures.bmy = (config) ->
       .on('click', (d) ->
         $.publish "select.#{figureId}", [d.point])
     voronoi.exit().remove()
+
+    g.select('.x.axis')
+      .transition()
+      .duration(Visio.Durations.FAST)
+      .call(xAxis)
+
+    g.select('.y.axis')
+      .transition()
+      .duration(Visio.Durations.FAST)
+      .call(yAxis)
+      .attr('transform', 'translate(-20,0)')
+
 
   render.data = (_data) ->
     return data unless arguments.length
@@ -95,7 +117,13 @@ Visio.Figures.bmy = (config) ->
       width: config.width
       height: config.height
       data: data
+      showTotal: showTotal
     }
+
+  render.showTotal = (_showTotal) ->
+    return showTotal unless arguments.length
+    showTotal = _showTotal
+    render
 
   select = (e, d) ->
     line = g.select(".budget-line-#{d.budgetType}")
@@ -110,18 +138,37 @@ Visio.Figures.bmy = (config) ->
 
   reduceFn = (memo, budget) ->
     budget.set 'year', Visio.manager.get('yearList')[Math.floor(Math.random() * 4)] unless budget.get('year')?
+
+    # Add budget type array
     lineData = _.find memo, (array) -> array.budgetType == budget.get 'budget_type'
     unless lineData
       lineData = []
       lineData.budgetType = budget.get 'budget_type'
       memo.push lineData
 
+    # Add line datum
     datum = _.findWhere lineData, { year: budget.get 'year' }
     unless datum
       datum = { amount: 0, year: budget.get('year'), budgetType: budget.get('budget_type') }
       lineData.push datum
 
     datum.amount += budget.get 'amount'
+
+    if showTotal
+      # Add 'total' array
+      totalData = _.find memo, (array) -> array.budgetType == 'total'
+      unless totalData
+        totalData = []
+        totalData.budgetType = 'total'
+        memo.push totalData
+
+      # Add total datum
+      total = _.findWhere totalData, { year: budget.get 'year' }
+      unless total
+        total = { amount: 0, year: budget.get('year'), budgetType: 'total' }
+        totalData.push total
+      total.amount += budget.get 'amount'
+
     return memo
 
   $.subscribe "select.#{figureId}.figure", select
