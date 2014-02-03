@@ -24,7 +24,6 @@ gem 'mysql2'
 gem 'tire'
 gem 'will_paginate', '~> 3.0'
 gem 'normalize-rails'
-gem 'chronic'
 
 # Gems used only for assets and not required
 # in production environments by default.

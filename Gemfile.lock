@@ -248,7 +248,6 @@ DEPENDENCIES
   backbone-on-rails
   capistrano
   capistrano-rbenv
-  chronic
   coffee-rails (~> 3.2.1)
   devise
   equivalent-xml
