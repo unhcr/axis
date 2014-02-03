@@ -72,7 +72,7 @@ class Visio.Views.ExportModule extends Backbone.View
 
   close: ->
     $.unsubscribe "select.#{@model.get('figure_id')}"
-    @figure.unsubscribe()
+    @figure.unsubscribe() if @figure?
     @unbind()
     @remove()
 

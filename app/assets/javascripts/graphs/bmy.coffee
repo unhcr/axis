@@ -70,6 +70,20 @@ Visio.Figures.bmy = (config) ->
   render.el = () ->
     return selection.node()
 
+  render.config = ->
+    return {
+      margin: margin
+      width: config.width
+      height: config.height
+      data: data
+    }
+
+  render.exportId = ->
+    figureId + '_export'
+
+  render.unsubscribe = ->
+    $.unsubscribe "select.#{figureId}.figure"
+
   reduceFn = (memo, budget) ->
     budget.set 'year', Visio.manager.get('yearList')[Math.floor(Math.random() * 4)] unless budget.get('year')?
     lineData = _.find memo, (array) -> array.budgetType == budget.get 'budget_type'

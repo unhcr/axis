@@ -5,3 +5,4 @@
         = context.parameter.toString()
     .row.data-container
       %figure.bmy-figure
+      %a{:href => "#/export/bmy/#{context.figureId}"} export

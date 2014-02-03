@@ -11,7 +11,7 @@ module 'ISY Figure',
       height: 100
       selection: d3.select(@el))
 
-test 'filterFn', ->
+test 'filtered', ->
   data = new Visio.Collections.IndicatorDatum([
     {
       id: 'ben'
@@ -28,7 +28,7 @@ test 'filterFn', ->
   ])
 
   @graph.isPerformance(true)
-  filtered = _.filter data.models, @graph.filterFn
+  filtered = @graph.filtered data.models
   strictEqual filtered.length, 2
 
 

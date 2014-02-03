@@ -31,7 +31,7 @@ module 'Export Module View',
           comp_target: 50
         }
       ])
-    config =
+    @config =
       margin:
         left: 0
         right: 0
@@ -43,18 +43,19 @@ module 'Export Module View',
       isExport: true
       isPerformance: true
 
-    Visio.FigureInstances[@figureId] = Visio.Figures[figureType](config)
-    config.figureId = Visio.FigureInstances[@figureId].exportId()
+    Visio.FigureInstances[@figureId] = Visio.Figures[figureType](@config)
+    @config.figureId = Visio.FigureInstances[@figureId].exportId()
 
     @model = new Visio.Models.ExportModule
       figure_type: figureType
       state: Visio.manager.state()
-      figure_config: config
+      figure_config: @config
 
     @exportView = new Visio.Views.ExportModule( model: @model)
 
   teardown: ->
-    Visio.FigureInstances[@figureId].unsubscribe()
+    for key, val of Visio.FigureInstances
+      Visio.FigureInstances[key].unsubscribe()
     @exportView.close()
 
 
@@ -82,6 +83,13 @@ test 'select', ->
   strictEqual @exportView.$el.find(':checked').length, 0, 'Should not affect view'
   strictEqual @exportView.$el.find('figure .active').length, 1, 'Should toggle on active in isy figure'
 
+test 'Required functions', ->
+  figures = ['absy', 'isy', 'bmy']
+  requiredFns = ['filtered', 'exportId', 'config', 'el', 'unsubscribe']
 
+  _.each figures, (figure) =>
+    f = Visio.Figures[figure](@config)
 
+    _.each requiredFns, (fn) ->
+      ok f[fn] instanceof Function, "Must have filtered function for #{figure}"
 

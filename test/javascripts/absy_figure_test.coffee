@@ -31,19 +31,19 @@ test 'render', ->
   @figure()
   ok d3.selectAll('.bubble').length, 0
 
-test 'filterFn', ->
+test 'filtered', ->
 
-  ok @figure.filterFn(@d), 'Should not be filtered'
+  ok @figure.filtered([@d]).length, 'Should not be filtered'
 
   @d.selectedAmount.restore()
   sinon.stub @d, 'selectedAmount', -> 0
-  ok not @figure.filterFn(@d), 'Should be filtered'
+  ok not @figure.filtered([@d]).length, 'Should be filtered'
 
   @d.selectedAmount.restore()
   @d.selectedAchievement.restore()
   sinon.stub @d, 'selectedAmount', -> 10
   sinon.stub @d, 'selectedAchievement', -> { result: undefined }
-  ok not @figure.filterFn(@d), 'Should be filtered'
+  ok not @figure.filtered([@d]).length, 'Should be filtered'
 
 
 test 'select', ->
