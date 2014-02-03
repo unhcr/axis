@@ -1341,12 +1341,23 @@ input[type="radio"]:checked + label {
   position: absolute;
   z-index: 100;
 
-  .isy-tooltip .row {
+  .isy-tooltip section {
     background-color: white;
     border: 1px $dark-gray solid;
     border-bottom: none;
   }
-  .isy-tooltip .row:last-child {
+  .isy-tooltip section:last-child {
     border-bottom: 1px $dark-gray solid;
+  }
+}
+
+.zebra {
+  margin-left: -15px;
+  margin-right: -15px;
+  .row {
+    margin: 0px;
+  }
+  .row:nth-child(odd) {
+    background-color: $off-white;
   }
 }
