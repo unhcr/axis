@@ -29,6 +29,12 @@ Visio.Figures.bmy = (config) ->
 
   domain = null
 
+  voronoiFn = d3.geom.voronoi()
+    .x((d) -> return x(d.year))
+    .y((d) -> return y(d.amount))
+    .clipExtent([[-margin.left, -margin.top], [width + margin.right, height + margin.bottom]])
+
+
   isExport = config.isExport || false
 
   #xAxis = d3.svg.axis()
@@ -59,6 +65,13 @@ Visio.Figures.bmy = (config) ->
       .attr('d', lineFn)
       .attr('class', (d) -> ['budget-line'].join(' '))
 
+    console.log _.flatten(filtered)
+    voronoi = g.selectAll('.voronoi').data(voronoiFn(_.flatten(filtered)))
+    voronoi.enter().append('path')
+    voronoi.attr('class', (d, i) -> 'voronoi')
+      .attr('d', polygon)
+    voronoi.exit().remove()
+
   render.data = (_data) ->
     return data unless arguments.length
     data = _data
@@ -66,6 +79,10 @@ Visio.Figures.bmy = (config) ->
 
   render.filtered = (_data) ->
     _.chain(_data).reduce(reduceFn, []).value()
+
+  polygon = (d) ->
+    return "M0 0" unless d.length
+    "M" + d.join("L") + "Z"
 
   render.el = () ->
     return selection.node()
@@ -94,7 +111,7 @@ Visio.Figures.bmy = (config) ->
 
     datum = _.findWhere lineData, { year: budget.get 'year' }
     unless datum
-      datum = { amount: 0, year: budget.get 'year' }
+      datum = { amount: 0, year: budget.get('year'), budgetType: budget.get('budget_type') }
       lineData.push datum
 
     datum.amount += budget.get 'amount'

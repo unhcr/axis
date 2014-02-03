@@ -5,6 +5,7 @@ Visio.Figures.isy = (config) ->
 
   figureId = config.figureId
 
+
   width = config.width - margin.left - margin.right
   height = config.height - margin.top - margin.bottom
 
