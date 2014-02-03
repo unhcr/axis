@@ -15,10 +15,15 @@ module FocusFetch
 
   def fetch(max_files = +1.0/0.0, expires = 1.week)
     monitor = FetchMonitor.first || FetchMonitor.create
+    proxy = nil
+    proxy = ENV['http_proxy'] unless ENV['http_proxy'].empty?
+    opts = {
+      :http_basic_authentication => [ENV['LDAP_USERNAME'], ENV['LDAP_PASSWORD']],
+      :proxy => proxy
+    }
 
     begin
-      headers_zip = open(server_url(HEADERS),
-         :http_basic_authentication => [ENV['LDAP_USERNAME'], ENV['LDAP_PASSWORD']])
+      headers_zip = open(server_url(HEADERS), opts)
     rescue Exception => e
       Rails.logger.fatal "Failed fetching header file: #{e.message}"
       exit
@@ -54,8 +59,7 @@ module FocusFetch
       p "Skipping #{id}" and next if find_plan_file(id, expires) && monitor.complete?(id)
 
       begin
-        plan_zip = open("#{server_url("#{PLAN_PREFIX}#{id}#{PLAN_SUFFIX}")}",
-                      :http_basic_authentication => [ENV['LDAP_USERNAME'], ENV['LDAP_PASSWORD']])
+        plan_zip = open("#{server_url("#{PLAN_PREFIX}#{id}#{PLAN_SUFFIX}")}", opts)
       rescue Exception => e
         Rails.logger.error "Failed fetching #{id} -- e.message"
         monitor.set_state(id, FetchMonitor::MONITOR_STATES[:error])
