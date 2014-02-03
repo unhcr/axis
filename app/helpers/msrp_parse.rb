@@ -17,6 +17,7 @@ module MsrpParse
 
       attrs = {
         :plan_id => row[fields[:plan_id]],
+        :operation_id => row[fields[:operation_id]],
         :ppg_id => row[fields[:ppg_id]],
         :goal_id => row[fields[:goal_id]],
         :problem_objective_id => row[fields[:problem_objective_id]],

@@ -11,7 +11,8 @@ module MsrpFetch
     :output_id => 'b1.rfoutputid',
     :ppg_id => 'b1.populationgroupid',
     :budget_type => 'b1.budget_type',
-    :scenario => 'b1.budgetcomponent'
+    :scenario => 'b1.budgetcomponent',
+    :operation_id => 'b1.operationid'
   }
   GROUP_BY = FIELDS
 
