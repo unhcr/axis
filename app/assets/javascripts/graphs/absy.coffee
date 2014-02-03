@@ -120,6 +120,17 @@ Visio.Figures.absy = (config) ->
 
     bubbles.exit().transition().duration(Visio.Durations.FAST).attr('r', 0).remove()
 
+    if isExport
+      labels = g.selectAll('.label').data(filtered, (d) -> d.refId())
+      labels.enter().append('text')
+      labels.attr('class', 'label')
+        .attr('x', (d) -> x(d.selectedAmount()))
+        .attr('y', (d) -> y(d.selectedAchievement().result))
+        .attr('dy', '.3em')
+        .attr('text-anchor', 'middle')
+        .text((d, i) -> i + 1)
+
+
     path = g.selectAll('.voronoi')
       .data(voronoi(filtered))
 
@@ -135,7 +146,9 @@ Visio.Figures.absy = (config) ->
           window.setTimeout(( -> entered = false), 50)
           info.render(d.point)
           info.show()
-          g.select(".bubble.id-#{d.point.refId()}").classed 'focus', true
+          bubble = g.select(".bubble.id-#{d.point.refId()}")
+          bubble.moveToFront() unless isExport
+          bubble.classed 'focus', true
         ).on('mouseout', (d) ->
           info.hide() if info and not entered
           g.select(".bubble.id-#{d.point.refId()}").classed 'focus', false
