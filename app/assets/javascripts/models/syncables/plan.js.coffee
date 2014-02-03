@@ -1,4 +1,4 @@
-class Visio.Models.Plan extends Visio.Models.Syncable
+class Visio.Models.Plan extends Visio.Models.Parameter
 
   initialize: (attrs, options) ->
     @set(

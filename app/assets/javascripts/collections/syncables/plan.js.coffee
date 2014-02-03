@@ -1,4 +1,4 @@
-class Visio.Collections.Plan extends Visio.Collections.Syncable
+class Visio.Collections.Plan extends Visio.Collections.Parameter
 
   model: Visio.Models.Plan
 

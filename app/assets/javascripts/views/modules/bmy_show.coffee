@@ -26,9 +26,6 @@ class Visio.Views.BmyShowView extends Visio.Views.AccordionShowView
 
   render: (isRerender) ->
 
-    if @model.toString() == 'Malaysia'
-      console.log 'que'
-
     unless isRerender
       @$el.html @template( parameter: @model, figureId: @bmyFigureId() )
       @$el.find('.bmy-figure').html Visio.FigureInstances[@bmyFigureId()].el()

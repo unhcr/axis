@@ -126,7 +126,6 @@ class Visio.Views.MapTooltipView extends Backbone.View
 
     if @boundingRect.right < offset.left + $content.width() + padding
       dx = @boundingRect.right - (offset.left + $content.width() + padding)
-      console.log dx
 
     Visio.FigureInstances.map.pan dx, dy
 

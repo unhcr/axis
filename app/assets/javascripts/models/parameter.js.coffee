@@ -14,7 +14,6 @@ class Visio.Models.Parameter extends Visio.Models.Syncable
       condition["#{@name.singular}_id"] = @id
       data = Visio.manager.get(type.plural).where(condition)
 
-    console.log idHash
     data = _.filter data, (d) =>
       return _.every _.values(Visio.Parameters), (hash) =>
 

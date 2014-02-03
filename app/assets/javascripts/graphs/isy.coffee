@@ -47,13 +47,10 @@ Visio.Figures.isy = (config) ->
   render = () ->
 
     filtered = _.filter data, render.filterFn
-    console.log filtered
-    console.log selection.node()
 
     boxes = g.selectAll('g.box').data filtered, (d) ->
       d.id
     boxes.enter().append('g')
-    console.log g.node()
     boxes.attr('class', (d) -> ['box', "box-#{d.id}"].join(' '))
       .sort(sortFn)
       .transition()
@@ -208,7 +205,6 @@ Visio.Figures.isy = (config) ->
     boxes.on 'click', (d) ->
       $.publish "select.#{figureId}", [d]
 
-    console.log g.node()
     boxes.exit().remove()
 
   render.data = (_data) ->
