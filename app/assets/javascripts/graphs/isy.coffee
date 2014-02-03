@@ -46,7 +46,7 @@ Visio.Figures.isy = (config) ->
   # Rendering
   render = () ->
 
-    filtered = _.filter data, render.filterFn
+    filtered = render.filtered data
 
     boxes = g.selectAll('g.box').data filtered, (d) ->
       d.id
@@ -249,7 +249,7 @@ Visio.Figures.isy = (config) ->
   render.exportId = ->
     return figureId + '_export'
 
-  render.filterFn = (d) ->
+  filterFn = (d) ->
     d.get('is_performance') == isPerformance
 
   render.el = () ->
@@ -267,6 +267,9 @@ Visio.Figures.isy = (config) ->
     reversedA = if a.get(progress.start) > a.get(progress.end) then -1 else 1
     reversedB = if b.get(progress.start) > b.get(progress.end) then -1 else 1
     (reversedA * scaledBarHeight(a)) - (reversedB * scaledBarHeight(b))
+
+  render.filtered = (_data) ->
+    _.chain(_data).filter(filterFn).sort(sortFn).value()
 
   scaledBarHeight = (d) ->
     y.domain [0, +d.get(goalType)]

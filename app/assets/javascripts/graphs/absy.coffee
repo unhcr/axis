@@ -81,7 +81,7 @@ Visio.Figures.absy = (config) ->
 
   render = () ->
 
-    filtered = data.filter render.filterFn
+    filtered = render.filtered data
     maxAmount = d3.max data, (d) -> d.selectedAmount()
 
     if !domain || domain[1] < maxAmount || domain[1] > 2 * maxAmount
@@ -184,8 +184,11 @@ Visio.Figures.absy = (config) ->
   render.exportId = ->
     return figureId + '_export'
 
-  render.filterFn = (d) ->
+  filterFn = (d) ->
     return d.selectedAmount() && d.selectedAchievement().result
+
+  render.filtered = (_data) ->
+    _.chain(_data).filter(filterFn).value()
 
   render.el = () ->
     return selection.node()
