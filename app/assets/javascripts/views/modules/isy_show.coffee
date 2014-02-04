@@ -68,8 +68,6 @@ class Visio.Views.IsyShowView extends Visio.Views.AccordionShowView
 
     @drawFigures()
 
-    @toolbarHeight or= $('.toolbar').height()
-
     @
 
   onGoalTypeChange: (e) ->
