@@ -203,8 +203,8 @@ Visio.Figures.isy = (config) ->
         whisker.exit().remove()
 
       )
-    boxes.on 'click', (d) ->
-      $.publish "select.#{figureId}", [d]
+    boxes.on 'click', (d, i) ->
+      $.publish "select.#{figureId}", [d, i]
 
     boxes.exit().remove()
 
@@ -212,6 +212,9 @@ Visio.Figures.isy = (config) ->
     return data unless arguments.length
     data = _data
     render
+
+  render.figureId = ->
+    return figureId
 
   render.isPerformance = (_isPerformance) ->
     return isPerformance unless arguments.length

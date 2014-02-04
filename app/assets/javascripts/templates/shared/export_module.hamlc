@@ -12,15 +12,14 @@
       %div
         = "Select up 10 [something] to export. Simply click the checkboxes."
       %figcaption
-        - _.each context.filtered, (d) ->
-          - if d.index?
-            .visio-check.visio-check-vertical
-              %input{
-                :id => "datum-#{d.index}",
-                :type => "checkbox",
-                :value => "#{d.index}"}
-              %label{:for => "datum-#{d.index}"}
-                = d.index + 1
+        - _.each context.filtered, (d, i) ->
+          .visio-check.visio-check-vertical
+            %input{
+              :id => "datum-#{i}",
+              :type => "checkbox",
+              :value => "#{i}"}
+            %label{:for => "datum-#{i}"}
+              = i + 1
     %section.export-settings.row
       %h4 The Details
       %form

@@ -1,6 +1,5 @@
 module 'ABSY Figure',
   setup: ->
-    @el = $('<div></div>')[0]
     @figure = Visio.Figures.absy(
       margin:
         left: 0
@@ -9,13 +8,14 @@ module 'ABSY Figure',
         bottom: 0
       width: 100
       height: 100
-      selection: d3.select(@el))
+      figureId: '1234'
+      )
     @d = new Visio.Models.Output({ id: 1 })
     sinon.stub @d, 'selectedAmount', -> 10
     sinon.stub @d, 'selectedAchievement', -> { result: 10 }
 
   teardown: ->
-    $.unsubscribe('select.absy')
+    @figure.unsubscribe()
     @d.selectedAmount.restore()
     @d.selectedAchievement.restore()
 
@@ -23,13 +23,13 @@ test 'render', ->
   @figure.data [@d]
   @figure()
 
-  ok d3.selectAll('.bubble').length, 1
+  ok d3.select(@figure.el()).selectAll('.bubble').size(), 1
 
   @d.selectedAmount.restore()
   sinon.stub @d, 'selectedAmount', -> 0
 
   @figure()
-  ok d3.selectAll('.bubble').length, 0
+  ok d3.select(@figure.el()).selectAll('.bubble').size(), 0
 
 test 'filtered', ->
 
@@ -50,10 +50,11 @@ test 'select', ->
   @figure.data [@d]
   @figure()
 
-  ok d3.select(@el).selectAll('.active').length, 0, 'Should have no active bubbles'
+  ok d3.select(@figure.el()).selectAll('.active').empty(), 'Should have no active bubbles'
 
-  $.publish('select.absy', [@d])
-  ok d3.select(@el).selectAll('.active').length, 1, 'Should have one active bubble'
+  $.publish("select.#{@figure.figureId()}.figure", [@d, 0])
+  ok not d3.select(@figure.el()).selectAll('.active').empty(), 'Should have active bubbles'
+  strictEqual d3.select(@figure.el()).selectAll('.active').size(), 1, 'Should have one active bubble'
 
 test 'el', ->
   @figure.data [@d]
@@ -61,6 +62,6 @@ test 'el', ->
 
   ok @figure.el() != '', 'Figure should have something in it'
 
-  $(@el).html ''
+  $(@figure.el()).html ''
 
   strictEqual @figure.el().innerHTML, '', 'Figure should be empty'

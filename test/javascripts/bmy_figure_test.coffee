@@ -5,6 +5,7 @@ module 'BMY Figure',
     Visio.manager = new Visio.Models.Manager()
     @figure = Visio.Figures.bmy(
       showTotal: false
+      figureId: 'bmy-figure'
       margin:
         left: 0
         right: 0
@@ -15,6 +16,7 @@ module 'BMY Figure',
     @d = new Visio.Models.Output({ id: 1 })
     sinon.stub @d, 'selectedBudgetData', -> @budgets
   teardown: ->
+    @figure.unsubscribe()
     @d.selectedBudgetData.restore()
 
 test 'filtered', ->
@@ -46,3 +48,18 @@ test 'showTotal', ->
   strictEqual memo.length, 3, 'Should have three lines (one more for total)'
   ok _.findWhere(memo, { budgetType: 'total' }), 'Should have total array'
 
+test 'select', ->
+  @figure.isExport true
+  @figure.data @budgets.models
+  @figure()
+  console.log @figure.el()
+  i = 0
+
+  strictEqual d3.select(@figure.el()).selectAll('.active').size(), 0, 'Should have no active elements'
+
+  $.publish("select.#{@figure.figureId()}.figure", [@figure.filtered(@budgets.models)[i], i])
+  console.log @figure.el()
+  strictEqual d3.select(@figure.el()).selectAll('.active').size(), 1, 'Should have one active elements'
+
+  $.publish("select.#{@figure.figureId()}.figure", [@figure.filtered(@budgets.models)[i], i])
+  strictEqual d3.select(@figure.el()).selectAll('.active').size(), 0, 'Should have no active elements'

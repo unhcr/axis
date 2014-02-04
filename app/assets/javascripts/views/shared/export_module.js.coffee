@@ -21,7 +21,6 @@ class Visio.Views.ExportModule extends Backbone.View
     @figure = @model.figure()(@config)
 
     @filtered = @figure.filtered @config.data
-    datum.index = i for datum, i in @filtered
 
     @$el.html @template( model: @model.toJSON(), filtered: @filtered )
     @$el.find('.export-figure figure').html @figure.el()
@@ -31,14 +30,18 @@ class Visio.Views.ExportModule extends Backbone.View
   onSelectionChange: (e) ->
     e.preventDefault()
     $target = $(e.currentTarget)
-    d = _.find @filtered, (d) ->
-      d.index == +$target.val()
+    d = _.find @filtered, (d, i) ->
+      i == +$target.val()
+
+    unless d
+      console.warn "No element found. Returning"
+      return
 
     $.publish "select.#{@config.figureId}.figure", [d]
 
 
-  select: (e, d) =>
-    $input = @$el.find("#datum-#{d.index}")
+  select: (e, d, i) =>
+    $input = @$el.find("#datum-#{i}")
     checked = $input.is(':checked')
 
     # Toggle if it's check or not

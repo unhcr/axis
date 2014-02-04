@@ -153,8 +153,8 @@ Visio.Figures.absy = (config) ->
           info.hide() if info and not entered
           g.select(".bubble.id-#{d.point.refId()}").classed 'focus', false
 
-        ).on('click', (d) ->
-          $.publish "select.#{figureId}", [d.point]
+        ).on('click', (d, i) ->
+          $.publish "select.#{figureId}", [d.point, i]
         )
 
     path.exit().remove()
@@ -171,7 +171,7 @@ Visio.Figures.absy = (config) ->
       .call(yAxis)
       .attr('transform', 'translate(-20,0)')
 
-  select = (e, d) ->
+  select = (e, d, i) ->
     bubble = g.select(".bubble.id-#{d.refId()}")
     isActive = bubble.classed 'active'
     bubble.classed 'active', not isActive
@@ -193,6 +193,9 @@ Visio.Figures.absy = (config) ->
 
   render.unsubscribe = ->
     $.unsubscribe "select.#{figureId}.figure"
+
+  render.figureId = ->
+    return figureId
 
   render.exportId = ->
     return figureId + '_export'

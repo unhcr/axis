@@ -67,25 +67,26 @@ test 'render', ->
 
 test 'select', ->
   @exportView.render()
-  d = _.find @model.get('figure_config').data, (d) -> d.index == 0
+  i = 0
+  d = @exportView.filtered[i]
   strictEqual $(@exportView.el).find('figcaption input').length, 2
   strictEqual $(@exportView.el).find('figure .box').length, 2
 
-  $.publish "select.#{@model.get('figure_config').figureId}", [d]
+  $.publish "select.#{@model.get('figure_config').figureId}", [d, i]
   strictEqual @exportView.$el.find(':checked').length, 1, 'Should make one active'
   strictEqual @exportView.$el.find('figure .active').length, 1, 'Should make one active in isy figure'
 
-  $.publish "select.#{@model.get('figure_config').figureId}", [d]
+  $.publish "select.#{@model.get('figure_config').figureId}", [d, i]
   strictEqual @exportView.$el.find(':checked').length, 0, 'Should toggle it off'
   strictEqual @exportView.$el.find('figure .active').length, 0, 'Should toggle off active in isy figure'
 
-  $.publish "select.#{@model.get('figure_config').figureId}.figure", [d]
+  $.publish "select.#{@model.get('figure_config').figureId}.figure", [d, i]
   strictEqual @exportView.$el.find(':checked').length, 0, 'Should not affect view'
   strictEqual @exportView.$el.find('figure .active').length, 1, 'Should toggle on active in isy figure'
 
 test 'Required functions', ->
   figures = ['absy', 'isy', 'bmy']
-  requiredFns = ['filtered', 'exportId', 'config', 'el', 'unsubscribe']
+  requiredFns = ['filtered', 'exportId', 'config', 'el', 'unsubscribe', 'figureId']
 
   _.each figures, (figure) =>
     f = Visio.Figures[figure](@config)

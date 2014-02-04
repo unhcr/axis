@@ -35,16 +35,15 @@ Visio.Figures.bmy = (config) ->
 
   showTotal = if config.showTotal? then config.showTotal else true
 
-
   domain = null
 
   voronoiFn = d3.geom.voronoi()
-    .x((d) -> return x(d))
-    .y((d) -> return height / 2)
+    .x((d) -> x(d.year))
+    .y((d) -> y(d.amount))
     .clipExtent([[-margin.left, -margin.top], [width + margin.right, height + margin.bottom]])
 
   filtered = []
-  isExport = config.isExport || false
+  isExport = if config.isExport? then config.isExport else false
 
   xAxis = d3.svg.axis()
     .scale(x)
@@ -83,15 +82,14 @@ Visio.Figures.bmy = (config) ->
       .attr('d', lineFn)
       .attr('class', (d) -> ['budget-line', "budget-line-#{d.budgetType}", d.budgetType].join(' '))
 
+    # For selecting line segments
 
-    voronoi = g.selectAll('.voronoi').data(voronoiFn(Visio.manager.get('yearList')))
+    voronoi = g.selectAll('.voronoi').data(voronoiFn(_.flatten(filtered)))
     voronoi.enter().append('path')
     voronoi.attr('class', (d, i) -> 'voronoi')
       .attr('d', polygon)
-      .on('click', (d) ->
-        $.publish "select.#{figureId}", [d.point])
       .on('mouseenter', (d) ->
-        pointData = _.chain(filtered).flatten().where({ year: d.point }).value()
+        pointData = _.chain(filtered).flatten().where({ year: d.point.year }).value()
         points = g.selectAll('.point').data(pointData)
         points.enter().append 'circle'
         points
@@ -104,16 +102,29 @@ Visio.Figures.bmy = (config) ->
 
 
         if tooltip?
-          tooltip.year = d.point
+          tooltip.year = d.point.year
           tooltip.collection = new Backbone.Collection(pointData)
           tooltip.render(true)
         else
           tooltip = new Visio.Views.BmyTooltip
             figure: render
-            year: d.point
+            year: d.point.year
             collection: new Backbone.Collection(pointData)
 
       )
+
+    if isExport
+      voronoi.on('click', (d, i) ->
+        # ASSUMES DETERMINISTIC FLATTEN FUNCTION
+        count = 0
+        lineIndex = null
+        _.each filtered, (lineArray, lineArrayIndex) ->
+          _.each lineArray, (lineDatum) ->
+            lineIndex = lineArrayIndex if count == i
+            count += 1
+
+        $.publish "select.#{figureId}", [d.point, lineIndex])
+
     voronoi.exit().remove()
 
     g.select('.x.axis')
@@ -167,12 +178,20 @@ Visio.Figures.bmy = (config) ->
     height = _height
     render
 
+  render.isExport = (_isExport) ->
+    return isExport unless arguments.length
+    isExport = _isExport
+    render
+
+  render.figureId = ->
+    return figureId
+
   render.margin = (_margin) ->
     return margin unless arguments.length
     margin = _margin
     render
 
-  select = (e, d) ->
+  select = (e, d, i) ->
     line = g.select(".budget-line-#{d.budgetType}")
     isActive = line.classed 'active'
     line.classed 'active', not isActive

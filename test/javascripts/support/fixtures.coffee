@@ -30,3 +30,30 @@
     },
 
 ])
+@Fixtures.data = new Visio.Collections.IndicatorDatum([
+    {
+      id: 'ben'
+      is_performance: false
+      baseline: 0
+      myr: 10
+      yer: 20
+      comp_target: 50
+      standard: 50
+    },
+    {
+      id: 'jeff'
+      is_performance: true
+      baseline: 0
+      myr: 10
+      yer: 20
+      comp_target: 50
+    },
+    {
+      id: 'lisa'
+      is_performance: true
+      baseline: 0
+      myr: 10
+      yer: 20
+      comp_target: 50
+    }
+  ])
