@@ -51,6 +51,7 @@ class FocusParseTest < ActiveSupport::TestCase
     parse_plan(updated_file)
 
     assert_equal 2, Budget.count, 'There should be 2 budgets'
+    Budget.all.each { |b| assert b.operation }
 
   end
 
