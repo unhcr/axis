@@ -8,8 +8,14 @@
  * You're free to add application-wide styles to this file and they'll appear at the top of the
  * compiled file, but it's generally better to create a new file per style scope.
  *
- *= require_self
- *= require normalize-rails
- *= require_tree ./shared
- *= require_tree ./application
+
  */
+ @import "compass/css3";
+
+ @import "application/bootstrap.css";
+ @import "application/global.css";
+ @import "application/graphs.css";
+
+ @import "shared/variables.css";
+ @import "shared/nprogress.css";
+ @import "shared/easydropdown.metro.css";
