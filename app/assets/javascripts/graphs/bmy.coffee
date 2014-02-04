@@ -8,10 +8,16 @@ Visio.Figures.bmy = (config) ->
 
   selection = config.selection || d3.select($('<div></div>')[0])
 
+  tooltip = null
   svg = selection.append('svg')
     .attr('width', config.width)
     .attr('height', config.height)
     .attr('class', 'svg-bmy-figure')
+    .on('mouseleave', () ->
+      tooltip.close() if tooltip?
+      tooltip = null
+      d3.select(@).selectAll('.point').transition().duration(Visio.Durations.VERY_FAST).attr('r', 0).remove()
+    )
 
   g = svg.append('g')
     .attr('transform', "translate(#{margin.left}, #{margin.top})")
@@ -29,11 +35,12 @@ Visio.Figures.bmy = (config) ->
 
   showTotal = if config.showTotal? then config.showTotal else true
 
+
   domain = null
 
   voronoiFn = d3.geom.voronoi()
-    .x((d) -> return x(d.year))
-    .y((d) -> return y(d.amount))
+    .x((d) -> return x(d))
+    .y((d) -> return height / 2)
     .clipExtent([[-margin.left, -margin.top], [width + margin.right, height + margin.bottom]])
 
   filtered = []
@@ -74,14 +81,39 @@ Visio.Figures.bmy = (config) ->
     lines
       .each((d) -> d.sort((a, b) -> a.year - b.year))
       .attr('d', lineFn)
-      .attr('class', (d) -> ['budget-line', "budget-line-#{d.budgetType}"].join(' '))
+      .attr('class', (d) -> ['budget-line', "budget-line-#{d.budgetType}", d.budgetType].join(' '))
 
-    voronoi = g.selectAll('.voronoi').data(voronoiFn(_.flatten(filtered)))
+
+    voronoi = g.selectAll('.voronoi').data(voronoiFn(Visio.manager.get('yearList')))
     voronoi.enter().append('path')
     voronoi.attr('class', (d, i) -> 'voronoi')
       .attr('d', polygon)
       .on('click', (d) ->
         $.publish "select.#{figureId}", [d.point])
+      .on('mouseenter', (d) ->
+        pointData = _.chain(filtered).flatten().where({ year: d.point }).value()
+        points = g.selectAll('.point').data(pointData)
+        points.enter().append 'circle'
+        points
+          .attr('r', 5)
+          .attr('class', (d) -> ['point', d.budgetType].join(' '))
+        points.transition().duration(Visio.Durations.FAST).ease('linear')
+          .attr('cx', (d) -> x(d.year))
+          .attr('cy', (d) -> y(d.amount))
+        points.exit().remove()
+
+
+        if tooltip?
+          tooltip.year = d.point
+          tooltip.collection = new Backbone.Collection(pointData)
+          tooltip.render(true)
+        else
+          tooltip = new Visio.Views.BmyTooltip
+            figure: render
+            year: d.point
+            collection: new Backbone.Collection(pointData)
+
+      )
     voronoi.exit().remove()
 
     g.select('.x.axis')
@@ -120,9 +152,24 @@ Visio.Figures.bmy = (config) ->
       showTotal: showTotal
     }
 
+  render.x = (_x) ->
+    return x unless arguments.length
+    x = _x
+    render
+
   render.showTotal = (_showTotal) ->
     return showTotal unless arguments.length
     showTotal = _showTotal
+    render
+
+  render.height = (_height) ->
+    return height unless arguments.length
+    height = _height
+    render
+
+  render.margin = (_margin) ->
+    return margin unless arguments.length
+    margin = _margin
     render
 
   select = (e, d) ->
@@ -137,7 +184,9 @@ Visio.Figures.bmy = (config) ->
     $.unsubscribe "select.#{figureId}.figure"
 
   reduceFn = (memo, budget) ->
-    budget.set 'year', Visio.manager.get('yearList')[Math.floor(Math.random() * 4)] unless budget.get('year')?
+    unless budget.get('year')
+      console.warn 'No year for budget: ' + budget.id
+      return memo
 
     # Add budget type array
     lineData = _.find memo, (array) -> array.budgetType == budget.get 'budget_type'

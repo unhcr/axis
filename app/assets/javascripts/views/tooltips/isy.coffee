@@ -4,9 +4,9 @@ class Visio.Views.IsyTooltip extends Visio.Views.D3Tooltip
 
   offset: 170
 
-  width: => ((2*@figure.width() / 3) - @offset) + 'px'
+  width: => ((2*@figure.width() / 3) - @offset)
 
-  height: -> '300px'
+  height: -> 300
 
   top: =>
     @$figureEl.offset().top

@@ -1,0 +1,10 @@
+.container.bmy-tooltip.full-width.zero-padding
+  - _.each context.sortedModels, (model) ->
+    %section{ :class => "row #{model.get('budgetType')} budget-type" }
+      %div
+        = model.get('budgetType')
+      %div.ui-small-header
+        = "$" + Visio.Formats.COMMA(model.get('amount'))
+
+
+

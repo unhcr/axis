@@ -1,4 +1,6 @@
 @import "../shared/variables.css.scss";
+@import "compass/css3";
+
 
 @font-face {
   font-family: 'Lato';
@@ -1357,6 +1359,11 @@ input[type="radio"]:checked + label {
 .d3-floating-tooltip {
   position: absolute;
   z-index: 100;
+  pointer-events: none;
+
+  @include transition-property(left);
+  @include transition-duration($fast-transition);
+  @include transition-timing-function(linear);
 
   .isy-tooltip section {
     background-color: white;
@@ -1365,6 +1372,29 @@ input[type="radio"]:checked + label {
   }
   .isy-tooltip section:last-child {
     border-bottom: 1px $dark-gray solid;
+  }
+
+  .bmy-tooltip .budget-type {
+    border: 1px solid black;
+    margin: 5px 0;
+    background-color: white;
+  }
+  .bmy-tooltip {
+    .ADMIN {
+      color: $admin;
+    }
+    .STAFF {
+      color: $staff;
+    }
+    .PROJECT {
+      color: $project;
+    }
+    .PARTNER {
+      color: $partner;
+    }
+    .total {
+      color: $total
+    }
   }
 }
 
