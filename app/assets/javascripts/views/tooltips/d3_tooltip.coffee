@@ -7,7 +7,7 @@ class Visio.Views.D3Tooltip extends Backbone.View
   template: (data) ->
     @baseTemplate({ childTemplate: @childTemplate, data: data })
 
-  width: -> '100px'
+  width: -> 100
 
   top: -> 0
 
@@ -17,14 +17,14 @@ class Visio.Views.D3Tooltip extends Backbone.View
     @childTemplate = window.HAML["tooltips/#{@name}"]
     @render()
 
-  render: ->
+  render: (isRerender) ->
 
     @$el.css 'top', @top() + 'px'
     @$el.css 'left', @left() + 'px'
-    @$el.css 'width', @width()
-    @$el.css 'height', @height()
+    @$el.css 'width', @width() + 'px'
+    @$el.css 'height', @height() + 'px'
 
-    $('body').append @$el
+    $('body').append @$el unless isRerender
 
   close: ->
     @unbind()

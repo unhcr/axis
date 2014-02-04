@@ -24,6 +24,7 @@
 //= require ./models/parameter
 //= require ./collections/syncables/amount_type
 //= require ./models/syncables/amount_type
+//= require ./views/tooltips/d3_tooltip
 //= require_tree ./views
 //= require_tree ./routers
 //= require_tree ./helpers

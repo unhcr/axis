@@ -23,19 +23,25 @@ line {
   .budget-line.active {
     stroke: red;
   }
-  .budget-line-ADMIN {
-    stroke: blue;
+  .ADMIN {
+    stroke: $admin;
   }
-  .budget-line-STAFF {
-    stroke: red;
+  .STAFF {
+    stroke: $staff;
   }
-  .budget-line-PROJECT {
-    stroke: green;
+  .PROJECT {
+    stroke: $project;
   }
-  .budget-line-PARTNER {
-    stroke: $orange;
+  .PARTNER {
+    stroke: $partner;
   }
-
+  .total {
+    stroke: $total
+  }
+  .point {
+    fill: white;
+    stroke-width: 2px;
+  }
   .axis line {
     stroke: black;
   }

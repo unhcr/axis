@@ -13,7 +13,6 @@ class Visio.Views.StrategySnapshotView extends Backbone.View
 
   initialize: (options) ->
     @collection = Visio.manager.strategy().operations()
-    console.log @collection
 
   events:
     'change .ui-blank-radio > input': 'onChangeOperation'
