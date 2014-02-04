@@ -16,7 +16,7 @@ module FocusFetch
   def fetch(max_files = +1.0/0.0, expires = 1.week)
     monitor = FetchMonitor.first || FetchMonitor.create
     proxy = nil
-    proxy = ENV['http_proxy'] unless ENV['http_proxy'].empty?
+    proxy = ENV['http_proxy'] if ENV.has_key?('http_proxy') && not ENV['http_proxy'].empty?
     opts = {
       :http_basic_authentication => [ENV['LDAP_USERNAME'], ENV['LDAP_PASSWORD']],
       :proxy => proxy
