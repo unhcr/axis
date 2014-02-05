@@ -77,21 +77,21 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
   routes:
     'menu' : 'menu'
     'search': 'search'
-    'export/:figureType/:figureId': 'export'
+    'export/:figureId': 'export'
     ':figureType/:year': 'figure'
     ':figureType': 'figure'
     '*default': 'index'
 
-  export: (figureType, figureId) ->
+  export: (figureId) ->
     unless Visio.FigureInstances[figureId]?
       @navigate '/', { trigger: true }
       return
 
     @setup().done =>
       figure = Visio.FigureInstances[figureId]
-      config = $.extend { figureId: figure.exportId(), isExport: true }, figure.config()
+      config = $.extend { isExport: true }, figure.config()
       model = new Visio.Models.ExportModule
-        figure_type: figureType
+        figure_type: figure.type
         state: Visio.manager.state()
         figure_config: config
 

@@ -12,19 +12,19 @@ class Visio.Views.ExportModule extends Backbone.View
   initialize: (options) ->
     $(document).scrollTop(0)
     @config = @model.get 'figure_config'
+    @figure = @model.figure(@config)
 
-    $.subscribe "select.#{@config.figureId}", @select
+    $.subscribe "select.#{@figure.figureId()}", @select
 
   render: ->
 
 
-    @figure = @model.figure()(@config)
 
     @filtered = @figure.filtered @config.data
 
     @$el.html @template( model: @model.toJSON(), filtered: @filtered )
-    @$el.find('.export-figure figure').html @figure.el()
-    @figure()
+    @$el.find('.export-figure figure').html @figure.el
+    @figure.render()
     @
 
   onSelectionChange: (e) ->
@@ -37,7 +37,7 @@ class Visio.Views.ExportModule extends Backbone.View
       console.warn "No element found. Returning"
       return
 
-    $.publish "select.#{@config.figureId}.figure", [d]
+    $.publish "select.#{@figure.figureId()}.figure", [d]
 
 
   select: (e, d, i) =>
@@ -71,10 +71,10 @@ class Visio.Views.ExportModule extends Backbone.View
 
   onClose: ->
     @close()
-    Visio.router.navigate '/' + @model.get 'figure_type', { trigger: true }
+    Visio.router.navigate '/' + @model.get('figure_type').name, { trigger: true }
 
   close: ->
-    $.unsubscribe "select.#{@model.get('figure_id')}"
+    $.unsubscribe "select.#{@figure.figureId()}"
     @figure.unsubscribe() if @figure?
     @unbind()
     @remove()

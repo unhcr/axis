@@ -5,6 +5,19 @@ window.Visio =
   Routers: {}
   Utils: {}
   Figures: {}
+  FigureTypes:
+    ABSY:
+      className: 'Absy'
+      human: 'Achievement vs Budget: Single Year'
+      name: 'absy'
+    BMY:
+      className: 'Bmy'
+      human: 'Budget vs Time'
+      name: 'bmy'
+    ISY:
+      className: 'Isy'
+      human: 'Indicators: Single Year'
+      name: 'isy'
 
   # Actual instances of figures
   FigureInstances: {}

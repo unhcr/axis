@@ -23,7 +23,6 @@ class Visio.Views.IsyShowView extends Visio.Views.AccordionShowView
         right: 10
       width: 800
       height: 300
-      figureId: @isyFigureId()
 
     @sparkConfig =
       margin:
@@ -33,15 +32,17 @@ class Visio.Views.IsyShowView extends Visio.Views.AccordionShowView
         bottom: 0
       width: 100
 
+    @isyFigure = new Visio.Figures.Isy @config
+    Visio.FigureInstances[@isyFigure.figureId()] = @isyFigure
+
   render: (isRerender) ->
     situationAnalysis = @model.selectedSituationAnalysis()
 
     if !isRerender
-      @$el.html @template({ parameter: @model, figureId: @isyFigureId() })
+      @$el.html @template({ parameter: @model, figureId: @isyFigure.figureId() })
 
       # Initialize the indicator bar graph
-      @config.selection = d3.select(@el).select('.indicator-bar-graph')
-      Visio.FigureInstances[@isyFigureId()] = Visio.Figures.isy @config
+      @$el.find('.indicator-bar-graph').html @isyFigure.el
 
       # Initialize the side spark bar graph
       @sparkConfig.selection = d3.select(@el).select('.spark-bar-graph')
@@ -73,21 +74,17 @@ class Visio.Views.IsyShowView extends Visio.Views.AccordionShowView
   onGoalTypeChange: (e) ->
     $target = $(e.currentTarget)
     if $target.is ':checked'
-      Visio.FigureInstances[@isyFigureId()].goalType(Visio.Algorithms.GOAL_TYPES.target)()
+      @isyFigure.goalTypeFn(Visio.Algorithms.GOAL_TYPES.target).render()
     else
-      Visio.FigureInstances[@isyFigureId()].goalType(Visio.Algorithms.GOAL_TYPES.standard)()
+      @isyFigure.goalTypeFn(Visio.Algorithms.GOAL_TYPES.standard).render()
 
   onIsPerformanceChange: (e) ->
     $target = $(e.currentTarget)
-    Visio.FigureInstances[@isyFigureId()].isPerformance($target.is(':checked'))()
+    @isyFigure.isPerformanceFn($target.is(':checked')).render()
 
   drawFigures: ->
-    Visio.FigureInstances[@isyFigureId()].data @model.selectedIndicatorData().models
-    Visio.FigureInstances[@isyFigureId()]()
-
-  changeIsPerformance: (isPerformance) ->
-    Visio.FigureInstances[@isyFigureId()].isPerformance isPerformance
-    Visio.FigureInstances[@isyFigureId()]()
+    @isyFigure.dataFn @model.selectedIndicatorData().models
+    @isyFigure.render()
 
   onMouseenterBox: (e) ->
     d = d3.select(e.currentTarget).datum()
@@ -96,12 +93,9 @@ class Visio.Views.IsyShowView extends Visio.Views.AccordionShowView
     _.each containerTypes, (type) =>
       @$el.find(".js-#{type}-container").text Visio.manager.get("#{type}s").get(d.get("#{type}_id"))
 
-  isyFigureId: =>
-    "isy-#{@model.id}"
-
   sparkFigureId: =>
     "spark-#{@model.id}"
 
   removeInstances: =>
-    delete Visio.FigureInstances[@isyFigureId()]
+    delete Visio.FigureInstances[@isyFigure.figureId()]
     delete Visio.FigureInstances[@sparkFigureId()]

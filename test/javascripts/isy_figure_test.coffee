@@ -1,7 +1,6 @@
 module 'ISY Figure',
   setup: ->
-    @el = $('<div></div>')[0]
-    @graph = Visio.Figures.isy(
+    @figure = new Visio.Figures.Isy
       margin:
         left: 0
         right: 0
@@ -9,7 +8,6 @@ module 'ISY Figure',
         bottom: 0
       width: 100
       height: 100
-      selection: d3.select(@el))
 
 test 'filtered', ->
   data = new Visio.Collections.IndicatorDatum([
@@ -27,8 +25,8 @@ test 'filtered', ->
     }
   ])
 
-  @graph.isPerformance(true)
-  filtered = @graph.filtered data.models
+  @figure.isPerformanceFn true
+  filtered = @figure.filtered data.models
   strictEqual filtered.length, 2
 
 
@@ -48,19 +46,19 @@ test 'data', ->
     }
   ])
 
-  @graph.data(data.models)
-  strictEqual @graph.data().length, 3
-  ok @graph.data() instanceof Array
+  @figure.dataFn data.models
+  strictEqual @figure.dataFn().length, 3
+  ok @figure.dataFn() instanceof Array
 
-  @graph.isPerformance(false)
-  @graph.data(data.models)
-  strictEqual @graph.data().length, 3
-  ok @graph.data() instanceof Array
+  @figure.isPerformanceFn false
+  @figure.dataFn data.models
+  strictEqual @figure.dataFn().length, 3
+  ok @figure.dataFn() instanceof Array
 
-  @graph.isPerformance(true)
-  @graph.data(data.models)
-  strictEqual @graph.data().length, 3
-  ok @graph.data() instanceof Array
+  @figure.isPerformanceFn(true)
+  @figure.dataFn data.models
+  strictEqual @figure.dataFn().length, 3
+  ok @figure.dataFn() instanceof Array
 
 test 'render', ->
   data = new Visio.Collections.IndicatorDatum([
@@ -93,9 +91,9 @@ test 'render', ->
     }
   ])
 
-  @graph.isPerformance(false)
-  @graph.data(data.models)
-  @graph()
+  @figure.isPerformanceFn false
+  @figure.dataFn data.models
+  @figure.render()
 
-  ok $(@el).find('.box').length, 1
-  ok $(@el).find('.box line').length, 1
+  ok @figure.$el.find('.box').length, 1
+  ok @figure.$el.find('.box line').length, 1

@@ -1,6 +1,6 @@
 module 'ABSY Figure',
   setup: ->
-    @figure = Visio.Figures.absy(
+    @figure = new Visio.Figures.Absy(
       margin:
         left: 0
         right: 0
@@ -8,7 +8,6 @@ module 'ABSY Figure',
         bottom: 0
       width: 100
       height: 100
-      figureId: '1234'
       )
     @d = new Visio.Models.Output({ id: 1 })
     sinon.stub @d, 'selectedAmount', -> 10
@@ -20,16 +19,16 @@ module 'ABSY Figure',
     @d.selectedAchievement.restore()
 
 test 'render', ->
-  @figure.data [@d]
-  @figure()
+  @figure.dataFn [@d]
+  @figure.render()
 
-  ok d3.select(@figure.el()).selectAll('.bubble').size(), 1
+  ok d3.select(@figure.el).selectAll('.bubble').size(), 1
 
   @d.selectedAmount.restore()
   sinon.stub @d, 'selectedAmount', -> 0
 
-  @figure()
-  ok d3.select(@figure.el()).selectAll('.bubble').size(), 0
+  @figure.render()
+  ok d3.select(@figure.el).selectAll('.bubble').size(), 0
 
 test 'filtered', ->
 
@@ -47,21 +46,21 @@ test 'filtered', ->
 
 
 test 'select', ->
-  @figure.data [@d]
-  @figure()
+  @figure.dataFn [@d]
+  @figure.render()
 
-  ok d3.select(@figure.el()).selectAll('.active').empty(), 'Should have no active bubbles'
+  ok d3.select(@figure.el).selectAll('.active').empty(), 'Should have no active bubbles'
 
   $.publish("select.#{@figure.figureId()}.figure", [@d, 0])
-  ok not d3.select(@figure.el()).selectAll('.active').empty(), 'Should have active bubbles'
-  strictEqual d3.select(@figure.el()).selectAll('.active').size(), 1, 'Should have one active bubble'
+  ok not d3.select(@figure.el).selectAll('.active').empty(), 'Should have active bubbles'
+  strictEqual d3.select(@figure.el).selectAll('.active').size(), 1, 'Should have one active bubble'
 
 test 'el', ->
-  @figure.data [@d]
-  @figure()
+  @figure.dataFn [@d]
+  @figure.render()
 
-  ok @figure.el() != '', 'Figure should have something in it'
+  ok @figure.el.innerHTML != '', 'Figure should have something in it'
 
-  $(@figure.el()).html ''
+  $(@figure.el).html ''
 
-  strictEqual @figure.el().innerHTML, '', 'Figure should be empty'
+  strictEqual @figure.el.innerHTML, '', 'Figure should be empty'
