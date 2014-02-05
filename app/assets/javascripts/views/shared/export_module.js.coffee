@@ -71,7 +71,7 @@ class Visio.Views.ExportModule extends Backbone.View
 
   onClose: ->
     @close()
-    Visio.router.navigate '/' + @model.get 'figure_type', { trigger: true }
+    Visio.router.navigate '/' + @model.get('figure_type').name, { trigger: true }
 
   close: ->
     $.unsubscribe "select.#{@figure.figureId()}"
