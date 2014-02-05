@@ -11,7 +11,6 @@ class Visio.Figures.Bmy extends Visio.Figures.Exportable
     @svg.on('mouseleave', () ->
       self.tooltip.close() if self.tooltip?
       self.tooltip = null
-      console.log this
       d3.select(@).selectAll('.point').transition().duration(Visio.Durations.VERY_FAST).attr('r', 0).remove()
     )
 
@@ -103,7 +102,7 @@ class Visio.Figures.Bmy extends Visio.Figures.Exportable
       )
 
     if @isExport
-      @voronoi.on('click', (d, i) ->
+      voronoi.on('click', (d, i) =>
         # ASSUMES DETERMINISTIC FLATTEN FUNCTION
         count = 0
         lineIndex = null
@@ -171,7 +170,7 @@ class Visio.Figures.Bmy extends Visio.Figures.Exportable
     "M" + d.join("L") + "Z"
 
   select: (e, d, i) =>
-    line = g.select(".budget-line-#{d.budgetType}")
+    line = @g.select(".budget-line-#{d.budgetType}")
     isActive = line.classed 'active'
     line.classed 'active', not isActive
 

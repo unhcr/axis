@@ -204,7 +204,7 @@ class Visio.Figures.Isy extends Visio.Figures.Exportable
   filtered: (data) => _.chain(data).filter(@filterFn).sort(@sortFn).value()
 
   select: (e, d, i) =>
-    box = g.select(".box-#{d.id}")
+    box = @g.select(".box-#{d.id}")
     isActive = box.classed 'active'
     box.classed 'active', not isActive
 

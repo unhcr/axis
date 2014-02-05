@@ -2,6 +2,8 @@ class Visio.Figures.Exportable extends Backbone.View
 
   attrAccessible: ['x', 'y', 'width', 'height', 'figureId', 'exportId', 'data', 'margin']
 
+  attrConfig: ['margin', 'data', 'width', 'height']
+
   initialize: (config) ->
 
     for attr, value of config
@@ -33,8 +35,8 @@ class Visio.Figures.Exportable extends Backbone.View
   config: =>
     config = {}
 
-    _.each @attrAccessible, (attr) =>
-      config = @["_#{attr}"]
+    _.each @attrConfig, (attr) =>
+      config[attr] = @[attr]
 
     config
 
