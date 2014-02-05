@@ -2,8 +2,7 @@ class Visio.Figures.Isy extends Visio.Figures.Exportable
 
   type: Visio.FigureTypes.ISY
 
-  attrAccessible: ['x', 'y', 'width', 'height', 'figureId', 'exportId', 'data', 'margin',
-    'goalType', 'isPerformance']
+  attrAccessible: ['x', 'y', 'width', 'height', 'data', 'margin', 'goalType', 'isPerformance']
 
   initialize: (config) ->
 

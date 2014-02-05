@@ -1,6 +1,6 @@
 class Visio.Figures.Exportable extends Backbone.View
 
-  attrAccessible: ['x', 'y', 'width', 'height', 'figureId', 'exportId', 'data', 'margin']
+  attrAccessible: ['x', 'y', 'width', 'height', 'data', 'margin']
 
   attrConfig: ['margin', 'data', 'width', 'height']
 
@@ -33,7 +33,6 @@ class Visio.Figures.Exportable extends Backbone.View
       .attr('transform', "translate(#{@margin.left}, #{@margin.top})")
 
     $.subscribe "select.#{@cid}.figure", @select
-
 
   config: =>
     config = {}

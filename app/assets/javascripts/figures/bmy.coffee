@@ -3,6 +3,19 @@ class Visio.Figures.Bmy extends Visio.Figures.Exportable
   type: Visio.FigureTypes.BMY
 
   initialize: (config) ->
+    @filters = new Visio.Collections.FigureFilter([
+      {
+        id: 'budget_type'
+        filterType: 'checkbox'
+        values: _.object(_.values(Visio.Budgets), _.values(Visio.Budgets).map(-> true))
+      },
+      {
+        id: 'scenario'
+        filterType: 'checkbox'
+        values: _.object(_.values(Visio.Scenarios), _.values(Visio.Scenarios).map(-> true))
+      }
+    ])
+
     Visio.Figures.Exportable.prototype.initialize.call @, config
 
     @tooltip = null
@@ -59,16 +72,21 @@ class Visio.Figures.Bmy extends Visio.Figures.Exportable
       .append("text")
 
 
+
   render: ->
     filtered = @filtered @data
     @y.domain [0, d3.max(_.flatten(filtered), (d) -> d.amount)]
 
-    lines = @g.selectAll('.budget-line').data(filtered)
+    lines = @g.selectAll('.budget-line').data(filtered, (d) -> d.budgetType)
     lines.enter().append 'path'
     lines
       .each((d) -> d.sort((a, b) -> a.year - b.year))
+      .transition()
+      .duration(Visio.Durations.FAST)
       .attr('d', @lineFn)
       .attr('class', (d) -> ['budget-line', "budget-line-#{d.budgetType}", d.budgetType].join(' '))
+
+    lines.exit().remove()
 
     # For selecting line segments
 
@@ -137,14 +155,17 @@ class Visio.Figures.Bmy extends Visio.Figures.Exportable
     unless lineData
       lineData = []
       lineData.budgetType = budget.get 'budget_type'
-      memo.push lineData
+      memo.push lineData if @filters.get('budget_type').isFiltered budget.get('budget_type')
+
+    return memo unless @filters.get('budget_type').isFiltered budget.get('budget_type')
 
     # Add line datum
     datum = _.findWhere lineData, { year: budget.get 'year' }
     unless datum
       datum = { amount: 0, year: budget.get('year'), budgetType: budget.get('budget_type') }
-      lineData.push datum
+      lineData.push datum if @filters.get('scenario').isFiltered budget.get('scenario')
 
+    return memo unless @filters.get('scenario').isFiltered budget.get('scenario')
     datum.amount += budget.get 'amount'
 
     # Add 'total' array
@@ -174,4 +195,5 @@ class Visio.Figures.Bmy extends Visio.Figures.Exportable
     isActive = line.classed 'active'
     line.classed 'active', not isActive
 
-
+  filter: (type, attr, active) =>
+    @filters[type].values[attr] = active

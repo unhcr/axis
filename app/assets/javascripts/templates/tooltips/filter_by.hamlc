@@ -1,0 +1,10 @@
+- context.figure.filters.each (filter) ->
+  - for filterName, filterValue of filter.get('values')
+    %div{ :class => "visio-#{filter.get('filterType')}" }
+      %input{ :value => "#{filter.id}#{Visio.Constants.SEPARATOR}#{filterName}",
+              :checked => filterValue,
+              :type => filter.get('filterType'),
+              :id => "#{context.figure.figureId()}_#{filterName}" }
+      %label{ :for => "#{context.figure.figureId()}_#{filterName}" }
+        = filterName
+  .divider
