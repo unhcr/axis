@@ -2,8 +2,7 @@ module 'Export Module View',
   setup: ->
     Visio.user = new Visio.Models.User()
     Visio.manager = new Visio.Models.Manager()
-    figureType = 'isy'
-    @figureId = 'myid-export'
+    figureType = Visio.FigureTypes.ISY
     @data = new Visio.Collections.IndicatorDatum([
         {
           id: 'ben'
@@ -43,8 +42,8 @@ module 'Export Module View',
       isExport: true
       isPerformance: true
 
-    Visio.FigureInstances[@figureId] = Visio.Figures[figureType](@config)
-    @config.figureId = Visio.FigureInstances[@figureId].exportId()
+    @figure = new Visio.Figures[figureType.className](@config)
+    Visio.FigureInstances[@figure.figureId()] = @figure
 
     @model = new Visio.Models.ExportModule
       figure_type: figureType
@@ -72,25 +71,24 @@ test 'select', ->
   strictEqual $(@exportView.el).find('figcaption input').length, 2
   strictEqual $(@exportView.el).find('figure .box').length, 2
 
-  $.publish "select.#{@model.get('figure_config').figureId}", [d, i]
+  $.publish "select.#{@exportView.figure.figureId()}", [d, i]
   strictEqual @exportView.$el.find(':checked').length, 1, 'Should make one active'
   strictEqual @exportView.$el.find('figure .active').length, 1, 'Should make one active in isy figure'
 
-  $.publish "select.#{@model.get('figure_config').figureId}", [d, i]
+  $.publish "select.#{@exportView.figure.figureId()}", [d, i]
   strictEqual @exportView.$el.find(':checked').length, 0, 'Should toggle it off'
   strictEqual @exportView.$el.find('figure .active').length, 0, 'Should toggle off active in isy figure'
 
-  $.publish "select.#{@model.get('figure_config').figureId}.figure", [d, i]
+  $.publish "select.#{@exportView.figure.figureId()}.figure", [d, i]
   strictEqual @exportView.$el.find(':checked').length, 0, 'Should not affect view'
   strictEqual @exportView.$el.find('figure .active').length, 1, 'Should toggle on active in isy figure'
 
 test 'Required functions', ->
-  figures = ['absy', 'isy', 'bmy']
-  requiredFns = ['filtered', 'exportId', 'config', 'el', 'unsubscribe', 'figureId']
+  requiredFns = ['filtered', 'config', 'unsubscribe', 'figureId']
 
-  _.each figures, (figure) =>
-    f = Visio.Figures[figure](@config)
+  _.each Visio.FigureTypes, (figureType) =>
+    f = new Visio.Figures[figureType.className](@config)
 
     _.each requiredFns, (fn) ->
-      ok f[fn] instanceof Function, "Must have filtered function for #{figure}"
+      ok f[fn] instanceof Function, "Must have #{fn} function for #{figureType.human}"
 

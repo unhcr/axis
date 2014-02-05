@@ -166,7 +166,7 @@ class Visio.Figures.Bmy extends Visio.Figures.Exportable
   filtered: (data) => _.chain(data).reduce(@reduceFn, []).value()
 
   polygon: (d) ->
-    return "M0 0" unless d.length
+    return "M0 0" unless d? and d.length
     "M" + d.join("L") + "Z"
 
   select: (e, d, i) =>

@@ -145,7 +145,7 @@ class Visio.Figures.Absy extends Visio.Figures.Exportable
   filtered: (data) => _.chain(data).filter(@filterFn).value()
 
   polygon: (d) ->
-    return "M0 0" unless d.length
+    return "M0 0" unless d? and d.length
     "M" + d.join("L") + "Z"
 
   select: (e, d, i) =>
