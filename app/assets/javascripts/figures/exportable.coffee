@@ -17,6 +17,9 @@ class Visio.Figures.Exportable extends Backbone.View
 
     @selection = d3.select @el
 
+    @originalWidth = config.width
+    @originalHeight = config.height
+
     # Adjust for margins
     @widthFn(config.width - @margin.left - @margin.right)
     @heightFn(config.height - @margin.top - @margin.bottom)
@@ -37,6 +40,9 @@ class Visio.Figures.Exportable extends Backbone.View
 
     _.each @attrConfig, (attr) =>
       config[attr] = @[attr]
+
+    config.height = @originalHeight
+    config.width = @originalWidth
 
     config
 
