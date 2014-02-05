@@ -1362,8 +1362,8 @@ input[type="radio"]:checked + label {
   pointer-events: none;
 
   @include transition-property(left);
-  @include transition-duration($fast-transition);
-  @include transition-timing-function(linear);
+  @include transition-duration($very-fast-transition);
+  @include transition-timing-function(ease-in);
 
   .isy-tooltip section {
     background-color: white;
