@@ -15,19 +15,18 @@ class Visio.Views.AbsyView extends Backbone.View
     @config =
       width: 600
       height: 320
-      figureId: 'absy'
       margin:
         top: 10
         bottom: 30
         left: 90
         right: 80
-    Visio.FigureInstances['absy'] = Visio.Figures.absy(@config)
+    Visio.FigureInstances['absy'] = new Visio.Figures.Absy(@config)
 
   render: (isRerender) ->
 
     if !isRerender
-      @$el.html @template( figureId: 'absy' )
-      @$el.find('#bubble').html Visio.FigureInstances['absy'].el()
+      @$el.html @template( figureId: Visio.FigureInstances['absy'].figureId() )
+      @$el.find('#bubble').html Visio.FigureInstances['absy'].el
 
 
     _.each _.keys(Visio.manager.get('scenario_type')), (scenario) =>
@@ -36,8 +35,8 @@ class Visio.Views.AbsyView extends Backbone.View
     _.each _.keys(Visio.manager.get('budget_type')), (budget) =>
       @$el.find("input[value='#{budget}']").prop('checked', true)
 
-    Visio.FigureInstances['absy'].data(Visio.manager.selected(Visio.manager.get('aggregation_type')).models)
-    Visio.FigureInstances['absy']()
+    Visio.FigureInstances['absy'].dataFn(Visio.manager.selected(Visio.manager.get('aggregation_type')).models)
+    Visio.FigureInstances['absy'].render()
 
     @
 

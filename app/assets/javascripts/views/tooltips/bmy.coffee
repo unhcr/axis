@@ -6,17 +6,17 @@ class Visio.Views.BmyTooltip extends Visio.Views.D3Tooltip
 
   width: -> 180
 
-  height: => @figure.height()
+  height: => @figure.heightFn()
 
-  top: => $(@figure.el()).offset().top
+  top: => $(@figure.el).offset().top
 
   left: =>
-    base = $(@figure.el()).offset().left + @figure.x()(@year) + @figure.margin().left
-    if (_.indexOf @figure.x().domain(), @year) < @figure.x().domain().length - 1
-      base + @offset
+    base = $(@figure.el).offset().left + @figure.xFn()(@year) + @figure.marginFn().left
+    if (_.indexOf @figure.xFn().domain(), @year) < @figure.xFn().domain().length - 1
+      return base + @offset
     else
       # Last element in domain
-      base - @offset - @width()
+      return base - @offset - @width()
 
   initialize: (options) ->
     @figure = options.figure

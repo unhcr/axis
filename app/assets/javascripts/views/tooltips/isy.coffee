@@ -2,25 +2,26 @@ class Visio.Views.IsyTooltip extends Visio.Views.D3Tooltip
 
   name: 'isy'
 
-  offset: 170
+  offset: 140
 
-  width: => ((2*@figure.width() / 3) - @offset)
+  width: => ((2*@figure.widthFn() / 3) - @offset)
 
   height: -> 300
 
   top: =>
-    @$figureEl.offset().top
+    @figure.$el.offset().top
 
   left: =>
-    if @figure.x()(@isyIndex) > @figure.width() / 2
-      return @$figureEl.offset().left - @width() - @offset
+    console.log @isyIndex
+    base = $(@figure.el).offset().left + @figure.xFn()(@isyIndex) + @figure.marginFn().left
+    if @figure.xFn()(@isyIndex) > @figure.widthFn() / 2
+      return base - @offset - @width()
     else
-      return @$figureEl.offset().left + @offset
+      return base + @offset
 
   initialize: (options) ->
     @figure = options.figure
-    @$figureEl = options.$figureEl
-    @isyIndex = options.index
+    @isyIndex = options.isyIndex
 
     Visio.Views.D3Tooltip.prototype.initialize.call @, options
 

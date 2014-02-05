@@ -22,21 +22,21 @@ class Visio.Views.BmyShowView extends Visio.Views.AccordionShowView
       height: 300
       figureId: @bmyFigureId()
 
-    Visio.FigureInstances[@bmyFigureId()] = Visio.Figures.bmy @config
+    Visio.FigureInstances[@bmyFigureId()] = new Visio.Figures.Bmy @config
 
   render: (isRerender) ->
 
     unless isRerender
       @$el.html @template( parameter: @model, figureId: @bmyFigureId() )
-      @$el.find('.bmy-figure').html Visio.FigureInstances[@bmyFigureId()].el()
+      @$el.find('.bmy-figure').html Visio.FigureInstances[@bmyFigureId()].el
 
     @drawFigures()
     @
 
 
   drawFigures: ->
-    Visio.FigureInstances[@bmyFigureId()].data @model.selectedBudgetData(true).models
-    Visio.FigureInstances[@bmyFigureId()]()
+    Visio.FigureInstances[@bmyFigureId()].dataFn @model.selectedBudgetData(true).models
+    Visio.FigureInstances[@bmyFigureId()].render()
 
   bmyFigureId: =>
     "bmy-#{@model.id}"

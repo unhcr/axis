@@ -25,14 +25,14 @@ class Visio.Views.BmyView extends Visio.Views.AccordionIndexView
       height: 300
       figureId: @bmySummaryFigureId()
 
-    Visio.FigureInstances[@bmySummaryFigureId()] = Visio.Figures.bmy @config
+    Visio.FigureInstances[@bmySummaryFigureId()] = new Visio.Figures.Bmy @config
 
   render: (isRerender) ->
     # Call super
     Visio.Views.AccordionIndexView.prototype.render.apply @, [isRerender]
 
     unless isRerender
-      @$el.find('.summary-figure').html Visio.FigureInstances[@bmySummaryFigureId()].el()
+      @$el.find('.summary-figure').html Visio.FigureInstances[@bmySummaryFigureId()].el
 
     @drawFigures()
     @
@@ -43,8 +43,8 @@ class Visio.Views.BmyView extends Visio.Views.AccordionIndexView
     _.each parameters, (model) ->
       data = data.concat model.selectedBudgetData(true).models
 
-    Visio.FigureInstances[@bmySummaryFigureId()].data data
-    Visio.FigureInstances[@bmySummaryFigureId()]()
+    Visio.FigureInstances[@bmySummaryFigureId()].dataFn data
+    Visio.FigureInstances[@bmySummaryFigureId()].render()
 
   sort: (parameterA, parameterB) ->
     0

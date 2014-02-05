@@ -40,8 +40,8 @@ class Visio.Views.IsyShowView extends Visio.Views.AccordionShowView
       @$el.html @template({ parameter: @model, figureId: @isyFigureId() })
 
       # Initialize the indicator bar graph
-      @config.selection = d3.select(@el).select('.indicator-bar-graph')
-      Visio.FigureInstances[@isyFigureId()] = Visio.Figures.isy @config
+      @config.el = d3.select(@el).select('.indicator-bar-graph').node()
+      Visio.FigureInstances[@isyFigureId()] = new Visio.Figures.Isy @config
 
       # Initialize the side spark bar graph
       @sparkConfig.selection = d3.select(@el).select('.spark-bar-graph')
@@ -73,21 +73,21 @@ class Visio.Views.IsyShowView extends Visio.Views.AccordionShowView
   onGoalTypeChange: (e) ->
     $target = $(e.currentTarget)
     if $target.is ':checked'
-      Visio.FigureInstances[@isyFigureId()].goalType(Visio.Algorithms.GOAL_TYPES.target)()
+      Visio.FigureInstances[@isyFigureId()].goalTypeFn(Visio.Algorithms.GOAL_TYPES.target).render()
     else
-      Visio.FigureInstances[@isyFigureId()].goalType(Visio.Algorithms.GOAL_TYPES.standard)()
+      Visio.FigureInstances[@isyFigureId()].goalTypeFn(Visio.Algorithms.GOAL_TYPES.standard).render()
 
   onIsPerformanceChange: (e) ->
     $target = $(e.currentTarget)
-    Visio.FigureInstances[@isyFigureId()].isPerformance($target.is(':checked'))()
+    Visio.FigureInstances[@isyFigureId()].isPerformanceFn($target.is(':checked')).render()
 
   drawFigures: ->
-    Visio.FigureInstances[@isyFigureId()].data @model.selectedIndicatorData().models
-    Visio.FigureInstances[@isyFigureId()]()
+    Visio.FigureInstances[@isyFigureId()].dataFn @model.selectedIndicatorData().models
+    Visio.FigureInstances[@isyFigureId()].render()
 
   changeIsPerformance: (isPerformance) ->
-    Visio.FigureInstances[@isyFigureId()].isPerformance isPerformance
-    Visio.FigureInstances[@isyFigureId()]()
+    Visio.FigureInstances[@isyFigureId()].isPerformanceFn isPerformance
+    Visio.FigureInstances[@isyFigureId()].render()
 
   onMouseenterBox: (e) ->
     d = d3.select(e.currentTarget).datum()
