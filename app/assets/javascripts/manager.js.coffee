@@ -50,8 +50,6 @@ class Visio.Models.Manager extends Backbone.Model
     'budget_type': {}
     'achievement_type': Visio.AchievementTypes.TARGET
     'amount_type': Visio.Syncables.BUDGETS
-    'bust_cache': false
-    'use_cache': false
 
   resetSelectedDefaults: () ->
     _.each _.values(Visio.Parameters), (hash) ->

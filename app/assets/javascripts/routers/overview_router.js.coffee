@@ -9,23 +9,27 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
 
     Visio.manager.set 'selected_strategies', selectedStrategies
     Visio.manager.on 'change:date', () =>
-      Visio.manager.set 'bust_cache', true
       @navigation.render()
       @strategySnapshotView.render()
-      @moduleView.render(true)
-      Visio.manager.set 'bust_cache', false
+      @moduleView.render true
 
-    Visio.manager.on [
-      'change:aggregation_type',
-      'change:selected',
-      'change:achievement',
-      'change:scenario_type',
-      'change:budget_type',
-      'change:amount_type'].join(' ')
-      , () =>
-        Visio.manager.set 'bust_cache', true
-        @moduleView.render true
-        Visio.manager.set 'bust_cache', false
+    Visio.manager.on 'change:aggregation_type', () =>
+      @moduleView.render true
+
+    Visio.manager.on 'change:selected', () =>
+      @moduleView.render true
+
+    Visio.manager.on 'change:achievement_type', () =>
+      @moduleView.render true
+
+    Visio.manager.on 'change:scenario_type', () =>
+      @moduleView.render true
+
+    Visio.manager.on 'change:budget_type', () =>
+      @moduleView.render true
+
+    Visio.manager.on 'change:amount_type', =>
+      @moduleView.render true
 
     @module = $('#module')
 

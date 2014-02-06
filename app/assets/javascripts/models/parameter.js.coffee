@@ -81,51 +81,32 @@ class Visio.Models.Parameter extends Visio.Models.Syncable
     @strategyData(Visio.Syncables.EXPENDITURES, strategy, isAnyYear, filters)
 
   strategyExpenditure: ->
-    return @get 'cache.strategyExpenditure' if @useCache 'strategyExpenditure'
     data = @strategyExpenditureData()
-    @set 'cache.strategyExpenditure', data.amount()
-    @get 'cache.strategyExpenditure'
+    data.amount()
 
   strategyBudget: () ->
-    return @get 'cache.strategyBudget' if @useCache 'strategyBudget'
     data = @strategyBudgetData()
-    @set 'cache.strategyBudget', data.amount()
-    @get 'cache.strategyBudget'
+    data.amount()
 
   strategySituationAnalysis: () ->
-    if @useCache 'strategySituationAnalysis'
-      return @get 'cache.strategySituationAnalysis'
     data = @strategyIndicatorData()
-    @set 'cache.strategySituationAnalysis', data.situationAnalysis()
-    @get 'cache.strategySituationAnalysis'
+    data.situationAnalysis()
 
   selectedAchievement: (isAnyYear = false, filters = null) ->
-    if @useCache 'selectedAchievement'
-      return @get 'cache.selectedAchievement'
     data = @selectedIndicatorData(isAnyYear = false, filters = null)
-    @set 'cache.selectedAchievement', data.achievement()
-    @get 'cache.selectedAchievement'
+    data.achievement()
 
   selectedBudget: (isAnyYear = false, filters = null) ->
-    if @useCache 'selectedBudget'
-      return @get 'cache.selectedBudget'
     data = @selectedBudgetData(isAnyYear, filters)
-    @set 'cache.selectedBudget', data.amount()
-    @get 'cache.selectedBudget'
+    data.amount()
 
   selectedSituationAnalysis: (isAnyYear = false, filters = null) ->
-    if @useCache 'selectedSituationAnalysis'
-      return @get 'cache.selectedSituationAnalysis'
     data = @selectedIndicatorData(isAnyYear, filters)
-    @set 'cache.selectedSituationAnalysis', data.situationAnalysis()
-    @get 'cache.selectedSituationAnalysis'
+    data.situationAnalysis()
 
   selectedExpenditure: (isAnyYear = false, filters = null) ->
-    if @useCache 'selectedExpenditure'
-      return @get 'cache.selectedExpenditure'
     data = @selectedExpenditureData(isAnyYear, filters)
-    @set 'cache.selectedExpenditure', data.amount()
-    @get 'cache.selectedExpenditure'
+    data.amount()
 
   useCache: (key) ->
     @get("cache.#{key}")? and Visio.manager.get('use_cache') and not Visio.manager.get 'bust_cache'
