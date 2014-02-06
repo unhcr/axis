@@ -24,3 +24,7 @@ class Visio.Views.FilterBy extends Backbone.View
 
     @figure.filters.get(type).filter(attr, active)
     @figure.render()
+
+  close: ->
+    @unbind()
+    @remove()

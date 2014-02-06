@@ -21,7 +21,7 @@ class Visio.Views.AbsyView extends Backbone.View
         left: 90
         right: 80
 
-    @figure = new Visio.Figures.Absy(@config)
+    @figure = new Visio.Figures.Absy @config
     Visio.FigureInstances[@figure.figureId()] = @figure
 
   render: (isRerender) ->
@@ -29,13 +29,8 @@ class Visio.Views.AbsyView extends Backbone.View
     if !isRerender
       @$el.html @template( figureId: @figure.figureId() )
       @$el.find('#bubble').html @figure.el
+      @$el.find('.figure-header').html (new Visio.Views.FilterBy({ figure: @figure, })).render().el
 
-
-    _.each _.keys(Visio.manager.get('scenario_type')), (scenario) =>
-      @$el.find("input[value='#{scenario}']").prop('checked', true)
-
-    _.each _.keys(Visio.manager.get('budget_type')), (budget) =>
-      @$el.find("input[value='#{budget}']").prop('checked', true)
 
     @figure.dataFn(Visio.manager.selected(Visio.manager.get('aggregation_type')).models)
     @figure.render()
@@ -49,23 +44,3 @@ class Visio.Views.AbsyView extends Backbone.View
       achievement_type = Visio.AchievementTypes.TARGET
 
     Visio.manager.set 'achievement_type', achievement_type
-
-  onClickScenario: (e) =>
-    $target = $(e.currentTarget)
-
-    if $target.is(':checked')
-      Visio.manager.get('scenario_type')[$target.val()] = true
-    else
-      delete Visio.manager.get('scenario_type')[$target.val()]
-
-    Visio.manager.trigger('change:scenario_type')
-
-  onClickBudget: (e) =>
-    $target = $(e.currentTarget)
-
-    if $target.is(':checked')
-      Visio.manager.get('budget_type')[$target.val()] = true
-    else
-      delete Visio.manager.get('budget_type')[$target.val()]
-
-    Visio.manager.trigger('change:budget_type')

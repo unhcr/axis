@@ -35,8 +35,9 @@ test 'amount', () ->
 
   Visio.manager.get('scenario_type')[Visio.Scenarios.OL] = false
   total = budgets.amount()
-  strictEqual(total, 40)
+  strictEqual(total, 60)
 
+  # Should be dependent on filters from datums
   Visio.manager.get('budget_type')[Visio.Budgets.PROJECT] = false
   total = budgets.amount()
-  strictEqual(total, 10)
+  strictEqual(total, 60)

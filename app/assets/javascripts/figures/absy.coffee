@@ -3,6 +3,18 @@ class Visio.Figures.Absy extends Visio.Figures.Exportable
   type: Visio.FigureTypes.ABSY
 
   initialize: (config) ->
+    @filters = new Visio.Collections.FigureFilter([
+      {
+        id: 'budget_type'
+        filterType: 'checkbox'
+        values: _.object(_.values(Visio.Budgets), _.values(Visio.Budgets).map(-> true))
+      },
+      {
+        id: 'scenario'
+        filterType: 'checkbox'
+        values: _.object(_.values(Visio.Scenarios), _.values(Visio.Scenarios).map(-> true))
+      }
+    ])
 
     Visio.Figures.Exportable.prototype.initialize.call @, config
 
@@ -39,8 +51,8 @@ class Visio.Figures.Absy extends Visio.Figures.Exportable
     @info = null
     @voronoi = d3.geom.voronoi()
       .clipExtent([[0, 0], [@width, @height]])
-      .x((d) => @x(d.selectedAmount()))
-      .y((d) => @y(d.selectedAchievement().result))
+      .x((d) => @x(d.selectedAmount(false, @filters)))
+      .y((d) => @y(d.selectedAchievement(false, @filters).result))
 
     @g.append('g')
       .attr('class', 'y axis')
@@ -64,7 +76,7 @@ class Visio.Figures.Absy extends Visio.Figures.Exportable
 
   render: ->
     filtered = @filtered @data
-    maxAmount = d3.max @data, (d) -> d.selectedAmount()
+    maxAmount = d3.max @data, (d) => d.selectedAmount(false, @filters)
 
     if !@domain || @domain[1] < maxAmount || @domain[1] > 2 * maxAmount
       @domain = [0, maxAmount]
@@ -81,9 +93,9 @@ class Visio.Figures.Absy extends Visio.Figures.Exportable
       .attr('r', (d) =>
         return @r(600000))
       .attr('cy', (d) =>
-        return @y(d.selectedAchievement().result))
+        return @y(d.selectedAchievement(false, @filters).result))
       .attr('cx', (d) =>
-        return @x(d.selectedAmount()))
+        return @x(d.selectedAmount(false, @filters)))
 
     bubbles.exit().transition().duration(Visio.Durations.FAST).attr('r', 0).remove()
 
@@ -91,8 +103,8 @@ class Visio.Figures.Absy extends Visio.Figures.Exportable
       labels = @g.selectAll('.label').data(filtered, (d) -> d.refId())
       labels.enter().append('text')
       labels.attr('class', 'label')
-        .attr('x', (d) => @x(d.selectedAmount()))
-        .attr('y', (d) => @y(d.selectedAchievement().result))
+        .attr('x', (d) => @x(d.selectedAmount(false, @filters)))
+        .attr('y', (d) => @y(d.selectedAchievement(false, @filters).result))
         .attr('dy', '.3em')
         .attr('text-anchor', 'middle')
         .text((d, i) -> i + 1)
@@ -140,7 +152,7 @@ class Visio.Figures.Absy extends Visio.Figures.Exportable
 
 
   filterFn: (d) ->
-    d.selectedAmount() && d.selectedAchievement().result
+    d.selectedAmount(false, @filters) && d.selectedAchievement(false, @filters).result
 
   filtered: (data) => _.chain(data).filter(@filterFn).value()
 

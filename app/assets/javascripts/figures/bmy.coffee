@@ -81,10 +81,10 @@ class Visio.Figures.Bmy extends Visio.Figures.Exportable
     lines.enter().append 'path'
     lines
       .each((d) -> d.sort((a, b) -> a.year - b.year))
+      .attr('class', (d) -> ['budget-line', "budget-line-#{d.budgetType}", d.budgetType].join(' '))
       .transition()
       .duration(Visio.Durations.FAST)
       .attr('d', @lineFn)
-      .attr('class', (d) -> ['budget-line', "budget-line-#{d.budgetType}", d.budgetType].join(' '))
 
     lines.exit().remove()
 
@@ -155,17 +155,17 @@ class Visio.Figures.Bmy extends Visio.Figures.Exportable
     unless lineData
       lineData = []
       lineData.budgetType = budget.get 'budget_type'
-      memo.push lineData if @filters.get('budget_type').isFiltered budget.get('budget_type')
+      memo.push lineData unless @filters.get('budget_type').isFiltered budget
 
-    return memo unless @filters.get('budget_type').isFiltered budget.get('budget_type')
+    return memo if @filters.get('budget_type').isFiltered budget
 
     # Add line datum
     datum = _.findWhere lineData, { year: budget.get 'year' }
     unless datum
       datum = { amount: 0, year: budget.get('year'), budgetType: budget.get('budget_type') }
-      lineData.push datum if @filters.get('scenario').isFiltered budget.get('scenario')
+      lineData.push datum unless @filters.get('scenario').isFiltered budget
 
-    return memo unless @filters.get('scenario').isFiltered budget.get('scenario')
+    return memo if @filters.get('scenario').isFiltered budget
     datum.amount += budget.get 'amount'
 
     # Add 'total' array

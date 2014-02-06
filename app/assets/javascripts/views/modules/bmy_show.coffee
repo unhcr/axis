@@ -22,6 +22,7 @@ class Visio.Views.BmyShowView extends Visio.Views.AccordionShowView
       height: 300
 
     @figure = new Visio.Figures.Bmy @config
+    @filterBy = new Visio.Views.FilterBy({ figure: @figure, })
     Visio.FigureInstances[@figure.figureId()] = @figure
 
   render: (isRerender) ->
@@ -29,7 +30,7 @@ class Visio.Views.BmyShowView extends Visio.Views.AccordionShowView
     unless isRerender
       @$el.html @template( parameter: @model, figureId: @figure.figureId() )
       @$el.find('.bmy-figure').html @figure.el
-      @$el.find('.figure-header').html (new Visio.Views.FilterBy({ figure: @figure, })).render().el
+      @$el.find('.figure-header').html @filterBy.render().el
     @drawFigures()
     @
 
@@ -39,5 +40,6 @@ class Visio.Views.BmyShowView extends Visio.Views.AccordionShowView
     @figure.render()
 
   removeInstances: =>
+    @fitlerBy.close()
+    @figure.unsubscribe()
     delete Visio.FigureInstances[@figure.figureId()]
-

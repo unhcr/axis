@@ -11,6 +11,7 @@
 .row
   .col-md-8.col-centered
     %a{:href => "#/export/#{ context.figureId }"} export
+    .figure-header
     %figure#bubble
 .row
   .col-md-8.col-centered.zero-padding
@@ -20,27 +21,3 @@
       %input{ :type => "checkbox",
         :class => "achievement-type-toggle",
         :checked => isChecked }
-    .col-md-2.scenario
-      - _.each Visio.Scenarios, (scenario) ->
-        .visio-check.visio-check-yellow
-          - shortName = if scenario == Visio.Scenarios.AOL then 'AOL' else 'OL'
-          %input{
-            :checked => "checked",
-            :id => "check-#{shortName}",
-            :type => "checkbox",
-            :value => "#{scenario}"}
-          %label{
-            :for => "check-#{shortName}"}
-            = shortName
-
-    .col-md-3.budget
-      - _.each _.values(Visio.Budgets), (budget, i, values) ->
-        .visio-check.visio-check-yellow
-          %input{
-            :checked => "checked",
-            :id => "check-#{budget}",
-            :type => "checkbox",
-            :value => "#{budget}"}
-          %label{
-            :for => "check-#{budget}"}
-            = budget
