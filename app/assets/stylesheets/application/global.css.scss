@@ -1452,6 +1452,14 @@ a {
 }
 
 .filter-by {
+
+  .filter-toggle:before {
+    content: 'ↆ';
+    background: transparent;
+    display: inline-block;
+    margin-right: 10px;
+  }
+
   width: 180px;
   float: right;
   position: relative;
