@@ -84,7 +84,7 @@ class Visio.Figures.Bmy extends Visio.Figures.Exportable
       .attr('class', (d) -> ['budget-line', "budget-line-#{d.budgetType}", d.budgetType].join(' '))
       .transition()
       .duration(Visio.Durations.FAST)
-      .attr('d', @lineFn)
+      .attr('d', (d) => if d.length then @lineFn(d) else 'M0 0')
 
     lines.exit().remove()
 
