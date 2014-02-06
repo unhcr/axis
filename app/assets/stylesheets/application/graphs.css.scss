@@ -18,7 +18,8 @@ line {
   .budget-line {
     stroke: black;
     fill: none;
-    stroke-width: 2px;
+    stroke-width: 4px;
+
   }
   .budget-line.active {
     stroke: red;
@@ -36,7 +37,8 @@ line {
     stroke: $partner;
   }
   .total {
-    stroke: $total
+    stroke: $total;
+    stroke-width: 6px;
   }
   .point {
     fill: white;

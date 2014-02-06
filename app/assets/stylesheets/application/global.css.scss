@@ -1417,25 +1417,37 @@ a {
   }
 
   .bmy-tooltip .budget-type {
-    border: 1px solid black;
+    border: 1px solid $black;
     margin: 5px 0;
     background-color: white;
+    padding: 0 12px;
   }
   .bmy-tooltip {
+    .title {
+      margin-top: 4px;
+      padding-top: 8px;
+    }
+
     .ADMIN {
       color: $admin;
+      .title { border-top: 2px solid $admin }
     }
     .STAFF {
       color: $staff;
+      .title { border-top: 2px solid $staff }
     }
     .PROJECT {
       color: $project;
+      .title { border-top: 2px solid $project }
     }
     .PARTNER {
       color: $partner;
+      .title { border-top: 2px solid $partner }
     }
     .total {
-      color: $total
+      color: $white;
+      background-color: $black;
+      .title { border-top: 2px solid $white }
     }
   }
 }

@@ -22,7 +22,7 @@ class Visio.Views.BmyView extends Visio.Views.AccordionIndexView
         left: 120
         right: 40
       width: 650
-      height: 300
+      height: 450
 
     @figure = new Visio.Figures.Bmy @config
     Visio.FigureInstances[@figure.figureId()] = @figure
