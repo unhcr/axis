@@ -13,6 +13,16 @@ class Visio.Figures.Absy extends Visio.Figures.Exportable
         id: 'scenario'
         filterType: 'checkbox'
         values: _.object(_.values(Visio.Scenarios), _.values(Visio.Scenarios).map(-> true))
+      },
+      {
+        id: 'achievement'
+        filterType: 'radio'
+        values: _.object(_.values(Visio.AchievementTypes), _.values(Visio.AchievementTypes).map(
+          (achievement_type) ->
+            Visio.manager.get('achievement_type') == achievement_type))
+        callback: (name, attr) ->
+          console.log name
+          Visio.manager.set('achievement_type', name)
       }
     ])
 

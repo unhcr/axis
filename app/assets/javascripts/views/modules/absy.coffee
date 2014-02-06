@@ -7,8 +7,8 @@ class Visio.Views.AbsyView extends Backbone.View
   id: 'absy'
 
   events:
-    'click .scenario .visio-check input': 'onClickScenario'
-    'click .budget .visio-check input': 'onClickBudget'
+    'click .scenario .visio-checkbox input': 'onClickScenario'
+    'click .budget .visio-checkbox input': 'onClickBudget'
     'change .achievement-type-toggle': 'onAchievementTypeChange'
 
   initialize: (options) ->
@@ -36,11 +36,3 @@ class Visio.Views.AbsyView extends Backbone.View
     @figure.render()
 
     @
-
-  onAchievementTypeChange: (e) =>
-    if Visio.manager.get('achievement_type') == Visio.AchievementTypes.TARGET
-      achievement_type = Visio.AchievementTypes.STANDARD
-    else
-      achievement_type = Visio.AchievementTypes.TARGET
-
-    Visio.manager.set 'achievement_type', achievement_type

@@ -5,7 +5,7 @@
   .bold Strategies
   %div Filter by:
 - _.each context.strategies, (strategy) ->
-  .visio-check.ui-line-item-theme
+  .visio-checkbox.ui-line-item-theme
     %input{:id => "check-#{ strategy.id }", :type => "checkbox", :value => "#{ strategy.id }"}
     %label{:for => "check-#{ strategy.id }"}
       = strategy.name

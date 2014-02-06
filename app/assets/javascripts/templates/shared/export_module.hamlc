@@ -13,7 +13,7 @@
         = "Select up 10 [something] to export. Simply click the checkboxes."
       %figcaption
         - _.each context.filtered, (d, i) ->
-          .visio-check.visio-check-vertical
+          .visio-checkbox.visio-checkbox-vertical
             %input{
               :id => "datum-#{i}",
               :type => "checkbox",

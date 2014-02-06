@@ -6,3 +6,6 @@ class Visio.Collections.FigureFilter extends Backbone.Collection
     not @every (filter) ->
       not filter.isFiltered(datum)
 
+  resetFilters: ->
+    @each (filter) -> filter.resetFilter()
+

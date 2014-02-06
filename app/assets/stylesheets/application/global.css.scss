@@ -555,16 +555,56 @@ button, input {
   border-bottom: none;
 }
 
-.visio-check input {
+.visio-radio input {
   display: none;
 }
 
-.visio-check label {
+.visio-radio label {
+  display: block;
+  cursor: pointer;
+  position: relative;
+}
+
+.visio-radio label:before {
+  content: ' ';
+  border: 2px solid $primary;
+  border-radius: 12px;
+  width: 12px;
+  height: 12px;
+  margin-top: 3px;
+  float: right;
+  margin-left: 6px;
+}
+
+.visio-radio-left label:before {
+  content: ' ';
+  float: left;
+  margin-right: 6px;
+  margin-left: 0px;
+}
+
+.visio-radio-left input:checked + label:after {
+  content: ' ';
+  border: 3px solid #0d2d46;
+  border-radius: 10px;
+  width: 5px;
+  height: 5px;
+  margin-top: 3px;
+  position: absolute;
+  left: 3px;
+  top: 3px
+}
+
+.visio-checkbox input {
+  display: none;
+}
+
+.visio-checkbox label {
   display: block;
   cursor: pointer;
 }
 
-.visio-check label:before {
+.visio-checkbox label:before {
   content: ' ';
   border: 1px solid $white;
   width: 12px;
@@ -574,35 +614,46 @@ button, input {
   margin-left: 6px;
 }
 
-.visio-check input:checked + label:before {
-  content: ' ';
-  border: 3px solid $turquoise;
-}
-
-.visio-check-yellow label:before {
+.visio-checkbox-left label:before {
   content: ' ';
   float: left;
   margin-right: 6px;
   margin-left: 0px;
 }
 
-.visio-check-yellow input:checked + label:before {
+.visio-checkbox input:checked + label:before {
+  content: ' ';
+  border: 3px solid $turquoise;
+}
+
+.visio-checkbox-yellow label:before {
+  content: ' ';
+  float: left;
+  margin-right: 6px;
+  margin-left: 0px;
+}
+
+.visio-checkbox-primary input:checked + label:before {
+  border: 3px solid $primary;
+}
+
+.visio-checkbox-yellow input:checked + label:before {
   content: ' ';
   border: 3px solid $yellow;
 }
 
-.visio-check-vertical {
+.visio-checkbox-vertical {
   display: inline-block;
   margin-top: 1em;
 }
 
-.visio-check-vertical label {
+.visio-checkbox-vertical label {
   display: inline-block;
   width: 2em;
   text-align: center;
 }
 
-.visio-check-vertical label:before {
+.visio-checkbox-vertical label:before {
   float: none;
   display: block;
   position: relative;
@@ -1180,15 +1231,6 @@ a {
   left: $navigation-width;
 }
 
-input[type="radio"] + label {
-  cursor: pointer;
-  display: block;
-}
-
-input[type="radio"]:checked + label {
-  color: $bright-yellow;
-}
-
 .strategy-snapshot {
   padding-bottom: 40px;
 }
@@ -1406,5 +1448,36 @@ input[type="radio"]:checked + label {
   }
   .row:nth-child(odd) {
     background-color: $off-white;
+  }
+}
+
+.filter-by {
+  width: 180px;
+  float: right;
+  position: relative;
+  cursor: pointer;
+
+  .filters {
+    @include transition-property(max-height);
+    @include transition-duration($fast-transition);
+    @include transition-timing-function(ease-in);
+    position: absolute;
+    max-height: 0px;
+    overflow: hidden;
+    background-color: white;
+  }
+
+  .filter-group {
+    padding: 10px 0;
+  }
+
+  .filters.styled {
+    padding: 15px 10px;
+    @include single-box-shadow;
+    border-top: 3px $primary-dark solid;
+  }
+
+  .filters.open {
+    max-height: 400px;
   }
 }

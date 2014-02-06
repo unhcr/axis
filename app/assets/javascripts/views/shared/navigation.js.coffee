@@ -6,7 +6,7 @@ class Visio.Views.NavigationView extends Backbone.View
 
   events:
     'click .open': 'onClickOpen'
-    'change .visio-check input': 'onChangeSelection'
+    'change .visio-checkbox input': 'onChangeSelection'
 
   render: () ->
 
