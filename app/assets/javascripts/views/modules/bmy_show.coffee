@@ -40,6 +40,6 @@ class Visio.Views.BmyShowView extends Visio.Views.AccordionShowView
     @figure.render()
 
   removeInstances: =>
-    @fitlerBy.close()
+    @filterBy.close()
     @figure.unsubscribe()
     delete Visio.FigureInstances[@figure.figureId()]
