@@ -22,6 +22,7 @@ module 'Figure Filter',
         id: 'is_performance'
         values: {
           'true': true
+          'false': false
         }
       }
     ])
@@ -37,3 +38,34 @@ test 'Filters', ->
   strictEqual filtered.length, 2, 'There should be two impact indicators'
   ok _.find(filtered, (d) -> d.id == 'g')
   ok _.find(filtered, (d) -> d.id == 'y')
+
+test 'resetFilter', ->
+
+  filter = @filters.get('budget_type')
+  ok filter.get('values').ADMIN
+  ok not filter.get('values').PROJECT
+
+  filter.resetFilter()
+  ok filter.get('values').ADMIN
+  ok filter.get('values').PROJECT
+
+test 'resetFilter - collection', ->
+
+  ok not _.every(@filters.pluck('values'), (values) ->
+    _.every(_.values(values), (value) -> value)), 'Every value should not be true'
+
+  @filters.resetFilters()
+
+  ok _.every(@filters.pluck('values'), (values) ->
+    _.every(_.values(values), (value) -> value)), 'Every value should be true'
+
+test 'Callback on filter', ->
+  callback = sinon.spy()
+
+  filter = @filters.get 'budget_type'
+  filter.set 'callback', callback
+
+  filter.filter 'ADMIN', false
+
+  strictEqual callback.callCount, 1, 'Callback should be called once'
+  ok callback.calledWith('ADMIN', false), 'Callback should be called with params'

@@ -1,5 +1,6 @@
 module 'ABSY Figure',
   setup: ->
+    Visio.manager = new Visio.Models.Manager()
     @figure = new Visio.Figures.Absy(
       margin:
         left: 0

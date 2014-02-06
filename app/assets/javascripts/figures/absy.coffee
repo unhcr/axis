@@ -21,7 +21,6 @@ class Visio.Figures.Absy extends Visio.Figures.Exportable
           (achievement_type) ->
             Visio.manager.get('achievement_type') == achievement_type))
         callback: (name, attr) ->
-          console.log name
           Visio.manager.set('achievement_type', name)
       }
     ])
