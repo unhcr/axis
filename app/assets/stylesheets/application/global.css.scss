@@ -1203,12 +1203,22 @@ a {
   cursor: pointer;
 }
 
+.js-parameter:before {
+  max-width: 0px;
+  @include transition-property(max-width);
+  @include transition-duration($fast-transition);
+  @include transition-timing-function(ease-in);
+  display: block;
+  overflow-x: hidden;
+}
+
 .js-parameter:hover:before {
   content: '→';
   float: left;
   font-size: 2em;
   margin-top: .5em;
-  margin-right: .8em
+  margin-right: .8em;
+  max-width: 100px;
 }
 
 .accordion-show-container.open {
@@ -1219,7 +1229,7 @@ a {
   }
 
   .js-parameter:hover:before{
-    display: none;
+    max-width: 0px;
   }
 }
 
