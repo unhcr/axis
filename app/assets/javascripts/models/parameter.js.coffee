@@ -108,9 +108,6 @@ class Visio.Models.Parameter extends Visio.Models.Syncable
     data = @selectedExpenditureData(isAnyYear, filters)
     data.amount()
 
-  useCache: (key) ->
-    @get("cache.#{key}")? and Visio.manager.get('use_cache') and not Visio.manager.get 'bust_cache'
-
   refId: ->
     @id
 
