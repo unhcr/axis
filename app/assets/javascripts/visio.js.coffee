@@ -48,6 +48,11 @@ window.Visio =
     MAP: 'map'
     SYNC: 'sync_date'
   Parameters:
+    OPERATIONS:
+      singular: 'operation'
+      plural: 'operations'
+      className: 'Operation'
+      human: 'Operation'
     PPGS:
       singular: 'ppg'
       plural: 'ppgs'
@@ -78,12 +83,6 @@ window.Visio =
       plural: 'strategy_objectives'
       className: 'StrategyObjective'
       human: 'Strategy Objective'
-    OPERATIONS:
-      singular: 'operation'
-      plural: 'operations'
-      className: 'Operation'
-      human: 'Operation'
-
   SkippedParameters:
     RIGHTS_GROUPS:
       singular: 'rights_group'

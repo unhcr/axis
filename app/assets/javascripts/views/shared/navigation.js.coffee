@@ -13,7 +13,6 @@ class Visio.Views.NavigationView extends Backbone.View
     parameters = []
 
     _.each _.values(Visio.Parameters), (hash) ->
-      return if hash == Visio.Parameters.STRATEGY_OBJECTIVES
 
       data = Visio.manager.strategy()[hash.plural]()
 
