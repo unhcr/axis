@@ -1199,8 +1199,16 @@ a {
 }
 
 .accordion-show-container:hover {
-  background-color: white;
+  background-color: $off-white;
   cursor: pointer;
+}
+
+.js-parameter:hover:before {
+  content: '→';
+  float: left;
+  font-size: 2em;
+  margin-top: .5em;
+  margin-right: .8em
 }
 
 .accordion-show-container.open {
@@ -1208,6 +1216,10 @@ a {
 
   .data-container {
     max-height: 420px;
+  }
+
+  .js-parameter:hover:before{
+    display: none;
   }
 }
 
