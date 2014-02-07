@@ -107,7 +107,7 @@ class FocusParseTest < ActiveSupport::TestCase
       assert_equal 0, models[:updated].count, "#{resource} updated wrong number of resources"
     end
     ids = {}
-    [Plan, Ppg, Goal, ProblemObjective, Output, Indicator].each do |resource|
+    [Operation, Ppg, Goal, ProblemObjective, Output, Indicator].each do |resource|
       ids["#{resource.table_name.singularize}_ids".to_sym] = resource.all.map(&:id)
     end
     [Budget].each do |resource|

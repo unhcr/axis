@@ -3,6 +3,7 @@ module RouteHelpers
     res.each do |r|
       resources(r) do
         get 'synced', on: :collection
+        post 'synced', on: :collection
         get 'search', on: :collection
       end
     end

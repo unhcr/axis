@@ -19,6 +19,10 @@ class Visio.Models.Manager extends Backbone.Model
 
     @resetBudgetDefaults()
 
+    @get('indicator_data').on('add', () -> console.log(arguments))
+    @get('budgets').on('add', () -> console.log(arguments))
+    @get('expenditures').on('add', () -> console.log(arguments))
+
     # Automatically change date if we change year
     @on 'change:year', =>
       @year(@get('year'))

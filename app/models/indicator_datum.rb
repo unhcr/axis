@@ -39,11 +39,24 @@ class IndicatorDatum < ActiveRecord::Base
 
     synced_data = {}
 
-    query_string = "plan_id IN ('#{ids[:plan_ids].join("','")}') AND
-      ppg_id IN ('#{(ids[:ppg_ids] || []).join("','")}') AND
-      goal_id IN ('#{(ids[:goal_ids] || []).join("','")}') AND
-      (problem_objective_id IN ('#{(ids[:problem_objective_ids] || []).join("','")}') OR output_id IN ('#{(ids[:output_ids] || []).join("','")}')) AND
-      indicator_id IN ('#{(ids[:indicator_ids] || []).join("','")}')"
+    conditions = []
+
+    conditions << "operation_id IN ('#{ids[:operation_ids].join("','")}')" if ids[:operation_ids]
+    conditions << "plan_id IN ('#{ids[:plan_ids].join("','")}')" if ids[:plan_ids]
+    conditions << "ppg_id IN ('#{ids[:ppg_ids].join("','")}')" if ids[:ppg_ids]
+    conditions << "goal_id IN ('#{ids[:goal_ids].join("','")}')" if ids[:goal_ids]
+    conditions << "indicator_id IN ('#{ids[:indicator_ids].join("','")}')" if ids[:indicator_ids]
+
+    if ids[:problem_objective_ids] && ids[:output_ids]
+      conditions << "(problem_objective_id IN ('#{ids[:problem_objective_ids].join("','")}') OR
+                     output_id IN ('#{ids[:output_ids].join("','")}'))"
+    elsif ids[:problem_objective_ids]
+      conditions << "problem_objective_id IN ('#{ids[:problem_objective_ids].join("','")}')"
+    elsif ids[:output_ids]
+      conditions << "output_id IN ('#{ids[:output_ids].join("','")}')"
+    end
+    query_string = conditions.join(' AND ')
+
 
     indicator_data = IndicatorDatum.loaded
 
