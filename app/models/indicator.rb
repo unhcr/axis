@@ -4,7 +4,6 @@ class Indicator < ActiveRecord::Base
   include SyncableModel
   include Tire::Model::Search
   include Tire::Model::Callbacks
-  extend Searchable
 
   attr_accessible :is_gsp, :is_performance, :name
 

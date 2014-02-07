@@ -4,7 +4,6 @@ class Operation < ActiveRecord::Base
   include SyncableModel
   include Tire::Model::Search
   include Tire::Model::Callbacks
-  extend Searchable
 
   attr_accessible :id, :name, :years
 

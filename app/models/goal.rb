@@ -1,5 +1,7 @@
 class Goal < ActiveRecord::Base
   include SyncableModel
+  include Tire::Model::Search
+  include Tire::Model::Callbacks
   attr_accessible :name
 
   self.primary_key  = :id

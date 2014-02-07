@@ -3,6 +3,9 @@ class Visio.Views.NavigationView extends Backbone.View
   template: HAML['shared/navigation']
 
   initialize: () ->
+    @searches = _.map _.values(Visio.Parameters), (hash) ->
+      new Visio.Views.ParameterSearch({ collection: Visio.manager.get(hash.plural) })
+
 
   events:
     'click .open': 'onClickOpen'
@@ -23,6 +26,12 @@ class Visio.Views.NavigationView extends Backbone.View
     @$el.html @template(
       strategy: Visio.manager.strategy()
       parameters: parameters)
+
+    _.each @searches, (view) =>
+      plural = view.collection.name.plural
+      $target = @$el.find(".ui-accordion-content.#{plural}")
+      $target.prepend view.render().el
+
 
   onChangeSelection: (e) ->
     $target = $(e.currentTarget)

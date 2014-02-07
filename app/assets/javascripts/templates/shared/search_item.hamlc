@@ -1,2 +1,5 @@
-.search-item
-  = context.result
+.search-item{ :data => { :id => context.elasticModel.id } }
+  - if context.elasticModel.highlight.name
+    != context.elasticModel.highlight.name[0]
+  - else
+    = context.elasticModel.name

@@ -293,3 +293,23 @@ test 'refId', ->
     else
       strictEqual model.id, model.refId()
 
+test 'search', ->
+
+  sinon.stub $, 'get', (query) ->
+    dfd = new $.Deferred()
+    dfd.resolve [{ id: 'b' }, { id: 'a' }, { id: 'c' }]
+    return dfd.promise()
+
+  _.each _.values(Visio.Parameters), (hash, i) ->
+    collection = new Visio.Collections[hash.className]()
+    model = new Visio.Models[hash.className]()
+
+    collection.search('something').done (resp) ->
+      strictEqual resp.length, 3
+      strictEqual $.get.callCount, 2 * i + 1
+
+    model.search('something').done (resp) ->
+      strictEqual resp.length, 3
+      strictEqual $.get.callCount, 2 * i + 2
+
+  $.get.restore()

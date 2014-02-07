@@ -1,5 +1,8 @@
 class Output < ActiveRecord::Base
   include SyncableModel
+  include Tire::Model::Search
+  include Tire::Model::Callbacks
+
   attr_accessible :name, :priority
   self.primary_key = :id
   has_and_belongs_to_many :indicators, :uniq => true

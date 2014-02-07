@@ -1,5 +1,8 @@
 class ProblemObjective < ActiveRecord::Base
   include SyncableModel
+  include Tire::Model::Search
+  include Tire::Model::Callbacks
+
   attr_accessible :is_excluded, :objective_name, :problem_name
 
   self.primary_key = :id
@@ -24,5 +27,17 @@ class ProblemObjective < ActiveRecord::Base
 
   def as_json(options = {})
     to_jbuilder(options).attributes!
+  end
+
+  def self.search_models(query, options = {})
+    return [] if !query || query.empty?
+    options[:page] ||= 1
+    options[:per_page] ||= 6
+    s = self.search(options) do
+      query { string "objective_name:#{query}" }
+
+      highlight :name
+    end
+    s
   end
 end

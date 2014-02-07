@@ -42,8 +42,8 @@ class ApplicationController < ActionController::Base
     end
 
     render :json => {
-      :indicators => Indicator.paged(query),
-      :operations => Operation.paged(query)
+      :indicators => Indicator.search_models(query),
+      :operations => Operation.search_models(query)
     }
   end
 end
