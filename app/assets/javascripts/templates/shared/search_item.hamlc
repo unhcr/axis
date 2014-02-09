@@ -1,5 +1,5 @@
-.search-item{ :data => { :id => context.elasticModel.id } }
-  - if context.elasticModel.highlight.name
-    != context.elasticModel.highlight.name[0]
+.search-item{ :data => { :id => context.model.id } }
+  - if context.model.highlight()
+    != context.model.highlight()
   - else
-    = context.elasticModel.name
+    = context.model.toString()
