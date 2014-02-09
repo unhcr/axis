@@ -51,7 +51,7 @@ class Visio.Collections.Syncable extends Backbone.Collection
       return $[method](url, options)
     ).done((parameters) =>
       @setSynced(parameters, timestampId)
-    ).done((ids) =>
+    ).done((id) =>
       @getSynced()
     ).done((records) =>
       @reset(records)
