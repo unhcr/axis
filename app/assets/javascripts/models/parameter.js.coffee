@@ -117,3 +117,6 @@ class Visio.Models.Parameter extends Visio.Models.Syncable
   selectedAmount: (isAnyYear = false, filters = null) ->
     # Either Budget or Expenditure
     @["selected#{Visio.manager.get('amount_type').className}"](isAnyYear, filters)
+
+  highlight: ->
+    return @get('highlight').name[0] if @get('highlight')
