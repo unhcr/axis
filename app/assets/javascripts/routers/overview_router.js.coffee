@@ -13,6 +13,10 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
       @strategySnapshotView.render()
       @moduleView.render true
 
+    Visio.manager.on ['change:navigation'].join(' '), =>
+      @navigation.render()
+      @moduleView.render true
+
     Visio.manager.on ['change:aggregation_type'
                       'change:selected',
                       'change:achievement_type',

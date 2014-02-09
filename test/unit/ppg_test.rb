@@ -1,6 +1,14 @@
 require 'test_helper'
 
 class PpgTest < ActiveSupport::TestCase
+  def setup
+    @ppg = ppgs(:one)
+    @ppg.operations << operations(:one)
+    @ppg.goals << goals(:one)
+    @ppg.save
+
+  end
+
   test "synced models no date" do
     models = Ppg.synced_models
 
@@ -83,5 +91,24 @@ class PpgTest < ActiveSupport::TestCase
 
     assert_equal 2, models[:new].count
 
+  end
+
+  test "include options" do
+    options = {
+      :include => {
+        :goal_ids => true,
+        :operation_ids => true,
+      }
+    }
+
+    json = @ppg.as_json
+
+    assert_nil json["goal_ids"]
+    assert_nil json["operation_ids"]
+
+    json = @ppg.as_json(options)
+
+    assert_equal json["goal_ids"].length, 1
+    assert_equal json["operation_ids"].length, 1
   end
 end

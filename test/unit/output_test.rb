@@ -3,6 +3,11 @@ require 'test_helper'
 class OutputTest < ActiveSupport::TestCase
   fixtures :all
   def setup
+    @o = outputs(:one)
+    @o.operations << operations(:one)
+    @o.problem_objectives << problem_objectives(:one)
+    @o.indicators << indicators(:one)
+    @o.save
 
   end
 
@@ -72,5 +77,27 @@ class OutputTest < ActiveSupport::TestCase
     models = Output.synced_models(Time.now - 3.days, { :plan_id => [s.id, s2.id] })
 
     assert_equal 2, models[:new].count
+  end
+
+  test "include options" do
+    options = {
+      :include => {
+        :problem_objective_ids => true,
+        :operation_ids => true,
+        :indicator_ids => true,
+      }
+    }
+
+    json = @o.as_json
+
+    assert_nil json["problem_objective_ids"]
+    assert_nil json["operation_ids"]
+    assert_nil json["indicator_ids"]
+
+    json = @o.as_json(options)
+
+    assert_equal json["problem_objective_ids"].length, 1
+    assert_equal json["operation_ids"].length, 1
+    assert_equal json["indicator_ids"].length, 1
   end
 end

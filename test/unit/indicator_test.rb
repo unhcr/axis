@@ -1,6 +1,14 @@
 require 'test_helper'
 
 class IndicatorTest < ActiveSupport::TestCase
+  def setup
+    @i = indicators(:one)
+    @i.operations << operations(:one)
+    @i.problem_objectives << problem_objectives(:one)
+    @i.outputs << outputs(:one)
+    @i.save
+
+  end
   test "synced models no date" do
     models = Indicator.synced_models
 
@@ -66,5 +74,27 @@ class IndicatorTest < ActiveSupport::TestCase
     models = Indicator.synced_models(Time.now - 3.days, { :plan_id => [s.id, s2.id] })
 
     assert_equal 2, models[:new].count
+  end
+
+  test "include options" do
+    options = {
+      :include => {
+        :problem_objective_ids => true,
+        :operation_ids => true,
+        :output_ids => true,
+      }
+    }
+
+    json = @i.as_json
+
+    assert_nil json["problem_objective_ids"]
+    assert_nil json["operation_ids"]
+    assert_nil json["output_ids"]
+
+    json = @i.as_json(options)
+
+    assert_equal json["problem_objective_ids"].length, 1
+    assert_equal json["operation_ids"].length, 1
+    assert_equal json["output_ids"].length, 1
   end
 end

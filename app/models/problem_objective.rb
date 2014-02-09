@@ -20,8 +20,14 @@ class ProblemObjective < ActiveRecord::Base
 
 
   def to_jbuilder(options = {})
+    options ||= {}
+    options[:include] ||= {}
     Jbuilder.new do |json|
       json.extract! self, :objective_name, :problem_name, :id
+      json.operation_ids self.operation_ids if options[:include][:operation_ids].present?
+      json.goal_ids self.goal_ids if options[:include][:goal_ids].present?
+      json.output_ids self.output_ids if options[:include][:output_ids].present?
+      json.indicator_ids self.indicator_ids if options[:include][:indicator_ids].present?
     end
   end
 
@@ -36,7 +42,7 @@ class ProblemObjective < ActiveRecord::Base
     s = self.search(options) do
       query { string "objective_name:#{query}" }
 
-      highlight :name
+      highlight :objective_name
     end
     s
   end

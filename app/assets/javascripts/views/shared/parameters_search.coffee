@@ -29,45 +29,86 @@ class Visio.Views.ParameterSearch extends Backbone.View
 
   search: (query) =>
     @collection.search(query).done (resp) =>
-      console.log resp
-      @$el.find('.results').html _.map(resp, (elasticModel) ->
-        HAML['shared/search_item']({ elasticModel: elasticModel }))
+      @$el.find('.results').html _.map(resp, (elasticModel) =>
+        HAML['shared/search_item']({ model: new @collection.model(elasticModel) }))
 
       @$el.find('.results').html '' unless resp.length
 
-  filterIds: (id) =>
+  filterIds: (parameterType, id) =>
     filterIds = {}
     _.each _.values(Visio.Parameters), (hash) =>
       return if hash == Visio.Parameters.STRATEGY_OBJECTIVES or
                 hash == Visio.Parameters.PPGS
 
-      if hash == @collection.name
+      if hash == parameterType
         filterIds["#{hash.singular}_ids"] = [id]
       else
         filterIds["#{hash.singular}_ids"] = Visio.manager.get(hash.plural).pluck('id')
 
     filterIds
 
-  dataTypes: =>
-    if @collection.name == Visio.Parameters.INDICATORS
+  dataTypes: (parameterType) =>
+    if parameterType == Visio.Parameters.INDICATORS
       return [Visio.Syncables.INDICATOR_DATA]
     else
       return [Visio.Syncables.INDICATOR_DATA,
               Visio.Syncables.BUDGETS,
               Visio.Syncables.EXPENDITURES]
 
+  dependencyTypes: (parameterType) =>
+    if parameterType == Visio.Parameters.OPERATIONS
+      return [Visio.Parameters.PPGS]
+    else if parameterType == Visio.Parameters.STRATEGY_OBJECTIVES
+      return [Visio.Parameters.GOALS,
+              Visio.Parameters.OUTPUTS,
+              Visio.Parameters.PROBLEM_OBJECTIVES,
+              Visio.Parameters.INDICATORS]
+    else
+      []
 
   add: (id) =>
-    if @collection.get(id)
-      selected = Visio.manager.get 'selected'
-      selected[@collection.name.plural][id] = true
-    else
-      # Need to fetch from server for indicator/expenditure/budget data
+    dependencyTypes = @dependencyTypes @collection.name
+    dataTypes = @dataTypes @collection.name
 
-      options =
-        filter_ids: @filterIds(id)
+    fetchOptions = { include: {} }
+    _.each dependencyTypes, (dependencyType) ->
+      fetchOptions.include["#{dependencyType.singular}_ids"] = true
 
-      dataTypes = @dataTypes()
-      _.each dataTypes, (dataType) ->
-        Visio.manager.get(dataType.plural).fetchSynced(options, null, 'post')
+    model = new Visio.Models[@collection.name.className]({ id: id })
 
+    # First fetch the actual parameter
+    dfd = model.fetch({ data: options: fetchOptions })
+
+    # Need to fetch from server for indicator/expenditure/budget data
+
+    # First fetch all dependencies
+
+    dependencyOptions = { join_ids: {} }
+    dependencyOptions.join_ids["#{@collection.name.singular}_id"] = id
+
+    dataOptions =
+      filter_ids: @filterIds(@collection.name, id)
+
+
+    # Have to cascade promises since jquery's when doesn't properly return promise when called with apply
+    dfd.done(() =>
+      Visio.manager.get(model.name.plural).add model
+      # Fetch all parameter dependencies
+      $.when.apply(@, dependencyTypes.map (dependencyType) ->
+        Visio.manager.get(dependencyType.plural).fetchSynced(dependencyOptions)).done(() =>
+
+          # Select model and dependencies
+          Visio.manager.select model.name.plural, id
+          _.each dependencyTypes, (dependencyType) ->
+            Visio.manager.select dependencyType.plural, model.get("#{dependencyType.singular}_ids")
+
+          $.when.apply(@, dataTypes.map (dataType) ->
+            Visio.manager.get(dataType.plural).fetchSynced(dataOptions, null, 'post')
+          ).done(() =>
+              # finally trigger redraw
+              Visio.manager.trigger 'change:navigation'
+            )))
+
+  close: ->
+    @unbind()
+    @remove()

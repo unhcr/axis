@@ -15,8 +15,12 @@ class Ppg < ActiveRecord::Base
   has_many :budgets
 
   def to_jbuilder(options = {})
+    options ||= {}
+    options[:include] ||= {}
     Jbuilder.new do |json|
       json.extract! self, :name, :id, :operation_name
+      json.operation_ids self.operation_ids if options[:include][:operation_ids].present?
+      json.goal_ids self.goal_ids if options[:include][:goal_ids].present?
     end
   end
 

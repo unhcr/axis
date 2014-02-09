@@ -3,8 +3,6 @@ class Visio.Views.NavigationView extends Backbone.View
   template: HAML['shared/navigation']
 
   initialize: () ->
-    @searches = _.map _.values(Visio.Parameters), (hash) ->
-      new Visio.Views.ParameterSearch({ collection: Visio.manager.get(hash.plural) })
 
 
   events:
@@ -12,12 +10,16 @@ class Visio.Views.NavigationView extends Backbone.View
     'change .visio-checkbox input': 'onChangeSelection'
 
   render: () ->
+    _.each @searches, (searchView) -> searchView.close() if @searches?
+
+    @searches = _.map _.values(Visio.Parameters), (hash) ->
+      new Visio.Views.ParameterSearch({ collection: Visio.manager.get(hash.plural) })
 
     parameters = []
 
     _.each _.values(Visio.Parameters), (hash) ->
 
-      data = Visio.manager.strategy()[hash.plural]()
+      data = Visio.manager.get(hash.plural)
 
       parameters.push
         data: data
