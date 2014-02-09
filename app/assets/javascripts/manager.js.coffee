@@ -89,6 +89,18 @@ class Visio.Models.Manager extends Backbone.Model
       _.include(strategy_ids.map((i) -> +i), strategy.id)
     ))
 
+  select: (type, ids) ->
+    selected = @get 'selected'
+
+    if _.isArray ids
+      _.each ids, (id) ->
+        selected[type][id] = true
+    else if ids?
+      # Must be single id
+      selected[type][ids] = true
+
+    @set 'selected', selected
+
   selected: (type) ->
     parameters = @get(type)
 
