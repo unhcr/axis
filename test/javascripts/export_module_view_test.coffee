@@ -54,7 +54,7 @@ module 'Export Module View',
 
   teardown: ->
     for key, val of Visio.FigureInstances
-      Visio.FigureInstances[key].unsubscribe()
+      Visio.FigureInstances[key].unsubscribe() if Visio.FigureInstances[key].unsubscribe
     @exportView.close()
 
 
