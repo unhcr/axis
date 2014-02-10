@@ -143,6 +143,8 @@ GEM
       slop (~> 3.4)
     pry-rails (0.3.2)
       pry (>= 0.9.10)
+    quiet_assets (1.0.2)
+      railties (>= 3.1, < 5.0)
     qunit-rails (0.0.4)
       railties (>= 3.2.3)
     quoth (0.0.1)
@@ -274,6 +276,7 @@ DEPENDENCIES
   pony
   pry
   pry-rails
+  quiet_assets
   qunit-rails
   quoth
   rails (= 3.2.13)

@@ -41,6 +41,7 @@ group :assets do
 end
 
 group :development, :test do
+  gem 'quiet_assets'
   gem 'capistrano'
   gem 'capistrano-rbenv'
   gem 'qunit-rails'
