@@ -16,7 +16,7 @@
             .small-item.pull-left
               Ça va,
               %span.highlight
-                = current_user.firstname
+                = current_user.login
             .account-menu.pull-left
               .small-item.pull-right
                 = link_to "Sign out", destroy_user_session_path, :method => :delete
