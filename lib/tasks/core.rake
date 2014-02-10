@@ -83,6 +83,9 @@ namespace :build do
       match_plan_to_country(plan)
     end
 
+    Operation.all.each do |operation|
+      match_operation_to_country(operation)
+    end
   end
 end
 

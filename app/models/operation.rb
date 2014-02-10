@@ -21,6 +21,10 @@ class Operation < ActiveRecord::Base
   has_and_belongs_to_many :goals, :uniq => true
   has_and_belongs_to_many :ppgs, :uniq => true
 
+  belongs_to :country
+
+  default_scope { includes([:country]) }
+
   def loaded
     includes([:plan_ids])
   end
@@ -45,6 +49,7 @@ class Operation < ActiveRecord::Base
         json.problem_objective_ids self.problem_objective_ids
       end
       json.indicator_ids self.indicator_ids if options[:include][:indicator_ids].present?
+      json.country self.country
     end
   end
 

@@ -55,5 +55,11 @@
             .center-text
               .row Total Budget for
               .row.ui-bright-yellow.js-operation-name All Target Countries
-  .row.js-extra-target-countries.gone
-    .col-md-8.col-centered
+
+  .target-countries
+    - _.each context.targetOperations, (operation) ->
+      - if operation.country
+        %img.country{
+          :width => "32",
+          :height => "32",
+          :src => "/assets/countries/#{operation.country.iso2}/64.png" }

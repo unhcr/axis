@@ -7,4 +7,10 @@ module CountryHelper
     plan.save
   end
 
+  def match_operation_to_country(operation)
+    country = Country.where("un_names LIKE ?", '%' + operation.name + '%').first
+    Rails.logger.info "No country for plan: #{operation.name}" and return unless country
+    operation.country = country
+    operation.save
+  end
 end
