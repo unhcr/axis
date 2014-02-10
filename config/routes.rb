@@ -3,6 +3,7 @@ Visio::Application.routes.draw do
 
   # Application
   get '/splash' => 'application#splash'
+  get '/algorithms' => 'application#algorithms'
   get '/map' => 'application#map'
   get '/overview' => 'application#overview'
   get '/global_search' => 'application#global_search'

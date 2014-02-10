@@ -46,4 +46,8 @@ class ApplicationController < ActionController::Base
       :operations => Operation.search_models(query)
     }
   end
+
+  def algorithms
+    render :layout => 'application'
+  end
 end
