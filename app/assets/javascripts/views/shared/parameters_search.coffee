@@ -91,11 +91,11 @@ class Visio.Views.ParameterSearch extends Backbone.View
 
 
     # Have to cascade promises since jquery's when doesn't properly return promise when called with apply
-    dfd.done(() =>
+    dfd.done =>
       Visio.manager.get(model.name.plural).add model
       # Fetch all parameter dependencies
       $.when.apply(@, dependencyTypes.map (dependencyType) ->
-        Visio.manager.get(dependencyType.plural).fetchSynced(dependencyOptions)).done(() =>
+        Visio.manager.get(dependencyType.plural).fetchSynced(dependencyOptions)).done =>
 
           # Select model and dependencies
           Visio.manager.select model.name.plural, id
@@ -103,11 +103,10 @@ class Visio.Views.ParameterSearch extends Backbone.View
             Visio.manager.select dependencyType.plural, model.get("#{dependencyType.singular}_ids")
 
           $.when.apply(@, dataTypes.map (dataType) ->
-            Visio.manager.get(dataType.plural).fetchSynced(dataOptions, null, 'post')
-          ).done(() =>
+            Visio.manager.get(dataType.plural).fetchSynced(dataOptions, null, 'post')).done =>
               # finally trigger redraw
               Visio.manager.trigger 'change:navigation'
-            )))
+
 
   close: ->
     @unbind()
