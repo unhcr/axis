@@ -31,9 +31,9 @@ class IndicatorDatum < ActiveRecord::Base
 
   def self.loaded
     includes({ :goal => :strategy_objectives,
-               :problem_objective => :strategy_objectives,
+               :problem_objective => [:strategy_objectives, :outputs],
                :indicator => :strategy_objectives,
-               :output => [:strategy_objectives, :budgets]})
+               :output => :strategy_objectives})
   end
 
   def self.synced_models(ids = {}, synced_date = nil, limit = nil, where = {})
@@ -105,16 +105,12 @@ class IndicatorDatum < ActiveRecord::Base
   end
 
   def missing_budget?
-    return true if self.output.nil?
-    budgets = self.output.budgets.select do |b|
-      b.plan_id == self.plan_id &&
-      b.ppg_id == self.ppg_id &&
-      b.goal_id == self.goal_id &&
-      b.problem_objective_id == self.problem_objective_id &&
-      b.amount > 0
+    if self.output.nil?
+      # TODO This is not always correct, we need to rely on XML
+      return self.problem_objective.outputs.all? { |output| output.missing_budget? }
+    else
+      return self.output.missing_budget?
     end
-
-    budgets.empty?
   end
 
   def situation_analysis(reported_value = REPORTED_VALUES[:myr])

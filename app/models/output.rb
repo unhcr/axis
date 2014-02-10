@@ -30,6 +30,10 @@ class Output < ActiveRecord::Base
     end
   end
 
+  def missing_budget?
+    not (self.priority == 'PARTIAL' || self.priority == 'WOL')
+  end
+
   def as_json(options = {})
     to_jbuilder(options).attributes!
   end
