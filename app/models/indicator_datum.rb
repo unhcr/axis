@@ -32,7 +32,8 @@ class IndicatorDatum < ActiveRecord::Base
   def self.loaded
     includes({ :goal => :strategy_objectives,
                :problem_objective => :strategy_objectives,
-               :output => :strategy_objectives})
+               :indicator => :strategy_objectives,
+               :output => [:strategy_objectives, :budgets]})
   end
 
   def self.synced_models(ids = {}, synced_date = nil, limit = nil, where = {})
@@ -104,13 +105,14 @@ class IndicatorDatum < ActiveRecord::Base
   end
 
   def missing_budget?
-    budgets = Budget.where({
-      :plan_id => self.plan_id,
-      :ppg_id => self.ppg_id,
-      :goal_id => self.goal_id,
-      :output_id => self.output_id,
-      :problem_objective_id => self.problem_objective_id,
-    }).where('amount > 0')
+    return true if self.output.nil?
+    budgets = self.output.budgets.select do |b|
+      b.plan_id == self.plan_id &&
+      b.ppg_id == self.ppg_id &&
+      b.goal_id == self.goal_id &&
+      b.problem_objective_id == self.problem_objective_id &&
+      b.amount > 0
+    end
 
     budgets.empty?
   end
