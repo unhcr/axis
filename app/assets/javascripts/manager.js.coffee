@@ -50,8 +50,6 @@ class Visio.Models.Manager extends Backbone.Model
     'budget_type': {}
     'achievement_type': Visio.AchievementTypes.TARGET
     'amount_type': Visio.Syncables.BUDGETS
-    'bust_cache': false
-    'use_cache': true
 
   resetSelectedDefaults: () ->
     _.each _.values(Visio.Parameters), (hash) ->
@@ -87,11 +85,20 @@ class Visio.Models.Manager extends Backbone.Model
       _.include(strategy_ids.map((i) -> +i), strategy.id)
     ))
 
+  select: (type, ids) ->
+    selected = @get 'selected'
+
+    if _.isArray ids
+      _.each ids, (id) ->
+        selected[type][id] = true
+    else if ids?
+      # Must be single id
+      selected[type][ids] = true
+
+    @set 'selected', selected
+
   selected: (type) ->
     parameters = @get(type)
-
-    if type == Visio.Parameters.STRATEGY_OBJECTIVES.plural
-      return @strategy()[type]()
 
     return new parameters.constructor(parameters.filter((p) => @get('selected')[type][p.id]) )
 

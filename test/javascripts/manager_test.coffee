@@ -251,3 +251,19 @@ test 'validation', ->
     () ->
       Visio.manager.set('achievement_type', 'abcdef')
     , /achievement_type/, 'Raise a wrong achievement_type error')
+
+test 'select', ->
+
+  ids = [1, 2, 'abc']
+  for key, hash of Visio.Parameters
+    Visio.manager.select hash.plural, ids
+
+    _.each ids, (id) ->
+      ok Visio.manager.get('selected')[hash.plural][id], "#{hash.plural} id: #{id} should be selected"
+
+  id = 'wham'
+
+  for key, hash of Visio.Parameters
+    Visio.manager.select hash.plural, id
+
+    ok Visio.manager.get('selected')[hash.plural][id], "#{hash.plural} id: #{id} should be selected"

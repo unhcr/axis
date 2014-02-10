@@ -26,7 +26,7 @@ class Strategy < ActiveRecord::Base
 
   def synced(resource, synced_date = nil, limit = nil, where = {})
     ids = {
-      :plan_ids => self.plan_ids,
+      :operation_ids => self.operation_ids,
       :ppg_ids => self.ppg_ids,
       :goal_ids => self.goal_ids,
       :problem_objective_ids => self.problem_objective_ids,

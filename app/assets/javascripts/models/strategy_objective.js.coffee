@@ -4,6 +4,7 @@ class Visio.Models.StrategyObjective extends Visio.Models.Parameter
     Backbone.Model.apply @, arguments
 
   initialize: (options) ->
+    options or= {}
     @set(Visio.Parameters.GOALS.plural,
       new Visio.Collections.Goal((options[Visio.Parameters.GOALS.plural] || [])))
     @set(Visio.Parameters.PROBLEM_OBJECTIVES.plural,

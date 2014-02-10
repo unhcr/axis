@@ -10,10 +10,10 @@
                                :data => { :type => p.hash.plural } }
 
           - p.data.each (d) ->
-            .visio-check.visio-check-yellow.ui-line-item-theme
+            .visio-checkbox.visio-checkbox-yellow.ui-line-item-theme
               %input{
                 :value => p.hash.plural + Visio.Constants.SEPARATOR + d.id,
-                :checked => Visio.manager.get('selected')[p.hash.plural][d.id],
+                :checked => if Visio.manager.get('selected')[p.hash.plural][d.id] then true else false,
                 :type => 'checkbox',
                 :id => "check_#{d.id}" }
               %label{ :for => "check_#{d.id}" }

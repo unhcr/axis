@@ -3,6 +3,7 @@ class ExportModule < ActiveRecord::Base
 
   serialize :state, Hash
   serialize :figure_config, Hash
+  serialize :figure_type, Hash
 
   belongs_to :user
 end

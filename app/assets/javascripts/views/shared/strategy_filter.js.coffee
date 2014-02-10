@@ -5,7 +5,7 @@ class Visio.Views.StrategyFilterView extends Backbone.View
   template: HAML['shared/strategy_filter']
 
   events:
-    'change .visio-check input': 'onChangeCheck'
+    'change .visio-checkbox input': 'onChangeCheck'
 
   initialize: (options) ->
 

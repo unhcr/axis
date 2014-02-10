@@ -1,17 +1,30 @@
 .container.isy-tooltip.full-width
-  .row.ui-orange
+  %section.row.ui-orange
     .col-md-6
       = Visio.manager.year()
-    .col-md-6
+    .col-md-6.right-text
       - if (context.model.get('is_performance'))
         PERFORMANCE
       - else
         IMPACT
       INDICATOR
   - _.each [Visio.Parameters.PPGS, Visio.Parameters.GOALS, Visio.Parameters.INDICATORS], (hash) ->
-    .row
+    %section.row
       .col-md-12
         .ui-primary
           = hash.human.toUpperCase()
         .ui-primary-light
           = context.model[hash.singular]().get('name')
+  %section.zebra
+    - _.each context.values, (value) ->
+      .row
+        .col-md-6.ui-orange.zero-padding
+          = value.human
+        .col-md-6.ui-primary-light.zero-padding.right-text
+          - if context.model.indicator().get('name')[0] == '%'
+            = Visio.Formats.PERCENT context.model.get(value.value) / 100
+          - else
+            = Visio.Formats.COMMA context.model.get(value.value)
+  %section.row
+    .col-md-12
+      = "* ALL PERCENTAGES ARE TOWARDS THE TARGET"

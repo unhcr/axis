@@ -9,12 +9,15 @@ class Visio.Views.AccordionShowView extends Backbone.View
   shrink: =>
     @$el.removeClass 'open'
 
+  toolbarHeight: => $('.toolbar').height() + 20
+
+
   onTransitionEnd: (e) ->
     if @isOpen() and e.originalEvent.propertyName == 'max-height'
       $.scrollTo @$el,
         duration: 100
         offset:
-          top: -@toolbarHeight
+          top: -@toolbarHeight()
           left: 0
   close: ->
     @removeInstances()

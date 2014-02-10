@@ -16,7 +16,7 @@
   .row
     .col-md-8.col-centered
       .col-md-8.zero-padding
-        %a{:href => "#/export/isy/#{context.figureId}"} export
+        %a{:href => "#/export/#{context.figureId}"} export
         .row.js-ppg-container{ :data => { :prefix => "PPG" } }
         .row.js-goal-container{ :data => { :prefix => "Goal" } }
         .row.divider-white

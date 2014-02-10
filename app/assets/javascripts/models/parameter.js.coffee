@@ -1,6 +1,8 @@
 class Visio.Models.Parameter extends Visio.Models.Syncable
 
-  data: (type, idHash, isAnyYear = false) ->
+  data: (type, idHash, isAnyYear = false, filters) ->
+
+
     # Return empty collection since indicators do not have budgets or expenditures
     if (type.plural == Visio.Syncables.BUDGETS.plural or
        type.plural == Visio.Syncables.EXPENDITURES.plural) and
@@ -14,6 +16,8 @@ class Visio.Models.Parameter extends Visio.Models.Syncable
       condition["#{@name.singular}_id"] = @id
       data = Visio.manager.get(type.plural).where(condition)
 
+    data = _.filter data, (d) => not filters? or not filters.isFiltered(d)
+
     data = _.filter data, (d) =>
       return _.every _.values(Visio.Parameters), (hash) =>
 
@@ -21,7 +25,6 @@ class Visio.Models.Parameter extends Visio.Models.Syncable
 
         # Must be current year if we are specifying year
         return false if not isAnyYear and Visio.manager.year() != d.get('year')
-
 
         # Skip indicator if it's a budget
         if (type.plural == Visio.Syncables.BUDGETS.plural or
@@ -46,90 +49,74 @@ class Visio.Models.Parameter extends Visio.Models.Syncable
 
     return new Visio.Collections[type.className](data)
 
-  selectedIndicatorData: (isAnyYear = false) ->
-    @selectedData(Visio.Syncables.INDICATOR_DATA, isAnyYear)
+  selectedIndicatorData: (isAnyYear = false, filters = null) ->
+    @selectedData(Visio.Syncables.INDICATOR_DATA, isAnyYear, filters)
 
-  selectedBudgetData: (isAnyYear = false) ->
-    @selectedData(Visio.Syncables.BUDGETS, isAnyYear)
+  selectedBudgetData: (isAnyYear = false, filters = null) ->
+    @selectedData(Visio.Syncables.BUDGETS, isAnyYear, filters)
 
-  selectedExpenditureData: (isAnyYear = false) ->
-    @selectedData(Visio.Syncables.EXPENDITURES, isAnyYear)
+  selectedExpenditureData: (isAnyYear = false, filters = null) ->
+    @selectedData(Visio.Syncables.EXPENDITURES, isAnyYear, filters)
 
-  selectedData: (type, isAnyYear = false) ->
-    @data type, Visio.manager.get('selected'), isAnyYear
+  selectedData: (type, isAnyYear = false, filters = null) ->
+    @data type, Visio.manager.get('selected'), isAnyYear, filters
 
-  strategyData: (type, strategy, isAnyYear = false) ->
+  strategyData: (type, strategy, isAnyYear = false, filters = null) ->
     strategy or= Visio.manager.strategy()
     idHash = {}
 
     _.each _.values(Visio.Parameters), (hash) ->
       idHash[hash.plural] = strategy.get("#{hash.singular}_ids")
 
-    @data type, idHash, isAnyYear
+    @data type, idHash, isAnyYear, filters
 
 
-  strategyIndicatorData: (strategy) ->
-    @strategyData(Visio.Syncables.INDICATOR_DATA, strategy)
+  strategyIndicatorData: (strategy, isAnyYear = false, filters = null) ->
+    @strategyData(Visio.Syncables.INDICATOR_DATA, strategy, isAnyYear, filters)
 
-  strategyBudgetData: (strategy) ->
-    @strategyData(Visio.Syncables.BUDGETS, strategy)
+  strategyBudgetData: (strategy, isAnyYear = false, filters = null) ->
+    @strategyData(Visio.Syncables.BUDGETS, strategy, isAnyYear, filters)
 
-  strategyExpenditureData: (strategy) ->
-    @strategyData(Visio.Syncables.EXPENDITURES, strategy)
+  strategyExpenditureData: (strategy, isAnyYear = false, filters = null) ->
+    @strategyData(Visio.Syncables.EXPENDITURES, strategy, isAnyYear, filters)
 
   strategyExpenditure: ->
-    return @get 'cache.strategyExpenditure' if @useCache 'strategyExpenditure'
     data = @strategyExpenditureData()
-    @set 'cache.strategyExpenditure', data.amount()
-    @get 'cache.strategyExpenditure'
+    data.amount()
 
   strategyBudget: () ->
-    return @get 'cache.strategyBudget' if @useCache 'strategyBudget'
     data = @strategyBudgetData()
-    @set 'cache.strategyBudget', data.amount()
-    @get 'cache.strategyBudget'
+    data.amount()
 
   strategySituationAnalysis: () ->
-    if @useCache 'strategySituationAnalysis'
-      return @get 'cache.strategySituationAnalysis'
     data = @strategyIndicatorData()
-    @set 'cache.strategySituationAnalysis', data.situationAnalysis()
-    @get 'cache.strategySituationAnalysis'
+    data.situationAnalysis()
 
-  selectedAchievement: () ->
-    if @useCache 'selectedAchievement'
-      return @get 'cache.selectedAchievement'
-    data = @selectedIndicatorData()
-    @set 'cache.selectedAchievement', data.achievement()
-    @get 'cache.selectedAchievement'
+  selectedAchievement: (isAnyYear = false, filters = null) ->
+    data = @selectedIndicatorData(isAnyYear = false, filters = null)
+    data.achievement()
 
-  selectedBudget: () ->
-    if @useCache 'selectedBudget'
-      return @get 'cache.selectedBudget'
-    data = @selectedBudgetData()
-    @set 'cache.selectedBudget', data.amount()
-    @get 'cache.selectedBudget'
+  selectedBudget: (isAnyYear = false, filters = null) ->
+    data = @selectedBudgetData(isAnyYear, filters)
+    data.amount()
 
-  selectedSituationAnalysis: () ->
-    if @useCache 'selectedSituationAnalysis'
-      return @get 'cache.selectedSituationAnalysis'
-    data = @selectedIndicatorData()
-    @set 'cache.selectedSituationAnalysis', data.situationAnalysis()
-    @get 'cache.selectedSituationAnalysis'
+  selectedSituationAnalysis: (isAnyYear = false, filters = null) ->
+    data = @selectedIndicatorData(isAnyYear, filters)
+    data.situationAnalysis()
 
-  selectedExpenditure: ->
-    if @useCache 'selectedExpenditure'
-      return @get 'cache.selectedExpenditure'
-    data = @selectedExpenditureData()
-    @set 'cache.selectedExpenditure', data.amount()
-    @get 'cache.selectedExpenditure'
-
-  useCache: (key) ->
-    @get("cache.#{key}")? and Visio.manager.get('use_cache') and not Visio.manager.get 'bust_cache'
+  selectedExpenditure: (isAnyYear = false, filters = null) ->
+    data = @selectedExpenditureData(isAnyYear, filters)
+    data.amount()
 
   refId: ->
     @id
 
-  selectedAmount: ->
+  search: (query) ->
+    $.get("#{@url}/search", { query: query })
+
+  selectedAmount: (isAnyYear = false, filters = null) ->
     # Either Budget or Expenditure
-    @["selected#{Visio.manager.get('amount_type').className}"]()
+    @["selected#{Visio.manager.get('amount_type').className}"](isAnyYear, filters)
+
+  highlight: ->
+    return @get('highlight').name[0] if @get('highlight')

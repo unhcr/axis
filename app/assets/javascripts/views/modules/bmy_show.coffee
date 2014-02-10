@@ -15,32 +15,31 @@ class Visio.Views.BmyShowView extends Visio.Views.AccordionShowView
     @config =
       margin:
         top: 10
-        bottom: 10
-        left: 10
-        right: 10
-      width: 800
-      height: 300
-      figureId: @bmyFigureId()
+        bottom: 80
+        left: 120
+        right: 40
+      width: 650
+      height: 450
 
-    Visio.FigureInstances[@bmyFigureId()] = Visio.Figures.bmy @config
+    @figure = new Visio.Figures.Bmy @config
+    @filterBy = new Visio.Views.FilterBy({ figure: @figure, })
+    Visio.FigureInstances[@figure.figureId()] = @figure
 
   render: (isRerender) ->
 
     unless isRerender
-      @$el.html @template( parameter: @model, figureId: @bmyFigureId() )
-      @$el.find('.bmy-figure').html Visio.FigureInstances[@bmyFigureId()].el()
-
+      @$el.html @template( parameter: @model, figureId: @figure.figureId() )
+      @$el.find('.bmy-figure').html @figure.el
+      @$el.find('.figure-header').html @filterBy.render().el
     @drawFigures()
     @
 
 
   drawFigures: ->
-    Visio.FigureInstances[@bmyFigureId()].data @model.selectedBudgetData(true).models
-    Visio.FigureInstances[@bmyFigureId()]()
-
-  bmyFigureId: =>
-    "bmy-#{@model.id}"
+    @figure.dataFn @model.selectedBudgetData(true).models
+    @figure.render()
 
   removeInstances: =>
-    delete Visio.FigureInstances[@bmyFigureId()]
-
+    @filterBy.close()
+    @figure.unsubscribe()
+    delete Visio.FigureInstances[@figure.figureId()]

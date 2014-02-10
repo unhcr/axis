@@ -4,18 +4,22 @@ class Visio.Views.NavigationView extends Backbone.View
 
   initialize: () ->
 
+
   events:
     'click .open': 'onClickOpen'
-    'change .visio-check input': 'onChangeSelection'
+    'change .visio-checkbox input': 'onChangeSelection'
 
   render: () ->
+    _.each @searches, (searchView) -> searchView.close() if @searches?
+
+    @searches = _.map _.values(Visio.Parameters), (hash) ->
+      new Visio.Views.ParameterSearch({ collection: Visio.manager.get(hash.plural) })
 
     parameters = []
 
     _.each _.values(Visio.Parameters), (hash) ->
-      return if hash == Visio.Parameters.STRATEGY_OBJECTIVES
 
-      data = Visio.manager.strategy()[hash.plural]()
+      data = Visio.manager.get(hash.plural)
 
       parameters.push
         data: data
@@ -24,6 +28,12 @@ class Visio.Views.NavigationView extends Backbone.View
     @$el.html @template(
       strategy: Visio.manager.strategy()
       parameters: parameters)
+
+    _.each @searches, (view) =>
+      plural = view.collection.name.plural
+      $target = @$el.find(".ui-accordion-content.#{plural}")
+      $target.prepend view.render().el
+
 
   onChangeSelection: (e) ->
     $target = $(e.currentTarget)

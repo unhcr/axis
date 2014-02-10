@@ -4,5 +4,6 @@
       .col-md-12.ui-medium-header
         = context.parameter.toString()
     .row.data-container
+      .figure-header
       %figure.bmy-figure
-      %a{:href => "#/export/bmy/#{context.figureId}"} export
+      %a{:href => "#/export/#{context.figureId}"} export

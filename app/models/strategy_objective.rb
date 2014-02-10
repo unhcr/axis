@@ -26,6 +26,8 @@ class StrategyObjective < ActiveRecord::Base
   end
 
   def to_jbuilder(options = {})
+    options ||= {}
+    options[:include] ||= {}
     Jbuilder.new do |json|
       json.extract! self, :name, :id, :description, :strategy_id
 
@@ -33,6 +35,13 @@ class StrategyObjective < ActiveRecord::Base
       json.problem_objectives self.problem_objectives
       json.outputs self.outputs
       json.indicators self.indicators
+
+      json.goal_ids self.goal_ids if options[:include][:goal_ids].present?
+      json.output_ids self.output_ids if options[:include][:output_ids].present?
+      if options[:include][:problem_objective_ids].present?
+        json.problem_objective_ids self.problem_objective_ids
+      end
+      json.indicator_ids self.indicator_ids if options[:include][:indicator_ids].present?
     end
   end
 

@@ -36,9 +36,9 @@ test 'amount', () ->
 
   Visio.manager.get('scenario_type')[Visio.Scenarios.OL] = false
   total = expenditures.amount()
-  strictEqual(total, 40)
+  strictEqual(total, 60)
 
   Visio.manager.get('budget_type')[Visio.Budgets.PROJECT] = false
   total = expenditures.amount()
-  strictEqual(total, 10)
+  strictEqual(total, 60)
 

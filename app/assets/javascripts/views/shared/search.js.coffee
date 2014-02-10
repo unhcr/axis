@@ -44,8 +44,8 @@ class Visio.Views.SearchView extends Backbone.View
 
       _.each searchTypes, (hash) =>
         html = ''
-        _.each response[hash.plural], (result) =>
-          html += @itemTemplate( result: result.highlight.name[0] )
+        _.each response[hash.plural], (elasticModel) =>
+          html += @itemTemplate( model: new Visio.Models[hash.className](elasticModel) )
 
         if html
           $results.find(".#{hash.singular}-results").html html

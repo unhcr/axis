@@ -3,7 +3,8 @@ module 'BMY Figure',
     @budgets = Fixtures.budgets
     Visio.user = new Visio.Models.User()
     Visio.manager = new Visio.Models.Manager()
-    @figure = Visio.Figures.bmy(
+    @figure = new Visio.Figures.Bmy(
+      showTotal: false
       margin:
         left: 0
         right: 0
@@ -14,15 +15,17 @@ module 'BMY Figure',
     @d = new Visio.Models.Output({ id: 1 })
     sinon.stub @d, 'selectedBudgetData', -> @budgets
   teardown: ->
+    @figure.unsubscribe()
     @d.selectedBudgetData.restore()
 
 test 'filtered', ->
 
   memo = @figure.filtered @budgets.models
 
-  strictEqual memo.length, 2, 'Should have two lines'
+  strictEqual memo.length, 3, 'Should have two lines'
   ok _.find memo, ((array) -> array.budgetType == Visio.Budgets.ADMIN), 'One line should have ADMIN type'
   ok _.find memo, ((array) -> array.budgetType == Visio.Budgets.PROJECT), 'One line should have PROJECT type'
+  ok _.find memo, ((array) -> array.budgetType == 'total'), 'One line should have total type'
 
   lineData = _.find memo, (array) -> array.budgetType == Visio.Budgets.ADMIN
   strictEqual lineData.length, 2, 'Should have two datums'
@@ -31,7 +34,21 @@ test 'filtered', ->
 
 
 test 'render', ->
-  @figure.data @budgets.models
-  @figure()
+  @figure.dataFn @budgets.models
+  @figure.render()
 
-  strictEqual $(@figure.el()).find('.budget-line').length, 2, 'Should have drawn 2 budget lines'
+  strictEqual $(@figure.el).find('.budget-line').length, 3, 'Should have drawn 3 budget lines'
+
+test 'select', ->
+  @figure.isExport = true
+  @figure.dataFn @budgets.models
+  @figure.render()
+  i = 0
+
+  strictEqual d3.select(@figure.el).selectAll('.active').size(), 0, 'Should have no active elements'
+
+  $.publish("select.#{@figure.figureId()}.figure", [@figure.filtered(@budgets.models)[i], i])
+  strictEqual d3.select(@figure.el).selectAll('.active').size(), 1, 'Should have one active elements'
+
+  $.publish("select.#{@figure.figureId()}.figure", [@figure.filtered(@budgets.models)[i], i])
+  strictEqual d3.select(@figure.el).selectAll('.active').size(), 0, 'Should have no active elements'

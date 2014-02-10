@@ -28,11 +28,11 @@ class Plan < ActiveRecord::Base
       if options[:include]
 
         if options[:include][:counts]
-          json.indicators_count self.indicators.count
-          json.goals_count self.goals.count
-          json.ppgs_count self.ppgs.count
-          json.outputs_count self.outputs.count
-          json.problem_objectives_count self.problem_objectives.count
+          json.indicators_count self.indicators.length
+          json.goals_count self.goals.length
+          json.ppgs_count self.ppgs.length
+          json.outputs_count self.outputs.length
+          json.problem_objectives_count self.problem_objectives.length
         end
 
         if options[:include][:situation_analysis]
@@ -51,7 +51,7 @@ class Plan < ActiveRecord::Base
   end
 
   def situation_analysis(reported_value = IndicatorDatum::REPORTED_VALUES[:myr])
-    indicator_data = self.indicator_data.where(:indicator_id => self.impact_indicators.map(&:id))
+    indicator_data = self.indicator_data.where(:is_performance => false)
     indicator_data.situation_analysis(indicator_data, reported_value)
   end
 

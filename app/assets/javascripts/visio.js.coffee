@@ -5,6 +5,19 @@ window.Visio =
   Routers: {}
   Utils: {}
   Figures: {}
+  FigureTypes:
+    ABSY:
+      className: 'Absy'
+      human: 'Achievement vs Budget: Single Year'
+      name: 'absy'
+    BMY:
+      className: 'Bmy'
+      human: 'Budget vs Time'
+      name: 'bmy'
+    ISY:
+      className: 'Isy'
+      human: 'Indicators: Single Year'
+      name: 'isy'
 
   # Actual instances of figures
   FigureInstances: {}
@@ -27,6 +40,7 @@ window.Visio =
   Formats:
     SI: d3.format('0.3s')
     PERCENT: d3.format(".0%")
+    COMMA: d3.format(',')
   Constants:
     DB_NAME: 'visio'
     SEPARATOR: '___'
@@ -34,6 +48,11 @@ window.Visio =
     MAP: 'map'
     SYNC: 'sync_date'
   Parameters:
+    OPERATIONS:
+      singular: 'operation'
+      plural: 'operations'
+      className: 'Operation'
+      human: 'Operation'
     PPGS:
       singular: 'ppg'
       plural: 'ppgs'
@@ -64,12 +83,6 @@ window.Visio =
       plural: 'strategy_objectives'
       className: 'StrategyObjective'
       human: 'Strategy Objective'
-    OPERATIONS:
-      singular: 'operation'
-      plural: 'operations'
-      className: 'Operation'
-      human: 'Operation'
-
   SkippedParameters:
     RIGHTS_GROUPS:
       singular: 'rights_group'
@@ -103,11 +116,13 @@ window.Visio =
     OK_THRESHOLD: 0.33
     HIGH_THRESHOLD: 0.8
     MEDIUM_THRESHOLD: 0.6
+    STATUS:
+      missing: 'missing'
+      reported: 'reported'
     ALGO_RESULTS:
       success: 'success'
       ok: 'ok'
       fail: 'fail'
-      missing: 'missing'
       high: 'high'
       medium: 'medium'
       low: 'low'

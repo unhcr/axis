@@ -1,6 +1,14 @@
 require 'test_helper'
 
 class GoalTest < ActiveSupport::TestCase
+  def setup
+    @goal = goals(:one)
+    @goal.operations << operations(:one)
+    @goal.ppgs << ppgs(:one)
+    @goal.problem_objectives << problem_objectives(:one)
+    @goal.save
+  end
+
   test "synced models no date" do
     i = [goals(:one), goals(:two)]
 
@@ -70,5 +78,27 @@ class GoalTest < ActiveSupport::TestCase
     models = Goal.synced_models(Time.now - 3.days, { :plan_id => [s.id, s2.id] })
 
     assert_equal 2, models[:new].count
+  end
+
+  test "include options" do
+    options = {
+      :include => {
+        :problem_objective_ids => true,
+        :operation_ids => true,
+        :ppg_ids => true,
+      }
+    }
+
+    json = @goal.as_json
+
+    assert_nil json["ppg_ids"]
+    assert_nil json["problem_objective_ids"]
+    assert_nil json["operation_ids"]
+
+    json = @goal.as_json(options)
+
+    assert_equal json["ppg_ids"].length, 1
+    assert_equal json["operation_ids"].length, 1
+    assert_equal json["problem_objective_ids"].length, 1
   end
 end

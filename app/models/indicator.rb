@@ -4,7 +4,6 @@ class Indicator < ActiveRecord::Base
   include SyncableModel
   include Tire::Model::Search
   include Tire::Model::Callbacks
-  extend Searchable
 
   attr_accessible :is_gsp, :is_performance, :name
 
@@ -19,8 +18,17 @@ class Indicator < ActiveRecord::Base
   has_many :indicator_data
 
   def to_jbuilder(options = {})
+    options ||= {}
+    options[:include] ||= {}
     Jbuilder.new do |json|
       json.extract! self, :is_gsp, :is_performance, :name, :id
+      json.ppg_ids self.ppg_ids if options[:include][:ppg_ids].present?
+      json.operation_ids self.operation_ids if options[:include][:operation_ids].present?
+      json.output_ids self.output_ids if options[:include][:output_ids].present?
+      if options[:include][:problem_objective_ids].present?
+        json.problem_objective_ids self.problem_objective_ids
+      end
+      json.output_ids self.output_ids if options[:include][:output_ids].present?
     end
   end
 

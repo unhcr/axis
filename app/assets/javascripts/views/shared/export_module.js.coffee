@@ -1,6 +1,6 @@
 class Visio.Views.ExportModule extends Backbone.View
 
-  className: 'overview-overlay'
+  className: 'overview-overlay export-module'
 
   template: HAML['shared/export_module']
 
@@ -12,33 +12,36 @@ class Visio.Views.ExportModule extends Backbone.View
   initialize: (options) ->
     $(document).scrollTop(0)
     @config = @model.get 'figure_config'
+    @figure = @model.figure(@config)
 
-    $.subscribe "select.#{@config.figureId}", @select
+    $.subscribe "select.#{@figure.figureId()}", @select
 
   render: ->
 
 
-    @figure = @model.figure()(@config)
 
-    @filtered = @figure.filtered(@config.data)
-    datum.index = i for datum, i in @filtered
+    @filtered = @figure.filtered @config.data
 
     @$el.html @template( model: @model.toJSON(), filtered: @filtered )
-    @$el.find('.export-figure figure').html @figure.el()
-    @figure()
+    @$el.find('.export-figure figure').html @figure.el
+    @figure.render()
     @
 
   onSelectionChange: (e) ->
     e.preventDefault()
     $target = $(e.currentTarget)
-    d = _.find @filtered, (d) ->
-      d.index == +$target.val()
+    d = _.find @filtered, (d, i) ->
+      i == +$target.val()
 
-    $.publish "select.#{@config.figureId}.figure", [d]
+    unless d
+      console.warn "No element found. Returning"
+      return
+
+    $.publish "select.#{@figure.figureId()}.figure", [d]
 
 
-  select: (e, d) =>
-    $input = @$el.find("#datum-#{d.index}")
+  select: (e, d, i) =>
+    $input = @$el.find("#datum-#{i}")
     checked = $input.is(':checked')
 
     # Toggle if it's check or not
@@ -68,10 +71,10 @@ class Visio.Views.ExportModule extends Backbone.View
 
   onClose: ->
     @close()
-    Visio.router.navigate '/' + @model.get 'figure_type', { trigger: true }
+    Visio.router.navigate '/' + @model.get('figure_type').name, { trigger: true }
 
   close: ->
-    $.unsubscribe "select.#{@model.get('figure_id')}"
+    $.unsubscribe "select.#{@figure.figureId()}"
     @figure.unsubscribe() if @figure?
     @unbind()
     @remove()

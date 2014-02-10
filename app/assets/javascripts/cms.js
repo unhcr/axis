@@ -22,7 +22,7 @@
 //= require ./models/parameter
 //= require ./collections/syncables/amount_type
 //= require ./models/syncables/amount_type
-//= require_tree ../templates
+//= require_tree ./templates
 //= require_tree ./models/parameters
 //= require_tree ./models/syncables
 //= require_tree ./collections/parameters

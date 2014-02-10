@@ -25,12 +25,12 @@ gem 'mysql2'
 gem 'tire'
 gem 'will_paginate', '~> 3.0'
 gem 'normalize-rails'
-gem "capistrano-rbenv"
 
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
+  gem 'compass-rails'
   gem 'coffee-rails', '~> 3.2.1'
   gem 'haml_coffee_assets'
   gem 'execjs'
@@ -42,6 +42,9 @@ group :assets do
 end
 
 group :development, :test do
+  gem 'quiet_assets'
+  gem 'capistrano'
+  gem 'capistrano-rbenv'
   gem 'qunit-rails'
   gem 'random-word'
   gem 'simplecov', :require => false

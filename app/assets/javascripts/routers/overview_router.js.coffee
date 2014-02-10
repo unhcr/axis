@@ -9,23 +9,21 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
 
     Visio.manager.set 'selected_strategies', selectedStrategies
     Visio.manager.on 'change:date', () =>
-      Visio.manager.set 'bust_cache', true
       @navigation.render()
       @strategySnapshotView.render()
-      @moduleView.render(true)
-      Visio.manager.set 'bust_cache', false
+      @moduleView.render true
 
-    Visio.manager.on [
-      'change:aggregation_type',
-      'change:selected',
-      'change:achievement',
-      'change:scenario_type',
-      'change:budget_type',
-      'change:amount_type'].join(' ')
-      , () =>
-        Visio.manager.set 'bust_cache', true
-        @moduleView.render true
-        Visio.manager.set 'bust_cache', false
+    Visio.manager.on ['change:navigation'].join(' '), =>
+      @navigation.render()
+      @moduleView.render true
+
+    Visio.manager.on ['change:aggregation_type'
+                      'change:selected',
+                      'change:achievement_type',
+                      'change:scenario_type',
+                      'change:budget_type',
+                      'change:amount_type'].join(' '), =>
+      @moduleView.render true
 
     @module = $('#module')
 
@@ -77,21 +75,21 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
   routes:
     'menu' : 'menu'
     'search': 'search'
-    'export/:figureType/:figureId': 'export'
+    'export/:figureId': 'export'
     ':figureType/:year': 'figure'
     ':figureType': 'figure'
     '*default': 'index'
 
-  export: (figureType, figureId) ->
+  export: (figureId) ->
     unless Visio.FigureInstances[figureId]?
       @navigate '/', { trigger: true }
       return
 
     @setup().done =>
       figure = Visio.FigureInstances[figureId]
-      config = $.extend { figureId: figure.exportId(), isExport: true }, figure.config()
+      config = $.extend { isExport: true }, figure.config()
       model = new Visio.Models.ExportModule
-        figure_type: figureType
+        figure_type: figure.type
         state: Visio.manager.state()
         figure_config: config
 

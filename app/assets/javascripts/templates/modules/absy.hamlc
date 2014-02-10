@@ -10,37 +10,6 @@
       Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
 .row
   .col-md-8.col-centered
-    %a{:href => "#/export/absy/#{ context.figureId }"} export
+    %a{:href => "#/export/#{ context.figureId }"} export
+    .figure-header
     %figure#bubble
-.row
-  .col-md-8.col-centered.zero-padding
-    .col-md-2
-      %label Target
-      - isChecked = Visio.manager.get('achievement_type') == Visio.AchievementTypes.TARGET
-      %input{ :type => "checkbox",
-        :class => "achievement-type-toggle",
-        :checked => isChecked }
-    .col-md-2.scenario
-      - _.each Visio.Scenarios, (scenario) ->
-        .visio-check.visio-check-yellow
-          - shortName = if scenario == Visio.Scenarios.AOL then 'AOL' else 'OL'
-          %input{
-            :checked => "checked",
-            :id => "check-#{shortName}",
-            :type => "checkbox",
-            :value => "#{scenario}"}
-          %label{
-            :for => "check-#{shortName}"}
-            = shortName
-
-    .col-md-3.budget
-      - _.each _.values(Visio.Budgets), (budget, i, values) ->
-        .visio-check.visio-check-yellow
-          %input{
-            :checked => "checked",
-            :id => "check-#{budget}",
-            :type => "checkbox",
-            :value => "#{budget}"}
-          %label{
-            :for => "check-#{budget}"}
-            = budget

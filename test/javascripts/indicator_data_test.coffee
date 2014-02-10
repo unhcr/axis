@@ -2,7 +2,6 @@ module 'Indicator Data',
   setup: () ->
     Visio.user = new Visio.Models.User()
     Visio.manager = new Visio.Models.Manager()
-    Visio.manager.set 'use_cache', false
 
 test 'achievement collection', () ->
   Visio.manager.get('outputs').reset([
@@ -103,31 +102,75 @@ test 'achievement', () ->
     missing_budget: false
   })
 
-  strictEqual(1, datum.achievement())
+  strictEqual(1, datum.achievement().result)
 
   datum.set('comp_target', 40)
-  strictEqual(1, datum.achievement())
+  strictEqual(1, datum.achievement().result)
 
   datum.set('is_performance', false)
-  strictEqual(0, datum.achievement())
+  strictEqual(0, datum.achievement().result)
 
   datum.set('baseline', 100)
   datum.set('comp_target', 50)
-  strictEqual(1 , datum.achievement())
+  strictEqual(1 , datum.achievement().result)
 
   datum.set('comp_target', 25)
-  strictEqual(50/75 , datum.achievement())
+  strictEqual(50/75 , datum.achievement().result)
 
   datum.set('reversal', false)
   datum.set('baseline', 50)
   datum.set('myr', 50)
   datum.set('comp_target', 50)
 
-  strictEqual(1, datum.achievement())
+  strictEqual(1, datum.achievement().result)
 
-  datum.set('comp_target', 100)
+  datum.set 'comp_target', 100
 
-  strictEqual(0, datum.achievement())
+  strictEqual 0, datum.achievement().result
+
+  datum.set 'missing_budget', true
+  result = datum.achievement()
+  strictEqual result.include, false
+  strictEqual result.result, null
+  strictEqual result.status, null
+
+  datum.set 'missing_budget', false
+  datum.set 'myr', null
+
+  result = datum.achievement()
+  strictEqual result.include, true
+  strictEqual result.status, Visio.Algorithms.STATUS.missing
+  strictEqual result.result, null
+
+  datum.set 'reversal', true
+  datum.set 'myr', 50
+  datum.set 'comp_target', 100
+
+  result = datum.achievement()
+  strictEqual result.include, true
+  strictEqual result.status, Visio.Algorithms.STATUS.reported
+  strictEqual result.result, 1
+
+  datum.set 'reversal', false
+  datum.set 'myr', 50
+  datum.set 'baseline', 25
+  datum.set 'comp_target', 75
+
+  result = datum.achievement()
+  strictEqual result.include, true
+  strictEqual result.status, Visio.Algorithms.STATUS.reported
+  strictEqual result.result, .5
+
+  datum.set 'reversal', false
+  datum.set 'myr', 50
+  datum.set 'comp_target', 25
+  datum.set 'is_performance', false
+
+  result = datum.achievement()
+  strictEqual result.include, true
+  strictEqual result.status, Visio.Algorithms.STATUS.reported
+  strictEqual result.result, 1
+
 
 test 'situation analysis', () ->
   datum = new Visio.Models.IndicatorDatum({
@@ -141,18 +184,35 @@ test 'situation analysis', () ->
   })
 
   res = datum.situationAnalysis()
-  strictEqual res, Visio.Algorithms.ALGO_RESULTS.ok
+  strictEqual res.category, Visio.Algorithms.ALGO_RESULTS.ok
+  strictEqual res.status, Visio.Algorithms.STATUS.reported
+  strictEqual res.include, true
 
-  datum.set('myr', 60)
+  datum.set 'myr', 60
   res = datum.situationAnalysis()
-  strictEqual res, Visio.Algorithms.ALGO_RESULTS.success
+  strictEqual res.category, Visio.Algorithms.ALGO_RESULTS.success
+  strictEqual res.status, Visio.Algorithms.STATUS.reported
+  strictEqual res.include, true
 
-  datum.set('myr', 30)
+  datum.set 'myr', 30
   res = datum.situationAnalysis()
-  strictEqual res, Visio.Algorithms.ALGO_RESULTS.fail
+  strictEqual res.category, Visio.Algorithms.ALGO_RESULTS.fail
+  strictEqual res.status, Visio.Algorithms.STATUS.reported
+  strictEqual res.include, true
 
   datum.set 'is_performance', true
-  throws datum.situationAnalysis, 'Should throw an error'
+  res = datum.situationAnalysis()
+  strictEqual res.include, false
+  strictEqual res.category, null
+  strictEqual res.status, null
+
+  datum.set 'is_performance', false
+  datum.set 'myr', null
+  res = datum.situationAnalysis()
+  strictEqual res.include, true
+  strictEqual res.category, null
+  strictEqual res.status, Visio.Algorithms.STATUS.missing
+
 
 test 'situation analysis collection', () ->
   data = new Visio.Collections.IndicatorDatum([{

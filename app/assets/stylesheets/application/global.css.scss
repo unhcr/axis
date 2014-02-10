@@ -1,4 +1,6 @@
 @import "../shared/variables.css.scss";
+@import "compass/css3";
+
 
 @font-face {
   font-family: 'Lato';
@@ -553,16 +555,56 @@ button, input {
   border-bottom: none;
 }
 
-.visio-check input {
+.visio-radio input {
   display: none;
 }
 
-.visio-check label {
+.visio-radio label {
+  display: block;
+  cursor: pointer;
+  position: relative;
+}
+
+.visio-radio label:before {
+  content: ' ';
+  border: 2px solid $primary;
+  border-radius: 12px;
+  width: 12px;
+  height: 12px;
+  margin-top: 3px;
+  float: right;
+  margin-left: 6px;
+}
+
+.visio-radio-left label:before {
+  content: ' ';
+  float: left;
+  margin-right: 6px;
+  margin-left: 0px;
+}
+
+.visio-radio-left input:checked + label:after {
+  content: ' ';
+  border: 3px solid #0d2d46;
+  border-radius: 10px;
+  width: 5px;
+  height: 5px;
+  margin-top: 3px;
+  position: absolute;
+  left: 3px;
+  top: 3px
+}
+
+.visio-checkbox input {
+  display: none;
+}
+
+.visio-checkbox label {
   display: block;
   cursor: pointer;
 }
 
-.visio-check label:before {
+.visio-checkbox label:before {
   content: ' ';
   border: 1px solid $white;
   width: 12px;
@@ -572,35 +614,46 @@ button, input {
   margin-left: 6px;
 }
 
-.visio-check input:checked + label:before {
-  content: ' ';
-  border: 3px solid $turquoise;
-}
-
-.visio-check-yellow label:before {
+.visio-checkbox-left label:before {
   content: ' ';
   float: left;
   margin-right: 6px;
   margin-left: 0px;
 }
 
-.visio-check-yellow input:checked + label:before {
+.visio-checkbox input:checked + label:before {
+  content: ' ';
+  border: 3px solid $turquoise;
+}
+
+.visio-checkbox-yellow label:before {
+  content: ' ';
+  float: left;
+  margin-right: 6px;
+  margin-left: 0px;
+}
+
+.visio-checkbox-primary input:checked + label:before {
+  border: 3px solid $primary;
+}
+
+.visio-checkbox-yellow input:checked + label:before {
   content: ' ';
   border: 3px solid $yellow;
 }
 
-.visio-check-vertical {
+.visio-checkbox-vertical {
   display: inline-block;
   margin-top: 1em;
 }
 
-.visio-check-vertical label {
+.visio-checkbox-vertical label {
   display: inline-block;
   width: 2em;
   text-align: center;
 }
 
-.visio-check-vertical label:before {
+.visio-checkbox-vertical label:before {
   float: none;
   display: block;
   position: relative;
@@ -1146,8 +1199,26 @@ a {
 }
 
 .accordion-show-container:hover {
-  background-color: white;
+  background-color: $off-white;
   cursor: pointer;
+}
+
+.js-parameter:before {
+  max-width: 0px;
+  @include transition-property(max-width);
+  @include transition-duration($fast-transition);
+  @include transition-timing-function(ease-in);
+  display: block;
+  overflow-x: hidden;
+}
+
+.js-parameter:hover:before {
+  content: '→';
+  float: left;
+  font-size: 2em;
+  margin-top: .5em;
+  margin-right: .8em;
+  max-width: 100px;
 }
 
 .accordion-show-container.open {
@@ -1155,6 +1226,10 @@ a {
 
   .data-container {
     max-height: 420px;
+  }
+
+  .js-parameter:hover:before{
+    max-width: 0px;
   }
 }
 
@@ -1178,15 +1253,6 @@ a {
   left: $navigation-width;
 }
 
-input[type="radio"] + label {
-  cursor: pointer;
-  display: block;
-}
-
-input[type="radio"]:checked + label {
-  color: $bright-yellow;
-}
-
 .strategy-snapshot {
   padding-bottom: 40px;
 }
@@ -1200,7 +1266,6 @@ input[type="radio"]:checked + label {
 
 .info-container {
   position: relative;
-  height: 160px;
 }
 
 .bubble-info {
@@ -1322,32 +1387,139 @@ input[type="radio"]:checked + label {
   top: 0;
   margin-left: $page-margin;
   margin-right: $page-margin;
+  .row {
+    max-width: $row-inner-width;
+    margin: 0 auto;
+  }
 
+}
+
+.export-module {
   .overlay-header {
     text-align: center;
   }
 
+  h4 {
+    text-align: left;
+    display: block;
+    border-bottom: 1px solid $primary-light;
+    color: $orange;
+    font-size: 2em;
+  }
+
+  .export-selections {
+    text-align: center
+  }
+
   figure {
-    border: 1px solid $dark-gray;
   }
 
   figcaption {
-    border: 1px solid $dark-gray;
-    border-top: none;
   }
+
 
 }
 
 .d3-floating-tooltip {
   position: absolute;
   z-index: 100;
+  pointer-events: none;
 
-  .isy-tooltip .row {
+  @include transition-property(left);
+  @include transition-duration($very-fast-transition);
+  @include transition-timing-function(ease-in);
+
+  .isy-tooltip section {
     background-color: white;
     border: 1px $dark-gray solid;
     border-bottom: none;
   }
-  .isy-tooltip .row:last-child {
+  .isy-tooltip section:last-child {
     border-bottom: 1px $dark-gray solid;
+  }
+
+  .bmy-tooltip .budget-type {
+    border: 1px solid $black;
+    margin: 5px 0;
+    background-color: white;
+    padding: 0 12px;
+  }
+  .bmy-tooltip {
+    .title {
+      margin-top: 4px;
+      padding-top: 8px;
+    }
+
+    .ADMIN {
+      color: $admin;
+      .title { border-top: 2px solid $admin }
+    }
+    .STAFF {
+      color: $staff;
+      .title { border-top: 2px solid $staff }
+    }
+    .PROJECT {
+      color: $project;
+      .title { border-top: 2px solid $project }
+    }
+    .PARTNER {
+      color: $partner;
+      .title { border-top: 2px solid $partner }
+    }
+    .total {
+      color: $white;
+      background-color: $black;
+      .title { border-top: 2px solid $white }
+    }
+  }
+}
+
+.zebra {
+  margin-left: -15px;
+  margin-right: -15px;
+  .row {
+    margin: 0px;
+  }
+  .row:nth-child(odd) {
+    background-color: $off-white;
+  }
+}
+
+.filter-by {
+
+  .filter-toggle:before {
+    content: 'ↆ';
+    background: transparent;
+    display: inline-block;
+    margin-right: 10px;
+  }
+
+  width: 180px;
+  float: right;
+  position: relative;
+  cursor: pointer;
+
+  .filters {
+    @include transition-property(max-height);
+    @include transition-duration($fast-transition);
+    @include transition-timing-function(ease-in);
+    position: absolute;
+    max-height: 0px;
+    overflow: hidden;
+    background-color: white;
+  }
+
+  .filter-group {
+    padding: 10px 0;
+  }
+
+  .filters.styled {
+    padding: 15px 10px;
+    @include single-box-shadow;
+    border-top: 3px $primary-dark solid;
+  }
+
+  .filters.open {
+    max-height: 400px;
   }
 }
