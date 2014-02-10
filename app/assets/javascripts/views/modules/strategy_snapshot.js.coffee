@@ -8,7 +8,7 @@ class Visio.Views.StrategySnapshotView extends Backbone.View
     Visio.Algorithms.ALGO_RESULTS.success,
     Visio.Algorithms.ALGO_RESULTS.ok,
     Visio.Algorithms.ALGO_RESULTS.fail,
-    Visio.Algorithms.ALGO_RESULTS.missing,
+    Visio.Algorithms.STATUS.missing,
   ]
 
   initialize: (options) ->

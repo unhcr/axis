@@ -116,11 +116,13 @@ window.Visio =
     OK_THRESHOLD: 0.33
     HIGH_THRESHOLD: 0.8
     MEDIUM_THRESHOLD: 0.6
+    STATUS:
+      missing: 'missing'
+      reported: 'reported'
     ALGO_RESULTS:
       success: 'success'
       ok: 'ok'
       fail: 'fail'
-      missing: 'missing'
       high: 'high'
       medium: 'medium'
       low: 'low'
