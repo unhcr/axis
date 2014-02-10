@@ -55,7 +55,6 @@ class Visio.Collections.IndicatorDatum extends Visio.Collections.Syncable
 
     @each (datum) ->
       result = datum.achievement(reported)
-      console.log result
 
       if result.include and result.status == Visio.Algorithms.STATUS.reported
         results.push(result.result)
@@ -79,6 +78,5 @@ class Visio.Collections.IndicatorDatum extends Visio.Collections.Syncable
       result: average
     }
 
-    console.log result
 
     result
