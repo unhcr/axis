@@ -20,18 +20,18 @@ class Visio.Views.SigninView extends Backbone.View
 
     console.log 'clicked login'
 
-    $email = @$el.find('.email')
+    $login = @$el.find('.login')
     $password = @$el.find('.password')
 
-    email = $email.val()
+    login = $login.val()
     password = $password.val()
 
 
-    Visio.Utils.flash($email, 'Please enter valid email address') unless email
+    Visio.Utils.flash($login, 'Please enter valid username') unless login
     Visio.Utils.flash($password, 'This field is required') unless password
 
-    if email && password
-      Visio.Utils.signin(email, password, () =>
+    if login && password
+      Visio.Utils.signin(login, password, () =>
         window.location.href = '/'
       )
 
