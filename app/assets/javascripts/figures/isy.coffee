@@ -6,7 +6,7 @@ class Visio.Figures.Isy extends Visio.Figures.Exportable
 
   initialize: (config) ->
 
-    Visio.Figures.Exportable.prototype.initialize.call @, config
+    super config
 
     @tooltip = null
 

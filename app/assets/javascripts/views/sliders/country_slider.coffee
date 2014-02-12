@@ -12,7 +12,7 @@ class Visio.Views.CountrySliderView extends Visio.Views.SliderView
 
   addOne: (model) =>
     return unless model.get('country')?
-    Visio.Views.SliderView.prototype.addOne.call @, model
+    super model
 
   toMove: (isNext) ->
     multiplier = if isNext then -1 else 1

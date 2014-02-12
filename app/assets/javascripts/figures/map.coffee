@@ -4,7 +4,7 @@ class Visio.Figures.Map extends Visio.Figures.Exportable
 
   initialize: (config) ->
 
-    Visio.Figures.Exportable.prototype.initialize.call @, config
+    super config
 
     @scale = 500
 

@@ -13,7 +13,7 @@ class Visio.Views.BmyView extends Visio.Views.AccordionIndexView
 
   initialize: (options) ->
     # Call super
-    Visio.Views.AccordionIndexView.prototype.initialize.apply @, [options]
+    super @
 
     @config =
       margin:
@@ -29,7 +29,7 @@ class Visio.Views.BmyView extends Visio.Views.AccordionIndexView
 
   render: (isRerender) ->
     # Call super
-    Visio.Views.AccordionIndexView.prototype.render.apply @, [isRerender]
+    super isRerender
 
     unless isRerender
       @$el.find('.summary-figure').html @figure.el

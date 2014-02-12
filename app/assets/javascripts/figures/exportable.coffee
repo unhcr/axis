@@ -3,7 +3,7 @@ class Visio.Figures.Exportable extends Visio.Figures.Base
   attrConfig: ['margin', 'data', 'width', 'height']
 
   initialize: (config) ->
-    Visio.Figures.Base.prototype.initialize.call @, config
+    super config
 
 
 

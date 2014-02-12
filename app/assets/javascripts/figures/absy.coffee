@@ -25,7 +25,7 @@ class Visio.Figures.Absy extends Visio.Figures.Exportable
       }
     ])
 
-    Visio.Figures.Exportable.prototype.initialize.call @, config
+    super config
 
 
     @x = d3.scale.linear()

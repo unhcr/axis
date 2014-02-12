@@ -6,7 +6,7 @@ class Visio.Figures.Circle extends Visio.Figures.Base
 
   initialize: (config) ->
 
-    Visio.Figures.Base.prototype.initialize.call @, config
+    super config
 
     @twoPi = 2 * Math.PI
 

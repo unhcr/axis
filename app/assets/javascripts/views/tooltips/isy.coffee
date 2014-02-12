@@ -23,7 +23,7 @@ class Visio.Views.IsyTooltip extends Visio.Views.D3Tooltip
     @figure = options.figure
     @isyIndex = options.isyIndex
 
-    Visio.Views.D3Tooltip.prototype.initialize.call @, options
+    super options
 
   render: ->
     values = [
@@ -36,6 +36,6 @@ class Visio.Views.IsyTooltip extends Visio.Views.D3Tooltip
 
     @$el.html @template({ model: @model, values: values })
 
-    Visio.Views.D3Tooltip.prototype.render.call @
+    super
 
     @

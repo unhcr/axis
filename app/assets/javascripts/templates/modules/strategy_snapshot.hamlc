@@ -24,11 +24,15 @@
         %a.row{ :href => "#bmy" } Budget over time
   .row.divider-light-gray
   %section.row
-    .col-md-12
-      %h3
-        Target Countries
-    .col-md-12
-      .target-countries.row
+    .row
+      .col-md-11
+        %h3
+          Target Countries
+      .col-md-1
+        .grid-view grid
+    .row
+      .col-md-12
+        .target-countries.row
   .row.divider-light-gray
   %section.row
     .col-md-12

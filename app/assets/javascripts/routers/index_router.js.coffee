@@ -1,7 +1,7 @@
 class Visio.Routers.IndexRouter extends Visio.Routers.GlobalRouter
 
   initialize: (options) ->
-    Visio.Routers.GlobalRouter.prototype.initialize.call(@)
+    super
     height = $(window).height() - $('header').height()
 
     @map = new Visio.Figures.Map(

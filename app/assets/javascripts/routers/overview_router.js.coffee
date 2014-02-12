@@ -1,7 +1,7 @@
 class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
 
   initialize: (options) ->
-    Visio.Routers.GlobalRouter.prototype.initialize.call(@)
+    super
 
     selectedStrategies = {}
     selectedStrategies[Visio.manager.strategy().id] = true

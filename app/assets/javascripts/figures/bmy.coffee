@@ -16,7 +16,7 @@ class Visio.Figures.Bmy extends Visio.Figures.Exportable
       }
     ])
 
-    Visio.Figures.Exportable.prototype.initialize.call @, config
+    super config
 
     @tooltip = null
 

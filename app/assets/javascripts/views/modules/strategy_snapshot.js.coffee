@@ -3,7 +3,7 @@ class Visio.Views.StrategySnapshotView extends Visio.Views.Dashboard
   template: HAML['modules/strategy_snapshot']
 
   initialize: (options) ->
-    Visio.Views.Dashboard.prototype.initialize.call @, options
+    super options
     @countrySlider = new Visio.Views.CountrySliderView({ collection: @collection })
     @actionSlider = new Visio.Views.ActionSliderView
       collection: Visio.manager.strategy()[Visio.Parameters.STRATEGY_OBJECTIVES.plural]()
@@ -16,7 +16,7 @@ class Visio.Views.StrategySnapshotView extends Visio.Views.Dashboard
     'click .grid-view': 'onGridView'
 
   render: (isRerender) ->
-    Visio.Views.Dashboard.prototype.render.call @, isRerender
+    super isRerender
     @$el.find('.target-countries').html @countrySlider.render().el
     @$el.find('.actions').html @actionSlider.render().el
 
