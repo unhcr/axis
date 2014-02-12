@@ -28,9 +28,6 @@ class Visio.Figures.Map extends Visio.Figures.Exportable
     @path = d3.geo.path()
       .projection(@projection)
 
-    if config.mapJSON
-      @data = config.mapJSON.features
-
     @g.append('rect')
       .attr('x', 0)
       .attr('y', 0)
@@ -131,6 +128,8 @@ class Visio.Figures.Map extends Visio.Figures.Exportable
       .attr('width', @width / scale)
       .attr('height', @height / scale)
 
+    @zoom.translate translate
+
     for key, value of @views
       value.render(true)
 
@@ -161,16 +160,13 @@ class Visio.Figures.Map extends Visio.Figures.Exportable
     @zoom.translate [translate[0] + dx, translate[1] + dy]
     @zoomed()
 
-  mapJSON: (mapJSON) =>
-    @data = topojson.feature(mapJSON, mapJSON.objects.world_50m).features
-
   clearTooltips: =>
     for key, value of @views
       value.close()
     @views = {}
 
   filtered: (data) =>
-    data
+    data = topojson.feature(data, data.objects.world_50m).features
 
   refreshTooltips: ->
     for key, value of @views
