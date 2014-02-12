@@ -2,7 +2,7 @@ class Visio.Figures.Circle extends Visio.Figures.Base
 
   type: Visio.FigureTypes.CIRCLE
 
-  attrAccessible: ['percent', 'number']
+  attrAccessible: ['percent', 'number', 'width', 'height']
 
   initialize: (config) ->
 
@@ -16,7 +16,8 @@ class Visio.Figures.Circle extends Visio.Figures.Base
       .outerRadius(@height / 2)
 
     @centerG = @g.append('g')
-      .attr("transform", "translate(" + @width / 2 + "," + @height / 2 + ")")
+      .attr("transform", "translate(" + @width / 2 +
+                                  "," + @height / 2 + ")")
 
     @meter = @centerG.append("g")
       .attr("class", "progress-meter")

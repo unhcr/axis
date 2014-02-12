@@ -6,9 +6,6 @@ class Visio.Figures.Exportable extends Visio.Figures.Base
     Visio.Figures.Base.prototype.initialize.call @, config
 
 
-    # Adjust for margins
-    @widthFn(config.width - @margin.left - @margin.right)
-    @heightFn(config.height - @margin.top - @margin.bottom)
 
     $.subscribe "select.#{@cid}.figure", @select
 
