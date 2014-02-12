@@ -6,6 +6,10 @@ window.Visio =
   Utils: {}
   Figures: {}
   FigureTypes:
+    CIRCLE:
+      className: 'Circle'
+      human: 'Circle'
+      name: 'circle'
     ABSY:
       className: 'Absy'
       human: 'Achievement vs Budget: Single Year'
