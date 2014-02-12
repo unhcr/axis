@@ -6,6 +6,10 @@ window.Visio =
   Utils: {}
   Figures: {}
   FigureTypes:
+    MAP:
+      className: 'Map'
+      human: 'Map'
+      name: 'map'
     CIRCLE:
       className: 'Circle'
       human: 'Circle'
