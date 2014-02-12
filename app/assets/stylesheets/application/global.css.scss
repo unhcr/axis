@@ -5,6 +5,10 @@
   font-size: 20px;
 }
 
+@mixin full-width {
+  width: 100%
+}
+
 @mixin small-header {
   font-size: 14px;
   letter-spacing: -.02em;
@@ -519,7 +523,7 @@ input:focus {
 }
 
 .full-width {
-  width: 100%
+  @include full-width
 }
 
 .zero-width {
@@ -634,6 +638,32 @@ button, input {
   position: absolute;
   left: 3px;
   top: 3px
+}
+
+.visio-radio-circle label:before {
+  content: ' ';
+  border: 3px solid $light-gray;
+  border-radius: 10px;
+  width: 5px;
+  height: 5px;
+  margin: 3px
+}
+
+.visio-radio-circle input:checked + label:before {
+  content: ' ';
+  border: 2px solid $yellow;
+  border-radius: 12px;
+  width: 12px;
+  height: 12px;
+  margin: 0 3px;
+}
+
+.visio-radio-circle {
+  display: inline-block;
+}
+
+.visio-radio-circle label {
+  display: inline-block;
 }
 
 .visio-checkbox input {
@@ -1288,6 +1318,23 @@ a {
   left: $navigation-width;
 }
 
+.actions {
+  padding-top: 33px;
+  height: 340px;
+  margin-left: -15px;
+  margin-right: -15px;
+  background-color: $black;
+  color: $white;
+
+  h1 {
+    margin-bottom: 0px;
+  }
+
+  h3, h5 {
+    margin-top: 0px
+  }
+}
+
 .strategy-snapshot {
 
 
@@ -1665,25 +1712,37 @@ a {
   margin: 0 -15px;
 }
 
-.country-slider {
+.slider-container {
   .slider {
     white-space: nowrap;
-    overflow-x: hidden;
+    overflow: hidden;
     /* Needed to make inline-block elements sit flush */
     font-size: 0px;
-  }
+    .slide {
+      float: none;
+      position: relative;
+      left: 0;
+      display: inline-block;
+      @include transition-property(all);
+      @include transition-duration($fast-transition);
+      @include transition-timing-function(ease-in-out);
 
+    }
+  }
   position: relative;
 
+}
+
+.action-slider {
+  .action-slide {
+    width: $row-inner-width;
+    text-align: center;
+  }
+}
+
+.country-slider {
 
   .country-slide {
-    float: none;
-    position: relative;
-    left: 0;
-    @include transition-property(all);
-    @include transition-duration($fast-transition);
-    @include transition-timing-function(ease-in-out);
-    display: inline-block;
     border: 1px solid $light-gray;
     width: $country-slide-width;
     height: $country-slide-height;

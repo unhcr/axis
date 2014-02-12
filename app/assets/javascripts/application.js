@@ -26,6 +26,7 @@
 //= require ./models/syncables/amount_type
 //= require ./views/tooltips/d3_tooltip
 //= require ./views/shared/dashboard
+//= require ./views/sliders/slider
 //= require ./figures/base
 //= require ./figures/exportable
 //= require_tree ./views

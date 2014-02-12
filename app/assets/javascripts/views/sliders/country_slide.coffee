@@ -1,8 +1,6 @@
 class Visio.Views.CountrySlideView extends Visio.Views.Dashboard
 
-  className: 'country-slide'
-
-  template: HAML['shared/country_slide']
+  template: HAML['sliders/country_slide']
 
   initialize: (options) ->
     @criticalityConfig.width = 16
