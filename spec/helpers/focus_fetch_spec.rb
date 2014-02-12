@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe FocusFetch do
-  fixtures :all
   include FocusFetch
 
   TESTHEADER_NAME = "HeaderTest.zip"
