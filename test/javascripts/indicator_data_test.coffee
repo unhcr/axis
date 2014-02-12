@@ -276,6 +276,13 @@ test 'situation analysis collection', () ->
   strictEqual res.total, 0
   strictEqual res.counts[Visio.Algorithms.ALGO_RESULTS.ok], 0
 
+  data = new Visio.Collections.IndicatorDatum({ id: 1, is_performance: false })
+  res = data.situationAnalysis()
+  strictEqual res.category, Visio.Algorithms.ALGO_RESULTS.fail
+  strictEqual res.result, 0
+  strictEqual res.total, 1
+  strictEqual res.counts[Visio.Algorithms.STATUS.missing], 1
+
 
 
 

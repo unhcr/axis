@@ -27,7 +27,8 @@ class Visio.Collections.IndicatorDatum extends Visio.Collections.Syncable
 
     count = counts[Visio.Algorithms.ALGO_RESULTS.success] +
             counts[Visio.Algorithms.ALGO_RESULTS.ok] +
-            counts[Visio.Algorithms.ALGO_RESULTS.fail]
+            counts[Visio.Algorithms.ALGO_RESULTS.fail] +
+            counts[Visio.Algorithms.STATUS.missing]
 
     result = (counts[Visio.Algorithms.ALGO_RESULTS.success] / count) +
              (0.5 * (counts[Visio.Algorithms.ALGO_RESULTS.ok] / count))
