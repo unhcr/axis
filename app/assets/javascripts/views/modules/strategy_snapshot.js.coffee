@@ -13,6 +13,7 @@ class Visio.Views.StrategySnapshotView extends Visio.Views.Dashboard
   events:
     'change .ui-blank-radio > input': 'onChangeOperation'
     'click .js-show-all': 'onClickShowAll'
+    'click .grid-view': 'onGridView'
 
   render: (isRerender) ->
     Visio.Views.Dashboard.prototype.render.call @, isRerender
@@ -21,3 +22,7 @@ class Visio.Views.StrategySnapshotView extends Visio.Views.Dashboard
 
 
     @
+
+  onGridView: ->
+    @$el.find('.slider').toggleClass 'grid'
+    @reset()

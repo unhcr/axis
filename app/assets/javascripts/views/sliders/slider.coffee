@@ -54,3 +54,6 @@ class Visio.Views.SliderView extends Backbone.View
   onPrevious: (e) =>
     @move(1)
 
+  reset: =>
+    @$el.find('.slide').css 'left', 0
+    @position = 0
