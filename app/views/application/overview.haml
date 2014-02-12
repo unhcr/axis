@@ -1,28 +1,9 @@
 .navigation-activation.margin-left
   .navigation-activation-icon
 
-.inner-content
-  %aside.container.full-width.toolbar.gone
-  .collapsable-content.full-width
-    .container.full-width.ui-primary-soft-theme
-      .row
-        .col-md-8.col-centered.zero-padding
-          .col-md-12
-            .ui-large-header.light
-              = @strategy.name
-      .row
-        .col-md-8.col-centered.zero-padding
-          .col-md-12.light.strategy-description.text.zero-padding
-            = @strategy.description
-
-
-      .row
-        .col-md-8.col-centered.zero-padding
-          .col-md-12.light.ui-small-header
-            Overview
-    .divider-stack
-
-    #strategy-snapshot.container.full-width.ui-primary-soft-theme
+.inner-content.container.full-width
+  %aside.full-width.toolbar.gone
+  #strategy-snapshot
 
   #module.container.full-width.zero-padding
 

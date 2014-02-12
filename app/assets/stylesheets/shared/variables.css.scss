@@ -14,6 +14,7 @@ $white: rgb(249, 249, 249);
 $off-white: rgb(245, 245, 245);
 $dark-gray: rgb(133, 135, 134);
 $light-gray: rgb(177, 177, 177);
+$lighter-gray: rgb(217, 217, 217);
 $black: rgb(39,38,34);
 $fail: #c6302a;
 $fail-dark: #710d09;
@@ -53,7 +54,7 @@ $fast-transition: .5s;
 $medium-transition: 1s;
 
 /* Lengths */
-$row-inner-width: 1000px;
+$row-inner-width: 960px;
 $radius: 3px;
 $content-margin: 20px;
 $pin-medium: 20px;
@@ -69,6 +70,7 @@ $page-margin: 40px;
 $search-icon: 29px;
 $header-height: 65px;
 $toolbar-height: 42px;
-
-
-
+$country-slide-height: 290px;
+$country-slide-width: 230px;
+$slider-controls-width: 62px;
+$control-radius: 17px;

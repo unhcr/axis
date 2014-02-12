@@ -1,126 +1,17 @@
-class Visio.Views.StrategySnapshotView extends Backbone.View
+class Visio.Views.StrategySnapshotView extends Visio.Views.Dashboard
 
   template: HAML['modules/strategy_snapshot']
 
-  maxListLength: 10
-
-  resultTypes: [
-    Visio.Algorithms.ALGO_RESULTS.success,
-    Visio.Algorithms.ALGO_RESULTS.ok,
-    Visio.Algorithms.ALGO_RESULTS.fail,
-    Visio.Algorithms.STATUS.missing,
-  ]
-
   initialize: (options) ->
-    @collection = Visio.manager.strategy().operations()
+    Visio.Views.Dashboard.prototype.initialize.call @, options
+    @slider = new Visio.Views.CountrySliderView({ collection: @collection })
+    @parameter = @collection
 
   events:
     'change .ui-blank-radio > input': 'onChangeOperation'
     'click .js-show-all': 'onClickShowAll'
 
-  render: () ->
-
-    @$el.html @template(
-      targetOperations: @collection.toJSON()
-      resultTypes: @resultTypes
-      max: @maxListLength
-      cols: 3
-    )
-    @countCircles = []
-    _.each @resultTypes, (resultType) =>
-      config =
-        resultType: resultType
-        width: 85
-        height: 85
-        selection: d3.select(".#{resultType}-circle")
-        percent: Math.random()
-        number: 45
-        margin:
-          top: 10
-          bottom: 10
-          left: 0
-          right: 10
-
-      @countCircles.push
-        circle: Visio.Figures.circle(config)
-        type: resultType
-
-    @update()
-
-  update: () =>
-    @updateSituationAnalysis(@model)
-
-    if @model
-      budget = @model.strategyBudget()
-      expenditure = @model.strategyExpenditure()
-      @$el.find('.js-operation-name').text @model.get('operation_name')
-    else
-      budget = @collection.reduce(
-        (budget, p) -> return budget + p.strategyBudget(),
-        0)
-      expenditure = @collection.reduce(
-        (expenditure, p) -> return expenditure + p.strategyExpenditure(),
-        0)
-      @$el.find('.js-operation-name').text 'All Target Countries'
-
-    @updateMeter(expenditure / budget, budget)
-
-  onClickShowAll: (e) ->
-    @$el.find('.js-extra-target-countries').toggleClass 'gone'
-
-  onChangeOperation: (e) ->
-    id = $(e.currentTarget).val()
-
-    if id == 'all'
-      @model = null
-    else
-      @model = @collection.get(id)
-
-    @update()
-
-  updateMeter: (percent, budget) =>
-    $expenditure = @$el.find('.expenditure span')
-
-    $expenditure.countTo(
-      from: +$expenditure.text()
-      to: d3.round(percent * 100)
-      speed: Visio.Durations.FAST
-      formatter: Visio.Utils.countToFormatter
-    )
-    @$el.find('.budget').text "$#{Visio.Formats.SI(budget)}"
-    @$el.find('.meter > span').attr('style', "width: #{percent * 100}%")
-
-  updateSituationAnalysis: (operation) =>
-
-    if operation
-      counts = operation.strategySituationAnalysis().counts
-
-
-    else
-      counts = {}
-      _.each @resultTypes, (resultType) ->
-        counts[resultType] = 0
-
-      @collection.each (operation) =>
-        result = operation.strategySituationAnalysis().counts
-        _.each @resultTypes, (resultType) ->
-          counts[resultType] += result[resultType]
-
-    total = 0
-    for resultType, count of counts
-      total += count
-
-    _.each @resultTypes, (type) =>
-      circle = _.findWhere @countCircles, { type: type }
-      circle.circle
-        .number(counts[type])
-        .percent(counts[type] / total)()
-
-    $totalIndicators = @$el.find('.total-indicators')
-
-    $totalIndicators.countTo(
-      from: +$totalIndicators.text()
-      to: total
-      speed: Visio.Durations.FAST
-      formatter: Visio.Utils.countToFormatter
-    )
+  render: (isRerender) ->
+    Visio.Views.Dashboard.prototype.render.call @, isRerender
+    @$el.find('.target-countries').html @slider.render().el
+    @

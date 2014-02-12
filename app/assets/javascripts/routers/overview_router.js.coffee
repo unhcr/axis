@@ -57,6 +57,7 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
 
       @strategySnapshotView = new Visio.Views.StrategySnapshotView(
         el: $('#strategy-snapshot')
+        collection: Visio.manager.strategy().operations()
       )
       @strategySnapshotView.render()
 

@@ -97,31 +97,12 @@ line {
   }
 }
 
-.circle {
+.svg-circle-figure {
   .background {
-    fill: $light-gray;
+    fill: $white;
+    stroke: $light-gray;
   }
 
-  .foreground.ok {
-    fill: $ok;
-  }
-
-  .foreground.success {
-    fill: $success;
-  }
-
-  .foreground.fail {
-    fill: $fail;
-  }
-
-  .foreground.missing {
-    fill: $dark-gray;
-  }
-
-  .progress-meter text {
-    font-size: 1.8em;
-    fill: white;
-  }
 }
 
 .voronoi, .voronoiPoint {

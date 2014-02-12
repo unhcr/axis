@@ -1,0 +1,33 @@
+.row
+  .country-icon.col-md-4
+    %img{
+      :width => "55",
+      :height => "55",
+      :src => "/assets/countries/#{context.parameter.get('country').iso2}/128.png" }
+  .col-md-8
+    .pin.pin-medium.pull-right{ :class => "pin-#{context.category}" }
+      .pin-tip
+      .pin-body
+.row
+  .country-name.col-md-12
+    = context.parameter.get('name')
+
+.row
+  - _.each [0, 1, 2, 3], (i) ->
+    .col-md-2.criticality{ :class => "#{context.criticalities[i]}-criticality" }
+
+.row.divider-light-gray
+.row
+  - for i in [0..1]
+    .col-md-6{ :class => "keyFigure #{context.keyFigures[i].fn}" }
+      .ui-small-number.number
+        0
+      %div
+        = context.keyFigures[i].human
+.row
+  - for i in [2..3]
+    .col-md-6{ :class => "keyFigure #{context.keyFigures[i].fn}" }
+      .ui-small-number.number
+        0
+      %div
+        = context.keyFigures[i].human

@@ -85,8 +85,8 @@ test 'select', ->
 
 test 'Required functions', ->
   requiredFns = ['filtered', 'config', 'unsubscribe', 'figureId']
-
-  _.each Visio.FigureTypes, (figureType) =>
+  figures = [Visio.FigureTypes.BMY, Visio.FigureTypes.ABSY, Visio.FigureTypes.ISY]
+  _.each figures, (figureType) =>
     f = new Visio.Figures[figureType.className](@config)
 
     _.each requiredFns, (fn) ->
