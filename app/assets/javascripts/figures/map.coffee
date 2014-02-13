@@ -1,4 +1,4 @@
-class Visio.Figures.Map extends Visio.Figures.Exportable
+class Visio.Figures.Map extends Visio.Figures.Base
 
   type: Visio.FigureTypes.MAP
 
@@ -22,7 +22,7 @@ class Visio.Figures.Map extends Visio.Figures.Exportable
     @projection = d3.geo.mercator()
       .center([0, 35])
       .scale(@scale)
-      .translate([@width / 2, @height / 2])
+      .translate([@adjustedWidth / 2, @adjustedHeight / 2])
       .precision(0.1)
 
     @path = d3.geo.path()
@@ -31,8 +31,8 @@ class Visio.Figures.Map extends Visio.Figures.Exportable
     @g.append('rect')
       .attr('x', 0)
       .attr('y', 0)
-      .attr('width', @width)
-      .attr('height', @height)
+      .attr('width', @adjustedWidth)
+      .attr('height', @adjustedHeight)
       .attr('class', 'background-rect')
 
     expanded = null
@@ -102,8 +102,8 @@ class Visio.Figures.Map extends Visio.Figures.Exportable
 
     translate = if d3.event && d3.event.translate then d3.event.translate else @zoom.translate()
 
-    deltaWidth = @width - @width / scale
-    deltaHeight = @height - @height / scale
+    deltaWidth = @adjustedWidth - @adjustedWidth / scale
+    deltaHeight = @adjustedHeight - @adjustedHeight / scale
 
     absTranslateX = translate[0] / scale
     absTranslateY = translate[1] / scale
@@ -125,8 +125,8 @@ class Visio.Figures.Map extends Visio.Figures.Exportable
     @g.select('.background-rect')
       .attr('x', -(translate[0] / scale))
       .attr('y', -(translate[1] / scale))
-      .attr('width', @width / scale)
-      .attr('height', @height / scale)
+      .attr('width', @adjustedWidth / scale)
+      .attr('height', @adjustedHeight / scale)
 
     @zoom.translate translate
 

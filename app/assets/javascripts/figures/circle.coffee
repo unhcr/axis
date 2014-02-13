@@ -13,11 +13,11 @@ class Visio.Figures.Circle extends Visio.Figures.Base
     @arc = d3.svg.arc()
       .startAngle(0)
       .innerRadius(0)
-      .outerRadius(@height / 2)
+      .outerRadius(@adjustedHeight / 2)
 
     @centerG = @g.append('g')
-      .attr("transform", "translate(" + @width / 2 +
-                                  "," + @height / 2 + ")")
+      .attr("transform", "translate(" + @adjustedWidth / 2 +
+                                  "," + @adjustedHeight / 2 + ")")
 
     @meter = @centerG.append("g")
       .attr("class", "progress-meter")

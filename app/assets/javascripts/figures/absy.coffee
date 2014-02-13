@@ -1,8 +1,9 @@
-class Visio.Figures.Absy extends Visio.Figures.Exportable
+class Visio.Figures.Absy extends Visio.Figures.Base
 
   type: Visio.FigureTypes.ABSY
 
   initialize: (config) ->
+    @$el.prepend $('<a class="export">export</a>')
     @filters = new Visio.Collections.FigureFilter([
       {
         id: 'budget_type'
@@ -29,11 +30,11 @@ class Visio.Figures.Absy extends Visio.Figures.Exportable
 
 
     @x = d3.scale.linear()
-      .range([0, @width])
+      .range([0, @adjustedWidth])
 
     @y = d3.scale.linear()
       .domain([0, 1])
-      .range([@height, 0])
+      .range([@adjustedHeight, 0])
 
     @r = d3.scale.sqrt()
       .domain([0, 1000000])
@@ -59,7 +60,7 @@ class Visio.Figures.Absy extends Visio.Figures.Exportable
 
     @info = null
     @voronoi = d3.geom.voronoi()
-      .clipExtent([[0, 0], [@width, @height]])
+      .clipExtent([[0, 0], [@adjustedWidth, @adjustedHeight]])
       .x((d) => @x(d.selectedAmount(false, @filters)))
       .y((d) => @y(d.selectedAchievement(false, @filters).result))
 
@@ -69,16 +70,16 @@ class Visio.Figures.Absy extends Visio.Figures.Exportable
       .append("text")
         .attr("transform", "rotate(-90)")
         .attr("y", 0)
-        .attr("x", -@height)
+        .attr("x", -@adjustedHeight)
         .attr("dy", "-.21em")
         .style("text-anchor", "start")
         .text('Acheivement')
 
     @g.append('g')
       .attr('class', 'x axis')
-      .attr('transform', "translate(0,#{@height})")
+      .attr('transform', "translate(0,#{@adjustedHeight})")
       .append("text")
-        .attr("x", @width + 10)
+        .attr("x", @adjustedWidth + 10)
         .attr("dy", "-.21em")
         .style("text-anchor", "start")
         .text('Budget')

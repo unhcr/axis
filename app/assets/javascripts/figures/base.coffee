@@ -1,6 +1,12 @@
 class Visio.Figures.Base extends Backbone.View
 
+  @include Visio.Mixins.Exportable
+
   attrAccessible: ['x', 'y', 'width', 'height', 'data', 'margin']
+
+  attrConfig: ['margin', 'data', 'width', 'height']
+
+  viewLocation: 'Figures'
 
   initialize: (config) ->
     for attr, value of config
@@ -14,12 +20,10 @@ class Visio.Figures.Base extends Backbone.View
 
     @selection = d3.select @el
 
-    @originalWidth = config.width
-    @originalHeight = config.height
 
     # Adjust for margins
-    @widthFn(config.width - @margin.left - @margin.right)
-    @heightFn(config.height - @margin.top - @margin.bottom)
+    @adjustedWidth = (config.width - @margin.left - @margin.right)
+    @adjustedHeight = (config.height - @margin.top - @margin.bottom)
 
     @svg = @selection.append('svg')
       .attr('width', config.width)
@@ -30,3 +34,7 @@ class Visio.Figures.Base extends Backbone.View
     @g = @svg.append('g')
       .attr('transform', "translate(#{@margin.left}, #{@margin.top})")
 
+
+    @subscribe() if config.isExport
+
+  selectable: true

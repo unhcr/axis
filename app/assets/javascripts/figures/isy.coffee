@@ -1,10 +1,11 @@
-class Visio.Figures.Isy extends Visio.Figures.Exportable
+class Visio.Figures.Isy extends Visio.Figures.Base
 
   type: Visio.FigureTypes.ISY
 
   attrAccessible: ['x', 'y', 'width', 'height', 'data', 'margin', 'goalType', 'isPerformance']
 
   initialize: (config) ->
+    @$el.prepend $('<a class="export">export</a>')
 
     super config
 
@@ -16,11 +17,11 @@ class Visio.Figures.Isy extends Visio.Figures.Exportable
     @barMargin = 8
 
     @x = d3.scale.linear()
-      .domain([0, @width / ((2 * @barWidth) + @barMargin)])
-      .range([0, @width])
+      .domain([0, @adjustedWidth / ((2 * @barWidth) + @barMargin)])
+      .range([0, @adjustedWidth])
 
     @y = d3.scale.linear()
-      .range([@height, 0])
+      .range([@adjustedHeight, 0])
       .clamp(true)
 
     @goalType = config.goalType || Visio.Algorithms.GOAL_TYPES.target

@@ -1,5 +1,7 @@
 class Visio.Views.StrategySnapshotView extends Visio.Views.Dashboard
 
+  @include Visio.Mixins.Exportable
+
   template: HAML['modules/strategy_snapshot']
 
   initialize: (options) ->
@@ -14,6 +16,8 @@ class Visio.Views.StrategySnapshotView extends Visio.Views.Dashboard
 
   type: Visio.ViewTypes.OVERVIEW
 
+  viewLocation: 'Views'
+
   events:
     'change .ui-blank-radio > input': 'onChangeOperation'
     'click .js-show-all': 'onClickShowAll'
@@ -27,11 +31,6 @@ class Visio.Views.StrategySnapshotView extends Visio.Views.Dashboard
 
 
     @
-
-  config: ->
-    config = super
-    config.collection = @parameter.toJSON()
-    config
 
   onGridView: ->
     @countrySlider.$el.find('.slider').toggleClass 'grid'
