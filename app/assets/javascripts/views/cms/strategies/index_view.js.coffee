@@ -7,3 +7,7 @@ class Visio.Views.StrategyCMSIndexView extends Backbone.View
 
   render: ->
     @$el.html @template(strategies: @collection.toJSON())
+
+  close: ->
+    @unbind()
+    @remove()

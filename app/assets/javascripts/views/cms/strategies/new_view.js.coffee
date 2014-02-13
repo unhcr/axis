@@ -95,5 +95,9 @@ class Visio.Views.StrategyCMSNewView extends Backbone.View
 
     selectedIndexes
 
+  close: ->
+    @unbind()
+    @remove()
+
 
 
