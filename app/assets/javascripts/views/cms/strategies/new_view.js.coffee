@@ -76,29 +76,42 @@ class Visio.Views.StrategyCMSEditView extends Backbone.View
 
         return unless field.cascade.length > 0
 
+
+
         # Setup cascading selection
         modalForm.on "#{field.field.plural}:change", =>
-          ids = modalForm.fields[field.field.plural].getValue()
+          return unless field.cascade.length > 0
+
+          collections = {}
 
           for cascadingField in field.cascade
-            console.log cascadingField
-            collection = new Visio.Collections[cascadingField.className]()
+            dependentFields = (_.find cascadingFields, (field) -> field.field == cascadingField).dependent
+            ids = {}
+            for dependentField in dependentFields
+              ids[dependentField.plural] = modalForm.fields[dependentField.plural].getValue()
+
+            collections[cascadingField.plural] = new Visio.Collections[cascadingField.className]()
 
             modalForm.fields[cascadingField.plural].editor.setOptions (callback) =>
               followingFormField = modalForm.fields[cascadingField.plural]
               selected = new Visio.Collections[cascadingField.className](followingFormField.value)
-              if _.isEmpty(ids)
-                callback(collection)
-                followingFormField.editor.setSelected @selectedIndexes(collection, selected)
+              if _.isEmpty(ids) or _.every(_.values(ids), (idArray) -> _.isEmpty idArray )
+                callback(collections[cascadingField.plural])
+                followingFormField.editor.setSelected @selectedIndexes(collections[cascadingField.plural], selected)
               else
-                data = join_ids: {}
-                data.join_ids["#{field.field.singular}_ids"] = ids
-                console.log data
 
-                collection.fetch(data: data).done (response) =>
-                  newCollection = new Visio.Collections[cascadingField.className](response)
-                  callback(newCollection)
-                  followingFormField.editor.setSelected @selectedIndexes(newCollection, selected)
+                for dependentField in dependentFields
+                  continue if _.isEmpty ids[dependentField.plural]
+                  data = join_ids: {}
+                  data.join_ids["#{dependentField.singular}_ids"] = ids[dependentField.plural]
+
+                  # Wrap in closure so that done function properly refers to correct field
+                  ((type) =>
+                    collections[type].fetch(data: data, remove: false).done (response) =>
+                      console.log type
+                      callback collections[type]
+                      followingFormField.editor.setSelected @selectedIndexes(collections[type], selected)
+                  )(cascadingField.plural)
 
   onCommit: ->
     @model.save(strategy: @form.getValue()).done (response, msg, xhr) =>
