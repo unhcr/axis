@@ -41,6 +41,7 @@ test 'render', ->
 
 test 'select', ->
   @figure.isExport = true
+  @figure.subscribe()
   @figure.dataFn @budgets.models
   @figure.render()
   i = 0

@@ -53,7 +53,12 @@ test 'select', ->
   ok d3.select(@figure.el).selectAll('.active').empty(), 'Should have no active bubbles'
 
   $.publish("select.#{@figure.figureId()}.figure", [@d, 0])
-  ok not d3.select(@figure.el).selectAll('.active').empty(), 'Should have active bubbles'
+
+  ok not @figure.isExport, 'Should not be export'
+  ok d3.select(@figure.el).selectAll('.active').empty(), 'Should not have active bubbles since it is not export'
+
+  @figure.subscribe()
+  $.publish("select.#{@figure.figureId()}.figure", [@d, 0])
   strictEqual d3.select(@figure.el).selectAll('.active').size(), 1, 'Should have one active bubble'
 
 test 'el', ->

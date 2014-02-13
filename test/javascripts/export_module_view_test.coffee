@@ -37,6 +37,8 @@ module 'Export Module View',
         top: 0
         bottom: 0
       width: 100
+      viewLocation: 'Figures'
+      selectable: true
       height: 100
       data: @data.models
       isExport: true
