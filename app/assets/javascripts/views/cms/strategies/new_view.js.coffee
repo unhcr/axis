@@ -116,7 +116,7 @@ class Visio.Views.StrategyCMSEditView extends Backbone.View
   onCommit: ->
     @model.save(strategy: @form.getValue()).done (response, msg, xhr) =>
       if msg == 'success'
-        @collection.add response.strategy
+        @collection.add response.strategy, merge: true
         Visio.router.navigate '/', { trigger: true }
       else
         alert(msg)
