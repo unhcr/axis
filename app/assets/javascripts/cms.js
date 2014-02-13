@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require underscore
+//= require hamlcoffee
 //= require backbone
 //= require ./vendor/d3.v3
 //= require visio
