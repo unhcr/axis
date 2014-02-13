@@ -25,6 +25,7 @@
 //= require ./collections/syncables/amount_type
 //= require ./models/syncables/amount_type
 //= require ./views/tooltips/d3_tooltip
+//= require ./views/shared/exportable_view
 //= require ./views/shared/dashboard
 //= require ./views/sliders/slider
 //= require ./figures/base

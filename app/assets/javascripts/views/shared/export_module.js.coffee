@@ -14,17 +14,21 @@ class Visio.Views.ExportModule extends Backbone.View
     @config = @model.get 'figure_config'
     @figure = @model.figure(@config)
 
-    $.subscribe "select.#{@figure.figureId()}", @select
+    if @config.selectable
+      $.subscribe "select.#{@figure.figureId()}", @select
+      @filtered = @figure.filtered @config.data
 
   render: ->
 
 
 
-    @filtered = @figure.filtered @config.data
 
     @$el.html @template( model: @model.toJSON(), filtered: @filtered )
     @$el.find('.export-figure figure').html @figure.el
-    @figure.render()
+    if @config.selectable
+      @figure.render()
+    else
+      @figure.$el.html @figure.type.human
     @
 
   onSelectionChange: (e) ->
@@ -71,11 +75,10 @@ class Visio.Views.ExportModule extends Backbone.View
 
   onClose: ->
     @close()
-    Visio.router.navigate '/' + @model.get('figure_type').name, { trigger: true }
 
   close: ->
-    $.unsubscribe "select.#{@figure.figureId()}"
-    @figure.unsubscribe() if @figure?
+    $.unsubscribe "select.#{@figure.figureId()}" if @config.selectable
+    @figure.unsubscribe() if @figure?.unsubscribe?
     @unbind()
     @remove()
 

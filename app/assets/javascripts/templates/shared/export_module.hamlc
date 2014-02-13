@@ -3,23 +3,26 @@
     %section.overlay-header.row
       %a.close Close
       %h1 Create a PDF.
-      %h3 Select Indicators.
+
+      - if context.model.figure_config.selectable
+        %h3 Select Indicators.
     %section.overlay-content.export-figure.row
       %figure
-    %section.export-selections.row
-      %h4 Make Your Selections.
-      .ui-small-header LABEL
-      %div
-        = "Select up 10 [something] to export. Simply click the checkboxes."
-      %figcaption
-        - _.each context.filtered, (d, i) ->
-          .visio-checkbox.visio-checkbox-vertical
-            %input{
-              :id => "datum-#{i}",
-              :type => "checkbox",
-              :value => "#{i}"}
-            %label{:for => "datum-#{i}"}
-              = i + 1
+      - if context.model.figure_config.selectable
+        %section.export-selections.row
+          %h4 Make Your Selections.
+          .ui-small-header LABEL
+          %div
+            = "Select up 10 [something] to export. Simply click the checkboxes."
+          %figcaption
+            - _.each context.filtered, (d, i) ->
+              .visio-checkbox.visio-checkbox-vertical
+                %input{
+                  :id => "datum-#{i}",
+                  :type => "checkbox",
+                  :value => "#{i}"}
+                %label{:for => "datum-#{i}"}
+                  = i + 1
     %section.export-settings.row
       %h4 The Details
       %form

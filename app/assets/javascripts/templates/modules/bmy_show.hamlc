@@ -6,4 +6,3 @@
     .row.data-container
       .figure-header
       %figure.bmy-figure
-      %a{:href => "#/export/#{context.figureId}"} export

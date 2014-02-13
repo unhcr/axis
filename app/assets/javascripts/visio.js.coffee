@@ -26,7 +26,11 @@ window.Visio =
       className: 'Isy'
       human: 'Indicators: Single Year'
       name: 'isy'
-
+  ViewTypes:
+    OVERVIEW:
+      className: 'StrategySnapshotView'
+      human: 'Strategy Overview'
+      name: 'strategy_snapshot'
   # Actual instances of figures
   FigureInstances: {}
   AchievementTypes:

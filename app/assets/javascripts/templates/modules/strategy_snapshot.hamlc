@@ -1,4 +1,5 @@
 .strategy-snapshot
+  %a{:class => "export"} export
   %section.row
     .row
       .pin.pin-medium{ :class => "pin-#{context.category}" }

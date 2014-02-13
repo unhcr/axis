@@ -1,5 +1,5 @@
 # Provides functions implementing dashboard stats for a parameter
-class Visio.Views.Dashboard extends Backbone.View
+class Visio.Views.Dashboard extends Visio.Views.ExportableView
 
   criticalities: [
     Visio.Algorithms.ALGO_RESULTS.success,

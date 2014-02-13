@@ -17,7 +17,7 @@ class Visio.Models.ExportModule extends Backbone.Model
     data: null
 
   figure: (config) ->
-    new Visio.Figures[@get('figure_type').className](config)
+    new Visio[config.viewLocation][@get('figure_type').className](config)
 
   figure_config: {}
 

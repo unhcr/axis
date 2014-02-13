@@ -6,7 +6,6 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
     selectedStrategies = {}
     selectedStrategies[Visio.manager.strategy().id] = true
 
-
     Visio.manager.set 'selected_strategies', selectedStrategies
     Visio.manager.on 'change:date', () =>
       @navigation.render()
@@ -26,6 +25,16 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
       @moduleView.render true
 
     @module = $('#module')
+
+    @on 'export', (config) =>
+      config = $.extend { isExport: true }, config
+      model = new Visio.Models.ExportModule
+        figure_type: config.type
+        state: Visio.manager.state()
+        figure_config: config
+
+      @exportView = new Visio.Views.ExportModule( model: model )
+      $('.content').append(@exportView.render().el)
 
   setup: () ->
     # Return empty promise if we've setup already
@@ -76,26 +85,9 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
   routes:
     'menu' : 'menu'
     'search': 'search'
-    'export/:figureId': 'export'
     ':figureType/:year': 'figure'
     ':figureType': 'figure'
     '*default': 'index'
-
-  export: (figureId) ->
-    unless Visio.FigureInstances[figureId]?
-      @navigate '/', { trigger: true }
-      return
-
-    @setup().done =>
-      figure = Visio.FigureInstances[figureId]
-      config = $.extend { isExport: true }, figure.config()
-      model = new Visio.Models.ExportModule
-        figure_type: figure.type
-        state: Visio.manager.state()
-        figure_config: config
-
-      @exportView = new Visio.Views.ExportModule( model: model)
-      $('.content').append(@exportView.render().el)
 
   figure: (figureType, year) ->
     Visio.manager.year year, { silent: true } if year?
@@ -113,5 +105,5 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
       console.log e
 
   index: () =>
-    @figure('absy')
+    @figure 'absy'
 
