@@ -24,5 +24,5 @@ class Visio.Views.StrategySnapshotView extends Visio.Views.Dashboard
     @
 
   onGridView: ->
-    @$el.find('.slider').toggleClass 'grid'
-    @reset()
+    @countrySlider.$el.find('.slider').toggleClass 'grid'
+    @countrySlider.reset()
