@@ -1,16 +1,13 @@
-.pdf-page
-  %h1
-    = @export_module.title
+:javascript
+  $(document).ready(function() {
 
-  %h2
-    = @export_module.description
+    Visio.manager = new Visio.Models.Manager({
+      state: #{@export_module.state.to_json},
+      ready: function() {
+        Visio.router = new Visio.Routers.PdfRouter({ config: #{@export_module.to_json} });
+        Backbone.history.start();
 
-  .pbi_avoid
-    here is a sentence.  here is a sentence.  here is a sentence.  here is a sentence.  here is a sentence.  here is a sentence.  here is a sentence.
-  .pbi_avoid
-    here is a sentence.  here is a sentence.  here is a sentence.  here is a sentence.  here is a sentence.  here is a sentence.  here is a sentence.
-  .pbi_avoid
-    here is a sentence.  here is a sentence.  here is a sentence.  here is a sentence.  here is a sentence.  here is a sentence.  here is a sentence.
+      }
+    })
 
-.pdf-page-2.pbi_avoid
-  boob
+  })

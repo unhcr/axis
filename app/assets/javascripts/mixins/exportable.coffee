@@ -6,16 +6,23 @@ Visio.Mixins.Exportable =
     _.each @attrConfig, (attr) =>
       config[attr] = @[attr]
 
-    config.collection = @collection.toJSON() if @collection?
-    config.model = @model.toJSON() if @model?
+    if @collection?
+      config.collection = @collection.toJSON()
+      config.collectionName = @collection.constructor.name
+    if @model?
+      config.model = @model.toJSON()
+      config.modelName = @model.constructor.name
     config.type = @type
     config.selectable = @selectable
     config.viewLocation = @viewLocation
+    config.pdfViewLocation = @pdfViewLocation
     config
 
   attrConfig: []
 
   viewLocation: null
+
+  pdfView: null
 
   selectable: false
 

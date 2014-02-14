@@ -1389,29 +1389,6 @@ a {
     content: 'Not-Reported'
   }
 
-  .ok-criticality {
-    .foreground {
-      fill: $ok;
-    }
-  }
-
-  .success-criticality {
-    .foreground {
-      fill: $success;
-    }
-  }
-
-  .fail-criticality {
-    .foreground {
-      fill: $fail;
-    }
-  }
-
-  .missing-criticality {
-    .foreground {
-      fill: $lighter-gray;
-    }
-  }
   padding-bottom: 40px;
 
   h3 {
@@ -1793,4 +1770,28 @@ a {
 }
 .slider.grid {
   white-space: normal;
+}
+
+.ok-criticality {
+  .foreground {
+    fill: $ok;
+  }
+}
+
+.success-criticality {
+  .foreground {
+    fill: $success;
+  }
+}
+
+.fail-criticality {
+  .foreground {
+    fill: $fail;
+  }
+}
+
+.missing-criticality {
+  .foreground {
+    fill: $lighter-gray;
+  }
 }

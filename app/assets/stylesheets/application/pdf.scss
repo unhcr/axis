@@ -2,12 +2,8 @@
 .pb_after  { page-break-after:always !important; }
 .pbi_avoid { page-break-inside:avoid !important; }
 
-.pdf-page, .pdf-page-2 {
+.pdf-page {
   width: 21cm;
   height: 29.7cm;
-  background-color: blue;
-}
-
-.pdf-page-2 {
-  background-color: red;
+  margin: 0;
 }

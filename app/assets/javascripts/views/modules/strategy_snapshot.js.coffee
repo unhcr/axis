@@ -6,9 +6,14 @@ class Visio.Views.StrategySnapshotView extends Visio.Views.Dashboard
 
   initialize: (options) ->
     super options
-    @countrySlider = new Visio.Views.CountrySliderView({ collection: @collection })
-    @actionSlider = new Visio.Views.ActionSliderView
-      collection: Visio.manager.strategy()[Visio.Parameters.STRATEGY_OBJECTIVES.plural]()
+
+    if options.isPDF
+      @template = HAML['pdf/strategy_snapshot']
+      @$el.addClass 'pdf-page container'
+    else
+      @countrySlider = new Visio.Views.CountrySliderView({ collection: @collection })
+      @actionSlider = new Visio.Views.ActionSliderView
+        collection: Visio.manager.strategy()[Visio.Parameters.STRATEGY_OBJECTIVES.plural]()
 
     @parameter = @collection
 
@@ -26,8 +31,8 @@ class Visio.Views.StrategySnapshotView extends Visio.Views.Dashboard
 
   render: (isRerender) ->
     super isRerender
-    @$el.find('.target-countries').html @countrySlider.render().el
-    @$el.find('.actions').html @actionSlider.render().el
+    @$el.find('.target-countries').html @countrySlider.render().el if @countrySlider?
+    @$el.find('.actions').html @actionSlider.render().el if @actionSlider?
 
 
     @

@@ -1,0 +1,50 @@
+.row
+  .col-sm-10
+    = Visio.manager.strategy().get 'name'
+
+.row
+  .col-sm-10
+    = 'Overview'
+
+.row
+  .col-sm-10
+    .divider-light-gray
+
+.row
+  .col-sm-10.ui-medium-header
+    = "#{context.parameter.length} Target Countries"
+.row
+  .col-sm-10
+    = (context.parameter.map (operation) -> operation.get('country')?.name).join ', '
+
+.row
+  .col-sm-10
+    Key Figures
+
+.row
+  .col-sm-10
+    .divider-light-gray
+
+.row
+  .col-sm-8
+    .row
+      - for i in [0..3]
+        .col-sm-6{ :class => "keyFigure #{context.keyFigures[i].fn}" }
+          .ui-huge-number.number
+            0
+          %div
+            = context.keyFigures[i].human
+          %span.js-operation-name All&nbsp;Target&nbsp;Countries
+
+    .row
+      .col-sm-12
+        %p ddescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondes criptiondescriptionescription
+
+
+  .col-sm-2
+    - for i in [0..3]
+      .row
+        .col-sm-12.criticality{ :class => "#{context.criticalities[i]}-criticality" }
+        .col-sm-12.count{ :class => "#{context.criticalities[i]}-count" }
+          0
+
