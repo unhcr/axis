@@ -40,7 +40,7 @@ module 'Export Module View',
       viewLocation: 'Figures'
       selectable: true
       height: 100
-      data: @data.models
+      collection: @data
       isExport: true
       isPerformance: true
 
@@ -49,9 +49,9 @@ module 'Export Module View',
     @model = new Visio.Models.ExportModule
       figure_type: figureType
       state: Visio.manager.state()
-      figure_config: @config
+      figure_config: _.extend({ isExport: true }, @figure.config())
 
-    @exportView = new Visio.Views.ExportModule( model: @model)
+    @exportView = new Visio.Views.ExportModule( model: @model )
 
   teardown: ->
     @exportView.close()
@@ -60,8 +60,8 @@ module 'Export Module View',
 test 'render', ->
   @exportView.render()
 
-  strictEqual $(@exportView.el).find('figcaption input').length, 2
-  strictEqual $(@exportView.el).find('figure .box').length, 2
+  strictEqual $(@exportView.el).find('figcaption input').length, 2, 'Should have two input boxes'
+  strictEqual $(@exportView.el).find('figure .box').length, 2, 'Should have two bars'
 
 test 'select', ->
   @exportView.render()

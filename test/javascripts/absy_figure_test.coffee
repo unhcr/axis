@@ -20,10 +20,12 @@ module 'ABSY Figure',
     @d.selectedAchievement.restore()
 
 test 'render', ->
-  @figure.dataFn [@d]
+  @figure.collectionFn new Visio.Collections.Output([@d])
   @figure.render()
 
   ok d3.select(@figure.el).selectAll('.bubble').size(), 1
+  strictEqual @figure.x.domain()[0], 0
+  strictEqual @figure.x.domain()[1], 10
 
   @d.selectedAmount.restore()
   sinon.stub @d, 'selectedAmount', -> 0
@@ -33,21 +35,23 @@ test 'render', ->
 
 test 'filtered', ->
 
-  ok @figure.filtered([@d]).length, 'Should not be filtered'
+  collection = new Visio.Collections.Output([@d])
+
+  strictEqual @figure.filtered(collection).length, 1, 'Should not be filtered'
 
   @d.selectedAmount.restore()
   sinon.stub @d, 'selectedAmount', -> 0
-  ok not @figure.filtered([@d]).length, 'Should be filtered'
+  ok not @figure.filtered(collection).length, 'Should be filtered'
 
   @d.selectedAmount.restore()
   @d.selectedAchievement.restore()
   sinon.stub @d, 'selectedAmount', -> 10
   sinon.stub @d, 'selectedAchievement', -> { result: undefined }
-  ok not @figure.filtered([@d]).length, 'Should be filtered'
+  ok not @figure.filtered(collection).length, 'Should be filtered'
 
 
 test 'select', ->
-  @figure.dataFn [@d]
+  @figure.collectionFn new Visio.Collections.Output([@d])
   @figure.render()
 
   ok d3.select(@figure.el).selectAll('.active').empty(), 'Should have no active bubbles'
@@ -62,7 +66,7 @@ test 'select', ->
   strictEqual d3.select(@figure.el).selectAll('.active').size(), 1, 'Should have one active bubble'
 
 test 'el', ->
-  @figure.dataFn [@d]
+  @figure.collectionFn new Visio.Collections.Output([@d])
   @figure.render()
 
   ok @figure.el.innerHTML != '', 'Figure should have something in it'

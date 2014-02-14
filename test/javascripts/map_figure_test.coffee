@@ -15,7 +15,7 @@ module 'Map Figure',
 
 test 'render', ->
 
-  @map.dataFn @data
+  @map.modelFn new Backbone.Model @data
   @map.render()
 
   strictEqual @map.$el.find('.country').length, 3, 'Should have 3 countries'
@@ -23,7 +23,7 @@ test 'render', ->
 
 test 'pan', ->
 
-  @map.dataFn @data
+  @map.modelFn new Backbone.Model @data
   @map.render()
 
   extent = @map.translateExtent

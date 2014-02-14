@@ -28,7 +28,7 @@ module 'Spark Figure',
     @d.selectedSituationAnalysis.restore()
 
 test 'filtered', ->
-  filtered = @figure.filtered [@d]
+  filtered = @figure.filtered @d
 
   strictEqual filtered.length, 4, 'Filtered length should be 4'
   strictEqual @d.selectedSituationAnalysis.callCount, 1, 'Should call sit. anal. once'
@@ -37,7 +37,7 @@ test 'filtered', ->
     strictEqual d.value, 2, 'Should have a value of 2 for each count'
 
 test 'render', ->
-  @figure.dataFn [@d]
+  @figure.modelFn @d
   @figure.render()
 
   strictEqual @figure.$el.find('.bar').length, 4, 'Should have 4 bars rendered'
