@@ -14,12 +14,23 @@ class Operation < ActiveRecord::Base
   has_many :budgets
   has_many :expenditures
 
-  has_and_belongs_to_many :indicators, :uniq => true
-  has_and_belongs_to_many :outputs, :uniq => true
-  has_and_belongs_to_many :problem_objectives, :uniq => true
-  has_and_belongs_to_many :rights_groups, :uniq => true
-  has_and_belongs_to_many :goals, :uniq => true
-  has_and_belongs_to_many :ppgs, :uniq => true
+  has_many :indicators_operations, :class_name => 'IndicatorsOperations'
+  has_many :indicators, :uniq => true, :through => :indicators_operations
+
+  has_many :operations_outputs, :class_name => 'OperationsOutputs'
+  has_many :outputs, :uniq => true, :through => :operations_outputs
+
+  has_many :operations_problem_objectives, :class_name => 'OperationsProblemObjectives'
+  has_many :problem_objectives, :uniq => true, :through => :operations_problem_objectives
+
+  has_many :operations_rights_groups, :class_name => 'OperationsRightsGroups'
+  has_many :rights_groups, :uniq => true, :through => :operations_rights_groups
+
+  has_many :goals_operations, :class_name => 'GoalsOperations'
+  has_many :goals, :uniq => true, :through => :goals_operations
+
+  has_many :operations_ppgs, :class_name => 'OperationsPpgs'
+  has_many :ppgs, :uniq => true, :through => :operations_ppgs
 
   belongs_to :country
 

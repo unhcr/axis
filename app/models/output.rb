@@ -5,12 +5,24 @@ class Output < ActiveRecord::Base
 
   attr_accessible :name, :priority
   self.primary_key = :id
-  has_and_belongs_to_many :indicators, :uniq => true
-  has_and_belongs_to_many :problem_objectives, :uniq => true
-  has_and_belongs_to_many :operations, :uniq => true
-  has_and_belongs_to_many :strategies, :uniq => true
-  has_and_belongs_to_many :strategy_objectives, :uniq => true
-  has_and_belongs_to_many :plans, :uniq => true
+
+  has_many :indicators_outputs, :class_name    => 'IndicatorsOutputs'
+  has_many :indicators, :uniq => true, :through => :indicators_outputs
+
+  has_many :outputs_problem_objectives, :class_name    => 'OutputsProblemObjectives'
+  has_many :problem_objectives, :uniq => true, :through => :outputs_problem_objectives
+
+  has_many :outputs_operations, :class_name    => 'OutputsOperations'
+  has_many :operations, :uniq => true, :through => :outputs_operations
+
+  has_many :outputs_strategies, :class_name    => 'OutputsStrategies'
+  has_many :strategies, :uniq => true, :through => :outputs_strategies
+
+  has_many :outputs_strategy_objectives, :class_name     => 'OutputsStrategyObjectives'
+  has_many :strategy_objectives, :uniq => true, :through => :outputs_strategy_objectives
+
+  has_many :outputs_plans, :class_name     => 'OutputsPlans'
+  has_many :plans, :uniq => true, :through => :outputs_plans
 
 
   has_many :indicator_data

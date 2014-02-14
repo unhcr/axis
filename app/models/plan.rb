@@ -4,13 +4,27 @@ class Plan < ActiveRecord::Base
   attr_accessible :name, :operation_name, :year, :operation_id
 
   self.primary_key = :id
-  has_and_belongs_to_many :ppgs, :uniq => true
-  has_and_belongs_to_many :indicators, :uniq => true
-  has_and_belongs_to_many :outputs, :uniq => true
-  has_and_belongs_to_many :problem_objectives, :uniq => true
-  has_and_belongs_to_many :rights_groups, :uniq => true
-  has_and_belongs_to_many :goals, :uniq => true
-  has_and_belongs_to_many :strategies, :uniq => true
+
+  has_many :plans_ppgs, :class_name => 'PlansPpgs'
+  has_many :ppgs, :uniq => true, :through => :plans_ppgs
+
+  has_many :indicators_plans, :class_name => 'IndicatorsPlans'
+  has_many :indicators, :uniq => true, :through => :indicators_plans
+
+  has_many :outputs_plans, :class_name => 'OutputsPlans'
+  has_many :outputs, :uniq => true, :through => :outputs_plans
+
+  has_many :plans_problem_objectives, :class_name => 'PlansProblemObjectives'
+  has_many :problem_objectives, :uniq => true, :through => :plans_problem_objectives
+
+  has_many :plans_rights_groups, :class_name => 'PlansRightsGroups'
+  has_many :rights_groups, :uniq => true, :through => :plans_rights_groups
+
+  has_many :goals_plans, :class_name => 'GoalsPlans'
+  has_many :goals, :uniq => true, :through => :goals_plans
+
+  has_many :strategies_plans, :class_name => 'StrategiesPlans'
+  has_many :strategies, :uniq => true, :through => :strategies_plans
 
 
   has_many :indicator_data
