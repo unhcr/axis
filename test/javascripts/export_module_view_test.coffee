@@ -45,7 +45,6 @@ module 'Export Module View',
       isPerformance: true
 
     @figure = new Visio.Figures[figureType.className](@config)
-    Visio.FigureInstances[@figure.figureId()] = @figure
 
     @model = new Visio.Models.ExportModule
       figure_type: figureType
@@ -55,8 +54,6 @@ module 'Export Module View',
     @exportView = new Visio.Views.ExportModule( model: @model)
 
   teardown: ->
-    for key, val of Visio.FigureInstances
-      Visio.FigureInstances[key].unsubscribe() if Visio.FigureInstances[key].unsubscribe
     @exportView.close()
 
 

@@ -22,7 +22,6 @@ class Visio.Views.AbsyView extends Backbone.View
         right: 80
 
     @figure = new Visio.Figures.Absy @config
-    Visio.FigureInstances[@figure.figureId()] = @figure
 
   render: (isRerender) ->
 

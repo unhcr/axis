@@ -25,7 +25,6 @@ class Visio.Views.BmyView extends Visio.Views.AccordionIndexView
       height: 450
 
     @figure = new Visio.Figures.Bmy @config
-    Visio.FigureInstances[@figure.figureId()] = @figure
 
   render: (isRerender) ->
     # Call super

@@ -14,9 +14,6 @@ class Visio.Routers.IndexRouter extends Visio.Routers.GlobalRouter
       height: height
       el: '#map')
 
-    Visio.FigureInstances['map'] = @map
-
-
     Visio.manager.on 'change:date', () =>
       options =
         options:

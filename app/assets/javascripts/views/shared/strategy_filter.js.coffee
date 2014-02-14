@@ -25,8 +25,8 @@ class Visio.Views.StrategyFilterView extends Backbone.View
       Visio.manager.get('indicator_data').fetchSynced(options).done(() =>
         Visio.manager.get('selected_strategies')[$target.val()] = true
 
-        Visio.FigureInstances.map.filterTooltips(Visio.manager.selectedStrategyPlanIds())
+        Visio.router.map.filterTooltips(Visio.manager.selectedStrategyPlanIds())
       )
     else
       delete Visio.manager.get('selected_strategies')[$target.val()]
-      Visio.FigureInstances.map.filterTooltips(Visio.manager.selectedStrategyPlanIds())
+      Visio.router.map.filterTooltips(Visio.manager.selectedStrategyPlanIds())

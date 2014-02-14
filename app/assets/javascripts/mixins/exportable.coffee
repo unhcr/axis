@@ -33,10 +33,6 @@ Visio.Mixins.Exportable =
   subscribe: ->
     $.subscribe "select.#{@cid}.figure", @select
 
-  onExport: (e) ->
-    e.stopPropagation()
-    Visio.router.trigger 'export', @config()
-
   events:
     'click a.export': 'onExport'
 

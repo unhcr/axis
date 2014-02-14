@@ -33,7 +33,7 @@ class Visio.Views.IsyShowView extends Visio.Views.AccordionShowView
       width: 100
 
     @isyFigure = new Visio.Figures.Isy @config
-    Visio.FigureInstances[@isyFigure.figureId()] = @isyFigure
+    @sparkFigure = new Visio.Figures.Spark @sparkConfig
 
   render: (isRerender) ->
     situationAnalysis = @model.selectedSituationAnalysis()
@@ -41,12 +41,8 @@ class Visio.Views.IsyShowView extends Visio.Views.AccordionShowView
     if !isRerender
       @$el.html @template({ parameter: @model, figureId: @isyFigure.figureId() })
 
-      # Initialize the indicator bar graph
       @$el.find('.indicator-bar-graph').html @isyFigure.el
-
-      # Initialize the side spark bar graph
-      @sparkConfig.selection = d3.select(@el).select('.spark-bar-graph')
-      Visio.FigureInstances[@sparkFigureId()] = Visio.Figures.sparkBarGraph(@sparkConfig)
+      @$el.find('.spark-bar-graph').html @sparkFigure.el
 
     category = if situationAnalysis.total == 0 then 'white' else situationAnalysis.category
 
@@ -64,8 +60,8 @@ class Visio.Views.IsyShowView extends Visio.Views.AccordionShowView
     else
       @$el.removeClass 'disabled'
 
-    Visio.FigureInstances[@sparkFigureId()].data situationAnalysis
-    Visio.FigureInstances[@sparkFigureId()]()
+    @sparkFigure.dataFn [@model]
+    @sparkFigure.render()
 
     @drawFigures()
 
@@ -93,9 +89,5 @@ class Visio.Views.IsyShowView extends Visio.Views.AccordionShowView
     _.each containerTypes, (type) =>
       @$el.find(".js-#{type}-container").text Visio.manager.get("#{type}s").get(d.get("#{type}_id"))
 
-  sparkFigureId: =>
-    "spark-#{@model.id}"
 
   removeInstances: =>
-    delete Visio.FigureInstances[@isyFigure.figureId()]
-    delete Visio.FigureInstances[@sparkFigureId()]

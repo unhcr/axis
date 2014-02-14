@@ -11,6 +11,10 @@ window.Visio =
       className: 'Map'
       human: 'Map'
       name: 'map'
+    SPARK:
+      className: 'Spark'
+      human: 'Spark'
+      name: 'spark'
     CIRCLE:
       className: 'Circle'
       human: 'Circle'
@@ -32,8 +36,6 @@ window.Visio =
       className: 'StrategySnapshotView'
       human: 'Strategy Overview'
       name: 'strategy_snapshot'
-  # Actual instances of figures
-  FigureInstances: {}
   AchievementTypes:
     TARGET: 'comp_target'
     STANDARD: 'standard'
