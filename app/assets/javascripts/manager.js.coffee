@@ -4,6 +4,8 @@ class Visio.Models.Manager extends Backbone.Model
     @set('db', new ydn.db.Storage(Visio.Constants.DB_NAME, Visio.Schema))
     options ||= {}
 
+    @state options.state if options.state?
+
     @get('db').addEventListener 'ready', (e) =>
       if Visio.user && Visio.user.get('reset_local_db')
         @get('db').clear(Visio.Schema.stores.map((store) -> store.name))
@@ -179,11 +181,14 @@ class Visio.Models.Manager extends Backbone.Model
   state: (_state) ->
     if _state?
       @set 'selected', _state.selected
-      @set.year _state.year
-      @set.set 'achievement_type', _state.achievement_type
-      @set.set 'scenario_type', _state.scenario_type
-      @set.set 'budget_type', _state.budget_type
-      @set.set 'amount_type', _state.amount_type
+      @year _state.year
+      @set 'achievement_type', _state.achievement_type
+      @set 'scenario_type', _state.scenario_type
+      @set 'budget_type', _state.budget_type
+      @set 'amount_type', _state.amount_type
+      @set 'strategies', new Visio.Collections.Strategy _state.strategies
+      @set 'selected_strategies', _state.selected_strategies
+      @set 'strategy_id', _state.strategy_id
       return _state
     else
       return {
@@ -193,5 +198,8 @@ class Visio.Models.Manager extends Backbone.Model
         scenario_type: @get 'scenario_type'
         budget_type: @get 'budget_type'
         amount_type: @get 'amount_type'
+        strategies: @get('strategies').toJSON()
+        selected_strategies: @get 'selected_strategies'
+        strategy_id: @get 'strategy_id'
       }
 
