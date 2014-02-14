@@ -2,9 +2,9 @@ class Visio.Figures.Base extends Backbone.View
 
   @include Visio.Mixins.Exportable
 
-  attrAccessible: ['x', 'y', 'width', 'height', 'data', 'margin']
+  attrAccessible: ['x', 'y', 'width', 'height', 'collection', 'margin', 'model']
 
-  attrConfig: ['margin', 'data', 'width', 'height']
+  attrConfig: ['margin', 'width', 'height']
 
   viewLocation: 'Figures'
 

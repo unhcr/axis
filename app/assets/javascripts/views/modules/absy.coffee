@@ -31,7 +31,7 @@ class Visio.Views.AbsyView extends Backbone.View
       @$el.find('.figure-header').html (new Visio.Views.FilterBy({ figure: @figure, })).render().el
 
 
-    @figure.dataFn(Visio.manager.selected(Visio.manager.get('aggregation_type')).models)
+    @figure.collectionFn(Visio.manager.selected(Visio.manager.get('aggregation_type')))
     @figure.render()
 
     @

@@ -35,7 +35,7 @@ class Visio.Views.BmyShowView extends Visio.Views.AccordionShowView
 
 
   drawFigures: ->
-    @figure.dataFn @model.selectedBudgetData(true).models
+    @figure.collectionFn @model.selectedBudgetData(true)
     @figure.render()
 
   removeInstances: =>

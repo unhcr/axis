@@ -85,8 +85,8 @@ class Visio.Figures.Absy extends Visio.Figures.Base
         .text('Budget')
 
   render: ->
-    filtered = @filtered @data
-    maxAmount = d3.max @data, (d) => d.selectedAmount(false, @filters)
+    filtered = @filtered @collection
+    maxAmount = d3.max filtered, (d) => d.selectedAmount(false, @filters)
 
     if !@domain || @domain[1] < maxAmount || @domain[1] > 2 * maxAmount
       @domain = [0, maxAmount]
@@ -160,11 +160,13 @@ class Visio.Figures.Absy extends Visio.Figures.Base
       .call(@yAxis)
       .attr('transform', 'translate(-20,0)')
 
+    @
+
 
   filterFn: (d) ->
     d.selectedAmount(false, @filters) && d.selectedAchievement(false, @filters).result
 
-  filtered: (data) => _.chain(data).filter(@filterFn).value()
+  filtered: (collection) => _.chain(collection.models).filter(@filterFn).value()
 
   polygon: (d) ->
     return "M0 0" unless d? and d.length

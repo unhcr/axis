@@ -49,7 +49,7 @@ class Visio.Figures.Map extends Visio.Figures.Base
 
     self = @
 
-    filtered = @filtered @data
+    filtered = @filtered @model
     world = @g.selectAll('.country')
       .data(filtered)
 
@@ -96,6 +96,7 @@ class Visio.Figures.Map extends Visio.Figures.Base
           self.views[d.get('country').iso3] = new Visio.Views.MapTooltipView({ model: d, point: @ })
       )
 
+    @
 
   zoomed: =>
     scale = if d3.event && d3.event.scale then d3.event.scale else @zoom.scale()
@@ -165,8 +166,8 @@ class Visio.Figures.Map extends Visio.Figures.Base
       value.close()
     @views = {}
 
-  filtered: (data) =>
-    data = topojson.feature(data, data.objects.world_50m).features
+  filtered: (model) =>
+    topojson.feature(model.toJSON(), model.toJSON().objects.world_50m).features
 
   refreshTooltips: ->
     for key, value of @views

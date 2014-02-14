@@ -2,7 +2,7 @@ class Visio.Figures.Isy extends Visio.Figures.Base
 
   type: Visio.FigureTypes.ISY
 
-  attrAccessible: ['x', 'y', 'width', 'height', 'data', 'margin', 'goalType', 'isPerformance']
+  attrAccessible: ['x', 'y', 'width', 'height', 'collection', 'margin', 'goalType', 'isPerformance']
 
   initialize: (config) ->
     @$el.prepend $('<a class="export">export</a>')
@@ -32,7 +32,7 @@ class Visio.Figures.Isy extends Visio.Figures.Base
 
 
   render: ->
-    filtered = @filtered @data
+    filtered = @filtered @collection
 
     self = @
 
@@ -189,6 +189,7 @@ class Visio.Figures.Isy extends Visio.Figures.Base
       $.publish "select.#{@figureId()}", [d, i]
 
     boxes.exit().remove()
+    @
 
   sortFn: (a, b) =>
     reversedA = if a.get(@progress.start) > a.get(@progress.end) then -1 else 1
@@ -201,7 +202,7 @@ class Visio.Figures.Isy extends Visio.Figures.Base
     @y.domain [0, +d.get(@goalType)]
     v = Math.abs(+d.get(@progress.start) - +d.get(@progress.end))
 
-  filtered: (data) => _.chain(data).filter(@filterFn).sort(@sortFn).value()
+  filtered: (collection) => _.chain(collection.models).filter(@filterFn).sort(@sortFn).value()
 
   select: (e, d, i) =>
     box = @g.select(".box-#{d.id}")

@@ -12,16 +12,14 @@ class Visio.Views.ExportModule extends Backbone.View
   initialize: (options) ->
     $(document).scrollTop(0)
     @config = @model.get 'figure_config'
-    @figure = @model.figure(@config)
+
+    @figure = @model.figure @config
 
     if @config.selectable
       $.subscribe "select.#{@figure.figureId()}", @select
-      @filtered = @figure.filtered @config.data
+      @filtered = @figure.filtered @figure.collection
 
   render: ->
-
-
-
 
     @$el.html @template( model: @model.toJSON(), filtered: @filtered )
     @$el.find('.export-figure figure').html @figure.el

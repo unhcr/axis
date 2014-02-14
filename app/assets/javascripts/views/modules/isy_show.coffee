@@ -60,7 +60,7 @@ class Visio.Views.IsyShowView extends Visio.Views.AccordionShowView
     else
       @$el.removeClass 'disabled'
 
-    @sparkFigure.dataFn [@model]
+    @sparkFigure.modelFn @model
     @sparkFigure.render()
 
     @drawFigures()
@@ -79,7 +79,7 @@ class Visio.Views.IsyShowView extends Visio.Views.AccordionShowView
     @isyFigure.isPerformanceFn($target.is(':checked')).render()
 
   drawFigures: ->
-    @isyFigure.dataFn @model.selectedIndicatorData().models
+    @isyFigure.collectionFn @model.selectedIndicatorData()
     @isyFigure.render()
 
   onMouseenterBox: (e) ->

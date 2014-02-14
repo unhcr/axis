@@ -75,7 +75,7 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
 
 
   render: ->
-    filtered = @filtered @data
+    filtered = @filtered @collection
     @y.domain [0, d3.max(_.flatten(filtered), (d) -> d.amount)]
 
     lines = @g.selectAll('.budget-line').data(filtered, (d) -> d.budgetType)
@@ -145,6 +145,8 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
       .call(@yAxis)
       .attr('transform', 'translate(-20,0)')
 
+    @
+
 
   reduceFn: (memo, budget) =>
     unless budget.get('year')
@@ -185,7 +187,7 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
 
     return memo
 
-  filtered: (data) => _.chain(data).reduce(@reduceFn, []).value()
+  filtered: (collection) => _.chain(collection.models).reduce(@reduceFn, []).value()
 
   polygon: (d) ->
     return "M0 0" unless d? and d.length

@@ -43,7 +43,7 @@ class Visio.Views.BmyView extends Visio.Views.AccordionIndexView
     _.each parameters, (model) ->
       data = data.concat model.selectedBudgetData(true).models
 
-    @figure.dataFn data
+    @figure.collectionFn new Visio.Collections.Budget(data)
     @figure.render()
 
   sort: (parameterA, parameterB) ->

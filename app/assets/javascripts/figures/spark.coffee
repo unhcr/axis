@@ -21,7 +21,7 @@ class Visio.Figures.Spark extends Visio.Figures.Base
 
   render: ->
 
-    filtered = @filtered @data
+    filtered = @filtered @model
 
     @bars = @g.selectAll('.bar').data(filtered)
     @bars.enter().append('rect')
@@ -34,14 +34,9 @@ class Visio.Figures.Spark extends Visio.Figures.Base
       .attr('height', @barWidth)
 
     @bars.exit().remove()
+    @
 
-  filtered: (data) ->
-    counts = {}
-
-    _.each data, (d) ->
-      c = d.selectedSituationAnalysis().counts
-      for key, val of c
-        counts[key] = 0 unless counts[key]?
-        counts[key] += c[key]
+  filtered: (model) ->
+    counts = model.selectedSituationAnalysis().counts
 
     return d3.map(counts).entries()

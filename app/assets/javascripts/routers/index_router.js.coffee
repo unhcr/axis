@@ -47,7 +47,7 @@ class Visio.Routers.IndexRouter extends Visio.Routers.GlobalRouter
           situation_analysis: true
     #NProgress.start()
     Visio.manager.getMap().done((map) =>
-      @map.dataFn(map)
+      @map.modelFn new Backbone.Model map
       @filterView = new Visio.Views.MapFilterView()
       @map.render()
       Visio.manager.get('plans').fetchSynced(options)
