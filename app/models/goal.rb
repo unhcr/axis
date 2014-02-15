@@ -12,7 +12,7 @@ class Goal < ActiveRecord::Base
   has_many :ppgs, :uniq => true, :through => :goals_ppgs
 
   has_many :goals_rights_groups, :class_name => 'GoalsRightsGroups'
-  has_many :rights_groups, :uniq => true, :through => :rights_groups_goals
+  has_many :rights_groups, :uniq => true, :through => :goals_rights_groups
 
   has_many :goals_operations, :class_name => 'GoalsOperations'
   has_many :operations, :uniq => true, :through => :goals_operations

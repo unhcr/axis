@@ -12,8 +12,8 @@ class Output < ActiveRecord::Base
   has_many :outputs_problem_objectives, :class_name    => 'OutputsProblemObjectives'
   has_many :problem_objectives, :uniq => true, :through => :outputs_problem_objectives
 
-  has_many :outputs_operations, :class_name    => 'OutputsOperations'
-  has_many :operations, :uniq => true, :through => :outputs_operations
+  has_many :operations_outputs, :class_name    => 'OperationsOutputs'
+  has_many :operations, :uniq => true, :through => :operations_outputs
 
   has_many :outputs_strategies, :class_name    => 'OutputsStrategies'
   has_many :strategies, :uniq => true, :through => :outputs_strategies

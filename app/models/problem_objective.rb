@@ -9,7 +9,7 @@ class ProblemObjective < ActiveRecord::Base
   has_many :indicator_data
   has_many :budgets
 
-  has_many :outputs_problem_objectives, :class_name    => 'OutputsProblemObjectives'
+  has_many :outputs_problem_objectives, :class_name => 'OutputsProblemObjectives'
   has_many :outputs, :uniq => true, :through => :outputs_problem_objectives
 
   has_many :indicators_problem_objectives, :class_name     => 'IndicatorsProblemObjectives'
@@ -18,8 +18,8 @@ class ProblemObjective < ActiveRecord::Base
   has_many :problem_objectives_rights_groups, :class_name    => 'ProblemObjectivesRightsGroups'
   has_many :rights_groups, :uniq => true, :through => :problem_objectives_rights_groups
 
-  has_many :problem_objectives_operations, :class_name     => 'ProblemObjectivesOperations'
-  has_many :operations, :uniq => true, :through => :problem_objectives_operations
+  has_many :operations_problem_objectives, :class_name => 'OperationsProblemObjectives'
+  has_many :operations, :uniq => true, :through => :operations_problem_objectives
 
   has_many :problem_objectives_strategies, :class_name     => 'ProblemObjectivesStrategies'
   has_many :strategies, :uniq => true, :through => :problem_objectives_strategies

@@ -143,8 +143,8 @@ class StrategyTest < ActiveSupport::TestCase
     assert_equal 1, StrategyObjective.find(@so2.id).goals.length
     assert_equal 2, Strategy.find(@s.id).goals.length
 
-    @so2.goals.destroy_all
-    @so.goals.destroy_all
+    @so2.goals.delete_all
+    @so.goals.delete_all
     assert_equal 0, Strategy.find(@s.id).goals.length
   end
 

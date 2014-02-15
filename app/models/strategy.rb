@@ -9,8 +9,8 @@ class Strategy < ActiveRecord::Base
   has_many :plans_strategies, :class_name    => 'PlansStrategies'
   has_many :plans, :uniq => true, :through => :plans_strategies
 
-  has_many :rights_groups_ppgs, :class_name    => 'RightsGroups_ppgs'
-  has_many :ppgs, :uniq => true, :through => :rights_groups_ppgs
+  has_many :ppgs_strategies, :class_name    => 'PpgsStrategies'
+  has_many :ppgs, :uniq => true, :through => :ppgs_strategies
 
   has_many :goals_strategies, :class_name    => 'GoalsStrategies'
   has_many :goals, :uniq => true, :before_add => :belongs_to_strategy_objective, :through => :goals_strategies

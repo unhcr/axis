@@ -4,22 +4,22 @@ class StrategyObjective < ActiveRecord::Base
 
   default_scope :include => [:goals, :problem_objectives, :outputs, :indicators]
 
-  has_many :goals_strategy_objectives, :class_name    => 'GoalsStrategyObjectives'
+  has_many :goals_strategy_objectives, :class_name => 'GoalsStrategyObjectives'
   has_many :goals, :uniq => true, :through => :goals_strategy_objectives,
     :after_add => :add_to_strategy,
     :after_remove => :remove_from_strategy
 
-  has_many :problem_objectives_strategy_objectives, :class_name     => 'ProblemObjectivesStrategyObjectives'
+  has_many :problem_objectives_strategy_objectives, :class_name => 'ProblemObjectivesStrategyObjectives'
   has_many :problem_objectives, :uniq => true, :through => :problem_objectives_strategy_objectives,
     :after_add => :add_to_strategy,
     :after_remove => :remove_from_strategy
 
-  has_many :outputs_strategy_objectives, :class_name    => 'OutputsStrategyObjectives'
+  has_many :outputs_strategy_objectives, :class_name => 'OutputsStrategyObjectives'
   has_many :outputs, :uniq => true, :through => :outputs_strategy_objectives,
     :after_add => :add_to_strategy,
     :after_remove => :remove_from_strategy
 
-  has_many :indicators_strategy_objectives, :class_name     => 'IndicatorsStrategyObjectives'
+  has_many :indicators_strategy_objectives, :class_name => 'IndicatorsStrategyObjectives'
   has_many :indicators, :uniq => true, :through => :indicators_strategy_objectives,
     :after_add => :add_to_strategy,
     :after_remove => :remove_from_strategy

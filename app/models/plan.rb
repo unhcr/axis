@@ -23,8 +23,8 @@ class Plan < ActiveRecord::Base
   has_many :goals_plans, :class_name => 'GoalsPlans'
   has_many :goals, :uniq => true, :through => :goals_plans
 
-  has_many :strategies_plans, :class_name => 'StrategiesPlans'
-  has_many :strategies, :uniq => true, :through => :strategies_plans
+  has_many :plans_strategies, :class_name => 'PlansStrategies'
+  has_many :strategies, :uniq => true, :through => :plans_strategies
 
 
   has_many :indicator_data
