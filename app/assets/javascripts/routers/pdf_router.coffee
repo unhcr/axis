@@ -2,7 +2,7 @@ class Visio.Routers.PdfRouter extends Backbone.Router
 
   initialize: (options) ->
 
-    @exportModule = new Visio.Models.ExportModule options.config
+    Visio.exportModule = new Visio.Models.ExportModule options.config
 
 
   routes:
@@ -19,7 +19,7 @@ class Visio.Routers.PdfRouter extends Backbone.Router
   index: ->
 
     @setup().done =>
-      figureConfig = @exportModule.get('figure_config')
+      figureConfig = Visio.exportModule.get('figure_config')
 
       options = _.extend { isPDF: true }, figureConfig
 

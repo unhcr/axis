@@ -38,7 +38,8 @@
 
     .row
       .col-sm-12
-        %p ddescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondes criptiondescriptionescription
+        %p
+          = Visio.exportModule.get 'description'
 
 
   .col-sm-2
