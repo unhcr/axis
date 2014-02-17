@@ -23,6 +23,7 @@ class Visio.Figures.Base extends Backbone.View
     if config.filters?
       @filters = new Visio.Collections.FigureFilter(config.filters)
 
+    @template = HAML["pdf/#{@type.name}"] if @isPdf
     @$el.html @template()
     @selection = d3.select @$el.find('figure')[0]
 

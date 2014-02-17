@@ -1,0 +1,6 @@
+- if context.model.get('country')
+  %img{
+    :width => "55",
+    :height => "55",
+    :src => "/assets/countries/#{context.model.get('country').iso2}/128.png" }
+= context.model.toString()

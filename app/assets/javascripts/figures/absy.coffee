@@ -3,7 +3,6 @@ class Visio.Figures.Absy extends Visio.Figures.Base
   type: Visio.FigureTypes.ABSY
 
   initialize: (config) ->
-    @$el.prepend $('<a class="export">export</a>')
     @filters = new Visio.Collections.FigureFilter([
       {
         id: 'budget_type'
@@ -27,7 +26,7 @@ class Visio.Figures.Absy extends Visio.Figures.Base
     ])
 
     super config
-
+    @$el.prepend $('<a class="export">export</a>')
 
     @x = d3.scale.linear()
       .range([0, @adjustedWidth])
@@ -111,6 +110,10 @@ class Visio.Figures.Absy extends Visio.Figures.Base
 
     if @isExport
       labels = @g.selectAll('.label').data(filtered, (d) -> d.refId())
+    else if @isPdf and not _.isEmpty @selected
+      labels = @g.selectAll('.label').data(_.filter(filtered, (d) => _.include @selected, d.id))
+
+    if @isExport or @isPdf
       labels.enter().append('text')
       labels.attr('class', 'label')
         .attr('x', (d) => @x(d.selectedAmount(false, @filters)))
@@ -159,6 +162,13 @@ class Visio.Figures.Absy extends Visio.Figures.Base
       .duration(Visio.Durations.FAST)
       .call(@yAxis)
       .attr('transform', 'translate(-20,0)')
+
+    # Generate legend view
+    if @isPdf
+      @legendView = new Visio.Figures.AbsyLegend
+        collection: new @collection.constructor(_.filter(filtered, (d) => _.include @selected, d.id))
+      @$el.find('.legend-container').html @legendView.render().el
+
 
     @
 

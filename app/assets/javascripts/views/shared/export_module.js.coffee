@@ -66,6 +66,9 @@ class Visio.Views.ExportModule extends Backbone.View
     formArray = @$el.find('.export-settings form').serializeArray()
     _.each formArray, (formObj) => @model.set formObj.name, formObj.value
 
+    selected = _.map @$el.find('figcaption input[type="checkbox"]:checked'), (ele) -> $(ele).attr('data-id')
+    @model.get('figure_config').selected = selected
+
     @model.save().then =>
       $.ajax
         url: @model.pdfUrl()

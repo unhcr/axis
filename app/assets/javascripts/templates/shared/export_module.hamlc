@@ -20,6 +20,7 @@
                 %input{
                   :id => "datum-#{i}",
                   :type => "checkbox",
+                  :data => { :id => d.id },
                   :value => "#{i}"}
                 %label{:for => "datum-#{i}"}
                   = i + 1
