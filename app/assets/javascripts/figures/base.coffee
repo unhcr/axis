@@ -2,6 +2,8 @@ class Visio.Figures.Base extends Backbone.View
 
   @include Visio.Mixins.Exportable
 
+  template: HAML['figures/base']
+
   attrAccessible: ['x', 'y', 'width', 'height', 'collection', 'margin', 'model']
 
   attrConfig: ['margin', 'width', 'height']
@@ -21,7 +23,8 @@ class Visio.Figures.Base extends Backbone.View
     if config.filters?
       @filters = new Visio.Collections.FigureFilter(config.filters)
 
-    @selection = d3.select @el
+    @$el.html @template()
+    @selection = d3.select @$el.find('figure')[0]
 
 
     # Adjust for margins
