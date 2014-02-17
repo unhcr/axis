@@ -1,7 +1,8 @@
 class Strategy < ActiveRecord::Base
   attr_accessible :name, :description
 
-  has_many :strategy_objectives, :before_add => :add_strategy_objective_parameters
+  has_many :strategy_objectives,
+    :before_add => :add_strategy_objective_parameters, :dependent => :destroy
 
   has_many :operations_strategies, :class_name     => 'OperationsStrategies'
   has_many :operations, :uniq => true, :through => :operations_strategies
