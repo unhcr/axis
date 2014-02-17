@@ -36,3 +36,4 @@
 //= require_tree ./vendor
 //= require_tree ./cms_vendor
 //= require manager
+//= stub backbone_ext

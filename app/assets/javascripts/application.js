@@ -18,6 +18,7 @@
 //= require ./vendor/d3.v3
 //= require_tree ./templates
 //= require visio
+//= require backbone_ext
 //= require_tree ./mixins
 //= require ./collections/syncable
 //= require ./models/syncable
