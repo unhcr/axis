@@ -36,8 +36,11 @@ class Visio.Views.SliderView extends Backbone.View
 
     # new left
     @position += toMove
-    if -@position >= $slides.length - toMove
-      @position = -1 * ($slides.length - toMove)
+    console.log @position
+    console.log $slides.length
+    if -@position >= $slides.length
+      @position = -1 * ($slides.length + toMove)
+      console.log @position
     else if @position > 0
       @position = 0
     left = (@position * slideWidth)

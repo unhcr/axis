@@ -27,10 +27,10 @@ class Visio.Views.CountrySliderView extends Visio.Views.SliderView
     toMove * multiplier
 
   onNext: (e) =>
-    @move(@toMove(true))
+    @move(@toMove(true)) unless @$el.find('.slider').hasClass 'grid'
 
   onPrevious: (e) =>
-    @move(@toMove(false))
+    @move(@toMove(false)) unless @$el.find('.slider').hasClass 'grid'
 
   onMouseenter: (e) =>
      #@$el.find('.country-slide').css('opacity', .5)
