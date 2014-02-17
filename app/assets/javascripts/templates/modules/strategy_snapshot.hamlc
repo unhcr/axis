@@ -11,12 +11,12 @@
           = "#{Visio.manager.strategy().get('name')}."
   .divider-light-gray.divider-full
   %section.row
-    .col-md-6
+    .col-md-6.col-sm-6
       %h3
         Strategy Overview.
       %p
         = Visio.manager.strategy().get('description')
-    .col-md-4.col-md-offset-1.links
+    .col-md-4.col-md-offset-2.links.col-sm-6
       .col-md-4
         %span Jump To:
       .col-md-8.right-text
@@ -41,7 +41,7 @@
         Education Key Figures.
     .row.center-text
       - for i in [0..3]
-        .col-md-3{ :class => "keyFigure #{context.keyFigures[i].fn}" }
+        .col-md-3.col-sm-6{ :class => "keyFigure #{context.keyFigures[i].fn}" }
           .ui-huge-number.number
             0
           %div
@@ -67,16 +67,15 @@
     .col-md-8
       .row
         - _.each [0, 1, 2], (i) ->
-          .col-md-4
+          .col-md-4.col-xs-6
             .col-md-4.criticality{ :class => "#{context.criticalities[i]}-criticality" }
             .col-md-8.count{ :class => "#{context.criticalities[i]}-count" }
               0
-      .row
-        .col-md-4
+        .col-md-4.col-xs-6
           .col-md-4.criticality{ :class => "#{context.criticalities[3]}-criticality" }
           .col-md-8.count{ :class => "#{context.criticalities[3]}-count" }
             0
-        .col-md-4.col-md-offset-4
+        .col-md-4.col-md-offset-4.col-xs-6
           Values out of/
           %span.ui-small-header.total-count 0
 

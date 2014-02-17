@@ -14,7 +14,7 @@
 
 .row
   - _.each [0, 1, 2, 3], (i) ->
-    .col-md-2.criticality{ :class => "#{context.criticalities[i]}-criticality" }
+    .col-xs-2.criticality{ :class => "#{context.criticalities[i]}-criticality" }
 
 .row.divider-light-gray
 .row
