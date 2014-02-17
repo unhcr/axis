@@ -85,9 +85,8 @@ class Visio.Views.ParameterSearch extends Backbone.View
 
     dependencyOptions = { join_ids: {} }
     dependencyOptions.join_ids["#{@collection.name.singular}_id"] = id
+    dataOptions = {}
 
-    dataOptions =
-      filter_ids: @filterIds(@collection.name, id)
 
 
     # Have to cascade promises since jquery's when doesn't properly return promise when called with apply
@@ -102,6 +101,8 @@ class Visio.Views.ParameterSearch extends Backbone.View
           _.each dependencyTypes, (dependencyType) ->
             Visio.manager.select dependencyType.plural, model.get("#{dependencyType.singular}_ids")
 
+          dataOptions =
+            filter_ids: @filterIds @collection.name, id
           $.when.apply(@, dataTypes.map (dataType) ->
             Visio.manager.get(dataType.plural).fetchSynced(dataOptions, null, 'post')).done =>
               # finally trigger redraw
