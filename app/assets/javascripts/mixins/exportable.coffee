@@ -12,6 +12,9 @@ Visio.Mixins.Exportable =
     if @model?
       config.model = @model.toJSON()
       config.modelName = @model.constructor.name
+
+    if @filters?
+      config.filters = @filters.toJSON()
     config.type = @type
     config.selectable = @selectable
     config.viewLocation = @viewLocation

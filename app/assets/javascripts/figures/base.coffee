@@ -18,6 +18,9 @@ class Visio.Figures.Base extends Backbone.View
         @[attr] = _attr
         @
 
+    if config.filters?
+      @filters = new Visio.Collections.FigureFilter(config.filters)
+
     @selection = d3.select @el
 
 
