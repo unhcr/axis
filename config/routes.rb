@@ -28,7 +28,11 @@ Visio::Application.routes.draw do
       get 'pdf'
     end
   end
-  resources :strategy_objectives
+  resources :strategy_objectives do
+    collection do
+      get 'search'
+    end
+  end
   resources :strategies
   resources :users
 

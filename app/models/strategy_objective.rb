@@ -1,4 +1,7 @@
 class StrategyObjective < ActiveRecord::Base
+  include Tire::Model::Search
+  include Tire::Model::Callbacks
+
   attr_accessible :description, :name
   belongs_to :strategy
 
@@ -31,6 +34,19 @@ class StrategyObjective < ActiveRecord::Base
   def remove_from_strategy(assoc)
     self.strategy.send(assoc.class.table_name).delete(assoc) if self.strategy
   end
+
+  def self.search_models(query, options = {})
+    return [] if !query || query.empty?
+    options[:page] ||= 1
+    options[:per_page] ||= 6
+    s = self.search(options) do
+      query { string "name:#{query}" }
+
+      highlight :name
+    end
+    s
+  end
+
 
   def to_jbuilder(options = {})
     options ||= {}
