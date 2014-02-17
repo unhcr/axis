@@ -171,6 +171,22 @@ test 'achievement', () ->
   strictEqual result.status, Visio.Algorithms.STATUS.reported
   strictEqual result.result, 1
 
+  datum.set 'baseline', null
+  datum.set 'myr', 0
+
+  result = datum.achievement()
+  strictEqual result.include, true
+  strictEqual result.status, Visio.Algorithms.STATUS.reported
+  strictEqual result.result, 0
+
+  datum.set 'comp_target', 0
+  datum.set 'myr', 10
+  datum.set 'is_performance', true
+
+  result = datum.achievement()
+  strictEqual result.include, true
+  strictEqual result.status, Visio.Algorithms.STATUS.reported
+  strictEqual result.result, 1
 
 test 'situation analysis', () ->
   datum = new Visio.Models.IndicatorDatum({
