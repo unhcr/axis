@@ -42,7 +42,8 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
            Visio.manager.get('outputs').fetchSynced(options),
            Visio.manager.get('problem_objectives').fetchSynced(options),
            Visio.manager.get('indicators').fetchSynced(options),
-           Visio.manager.get('strategy_objectives').fetch(),
+           Visio.manager.get('strategy_objectives').fetch(
+             { data: { where: { strategy_id: Visio.manager.get('strategy_id') } } }),
            Visio.manager.get('expenditures').fetchSynced({ strategy_id: Visio.manager.get('strategy_id') })
            Visio.manager.get('budgets').fetchSynced({ strategy_id: Visio.manager.get('strategy_id') })
            Visio.manager.get('indicator_data').fetchSynced({ strategy_id: Visio.manager.get('strategy_id') })
