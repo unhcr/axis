@@ -26,15 +26,6 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
 
     @module = $('#module')
 
-    @on 'export', (config) =>
-      config = $.extend { isExport: true }, config
-      model = new Visio.Models.ExportModule
-        figure_type: config.type
-        state: Visio.manager.state()
-        figure_config: config
-
-      @exportView = new Visio.Views.ExportModule( model: model )
-      $('.content').append(@exportView.render().el)
 
   setup: () ->
     # Return empty promise if we've setup already
