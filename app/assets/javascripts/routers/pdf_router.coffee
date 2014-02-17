@@ -26,5 +26,6 @@ class Visio.Routers.PdfRouter extends Backbone.Router
 
       @view = new Visio[figureConfig.viewLocation][figureConfig.type.className](options)
 
+      $('body').addClass 'container'
       $('body').prepend @view.render().el
 
