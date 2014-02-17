@@ -78,7 +78,7 @@
             0
         .col-md-4.col-md-offset-4
           Values out of/
-          %span.ui-small-header 143
+          %span.ui-small-header.total-count 0
 
 .actions
 

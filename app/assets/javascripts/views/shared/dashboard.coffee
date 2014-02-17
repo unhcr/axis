@@ -94,6 +94,8 @@ class Visio.Views.Dashboard extends Backbone.View
 
       @$el.find(".#{figure.criticality}-count:last").text result.counts[figure.criticality]
 
+    @$el.find('.total-count:last').text result.total
+
   close: ->
     @unbind()
     @remove()
