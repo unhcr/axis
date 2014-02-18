@@ -6,6 +6,7 @@ class Visio.Models.FigureFilter extends Backbone.Model
     not @get('values')[datum.get(@id)]
 
   filter: (name, active) ->
+    return @get('values')[name] unless active?
     # Only one can be true for radio type
     if @get('filterType') == 'radio'
       _.each _.keys(@get('values')), (key) =>

@@ -14,10 +14,10 @@ class Visio.Figures.Base extends Backbone.View
 
     # default margin
     @margin =
-      left: 0
-      right: 0
-      top: 0
-      bottom: 0
+      left: 2
+      right: 2
+      top: 2
+      bottom: 2
     for attr, value of config
       @[attr] = value
 

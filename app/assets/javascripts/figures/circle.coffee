@@ -31,7 +31,7 @@ class Visio.Figures.Circle extends Visio.Figures.Base
 
     @oldPercent = config.percent || 1
 
-    @oldNumber = config.number
+    @oldNumber = config.number || 0
 
   render: ->
     i = d3.interpolate(@oldPercent, @percent)

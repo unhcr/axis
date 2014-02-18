@@ -59,20 +59,23 @@ line {
   }
 
   .bubble.active {
-    fill: $primary-dark;
+    fill: white;
+    stroke: $primary;
+    stroke-width: 2px;
   }
+
   .trail {
     stroke: black;
     stroke-dasharray: 5 5;
     pointer-events: none;
   }
   .bubble {
-    fill: $yellow-green;
+    fill: $pink;
     pointer-events: none;
   }
 
   .y.axis line {
-    stroke: $primary-light;
+    stroke: none;
   }
 
   .y.axis g:nth-of-type(-n+2) line {
@@ -80,20 +83,19 @@ line {
   }
 
   .y.axis text, .x.axis > text {
-    fill: $primary-light;
-    font-size: 1.4em;
+    fill: $black;
   }
 
   .x.axis path {
-    stroke: $light-gray;
+    stroke: none;
   }
 
   .x.axis line {
-    stroke: $light-gray;
+    stroke: none;
   }
 
   .x.axis text {
-    fill: $primary-light;
+    fill: $black;
   }
 }
 

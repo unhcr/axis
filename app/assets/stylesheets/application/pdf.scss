@@ -1,9 +1,13 @@
 .pb_before { page-break-before:always !important; }
 .pb_after  { page-break-after:always !important; }
-.pbi_avoid { page-break-inside:avoid !important; }
+.pbi-avoid { page-break-inside:avoid !important; }
 
 .pdf-page {
   width: 21cm;
   height: 29.7cm;
   margin: 0;
+}
+
+body {
+  text-rendering: optimizelegibility;
 }

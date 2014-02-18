@@ -4,7 +4,8 @@
     Visio.manager = new Visio.Models.Manager({
       state: #{@export_module.state.to_json},
       ready: function() {
-        Visio.router = new Visio.Routers.PdfRouter({ config: #{@export_module.to_json} });
+        var config = #{@export_module.to_json};
+        Visio.router = new Visio.Routers.PdfRouter({ config: config });
         Backbone.history.start();
 
       }

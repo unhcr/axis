@@ -50,9 +50,9 @@ class Visio.Figures.Absy extends Visio.Figures.Base
       .scale(@y)
       .orient('left')
       .ticks(5)
-      .tickFormat((d) -> return if d then d * 100 else '0%')
+      .tickFormat((d) -> return d * 100)
       .innerTickSize(14)
-      .tickPadding(20)
+      .tickPadding(0)
 
     @domain = null
     @entered = false
@@ -68,25 +68,27 @@ class Visio.Figures.Absy extends Visio.Figures.Base
       .attr('transform', 'translate(0,0)')
       .append("text")
         .attr("transform", "rotate(-90)")
-        .attr("y", 0)
-        .attr("x", -@adjustedHeight)
+        .attr("y", -40)
+        .attr("x", -@adjustedHeight / 2)
         .attr("dy", "-.21em")
-        .style("text-anchor", "start")
-        .text('Acheivement')
+        .style("text-anchor", "middle")
+        .text('Achievement (%)')
 
     @g.append('g')
       .attr('class', 'x axis')
       .attr('transform', "translate(0,#{@adjustedHeight})")
       .append("text")
-        .attr("x", @adjustedWidth + 10)
+        .attr('y', 50)
+        .attr("x", @adjustedWidth / 2)
         .attr("dy", "-.21em")
-        .style("text-anchor", "start")
-        .text('Budget')
+        .style("text-anchor", "middle")
+        .text('Budget (Dollars)')
 
   render: ->
     filtered = @filtered @collection
     maxAmount = d3.max filtered, (d) => d.selectedAmount(false, @filters)
 
+    self = @
     if !@domain || @domain[1] < maxAmount || @domain[1] > 2 * maxAmount
       @domain = [0, maxAmount]
       @x.domain(@domain)
@@ -95,12 +97,22 @@ class Visio.Figures.Absy extends Visio.Figures.Base
     bubbles.enter().append('circle')
     bubbles
       .attr('class', (d) ->
-        return ['bubble', "id-#{d.refId()}"].join(' '))
+        classList = ['bubble', "id-#{d.refId()}"]
+
+        if self.isPdf and _.include self.selected, d.id
+          classList.push 'active'
+          d3.select(@).moveToFront()
+
+        return classList.join(' '))
     bubbles
       .transition()
       .duration(Visio.Durations.FAST)
       .attr('r', (d) =>
-        return @r(600000))
+        if @isPdf and _.include @selected, d.id
+          16
+        else
+          12
+      )
       .attr('cy', (d) =>
         return @y(d.selectedAchievement(false, @filters).result))
       .attr('cx', (d) =>
@@ -166,6 +178,7 @@ class Visio.Figures.Absy extends Visio.Figures.Base
     # Generate legend view
     if @isPdf
       @legendView = new Visio.Figures.AbsyLegend
+        figure: @
         collection: new @collection.constructor(_.filter(filtered, (d) => _.include @selected, d.id))
       @$el.find('.legend-container').html @legendView.render().el
 

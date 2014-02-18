@@ -54,10 +54,12 @@ window.Visio =
     SLOW: 2000
   Formats:
     MONEY: d3.format('$0.3s')
+    LONG_MONEY: d3.format('$,f')
     SI: d3.format('0.3s')
     PERCENT: d3.format(".0%")
     COMMA: d3.format(',')
     NUMBER: d3.format('d')
+    LONG_NUMBER: d3.format(',f')
   Constants:
     DB_NAME: 'visio'
     SEPARATOR: '___'

@@ -1,6 +1,14 @@
 @import "../shared/variables.css.scss";
 @import "compass/css3";
 
+@mixin number {
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+}
+
+@mixin pbi_avoid {
+  page-break-inside:avoid !important;
+}
+
 @mixin medium-header {
   font-size: 20px;
 }
@@ -352,6 +360,7 @@ body.index {
   border-bottom: 1px solid $white;
 }
 
+
 .divider-shadow {
 
 }
@@ -379,6 +388,10 @@ body.index {
   border-bottom: 1px solid $primary;
 }
 
+.divider-dotted-primary {
+  border-bottom: 1px dotted $primary;
+}
+
 .divider-primary-light {
   border: none;
   border-bottom: 1px solid $primary-light;
@@ -386,6 +399,10 @@ body.index {
 
 .divider-light-gray {
   border-bottom: 1px solid $light-gray;
+}
+
+.divider-thick {
+  border-width: 2px;
 }
 
 .full-wrapper {
@@ -1793,5 +1810,107 @@ a {
 .missing-criticality {
   .foreground {
     fill: $lighter-gray;
+  }
+}
+
+.sides-flush {
+  padding-right: 0px;
+  margin-right: 0px;
+  padding-left: 0px;
+  margin-left: 0px;
+}
+
+.right-flush {
+  padding-right: 0px;
+  margin-right: 0px;
+}
+
+.top-flush {
+  padding-top: 0px;
+  margin-top: 0px;
+}
+
+.number {
+  @include number;
+}
+
+.parameter-show {
+
+  .divider-thick {
+    padding-top: 4px;
+  }
+
+  .svg-circle-figure {
+    .foreground {
+      fill: $primary-light;
+    }
+
+    .background {
+      stroke: $primary-light;
+    }
+  }
+
+  padding: 30px 50px;
+
+  .country-img {
+    position: relative;
+    top: 24px;
+  }
+
+  .cell {
+    padding-top: 3px;
+    padding-bottom: 3px;
+    white-space: nowrap;
+  }
+
+  .table-header {
+    text-transform: capitalize;
+  }
+
+  .table-datum {
+    @include number;
+    font-size: 11px;
+    font-weight: bold;
+    color: $primary;
+  }
+
+  .table-header.table-total {
+    text-transform: uppercase;
+  }
+
+  .table-total {
+    color: $orange;
+    text-align: right;
+    font-size: 12px;
+    font-weight: bold;
+    padding-left: 0px;
+
+  }
+
+  .header {
+    h5 {
+      line-height: 40px;
+    }
+    .idx {
+      @include number;
+      width: $parameter-show-idx;
+      height: $parameter-show-idx;
+      border-radius: $parameter-show-idx;
+      border: 2px solid $primary;
+      text-align: center;
+      line-height: $parameter-show-idx - 5px;
+      font-weight: bold;
+      position: relative;
+      top: 8px;
+    }
+
+  }
+
+  .achievement-label {
+    margin-top: -6px;
+  }
+
+  h5, h3 {
+    margin: 0;
   }
 }

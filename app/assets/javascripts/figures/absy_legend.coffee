@@ -4,7 +4,8 @@ class Visio.Figures.AbsyLegend extends Backbone.View
 
   template: HAML['figures/absy_legend']
 
-  initialize: ->
+  initialize: (options) ->
+    @figure = options.figure
 
   render: ->
     @$el.html @template()
@@ -16,6 +17,7 @@ class Visio.Figures.AbsyLegend extends Backbone.View
 
   addOne: (model, idx) =>
     view = new Visio.Views.ParameterShowView
+      filters: @figure.filters
       model: model
       idx: idx
 

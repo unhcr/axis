@@ -1,54 +1,77 @@
-.row
-  .col-md-8.col-md-offset-1
-    %div
-      - if context.model.get('country')
-        %img{
-          :width => "55",
-          :height => "55",
-          :src => "/assets/countries/#{context.model.get('country').iso2}/128.png" }
-    %div
-      = context.model.toString()
+%section
 
-  .col-md-3.right-text
-    - achievement = context.model.selectedAchievement().result
-    %div
-      != (new Visio.Figures.Circle({ width: 20, height: 20, percent: achievement, number: 0 })).render().$el.html()
-      pie chart
-    %div
-      = Visio.Formats.PERCENT achievement
-    %div
-      Achievement
+  - if context.model.get('country')
+    .country-img.col-sm-offset-1
+      %img{
+        :width => "55",
+        :height => "55",
+        :src => "/assets/countries/#{context.model.get('country').iso2}/128.png" }
+  .row
+    .col-sm-offset-9.col-sm-3.right-text.achievement-figure
 
-.row
-  .col-md-12
-    - _.each ['dummy'].concat(_.values(Visio.Scenarios)), (scenario, i) ->
-      .row
-        - if i == 0
-          .col-md-1 &nbsp;
+  .row.header
+    .col-sm-1.top-flush
+      .idx
+        = context.idx + 1
+    .col-sm-8.top-flush
+      %h5.ui-primary
+        - if context.model.name == Visio.Parameters.OPERATIONS
+          = context.model.toString().toUpperCase()
         - else
-          .col-md-1
-            - if scenario == Visio.Scenarios.AOL
-              = 'AOL'
-            - else
-              = 'OL'
-        - _.each _.values(Visio.Budgets).concat(['TOTAL BUDGET']), (budget, j) ->
+          = context.model.toString()
 
-          - if i == 0
-            .col-md-2
-              = budget
-          - else if i == 0 and budget == 'TOTAL BUDGET'
-            .col-md-3
-              = budget
-          - else if budget != 'TOTAL BUDGET'
-            .col-md-2
-              - budgets = context.model.selectedBudgetData().where({ scenario: scenario, budget_type: budget })
-              = Visio.Formats.MONEY((new Visio.Collections.Budget(budgets)).amount())
+    .col-sm-3.right-text.top-flush
+      - achievement = context.model.selectedAchievement().result
+      %h3.number
+        = Visio.Formats.PERCENT achievement
+      .ui-primary.bold.achievement-label
+        Achievement
+
+  .row
+    .col-sm-12.top-flush
+      .col-sm-11.divider-thick.divider-light-gray.col-sm-offset-1
+
+%section
+  .row
+    .col-sm-12
+      - colSize = Math.floor 12 / context.cols.length
+      - _.each context.rows, (scenario, rowNum) ->
+        .row.table-row
+          - if rowNum == 0
+            .col-sm-1.cell &nbsp;
           - else
-            .col-md-3.right-text
-              - budgets = context.model.selectedBudgetData().where({ scenario: scenario })
-              = Visio.Formats.MONEY((new Visio.Collections.Budget(budgets)).amount())
-        .clearfix
+            .col-sm-1.right-text.table-header.sides-flush.cell
+              - if scenario == Visio.Scenarios.AOL
+                = 'AOL'
+              - else
+                = 'OL'
 
-.row
-  .col-md-12.right-text
-    = Visio.Formats.MONEY(context.model.selectedBudget())
+          .col-sm-8.zero-padding
+            - _.each context.cols, (budget, colNum) ->
+
+              - if rowNum == 0
+                .table-header.cell{ :class => "col-sm-#{colSize}" }
+                  = budget.toLowerCase()
+              - else
+                .table-datum.cell{ :class => "col-sm-#{colSize}" }
+                  - budgets = context.model.selectedBudgetData().where({ scenario: scenario, budget_type: budget })
+                  = Visio.Formats.LONG_MONEY((new Visio.Collections.Budget(budgets)).amount())
+
+
+          - if rowNum == 0
+            .col-sm-3.table-header.table-total.cell
+              = 'TOTAL BUDGET'
+          - else
+            .col-sm-3.table-datum.table-total.cell
+              - budgets = context.model.selectedBudgetData().where({ scenario: scenario })
+              = Visio.Formats.LONG_MONEY((new Visio.Collections.Budget(budgets)).amount())
+          .clearfix
+
+        - if rowNum == 0
+          .divider-light-gray.col-sm-offset-1
+        - else
+          .divider-dotted-primary.col-sm-offset-1
+
+  .row
+    .col-sm-12.right-text.bold.cell
+      = Visio.Formats.LONG_MONEY(context.model.selectedBudget())
