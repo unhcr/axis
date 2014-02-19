@@ -43,7 +43,7 @@ class Visio.Figures.Absy extends Visio.Figures.Base
       .scale(@x)
       .orient('bottom')
       .tickFormat(d3.format('s'))
-      .ticks(6)
+      .ticks(Math.floor(@adjustedWidth / 100))
       .innerTickSize(14)
 
     @yAxis = d3.svg.axis()
@@ -93,46 +93,64 @@ class Visio.Figures.Absy extends Visio.Figures.Base
       @domain = [0, maxAmount]
       @x.domain(@domain)
 
-    bubbles = @g.selectAll('.bubble').data(filtered, (d) -> d.refId())
-    bubbles.enter().append('circle')
-    bubbles
-      .attr('class', (d) ->
-        classList = ['bubble', "id-#{d.refId()}"]
+    pointContainers = @g.selectAll('.point-container').data(filtered, (d) -> d.refId())
+    pointContainers.enter().append('g')
+    pointContainers.attr('class', (d, i) ->
+          classList = ['point-container', "id-#{d.refId()}"]
 
-        if self.isPdf and _.include self.selected, d.id
-          classList.push 'active'
-          d3.select(@).moveToFront()
+          if self.isPdf and _.include self.selected, d.id
+            classList.push 'active'
+            d3.select(@).moveToFront()
+          return classList.join(' '))
+        .each((d, i) ->
 
-        return classList.join(' '))
-    bubbles
-      .transition()
-      .duration(Visio.Durations.FAST)
-      .attr('r', (d) =>
-        if @isPdf and _.include @selected, d.id
-          16
-        else
-          12
-      )
-      .attr('cy', (d) =>
-        return @y(d.selectedAchievement(false, @filters).result))
-      .attr('cx', (d) =>
-        return @x(d.selectedAmount(false, @filters)))
+          pointContainer = d3.select @
 
-    bubbles.exit().transition().duration(Visio.Durations.FAST).attr('r', 0).remove()
+          # Points
+          point = pointContainer.selectAll('.point').data([d])
+          point.enter().append('circle')
+          point
+            .attr('class', (d) ->
+              classList = ['point']
+              return classList.join(' '))
+          point
+            .transition()
+            .duration(Visio.Durations.FAST)
+            .attr('r', (d) =>
+              if self.isPdf and _.include self.selected, d.id
+                16
+              else
+                12
+            )
+            .attr('cy', (d) =>
+              return self.y(d.selectedAchievement(false, self.filters).result))
+            .attr('cx', (d) =>
+              return self.x(d.selectedAmount(false, self.filters)))
 
-    if @isExport
-      labels = @g.selectAll('.label').data(filtered, (d) -> d.refId())
-    else if @isPdf and not _.isEmpty @selected
-      labels = @g.selectAll('.label').data(_.filter(filtered, (d) => _.include @selected, d.id))
+          point.exit().transition().duration(Visio.Durations.FAST).attr('r', 0).remove()
 
-    if @isExport or @isPdf
-      labels.enter().append('text')
-      labels.attr('class', 'label')
-        .attr('x', (d) => @x(d.selectedAmount(false, @filters)))
-        .attr('y', (d) => @y(d.selectedAchievement(false, @filters).result))
-        .attr('dy', '.3em')
-        .attr('text-anchor', 'middle')
-        .text((d, i) -> i + 1)
+          # Conditional Labels
+          if self.isExport
+            labels = pointContainer.selectAll('.label').data([d])
+          else if self.isPdf and not _.isEmpty self.selected
+            labels = pointContainer.selectAll('.label').data(_.filter([d], (d) => _.include self.selected, d.id))
+
+          if self.isExport or self.isPdf
+            labels.enter().append('text')
+            labels.attr('class', 'label')
+              .attr('x', (d) => self.x(d.selectedAmount(false, self.filters)))
+              .attr('y', (d) => self.y(d.selectedAchievement(false, self.filters).result))
+              .attr('dy', '.3em')
+              .attr('text-anchor', 'middle')
+              .text((d) ->
+                if self.isPdf
+                  console.log 'pdf'
+                  1 + _.indexOf self.selected, d.id
+                else
+                  i + 1
+              )
+
+        )
 
 
     path = @g.selectAll('.voronoi')
@@ -150,12 +168,12 @@ class Visio.Figures.Absy extends Visio.Figures.Base
           window.setTimeout(( -> @entered = false), 50)
           @info.render(d.point)
           @info.show()
-          bubble = @g.select(".bubble.id-#{d.point.refId()}")
-          bubble.moveToFront() unless @isExport
-          bubble.classed 'focus', true
+          pointContainer = @g.select(".point-container.id-#{d.point.refId()}")
+          pointContainer.moveToFront() unless @isExport
+          pointContainer.classed 'focus', true
         ).on('mouseout', (d) =>
           @info.hide() if @info and not @entered
-          @g.select(".bubble.id-#{d.point.refId()}").classed 'focus', false
+          @g.select(".point-container.id-#{d.point.refId()}").classed 'focus', false
 
         ).on('click', (d, i) =>
           $.publish "select.#{@figureId()}", [d.point, i]
@@ -196,6 +214,7 @@ class Visio.Figures.Absy extends Visio.Figures.Base
     "M" + d.join("L") + "Z"
 
   select: (e, d, i) =>
-    bubble = @g.select(".bubble.id-#{d.refId()}")
-    isActive = bubble.classed 'active'
-    bubble.classed 'active', not isActive
+    pointContainer = @g.select(".point-container.id-#{d.refId()}")
+    console.warn 'Selected element is empty' if pointContainer.empty()
+    isActive = pointContainer.classed 'active'
+    pointContainer.classed 'active', not isActive

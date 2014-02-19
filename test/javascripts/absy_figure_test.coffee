@@ -23,7 +23,7 @@ test 'render', ->
   @figure.collectionFn new Visio.Collections.Output([@d])
   @figure.render()
 
-  ok d3.select(@figure.el).selectAll('.bubble').size(), 1
+  ok d3.select(@figure.el).selectAll('.point').size(), 1
   strictEqual @figure.x.domain()[0], 0
   strictEqual @figure.x.domain()[1], 10
 
@@ -31,7 +31,7 @@ test 'render', ->
   sinon.stub @d, 'selectedAmount', -> 0
 
   @figure.render()
-  ok d3.select(@figure.el).selectAll('.bubble').size(), 0
+  ok d3.select(@figure.el).selectAll('.point').size(), 0
 
 test 'filtered', ->
 
@@ -54,16 +54,16 @@ test 'select', ->
   @figure.collectionFn new Visio.Collections.Output([@d])
   @figure.render()
 
-  ok d3.select(@figure.el).selectAll('.active').empty(), 'Should have no active bubbles'
+  ok d3.select(@figure.el).selectAll('.active').empty(), 'Should have no active point'
 
   $.publish("select.#{@figure.figureId()}.figure", [@d, 0])
 
   ok not @figure.isExport, 'Should not be export'
-  ok d3.select(@figure.el).selectAll('.active').empty(), 'Should not have active bubbles since it is not export'
+  ok d3.select(@figure.el).selectAll('.active').empty(), 'Should not have active point since it is not export'
 
   @figure.subscribe()
   $.publish("select.#{@figure.figureId()}.figure", [@d, 0])
-  strictEqual d3.select(@figure.el).selectAll('.active').size(), 1, 'Should have one active bubble'
+  strictEqual d3.select(@figure.el).selectAll('.active').size(), 1, 'Should have one active point'
 
 test 'el', ->
   @figure.collectionFn new Visio.Collections.Output([@d])

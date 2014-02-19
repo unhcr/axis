@@ -54,14 +54,20 @@ line {
 }
 
 .svg-absy-figure {
-  .bubble.focus {
+  .point-container.focus .point {
     fill: $orange;
   }
 
-  .bubble.active {
+  .point-container.active .point {
     fill: white;
     stroke: $primary;
     stroke-width: 2px;
+  }
+
+  .point-container {
+    .label {
+      font-weight: bold;
+    }
   }
 
   .trail {
@@ -69,7 +75,8 @@ line {
     stroke-dasharray: 5 5;
     pointer-events: none;
   }
-  .bubble {
+
+  .point {
     fill: $pink;
     pointer-events: none;
   }
