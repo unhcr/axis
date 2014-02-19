@@ -1,3 +1,10 @@
+GIT
+  remote: git://github.com/benrudolph/shrimp.git
+  revision: 8d2245068883bdf6d7fef8d00ca03bbc191f6ff2
+  specs:
+    shrimp (0.0.3)
+      json
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -209,8 +216,6 @@ GEM
       multi_json (~> 1.0)
       rubyzip (~> 1.0)
       websocket (~> 1.0.4)
-    shrimp (0.0.3)
-      json
     simplecov (0.8.2)
       docile (~> 1.1.0)
       multi_json
@@ -290,7 +295,7 @@ DEPENDENCIES
   rubyzip
   sass-rails (~> 3.2.3)
   selenium-webdriver (~> 2.38.0)
-  shrimp
+  shrimp!
   simplecov
   single_test
   sqlite3
