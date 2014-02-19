@@ -24,3 +24,10 @@ test 'humanMetric', ->
   strictEqual Visio.Utils.humanMetric(Visio.Algorithms.GOAL_TYPES.target), 'Target'
   strictEqual Visio.Utils.humanMetric(Visio.Algorithms.GOAL_TYPES.standard), 'Standard'
   strictEqual Visio.Utils.humanMetric('abc'), 'N/A'
+
+test 'nl2br', ->
+  breaks = Visio.Utils.nl2br 'break\nbreak\n'
+
+  arr = breaks.split '<br />'
+
+  strictEqual arr.length, 3
