@@ -12,11 +12,12 @@
     })
     window.PhantomJSPrinting = {
       header: {
-        height: "1cm",
+        height: "2.5cm",
         contents: function(pageNum, numPages) {
           return window.HAML['pdf/header']({
             pageNum: pageNum,
-            numPages: numPages
+            numPages: numPages,
+            figureType: #{@export_module.figure_type.to_json}
           });
         }
       },
