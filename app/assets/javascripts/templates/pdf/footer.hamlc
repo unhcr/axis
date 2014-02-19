@@ -1,0 +1,4 @@
+.footer
+  .footer-marker{ :style => 'width:280px;height:10px;background-color:blue' }
+  %div
+    = "UNHCR AXIS | #{Visio.manager.year()} GLOBAL INTEGRATED YEAR END REPORT - #{context.pageNum / context.numPages }"

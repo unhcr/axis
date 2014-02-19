@@ -10,5 +10,25 @@
 
       }
     })
+    window.PhantomJSPrinting = {
+      header: {
+        height: "1cm",
+        contents: function(pageNum, numPages) {
+          return window.HAML['pdf/header']({
+            pageNum: pageNum,
+            numPages: numPages
+          });
+        }
+      },
+      footer: {
+        height: "1cm",
+        contents: function(pageNum, numPages) {
+          return window.HAML['pdf/footer']({
+            pageNum: pageNum,
+            numPages: numPages
+          });
+        }
+      }
+    };
 
   })

@@ -1,0 +1,6 @@
+.header
+  .header-marker{ :style => 'width:280px;height:10px;background-color:blue' }
+  %div
+    = Visio.exportModule.get('title') or 'My Awesome Visualization'
+  %div
+    = 'Wakka wakka'
