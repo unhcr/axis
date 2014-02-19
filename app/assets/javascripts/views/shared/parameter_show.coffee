@@ -1,6 +1,6 @@
 class Visio.Views.ParameterShowView extends Backbone.View
 
-  className: 'col-md-6 col-sm-6 col-xs-6 parameter-show pbi-avoid'
+  className: 'parameter-show pbi-avoid'
 
   template: HAML['shared/parameter_show']
 

@@ -1,6 +1,14 @@
 .pb_before { page-break-before:always !important; }
 .pb_after  { page-break-after:always !important; }
-.pbi-avoid { page-break-inside:avoid !important; }
+.pbi-avoid {
+  display:inline-block !important;
+}
+.pbi-avoid:after {
+  content: '';
+  display:block;
+  height:0px;
+  visibility: hidden;
+}
 
 .pdf-page {
   width: 21cm;

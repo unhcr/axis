@@ -1836,6 +1836,9 @@ a {
 
 .parameter-show {
 
+  position: relative;
+  width: 460px;
+
   .divider-thick {
     padding-top: 4px;
   }
@@ -1884,7 +1887,6 @@ a {
     font-size: 12px;
     font-weight: bold;
     padding-left: 0px;
-
   }
 
   .header {
@@ -1898,7 +1900,7 @@ a {
       border-radius: $parameter-show-idx;
       border: 2px solid $primary;
       text-align: center;
-      line-height: $parameter-show-idx - 5px;
+      line-height: $parameter-show-idx - 3px;
       font-weight: bold;
       position: relative;
       top: 8px;
