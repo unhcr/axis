@@ -1830,6 +1830,11 @@ a {
   margin-top: 0px;
 }
 
+.bottom-flush {
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+}
+
 .number {
   @include number;
 }
