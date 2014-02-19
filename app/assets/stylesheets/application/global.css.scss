@@ -107,11 +107,11 @@ p.small {
 
 .ui-big-number {
   color: $bright-yellow;
-  font-size: 3.6em !important;
+  font-size: 3.6em;
 }
 
 .ui-small-number {
-  font-size: 18px !important;
+  font-size: 18px;
 }
 
 .ui-huge-number {
@@ -272,6 +272,10 @@ body.index {
   color: $primary;
 }
 
+.ui-primary-second {
+  color: $primary-second;
+}
+
 .ui-primary-light {
   color: $primary-light
 }
@@ -388,6 +392,11 @@ body.index {
   border-bottom: 1px solid $primary;
 }
 
+.divider-primary-second {
+  border: none;
+  border-bottom: 1px solid $primary-second;
+}
+
 .divider-dotted-primary {
   border-bottom: 1px dotted $primary;
 }
@@ -403,6 +412,10 @@ body.index {
 
 .divider-thick {
   border-width: 2px;
+}
+
+.divider-extra-thick {
+  border-width: 6px;
 }
 
 .full-wrapper {
@@ -1825,6 +1838,11 @@ a {
   margin-right: 0px;
 }
 
+.left-flush {
+  padding-left: 0px;
+  margin-left: 0px;
+}
+
 .top-flush {
   padding-top: 0px;
   margin-top: 0px;
@@ -1841,9 +1859,6 @@ a {
 
 .parameter-show {
 
-  position: relative;
-  width: 460px;
-
   .divider-thick {
     padding-top: 4px;
   }
@@ -1858,7 +1873,6 @@ a {
     }
   }
 
-  padding: 30px 50px;
 
   .country-img {
     position: relative;
@@ -1920,4 +1934,16 @@ a {
   h5, h3 {
     margin: 0;
   }
+  padding-top: $parameter-show-padding-vertical;
+  padding-bottom: $parameter-show-padding-vertical;
+}
+
+.parameter-show:nth-of-type(2n+4) {
+  padding-left: $parameter-show-padding-horizontal
+}
+.parameter-show:nth-of-type(2n+3) {
+  padding-right: $parameter-show-padding-horizontal
+}
+.parameter-show:nth-of-type(-n+2) {
+  padding-left: $parameter-show-padding-horizontal
 }

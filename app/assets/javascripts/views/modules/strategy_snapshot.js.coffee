@@ -5,15 +5,17 @@ class Visio.Views.StrategySnapshotView extends Visio.Views.Dashboard
   template: HAML['modules/strategy_snapshot']
 
   initialize: (options) ->
-    super options
-
-    if options.isPDF
+    if options.isPdf
       @template = HAML['pdf/strategy_snapshot']
-      @$el.addClass 'pdf-page container'
+      @criticalityConfig.width = 60
+      @criticalityConfig.height = 60
+
     else
       @countrySlider = new Visio.Views.CountrySliderView({ collection: @collection })
       @actionSlider = new Visio.Views.ActionSliderView
         collection: Visio.manager.strategy()[Visio.Parameters.STRATEGY_OBJECTIVES.plural]()
+    super options
+
 
     @parameter = @collection
 

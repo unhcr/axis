@@ -3,6 +3,7 @@ class Visio.Routers.PdfRouter extends Backbone.Router
   initialize: (options) ->
 
     Visio.exportModule = new Visio.Models.ExportModule options.config
+    $('body').addClass Visio.exportModule.get('figure_type').name
 
   routes:
     '*default': 'index'
@@ -20,12 +21,12 @@ class Visio.Routers.PdfRouter extends Backbone.Router
   absy: ->
     figureConfig = Visio.exportModule.get('figure_config')
     figureConfig.width = $('body').width()
-    figureConfig.height = 370
+    figureConfig.height = 470
     figureConfig.margin =
       left: 80
       bottom: 80
-      top: 20
-      right: 20
+      top: 70
+      right: 40
 
     Visio.exportModule.set 'figure_config', figureConfig
 

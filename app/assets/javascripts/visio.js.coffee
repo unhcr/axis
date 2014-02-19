@@ -21,7 +21,7 @@ window.Visio =
       name: 'circle'
     ABSY:
       className: 'Absy'
-      human: 'Achievement vs Budget: Single Year'
+      human: 'Achievement vs Budget'
       name: 'absy'
     BMY:
       className: 'Bmy'

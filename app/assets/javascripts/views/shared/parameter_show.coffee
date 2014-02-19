@@ -1,5 +1,7 @@
 class Visio.Views.ParameterShowView extends Backbone.View
 
+  tagName: 'article'
+
   className: 'parameter-show pbi-avoid'
 
   template: HAML['shared/parameter_show']
@@ -21,7 +23,6 @@ class Visio.Views.ParameterShowView extends Backbone.View
       rows.push scenario if @filters.filter('scenario', scenario)
 
     achievement = @model.selectedAchievement().result
-    console.log achievement
     @$el.html @template({ model: @model, idx: @idx, cols: cols, rows: rows })
     @achievementFigure = new Visio.Figures.Circle
       width: 20

@@ -1,3 +1,5 @@
+@import "../shared/variables.css.scss";
+
 .pb_before { page-break-before:always !important; }
 .pb_after  { page-break-after:always !important; }
 .pbi-avoid {
@@ -16,6 +18,75 @@
   margin: 0;
 }
 
-body {
+/* Warning lots of pixel perfect values needed. Makes for messy css */
+body.pdf {
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
   text-rendering: optimizelegibility;
+  padding: 0 50px;
+
+  article {
+    width: 435px;
+    display: inline-block;
+    position: relative;
+  }
+
+  .keyFigure {
+    padding-bottom: 30px;
+  }
+
+
+  .ui-extra-small-header {
+    font-size: 16px;
+  }
+
+  .ui-medium-header, .ui-large-header {
+    color: $primary-second;
+  }
+
+  .ui-small-header {
+    font-size: 18px;
+  }
+
+  .ui-huge-number {
+    font-size: 64px;
+  }
+
+  .ui-small-number {
+    font-size: 26px;
+  }
+
+  .light {
+    font-weight: 200;
+  }
+
+  header {
+    padding-top: 66px;
+    padding-bottom: 50px;
+  }
+
+  p {
+    font-size: 14px;
+    text-align:justify;
+    text-justify:inter-word;
+  }
+
+  .legend-body {
+    position: relative;
+  }
+
+}
+
+.pdf.absy {
+  figcaption {
+    width: 435px;
+    float: left;
+    padding-top: 45px;
+    height: 570px
+  }
+
+  .filler {
+    height: 100%;
+    width: 100%;
+    border: 1px solid $primary-light;
+  }
 }
