@@ -45,6 +45,11 @@ class Visio.Routers.IndexRouter extends Visio.Routers.GlobalRouter
         include:
           counts: true
           situation_analysis: true
+          ppg_ids: true
+          goal_ids: true
+          output_ids: true
+          problem_objective_ids: true
+          indicator_ids: true
     #NProgress.start()
     Visio.manager.getMap().done((map) =>
       @map.modelFn new Backbone.Model map

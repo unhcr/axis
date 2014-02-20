@@ -49,6 +49,14 @@ class Plan < ActiveRecord::Base
           json.problem_objectives_count self.problem_objectives.length
         end
 
+        json.ppg_ids self.ppg_ids if options[:include][:ppg_ids].present?
+        json.goal_ids self.goal_ids if options[:include][:goal_ids].present?
+        json.operation_ids self.operation_ids if options[:include][:operation_ids].present?
+        json.output_ids self.output_ids if options[:include][:output_ids].present?
+        json.indicator_ids self.indicator_ids if options[:include][:indicator_ids].present?
+        if options[:include][:problem_objective_ids].present?
+          json.problem_objective_ids self.problem_objective_ids
+        end
         if options[:include][:situation_analysis]
           json.situation_analysis self.situation_analysis
         end

@@ -69,7 +69,12 @@ class Visio.Views.ParameterListView extends Backbone.View
       @$el.find('.parameter-search').removeClass('zero-width')
 
     if (@model.get(type).length == 0 && @model.get("#{type}_count") > 0)
-      @model.fetchParameter(type).done(() =>
+      options = { join_ids: {} }
+
+      unless _.isEmpty Visio.manager.get('selected_strategies')
+        options.join_ids.strategy_ids = _.keys Visio.manager.get('selected_strategies')
+
+      @model.fetchParameter(type, options).done(() =>
         items = @model.get(type).map(@item)
         @$el.find('.items').html items.join(' ')
       )
