@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140220105815) do
+ActiveRecord::Schema.define(:version => 20140220162236) do
 
   create_table "budgets", :force => true do |t|
     t.string   "budget_type"
@@ -178,6 +178,7 @@ ActiveRecord::Schema.define(:version => 20140220105815) do
     t.boolean  "is_performance"
     t.integer  "year"
     t.datetime "found_at"
+    t.boolean  "missing_budget",       :default => false
   end
 
   add_index "indicator_data", ["created_at", "updated_at"], :name => "index_indicator_data_on_created_at_and_updated_at"
@@ -273,7 +274,6 @@ ActiveRecord::Schema.define(:version => 20140220105815) do
   create_table "outputs", :id => false, :force => true do |t|
     t.string   "id",                            :null => false
     t.string   "name"
-    t.string   "priority"
     t.datetime "created_at",                    :null => false
     t.datetime "updated_at",                    :null => false
     t.boolean  "is_deleted", :default => false
@@ -370,7 +370,6 @@ ActiveRecord::Schema.define(:version => 20140220105815) do
     t.datetime "updated_at",                        :null => false
     t.boolean  "is_deleted",     :default => false
     t.datetime "found_at"
-    t.boolean  "missing_budget", :default => false
   end
 
   create_table "problem_objectives_rights_groups", :id => false, :force => true do |t|

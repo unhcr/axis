@@ -12,6 +12,12 @@ module FocusParse
   AOL = 'Above Operating Level'
   OL = 'Operating Level'
 
+  PRIORITIES = {
+    :aol => 'AOL',
+    :wol => 'WOL',
+    :partial => 'PARTIAL'
+  }
+
   ADMIN = 'ADMIN'
   PARTNER = 'PARTNER'
   PROJECT = 'PROJECT'
@@ -155,12 +161,13 @@ module FocusParse
 
               (output = Output.find_or_initialize_by_id(:id => xml_output.attribute('RFID').value).tap do |o|
                 o.name = xml_output.search('./name').text
-                o.priority = xml_output.search('./priority').text
                 o.id = xml_output.attribute('RFID').value
               end).save
               output.found
 
-              missing_budget = false unless output.missing_budget?
+
+              priority = xml_output.search('./priority').text
+              missing_budget = false if priority != PRIORITIES[:aol]
 
               problem_objective.outputs << output unless problem_objective.outputs.include? output
               operation.outputs << output unless operation.outputs.include? output
@@ -185,6 +192,12 @@ module FocusParse
                   d.goal = goal
                   d.rights_group = rights_group
                   d.plan = plan
+                  priority = xml_output.search('./priority').text
+                  if priority == PRIORITIES[:aol]
+                    d.missing_budget = true
+                  else
+                    d.missing_budget = false
+                  end
                   d.ppg = ppg
                   d.problem_objective = problem_objective
                   d.output = output
@@ -263,7 +276,6 @@ module FocusParse
                 b.found
               end
               output.save
-              problem_objective.missing_budget = missing_budget
               problem_objective.save
             end
 
@@ -296,6 +308,7 @@ module FocusParse
                 d.problem_objective = problem_objective
                 d.indicator = indicator
                 d.operation = operation
+                d.missing_budget = missing_budget
 
                 yer = xml_impact_indicator.search('./yearEndValue').text
                 d.yer = yer.empty? ? nil : yer.to_i
