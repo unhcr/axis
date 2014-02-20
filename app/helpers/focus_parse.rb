@@ -133,6 +133,8 @@ module FocusParse
             end).save
             problem_objective.found
 
+            missing_budget = true
+
             unless rights_group.problem_objectives.include? problem_objective
               rights_group.problem_objectives << problem_objective
             end
@@ -157,6 +159,8 @@ module FocusParse
                 o.id = xml_output.attribute('RFID').value
               end).save
               output.found
+
+              missing_budget = false unless output.missing_budget?
 
               problem_objective.outputs << output unless problem_objective.outputs.include? output
               operation.outputs << output unless operation.outputs.include? output
@@ -259,6 +263,7 @@ module FocusParse
                 b.found
               end
               output.save
+              problem_objective.missing_budget = missing_budget
               problem_objective.save
             end
 

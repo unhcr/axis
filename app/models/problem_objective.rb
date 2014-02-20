@@ -3,7 +3,7 @@ class ProblemObjective < ActiveRecord::Base
   include Tire::Model::Search
   include Tire::Model::Callbacks
 
-  attr_accessible :is_excluded, :objective_name, :problem_name
+  attr_accessible :is_excluded, :objective_name, :problem_name, :missing_budget
 
   self.primary_key = :id
   has_many :indicator_data
@@ -48,6 +48,10 @@ class ProblemObjective < ActiveRecord::Base
 
   def as_json(options = {})
     to_jbuilder(options).attributes!
+  end
+
+  def missing_budget?
+    self.missing_budget
   end
 
   def self.search_models(query, options = {})

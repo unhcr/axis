@@ -5,6 +5,7 @@ class FocusParseTest < ActiveSupport::TestCase
   TESTFILE_PATH = "#{Rails.root}/test/files/"
   TESTFILE_NAME = "PlanTest.xml"
   SIMPLEFILE_NAME = "SimplePlanTest.xml"
+  PRESENT_BUDGET_NAME = "PresentBudgetPlanTest.xml"
   DELETED_TESTFILE_NAME = "DeletedPlanTest.xml"
   TESTFILE_NAME_2 = "PlanTest2.xml"
   TESTFILE_NAME_DIFFERENT = "PlanTestDifferent.xml"
@@ -52,6 +53,26 @@ class FocusParseTest < ActiveSupport::TestCase
 
     assert_equal 2, Budget.count, 'There should be 2 budgets'
     Budget.all.each { |b| assert b.operation }
+
+  end
+
+  test "problem objective missing budget" do
+    file = File.read(TESTFILE_PATH + TESTHEADER_NAME)
+    parse_header(file, PLAN_TYPES)
+
+    file = File.read(TESTFILE_PATH + SIMPLEFILE_NAME)
+    parse_plan(file)
+
+    assert_equal ProblemObjective.count, 1
+    p = ProblemObjective.first
+    assert p.missing_budget?
+
+    file = File.read(TESTFILE_PATH + PRESENT_BUDGET_NAME)
+    parse_plan(file)
+
+    assert_equal ProblemObjective.count, 1
+    p = ProblemObjective.first
+    assert !p.missing_budget?
 
   end
 

@@ -106,8 +106,7 @@ class IndicatorDatum < ActiveRecord::Base
 
   def missing_budget?
     if self.output.nil?
-      # TODO This is not always correct, we need to rely on XML
-      return self.problem_objective.outputs.all? { |output| output.missing_budget? }
+      return self.problem_objective.missing_budget?
     else
       return self.output.missing_budget?
     end
