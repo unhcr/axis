@@ -4,17 +4,17 @@ class Visio.Figures.Spark extends Visio.Figures.Base
 
   initialize: (config) ->
     @barWidth = config.barWidth || 10
-    config.height = @barWidth * 4
+    config.height = (@barWidth * 4) + config.margin.top + config.margin.bottom
 
     super config
 
     @x = d3.scale.linear()
       .domain([50, 0])
-      .range([0, @width])
+      .range([0, @adjustedWidth])
 
     @y = d3.scale.linear()
       .domain([0, 40])
-      .range([@height, 0])
+      .range([@adjustedHeight, 0])
 
     @negativeLength = 2
     @margin.right = @negativeLength
