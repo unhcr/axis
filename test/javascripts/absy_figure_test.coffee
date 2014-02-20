@@ -27,11 +27,19 @@ test 'render', ->
   strictEqual @figure.x.domain()[0], 0
   strictEqual @figure.x.domain()[1], 10
 
+  @figure.collectionFn new Visio.Collections.Output([])
+  @figure.render()
+  strictEqual d3.select(@figure.el).selectAll('.point').size(), 0, 'Collection is not 0'
+
+  @figure.collectionFn new Visio.Collections.Output([@d])
+  @figure.render()
+  strictEqual d3.select(@figure.el).selectAll('.point').size(), 1
+
   @d.selectedAmount.restore()
   sinon.stub @d, 'selectedAmount', -> 0
 
   @figure.render()
-  ok d3.select(@figure.el).selectAll('.point').size(), 0
+  strictEqual d3.select(@figure.el).selectAll('.point').size(), 0
 
 test 'filtered', ->
 

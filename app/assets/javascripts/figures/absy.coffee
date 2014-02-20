@@ -152,6 +152,7 @@ class Visio.Figures.Absy extends Visio.Figures.Base
 
         )
 
+    pointContainers.exit().remove()
 
     path = @g.selectAll('.voronoi')
       .data(@voronoi(filtered))
