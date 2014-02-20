@@ -2,6 +2,16 @@ require 'test_helper'
 
 class StrategyObjectivesControllerTest < ActionController::TestCase
 
+  def setup
+    StrategyObjective.index_name('test_' + StrategyObjective.model_name.plural)
+    StrategyObjective.index.delete
+    StrategyObjective.create_elasticsearch_index
+
+
+    StrategyObjective.index.import [strategy_objectives(:one), strategy_objectives(:two)]
+    StrategyObjective.index.refresh
+  end
+
   test 'Should get index' do
     get :index
 
