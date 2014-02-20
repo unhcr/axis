@@ -27,16 +27,24 @@
     %section.export-settings.row
       %h4 The Details
       %form
-        %input{
-          :name => "title",
-          :placeholder => context.model.title,
-          :type => "text",
-          :value => ""}
-        %textarea{
-          :cols => "20",
-          :name => "description",
-          :placeholder => context.model.description,
-          :rows => "5"}
+        .row
+          .col-md-12
+            %input{
+              :class => 'full-width',
+              :name => "title",
+              :placeholder => context.model.title,
+              :type => "text",
+              :maxlength => '80',
+              :value => ""}
+        .row
+          .col-md-12
+            %textarea{
+              :class => 'full-width',
+              :cols => "20",
+              :maxlength => '900',
+              :name => "description",
+              :placeholder => context.model.description,
+              :rows => "5"}
     %section.row
       %h4 Go Time.
       %button.export Export
