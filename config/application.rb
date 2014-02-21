@@ -24,6 +24,7 @@ module Visio
 
     Shrimp.configure do |config|
       config.viewport_width = 896
+      config.viewport_height = 1270
       config.margin = '0cm'
       config.rendering_time = 3000
     end
