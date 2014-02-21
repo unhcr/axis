@@ -1,31 +1,7 @@
 @import "../shared/variables.css.scss";
+@import "../shared/mixins.scss";
 @import "compass/css3";
 
-@mixin number {
-  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-}
-
-@mixin pbi_avoid {
-  page-break-inside:avoid !important;
-}
-
-@mixin medium-header {
-  font-size: 20px;
-}
-
-@mixin full-width {
-  width: 100%
-}
-
-@mixin small-header {
-  font-size: 14px;
-  letter-spacing: -.02em;
-}
-
-@mixin large-header {
-  font-size: 40px;
-  letter-spacing: -.02em
-}
 
 @font-face {
   font-family: 'Lato';
@@ -106,7 +82,6 @@ p.small {
 }
 
 .ui-big-number {
-  color: $bright-yellow;
   font-size: 3.6em;
 }
 
@@ -337,6 +312,10 @@ body.index {
   -webkit-transition:padding $medium-transition,width $medium-transition;
   -o-transition:padding $medium-transition,width $medium-transition;
   transition:padding $medium-transition,width $medium-transition;
+}
+
+.inline-block {
+  display: inline-block;
 }
 
 .tab {
@@ -1915,20 +1894,6 @@ a {
   }
 
   .header {
-    h5 {
-    }
-    .idx {
-      @include number;
-      width: $parameter-show-idx;
-      height: $parameter-show-idx;
-      border-radius: $parameter-show-idx;
-      border: 2px solid $primary;
-      text-align: center;
-      line-height: $parameter-show-idx - 3px;
-      font-weight: bold;
-      position: relative;
-      top: 8px;
-    }
 
   }
 
@@ -1939,16 +1904,7 @@ a {
   h5, h3 {
     margin: 0;
   }
-  padding-top: $parameter-show-padding-vertical;
+  padding-top: $parameter-show-padding-vertical / 2;
+  margin-top: $parameter-show-padding-vertical / 2;
   padding-bottom: $parameter-show-padding-vertical;
-}
-
-.parameter-show:nth-of-type(2n+4) {
-  padding-left: $parameter-show-padding-horizontal
-}
-.parameter-show:nth-of-type(2n+3) {
-  padding-right: $parameter-show-padding-horizontal
-}
-.parameter-show:nth-of-type(-n+2) {
-  padding-left: $parameter-show-padding-horizontal
 }

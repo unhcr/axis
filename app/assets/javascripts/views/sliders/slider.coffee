@@ -2,29 +2,34 @@ class Visio.Views.SliderView extends Backbone.View
 
   className: 'slider-container row'
 
-  initialize: ->
+  initialize: (options) ->
     @template = HAML["sliders/#{@name.singular}_slider"]
     @$el.addClass "#{@name.singular}-slider"
     @views = {}
     @position = 0
+    @isPdf = options.isPdf
 
   events:
     'click .next': 'onNext'
     'click .previous': 'onPrevious'
 
   render: ->
-    @$el.html @template({ collection: @collection })
+    @$el.html @template({ collection: @collection, isPdf: @isPdf })
+
+    @$el.find('.slider').addClass 'grid' if @isPdf
     @addAll()
     @
 
   addAll: =>
     @collection.each @addOne
 
-  addOne: (model, idx) =>
+  addOne: (model) =>
+
     @views[model.id] = new Visio.Views["#{@name.className}SlideView"]({
       model: model
       className: "#{@name.singular}-slide slide"
-      idx: idx
+      idx: @collection.indexOf model
+      isPdf: @isPdf
     })
     @$el.find('.slider').append @views[model.id].render().el
 

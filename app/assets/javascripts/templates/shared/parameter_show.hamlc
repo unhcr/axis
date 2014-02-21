@@ -1,3 +1,5 @@
+.idx
+  = context.idx + 1
 %section
 
   - if context.model.get('country')
@@ -10,10 +12,7 @@
     .col-sm-offset-9.col-sm-3.right-text.achievement-figure
 
   .row.header
-    .col-sm-1.top-flush
-      .idx
-        = context.idx + 1
-    .col-sm-8.top-flush
+    .col-sm-8.col-sm-offset-1.top-flush
       %h5.ui-primary
         - if context.model.name == Visio.Parameters.OPERATIONS
           = context.model.toString().toUpperCase()

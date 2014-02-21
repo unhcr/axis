@@ -112,3 +112,6 @@ Visio.Utils.humanMetric = (metric) ->
 
 Visio.Utils.nl2br = (string) ->
   string.replace(/\n/g, '<br />')
+
+Visio.Utils.space2nbsp = (string) ->
+  string.replace(/\ /g, '&nbsp;')

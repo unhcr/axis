@@ -23,8 +23,3 @@ class Visio.Figures.AbsyLegend extends Backbone.View
 
     $legendBody = @$el.find('.legend-body')
     $legendBody.append view.render().el
-
-    if idx % 2 == 1
-      $legendBody.append $('<div class="clearfix"></div>')
-
-

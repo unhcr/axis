@@ -11,9 +11,10 @@ class Visio.Views.StrategySnapshotView extends Visio.Views.Dashboard
       @criticalityConfig.height = 60
 
     else
-      @countrySlider = new Visio.Views.CountrySliderView({ collection: @collection })
       @actionSlider = new Visio.Views.ActionSliderView
         collection: Visio.manager.strategy()[Visio.Parameters.STRATEGY_OBJECTIVES.plural]()
+
+    @countrySlider = new Visio.Views.CountrySliderView({ collection: @collection, isPdf: options.isPdf })
     super options
 
 

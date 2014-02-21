@@ -56,6 +56,7 @@ class Visio.Views.Dashboard extends Backbone.View
         criticalities: @criticalities
         keyFigures: @keyFigures
         category: category
+        idx: @idx
       )
 
       _.each @criticalityFigures, (figure) =>

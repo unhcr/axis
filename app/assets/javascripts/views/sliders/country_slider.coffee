@@ -10,6 +10,10 @@ class Visio.Views.CountrySliderView extends Visio.Views.SliderView
     'mouseenter .country-slide': 'onMouseenter'
     'mouseout': 'onMouseout'
 
+  initialize: (options) ->
+    @isPdf = options.isPdf
+    super options
+
   addOne: (model) =>
     return unless model.get('country')?
     super model
