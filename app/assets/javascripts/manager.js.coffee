@@ -119,6 +119,8 @@ class Visio.Models.Manager extends Backbone.Model
   # Returns plan ids from selected strategies
   selectedStrategyPlanIds: () ->
     strategyIds = _.keys @get('selected_strategies')
+
+    return [] if _.isEmpty strategyIds
     strategies = @strategies strategyIds
 
     planIds = strategies.map (strategy) -> _.keys(strategy.get("#{Visio.Syncables.PLANS.singular}_ids"))

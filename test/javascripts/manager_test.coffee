@@ -198,7 +198,7 @@ test 'selectedStrategyPlanIds', ->
   strategies = [
     { id: 1, plan_ids: { 1: true , 2: true } },
     { id: 2, plan_ids: { 2: true, 3: true } },
-    { id: 3, plan_ids: { 4: true } }]
+    { id: 3, plan_ids: { 4: true, 2: true } }]
   selectedStrategies = {}
   plans = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }]
   Visio.manager.get('strategies').reset(strategies)
@@ -225,6 +225,7 @@ test 'selectedStrategyPlanIds', ->
   _.each ids, (id) ->
     ok _.include _.intersection(_.keys(strategies[0].plan_ids),
                                 _.keys(strategies[1].plan_ids)), id
+
 test 'validation', ->
 
   throws(
