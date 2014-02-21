@@ -17,10 +17,11 @@
         %label What is your name?*
     .row
       .col-md-8.col-centered
-        .col-md-6
-          %input.firstname.full-width{:name => "first-name", :placeholder => "First Name", :type => "text"}
-        .col-md-6
-          %input.lastname.full-width{:name => "last-name", :placeholder => "Last Name", :type => "text"}
+        .row
+          .col-md-6
+            %input.firstname.full-width{:name => "first-name", :placeholder => "First Name", :type => "text"}
+          .col-md-6
+            %input.lastname.full-width{:name => "last-name", :placeholder => "Last Name", :type => "text"}
     .row
       .col-md-8.col-centered
         %label What is your email address?*
