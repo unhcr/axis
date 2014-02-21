@@ -1,17 +1,18 @@
-.header{ :style =>
-  [ 'margin: 0 20px',
+.header{ :style => [ 'margin-left: 20px',
+    'margin-right: 20px',
+    'padding-top: 30px',
     'font-family: "Helvetica Neue"',
     'font-size: 11px'].join(';') }
-  .header-marker{ :style =>
-    [ 'width:340px',
-      'border-top: solid 8px rgb(13, 45, 70)',
-      'padding-bottom: 30px' ].join(';') }
   %div{ :style =>
-    [ 'color: rgb(13, 45, 70)',
+    [ 'color: rgb(2, 178, 225)',
       'font-family: "Helvetica Neue"',
-      'font-size: 18px'].join(';') }
-    = Visio.exportModule.get('title') or 'My Awesome Visualization'
-  %div{ :style => [ 'color: rgb(58, 97, 157)',
-      'font-family: "Helvetica Neue"',
+      'padding-bottom: 3px',
       'font-size: 17px'].join(';') }
-    = context.figureType.human
+    = context.figureType.human.toUpperCase()
+  .header-marker{ :style => [ 'width:100%',
+      'border-top: solid 1px rgb(13, 45, 70)' ].join(';') }
+  %div{ :style => [ 'color: rgb(13, 45, 70)',
+      'font-family: "Helvetica Neue"',
+      'font-weight: bold',
+      'font-size: 22px'].join(';') }
+    = Visio.exportModule.get('title') or 'My Awesome Visualization'
