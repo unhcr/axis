@@ -642,7 +642,7 @@ hr {
     margin-left: 0%;
   }
 }
-@media (min-width: 992px) {
+@media (min-width: 896px) {
   .container {
     width: 970px;
   }

@@ -23,7 +23,7 @@ module Visio
     config.middleware.use Shrimp::Middleware, :cache_ttl => 0, :out_path => "#{Rails.root}/public/reports/pdf", :polling_interval => 3
 
     Shrimp.configure do |config|
-      config.viewport_width = 992
+      config.viewport_width = 896
       config.margin = '0cm'
       config.rendering_time = 3000
     end
