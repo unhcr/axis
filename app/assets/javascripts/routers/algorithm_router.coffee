@@ -8,11 +8,13 @@ class Visio.Routers.AlgorithmsRouter extends Backbone.Router
     '*default': 'achievement'
 
   achievement: ->
-    @view = new Visio.Views.AchievementView
+    @view = new Visio.Views.AlgorithmView
       el: $('#algorithm'),
       collection: new Visio.Collections.IndicatorDatum()
+      algorithm: 'achievement'
 
   situationAnalysis: ->
-    @view = new Visio.Views.SituationAnalysisView
+    @view = new Visio.Views.AlgorithmView
       el: $('#algorithm'),
       collection: new Visio.Collections.IndicatorDatum()
+      algorithm: 'situationAnalysis'

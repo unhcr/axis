@@ -1,18 +1,20 @@
-class Visio.Views.AchievementView extends Backbone.View
+class Visio.Views.AlgorithmView extends Backbone.View
 
   template: HAML['algorithms/achievement']
 
   events:
-    'change #achievement_is_performance': 'onChangePerformance'
+    'change #is_performance': 'onChangePerformance'
     'submit form': 'onSubmit'
     'click .run': 'onRun'
+    'change .algorithms input': 'onAlgorithmChange'
 
-  initialize: ->
+  initialize: (options) ->
     @collection.on 'add', @addOne
+    @algorithm = options.algorithm
     @render()
 
   render: ->
-    @$el.html @template()
+    @$el.html @template({ algorithm: @algorithm })
     @addAll()
     @
 
@@ -25,12 +27,11 @@ class Visio.Views.AchievementView extends Backbone.View
     @$el.find('.indicators').append view.render().el
 
   onChangePerformance: (e) ->
-    value = +$(e.currentTarget).val()
-    console.log value
+    value = if $(e.currentTarget).val() == 'true' then true else false
 
-    $row = @$el.find('#achievement_standard').closest('.row')
+    $row = @$el.find(".impact-only").closest('.row')
 
-    if value then $row.removeClass('gone') else $row.addClass('gone')
+    if value then $row.addClass('gone') else $row.removeClass('gone')
 
 
   onSubmit: (e) =>
@@ -43,20 +44,26 @@ class Visio.Views.AchievementView extends Backbone.View
       value = obj.value
       if (value == "true" or value == "false")
         value = if value == 'true' then true else false
+      else
+        value = +value
 
       model[obj.name] = value
 
     @collection.add model
 
   onRun: ->
-    results = @collection.achievement()
+    results = @collection[@algorithm]()
 
     $results = @$el.find('.results')
-    $results.html ''
-    @collection.each (d) ->
-      result = d.achievement()
-      $results.append "<div>Result: #{result.result} | Status: #{result.status} | Include: #{ result.include}</div>"
+    $results.html "<h5>#{@algorithm}</h5>"
+    @collection.each (d) =>
+      result = d[@algorithm]()
+      $results.append "<div>#{JSON.stringify(result, null, 2)}</div>"
 
 
 
-    $results.append "<div>Result: #{results.result} | Category: #{results.category}</div>"
+    $results.append "<div>#{JSON.stringify(results, null, 2)}</div>"
+
+  onAlgorithmChange: (e) ->
+    $target = $(e.currentTarget)
+    @algorithm = $target.val()
