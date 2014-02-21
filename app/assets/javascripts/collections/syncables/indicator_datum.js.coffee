@@ -27,7 +27,8 @@ class Visio.Collections.IndicatorDatum extends Visio.Collections.Syncable
 
     count = counts[Visio.Algorithms.ALGO_RESULTS.success] +
             counts[Visio.Algorithms.ALGO_RESULTS.ok] +
-            counts[Visio.Algorithms.ALGO_RESULTS.fail]
+            counts[Visio.Algorithms.ALGO_RESULTS.fail] +
+            counts[Visio.Algorithms.STATUS.missing]
 
     result = (counts[Visio.Algorithms.ALGO_RESULTS.success] / count) +
              (0.5 * (counts[Visio.Algorithms.ALGO_RESULTS.ok] / count))
@@ -55,7 +56,6 @@ class Visio.Collections.IndicatorDatum extends Visio.Collections.Syncable
 
     @each (datum) ->
       result = datum.achievement(reported)
-      console.log result
 
       if result.include and result.status == Visio.Algorithms.STATUS.reported
         results.push(result.result)
@@ -79,6 +79,5 @@ class Visio.Collections.IndicatorDatum extends Visio.Collections.Syncable
       result: average
     }
 
-    console.log result
 
     result

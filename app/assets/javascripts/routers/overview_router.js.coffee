@@ -1,11 +1,10 @@
 class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
 
   initialize: (options) ->
-    Visio.Routers.GlobalRouter.prototype.initialize.call(@)
+    super
 
     selectedStrategies = {}
     selectedStrategies[Visio.manager.strategy().id] = true
-
 
     Visio.manager.set 'selected_strategies', selectedStrategies
     Visio.manager.on 'change:date', () =>
@@ -27,6 +26,7 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
 
     @module = $('#module')
 
+
   setup: () ->
     # Return empty promise if we've setup already
     return $.Deferred().resolve().promise() if Visio.manager.get('setup')
@@ -42,7 +42,8 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
            Visio.manager.get('outputs').fetchSynced(options),
            Visio.manager.get('problem_objectives').fetchSynced(options),
            Visio.manager.get('indicators').fetchSynced(options),
-           Visio.manager.get('strategy_objectives').fetch(),
+           Visio.manager.get('strategy_objectives').fetch(
+             { data: { where: { strategy_id: Visio.manager.get('strategy_id') } } }),
            Visio.manager.get('expenditures').fetchSynced({ strategy_id: Visio.manager.get('strategy_id') })
            Visio.manager.get('budgets').fetchSynced({ strategy_id: Visio.manager.get('strategy_id') })
            Visio.manager.get('indicator_data').fetchSynced({ strategy_id: Visio.manager.get('strategy_id') })
@@ -57,6 +58,7 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
 
       @strategySnapshotView = new Visio.Views.StrategySnapshotView(
         el: $('#strategy-snapshot')
+        collection: Visio.manager.strategy().operations()
       )
       @strategySnapshotView.render()
 
@@ -75,26 +77,9 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
   routes:
     'menu' : 'menu'
     'search': 'search'
-    'export/:figureId': 'export'
     ':figureType/:year': 'figure'
     ':figureType': 'figure'
     '*default': 'index'
-
-  export: (figureId) ->
-    unless Visio.FigureInstances[figureId]?
-      @navigate '/', { trigger: true }
-      return
-
-    @setup().done =>
-      figure = Visio.FigureInstances[figureId]
-      config = $.extend { isExport: true }, figure.config()
-      model = new Visio.Models.ExportModule
-        figure_type: figure.type
-        state: Visio.manager.state()
-        figure_config: config
-
-      @exportView = new Visio.Views.ExportModule( model: model)
-      $('.content').append(@exportView.render().el)
 
   figure: (figureType, year) ->
     Visio.manager.year year, { silent: true } if year?
@@ -112,5 +97,5 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
       console.log e
 
   index: () =>
-    @figure('absy')
+    @figure 'absy'
 

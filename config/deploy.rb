@@ -1,8 +1,9 @@
 require 'bundler/capistrano'
 require "capistrano-rbenv"
 
-set :whenever_command, 'bundle exec whenever'
-require 'whenever/capistrano'
+#set :whenever_command, 'bundle exec whenever'
+#set :whenever_environment, defer { rails_env }
+#require 'whenever/capistrano'
 load 'deploy/assets'
 set :rbenv_ruby_version, "1.9.3-p484"
 set :rbenv_repository, "https://github.com/sstephenson/rbenv.git"
@@ -57,11 +58,15 @@ task :query_login do
   run "shopt -q login_shell && echo 'Login shell' || echo 'Not login shell'"
 end
 
+task :whenever do
+  run "whenever -i"
+end
+
 namespace :db do
   task :config, :except => { :no_release => true }, :role => :app do
     run "cp -f ~/database.yml #{release_path}/config/database.yml"
   end
 end
 after "deploy:finalize_update", "db:config"
-after "deploy", "whenever"
+#after "deploy", "whenever"
 

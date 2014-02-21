@@ -22,14 +22,14 @@ class Visio.Views.BmyTooltip extends Visio.Views.D3Tooltip
     @figure = options.figure
     @year = options.year
 
-    Visio.Views.D3Tooltip.prototype.initialize.call @, options
+    super options
 
   render: (isRerender) ->
     sortedModels = @collection.sortBy @sortBy
 
     @$el.html @template({ year: @year, sortedModels: sortedModels })
 
-    Visio.Views.D3Tooltip.prototype.render.call @, isRerender
+    super isRerender
 
     @
 

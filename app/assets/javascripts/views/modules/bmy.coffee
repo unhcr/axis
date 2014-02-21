@@ -13,7 +13,7 @@ class Visio.Views.BmyView extends Visio.Views.AccordionIndexView
 
   initialize: (options) ->
     # Call super
-    Visio.Views.AccordionIndexView.prototype.initialize.apply @, [options]
+    super @
 
     @config =
       margin:
@@ -25,11 +25,10 @@ class Visio.Views.BmyView extends Visio.Views.AccordionIndexView
       height: 450
 
     @figure = new Visio.Figures.Bmy @config
-    Visio.FigureInstances[@figure.figureId()] = @figure
 
   render: (isRerender) ->
     # Call super
-    Visio.Views.AccordionIndexView.prototype.render.apply @, [isRerender]
+    super isRerender
 
     unless isRerender
       @$el.find('.summary-figure').html @figure.el
@@ -44,7 +43,7 @@ class Visio.Views.BmyView extends Visio.Views.AccordionIndexView
     _.each parameters, (model) ->
       data = data.concat model.selectedBudgetData(true).models
 
-    @figure.dataFn data
+    @figure.collectionFn new Visio.Collections.Budget(data)
     @figure.render()
 
   sort: (parameterA, parameterB) ->

@@ -37,32 +37,31 @@ module 'Export Module View',
         top: 0
         bottom: 0
       width: 100
+      viewLocation: 'Figures'
+      selectable: true
       height: 100
-      data: @data.models
+      collection: @data
       isExport: true
       isPerformance: true
 
     @figure = new Visio.Figures[figureType.className](@config)
-    Visio.FigureInstances[@figure.figureId()] = @figure
 
     @model = new Visio.Models.ExportModule
       figure_type: figureType
       state: Visio.manager.state()
-      figure_config: @config
+      figure_config: _.extend({ isExport: true }, @figure.config())
 
-    @exportView = new Visio.Views.ExportModule( model: @model)
+    @exportView = new Visio.Views.ExportModule( model: @model )
 
   teardown: ->
-    for key, val of Visio.FigureInstances
-      Visio.FigureInstances[key].unsubscribe() if Visio.FigureInstances[key].unsubscribe
     @exportView.close()
 
 
 test 'render', ->
   @exportView.render()
 
-  strictEqual $(@exportView.el).find('figcaption input').length, 2
-  strictEqual $(@exportView.el).find('figure .box').length, 2
+  strictEqual $(@exportView.el).find('figcaption input').length, 2, 'Should have two input boxes'
+  strictEqual $(@exportView.el).find('figure .box').length, 2, 'Should have two bars'
 
 test 'select', ->
   @exportView.render()
@@ -85,8 +84,8 @@ test 'select', ->
 
 test 'Required functions', ->
   requiredFns = ['filtered', 'config', 'unsubscribe', 'figureId']
-
-  _.each Visio.FigureTypes, (figureType) =>
+  figures = [Visio.FigureTypes.BMY, Visio.FigureTypes.ABSY, Visio.FigureTypes.ISY]
+  _.each figures, (figureType) =>
     f = new Visio.Figures[figureType.className](@config)
 
     _.each requiredFns, (fn) ->

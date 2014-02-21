@@ -1,7 +1,7 @@
 class IndicatorDatum < ActiveRecord::Base
   include SyncableModel
 
-  attr_accessible :baseline, :comp_target, :reversal, :standard, :stored_baseline, :threshold_green, :threshold_red, :yer, :myr, :is_performance, :year, :id, :opeartion_id
+  attr_accessible :baseline, :comp_target, :reversal, :standard, :stored_baseline, :threshold_green, :threshold_red, :yer, :myr, :is_performance, :year, :id, :opeartion_id, :missing_budget
 
   self.primary_key = :id
   belongs_to :indicator
@@ -105,12 +105,7 @@ class IndicatorDatum < ActiveRecord::Base
   end
 
   def missing_budget?
-    if self.output.nil?
-      # TODO This is not always correct, we need to rely on XML
-      return self.problem_objective.outputs.all? { |output| output.missing_budget? }
-    else
-      return self.output.missing_budget?
-    end
+    self.missing_budget
   end
 
   def situation_analysis(reported_value = REPORTED_VALUES[:myr])

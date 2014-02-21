@@ -2,13 +2,26 @@ window.Visio =
   Models: {}
   Collections: {}
   Views: {}
+  Mixins: {}
   Routers: {}
   Utils: {}
   Figures: {}
   FigureTypes:
+    MAP:
+      className: 'Map'
+      human: 'Map'
+      name: 'map'
+    SPARK:
+      className: 'Spark'
+      human: 'Spark'
+      name: 'spark'
+    CIRCLE:
+      className: 'Circle'
+      human: 'Circle'
+      name: 'circle'
     ABSY:
       className: 'Absy'
-      human: 'Achievement vs Budget: Single Year'
+      human: 'Achievement vs Budget'
       name: 'absy'
     BMY:
       className: 'Bmy'
@@ -18,9 +31,11 @@ window.Visio =
       className: 'Isy'
       human: 'Indicators: Single Year'
       name: 'isy'
-
-  # Actual instances of figures
-  FigureInstances: {}
+  ViewTypes:
+    OVERVIEW:
+      className: 'StrategySnapshotView'
+      human: 'Strategy Overview'
+      name: 'strategy_snapshot'
   AchievementTypes:
     TARGET: 'comp_target'
     STANDARD: 'standard'
@@ -38,9 +53,13 @@ window.Visio =
     MEDIUM: 1000
     SLOW: 2000
   Formats:
+    MONEY: d3.format('$0.3s')
+    LONG_MONEY: d3.format('$,f')
     SI: d3.format('0.3s')
     PERCENT: d3.format(".0%")
     COMMA: d3.format(',')
+    NUMBER: d3.format('d')
+    LONG_NUMBER: d3.format(',f')
   Constants:
     DB_NAME: 'visio'
     SEPARATOR: '___'

@@ -7,12 +7,23 @@ class Indicator < ActiveRecord::Base
 
   attr_accessible :is_gsp, :is_performance, :name
 
-  has_and_belongs_to_many :outputs, :uniq => true
-  has_and_belongs_to_many :problem_objectives, :uniq => true
-  has_and_belongs_to_many :operations, :uniq => true
-  has_and_belongs_to_many :plans, :uniq => true
-  has_and_belongs_to_many :strategies, :uniq => true
-  has_and_belongs_to_many :strategy_objectives, :uniq => true
+  has_many :indicators_outputs, :class_name    => 'IndicatorsOutputs'
+  has_many :outputs, :uniq => true, :through => :indicators_outputs
+
+  has_many :indicators_problem_objectives, :class_name     => 'IndicatorsProblemObjectives'
+  has_many :problem_objectives, :uniq => true, :through => :indicators_problem_objectives
+
+  has_many :indicators_operations, :class_name     => 'IndicatorsOperations'
+  has_many :operations, :uniq => true, :through => :indicators_operations
+
+  has_many :indicators_plans, :class_name    => 'IndicatorsPlans'
+  has_many :plans, :uniq => true, :through => :indicators_plans
+
+  has_many :indicators_strategies, :class_name     => 'IndicatorsStrategies'
+  has_many :strategies, :uniq => true, :through => :indicators_strategies
+
+  has_many :indicators_strategy_objectives, :class_name    => 'IndicatorsStrategyObjectives'
+  has_many :strategy_objectives, :uniq => true, :through => :indicators_strategy_objectives
 
 
   has_many :indicator_data

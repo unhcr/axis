@@ -57,36 +57,4 @@ class IndicatorDatumTest < ActiveSupport::TestCase
 
   end
 
-  test "missing budget" do
-    datum = IndicatorDatum.new()
-    datum.output = outputs(:one)
-    datum.save
-
-    datum.output.priority = 'AOL'
-    datum.output.save
-    assert datum.missing_budget?
-
-    datum.output.priority = 'WOL'
-    datum.output.save
-    assert !datum.missing_budget?
-
-    datum.output.priority = 'PARTIAL'
-    datum.output.save
-    assert !datum.missing_budget?
-
-    datum.output = nil
-    datum.save
-
-    datum.problem_objective = problem_objectives(:one)
-    datum.problem_objective.outputs << [outputs(:one), outputs(:two)]
-    datum.problem_objective.outputs[0].priority = 'AOL'
-    datum.problem_objective.outputs[1].priority = 'WOL'
-
-    assert !datum.missing_budget?
-
-    datum.problem_objective.outputs[0].priority = 'AOL'
-    datum.problem_objective.outputs[1].priority = 'AOL'
-    assert datum.missing_budget?
-
-  end
 end

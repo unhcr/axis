@@ -43,8 +43,8 @@ class Visio.Models.StrategyObjective extends Visio.Models.Parameter
         callback(new Visio.Collections.Indicator())
 
   defaults:
-    'name': ''
-    'description': ''
+    'name': 'Everyday'
+    'description': 'Hustlin\''
 
   toString: ->
     @get 'name'

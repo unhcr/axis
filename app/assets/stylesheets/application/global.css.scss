@@ -1,4 +1,5 @@
 @import "../shared/variables.css.scss";
+@import "../shared/mixins.scss";
 @import "compass/css3";
 
 
@@ -63,7 +64,7 @@ p.small {
 }
 
 .text {
-  max-width: 800px;
+  max-width: 960px;
 }
 
 .content {
@@ -81,13 +82,15 @@ p.small {
 }
 
 .ui-big-number {
-  color: $bright-yellow;
   font-size: 3.6em;
 }
 
+.ui-small-number {
+  font-size: 18px;
+}
+
 .ui-huge-number {
-  color: $bright-yellow;
-  font-size: 6em;
+  font-size: 42px;
   line-height: 1em;
 }
 
@@ -158,7 +161,7 @@ p.small {
 }
 
 .ui-invert-theme {
-  background-color: $off-white;
+  background-color: white;
   color: $primary;
 
   .highlight {
@@ -167,6 +170,12 @@ p.small {
 
   a {
     color: $primary-light;
+  }
+
+  a.logo {
+    color: $primary;
+    display: block;
+    text-decoration: none;
   }
 }
 
@@ -238,6 +247,10 @@ body.index {
   color: $primary;
 }
 
+.ui-primary-second {
+  color: $primary-second;
+}
+
 .ui-primary-light {
   color: $primary-light
 }
@@ -301,6 +314,10 @@ body.index {
   transition:padding $medium-transition,width $medium-transition;
 }
 
+.inline-block {
+  display: inline-block;
+}
+
 .tab {
   padding-top: 14px;
   margin-bottom: 0px;
@@ -326,6 +343,15 @@ body.index {
   border-bottom: 1px solid $white;
 }
 
+
+.divider-shadow {
+
+}
+
+.divider-full {
+  margin: 0 -15px;
+}
+
 .divider-stack {
   border-top: 1px $divider-top solid;
   border-bottom: 1px $divider-bottom solid;
@@ -345,9 +371,30 @@ body.index {
   border-bottom: 1px solid $primary;
 }
 
+.divider-primary-second {
+  border: none;
+  border-bottom: 1px solid $primary-second;
+}
+
+.divider-dotted-primary {
+  border-bottom: 1px dotted $primary;
+}
+
 .divider-primary-light {
   border: none;
   border-bottom: 1px solid $primary-light;
+}
+
+.divider-light-gray {
+  border-bottom: 1px solid $light-gray;
+}
+
+.divider-thick {
+  border-width: 2px;
+}
+
+.divider-extra-thick {
+  border-width: 6px;
 }
 
 .full-wrapper {
@@ -356,13 +403,11 @@ body.index {
 }
 
 .ui-medium-header {
-  font-size: 2.2em;
-  letter-spacing: -.02em;
+  @include medium-header;
 }
 
 .ui-small-header {
-  font-size: 1.7em;
-  letter-spacing: -.02em;
+  @include small-header;
 }
 
 .ui-extra-small-header {
@@ -371,8 +416,17 @@ body.index {
 }
 
 .ui-large-header {
-  font-size: 3.3em;
-  letter-spacing: -.02em
+  @include large-header;
+}
+
+h1 {
+  @include large-header;
+}
+h3 {
+  @include medium-header;
+}
+h5 {
+  @include small-header;
 }
 
 .ui-active {
@@ -478,7 +532,7 @@ input:focus {
 }
 
 .full-width {
-  width: 100%
+  @include full-width
 }
 
 .zero-width {
@@ -595,6 +649,32 @@ button, input {
   top: 3px
 }
 
+.visio-radio-circle label:before {
+  content: ' ';
+  border: 3px solid $light-gray;
+  border-radius: 10px;
+  width: 5px;
+  height: 5px;
+  margin: 3px
+}
+
+.visio-radio-circle input:checked + label:before {
+  content: ' ';
+  border: 2px solid $yellow;
+  border-radius: 12px;
+  width: 12px;
+  height: 12px;
+  margin: 0 3px;
+}
+
+.visio-radio-circle {
+  display: inline-block;
+}
+
+.visio-radio-circle label {
+  display: inline-block;
+}
+
 .visio-checkbox input {
   display: none;
 }
@@ -661,7 +741,7 @@ button, input {
   top: -1em;
 }
 
-.dropdown-item:hover, .count:hover {
+.dropdown-item:hover {
   background-color: black;
   text-decoration: none;
   cursor: pointer;
@@ -1094,12 +1174,6 @@ a {
   transition:width $medium-transition;
 }
 
-.target-countries {
-  max-height: 300px;
-  overflow: auto;
-  font-size: 1.2em;
-}
-
 .search-icon {
   background-color: $primary-light;
   height: $search-icon;
@@ -1253,8 +1327,104 @@ a {
   left: $navigation-width;
 }
 
+.actions {
+  padding-top: 33px;
+  height: 340px;
+  margin-left: -15px;
+  margin-right: -15px;
+  background-color: $black;
+  color: $white;
+
+  h1 {
+    margin-bottom: 0px;
+  }
+
+  h3, h5 {
+    margin-top: 0px
+  }
+}
+
 .strategy-snapshot {
+
+
+  .links {
+    span {
+      padding-left: 14px;
+      border-left: $black 1px solid;
+      min-height: 70px;
+      display: block;
+    }
+
+    a {
+      color: $black;
+    }
+  }
+
+  span {
+    color: $primary-soft;
+  }
+
+  section {
+    padding-top: 10px;
+    padding-bottom: 40px;
+  }
+
+  .ui-huge-number, .ui-small-number {
+    color: $primary-soft;
+  }
+
+  .count {
+    @include medium-header
+  }
+
+  .count:after {
+    @include small-header;
+    margin-left: 6px;
+  }
+
+  .ok-count:after {
+    content: 'Sub-Standard'
+  }
+
+  .success-count:after {
+    content: 'Acceptable'
+  }
+
+  .fail-count:after {
+    content: 'Critical'
+  }
+
+  .missing-count:after {
+    content: 'Not-Reported'
+  }
+
   padding-bottom: 40px;
+
+  h3 {
+    color: $primary-soft;
+    font-weight: bold;
+    margin: 0;
+  }
+
+  h3:before {
+    content: ' ';
+    border-bottom: $primary-soft 6px solid;
+    width: 25px;
+    display: inline-block;
+  }
+
+  h1 {
+    margin: 0;
+  }
+
+  h1:after {
+    content: ' ';
+    border-bottom: $primary-soft 6px solid;
+    width: 50px;
+    display: inline-block;
+
+  }
+
 }
 
 .vertical-divider {
@@ -1411,6 +1581,12 @@ a {
     text-align: center
   }
 
+  .export-settings {
+    input {
+      border: 1px solid $light-gray;
+    }
+  }
+
   figure {
   }
 
@@ -1522,4 +1698,213 @@ a {
   .filters.open {
     max-height: 400px;
   }
+}
+
+.target-countries {
+  margin: 0 -15px;
+}
+
+.slider-container {
+  .slider {
+    white-space: nowrap;
+    overflow: hidden;
+    /* Needed to make inline-block elements sit flush */
+    font-size: 0px;
+    .slide {
+      float: none;
+      position: relative;
+      left: 0;
+      display: inline-block;
+      @include transition-property(all);
+      @include transition-duration($fast-transition);
+      @include transition-timing-function(ease-in-out);
+
+    }
+  }
+  position: relative;
+
+}
+
+.action-slider {
+  .action-slide {
+    width: $row-inner-width;
+    text-align: center;
+  }
+}
+
+.country-slider {
+
+  .country-slide {
+    border: 1px solid $light-gray;
+    width: $country-slide-width;
+    padding: 0 22px;
+    padding-bottom: 25px;
+    margin: 8px 2px;
+    white-space: normal
+  }
+
+  .country-slide:hover {
+    @include box-shadow(0px 5px 13px -3px $primary-soft)
+  }
+
+  .country-name {
+    border-top: 4px black solid;
+    padding-top: 2px;
+    margin-top: 4px;
+    color: $black;
+  }
+
+  a, div {
+    font-size: 12px;
+  }
+
+  .controls {
+    position: absolute;
+    display: block;
+    height: $country-slide-height;
+    right: -$slider-controls-width;
+    width: $slider-controls-width;
+    a {
+      width: $control-radius * 2;
+      border: 1px solid $light-gray;
+      height: $control-radius * 2;
+      line-height: $control-radius * 2 - 2;
+      @include border-radius($control-radius);
+      text-align: center;
+      display: block;
+      border: 1px $primary-soft solid;
+      font-size: 14px;
+      color: $primary-soft;
+      margin: 5px auto;
+    }
+
+    a:hover {
+      text-decoration: none;
+    }
+  }
+}
+.slider.grid {
+  white-space: normal;
+}
+
+.ok-criticality {
+  .foreground {
+    fill: $ok;
+  }
+}
+
+.success-criticality {
+  .foreground {
+    fill: $success;
+  }
+}
+
+.fail-criticality {
+  .foreground {
+    fill: $fail;
+  }
+}
+
+.missing-criticality {
+  .foreground {
+    fill: $lighter-gray;
+  }
+}
+
+.sides-flush {
+  padding-right: 0px;
+  margin-right: 0px;
+  padding-left: 0px;
+  margin-left: 0px;
+}
+
+.right-flush {
+  padding-right: 0px;
+  margin-right: 0px;
+}
+
+.left-flush {
+  padding-left: 0px;
+  margin-left: 0px;
+}
+
+.top-flush {
+  padding-top: 0px;
+  margin-top: 0px;
+}
+
+.bottom-flush {
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+}
+
+.number {
+  @include number;
+}
+
+.parameter-show {
+
+  .divider-thick {
+    padding-top: 4px;
+  }
+
+  .svg-circle-figure {
+    .foreground {
+      fill: $primary-light;
+    }
+
+    .background {
+      stroke: $primary-light;
+    }
+  }
+
+
+  .country-img {
+    position: relative;
+    top: 24px;
+  }
+
+  .cell {
+    padding-top: 3px;
+    padding-bottom: 3px;
+    white-space: nowrap;
+  }
+
+  .table-header {
+    text-transform: capitalize;
+  }
+
+  .table-datum {
+    @include number;
+    font-size: 11px;
+    font-weight: bold;
+    color: $primary;
+  }
+
+  .table-header.table-total {
+    text-transform: uppercase;
+  }
+
+  .table-total {
+    color: $orange;
+    text-align: right;
+    font-size: 12px;
+    font-weight: bold;
+    padding-left: 0px;
+  }
+
+  .header {
+
+  }
+
+  .achievement-label {
+    margin-top: -6px;
+  }
+
+  h5, h3 {
+    margin: 0;
+  }
+  padding-top: $parameter-show-padding-vertical / 2;
+  margin-top: $parameter-show-padding-vertical / 2;
+  padding-bottom: $parameter-show-padding-vertical;
 }

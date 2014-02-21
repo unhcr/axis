@@ -1,12 +1,13 @@
-class Visio.Figures.Isy extends Visio.Figures.Exportable
+class Visio.Figures.Isy extends Visio.Figures.Base
 
   type: Visio.FigureTypes.ISY
 
-  attrAccessible: ['x', 'y', 'width', 'height', 'data', 'margin', 'goalType', 'isPerformance']
+  attrAccessible: ['x', 'y', 'width', 'height', 'collection', 'margin', 'goalType', 'isPerformance']
 
   initialize: (config) ->
+    @$el.prepend $('<a class="export">export</a>')
 
-    Visio.Figures.Exportable.prototype.initialize.call @, config
+    super config
 
     @tooltip = null
 
@@ -16,11 +17,11 @@ class Visio.Figures.Isy extends Visio.Figures.Exportable
     @barMargin = 8
 
     @x = d3.scale.linear()
-      .domain([0, @width / ((2 * @barWidth) + @barMargin)])
-      .range([0, @width])
+      .domain([0, @adjustedWidth / ((2 * @barWidth) + @barMargin)])
+      .range([0, @adjustedWidth])
 
     @y = d3.scale.linear()
-      .range([@height, 0])
+      .range([@adjustedHeight, 0])
       .clamp(true)
 
     @goalType = config.goalType || Visio.Algorithms.GOAL_TYPES.target
@@ -31,7 +32,7 @@ class Visio.Figures.Isy extends Visio.Figures.Exportable
 
 
   render: ->
-    filtered = @filtered @data
+    filtered = @filtered @collection
 
     self = @
 
@@ -188,6 +189,7 @@ class Visio.Figures.Isy extends Visio.Figures.Exportable
       $.publish "select.#{@figureId()}", [d, i]
 
     boxes.exit().remove()
+    @
 
   sortFn: (a, b) =>
     reversedA = if a.get(@progress.start) > a.get(@progress.end) then -1 else 1
@@ -200,7 +202,7 @@ class Visio.Figures.Isy extends Visio.Figures.Exportable
     @y.domain [0, +d.get(@goalType)]
     v = Math.abs(+d.get(@progress.start) - +d.get(@progress.end))
 
-  filtered: (data) => _.chain(data).filter(@filterFn).sort(@sortFn).value()
+  filtered: (collection) => _.chain(collection.models).filter(@filterFn).sort(@sortFn).value()
 
   select: (e, d, i) =>
     box = @g.select(".box-#{d.id}")

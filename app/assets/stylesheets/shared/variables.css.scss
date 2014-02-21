@@ -1,5 +1,6 @@
 /* Colors */
 $primary: rgb(13, 45, 70);
+$primary-second: rgb(58, 96, 157);
 $primary-light: rgb(2, 178, 225);
 $primary-medium-dark: rgb(3, 114, 142);
 $primary-medium: rgb(1, 139, 176);
@@ -14,10 +15,12 @@ $white: rgb(249, 249, 249);
 $off-white: rgb(245, 245, 245);
 $dark-gray: rgb(133, 135, 134);
 $light-gray: rgb(177, 177, 177);
+$lighter-gray: rgb(217, 217, 217);
 $black: rgb(39,38,34);
 $fail: #c6302a;
 $fail-dark: #710d09;
 $turquoise: rgb(32, 180, 180);
+$pink: rgb(200, 85, 145);
 $yellow-green: rgb(158, 196, 59);
 $yellow: rgb(222, 229, 29);
 $bright-yellow: rgb(246, 236, 0);
@@ -53,7 +56,7 @@ $fast-transition: .5s;
 $medium-transition: 1s;
 
 /* Lengths */
-$row-inner-width: 1000px;
+$row-inner-width: 960px;
 $radius: 3px;
 $content-margin: 20px;
 $pin-medium: 20px;
@@ -69,6 +72,10 @@ $page-margin: 40px;
 $search-icon: 29px;
 $header-height: 65px;
 $toolbar-height: 42px;
-
-
-
+$country-slide-height: 290px;
+$country-slide-width: 230px;
+$slider-controls-width: 62px;
+$control-radius: 17px;
+$parameter-show-idx: 24px;
+$parameter-show-padding-horizontal: 70px;
+$parameter-show-padding-vertical: 30px;

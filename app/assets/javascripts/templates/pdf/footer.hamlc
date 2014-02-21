@@ -1,0 +1,13 @@
+.footer{ :style =>
+  [ 'margin: 0 20px',
+    'font-family: "Helvetica Neue"',
+    'font-size: 11px'].join(';') }
+  .footer-marker{ :style =>
+    [ 'width:100%',
+      'border-top: solid 2px rgb(13, 45, 70)',
+      'padding-bottom: 3px' ].join(';') }
+  %div{ :style => [ 'color: rgb(13, 45, 70)' ].join(';') }
+    %span
+      != "UNHCR<b>AXIS</b> | <b>#{Visio.manager.year()} GLOBAL INTEGRATED</b> YEAR END REPORT"
+    %span{ :style => [ 'float:right' ].join(';') }
+      = "#{context.pageNum}/#{context.numPages }"

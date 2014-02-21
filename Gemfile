@@ -6,9 +6,10 @@ gem 'equivalent-xml'
 gem 'rubyzip'
 gem 'pdfkit'
 gem 'quoth'
-gem 'shrimp'
+gem 'shrimp', :git => 'git://github.com/benrudolph/shrimp.git'
 gem 'pony'
 gem 'whenever', :require => false
+gem "devise_ldap_authenticatable"
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'

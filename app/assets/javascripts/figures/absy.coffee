@@ -1,4 +1,4 @@
-class Visio.Figures.Absy extends Visio.Figures.Exportable
+class Visio.Figures.Absy extends Visio.Figures.Base
 
   type: Visio.FigureTypes.ABSY
 
@@ -25,15 +25,15 @@ class Visio.Figures.Absy extends Visio.Figures.Exportable
       }
     ])
 
-    Visio.Figures.Exportable.prototype.initialize.call @, config
-
+    super config
+    @$el.prepend $('<a class="export">export</a>')
 
     @x = d3.scale.linear()
-      .range([0, @width])
+      .range([0, @adjustedWidth])
 
     @y = d3.scale.linear()
       .domain([0, 1])
-      .range([@height, 0])
+      .range([@adjustedHeight, 0])
 
     @r = d3.scale.sqrt()
       .domain([0, 1000000])
@@ -43,23 +43,23 @@ class Visio.Figures.Absy extends Visio.Figures.Exportable
       .scale(@x)
       .orient('bottom')
       .tickFormat(d3.format('s'))
-      .ticks(6)
+      .ticks(Math.floor(@adjustedWidth / 100))
       .innerTickSize(14)
 
     @yAxis = d3.svg.axis()
       .scale(@y)
       .orient('left')
       .ticks(5)
-      .tickFormat((d) -> return if d then d * 100 else '0%')
+      .tickFormat((d) -> return d * 100)
       .innerTickSize(14)
-      .tickPadding(20)
+      .tickPadding(0)
 
     @domain = null
     @entered = false
 
     @info = null
     @voronoi = d3.geom.voronoi()
-      .clipExtent([[0, 0], [@width, @height]])
+      .clipExtent([[0, 0], [@adjustedWidth, @adjustedHeight]])
       .x((d) => @x(d.selectedAmount(false, @filters)))
       .y((d) => @y(d.selectedAchievement(false, @filters).result))
 
@@ -68,56 +68,91 @@ class Visio.Figures.Absy extends Visio.Figures.Exportable
       .attr('transform', 'translate(0,0)')
       .append("text")
         .attr("transform", "rotate(-90)")
-        .attr("y", 0)
-        .attr("x", -@height)
+        .attr("y", -40)
+        .attr("x", -@adjustedHeight / 2)
         .attr("dy", "-.21em")
-        .style("text-anchor", "start")
-        .text('Acheivement')
+        .style("text-anchor", "middle")
+        .text('Achievement (%)')
 
     @g.append('g')
       .attr('class', 'x axis')
-      .attr('transform', "translate(0,#{@height})")
+      .attr('transform', "translate(0,#{@adjustedHeight})")
       .append("text")
-        .attr("x", @width + 10)
+        .attr('y', 50)
+        .attr("x", @adjustedWidth / 2)
         .attr("dy", "-.21em")
-        .style("text-anchor", "start")
-        .text('Budget')
+        .style("text-anchor", "middle")
+        .text('Budget (Dollars)')
 
   render: ->
-    filtered = @filtered @data
-    maxAmount = d3.max @data, (d) => d.selectedAmount(false, @filters)
+    filtered = @filtered @collection
+    maxAmount = d3.max filtered, (d) => d.selectedAmount(false, @filters)
 
+    self = @
     if !@domain || @domain[1] < maxAmount || @domain[1] > 2 * maxAmount
       @domain = [0, maxAmount]
       @x.domain(@domain)
 
-    bubbles = @g.selectAll('.bubble').data(filtered, (d) -> d.refId())
-    bubbles.enter().append('circle')
-    bubbles
-      .attr('class', (d) ->
-        return ['bubble', "id-#{d.refId()}"].join(' '))
-    bubbles
-      .transition()
-      .duration(Visio.Durations.FAST)
-      .attr('r', (d) =>
-        return @r(600000))
-      .attr('cy', (d) =>
-        return @y(d.selectedAchievement(false, @filters).result))
-      .attr('cx', (d) =>
-        return @x(d.selectedAmount(false, @filters)))
+    pointContainers = @g.selectAll('.point-container').data(filtered, (d) -> d.refId())
+    pointContainers.enter().append('g')
+    pointContainers.attr('class', (d, i) ->
+          classList = ['point-container', "id-#{d.refId()}"]
 
-    bubbles.exit().transition().duration(Visio.Durations.FAST).attr('r', 0).remove()
+          if self.isPdf and _.include self.selected, d.id
+            classList.push 'active'
+            d3.select(@).moveToFront()
+          return classList.join(' '))
+        .each((d, i) ->
 
-    if @isExport
-      labels = @g.selectAll('.label').data(filtered, (d) -> d.refId())
-      labels.enter().append('text')
-      labels.attr('class', 'label')
-        .attr('x', (d) => @x(d.selectedAmount(false, @filters)))
-        .attr('y', (d) => @y(d.selectedAchievement(false, @filters).result))
-        .attr('dy', '.3em')
-        .attr('text-anchor', 'middle')
-        .text((d, i) -> i + 1)
+          pointContainer = d3.select @
 
+          # Points
+          point = pointContainer.selectAll('.point').data([d])
+          point.enter().append('circle')
+          point
+            .attr('class', (d) ->
+              classList = ['point']
+              return classList.join(' '))
+          point
+            .transition()
+            .duration(Visio.Durations.FAST)
+            .attr('r', (d) =>
+              if self.isPdf and _.include self.selected, d.id
+                16
+              else
+                12
+            )
+            .attr('cy', (d) =>
+              return self.y(d.selectedAchievement(false, self.filters).result))
+            .attr('cx', (d) =>
+              return self.x(d.selectedAmount(false, self.filters)))
+
+          point.exit().transition().duration(Visio.Durations.FAST).attr('r', 0).remove()
+
+          # Conditional Labels
+          if self.isExport
+            labels = pointContainer.selectAll('.label').data([d])
+          else if self.isPdf and not _.isEmpty self.selected
+            labels = pointContainer.selectAll('.label').data(_.filter([d], (d) => _.include self.selected, d.id))
+
+          if self.isExport or self.isPdf
+            labels.enter().append('text')
+            labels.attr('class', 'label')
+              .attr('x', (d) => self.x(d.selectedAmount(false, self.filters)))
+              .attr('y', (d) => self.y(d.selectedAchievement(false, self.filters).result))
+              .attr('dy', '.3em')
+              .attr('text-anchor', 'middle')
+              .text((d) ->
+                if self.isPdf
+                  console.log 'pdf'
+                  1 + _.indexOf self.selected, d.id
+                else
+                  i + 1
+              )
+
+        )
+
+    pointContainers.exit().remove()
 
     path = @g.selectAll('.voronoi')
       .data(@voronoi(filtered))
@@ -134,12 +169,12 @@ class Visio.Figures.Absy extends Visio.Figures.Exportable
           window.setTimeout(( -> @entered = false), 50)
           @info.render(d.point)
           @info.show()
-          bubble = @g.select(".bubble.id-#{d.point.refId()}")
-          bubble.moveToFront() unless @isExport
-          bubble.classed 'focus', true
+          pointContainer = @g.select(".point-container.id-#{d.point.refId()}")
+          pointContainer.moveToFront() unless @isExport
+          pointContainer.classed 'focus', true
         ).on('mouseout', (d) =>
           @info.hide() if @info and not @entered
-          @g.select(".bubble.id-#{d.point.refId()}").classed 'focus', false
+          @g.select(".point-container.id-#{d.point.refId()}").classed 'focus', false
 
         ).on('click', (d, i) =>
           $.publish "select.#{@figureId()}", [d.point, i]
@@ -159,17 +194,28 @@ class Visio.Figures.Absy extends Visio.Figures.Exportable
       .call(@yAxis)
       .attr('transform', 'translate(-20,0)')
 
+    # Generate legend view
+    if @isPdf
+      @legendView = new Visio.Figures.AbsyLegend
+        figure: @
+        collection: new @collection.constructor(_.filter(filtered, (d) => _.include @selected, d.id))
+      @$el.find('.legend-container').html @legendView.render().el
+
+
+    @
+
 
   filterFn: (d) ->
     d.selectedAmount(false, @filters) && d.selectedAchievement(false, @filters).result
 
-  filtered: (data) => _.chain(data).filter(@filterFn).value()
+  filtered: (collection) => _.chain(collection.models).filter(@filterFn).value()
 
   polygon: (d) ->
     return "M0 0" unless d? and d.length
     "M" + d.join("L") + "Z"
 
   select: (e, d, i) =>
-    bubble = @g.select(".bubble.id-#{d.refId()}")
-    isActive = bubble.classed 'active'
-    bubble.classed 'active', not isActive
+    pointContainer = @g.select(".point-container.id-#{d.refId()}")
+    console.warn 'Selected element is empty' if pointContainer.empty()
+    isActive = pointContainer.classed 'active'
+    pointContainer.classed 'active', not isActive

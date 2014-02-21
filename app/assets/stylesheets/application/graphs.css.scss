@@ -54,25 +54,35 @@ line {
 }
 
 .svg-absy-figure {
-  .bubble.focus {
+  .point-container.focus .point {
     fill: $orange;
   }
 
-  .bubble.active {
-    fill: $primary-dark;
+  .point-container.active .point {
+    fill: white;
+    stroke: $primary;
+    stroke-width: 2px;
   }
+
+  .point-container {
+    .label {
+      font-weight: bold;
+    }
+  }
+
   .trail {
     stroke: black;
     stroke-dasharray: 5 5;
     pointer-events: none;
   }
-  .bubble {
-    fill: $yellow-green;
+
+  .point {
+    fill: $pink;
     pointer-events: none;
   }
 
   .y.axis line {
-    stroke: $primary-light;
+    stroke: none;
   }
 
   .y.axis g:nth-of-type(-n+2) line {
@@ -80,48 +90,28 @@ line {
   }
 
   .y.axis text, .x.axis > text {
-    fill: $primary-light;
-    font-size: 1.4em;
+    fill: $black;
   }
 
   .x.axis path {
-    stroke: $light-gray;
+    stroke: none;
   }
 
   .x.axis line {
-    stroke: $light-gray;
+    stroke: none;
   }
 
   .x.axis text {
-    fill: $primary-light;
+    fill: $black;
   }
 }
 
-.circle {
+.svg-circle-figure {
   .background {
-    fill: $light-gray;
+    fill: $white;
+    stroke: $light-gray;
   }
 
-  .foreground.ok {
-    fill: $ok;
-  }
-
-  .foreground.success {
-    fill: $success;
-  }
-
-  .foreground.fail {
-    fill: $fail;
-  }
-
-  .foreground.missing {
-    fill: $dark-gray;
-  }
-
-  .progress-meter text {
-    font-size: 1.8em;
-    fill: white;
-  }
 }
 
 .voronoi, .voronoiPoint {

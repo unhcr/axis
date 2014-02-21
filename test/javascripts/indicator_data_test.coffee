@@ -171,6 +171,22 @@ test 'achievement', () ->
   strictEqual result.status, Visio.Algorithms.STATUS.reported
   strictEqual result.result, 1
 
+  datum.set 'baseline', null
+  datum.set 'myr', 0
+
+  result = datum.achievement()
+  strictEqual result.include, true
+  strictEqual result.status, Visio.Algorithms.STATUS.reported
+  strictEqual result.result, 0
+
+  datum.set 'comp_target', 0
+  datum.set 'myr', 10
+  datum.set 'is_performance', true
+
+  result = datum.achievement()
+  strictEqual result.include, true
+  strictEqual result.status, Visio.Algorithms.STATUS.reported
+  strictEqual result.result, 1
 
 test 'situation analysis', () ->
   datum = new Visio.Models.IndicatorDatum({
@@ -275,6 +291,13 @@ test 'situation analysis collection', () ->
   strictEqual res.result, 0
   strictEqual res.total, 0
   strictEqual res.counts[Visio.Algorithms.ALGO_RESULTS.ok], 0
+
+  data = new Visio.Collections.IndicatorDatum({ id: 1, is_performance: false })
+  res = data.situationAnalysis()
+  strictEqual res.category, Visio.Algorithms.ALGO_RESULTS.fail
+  strictEqual res.result, 0
+  strictEqual res.total, 1
+  strictEqual res.counts[Visio.Algorithms.STATUS.missing], 1
 
 
 

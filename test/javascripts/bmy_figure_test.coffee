@@ -20,7 +20,7 @@ module 'BMY Figure',
 
 test 'filtered', ->
 
-  memo = @figure.filtered @budgets.models
+  memo = @figure.filtered @budgets
 
   strictEqual memo.length, 3, 'Should have two lines'
   ok _.find memo, ((array) -> array.budgetType == Visio.Budgets.ADMIN), 'One line should have ADMIN type'
@@ -34,21 +34,22 @@ test 'filtered', ->
 
 
 test 'render', ->
-  @figure.dataFn @budgets.models
+  @figure.collectionFn @budgets
   @figure.render()
 
   strictEqual $(@figure.el).find('.budget-line').length, 3, 'Should have drawn 3 budget lines'
 
 test 'select', ->
   @figure.isExport = true
-  @figure.dataFn @budgets.models
+  @figure.subscribe()
+  @figure.collectionFn @budgets
   @figure.render()
   i = 0
 
   strictEqual d3.select(@figure.el).selectAll('.active').size(), 0, 'Should have no active elements'
 
-  $.publish("select.#{@figure.figureId()}.figure", [@figure.filtered(@budgets.models)[i], i])
+  $.publish("select.#{@figure.figureId()}.figure", [@figure.filtered(@budgets)[i], i])
   strictEqual d3.select(@figure.el).selectAll('.active').size(), 1, 'Should have one active elements'
 
-  $.publish("select.#{@figure.figureId()}.figure", [@figure.filtered(@budgets.models)[i], i])
+  $.publish("select.#{@figure.figureId()}.figure", [@figure.filtered(@budgets)[i], i])
   strictEqual d3.select(@figure.el).selectAll('.active').size(), 0, 'Should have no active elements'

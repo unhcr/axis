@@ -77,6 +77,7 @@ class Visio.Models.IndicatorDatum extends Visio.Models.Syncable
 
     if @get('is_performance')
       result.result = Math.min(+@get(reported) / +@get(achievement_type), 1)
+      result.result = 1 if isNaN result.result
     else
       if @get(reported) == @get(achievement_type)
         result.result = 1
@@ -85,12 +86,15 @@ class Visio.Models.IndicatorDatum extends Visio.Models.Syncable
       if @get('reversal')
         # Reverse indicator
         if @get(reported) > @get(achievement_type)
-          if @get('baseline') <= @get(reported)
+          if +@get('baseline') <= @get(reported)
             result.result = 0
             return result
 
-          result.result = (@get('baseline') - @get(reported)) /
-                          (@get('baseline') - @get(achievement_type))
+          numerator = @get('baseline') - @get(reported)
+          denominator = @get('baseline') - @get(achievement_type)
+
+          result.result =  numerator / denominator
+
         else
           result.result = 1
 
@@ -98,15 +102,19 @@ class Visio.Models.IndicatorDatum extends Visio.Models.Syncable
         # Normal indicator
         if @get(reported) < @get(achievement_type)
 
-          if @get('baseline') >= @get(reported)
+          if +@get('baseline') >= @get(reported)
             result.result = 0
             return result
 
-          result.result = (@get(reported) - @get('baseline')) /
-                 (@get(achievement_type) - @get('baseline'))
+          numerator = @get(reported) - @get('baseline')
+          denominator = @get(achievement_type) - @get('baseline')
+
+          result.result = numerator / denominator
         else
 
           result.result = 1
 
+    if isNaN(result.result)
+      console.log result
 
     return result

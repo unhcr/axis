@@ -12,19 +12,21 @@ class Visio.Views.ExportModule extends Backbone.View
   initialize: (options) ->
     $(document).scrollTop(0)
     @config = @model.get 'figure_config'
-    @figure = @model.figure(@config)
 
-    $.subscribe "select.#{@figure.figureId()}", @select
+    @figure = @model.figure @config
+
+    if @config.selectable
+      $.subscribe "select.#{@figure.figureId()}", @select
+      @filtered = @figure.filtered @figure.collection
 
   render: ->
 
-
-
-    @filtered = @figure.filtered @config.data
-
     @$el.html @template( model: @model.toJSON(), filtered: @filtered )
     @$el.find('.export-figure figure').html @figure.el
-    @figure.render()
+    if @config.selectable
+      @figure.render()
+    else
+      @figure.$el.html @figure.type.human
     @
 
   onSelectionChange: (e) ->
@@ -64,6 +66,9 @@ class Visio.Views.ExportModule extends Backbone.View
     formArray = @$el.find('.export-settings form').serializeArray()
     _.each formArray, (formObj) => @model.set formObj.name, formObj.value
 
+    selected = _.map @$el.find('figcaption input[type="checkbox"]:checked'), (ele) -> $(ele).attr('data-id')
+    @model.get('figure_config').selected = selected
+
     @model.save().then =>
       $.ajax
         url: @model.pdfUrl()
@@ -71,11 +76,10 @@ class Visio.Views.ExportModule extends Backbone.View
 
   onClose: ->
     @close()
-    Visio.router.navigate '/' + @model.get('figure_type').name, { trigger: true }
 
   close: ->
-    $.unsubscribe "select.#{@figure.figureId()}"
-    @figure.unsubscribe() if @figure?
+    $.unsubscribe "select.#{@figure.figureId()}" if @config.selectable
+    @figure.unsubscribe() if @figure?.unsubscribe?
     @unbind()
     @remove()
 

@@ -143,12 +143,22 @@ class StrategyTest < ActiveSupport::TestCase
     assert_equal 1, StrategyObjective.find(@so2.id).goals.length
     assert_equal 2, Strategy.find(@s.id).goals.length
 
-    @so2.goals.destroy_all
-    @so.goals.destroy_all
+    @so2.goals.delete_all
+    @so.goals.delete_all
     assert_equal 0, Strategy.find(@s.id).goals.length
   end
 
-  def build_datum
+  test "strategy objectives should be destroyed when strategy is destoryed" do
+    strategy_objectives = @s.strategy_objectives
+
+    assert_equal strategy_objectives.length, 1
+
+    @s.destroy
+
+    strategy_objectives.each do |so|
+      assert !StrategyObjective.exists?(so.id)
+    end
 
   end
+
 end

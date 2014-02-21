@@ -1,0 +1,173 @@
+@import "../shared/variables.css.scss";
+@import "../shared/mixins.scss";
+
+
+.pb_before { page-break-before:always !important; }
+.pb_after  { page-break-after:always !important; }
+.pbi-avoid {
+  display:inline-block !important;
+}
+.pbi-avoid:after {
+  content: '';
+  display:block;
+  height:0px;
+  visibility: hidden;
+}
+
+.pdf-page {
+  width: 21cm;
+  height: 29.7cm;
+  margin: 0;
+}
+
+/* Warning lots of pixel perfect values needed. Makes for messy css */
+body.pdf {
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  text-rendering: optimizelegibility;
+  padding: 0 50px;
+
+  p {
+    margin: 0;
+  }
+
+  article {
+    @include article;
+  }
+
+  .parameter-show {
+    width: 435px;
+  }
+
+  .country-slider {
+    .country-slide {
+      @include article;
+
+      margin: 0;
+      border: none;
+      border-bottom: 1px solid $light-gray;
+      padding: 30px $parameter-show-padding-horizontal / 2;
+
+      .country-name {
+        border-top: none;
+      }
+
+    }
+    .country-slide:nth-of-type(2n+1) {
+      border-right: 1px solid $light-gray;
+    }
+
+    /* Last two should not have a bottom border */
+    .country-slide:nth-last-type-of(-n + 2) {
+      border-bottom: none;
+    }
+    /* However if their is a widow, we add back the border */
+    .country-slide:nth-of-type(odd) {
+      border-bottom: 1px solid $light-gray;
+    }
+    /* Every 5th and 6th don't have border */
+    .country-slide:nth-of-type(6n), .country-slide:nth-of-type(6n-1) {
+      border-bottom: none;
+    }
+  }
+
+  .keyFigure {
+    padding-bottom: 30px;
+  }
+
+  .impact-indicator-count {
+    white-space: nowrap;
+    div {
+      line-height: 1.1em;
+    }
+  }
+
+
+  .ui-extra-small-header {
+    font-size: 16px;
+  }
+
+  .ui-medium-header, .ui-large-header {
+    color: $primary-second;
+  }
+
+  .ui-small-header {
+    font-size: 18px;
+  }
+
+  .ui-big-number {
+    font-size: 32px;
+  }
+
+  .ui-medium-number {
+    font-size: 24px;
+  }
+
+  .ui-huge-number {
+    font-size: 64px;
+  }
+
+  .ui-small-number {
+    font-size: 26px;
+  }
+
+  .light {
+    font-weight: 200;
+  }
+
+  header {
+    padding-top: 66px;
+    padding-bottom: 50px;
+  }
+
+  p {
+    font-size: 14px;
+    text-align:justify;
+    text-justify:inter-word;
+  }
+
+  .legend-body {
+    position: relative;
+  }
+
+}
+
+.pdf.absy {
+  figcaption {
+    width: 435px;
+    float: left;
+    padding-top: 45px;
+    height: 570px
+  }
+
+  .filler {
+    height: 100%;
+    width: 100%;
+    border: 1px solid $primary-light;
+  }
+}
+
+/*
+
+.parameter-show:nth-of-type(2n+4) {
+  padding-left: $parameter-show-padding-horizontal
+}
+.parameter-show:nth-of-type(2n+3) {
+  padding-right: $parameter-show-padding-horizontal
+}
+.parameter-show:nth-of-type(-n+2) {
+  padding-left: $parameter-show-padding-horizontal
+}*/
+
+.idx {
+  @include number;
+  width: $parameter-show-idx;
+  height: $parameter-show-idx;
+  border-radius: $parameter-show-idx;
+  border: 2px solid $primary;
+  text-align: center;
+  line-height: $parameter-show-idx - 3px;
+  font-weight: bold;
+  position: absolute;
+  top: 8px;
+  left: 15px;
+}

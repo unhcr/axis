@@ -31,11 +31,12 @@ class Visio.Models.Plan extends Visio.Models.Parameter
 
       return data.situationAnalysis()
 
-  fetchParameter: (type) ->
+  fetchParameter: (type, options) ->
 
-    options =
-      join_ids:
-        plan_id: @id
+    options or= {}
+    options.join_ids or= {}
+    options.join_ids.plan_id = @id
+
     @get(type).fetch(data: options)
 
   toString: () ->

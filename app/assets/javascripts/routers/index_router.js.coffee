@@ -1,19 +1,18 @@
 class Visio.Routers.IndexRouter extends Visio.Routers.GlobalRouter
 
   initialize: (options) ->
-    Visio.Routers.GlobalRouter.prototype.initialize.call(@)
+    super
     height = $(window).height() - $('header').height()
 
-    Visio.FigureInstances['map'] = Visio.Figures.map(
+    @map = new Visio.Figures.Map(
       margin:
         top: 0
         left: 0
         right: 0
         bottom: 0
-      selection: d3.select '#map'
       width: $(window).width()
-      height: height)
-
+      height: height
+      el: '#map')
 
     Visio.manager.on 'change:date', () =>
       options =
@@ -22,9 +21,9 @@ class Visio.Routers.IndexRouter extends Visio.Routers.GlobalRouter
             counts: true
             situation_analysis: true
       Visio.manager.get('plans').fetchSynced(options).done () =>
-        Visio.FigureInstances['map'].clearTooltips()
-        Visio.FigureInstances['map']()
-        Visio.FigureInstances['map'].filterTooltips Visio.manager.selectedStrategyPlanIds()
+        @map.clearTooltips()
+        @map.render()
+        @map.filterTooltips Visio.manager.selectedStrategyPlanIds()
 
     @setup()
 
@@ -46,14 +45,19 @@ class Visio.Routers.IndexRouter extends Visio.Routers.GlobalRouter
         include:
           counts: true
           situation_analysis: true
+          ppg_ids: true
+          goal_ids: true
+          output_ids: true
+          problem_objective_ids: true
+          indicator_ids: true
     #NProgress.start()
     Visio.manager.getMap().done((map) =>
-      Visio.FigureInstances['map'].mapJSON(map)
+      @map.modelFn new Backbone.Model map
       @filterView = new Visio.Views.MapFilterView()
-      Visio.FigureInstances['map']()
+      @map.render()
       Visio.manager.get('plans').fetchSynced(options)
     ).done =>
-      Visio.FigureInstances['map']()
+      @map.render()
 
   list: (plan_id, type) ->
 

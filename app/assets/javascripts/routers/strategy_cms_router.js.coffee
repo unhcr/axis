@@ -13,9 +13,10 @@ class Visio.Routers.StrategyCMSRouter extends Backbone.Router
     '*default': 'index'
 
   index: ->
+    @indexView.close() if @indexView?
     @indexView = new Visio.Views.StrategyCMSIndexView
       collection: @strategies
-      el: @$content
+    @$content.html @indexView.el
 
   show: (id) ->
     @showView = new Visio.Views.StrategyCMSShowView
@@ -23,14 +24,18 @@ class Visio.Routers.StrategyCMSRouter extends Backbone.Router
       el: @$content
 
   new: ->
-    @newView = new Visio.Views.StrategyCMSNewView
+    @editView.close() if @editView?
+    @editView = new Visio.Views.StrategyCMSEditView
+      collection: @strategies
       model: new Visio.Models.Strategy()
-      el: @$content
+    @$content.html @editView.el
 
   edit: (id) ->
-    @editView = new Visio.Views.StrategyCMSNewView
+    @editView.close() if @editView?
+    @editView = new Visio.Views.StrategyCMSEditView
+      collection: @strategies
       model: @strategies.get(id)
-      el: @$content
+    @$content.html @editView.el
 
   destroy: (id) ->
     @strategies.get(id).destroy().done =>

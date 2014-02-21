@@ -1,8 +1,9 @@
-class Visio.Figures.Bmy extends Visio.Figures.Exportable
+class Visio.Figures.Bmy extends Visio.Figures.Base
 
   type: Visio.FigureTypes.BMY
 
   initialize: (config) ->
+    @$el.prepend $('<a class="export">export</a>')
     @filters = new Visio.Collections.FigureFilter([
       {
         id: 'budget_type'
@@ -16,7 +17,7 @@ class Visio.Figures.Bmy extends Visio.Figures.Exportable
       }
     ])
 
-    Visio.Figures.Exportable.prototype.initialize.call @, config
+    super config
 
     @tooltip = null
 
@@ -29,11 +30,11 @@ class Visio.Figures.Bmy extends Visio.Figures.Exportable
 
 
     @x = d3.scale.ordinal()
-      .rangePoints([0, @width])
+      .rangePoints([0, @adjustedWidth])
       .domain(Visio.manager.get('yearList'))
 
     @y = d3.scale.linear()
-      .range([@height, 0])
+      .range([@adjustedHeight, 0])
 
     @lineFn = d3.svg.line()
       .x((d) => @x(d.year))
@@ -44,7 +45,7 @@ class Visio.Figures.Bmy extends Visio.Figures.Exportable
     @voronoiFn = d3.geom.voronoi()
       .x((d) => @x(d.year))
       .y((d) => @y(d.amount))
-      .clipExtent([[-@margin.left, -@margin.top], [@width + @margin.right, @height + @margin.bottom]])
+      .clipExtent([[-@margin.left, -@margin.top], [@adjustedWidth + @margin.right, @adjustedHeight + @margin.bottom]])
 
     @isExport = if config.isExport? then config.isExport else false
 
@@ -68,13 +69,13 @@ class Visio.Figures.Bmy extends Visio.Figures.Exportable
 
     @g.append('g')
       .attr('class', 'x axis')
-      .attr('transform', "translate(0,#{@height})")
+      .attr('transform', "translate(0,#{@adjustedHeight})")
       .append("text")
 
 
 
   render: ->
-    filtered = @filtered @data
+    filtered = @filtered @collection
     @y.domain [0, d3.max(_.flatten(filtered), (d) -> d.amount)]
 
     lines = @g.selectAll('.budget-line').data(filtered, (d) -> d.budgetType)
@@ -144,6 +145,8 @@ class Visio.Figures.Bmy extends Visio.Figures.Exportable
       .call(@yAxis)
       .attr('transform', 'translate(-20,0)')
 
+    @
+
 
   reduceFn: (memo, budget) =>
     unless budget.get('year')
@@ -184,7 +187,7 @@ class Visio.Figures.Bmy extends Visio.Figures.Exportable
 
     return memo
 
-  filtered: (data) => _.chain(data).reduce(@reduceFn, []).value()
+  filtered: (collection) => _.chain(collection.models).reduce(@reduceFn, []).value()
 
   polygon: (d) ->
     return "M0 0" unless d? and d.length

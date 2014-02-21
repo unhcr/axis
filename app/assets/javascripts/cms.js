@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require underscore
+//= require hamlcoffee
 //= require backbone
 //= require ./vendor/d3.v3
 //= require visio
@@ -35,3 +36,4 @@
 //= require_tree ./vendor
 //= require_tree ./cms_vendor
 //= require manager
+//= stub backbone_ext

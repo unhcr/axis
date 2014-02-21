@@ -26,7 +26,7 @@ test 'filtered', ->
   ])
 
   @figure.isPerformanceFn true
-  filtered = @figure.filtered data.models
+  filtered = @figure.filtered data
   strictEqual filtered.length, 2
 
 
@@ -46,19 +46,19 @@ test 'data', ->
     }
   ])
 
-  @figure.dataFn data.models
-  strictEqual @figure.dataFn().length, 3
-  ok @figure.dataFn() instanceof Array
+  @figure.collectionFn data
+  strictEqual @figure.collectionFn().length, 3
+  ok @figure.collectionFn() instanceof Visio.Collections.IndicatorDatum
 
   @figure.isPerformanceFn false
-  @figure.dataFn data.models
-  strictEqual @figure.dataFn().length, 3
-  ok @figure.dataFn() instanceof Array
+  @figure.collectionFn data
+  strictEqual @figure.collectionFn().length, 3
+  ok @figure.collectionFn() instanceof Visio.Collections.IndicatorDatum
 
   @figure.isPerformanceFn(true)
-  @figure.dataFn data.models
-  strictEqual @figure.dataFn().length, 3
-  ok @figure.dataFn() instanceof Array
+  @figure.collectionFn data
+  strictEqual @figure.collectionFn().length, 3
+  ok @figure.collectionFn() instanceof Visio.Collections.IndicatorDatum
 
 test 'render', ->
   data = new Visio.Collections.IndicatorDatum([
@@ -92,7 +92,7 @@ test 'render', ->
   ])
 
   @figure.isPerformanceFn false
-  @figure.dataFn data.models
+  @figure.collectionFn data
   @figure.render()
 
   ok @figure.$el.find('.box').length, 1

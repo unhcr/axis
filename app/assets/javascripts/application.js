@@ -18,6 +18,8 @@
 //= require ./vendor/d3.v3
 //= require_tree ./templates
 //= require visio
+//= require backbone_ext
+//= require_tree ./mixins
 //= require ./collections/syncable
 //= require ./models/syncable
 //= require ./collections/parameter
@@ -25,7 +27,9 @@
 //= require ./collections/syncables/amount_type
 //= require ./models/syncables/amount_type
 //= require ./views/tooltips/d3_tooltip
-//= require ./figures/exportable
+//= require ./views/shared/dashboard
+//= require ./views/sliders/slider
+//= require ./figures/base
 //= require_tree ./views
 //= require_tree ./figures
 //= require_tree ./routers
@@ -33,5 +37,4 @@
 //= require_tree ./models
 //= require_tree ./collections
 //= require_tree ./vendor
-//= require_tree ./graphs
 //= require manager

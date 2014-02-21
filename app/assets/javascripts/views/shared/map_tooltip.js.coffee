@@ -16,7 +16,7 @@ class Visio.Views.MapTooltipView extends Backbone.View
     Visio.Parameters.GOALS,
     Visio.Parameters.OUTPUTS,
     Visio.Parameters.PROBLEM_OBJECTIVES,
-    Visio.Parameters.OUTPUTS
+    Visio.Parameters.INDICATORS
   ]
 
   boundingRect: null
@@ -53,8 +53,13 @@ class Visio.Views.MapTooltipView extends Backbone.View
     unless isRerender
       @$el.hide()
 
+      counts = {}
+      _.each @parameters, (parameter) =>
+        counts[parameter.plural] = @count parameter
+
       @$el.html @template({
         plan: @model.toJSON()
+        counts: counts
         situationAnalysisCategory: @model.strategySituationAnalysis().category
         parameters: @parameters
       })
@@ -127,7 +132,7 @@ class Visio.Views.MapTooltipView extends Backbone.View
     if @boundingRect.right < offset.left + $content.width() + padding
       dx = @boundingRect.right - (offset.left + $content.width() + padding)
 
-    Visio.FigureInstances.map.pan dx, dy
+    Visio.router.map.pan dx, dy
 
     @render(true)
 
@@ -135,6 +140,20 @@ class Visio.Views.MapTooltipView extends Backbone.View
     @$el.find('.tooltip-content').addClass('gone')
     @$el.find('.pin').removeClass('pin-extra-large')
     @render(true)
+
+  count: (type) ->
+    selectedStrategies = Visio.manager.get 'selected_strategies'
+    if _.isEmpty selectedStrategies
+      @model.get "#{type.plural}_count"
+    else
+      strategies = Visio.manager.strategies _.keys(selectedStrategies)
+      ids = []
+      strategies.each (strategy) ->
+        ids = _.union ids, _.keys(strategy.get("#{type.singular}_ids"))
+
+      ids = _.intersection ids, @model.get("#{type.singular}_ids")
+      ids.length
+
 
   isShrunk: () ->
     return @$el.find('.tooltip-content').hasClass('gone')

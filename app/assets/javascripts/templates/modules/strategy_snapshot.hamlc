@@ -1,59 +1,83 @@
 .strategy-snapshot
-  .row
-    .col-md-8.col-centered
-      .target-country-count.center-text
-        .ui-huge-number
-          = context.targetOperations.length
-        %div Target Countries
-      .col-md-3
-        .target-countries
-          .ui-blank-radio
-            %input#radio-all{
-              :checked => "checked",
-              :name => "plan",
-              :type => "radio",
-              :value => "all"}
-            %label{:for => "radio-all"} All
-          - _.each context.targetOperations, (operation) ->
-            .ui-blank-radio
-              %input{
-                :id => "radio-#{operation.id}",
-                :name => "plan",
-                :type => "radio",
-                :value => "#{operation.id}"}
-              %label{
-                :for => "radio-#{operation.id}"}
-                = operation.name
+  %a{:class => "export"} export
+  %section.row
+    .row
+      .pin.pin-medium{ :class => "pin-#{context.category}" }
+        .pin-tip
+        .pin-body
+    .row
+      .col-md-12
+        %h1.bold
+          = "#{Visio.manager.strategy().get('name')}."
+  .divider-light-gray.divider-full
+  %section.row
+    .col-md-6.col-sm-6
+      %h3
+        Strategy Overview.
+      %p
+        = Visio.manager.strategy().get('description')
+    .col-md-4.col-md-offset-2.links.col-sm-6
+      .col-md-4
+        %span Jump To:
+      .col-md-8.right-text
+        %a.row{ :href => "#isy" } Indicators Single Year
+        %a.row{ :href => "#absy" } Achievement vs. Budget
+        %a.row{ :href => "#bmy" } Budget over time
+  .row.divider-light-gray
+  %section.row
+    .row
+      .col-md-11
+        %h3
+          Target Countries
+      .col-md-1
+        .grid-view grid
+    .row
+      .col-md-12
+        .target-countries.row
+  .row.divider-light-gray
+  %section.row
+    .col-md-12
+      %h3
+        Education Key Figures.
+    .row.center-text
+      - for i in [0..3]
+        .col-md-3.col-sm-6{ :class => "keyFigure #{context.keyFigures[i].fn}" }
+          .ui-huge-number.number
+            0
+          %div
+            = context.keyFigures[i].human
+          %span.js-operation-name All&nbsp;Target&nbsp;Countries
 
-        - if context.targetOperations.length > context.max
-          %button.js-show-all.btn Show All
-      .col-md-9
-        .row
-          .col-md-4
-            .ui-big-number.total-indicators.center-text
+  .row.divider-light-gray
+  %section.row
+    .col-md-12
+      %h3
+        Impact Criticality.
+  .row
+    .col-md-4
+      The situation values range from:
+
+      %ul
+        %li 0.0
+        %li 0.5
+        %li 1.0
+
+      The more indicators in the green range, the higher the situation value. The situation value is calculated by adding the percentage of indicators in green and half the percentage of indicators in amber.
+
+    .col-md-8
+      .row
+        - _.each [0, 1, 2], (i) ->
+          .col-md-4.col-xs-6
+            .col-md-4.criticality{ :class => "#{context.criticalities[i]}-criticality" }
+            .col-md-8.count{ :class => "#{context.criticalities[i]}-count" }
               0
-            .center-text
-              .row Total No. of Indicators for
-              .row.ui-bright-yellow.js-operation-name All&nbsp;Target&nbsp;Countries
-          .col-md-7.zero-padding
-            - _.each context.resultTypes, (result) ->
-              .circle.col-md-3.zero-padding{:class => "#{result}-circle"}
-        .row
-          .col-md-4
-            .ui-big-number.expenditure.center-text
-              %span 95
-              = '%'
-            .meter
-              %span{:style => "width: 95%"}
-            .center-text
-              .row Total Spent for
-              .ui-bright-yellow.row.js-operation-name All Target Countries
-          .col-md-4
-            .ui-big-number.center-text.budget
-              $
-              %span 200M
-            .center-text
-              .row Total Budget for
-              .row.ui-bright-yellow.js-operation-name All Target Countries
-  .row.js-extra-target-countries.gone
-    .col-md-8.col-centered
+        .col-md-4.col-xs-6
+          .col-md-4.criticality{ :class => "#{context.criticalities[3]}-criticality" }
+          .col-md-8.count{ :class => "#{context.criticalities[3]}-count" }
+            0
+        .col-md-4.col-md-offset-4.col-xs-6
+          Values out of/
+          %span.ui-small-header.total-count 0
+
+.actions
+

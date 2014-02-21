@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140210081251) do
+ActiveRecord::Schema.define(:version => 20140220162236) do
 
   create_table "budgets", :force => true do |t|
     t.string   "budget_type"
@@ -178,6 +178,7 @@ ActiveRecord::Schema.define(:version => 20140210081251) do
     t.boolean  "is_performance"
     t.integer  "year"
     t.datetime "found_at"
+    t.boolean  "missing_budget",       :default => false
   end
 
   add_index "indicator_data", ["created_at", "updated_at"], :name => "index_indicator_data_on_created_at_and_updated_at"
@@ -237,6 +238,7 @@ ActiveRecord::Schema.define(:version => 20140210081251) do
     t.datetime "updated_at",                    :null => false
     t.boolean  "is_deleted", :default => false
     t.datetime "found_at"
+    t.integer  "country_id"
   end
 
   create_table "operations_outputs", :id => false, :force => true do |t|
@@ -272,7 +274,6 @@ ActiveRecord::Schema.define(:version => 20140210081251) do
   create_table "outputs", :id => false, :force => true do |t|
     t.string   "id",                            :null => false
     t.string   "name"
-    t.string   "priority"
     t.datetime "created_at",                    :null => false
     t.datetime "updated_at",                    :null => false
     t.boolean  "is_deleted", :default => false
@@ -567,7 +568,6 @@ ActiveRecord::Schema.define(:version => 20140210081251) do
   create_table "users", :force => true do |t|
     t.datetime "created_at",                                :null => false
     t.datetime "updated_at",                                :null => false
-    t.string   "email",                  :default => "",    :null => false
     t.string   "encrypted_password",     :default => "",    :null => false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
@@ -580,9 +580,9 @@ ActiveRecord::Schema.define(:version => 20140210081251) do
     t.string   "firstname"
     t.string   "lastname"
     t.boolean  "reset_local_db",         :default => false
+    t.string   "login",                  :default => "",    :null => false
   end
 
-  add_index "users", ["email"], :name => "index_users_on_email", :unique => true
-  add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
+  add_index "users", ["login"], :name => "index_users_on_login"
 
 end

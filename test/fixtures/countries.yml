@@ -7,3 +7,11 @@ one:
 two:
   un_names: [congo]
   iso3: COG
+
+three:
+  un_names: [kenya, kbaby]
+  iso3: GOD
+
+four:
+  un_names: [kenya baby, what]
+  iso3: TRK

@@ -80,9 +80,12 @@ namespace :build do
     include CountryHelper
 
     Plan.all.each do |plan|
-      match_plan_to_country(plan)
+      match_model_to_country(plan, plan.operation_name)
     end
 
+    Operation.all.each do |operation|
+      match_model_to_country(operation, operation.name)
+    end
   end
 end
 

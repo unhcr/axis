@@ -1,3 +1,10 @@
+GIT
+  remote: git://github.com/benrudolph/shrimp.git
+  revision: 8d2245068883bdf6d7fef8d00ca03bbc191f6ff2
+  specs:
+    shrimp (0.0.3)
+      json
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -73,6 +80,9 @@ GEM
       railties (>= 3.2.6, < 5)
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
+    devise_ldap_authenticatable (0.8.1)
+      devise (>= 3.0)
+      net-ldap (>= 0.3.1, < 0.6.0)
     diff-lcs (1.2.5)
     docile (1.1.1)
     eco (1.0.0)
@@ -121,6 +131,7 @@ GEM
     mini_portile (0.5.2)
     multi_json (1.8.4)
     mysql2 (0.3.14)
+    net-ldap (0.3.1)
     net-scp (1.1.2)
       net-ssh (>= 2.6.5)
     net-sftp (2.1.2)
@@ -205,8 +216,6 @@ GEM
       multi_json (~> 1.0)
       rubyzip (~> 1.0)
       websocket (~> 1.0.4)
-    shrimp (0.0.3)
-      json
     simplecov (0.8.2)
       docile (~> 1.1.0)
       multi_json
@@ -261,6 +270,7 @@ DEPENDENCIES
   coffee-rails (~> 3.2.1)
   compass-rails
   devise
+  devise_ldap_authenticatable
   equivalent-xml
   execjs
   figaro
@@ -285,7 +295,7 @@ DEPENDENCIES
   rubyzip
   sass-rails (~> 3.2.3)
   selenium-webdriver (~> 2.38.0)
-  shrimp
+  shrimp!
   simplecov
   single_test
   sqlite3
