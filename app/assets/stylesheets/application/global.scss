@@ -994,7 +994,7 @@ a {
     height: 0;
     border-top: ($pin-medium / 2) solid transparent;
     border-bottom: ($pin-medium / 2) solid transparent;
-    border-left: ($pin-medium / 2) solid $fail-dark;
+    border-left: ($pin-medium / 2) solid $neutral-dark;
     position:absolute;
     right: 0;
     bottom: 0;
@@ -1002,7 +1002,7 @@ a {
   .pin-body {
     width: $pin-medium;
     height: 1.5 * $pin-medium;
-    background-color: $fail;
+    background-color: $neutral;
     position: absolute;
   }
 }
@@ -1057,11 +1057,11 @@ a {
 
 .pin.pin-white {
   .pin-tip {
-    border-left-color: $light-gray;
+    border-left-color: $neutral-dark;
   }
 
   .pin-body {
-    background-color: $white;
+    background-color: $neutral;
   }
 }
 
