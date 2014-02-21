@@ -1,61 +1,71 @@
 %h2 Achievement
 
-%form
+%form{ 'parsley-validate' => true }
   .row
     .col-md-3
       %label{ :for => 'achievement_missing_budget' } Missing Budget
     .col-md-3
-      %select{ :id => 'achievement_missing_budget' }
-        %option{ :value => true } Yes
-        %option{ :value => false } No
+      %select{ :name => 'missing_budget', :id => 'achievement_missing_budget' }
+        %option{ :value => 'true' } Yes
+        %option{ :value => 'false', :selected => true } No
 
   .row
     .col-md-3
       %label{ :for => 'achievement_is_performance' } Indicator Type
     .col-md-3
-      %select{ :id => 'achievement_is_performance' }
-        %option{ :value => true } Performance
-        %option{ :value => false } Impact
-
-  .row
-    .col-md-3
-      %label{ :for => 'achievement_achievement_type' } Goal Type
-    .col-md-3
-      %select{ :id => 'achievement_achievement_type' }
-        - _.each _.values(Visio.Algorithms.GOAL_TYPES), (type) ->
-          %option{ :value => type }
-            = type
-
-  .row
-    .col-md-3
-      %label{ :for => 'achievement_reported_type' } Reported Value
-    .col-md-3
-      %select{ :id => 'achievement_reported_type' }
-        %option{ :value => 'myr' } MYR
-        %option{ :value => 'yer' } YER
+      %select{ :name => 'is_performance', :id => 'achievement_is_performance' }
+        %option{ :value => 'true', :selected => true } Performance
+        %option{ :value => 'false' } Impact
 
   .row
     .col-md-3
       %label{ :for => 'achievement_reversal' } Reversal
     .col-md-3
-      %select{ :id => 'achievement_reversal' }
-        %option{ :value => false } No
-        %option{ :value => true } Yes
+      %select{ :name => 'reversal', :id => 'achievement_reversal' }
+        %option{ :value => 'false', :selected => true } No
+        %option{ :value => 'true' } Yes
 
   .row
     .col-md-3
       %label{ :for => 'achievement_baseline' } Baseline
     .col-md-3
-      %input{ :id => 'achievement_baseline', :type => 'text' }
+      %input{ :name => 'baseline', :value => 0, :id => 'achievement_baseline', :type => 'number' }
   .row
     .col-md-3
-      %label{ :for => 'achievement_reported_value' } Reported Value
+      %label{ :for => 'achievement_myr' } MYR
     .col-md-3
-      %input{ :id => 'achievement_reported_value', :type => 'text' }
+      %input{ :name => 'myr', :value => 0, :id => 'achievement_myr', :type => 'number' }
+
   .row
     .col-md-3
-      %label{ :for => 'achievement_goal_value' } Goal Value
+      %label{ :for => 'achievement_yer' } YER
     .col-md-3
-      %input{ :id => 'achievement_goal_value', :type => 'text' }
+      %input{ :name => 'yer', :value => 0, :id => 'achievement_yer', :type => 'number' }
+
+  .row
+    .col-md-3
+      %label{ :for => 'achievement_comp_target' } Target
+    .col-md-3
+      %input{ :name => 'comp_target', :value => 0, :id => 'achievement_comp_target', :type => 'number' }
+
+  .row.gone
+    .col-md-3
+      %label{ :for => 'achievement_standard' } Standard
+    .col-md-3
+      %input{ :name => 'standard', :value => 0, :id => 'achievement_standard', :type => 'number' }
+
+  .row
+    .col-md-3
+      %input{ :type => 'submit', :value => 'Create Indicator' }
+
+.row
+  .col-md-12
+    .indicators
 
 
+.row
+  .col-md-12
+    %button.run Run Achievement Algorithm!
+
+.row
+  .col-md-12.results

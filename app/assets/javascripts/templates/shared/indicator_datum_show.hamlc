@@ -1,0 +1,11 @@
+.row.name
+  .col-md-12
+    Indicator
+
+.row.gone.info
+  .col-md-12
+    - for key, val of context.model.toJSON()
+      .row
+        .col-md-12
+          = key + ' - ' + val
+

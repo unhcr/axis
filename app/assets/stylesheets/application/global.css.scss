@@ -1908,3 +1908,14 @@ a {
   margin-top: $parameter-show-padding-vertical / 2;
   padding-bottom: $parameter-show-padding-vertical;
 }
+
+.indicator-datum {
+  margin: 5px;
+  background-color: $orange;
+  cursor: pointer;
+}
+
+.indicator-datum:hover {
+  background-color: darken($orange, 5%);
+}
+
