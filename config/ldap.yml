@@ -41,11 +41,11 @@ test:
   # <<: *AUTHORIZATIONS
 
 production:
-  host: localhost
+  host: SWIGEC33.SWIGE.unhcr.org
   port: 636
-  attribute: cn
-  base: ou=people,dc=test,dc=com
-  admin_user: cn=admin,dc=test,dc=com
-  admin_password: admin_password
-  ssl: start_tls
+  attribute: uid
+  base: ou=Internal,ou=People,dc=unhcr,dc=org
+  #admin_user: cn=admin,dc=test,dc=com
+  #admin_password: admin_password
+  ssl: true
   # <<: *AUTHORIZATIONS
