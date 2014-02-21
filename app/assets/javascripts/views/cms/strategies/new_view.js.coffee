@@ -108,7 +108,6 @@ class Visio.Views.StrategyCMSEditView extends Backbone.View
                   # Wrap in closure so that done function properly refers to correct field
                   ((type) =>
                     collections[type].fetch(data: data, remove: false).done (response) =>
-                      console.log type
                       callback collections[type]
                       followingFormField.editor.setSelected @selectedIndexes(collections[type], selected)
                   )(cascadingField.plural)
