@@ -6,7 +6,7 @@ gem 'equivalent-xml'
 gem 'rubyzip'
 gem 'pdfkit'
 gem 'quoth'
-gem 'shrimp', :git => 'git://github.com/benrudolph/shrimp.git'
+gem 'shrimp', :git => 'https://github.com/benrudolph/shrimp.git'
 gem 'pony'
 gem 'whenever', :require => false
 gem "devise_ldap_authenticatable"
