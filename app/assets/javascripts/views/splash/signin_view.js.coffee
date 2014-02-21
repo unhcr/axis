@@ -18,8 +18,6 @@ class Visio.Views.SigninView extends Backbone.View
     e.preventDefault()
     e.stopPropagation()
 
-    console.log 'clicked login'
-
     $login = @$el.find('.login')
     $password = @$el.find('.password')
 
@@ -31,9 +29,15 @@ class Visio.Views.SigninView extends Backbone.View
     Visio.Utils.flash($password, 'This field is required') unless password
 
     if login && password
-      Visio.Utils.signin(login, password, () =>
-        window.location.href = '/'
-      )
+      Visio.Utils.signin(login, password).done (resp) =>
+        if resp.success
+          window.location.href = '/'
+        else
+          $login.val('')
+          $password.val('')
+          Visio.Utils.flash($login, 'Authentication Failed')
+          Visio.Utils.flash($password, 'Authentication Failed')
+
 
   onFocus: (e) ->
     $('body').addClass('ui-primary-dark-theme')

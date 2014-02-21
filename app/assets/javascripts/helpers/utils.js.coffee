@@ -1,4 +1,4 @@
-Visio.Utils.signin = (login, password, callback) ->
+Visio.Utils.signin = (login, password) ->
   data =
     remote: true
     commit: "Sign in"
@@ -8,11 +8,7 @@ Visio.Utils.signin = (login, password, callback) ->
       password: password
       login: login
 
-  $.post('/users/sign_in.json', data, (resp) ->
-    console.log resp
-    if callback
-      callback(resp)
-  )
+  $.post('/users/sign_in.json', data)
 
 
 Visio.Utils.signup = (firstname, lastname, login, password, passwordConf, callback) ->
