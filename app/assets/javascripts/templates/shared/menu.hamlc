@@ -1,0 +1,19 @@
+.row
+  .medium-item.ui-medium-header.light.col-md-8.col-centered
+    %a{:href => "/"} HOME
+- _.each context.strategies, (strategy) ->
+  .row.divider-stack-orange
+  .row
+    .medium-item.ui-medium-header.light.col-md-8.col-centered
+      %a{:href => "/overview?strategy_id=#{strategy.id}"}
+        = strategy.name.toUpperCase()
+.row
+  .medium-item.ui-medium-header
+    &nbsp;
+.row
+  .medium-item.ui-medium-header.light.col-md-8.col-centered
+    %a{:href => "/archive"} ARCHIVE
+.row.divider-stack-orange
+.row
+  .medium-item.ui-medium-header.light.col-md-8.col-centered
+    %a{:href => "/quicklinks"} QUICKLINKS

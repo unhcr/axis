@@ -1,19 +1,29 @@
 class StrategyObjective < ActiveRecord::Base
+  include Tire::Model::Search
+  include Tire::Model::Callbacks
+
   attr_accessible :description, :name
   belongs_to :strategy
 
   default_scope :include => [:goals, :problem_objectives, :outputs, :indicators]
 
-  has_and_belongs_to_many :goals, :uniq => true,
+  has_many :goals_strategy_objectives, :class_name => 'GoalsStrategyObjectives'
+  has_many :goals, :uniq => true, :through => :goals_strategy_objectives,
     :after_add => :add_to_strategy,
     :after_remove => :remove_from_strategy
-  has_and_belongs_to_many :problem_objectives, :uniq => true,
+
+  has_many :problem_objectives_strategy_objectives, :class_name => 'ProblemObjectivesStrategyObjectives'
+  has_many :problem_objectives, :uniq => true, :through => :problem_objectives_strategy_objectives,
     :after_add => :add_to_strategy,
     :after_remove => :remove_from_strategy
-  has_and_belongs_to_many :outputs, :uniq => true,
+
+  has_many :outputs_strategy_objectives, :class_name => 'OutputsStrategyObjectives'
+  has_many :outputs, :uniq => true, :through => :outputs_strategy_objectives,
     :after_add => :add_to_strategy,
     :after_remove => :remove_from_strategy
-  has_and_belongs_to_many :indicators, :uniq => true,
+
+  has_many :indicators_strategy_objectives, :class_name => 'IndicatorsStrategyObjectives'
+  has_many :indicators, :uniq => true, :through => :indicators_strategy_objectives,
     :after_add => :add_to_strategy,
     :after_remove => :remove_from_strategy
 
@@ -25,7 +35,22 @@ class StrategyObjective < ActiveRecord::Base
     self.strategy.send(assoc.class.table_name).delete(assoc) if self.strategy
   end
 
+  def self.search_models(query, options = {})
+    return [] if !query || query.empty?
+    options[:page] ||= 1
+    options[:per_page] ||= 6
+    s = self.search(options) do
+      query { string "name:#{query}" }
+
+      highlight :name
+    end
+    s
+  end
+
+
   def to_jbuilder(options = {})
+    options ||= {}
+    options[:include] ||= {}
     Jbuilder.new do |json|
       json.extract! self, :name, :id, :description, :strategy_id
 
@@ -33,6 +58,13 @@ class StrategyObjective < ActiveRecord::Base
       json.problem_objectives self.problem_objectives
       json.outputs self.outputs
       json.indicators self.indicators
+
+      json.goal_ids self.goal_ids if options[:include][:goal_ids].present?
+      json.output_ids self.output_ids if options[:include][:output_ids].present?
+      if options[:include][:problem_objective_ids].present?
+        json.problem_objective_ids self.problem_objective_ids
+      end
+      json.indicator_ids self.indicator_ids if options[:include][:indicator_ids].present?
     end
   end
 

@@ -1,0 +1,5 @@
+.search-item{ :data => { :id => context.model.id } }
+  - if context.model.highlight()
+    != context.model.highlight()
+  - else
+    = context.model.toString()

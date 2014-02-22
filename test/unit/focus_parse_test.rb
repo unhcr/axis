@@ -4,10 +4,13 @@ class FocusParseTest < ActiveSupport::TestCase
 
   TESTFILE_PATH = "#{Rails.root}/test/files/"
   TESTFILE_NAME = "PlanTest.xml"
+  SIMPLEFILE_NAME = "SimplePlanTest.xml"
+  PRESENT_BUDGET_NAME = "PresentBudgetPlanTest.xml"
   DELETED_TESTFILE_NAME = "DeletedPlanTest.xml"
   TESTFILE_NAME_2 = "PlanTest2.xml"
   TESTFILE_NAME_DIFFERENT = "PlanTestDifferent.xml"
   UPDATED_TESTFILE_NAME = "UpdatedPlanTest.xml"
+  UPDATED_SIMPLEFILE_NAME = "UpdatedSimplePlanTest.xml"
   TESTHEADER_NAME = "HeaderTest.xml"
   PLAN_TYPES = ['ONEPLAN']
 
@@ -36,6 +39,40 @@ class FocusParseTest < ActiveSupport::TestCase
     IndicatorDatum.destroy_all
     Operation.destroy_all
     Budget.delete_all
+  end
+
+  test "budget update" do
+    file = File.read(TESTFILE_PATH + TESTHEADER_NAME)
+    parse_header(file, PLAN_TYPES)
+
+    file = File.read(TESTFILE_PATH + SIMPLEFILE_NAME)
+    parse_plan(file)
+
+    updated_file = File.read(TESTFILE_PATH + UPDATED_SIMPLEFILE_NAME)
+    parse_plan(updated_file)
+
+    assert_equal 2, Budget.count, 'There should be 2 budgets'
+    Budget.all.each { |b| assert b.operation }
+
+  end
+
+  test "missing budget" do
+    file = File.read(TESTFILE_PATH + TESTHEADER_NAME)
+    parse_header(file, PLAN_TYPES)
+
+    file = File.read(TESTFILE_PATH + SIMPLEFILE_NAME)
+    parse_plan(file)
+
+    assert_equal IndicatorDatum.count, 1, 'Should have 1 datum'
+    d = IndicatorDatum.first
+    assert d.missing_budget?
+
+    file = File.read(TESTFILE_PATH + PRESENT_BUDGET_NAME)
+    parse_plan(file)
+
+    assert_equal 2, IndicatorDatum.count, 'Should have 2 datum'
+    assert_equal 1, IndicatorDatum.where(:missing_budget => true).count, '1 should have a missing budget'
+    assert_equal 1, IndicatorDatum.where(:missing_budget => false).count, '1 should not have a missing budget'
   end
 
   test "two separate plans" do
@@ -90,7 +127,7 @@ class FocusParseTest < ActiveSupport::TestCase
       assert_equal 0, models[:updated].count, "#{resource} updated wrong number of resources"
     end
     ids = {}
-    [Plan, Ppg, Goal, ProblemObjective, Output, Indicator].each do |resource|
+    [Operation, Ppg, Goal, ProblemObjective, Output, Indicator].each do |resource|
       ids["#{resource.table_name.singularize}_ids".to_sym] = resource.all.map(&:id)
     end
     [Budget].each do |resource|

@@ -7,7 +7,7 @@ class Visio.Collections.Syncable extends Backbone.Collection
   limit: 10000
 
   store: () ->
-    @name + '_store'
+    @name.plural + '_store'
 
   setSynced: (parameters, timestampId) ->
     db = Visio.manager.get('db')
@@ -35,7 +35,7 @@ class Visio.Collections.Syncable extends Backbone.Collection
     db = Visio.manager.get('db')
     db.values(@store(), undefined, @limit)
 
-  fetchSynced: (options, url) ->
+  fetchSynced: (options, url, method = 'get') ->
     db = Visio.manager.get('db')
     options ||= {}
 
@@ -48,10 +48,10 @@ class Visio.Collections.Syncable extends Backbone.Collection
     $.when(Visio.manager.getSyncDate(timestampId)).then((record) =>
       timestamp = if record then record.synced_timestamp / 1000 else undefined
       options.synced_timestamp = timestamp
-      return $.get(url, options)
+      return $[method](url, options)
     ).done((parameters) =>
       @setSynced(parameters, timestampId)
-    ).done((ids) =>
+    ).done((id) =>
       @getSynced()
     ).done((records) =>
       @reset(records)

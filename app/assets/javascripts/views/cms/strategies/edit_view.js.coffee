@@ -1,6 +1,6 @@
 class Visio.Routers.StrategyCMSEditView extends Backbone.View
 
-  template: JST['cms/strategies/edit']
+  template: HAML['cms/strategies/edit']
 
   initialize: ->
     @render()

@@ -4,6 +4,7 @@ class Visio.Models.StrategyObjective extends Visio.Models.Parameter
     Backbone.Model.apply @, arguments
 
   initialize: (options) ->
+    options or= {}
     @set(Visio.Parameters.GOALS.plural,
       new Visio.Collections.Goal((options[Visio.Parameters.GOALS.plural] || [])))
     @set(Visio.Parameters.PROBLEM_OBJECTIVES.plural,
@@ -12,6 +13,8 @@ class Visio.Models.StrategyObjective extends Visio.Models.Parameter
       new Visio.Collections.Output((options[Visio.Parameters.OUTPUTS.plural] || [])))
     @set(Visio.Parameters.INDICATORS.plural,
       new Visio.Collections.Indicator((options[Visio.Parameters.INDICATORS.plural] || [])))
+
+  name: Visio.Parameters.STRATEGY_OBJECTIVES
 
   urlRoot: '/strategy_objectives'
 
@@ -40,24 +43,9 @@ class Visio.Models.StrategyObjective extends Visio.Models.Parameter
         callback(new Visio.Collections.Indicator())
 
   defaults:
-    'name': ''
-    'description': ''
+    'name': 'Everyday'
+    'description': 'Hustlin\''
 
   toString: ->
     @get 'name'
 
-  selectedIndicatorData: ->
-    return new Visio.Collections.IndicatorDatum(Visio.manager.get('indicator_data').filter((d) =>
-      _.include(d.get("#{Visio.Parameters.STRATEGY_OBJECTIVES.singular}_ids"), @id) and
-        d.get('year') == Visio.manager.year()))
-
-  strategyIndicatorData: ->
-    @selectedIndicatorData()
-
-  selectedBudgetData: ->
-    return new Visio.Collections.Budget(Visio.manager.get('budgets').filter((d) =>
-      _.include(d.get("#{Visio.Parameters.STRATEGY_OBJECTIVES.singular}_ids"), @id) and
-        d.get('year') == Visio.manager.year()))
-
-  strategyBudgetData: ->
-    @selectedBudgetData()

@@ -4,4 +4,4 @@ class Visio.Collections.StrategyObjective extends Visio.Collections.Parameter
 
   url: '/strategy_objectives'
 
-  name: Visio.Parameters.STRATEGY_OBJECTIVES.plural
+  name: Visio.Parameters.STRATEGY_OBJECTIVES

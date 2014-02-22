@@ -1,8 +1,8 @@
 class Visio.Views.SearchView extends Backbone.View
 
-  template: JST['shared/search']
+  template: HAML['shared/search']
 
-  itemTemplate: JST['shared/search_item']
+  itemTemplate: HAML['shared/search_item']
 
   initialize: (options) ->
     @render()
@@ -33,7 +33,7 @@ class Visio.Views.SearchView extends Backbone.View
     @hide()
 
   search: (query) =>
-    searchTypes = [Visio.Parameters.INDICATORS, Visio.Syncables.OPERATIONS]
+    searchTypes = [Visio.Parameters.INDICATORS, Visio.Parameters.OPERATIONS]
     $.get('/global_search', { query: query }).done (response) =>
       $results = @$el.find('.results')
       if _.any(searchTypes, (hash) -> response[hash.plural].length > 0)
@@ -44,8 +44,8 @@ class Visio.Views.SearchView extends Backbone.View
 
       _.each searchTypes, (hash) =>
         html = ''
-        _.each response[hash.plural], (result) =>
-          html += @itemTemplate( result: result.highlight.name[0] )
+        _.each response[hash.plural], (elasticModel) =>
+          html += @itemTemplate( model: new Visio.Models[hash.className](elasticModel) )
 
         if html
           $results.find(".#{hash.singular}-results").html html

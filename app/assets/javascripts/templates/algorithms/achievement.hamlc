@@ -1,0 +1,108 @@
+%h1
+  Algorithms
+.algorithms
+  .row
+    .col-md-12
+      %input{ :value => 'achievement',
+              :checked => true,
+              :type => 'radio',
+              :name => 'algorithm',
+              :id => 'achievement' }
+      %label{ :for => 'achievement' }
+        = 'Achievement'
+
+  .row
+    .col-md-12
+      %input{ :value => 'situationAnalysis',
+              :checked => false,
+              :type => 'radio',
+              :name => 'algorithm',
+              :id => 'situationAnalysis' }
+      %label{ :for => 'situationAnalysis' }
+        = 'Situation Analysis'
+
+%h2
+  = context.algorithm
+
+%form{ 'parsley-validate' => true }
+  .row
+    .col-md-3
+      %label{ :for => 'missing_budget' } Missing Budget
+    .col-md-3
+      %select{ :name => 'missing_budget', :id => 'missing_budget' }
+        %option{ :value => 'true' } Yes
+        %option{ :value => 'false', :selected => true } No
+
+  .row
+    .col-md-3
+      %label{ :for => 'is_performance' } Indicator Type
+    .col-md-3
+      %select{ :name => 'is_performance', :id => 'is_performance' }
+        %option{ :value => 'true', :selected => true } Performance
+        %option{ :value => 'false' } Impact
+
+  .row
+    .col-md-3
+      %label{ :for => 'reversal' } Reversal
+    .col-md-3
+      %select{ :name => 'reversal', :id => 'reversal' }
+        %option{ :value => 'false', :selected => true } No
+        %option{ :value => 'true' } Yes
+
+  .row
+    .col-md-3
+      %label{ :for => 'baseline' } Baseline
+    .col-md-3
+      %input{ :name => 'baseline', :value => 0, :id => 'baseline', :type => 'number' }
+  .row
+    .col-md-3
+      %label{ :for => 'myr' } MYR
+    .col-md-3
+      %input{ :name => 'myr', :value => 0, :id => 'myr', :type => 'number' }
+
+  .row
+    .col-md-3
+      %label{ :for => 'yer' } YER
+    .col-md-3
+      %input{ :name => 'yer', :value => 0, :id => 'yer', :type => 'number' }
+
+  .row
+    .col-md-3
+      %label{ :for => 'comp_target' } Target
+    .col-md-3
+      %input{ :name => 'comp_target', :value => 0, :id => 'comp_target', :type => 'number' }
+
+  .row.impact-only.gone
+    .col-md-3
+      %label{ :for => 'standard' } Standard
+    .col-md-3
+      %input{ :name => 'standard', :value => 0, :id => 'standard', :type => 'number' }
+
+  .row.impact-only.gone
+    .col-md-3
+      %label{ :for => 'threshold_green' } Threshold Green
+    .col-md-3
+      %input{ :name => 'threshold_green', :value => 0, :id => 'threshold_green', :type => 'number' }
+
+  .row.impact-only.gone
+    .col-md-3
+      %label{ :for => 'threshold_red' } Threshold Red
+    .col-md-3
+      %input{ :name => 'threshold_red', :value => 0, :id => 'threshold_red', :type => 'number' }
+
+
+  .row
+    .col-md-3
+      %input{ :type => 'submit', :value => 'Create Indicator' }
+
+.row
+  .col-md-12
+    .indicators
+
+
+.row
+  .col-md-12
+    %button.run Run Algorithm!
+
+.row
+  .col-md-12.results

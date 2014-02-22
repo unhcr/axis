@@ -14,62 +14,81 @@ task :clear => :environment do
   Budget.delete_all
 end
 
-task :fetch => :environment do
+namespace :build do
 
-  n = ENV['n']
+  task :msrp => :environment do
+    n = ENV['n']
+    n = n.to_i unless n.nil?
 
-  n = n.nil? ? 1.0/0.0 : n.to_i
+    p 'Fetching MSRP data'
 
-  p 'Fetching FOCUS data'
+    include MsrpFetch
+    start = Time.now
 
-  include FocusFetch
+    fetch n
 
-  ret = fetch n
-  p 'Finished fetching'
-  p '-----------------'
-  p "Files Read: #{ret[:files_read]}"
-  p "Files Total: #{ret[:files_total]}"
+    p "Finished fetching MSRP data in: #{Time.now - start}"
 
-end
 
-task :init_countries => :environment do
-  file = open("#{Rails.root}/data/countries.json")
-  json = file.read
-
-  require "csv"
-
-  parsed = JSON.parse(json)
-
-  parsed.each do |c|
-    country = Country.find_or_create_by_iso3({
-      :name => c["name"],
-      :latlng => c["latlng"],
-      :iso3 => c["cca3"],
-      :iso2 => c["cca2"],
-      :region => c["region"],
-      :subregion => c["subregion"]
-    })
   end
 
-  CSV.foreach("#{Rails.root}/data/uniso.csv", :headers => true) do |row|
-    country = Country.where(:iso3 => row["ISO"]).first
-    p "No country found for #{row["ISO"]}" and next unless country
-    country.un_names << row["Country"] unless country.un_names.include? row["Country"]
-    country.save
+  task :focus => :environment do
+
+    n = ENV['n']
+
+    n = n.nil? ? 1.0/0.0 : n.to_i
+
+    p 'Fetching FOCUS data'
+
+    include FocusFetch
+    start = Time.now
+
+    ret = fetch n
+    p "Finished fetching FOCUS data in: #{Time.now - start}"
+    p '-----------------'
+    p "Files Read: #{ret[:files_read]}"
+    p "Files Total: #{ret[:files_total]}"
+
   end
 
-end
+  task :countries => :environment do
+    file = open("#{Rails.root}/data/countries.json")
+    json = file.read
 
-task :match_plans_to_country => :environment do
-  p 'No countries loaded' and return unless Country.count > 0
+    require "csv"
 
-  include CountryHelper
+    parsed = JSON.parse(json)
 
-  Plan.all.each do |plan|
-    match_plan_to_country(plan)
+    parsed.each do |c|
+      country = Country.find_or_create_by_iso3({
+        :name => c["name"],
+        :latlng => c["latlng"],
+        :iso3 => c["cca3"],
+        :iso2 => c["cca2"],
+        :region => c["region"],
+        :subregion => c["subregion"]
+      })
+    end
+
+    CSV.foreach("#{Rails.root}/data/uniso.csv", :headers => true) do |row|
+      country = Country.where(:iso3 => row["ISO"]).first
+      p "No country found for #{row["ISO"]}" and next unless country
+      country.un_names << row["Country"] unless country.un_names.include? row["Country"]
+      country.save
+    end
+
+    include CountryHelper
+
+    Plan.all.each do |plan|
+      match_model_to_country(plan, plan.operation_name)
+    end
+
+    Operation.all.each do |operation|
+      match_model_to_country(operation, operation.name)
+    end
   end
-
 end
+
 
 task :load_sample_strategy => :environment do
 

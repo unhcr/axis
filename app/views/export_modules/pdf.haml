@@ -1,0 +1,35 @@
+:javascript
+  $(document).ready(function() {
+
+    Visio.manager = new Visio.Models.Manager({
+      state: #{@export_module.state.to_json},
+      ready: function() {
+        var config = #{@export_module.to_json};
+        Visio.router = new Visio.Routers.PdfRouter({ config: config });
+        Backbone.history.start();
+
+      }
+    })
+    window.PhantomJSPrinting = {
+      header: {
+        height: "2.5cm",
+        contents: function(pageNum, numPages) {
+          return window.HAML['pdf/header']({
+            pageNum: pageNum,
+            numPages: numPages,
+            figureType: #{@export_module.figure_type.to_json}
+          });
+        }
+      },
+      footer: {
+        height: "1cm",
+        contents: function(pageNum, numPages) {
+          return window.HAML['pdf/footer']({
+            pageNum: pageNum,
+            numPages: numPages
+          });
+        }
+      }
+    };
+
+  })

@@ -3,7 +3,10 @@ module 'Budget',
     Visio.user = new Visio.Models.User()
     Visio.manager = new Visio.Models.Manager()
 
-test 'budget', () ->
+  teardown: ->
+    Visio.manager.get('db').clear()
+
+test 'amount', () ->
 
   budgets = new Visio.Collections.Budget([
     {
@@ -27,13 +30,14 @@ test 'budget', () ->
 
   ])
 
-  total = budgets.budget()
+  total = budgets.amount()
   strictEqual(total, 60)
 
   Visio.manager.get('scenario_type')[Visio.Scenarios.OL] = false
-  total = budgets.budget()
-  strictEqual(total, 40)
+  total = budgets.amount()
+  strictEqual(total, 60)
 
+  # Should be dependent on filters from datums
   Visio.manager.get('budget_type')[Visio.Budgets.PROJECT] = false
-  total = budgets.budget()
-  strictEqual(total, 10)
+  total = budgets.amount()
+  strictEqual(total, 60)

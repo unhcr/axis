@@ -1,4 +1,7 @@
 class ApplicationController < ActionController::Base
+  rescue_from DeviseLdapAuthenticatable::LdapException do |exception|
+    render :text => exception, :status => 500
+  end
   protect_from_forgery
 
   @@map = File.read("#{Rails.root}/public/world_50m_topo.json")
@@ -42,8 +45,12 @@ class ApplicationController < ActionController::Base
     end
 
     render :json => {
-      :indicators => Indicator.paged(query),
-      :operations => Operation.paged(query)
+      :indicators => Indicator.search_models(query),
+      :operations => Operation.search_models(query)
     }
+  end
+
+  def algorithms
+    render :layout => 'application'
   end
 end

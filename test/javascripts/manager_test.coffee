@@ -192,16 +192,13 @@ test 'resetSelectedDefaults', () ->
   Visio.manager.resetSelectedDefaults()
 
   _.each _.values(Visio.Parameters), (hash) ->
-    if hash.plural != Visio.Parameters.PLANS.plural
-      strictEqual(_.keys(Visio.manager.get('selected')[hash.plural]).length, 2)
-    else
-      strictEqual(_.keys(Visio.manager.get('selected')[hash.plural]).length, 1)
+    strictEqual(_.keys(Visio.manager.get('selected')[hash.plural]).length, 2)
 
 test 'selectedStrategyPlanIds', ->
   strategies = [
     { id: 1, plan_ids: { 1: true , 2: true } },
     { id: 2, plan_ids: { 2: true, 3: true } },
-    { id: 3, plan_ids: { 4: true } }]
+    { id: 3, plan_ids: { 4: true, 2: true } }]
   selectedStrategies = {}
   plans = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }]
   Visio.manager.get('strategies').reset(strategies)
@@ -233,12 +230,12 @@ test 'validation', ->
 
   throws(
     () ->
-      Visio.manager.set(Visio.Parameters.PLANS.plural, new Visio.Collections.Ppg())
+      Visio.manager.set(Visio.Parameters.OPERATIONS.plural, new Visio.Collections.Ppg())
     , /mismatched/, 'Raise a mismatch error')
 
   throws(
     () ->
-      Visio.manager.set(Visio.Parameters.PLANS.plural, undefined)
+      Visio.manager.set(Visio.Parameters.OPERATIONS.plural, undefined)
     , /mismatched/, 'Raise a mismatch error')
 
   throws(
@@ -255,3 +252,19 @@ test 'validation', ->
     () ->
       Visio.manager.set('achievement_type', 'abcdef')
     , /achievement_type/, 'Raise a wrong achievement_type error')
+
+test 'select', ->
+
+  ids = [1, 2, 'abc']
+  for key, hash of Visio.Parameters
+    Visio.manager.select hash.plural, ids
+
+    _.each ids, (id) ->
+      ok Visio.manager.get('selected')[hash.plural][id], "#{hash.plural} id: #{id} should be selected"
+
+  id = 'wham'
+
+  for key, hash of Visio.Parameters
+    Visio.manager.select hash.plural, id
+
+    ok Visio.manager.get('selected')[hash.plural][id], "#{hash.plural} id: #{id} should be selected"

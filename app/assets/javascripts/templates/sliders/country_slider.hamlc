@@ -1,0 +1,6 @@
+- unless context.isPdf
+  .controls
+    %a.next ᐳ
+    %a.previous ᐸ
+.slider
+

@@ -1,14 +1,7 @@
-class Visio.Collections.Budget extends Visio.Collections.Syncable
+class Visio.Collections.Budget extends Visio.Collections.AmountType
 
   model: Visio.Models.Budget
 
-  name: Visio.Syncables.BUDGETS.plural
+  name: Visio.Syncables.BUDGETS
 
   url: '/budgets'
-
-  budget: () ->
-    total = 0
-    @each (b) ->
-      total += b.budget()
-    total
-

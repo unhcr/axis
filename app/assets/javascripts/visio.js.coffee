@@ -2,9 +2,40 @@ window.Visio =
   Models: {}
   Collections: {}
   Views: {}
+  Mixins: {}
   Routers: {}
   Utils: {}
-  Graphs: {}
+  Figures: {}
+  FigureTypes:
+    MAP:
+      className: 'Map'
+      human: 'Map'
+      name: 'map'
+    SPARK:
+      className: 'Spark'
+      human: 'Spark'
+      name: 'spark'
+    CIRCLE:
+      className: 'Circle'
+      human: 'Circle'
+      name: 'circle'
+    ABSY:
+      className: 'Absy'
+      human: 'Achievement vs Budget'
+      name: 'absy'
+    BMY:
+      className: 'Bmy'
+      human: 'Budget vs Time'
+      name: 'bmy'
+    ISY:
+      className: 'Isy'
+      human: 'Indicators: Single Year'
+      name: 'isy'
+  ViewTypes:
+    OVERVIEW:
+      className: 'StrategySnapshotView'
+      human: 'Strategy Overview'
+      name: 'strategy_snapshot'
   AchievementTypes:
     TARGET: 'comp_target'
     STANDARD: 'standard'
@@ -22,8 +53,13 @@ window.Visio =
     MEDIUM: 1000
     SLOW: 2000
   Formats:
+    MONEY: d3.format('$0.3s')
+    LONG_MONEY: d3.format('$,f')
     SI: d3.format('0.3s')
     PERCENT: d3.format(".0%")
+    COMMA: d3.format(',')
+    NUMBER: d3.format('d')
+    LONG_NUMBER: d3.format(',f')
   Constants:
     DB_NAME: 'visio'
     SEPARATOR: '___'
@@ -31,11 +67,11 @@ window.Visio =
     MAP: 'map'
     SYNC: 'sync_date'
   Parameters:
-    PLANS:
-      singular: 'plan'
-      plural: 'plans'
-      className: 'Plan'
-      human: 'Operations'
+    OPERATIONS:
+      singular: 'operation'
+      plural: 'operations'
+      className: 'Operation'
+      human: 'Operation'
     PPGS:
       singular: 'ppg'
       plural: 'ppgs'
@@ -66,7 +102,6 @@ window.Visio =
       plural: 'strategy_objectives'
       className: 'StrategyObjective'
       human: 'Strategy Objective'
-
   SkippedParameters:
     RIGHTS_GROUPS:
       singular: 'rights_group'
@@ -75,6 +110,11 @@ window.Visio =
       human: 'Rights Groups'
 
   Syncables:
+    PLANS:
+      singular: 'plan'
+      plural: 'plans'
+      className: 'Plan'
+      human: 'Operations'
     INDICATOR_DATA:
       singular: 'indicator_datum'
       plural: 'indicator_data'
@@ -85,21 +125,23 @@ window.Visio =
       plural: 'budgets'
       className: 'Budget'
       human: 'Budget'
-    OPERATIONS:
-      singular: 'operation'
-      plural: 'operations'
-      className: 'Operation'
-      human: 'Operation'
+    EXPENDITURES:
+      singular: 'expenditure'
+      plural: 'expenditures'
+      className: 'Expenditure'
+      human: 'Expenditure'
   Algorithms:
     SUCCESS_THRESHOLD: 0.66
     OK_THRESHOLD: 0.33
     HIGH_THRESHOLD: 0.8
     MEDIUM_THRESHOLD: 0.6
+    STATUS:
+      missing: 'missing'
+      reported: 'reported'
     ALGO_RESULTS:
       success: 'success'
       ok: 'ok'
       fail: 'fail'
-      missing: 'missing'
       high: 'high'
       medium: 'medium'
       low: 'low'
@@ -122,7 +164,7 @@ Visio.ProgressTypes =
     "#{Visio.Algorithms.REPORTED_VALUES.myr}#{Visio.Constants.SEPARATOR}#{Visio.Algorithms.REPORTED_VALUES.yer}"
 
 Visio.AggregationTypes = [
-    Visio.Parameters.PLANS,
+    Visio.Parameters.OPERATIONS,
     Visio.Parameters.PPGS,
     Visio.Parameters.GOALS,
     Visio.Parameters.OUTPUTS,

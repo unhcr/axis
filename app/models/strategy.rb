@@ -1,16 +1,32 @@
 class Strategy < ActiveRecord::Base
   attr_accessible :name, :description
 
-  has_many :strategy_objectives, :before_add => :add_strategy_objective_parameters
+  has_many :strategy_objectives,
+    :before_add => :add_strategy_objective_parameters, :dependent => :destroy
 
-  has_and_belongs_to_many :operations, :uniq => true
-  has_and_belongs_to_many :plans, :uniq => true
-  has_and_belongs_to_many :ppgs, :uniq => true
-  has_and_belongs_to_many :goals, :uniq => true, :before_add => :belongs_to_strategy_objective
-  has_and_belongs_to_many :rights_groups, :uniq => true
-  has_and_belongs_to_many :problem_objectives, :uniq => true, :before_add => :belongs_to_strategy_objective
-  has_and_belongs_to_many :outputs, :uniq => true, :before_add => :belongs_to_strategy_objective
-  has_and_belongs_to_many :indicators, :uniq => true, :before_add => :belongs_to_strategy_objective
+  has_many :operations_strategies, :class_name     => 'OperationsStrategies'
+  has_many :operations, :uniq => true, :through => :operations_strategies
+
+  has_many :plans_strategies, :class_name    => 'PlansStrategies'
+  has_many :plans, :uniq => true, :through => :plans_strategies
+
+  has_many :ppgs_strategies, :class_name    => 'PpgsStrategies'
+  has_many :ppgs, :uniq => true, :through => :ppgs_strategies
+
+  has_many :goals_strategies, :class_name    => 'GoalsStrategies'
+  has_many :goals, :uniq => true, :before_add => :belongs_to_strategy_objective, :through => :goals_strategies
+
+  has_many :rights_groups_strategies, :class_name    => 'RightsGroupsStrategies'
+  has_many :rights_groups, :uniq => true, :through => :rights_groups_strategies
+
+  has_many :problem_objectives_strategies, :class_name     => 'ProblemObjectivesStrategies'
+  has_many :problem_objectives, :uniq => true, :before_add => :belongs_to_strategy_objective, :through => :problem_objectives_strategies
+
+  has_many :outputs_strategies, :class_name    => 'OutputsStrategies'
+  has_many :outputs, :uniq => true, :before_add => :belongs_to_strategy_objective, :through => :outputs_strategies
+
+  has_many :indicators_strategies, :class_name     => 'IndicatorsStrategies'
+  has_many :indicators, :uniq => true, :before_add => :belongs_to_strategy_objective, :through => :indicators_strategies
 
 
   def add_strategy_objective_parameters(strategy_objective)
@@ -26,7 +42,7 @@ class Strategy < ActiveRecord::Base
 
   def synced(resource, synced_date = nil, limit = nil, where = {})
     ids = {
-      :plan_ids => self.plan_ids,
+      :operation_ids => self.operation_ids,
       :ppg_ids => self.ppg_ids,
       :goal_ids => self.goal_ids,
       :problem_objective_ids => self.problem_objective_ids,
@@ -44,6 +60,7 @@ class Strategy < ActiveRecord::Base
       json.extract! self, :name, :id, :description
 
       if options[:include][:ids]
+        json.operation_ids self.operation_ids.inject({}) { |h, id| h[id] = true; h }
         json.indicator_ids self.indicator_ids.inject({}) { |h, id| h[id] = true; h }
         json.goal_ids self.goal_ids.inject({}) { |h, id| h[id] = true; h }
         json.ppg_ids self.ppg_ids.inject({}) { |h, id| h[id] = true; h }

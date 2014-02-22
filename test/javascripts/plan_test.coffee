@@ -101,7 +101,7 @@ test('find plan', () ->
 )
 
 test 'strategy situation analysis', () ->
-  p = new Visio.Models.Plan({ id: 'abcd', name: 'ben', situation_analysis:
+  p = new Visio.Models.Plan({ operation_id: 'op', id: 'abcd', name: 'ben', situation_analysis:
     {
       category: Visio.Algorithms.ALGO_RESULTS.success
       result: 1
@@ -114,12 +114,14 @@ test 'strategy situation analysis', () ->
       myr: 8
       threshold_green: 10
       threshold_red: 5
-      plan_id: 'abcd'
+      operation_id: 1
+      plan_id: 1
       goal_id: 1
       output_id: 1
       ppg_id: 1
       problem_objective_id: 1
       indicator_id: 1
+      strategy_objective_ids: [1]
       is_performance: false
     },
     {
@@ -128,108 +130,41 @@ test 'strategy situation analysis', () ->
       myr: 21
       threshold_green: 40
       threshold_red: 20
+      operation_id: 2
       plan_id: 2
       goal_id: 2
       output_id: 2
       ppg_id: 2
       problem_objective_id: 2
       indicator_id: 2
+      strategy_objective_ids: [2]
       is_performance: false
     }])
 
-
+  sinon.stub p, 'strategyData', -> new Visio.Collections.IndicatorDatum()
 
   result = p.strategySituationAnalysis()
   strictEqual(Visio.Algorithms.ALGO_RESULTS.success, result.category)
+  strictEqual p.strategyData.callCount, 0
 
-  Visio.manager.get('strategies').reset([{
-      id: 1
-      plan_ids: { 1: true }
-      goal_ids: { 1: true }
-      ppg_ids: { 1: true }
-      output_ids: { 1: true }
-      problem_objective_ids: { 1: true }
-      indicator_ids: { 1: true }
-    },
-    {
-      id: 2,
-      plan_ids: {}
-      goal_ids: {}
-      ppg_ids: {}
-      output_ids: {}
-      problem_objective_ids: {}
-      indicator_ids: {}
-    }])
+  Visio.manager.get('strategies').reset [{ id: 1 }, { id: 2, }]
 
   Visio.manager.get('selected_strategies')['1'] = true
   Visio.manager.get('selected_strategies')['2'] = true
+
+  p.strategyData.restore()
+  sinon.stub p, 'strategyData', -> Visio.manager.get('indicator_data')
+
   result = p.strategySituationAnalysis()
-  strictEqual(Visio.Algorithms.ALGO_RESULTS.fail, result.category)
+  strictEqual Visio.Algorithms.ALGO_RESULTS.ok, result.category
+  strictEqual p.strategyData.callCount, 2
 
   delete Visio.manager.get('selected_strategies')['2']
 
-  result = p.strategySituationAnalysis()
-  strictEqual(Visio.Algorithms.ALGO_RESULTS.fail, result.category)
-
-  Visio.manager.get('strategies').reset([{
-      id: 1
-      plan_ids: { 'abcd': true }
-      goal_ids: { 1: true }
-      ppg_ids: { 1: true }
-      output_ids: { 1: true }
-      problem_objective_ids: { 1: true }
-      indicator_ids: { 1: true }
-    },
-    {
-      id: 2,
-      plan_ids: {}
-      goal_ids: {}
-      ppg_ids: {}
-      output_ids: {}
-      problem_objective_ids: {}
-      indicator_ids: {}
-    }])
+  p.strategyData.restore()
+  sinon.stub p, 'strategyData', -> new Visio.Collections.IndicatorDatum(Visio.manager.get('indicator_data').get(1))
 
   result = p.strategySituationAnalysis()
   strictEqual(Visio.Algorithms.ALGO_RESULTS.ok, result.category)
-
-test 'getPlanForDifferentYear', () ->
-
-  plans = [{ id: 1, operation_id: 'ben', year: 2012 },
-           { id: 2, operation_id: 'ben', year: 2013 }]
-  Visio.manager.get('plans').reset(plans)
-  plan = Visio.manager.get('plans').at 0
-
-  strictEqual plan.get('year'), 2012, 'Start year should be 2012'
-
-  newPlan = plan.getPlanForDifferentYear 2013
-
-  ok newPlan, 'Should have found a year'
-  strictEqual newPlan.get('year'), 2013, 'Year should be 2013'
-  strictEqual newPlan.get('operation_id'), 'ben', 'Should have proper operation_id'
-
-  newPlan = plan.getPlanForDifferentYear 2014
-
-  ok not newPlan, 'No plan found for 2014'
-
-
-test 'getPlansForDifferentyear', () ->
-  oldPlans = [{ id: 1, operation_id: 'ben', year: 2012 },
-              { id: 2, operation_id: 'lisa', year: 2012 }]
-  newPlans = [{ id: 3, operation_id: 'ben', year: 2013 },
-              { id: 4, operation_id: 'lisa', year: 2013 }]
-
-  Visio.manager.get('plans').reset(oldPlans.concat(newPlans))
-
-  oldPlansCollection = new Visio.Collections.Plan(oldPlans)
-
-  newPlansCollection = oldPlansCollection.getPlansForDifferentYear(2013)
-  strictEqual newPlansCollection.length, 2
-  newPlansCollection.each (plan) ->
-    strictEqual plan.get('year'), 2013
-
-
-
-
-
-
+  strictEqual p.strategyData.callCount, 1
+  p.strategyData.restore()
