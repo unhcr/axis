@@ -78,7 +78,7 @@ module FocusParse
     plan.found
 
     unless plan.country
-      match_plan_to_country(plan)
+      match_model_to_country(plan, plan.operation_name)
     end
 
     operation = Operation.find(xml_plan.search('./operationID').text)
