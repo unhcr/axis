@@ -1,0 +1,33 @@
+@mixin article {
+  width: 465px;
+  display: inline-block;
+  position: relative;
+  padding-left: $parameter-show-padding-horizontal / 2;
+  padding-right: $parameter-show-padding-horizontal / 2;
+}
+
+@mixin number {
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+}
+
+@mixin pbi_avoid {
+  page-break-inside:avoid !important;
+}
+
+@mixin medium-header {
+  font-size: 20px;
+}
+
+@mixin full-width {
+  width: 100%
+}
+
+@mixin small-header {
+  font-size: 14px;
+  letter-spacing: -.02em;
+}
+
+@mixin large-header {
+  font-size: 40px;
+  letter-spacing: -.02em
+}

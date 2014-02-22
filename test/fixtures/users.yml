@@ -7,11 +7,11 @@
 one:
   firstname: Ben
   lastname: Rudolph
-  email: apple@apple.com
+  login: rudolph
 # column: value
 #
 two:
   firstname: Brad
   lastname: Pitt
-  email: banana@banana.com
+  login: bpitt
 #  column: value

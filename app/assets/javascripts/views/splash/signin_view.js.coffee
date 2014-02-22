@@ -1,6 +1,6 @@
 class Visio.Views.SigninView extends Backbone.View
 
-  template: JST['splash/signin']
+  template: HAML['splash/signin']
 
   events:
     'click .signin' : 'onClickSignin'
@@ -18,22 +18,26 @@ class Visio.Views.SigninView extends Backbone.View
     e.preventDefault()
     e.stopPropagation()
 
-    console.log 'clicked login'
-
-    $email = @$el.find('.email')
+    $login = @$el.find('.login')
     $password = @$el.find('.password')
 
-    email = $email.val()
+    login = $login.val()
     password = $password.val()
 
 
-    Visio.Utils.flash($email, 'Please enter valid email address') unless email
+    Visio.Utils.flash($login, 'Please enter valid username') unless login
     Visio.Utils.flash($password, 'This field is required') unless password
 
-    if email && password
-      Visio.Utils.signin(email, password, () =>
-        window.location.href = '/'
-      )
+    if login && password
+      Visio.Utils.signin(login, password).done (resp) =>
+        if resp.success
+          window.location.href = '/'
+        else
+          $login.val('')
+          $password.val('')
+          Visio.Utils.flash($login, 'Authentication Failed')
+          Visio.Utils.flash($password, 'Authentication Failed')
+
 
   onFocus: (e) ->
     $('body').addClass('ui-primary-dark-theme')

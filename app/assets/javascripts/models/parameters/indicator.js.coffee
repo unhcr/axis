@@ -4,5 +4,5 @@ class Visio.Models.Indicator extends Visio.Models.Parameter
 
   paramRoot: 'indicator'
 
-  name: Visio.Parameters.INDICATORS.plural
+  name: Visio.Parameters.INDICATORS
 

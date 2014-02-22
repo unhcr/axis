@@ -1,0 +1,14 @@
+.pin.pin-small{:class => "pin-#{context.situationAnalysisCategory} #{context.plan.country.iso3}"}
+  .pin-tip
+  .pin-body
+  .tooltip-content.gone{:class => "tooltip-#{context.situationAnalysisCategory}"}
+    .operation.ui-extra-small-header.ui-white
+      = context.plan.operation_name
+
+    - _.each context.parameters, (hash) ->
+      %a.rollover.count.ui-line-item-theme{
+        :href => "/##{context.plan.id}/#{hash.plural}",
+        :class => "#{hash.plural}" }
+        = "#{hash.human} (#{context.counts[hash.plural]})"
+    .tooltip-content-bottom
+    .tooltip-close

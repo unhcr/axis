@@ -2,7 +2,7 @@ class Visio.Views.ZoomFilterView extends Backbone.View
 
   className: 'zoom-filter map-filter'
 
-  template: JST['shared/zoom_filter']
+  template: HAML['shared/zoom_filter']
 
   initialize: () ->
     @render()

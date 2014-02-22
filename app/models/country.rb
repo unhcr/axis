@@ -6,4 +6,5 @@ class Country < ActiveRecord::Base
   serialize :un_names, Array
 
   has_many :plans
+  has_many :operations
 end

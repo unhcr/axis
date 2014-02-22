@@ -4,6 +4,12 @@ gem 'rails', '3.2.13'
 gem 'nokogiri'
 gem 'equivalent-xml'
 gem 'rubyzip'
+gem 'pdfkit'
+gem 'quoth'
+gem 'shrimp', :git => 'https://github.com/benrudolph/shrimp.git'
+gem 'pony'
+gem 'whenever', :require => false
+gem "devise_ldap_authenticatable"
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -19,13 +25,15 @@ gem 'mysql2'
 gem 'tire'
 gem 'will_paginate', '~> 3.0'
 gem 'normalize-rails'
-gem "capistrano-rbenv"
 
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
+  gem 'compass-rails'
   gem 'coffee-rails', '~> 3.2.1'
+  gem 'haml_coffee_assets'
+  gem 'execjs'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer', :platforms => :ruby
@@ -34,6 +42,9 @@ group :assets do
 end
 
 group :development, :test do
+  gem 'quiet_assets'
+  gem 'capistrano'
+  gem 'capistrano-rbenv'
   gem 'qunit-rails'
   gem 'random-word'
   gem 'simplecov', :require => false

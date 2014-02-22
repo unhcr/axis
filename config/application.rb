@@ -19,6 +19,24 @@ module Visio
     OpenURI::Buffer.send :remove_const, 'StringMax' if OpenURI::Buffer.const_defined?('StringMax')
     OpenURI::Buffer.const_set 'StringMax', 0
 
+    require 'shrimp'
+    config.middleware.use Shrimp::Middleware, :cache_ttl => 0, :out_path => "#{Rails.root}/public/reports/pdf", :polling_interval => 3
+
+    Shrimp.configure do |config|
+      config.viewport_width = 896
+      config.viewport_height = 1270
+      config.margin = '0cm'
+      config.rendering_time = 3000
+    end
+
+    if defined? ::HamlCoffeeAssets
+      config.hamlcoffee.dependencies = { '_' => 'underscore', :hc => 'hamlcoffee_amd', 'Visio' => 'Visio' }
+      config.hamlcoffee.context = false
+      config.hamlcoffee.namespace = 'window.HAML'
+
+    end
+
+
     # Custom directories with classes and modules you want to be autoloadable.
     # config.autoload_paths += %W(#{config.root}/extras)
 
@@ -62,7 +80,7 @@ module Visio
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
-    config.assets.precompile += ['cms.js']
+    config.assets.precompile += ['cms.js', 'cms.css']
 
   end
 end

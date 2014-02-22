@@ -4,7 +4,7 @@ module 'Overview Router',
     Visio.user = new Visio.Models.User()
     Visio.manager = new Visio.Models.Manager({
       strategy_id: 1
-      strategies: new Visio.Collections.Strategy([{ id: 1 }, { id: 2 }]),
+      strategies: new Visio.Collections.Strategy([{ id: 1, operation_ids: {20:true} }, { id: 2 }]),
       ready: ->
         Visio.router = new Visio.Routers.OverviewRouter()
         Backbone.history.start({ silent: true}) unless Backbone.History.started

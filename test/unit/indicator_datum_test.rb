@@ -56,4 +56,5 @@ class IndicatorDatumTest < ActiveSupport::TestCase
     assert_equal [@so.id, so2.id].sort, datum.as_json['strategy_objective_ids'].sort
 
   end
+
 end

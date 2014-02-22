@@ -1,0 +1,26 @@
+.row
+  .col-md-8.col-centered
+    .pin
+      .pin-tip
+      .pin-body
+.row
+  .col-md-8.col-centered.zero-padding
+    .col-md-4.ui-small-header.ui-primary-light.zero-padding
+      = context.plan.operation_name.toUpperCase()
+    .tabs.col-md-8.zero-padding
+      - _.each context.tabs, (tab) ->
+        %span.ui-primary-light.tab.pull-right{
+          :class => [('selected' if tab.plural == context.selectedTab.plural), (tab.plural)].join(' '),
+          :data => { :type => tab.plural } }
+          = tab.human
+
+.row
+  .col-md-8.col-centered.divider-primary-light
+.list-content
+  .row
+    .col-md-8.col-centered
+      %input.pull-right.white-placeholder.parameter-search{
+        :placeholder => "Search #{context.selectedTab.human}", :type => "text"}
+  .row
+    .col-md-8.col-centered.items
+.close

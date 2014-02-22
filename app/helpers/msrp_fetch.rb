@@ -1,16 +1,30 @@
 module MsrpFetch
-  ANT_TEMPLATE_FILEPATH = "#{Rails.root}/script"
+  ANT_TEMPLATE_FILEPATH = "#{Rails.root}/script/msrp"
   ANT_BUILD_ERBNAME = 'build.xml.erb'
   ANT_BUILD_NAME = 'build.xml'
   FINAL_FILENAME = 'generated_expenses.csv'
-  FIELDS = %W[HCR_BUDGET_REF	HCR_ABC	HCR_PRODUCT	HCR_PROGRAM_CODE	HCR_CLASS_FLD	BUDGET_TYPE	PLAN_TYPE	BUDGETCOMPONENT	ACCOUNT	SITES_ID	COSTCENTRE	CURRENCY_CD	PARTNERID	ACTORID	POPULATIONGROUPID	POPULATIONGROUP	RFOUTPUTID	RFGOALID	GOAL	PLANNINGYEAR	OPERATIONID	OPERATION	BDGCATEGORYID	PLANID	PRJPOPULATIONGROUPID	GOALID	RIGHTSGROUPID	OBJECTIVEID	OUTPUTID	EXPENSES_USD	EXPENSES_LC]
+  FIELDS = {
+    :plan_id => 'b1.planid',
+    :year => 'b1.planningyear',
+    :goal_id => 'b1.rfgoalid',
+    :problem_objective_id => 'b2.rfproblemobjectiveid',
+    :output_id => 'b1.rfoutputid',
+    :ppg_id => 'b1.populationgroupid',
+    :budget_type => 'b1.budget_type',
+    :scenario => 'b1.budgetcomponent',
+    :operation_id => 'b1.operationid'
+  }
+  GROUP_BY = FIELDS
 
   @@ANT_BUILD_FILEPATH = ANT_TEMPLATE_FILEPATH
+
+  include MsrpParse
 
   def generate_build(limit = nil)
     config = {
       :limit => limit,
-      :fields => FIELDS
+      :fields => FIELDS.values,
+      :group_by => GROUP_BY.values
     }
     build = AntBuild.new(config)
     build_erb = ERB.new(File.read("#{ANT_TEMPLATE_FILEPATH}/#{ANT_BUILD_ERBNAME}"))
@@ -27,12 +41,27 @@ module MsrpFetch
     Dir.chdir @@ANT_BUILD_FILEPATH
     output = system("ant #{AntBuild::BUILD_NAME}")
     File.open(FINAL_FILENAME, 'w') do |final|
-      final.puts FIELDS.join(',')
+      final.puts (FIELDS.values << :amount).join(',')
       File.foreach(AntBuild::OUTPUT_FILEPATH) do |line|
         final.puts line
       end
       final.close
     end
+
+    return "#{@@ANT_BUILD_FILEPATH}/#{FINAL_FILENAME}"
+  end
+
+  def fetch(limit = nil)
+    p '[0/3] Generating build'
+    generate_build(limit)
+
+    p '[1/3] Building'
+    filename = build
+
+    p '[2/3] Parsing'
+
+    parse(filename)
+    p '[3/3] Complete'
   end
 
   def set_build_dir(dir)

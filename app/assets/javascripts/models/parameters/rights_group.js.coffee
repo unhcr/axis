@@ -4,4 +4,4 @@ class Visio.Models.RightsGroup extends Visio.Models.Parameter
 
   paramRoot: 'rights_group'
 
-  name: Visio.SkippedParameters.RIGHTS_GROUPS.plural
+  name: Visio.SkippedParameters.RIGHTS_GROUPS

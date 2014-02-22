@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140123111843) do
+ActiveRecord::Schema.define(:version => 20140220162236) do
 
   create_table "budgets", :force => true do |t|
     t.string   "budget_type"
@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(:version => 20140123111843) do
     t.boolean  "is_deleted",           :default => false
     t.integer  "year"
     t.datetime "found_at"
+    t.string   "operation_id"
   end
 
   add_index "budgets", ["created_at", "updated_at"], :name => "index_budgets_on_created_at_and_updated_at"
@@ -46,6 +47,57 @@ ActiveRecord::Schema.define(:version => 20140123111843) do
     t.string   "name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "delayed_jobs", :force => true do |t|
+    t.integer  "priority",   :default => 0, :null => false
+    t.integer  "attempts",   :default => 0, :null => false
+    t.text     "handler",                   :null => false
+    t.text     "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string   "locked_by"
+    t.string   "queue"
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+  end
+
+  add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
+
+  create_table "expenditures", :force => true do |t|
+    t.string   "budget_type"
+    t.string   "scenario"
+    t.integer  "amount",               :default => 0
+    t.string   "plan_id"
+    t.string   "ppg_id"
+    t.string   "goal_id"
+    t.string   "output_id"
+    t.string   "problem_objective_id"
+    t.integer  "year"
+    t.boolean  "is_deleted",           :default => false
+    t.datetime "found_at"
+    t.datetime "created_at",                              :null => false
+    t.datetime "updated_at",                              :null => false
+    t.string   "operation_id"
+  end
+
+  add_index "expenditures", ["created_at", "updated_at"], :name => "index_expenditures_on_created_at_and_updated_at"
+  add_index "expenditures", ["created_at"], :name => "index_expenditures_on_created_at"
+  add_index "expenditures", ["is_deleted"], :name => "index_expenditures_on_is_deleted"
+  add_index "expenditures", ["updated_at"], :name => "index_expenditures_on_updated_at"
+
+  create_table "export_modules", :force => true do |t|
+    t.text     "state"
+    t.string   "title"
+    t.text     "description"
+    t.boolean  "include_parameter_list", :default => false
+    t.boolean  "include_explaination",   :default => false
+    t.text     "figure_config"
+    t.datetime "created_at",                                :null => false
+    t.datetime "updated_at",                                :null => false
+    t.integer  "user_id"
+    t.text     "figure_type"
   end
 
   create_table "fetch_monitors", :force => true do |t|
@@ -126,12 +178,14 @@ ActiveRecord::Schema.define(:version => 20140123111843) do
     t.boolean  "is_performance"
     t.integer  "year"
     t.datetime "found_at"
+    t.boolean  "missing_budget",       :default => false
   end
 
   add_index "indicator_data", ["created_at", "updated_at"], :name => "index_indicator_data_on_created_at_and_updated_at"
   add_index "indicator_data", ["created_at"], :name => "index_indicator_data_on_created_at"
   add_index "indicator_data", ["indicator_id"], :name => "index_indicator_data_on_indicator_id"
   add_index "indicator_data", ["is_deleted"], :name => "index_indicator_data_on_is_deleted"
+  add_index "indicator_data", ["is_performance"], :name => "index_indicator_data_on_is_performance"
 
   create_table "indicators", :id => false, :force => true do |t|
     t.string   "id",                                :null => false
@@ -184,6 +238,7 @@ ActiveRecord::Schema.define(:version => 20140123111843) do
     t.datetime "updated_at",                    :null => false
     t.boolean  "is_deleted", :default => false
     t.datetime "found_at"
+    t.integer  "country_id"
   end
 
   create_table "operations_outputs", :id => false, :force => true do |t|
@@ -219,7 +274,6 @@ ActiveRecord::Schema.define(:version => 20140123111843) do
   create_table "outputs", :id => false, :force => true do |t|
     t.string   "id",                            :null => false
     t.string   "name"
-    t.string   "priority"
     t.datetime "created_at",                    :null => false
     t.datetime "updated_at",                    :null => false
     t.boolean  "is_deleted", :default => false
@@ -514,7 +568,6 @@ ActiveRecord::Schema.define(:version => 20140123111843) do
   create_table "users", :force => true do |t|
     t.datetime "created_at",                                :null => false
     t.datetime "updated_at",                                :null => false
-    t.string   "email",                  :default => "",    :null => false
     t.string   "encrypted_password",     :default => "",    :null => false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
@@ -527,9 +580,9 @@ ActiveRecord::Schema.define(:version => 20140123111843) do
     t.string   "firstname"
     t.string   "lastname"
     t.boolean  "reset_local_db",         :default => false
+    t.string   "login",                  :default => "",    :null => false
   end
 
-  add_index "users", ["email"], :name => "index_users_on_email", :unique => true
-  add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
+  add_index "users", ["login"], :name => "index_users_on_login"
 
 end

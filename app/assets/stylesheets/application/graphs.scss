@@ -1,0 +1,204 @@
+@import "../shared/variables";
+
+.background-rect {
+  fill: $map-background;
+}
+
+.country {
+  fill: $country-color;
+  stroke-width: .5px;
+  stroke: $map-background;
+}
+
+line {
+  shape-rendering: crispEdges;
+}
+
+.svg-bmy-figure {
+  .budget-line {
+    stroke: black;
+    fill: none;
+    stroke-width: 4px;
+
+  }
+  .budget-line.active {
+    stroke: red;
+  }
+  .ADMIN {
+    stroke: $admin;
+  }
+  .STAFF {
+    stroke: $staff;
+  }
+  .PROJECT {
+    stroke: $project;
+  }
+  .PARTNER {
+    stroke: $partner;
+  }
+  .total {
+    stroke: $total;
+    stroke-width: 6px;
+  }
+  .point {
+    fill: white;
+    stroke-width: 2px;
+  }
+  .axis line {
+    stroke: black;
+  }
+}
+
+.axis path {
+  fill: none;
+}
+
+.svg-absy-figure {
+  .point-container.focus .point {
+    fill: $orange;
+  }
+
+  .point-container.active .point {
+    fill: white;
+    stroke: $primary;
+    stroke-width: 2px;
+  }
+
+  .point-container {
+    .label {
+      font-weight: bold;
+    }
+  }
+
+  .trail {
+    stroke: black;
+    stroke-dasharray: 5 5;
+    pointer-events: none;
+  }
+
+  .point {
+    fill: $pink;
+    pointer-events: none;
+  }
+
+  .y.axis line {
+    stroke: none;
+  }
+
+  .y.axis g:nth-of-type(-n+2) line {
+    stroke: none
+  }
+
+  .y.axis text, .x.axis > text {
+    fill: $black;
+  }
+
+  .x.axis path {
+    stroke: none;
+  }
+
+  .x.axis line {
+    stroke: none;
+  }
+
+  .x.axis text {
+    fill: $black;
+  }
+}
+
+.svg-circle-figure {
+  .background {
+    fill: $white;
+    stroke: $light-gray;
+  }
+
+}
+
+.voronoi, .voronoiPoint {
+  fill: transparent;
+}
+
+.svg-isy-figure {
+  .myr-bar {
+    fill: $purple-dark;
+  }
+  .yer-bar {
+    fill: $lightblue;
+  }
+  .bar {
+    stroke: white;
+    pointer-events: none;
+  }
+  .bar-container {
+    fill: $off-white;
+  }
+  .bar-container.inconsistent {
+    fill: $alert-red;
+  }
+  .box.faded {
+    opacity: .4;
+  }
+  .box.active {
+    stroke: black;
+    stroke-width: 1px;
+  }
+  .box {
+    -moz-transition:opacity $medium-transition;
+    -webkit-transition:opacity $medium-transition;
+    -o-transition:opacity $medium-transition;
+    transition:opacity $medium-transition;
+    line {
+      stroke: $dark-gray;
+      pointer-events: none;
+    }
+  }
+
+
+  .circle {
+    fill: white;
+    stroke: black;
+    stroke-width: 3px;
+    pointer-events: none;
+  }
+
+  .text {
+    fill: white;
+  }
+
+  .label {
+    pointer-events: none;
+  }
+
+  .tag.tag-myr {
+    fill: $primary-medium;
+  }
+  .tag.tag-yer, .tag.tag-comp_target {
+    fill: $primary-light;
+  }
+  .tag.tag-baseline {
+    fill: $primary-dark;
+  }
+
+}
+
+.spark-bar-graph {
+  margin-right: -2px;
+}
+
+.bar.success {
+  fill: $success;
+}
+.bar.ok {
+  fill: $ok;
+}
+.bar.fail {
+  fill: $fail;
+}
+.bar.missing {
+  fill: $dark-gray;
+}
+
+.graph-container {
+  fill: transparent;
+}
+

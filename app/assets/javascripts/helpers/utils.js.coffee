@@ -1,7 +1,4 @@
-Visio.Utils.signin = (email, password, callback) ->
-  assert(typeof email == 'string', 'Email must be string')
-  assert(typeof password == 'string', 'Password must be string')
-
+Visio.Utils.signin = (login, password) ->
   data =
     remote: true
     commit: "Sign in"
@@ -9,22 +6,12 @@ Visio.Utils.signin = (email, password, callback) ->
     user:
       remember_me: 1
       password: password
-      email: email
+      login: login
 
-  $.post('/users/sign_in.json', data, (resp) ->
-    console.log resp
-    if callback
-      callback(resp)
-  )
+  $.post('/users/sign_in.json', data)
 
 
-Visio.Utils.signup = (firstname, lastname, email, password, passwordConf, callback) ->
-  assert(typeof firstname == 'string', 'Name must be string')
-  assert(typeof lastname == 'string', 'Name must be string')
-  assert(typeof email == 'string', 'Email must be string')
-  assert(typeof password == 'string', 'Password must be string')
-  assert(typeof passwordConf == 'string', 'PasswordConf must be string')
-
+Visio.Utils.signup = (firstname, lastname, login, password, passwordConf, callback) ->
   data =
     remote: true
     commit: "Sign up"
@@ -33,7 +20,7 @@ Visio.Utils.signup = (firstname, lastname, email, password, passwordConf, callba
       remember_me: 1
       password: password
       password_confirmation: passwordConf
-      email: email
+      login: login
       firstname: firstname
       lastname: lastname
 
@@ -108,5 +95,19 @@ Visio.Utils.humanMetric = (metric) ->
     return 'Target'
   else if metric == Visio.Algorithms.GOAL_TYPES.standard
     return 'Standard'
+  else if metric == Visio.Algorithms.ALGO_RESULTS.success
+    return 'Acceptable'
+  else if metric == Visio.Algorithms.ALGO_RESULTS.ok
+    return 'Critical'
+  else if metric == Visio.Algorithms.ALGO_RESULTS.fail
+    return 'Sub-standard'
+  else if metric == Visio.Algorithms.STATUS.missing
+    return 'Non-reported'
   else
     return 'N/A'
+
+Visio.Utils.nl2br = (string) ->
+  string.replace(/\n/g, '<br />')
+
+Visio.Utils.space2nbsp = (string) ->
+  string.replace(/\ /g, '&nbsp;')

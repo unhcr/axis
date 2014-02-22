@@ -44,6 +44,8 @@ class PlansControllerTest < ActionController::TestCase
     p.indicators << indicators(:impact)
 
     datum = indicator_data(:one)
+    datum.is_performance = false
+    datum.save
 
     p.indicator_data << datum
     p.indicators[0].indicator_data << datum
@@ -101,6 +103,8 @@ class PlansControllerTest < ActionController::TestCase
     p.indicators << indicators(:impact)
 
     datum = indicator_data(:one)
+    datum.is_performance = false
+    datum.save
 
     p.indicator_data << datum
     p.indicators[0].indicator_data << datum

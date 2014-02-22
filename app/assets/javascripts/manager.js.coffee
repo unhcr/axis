@@ -4,6 +4,8 @@ class Visio.Models.Manager extends Backbone.Model
     @set('db', new ydn.db.Storage(Visio.Constants.DB_NAME, Visio.Schema))
     options ||= {}
 
+    @state options.state if options.state?
+
     @get('db').addEventListener 'ready', (e) =>
       if Visio.user && Visio.user.get('reset_local_db')
         @get('db').clear(Visio.Schema.stores.map((store) -> store.name))
@@ -33,6 +35,7 @@ class Visio.Models.Manager extends Backbone.Model
     'indicators': new Visio.Collections.Indicator()
     'indicator_data': new Visio.Collections.IndicatorDatum()
     'budgets': new Visio.Collections.Budget()
+    'expenditures': new Visio.Collections.Expenditure()
     'strategies': new Visio.Collections.Strategy()
     'strategy_objectives': new Visio.Collections.StrategyObjective()
     'date': new Date(2012, 1)
@@ -44,21 +47,17 @@ class Visio.Models.Manager extends Backbone.Model
     'yearList': [2012, 2013, 2014, 2015]
     'selected': {}
     'selected_strategies': {}
-    'aggregation_type': Visio.Parameters.PLANS.plural
+    'aggregation_type': Visio.Parameters.OPERATIONS.plural
     'scenario_type': {}
     'budget_type': {}
     'achievement_type': Visio.AchievementTypes.TARGET
+    'amount_type': Visio.Syncables.BUDGETS
 
   resetSelectedDefaults: () ->
     _.each _.values(Visio.Parameters), (hash) ->
       Visio.manager.get('selected')[hash.plural] = {}
-      if hash.singular == Visio.Parameters.PLANS.singular
-        plans = Visio.manager.strategy().plans().where({ year: Visio.manager.year() })
-        _.each plans, (plan) ->
-          Visio.manager.get('selected')[hash.plural][plan.id] = true
-      else
-        _.extend Visio.manager.get('selected')[hash.plural],
-          Visio.manager.strategy().get("#{hash.singular}_ids")
+      _.extend Visio.manager.get('selected')[hash.plural],
+        Visio.manager.strategy().get("#{hash.singular}_ids")
 
   resetBudgetDefaults: () ->
     _.each Visio.Scenarios, (scenario) =>
@@ -72,9 +71,9 @@ class Visio.Models.Manager extends Backbone.Model
     @resetSelectedDefaults()
     Visio.manager.trigger('change:selected')
 
-  year: (year, options) ->
+  year: (_year, options) ->
     return @get('date').getFullYear() if arguments.length == 0
-    @set { date: new Date(year, 1) }, options || {}
+    @set { date: new Date(_year, 1) }, options || {}
 
   strategy: () ->
     return unless @get('strategies') && @get('strategy_id')
@@ -88,11 +87,20 @@ class Visio.Models.Manager extends Backbone.Model
       _.include(strategy_ids.map((i) -> +i), strategy.id)
     ))
 
+  select: (type, ids) ->
+    selected = @get 'selected'
+
+    if _.isArray ids
+      _.each ids, (id) ->
+        selected[type][id] = true
+    else if ids?
+      # Must be single id
+      selected[type][ids] = true
+
+    @set 'selected', selected
+
   selected: (type) ->
     parameters = @get(type)
-
-    if type == Visio.Parameters.STRATEGY_OBJECTIVES.plural
-      return @strategy()[type]()
 
     return new parameters.constructor(parameters.filter((p) => @get('selected')[type][p.id]) )
 
@@ -111,9 +119,11 @@ class Visio.Models.Manager extends Backbone.Model
   # Returns plan ids from selected strategies
   selectedStrategyPlanIds: () ->
     strategyIds = _.keys @get('selected_strategies')
+
+    return [] if _.isEmpty strategyIds
     strategies = @strategies strategyIds
 
-    planIds = strategies.map (strategy) -> _.keys(strategy.get("#{Visio.Parameters.PLANS.singular}_ids"))
+    planIds = strategies.map (strategy) -> _.keys(strategy.get("#{Visio.Syncables.PLANS.singular}_ids"))
     planIds = _.intersection.apply(null, planIds)
 
   getSyncDate: (id) ->
@@ -169,3 +179,29 @@ class Visio.Models.Manager extends Backbone.Model
     else
       options.validate = true unless options.validate
       Backbone.Model.prototype.set.apply @, [key, val, options]
+
+  state: (_state) ->
+    if _state?
+      @set 'selected', _state.selected
+      @year _state.year
+      @set 'achievement_type', _state.achievement_type
+      @set 'scenario_type', _state.scenario_type
+      @set 'budget_type', _state.budget_type
+      @set 'amount_type', _state.amount_type
+      @set 'strategies', new Visio.Collections.Strategy _state.strategies
+      @set 'selected_strategies', _state.selected_strategies
+      @set 'strategy_id', _state.strategy_id
+      return _state
+    else
+      return {
+        selected: @get 'selected'
+        year: @year()
+        achievement_type: @get 'achievement_type'
+        scenario_type: @get 'scenario_type'
+        budget_type: @get 'budget_type'
+        amount_type: @get 'amount_type'
+        strategies: @get('strategies').toJSON()
+        selected_strategies: @get 'selected_strategies'
+        strategy_id: @get 'strategy_id'
+      }
+

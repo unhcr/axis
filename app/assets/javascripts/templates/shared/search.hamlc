@@ -1,0 +1,12 @@
+.container.full-width
+  .row
+    .col-centered.col-md-8.search-container
+      %input.full-width{:type => "text"}
+  .results.row.overlay.full-width.gone.ui-primary-theme
+    .col-centered.col-md-8
+      .operation-results-container
+        .ui-bright-yellow OPERATIONS
+        .operation-results
+      .indicator-results-container
+        .ui-bright-yellow INDICATORS
+        .indicator-results

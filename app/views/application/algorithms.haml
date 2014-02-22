@@ -1,0 +1,13 @@
+.container
+  #algorithm
+
+:javascript
+  $(document).ready(function() {
+    Visio.manager = new Visio.Models.Manager({
+      ready: function() {
+        Visio.router = new Visio.Routers.AlgorithmsRouter();
+        Backbone.history.start();
+      }
+    });
+  });
+

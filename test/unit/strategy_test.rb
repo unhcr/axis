@@ -2,9 +2,9 @@ require 'test_helper'
 
 class StrategyTest < ActiveSupport::TestCase
   def setup
-
     @s = strategies(:one)
 
+    @operations = [operations(:one)]
     @plans = [plans(:one)]
     @ppgs = [ppgs(:one)]
     @rights_groups = [rights_groups(:one)]
@@ -20,6 +20,7 @@ class StrategyTest < ActiveSupport::TestCase
     @so.outputs << @outputs
     @so.indicators << @indicators
 
+    @s.operations << @operations
     @s.plans << @plans
     @s.ppgs << @ppgs
     @s.rights_groups << @rights_groups
@@ -30,6 +31,7 @@ class StrategyTest < ActiveSupport::TestCase
   test "should get indicator data for strategy" do
 
     datum = IndicatorDatum.new()
+    datum.operation = operations(:one)
     datum.plan = plans(:one)
     datum.ppg = ppgs(:one)
     datum.goal = goals(:one)
@@ -47,7 +49,7 @@ class StrategyTest < ActiveSupport::TestCase
 
   test "should not get indicator data for the strategy" do
     datum = IndicatorDatum.new()
-    datum.plan = plans(:one)
+    datum.operation = operations(:one)
     datum.ppg = ppgs(:one)
     datum.goal = goals(:two)
     datum.rights_group = rights_groups(:one)
@@ -64,6 +66,7 @@ class StrategyTest < ActiveSupport::TestCase
 
   test "should allow to not have an output" do
     datum = IndicatorDatum.new()
+    datum.operation = operations(:one)
     datum.plan = plans(:one)
     datum.ppg = ppgs(:one)
     datum.goal = goals(:one)
@@ -81,6 +84,7 @@ class StrategyTest < ActiveSupport::TestCase
   test "should get updated data for strategy" do
 
     datum = IndicatorDatum.new()
+    datum.operation = operations(:one)
     datum.plan = plans(:one)
     datum.ppg = ppgs(:one)
     datum.goal = goals(:one)
@@ -99,6 +103,7 @@ class StrategyTest < ActiveSupport::TestCase
 
   test "should get deleted data for strategy" do
     datum = IndicatorDatum.new()
+    datum.operation = operations(:one)
     datum.plan = plans(:one)
     datum.ppg = ppgs(:one)
     datum.goal = goals(:one)
@@ -138,11 +143,22 @@ class StrategyTest < ActiveSupport::TestCase
     assert_equal 1, StrategyObjective.find(@so2.id).goals.length
     assert_equal 2, Strategy.find(@s.id).goals.length
 
-    @so2.goals.destroy_all
-    @so.goals.destroy_all
+    @so2.goals.delete_all
+    @so.goals.delete_all
     assert_equal 0, Strategy.find(@s.id).goals.length
+  end
 
+  test "strategy objectives should be destroyed when strategy is destoryed" do
+    strategy_objectives = @s.strategy_objectives
 
+    assert_equal strategy_objectives.length, 1
+
+    @s.destroy
+
+    strategy_objectives.each do |so|
+      assert !StrategyObjective.exists?(so.id)
+    end
 
   end
+
 end

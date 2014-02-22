@@ -1,0 +1,8 @@
+.row
+  .col-md-8.col-centered
+    .row.js-parameter
+      .col-md-12.ui-medium-header
+        = context.parameter.toString()
+    .row.data-container
+      .figure-header
+      %figure.bmy-figure

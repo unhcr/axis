@@ -7,4 +7,7 @@ class Visio.Models.Ppg extends Visio.Models.Parameter
   toString: () ->
     return "[#{@get('operation_name')}] #{@get('name')}"
 
-  name: Visio.Parameters.PPGS.plural
+  name: Visio.Parameters.PPGS
+
+  highlight: ->
+    return "[#{@get('operation_name')}] #{@get('highlight').name[0]}" if @get('highlight')

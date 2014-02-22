@@ -1,6 +1,6 @@
 class Visio.Views.ToolbarView extends Backbone.View
 
-  template: JST['shared/toolbar']
+  template: HAML['shared/toolbar']
 
   initialize: (options) ->
     @render()
