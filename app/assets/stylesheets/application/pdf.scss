@@ -30,6 +30,10 @@ body.pdf {
     margin: 0;
   }
 
+  label {
+    font-size: 14px;
+  }
+
   article {
     @include article;
   }

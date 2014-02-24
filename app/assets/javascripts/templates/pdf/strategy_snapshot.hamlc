@@ -58,11 +58,11 @@
         .row.center-text
           .col-sm-12.left-flush.criticality{ :class => "#{context.criticalities[i]}-criticality" }
         .row
-          .col-sm-7.col-sm-offset-5.bottom-flush.top-flush.number.ui-small-number.ui-primary-light.count{
+          .col-sm-7.col-sm-offset-5.zero-padding.number.ui-small-number.ui-primary-light.count{
             :class => "#{context.criticalities[i]}-count" }
             0
         .row
-          %p.col-sm-7.col-sm-offset-5.top-flush
+          %label.col-sm-7.col-sm-offset-5.zero-padding
             = Visio.Utils.humanMetric(context.criticalities[i])
 
 .target-countries
