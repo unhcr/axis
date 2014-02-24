@@ -1792,26 +1792,46 @@ a {
 }
 
 .ok-criticality {
-  .foreground {
-    fill: $ok;
+  .svg-circle-figure {
+    .foreground {
+      fill: $ok;
+    }
+    .background {
+      stroke: $ok;
+    }
   }
 }
 
 .success-criticality {
-  .foreground {
-    fill: $success;
+  .svg-circle-figure {
+    .foreground {
+      fill: $success;
+    }
+    .background {
+      stroke: $success;
+    }
   }
 }
 
 .fail-criticality {
-  .foreground {
-    fill: $fail;
+  .svg-circle-figure {
+    .foreground {
+      fill: $fail;
+    }
+    .background {
+      stroke: $fail;
+    }
   }
 }
 
 .missing-criticality {
-  .foreground {
-    fill: $lighter-gray;
+  .svg-circle-figure {
+    .foreground {
+      fill: $lighter-gray;
+    }
+    .background {
+      stroke: $lighter-gray;
+    }
   }
 }
 
@@ -1908,7 +1928,7 @@ a {
   h5, h3 {
     margin: 0;
   }
-  padding-top: $parameter-show-padding-vertical / 2;
+  padding-top: 2 * $parameter-show-padding-vertical / 3;
   margin-top: $parameter-show-padding-vertical / 2;
   padding-bottom: $parameter-show-padding-vertical;
 }
