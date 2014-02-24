@@ -5,6 +5,7 @@ class Visio.Figures.Map extends Visio.Figures.Base
   initialize: (config) ->
 
     super config
+    @$el.prepend $('<a class="export">export</a>')
 
     @scale = 500
 
@@ -44,6 +45,15 @@ class Visio.Figures.Map extends Visio.Figures.Base
       .on("zoom", @zoomed)
 
     @svg.call @zoom
+
+  dataAccessor: => @model
+
+  selectable: false
+
+  config: ->
+    config = super
+    config.width = 700
+    config
 
   render: ->
 
@@ -167,7 +177,7 @@ class Visio.Figures.Map extends Visio.Figures.Base
     @views = {}
 
   filtered: (model) =>
-    topojson.feature(model.toJSON(), model.toJSON().objects.world_50m).features
+    topojson.feature(model.get('map'), model.get('map').objects.world_50m).features
 
   refreshTooltips: ->
     for key, value of @views

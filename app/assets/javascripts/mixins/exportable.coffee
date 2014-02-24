@@ -21,6 +21,9 @@ Visio.Mixins.Exportable =
     config.pdfViewLocation = @pdfViewLocation
     config
 
+  # Returns where the data is stored. Usually is the collection, but can also be the model
+  dataAccessor: -> @collection
+
   attrConfig: []
 
   viewLocation: null
