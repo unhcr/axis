@@ -42,11 +42,11 @@ class Plan < ActiveRecord::Base
       if options[:include]
 
         if options[:include][:counts]
-          json.indicators_count self.indicators.length
-          json.goals_count self.goals.length
-          json.ppgs_count self.ppgs.length
-          json.outputs_count self.outputs.length
-          json.problem_objectives_count self.problem_objectives.length
+          json.indicators_count self.custom_indicators_count
+          json.goals_count self.custom_goals_count
+          json.ppgs_count self.custom_ppgs_count
+          json.outputs_count self.custom_outputs_count
+          json.problem_objectives_count self.custom_problem_objectives_count
         end
 
         json.ppg_ids self.ppg_ids if options[:include][:ppg_ids].present?
