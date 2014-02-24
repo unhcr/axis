@@ -42,7 +42,6 @@ class Visio.Models.Manager extends Backbone.Model
     'use_local_db': true
     'setup': false
     'db': null
-    'mapMD5': null
     'syncTimestampId': 'sync_timestamp_id_'
     'yearList': [2012, 2013, 2014, 2015]
     'selected': {}
@@ -135,23 +134,6 @@ class Visio.Models.Manager extends Backbone.Model
     db = @get('db')
 
     db.put(Visio.Stores.SYNC, { synced_timestamp: +d }, id)
-
-  getMap: () ->
-    return $.get '/map' unless @get('use_local_db')
-
-    db = @get('db')
-    assert(@get('mapMD5'))
-
-    $.when(db.get(Visio.Stores.MAP, @get('mapMD5'))).then((record) =>
-      if !record
-        return $.get('/map')
-      else
-        return record
-    ).done((record) =>
-      db.put(Visio.Stores.MAP, record, @get('mapMD5'))
-    ).done(() =>
-      db.get(Visio.Stores.MAP, @get('mapMD5'))
-    )
 
   validate: (attrs, options) ->
     unless _.every(_.values(Visio.Parameters), (hash) ->

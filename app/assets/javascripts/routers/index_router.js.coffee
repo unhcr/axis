@@ -10,6 +10,7 @@ class Visio.Routers.IndexRouter extends Visio.Routers.GlobalRouter
         left: 0
         right: 0
         bottom: 0
+      model: new Visio.Models.Map({ mapMD5: options.mapMD5 })
       width: $(window).width()
       height: height
       el: '#map')
@@ -33,10 +34,10 @@ class Visio.Routers.IndexRouter extends Visio.Routers.GlobalRouter
     ':plan_id/:type': 'list'
     '*default': 'index'
 
-  index: () ->
+  index: ->
     console.log 'index'
 
-  setup: () =>
+  setup: =>
 
     options =
       where:
@@ -51,8 +52,7 @@ class Visio.Routers.IndexRouter extends Visio.Routers.GlobalRouter
           problem_objective_ids: true
           indicator_ids: true
     #NProgress.start()
-    Visio.manager.getMap().done((map) =>
-      @map.modelFn new Backbone.Model map
+    @map.model.getMap().done( =>
       @filterView = new Visio.Views.MapFilterView()
       @map.render()
       Visio.manager.get('plans').fetchSynced(options)

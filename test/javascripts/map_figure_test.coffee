@@ -3,8 +3,9 @@ module 'Map Figure',
     Visio.user = new Visio.Models.User()
     Visio.manager = new Visio.Models.Manager()
 
-    @data = Fixtures.topo
+    model = new Visio.Models.Map({ map: Fixtures.topo })
     @map = new Visio.Figures.Map
+      model: model
       margin:
         top: 0
         left: 0
@@ -15,7 +16,6 @@ module 'Map Figure',
 
 test 'render', ->
 
-  @map.modelFn new Backbone.Model @data
   @map.render()
 
   strictEqual @map.$el.find('.country').length, 3, 'Should have 3 countries'
@@ -23,7 +23,6 @@ test 'render', ->
 
 test 'pan', ->
 
-  @map.modelFn new Backbone.Model @data
   @map.render()
 
   extent = @map.translateExtent
