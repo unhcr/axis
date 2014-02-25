@@ -5,15 +5,16 @@
 
   .divider
 
+  - plans = context.figure.filtered(context.collection)
   .row
     .col-md-12
       %span.ui-huge-number
-        = Visio.manager.selectedStrategyPlanIds().length
+        = plans.length
       TARGET COUNTRIES
 
   .row
     .col-md-12
-      - _.each context.figure.filtered(context.collection), (plan) ->
+      - _.each plans, (plan) ->
         %span.ui-large-header
           = plan.toString()
 

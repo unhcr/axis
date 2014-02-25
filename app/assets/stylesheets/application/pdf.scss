@@ -16,16 +16,8 @@
 
 .pdf-page {
   width: 21cm;
-  height: 29.7cm;
   margin: 0;
-}
-
-.pdf-page.country-list {
-  background-color: $primary-soft;
-
-  span {
-    color: white;
-  }
+  height: 100%
 }
 
 /* Warning lots of pixel perfect values needed. Makes for messy css */
@@ -33,6 +25,15 @@ body.pdf {
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
   text-rendering: optimizelegibility;
   padding: 0 50px;
+
+  .pdf-page.country-list {
+    background-color: $primary-soft;
+
+    span {
+      color: white;
+    }
+  }
+
 
   p {
     margin: 0;
