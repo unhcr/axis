@@ -1,4 +1,4 @@
-.pdf-page.country-list
+.pdf-page.country-list.pb_after
   - Visio.manager.strategies(_.keys(Visio.manager.get('selected_strategies'))).each (strategy) ->
     %h3
       = strategy.get 'name'
@@ -13,6 +13,8 @@
 
   .row
     .col-md-12
-      = context.collection.pluck('operation_name').join ', '
+      - _.each context.figure.filtered(context.collection), (plan) ->
+        %span.ui-large-header
+          = plan.toString()
 
 

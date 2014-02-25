@@ -20,6 +20,14 @@
   margin: 0;
 }
 
+.pdf-page.country-list {
+  background-color: $primary-soft;
+
+  span {
+    color: white;
+  }
+}
+
 /* Warning lots of pixel perfect values needed. Makes for messy css */
 body.pdf {
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
