@@ -40,7 +40,7 @@ asyncTest('setSyncDate with different ids', () ->
 
 )
 
-test('strategies', () ->
+test 'strategies', ->
   Visio.manager.get('strategies').reset([
     {
       id: 1
@@ -68,9 +68,8 @@ test('strategies', () ->
   ok(strategies instanceof Visio.Collections.Strategy)
 
   strategies = Visio.manager.strategies([])
-  strictEqual(strategies.length, 3)
+  strictEqual(strategies.length, 0)
   ok(strategies instanceof Visio.Collections.Strategy, "Must be instance of Strategy. Was: #{strategies.contructor}")
-)
 
 test 'selected', () ->
   selected = Visio.manager.get('selected')
