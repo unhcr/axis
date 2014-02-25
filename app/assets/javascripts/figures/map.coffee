@@ -73,19 +73,24 @@ class Visio.Figures.Map extends Visio.Figures.Base
     world.attr('class', (d) ->
       ['country', d.properties.adm0_a3].join(' '))
       .attr('d', @path)
-      .on('click', (d) =>
+      .on('click', (d) ->
+        d3.select(self.el).selectAll('.country.active').classed 'active', false
+        el = d3.select @
         iso3 = d.properties.adm0_a3
-        if @expanded && @views[iso3] && @expanded.model.id == @views[iso3].model.id
-          if @expanded.isShrunk()
-            @expanded.expand()
+        if self.expanded && self.views[iso3] && self.expanded.model.id == self.views[iso3].model.id
+          if self.expanded.isShrunk()
+            self.expanded.expand()
+            el.classed 'active', true
           else
-            @expanded.shrink()
+            self.expanded.shrink()
+            el.classed 'active', false
         else
-          @expanded.shrink() if @expanded
-          @expanded = @views[d.properties.adm0_a3]
-          return unless @expanded
+          self.expanded.shrink() if self.expanded
+          self.expanded = self.views[d.properties.adm0_a3]
+          return unless self.expanded
 
-          @expanded.expand()
+          self.expanded.expand()
+          el.classed 'active', true
       )
 
     centers = @g.selectAll('.center')

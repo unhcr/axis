@@ -8,6 +8,11 @@
   fill: $country-color;
   stroke-width: .5px;
   stroke: $map-background;
+  cursor: pointer;
+}
+
+.country:hover, .country.active {
+  fill: darken($country-color, 10%);
 }
 
 line {
