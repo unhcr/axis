@@ -2,6 +2,8 @@ class Visio.Figures.Map extends Visio.Figures.Base
 
   type: Visio.FigureTypes.MAP
 
+  className: 'map-container'
+
   initialize: (config) ->
 
     super config
@@ -11,6 +13,7 @@ class Visio.Figures.Map extends Visio.Figures.Base
 
     @views = {}
 
+    @collection or= new Visio.Collections.Plan()
     @zoomMax = 2.2
     @zoomMin = 0.5
 
@@ -59,9 +62,11 @@ class Visio.Figures.Map extends Visio.Figures.Base
 
     self = @
 
-    filtered = @filtered @model
+    filtered = @filtered @collection
+    features = topojson.feature(@model.get('map'), @model.get('map').objects.world_50m).features
+
     world = @g.selectAll('.country')
-      .data(filtered)
+      .data features
 
     world.enter().append 'path'
 
@@ -83,11 +88,8 @@ class Visio.Figures.Map extends Visio.Figures.Base
           @expanded.expand()
       )
 
-    centerData = Visio.manager.get(Visio.Syncables.PLANS.plural).filter (plan) ->
-      plan.get('country') and plan.get('year') == Visio.manager.year()
-
     centers = @g.selectAll('.center')
-      .data(centerData, (d) -> d.id)
+      .data(filtered, (d) -> d.id)
 
     centers.enter().append 'circle'
 
@@ -103,8 +105,11 @@ class Visio.Figures.Map extends Visio.Figures.Base
       .attr('r', 3)
       .each((d) ->
         unless self.views[d.get('country').iso3]
-          self.views[d.get('country').iso3] = new Visio.Views.MapTooltipView({ model: d, point: @ })
+          self.views[d.get('country').iso3] = new Visio.Views.MapTooltipView({
+            map: self, model: d, point: @ })
       )
+
+    @filterTooltips()
 
     @
 
@@ -157,10 +162,12 @@ class Visio.Figures.Map extends Visio.Figures.Base
     @zoomed()
 
 
-  filterTooltips: (plan_ids) =>
+  filterTooltips: () =>
+    filtered = @filtered @collection
+    filteredCollection = new Visio.Collections.Plan filtered
     for key, value of @views
       id = value.model.id
-      if (not plan_ids? || _.isEmpty(plan_ids) || _.include(plan_ids, id)) && value.isCurrentYear()
+      if filteredCollection.get(id)?
         value.show()
         value.render(false)
       else
@@ -176,8 +183,14 @@ class Visio.Figures.Map extends Visio.Figures.Base
       value.close()
     @views = {}
 
-  filtered: (model) =>
-    topojson.feature(model.get('map'), model.get('map').objects.world_50m).features
+  filtered: (collection) =>
+    selectedStrategies = _.chain(Visio.manager.get('selected_strategies'))
+      .keys().map((id) -> +id).value()
+
+    collection.filter (plan) ->
+      plan.get('year') == Visio.manager.year() and
+      plan.get('country') and
+      (_.isEmpty(selectedStrategies) or _.any(plan.get('strategy_ids'), (id) -> _.include(selectedStrategies, id)))
 
   refreshTooltips: ->
     for key, value of @views

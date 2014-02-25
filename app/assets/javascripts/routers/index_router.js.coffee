@@ -4,7 +4,7 @@ class Visio.Routers.IndexRouter extends Visio.Routers.GlobalRouter
     super
     height = $(window).height() - $('header').height()
 
-    @map = new Visio.Figures.Map(
+    @map = new Visio.Figures.Map
       margin:
         top: 0
         left: 0
@@ -13,8 +13,11 @@ class Visio.Routers.IndexRouter extends Visio.Routers.GlobalRouter
       model: new Visio.Models.Map({ mapMD5: options.mapMD5 })
       width: $(window).width()
       height: height
-      el: '#map')
+      el: $('#map').get(0)
 
+
+    Visio.manager.on 'change:selected_strategies', () =>
+      @map.render()
     Visio.manager.on 'change:date', () =>
       options =
         options:
@@ -23,6 +26,8 @@ class Visio.Routers.IndexRouter extends Visio.Routers.GlobalRouter
             situation_analysis: true
       Visio.manager.get('plans').fetchSynced(options).done () =>
         @map.clearTooltips()
+        @map.collectionFn new Visio.Collections.Plan(Visio.manager.get('plans').filter (plan) ->
+          plan.get('year') == Visio.manager.year())
         @map.render()
         @map.filterTooltips Visio.manager.selectedStrategyPlanIds()
 
@@ -46,17 +51,14 @@ class Visio.Routers.IndexRouter extends Visio.Routers.GlobalRouter
         include:
           counts: true
           situation_analysis: true
-          ppg_ids: true
-          goal_ids: true
-          output_ids: true
-          problem_objective_ids: true
-          indicator_ids: true
     #NProgress.start()
     @map.model.getMap().done( =>
       @filterView = new Visio.Views.MapFilterView()
       @map.render()
       Visio.manager.get('plans').fetchSynced(options)
     ).done =>
+      @map.collectionFn new Visio.Collections.Plan(Visio.manager.get('plans').filter (plan) ->
+        plan.get('year') == Visio.manager.year())
       @map.render()
 
   list: (plan_id, type) ->

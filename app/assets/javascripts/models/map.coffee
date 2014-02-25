@@ -15,3 +15,10 @@ class Visio.Models.Map extends Backbone.Model
       @set 'map', record
       db.put(Visio.Stores.MAP, record, @get('mapMD5'))
     )
+
+  toJSON: ->
+    json = super
+
+    # Map is way too big
+    json.map = null
+    json

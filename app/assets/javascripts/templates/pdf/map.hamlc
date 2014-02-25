@@ -1,0 +1,18 @@
+.pdf-page.country-list
+  - Visio.manager.strategies(_.keys(Visio.manager.get('selected_strategies'))).each (strategy) ->
+    %h3
+      = strategy.get 'name'
+
+  .divider
+
+  .row
+    .col-md-12
+      %span.ui-huge-number
+        = Visio.manager.selectedStrategyPlanIds().length
+      TARGET COUNTRIES
+
+  .row
+    .col-md-12
+      = context.collection.pluck('operation_name').join ', '
+
+

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140224110333) do
+ActiveRecord::Schema.define(:version => 20140225092002) do
 
   create_table "budgets", :force => true do |t|
     t.string   "budget_type"
@@ -88,14 +88,14 @@ ActiveRecord::Schema.define(:version => 20140224110333) do
   add_index "expenditures", ["updated_at"], :name => "index_expenditures_on_updated_at"
 
   create_table "export_modules", :force => true do |t|
-    t.text     "state"
+    t.text     "state",                  :limit => 2147483647
     t.string   "title"
     t.text     "description"
-    t.boolean  "include_parameter_list", :default => false
-    t.boolean  "include_explaination",   :default => false
-    t.text     "figure_config"
-    t.datetime "created_at",                                :null => false
-    t.datetime "updated_at",                                :null => false
+    t.boolean  "include_parameter_list",                       :default => false
+    t.boolean  "include_explaination",                         :default => false
+    t.text     "figure_config",          :limit => 2147483647
+    t.datetime "created_at",                                                      :null => false
+    t.datetime "updated_at",                                                      :null => false
     t.integer  "user_id"
     t.text     "figure_type"
   end
@@ -186,6 +186,7 @@ ActiveRecord::Schema.define(:version => 20140224110333) do
   add_index "indicator_data", ["indicator_id"], :name => "index_indicator_data_on_indicator_id"
   add_index "indicator_data", ["is_deleted"], :name => "index_indicator_data_on_is_deleted"
   add_index "indicator_data", ["is_performance"], :name => "index_indicator_data_on_is_performance"
+  add_index "indicator_data", ["plan_id"], :name => "index_indicator_data_on_plan_id"
 
   create_table "indicators", :id => false, :force => true do |t|
     t.string   "id",                                :null => false
