@@ -37,7 +37,7 @@ class Visio.Models.Plan extends Visio.Models.Parameter
     options.join_ids or= {}
     options.join_ids.plan_id = @id
 
-    @get(type).fetch(data: options)
+    @get(type).fetch(data: options, { reset: true })
 
   toString: () ->
     @get('operation_name')

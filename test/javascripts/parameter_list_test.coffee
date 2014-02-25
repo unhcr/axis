@@ -4,7 +4,7 @@ module 'ParameterListView',
     Visio.manager = new Visio.Models.Manager()
     Visio.manager.get('plans').reset([{ name: 'Ben', id: 'abcd', operation_name: 'Lisa' }])
 
-test('search', () ->
+test 'search', () ->
   plan = Visio.manager.get('plans').at(0)
   plan.get('indicators').reset([{
       name: 'babf'
@@ -30,5 +30,3 @@ test('search', () ->
 
   models = view.search('hhh')
   strictEqual(0, models.length)
-
-)
