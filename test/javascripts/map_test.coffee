@@ -3,6 +3,9 @@ module 'Map Model',
     Visio.manager = new Visio.Models.Manager()
     @map = new Visio.Models.Map({ mapMD5: 'abc123' })
 
+  teardown: ->
+    Visio.manager.get('db').clear()
+
 asyncTest 'getMap', ->
   sinon.stub $, 'get', (url, options) ->
     if url == '/map'
