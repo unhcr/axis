@@ -4,6 +4,7 @@ Visio.Mixins.Modal =
 
     $overlay = $('<div class="white-overlay"></div>')
     $('body').append $overlay
+    $(document).scrollTop 0
 
     previousClose = @close
     @close = (save) ->
