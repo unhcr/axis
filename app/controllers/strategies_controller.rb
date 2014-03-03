@@ -4,84 +4,18 @@ class StrategiesController < ApplicationController
       :name => params[:strategy][:name],
       :description => params[:strategy][:description])
 
-    s.operations = Operation.find(params[:strategy][:operations]) if params[:strategy][:operations]
-    s.plans = Plan.where(:operation_id => params[:strategy][:operations]) if params[:strategy][:operations]
-    s.ppgs = Ppg.find((s.plans.map &:ppg_ids).flatten.uniq)
 
-    if params[:strategy][:strategy_objectives]
-      params[:strategy][:strategy_objectives].each do |strategy_objective|
-        so = s.strategy_objectives.create(
-          :name => strategy_objective[:name],
-          :description => strategy_objective[:description])
-
-        so.goals = Goal.find(strategy_objective[:goals]) if strategy_objective[:goals]
-        so.outputs = Output.find(strategy_objective[:outputs]) if strategy_objective[:outputs]
-        if strategy_objective[:problem_objectives]
-          so.problem_objectives = ProblemObjective.find(strategy_objective[:problem_objectives])
-        end
-
-        if strategy_objective[:indicators]
-          so.indicators = Indicator.find(strategy_objective[:indicators])
-        end
-      end
-    end
-
-    s.save
-
-
+    s = update_strategy s, params[:strategy]
     render :json => { :strategy => s.as_json({ :include => { :strategy_objectives => true } }) }
   end
 
   def update
     s = Strategy.find(params[:id])
-
     s.update_attributes(
       :name => params[:strategy][:name],
       :description => params[:strategy][:description])
 
-
-    s.operations = Operation.find(params[:strategy][:operations]) if params[:strategy][:operations]
-    s.plans = Plan.where(:operation_id => params[:strategy][:operations]) if params[:strategy][:operations]
-    s.ppgs = Ppg.find((s.plans.map &:ppg_ids).flatten.uniq)
-
-    s.strategy_objectives.clear
-    if params[:strategy][:strategy_objectives]
-      params[:strategy][:strategy_objectives].each do |strategy_objective|
-        so = s.strategy_objectives.create(
-          :name => strategy_objective[:name],
-          :description => strategy_objective[:description])
-
-        if strategy_objective[:goals]
-          goal_ids = strategy_objective[:goals].map do |goalOrId|
-            goalOrId.is_a?(Hash) ? goalOrId[:id] : goalOrId
-          end
-          so.goals = Goal.find(goal_ids)
-        end
-        if strategy_objective[:outputs]
-          output_ids = strategy_objective[:outputs].map do |outputOrId|
-            outputOrId.is_a?(Hash) ? outputOrId[:id] : outputOrId
-          end
-          so.outputs = Output.find(output_ids)
-        end
-        if strategy_objective[:problem_objectives]
-          po_ids = strategy_objective[:problem_objectives].map do |poOrId|
-            poOrId.is_a?(Hash) ? poOrId[:id] : poOrId
-          end
-          so.problem_objectives = ProblemObjective.find(po_ids)
-        end
-
-        if strategy_objective[:indicators]
-          indicator_ids = strategy_objective[:indicators].map do |indicatorOrId|
-            indicatorOrId.is_a?(Hash) ? indicatorOrId[:id] : indicatorOrId
-          end
-          so.indicators = Indicator.find(indicator_ids)
-        end
-        so.save
-      end
-    end
-
-    s.save
-
+    s = update_strategy s, params[:strategy]
 
     render :json => { :strategy => s.as_json({ :include => { :strategy_objectives => true } }) }
   end
@@ -92,4 +26,39 @@ class StrategiesController < ApplicationController
 
     render :json => s
   end
+
+  private
+    def update_strategy(s, strategy_json)
+      s.operation_ids = strategy_json[:operations].map { |o| o['id'] } if strategy_json[:operations]
+
+      # Load all related plans
+      s.plans = Plan.where(:operation_id => s.operation_ids) if strategy_json[:operations]
+
+      # Load all related ppgs
+      s.ppgs = Ppg.find((s.plans.map &:ppg_ids).flatten.uniq)
+
+      # Build out all strategy_objectives
+      s.strategy_objectives.clear
+      if strategy_json[:strategy_objectives]
+        strategy_json[:strategy_objectives].each do |json|
+          so = s.strategy_objectives.create(
+            :name => json[:name],
+            :description => json[:description])
+
+
+          params = [:goals, :outputs, :problem_objectives, :indicators]
+          params.each do |param|
+            next unless json[param].present?
+            method = (param.to_s.singularize + '_ids=').to_sym
+            ids = json[param].map { |p| p['id'] }
+            so.send method, ids
+          end
+          so.save
+        end
+      end
+
+      s.save
+      s
+
+    end
 end

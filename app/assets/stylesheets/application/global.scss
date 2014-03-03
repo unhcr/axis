@@ -205,6 +205,19 @@ body.splash {
 
 }
 
+body.layout-cms {
+  @include text-theme-one;
+  color: $black;
+
+  a {
+    color: $black;
+  }
+
+  a:hover {
+    color: $black;
+  }
+}
+
 body.layout-application {
 
   header section {
@@ -815,6 +828,7 @@ button, input {
   top: .8em;
   right: .8em;
   cursor: pointer;
+  z-index: 10;
 }
 
 .parameter-list {
@@ -1569,16 +1583,10 @@ a {
 }
 
 .export-module {
+  @include text-theme-one;
+
   .overlay-header {
     text-align: center;
-  }
-
-  h4 {
-    text-align: left;
-    display: block;
-    border-bottom: 1px solid $primary-light;
-    color: $orange;
-    font-size: 2em;
   }
 
   .export-selections {
@@ -1943,3 +1951,39 @@ a {
   background-color: darken($orange, 5%);
 }
 
+
+.form-data {
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.modal {
+  position: absolute;
+  z-index: 1000;
+  top: 100px;
+  width: $modal-width;
+  margin-left: -$modal-width / 2;
+  background-color: white;
+  border: 1px solid $primary-light;
+  padding: 20px;
+  left: 50%;
+}
+
+.white-overlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: white;
+  opacity: .8;
+}
+
+.nested-items {
+  .nested-item {
+    padding-top: 4px;
+    padding-bottom: 4px;
+    overflow: hidden;
+    cursor: pointer;
+  }
+}

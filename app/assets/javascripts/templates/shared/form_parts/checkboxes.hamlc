@@ -1,0 +1,13 @@
+!= window.HAML['shared/form_parts/header']( field: context.formField.toJSON() )
+.form-data
+  - context.modelField.each (item) ->
+    .visio-checkbox.visio-checkbox-left
+      %input{
+          :data => { :name => context.formField.get('name'), :id => item.id },
+          :type => 'checkbox',
+          :checked => if context.formField.selected(item.id) then true else false,
+          :id => "form-#{context.formField.get('name')}-#{item.id}" }
+      %label{ :for => "form-#{context.formField.get('name')}-#{item.id}" }
+        = item.toString()
+
+

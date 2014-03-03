@@ -17,6 +17,8 @@
 //= require backbone
 //= require ./vendor/d3.v3
 //= require visio
+//= require backbone_ext
+//= require_tree ./mixins
 //= require ./collections/syncable
 //= require ./models/syncable
 //= require ./collections/parameter
@@ -31,9 +33,8 @@
 //= require_tree ./models/
 //= require_tree ./collections
 //= require_tree ./views/cms
+//= require_tree ./views/shared
 //= require_tree ./routers
 //= require_tree ./helpers
 //= require_tree ./vendor
-//= require_tree ./cms_vendor
 //= require manager
-//= stub backbone_ext

@@ -1,0 +1,21 @@
+%form
+  .row
+    .col-md-12
+      %h2.name
+        = context.model.get 'name'
+  .row
+    .col-md-6.form-name.form-field
+    .col-md-6.form-description.form-field
+
+  - _.each context.schema, (field) ->
+    - return if field.name == 'name' or field.name == 'description'
+    %div{ :class => "form-#{field.name} form-field"}
+
+  .row
+    .col-md-6
+      .btn.save
+        Save
+    .col-md-6
+      .btn.cancel
+        Cancel
+
