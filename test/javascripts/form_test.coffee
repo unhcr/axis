@@ -60,6 +60,8 @@ test 'initSchema - existing model', ->
   strictEqual @model.get('operations').length, 2
   ok not @model.get('name')?
 
+  ok @model.get('operations') instanceof Visio.Collections.Operation
+
   # Should have selected operations
   @model.get('operations').each (o) =>
     formField = @form.fields.findWhere { name: 'operations' }
@@ -87,11 +89,12 @@ test 'nestedItem - new model', ->
   spy = sinon.spy()
 
   @form.on 'initialize:strategy_objectives:goals', spy
-  so = new Visio.Models.StrategyObjective({ attr: 'ben' })
+  so = new Visio.Models.StrategyObjective { attr: 'ben' }
   @form.nestedItem so
 
   ok spy.calledOnce, 'Should have called initialize event for Strategy Objective goals'
 
+  ok @form.model.get('strategy_objectives') instanceof Visio.Collections.StrategyObjective
   strictEqual @form.model.get('strategy_objectives').length, 0
 
   @form.nestedForms['strategy_objectives'][so.cid].saveAndClose()
@@ -250,4 +253,23 @@ test 'close - save nested, save parent', ->
 
   strictEqual json.operations.length, 2
   strictEqual json.strategy_objectives.length, 3
+
+test 'remove nested model', ->
+  @model.id = 'something'
+  @model.set 'strategy_objectives', new Visio.Collections.StrategyObjective [{ id: 1, name: 'blue' },
+    { id: 2, name: 'red' }]
+
+  @form.initSchema()
+  spy = sinon.spy()
+  @form.on 'remove:strategy_objectives', spy
+  @form.render()
+
+  strictEqual @form.$el.find('.form-strategy_objectives .nested-item').length, 2
+
+  $item = @form.$el.find('.form-strategy_objectives .nested-item').eq 0
+  $item.find('.nested-delete').trigger 'click'
+
+  ok spy.calledOnce
+  strictEqual @form.$el.find('.form-strategy_objectives .nested-item').length, 1
+
 

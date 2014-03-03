@@ -52,6 +52,7 @@ class Visio.Views.Form extends Backbone.View
     'click .nested-item-add': 'onAddNestedItem'
     'click .save': 'saveAndClose'
     'click .close': 'close'
+    'click .nested-delete': 'onDeleteNestedItem'
 
   render: ->
     console.error 'Must call initSchema before rendering' unless @isSchemaInit
@@ -69,6 +70,7 @@ class Visio.Views.Form extends Backbone.View
         formField: formField })
 
     @nestedTrigger 'rendered'
+    console.log @model.get('strategy_objectives')
     @
 
   onClickNestedItem: (e) ->
@@ -82,6 +84,24 @@ class Visio.Views.Form extends Backbone.View
     console.error 'Unable to find associated model' unless model
 
     @nestedItem model
+
+  onDeleteNestedItem: (e) ->
+    e.preventDefault()
+    e.stopPropagation()
+
+    $target = $(e.currentTarget)
+    $item = $target.closest '.nested-item'
+
+    name = $item.attr 'data-name'
+    field = @fields.findWhere { name: name }
+    collection = @model.get(name)
+    id = $item.attr 'data-id'
+
+    nestedModel = collection.get id
+
+    collection.remove nestedModel
+    @render()
+    @nestedTrigger 'remove', field
 
   onAddNestedItem: (e) ->
     e.preventDefault()
