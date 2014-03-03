@@ -1,0 +1,6 @@
+%form
+  - _.each context.schema, (field) ->
+    %div{ :class => "form-#{field.name} form-field"}
+
+%button.save Save
+%button.close Close
