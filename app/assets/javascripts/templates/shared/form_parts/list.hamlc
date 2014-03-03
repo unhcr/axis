@@ -1,14 +1,12 @@
-%label
-  = context.formField.get('human')
+!= window.HAML['shared/form_parts/header']( field: context.formField.toJSON() )
 
 .form-data.nested-items
   - context.modelField.each (item) ->
     .nested-item{ :data =>
       { :name => context.formField.get('name'),
         :id => item.id || item.cid } }
-      .nested-content
-        = item.toString()
-      %a.nested-delete X
+      != window.HAML['shared/form_parts/item']( content: item.toString() )
 
-%button.nested-item-add{ :data => { :name => context.formField.get('name') } } Add
+%button.nested-item-add{ :data => { :name => context.formField.get('name') } }
+  = "Add #{context.formField.get('human')}"
 

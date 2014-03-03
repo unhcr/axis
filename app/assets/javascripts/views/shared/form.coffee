@@ -7,10 +7,12 @@ class Visio.Views.Form extends Backbone.View
   isSchemaInit: false
 
   initialize: (options) ->
+    @template = options.template if options.template
     @schema = $.extend {}, @model.schema
     @parent = options.parent
     @nestedForms = {}
     @isModal = options.isModal
+    @nestedTemplate = options.nestedTemplate
 
     @initModal() if @isModal
 
@@ -51,11 +53,12 @@ class Visio.Views.Form extends Backbone.View
     'click .nested-item-add': 'onAddNestedItem'
     'click .save': 'saveAndClose'
     'click .close': 'close'
+    'click .cancel': 'close'
     'click .nested-delete': 'onDeleteNestedItem'
 
   render: ->
     console.error 'Must call initSchema before rendering' unless @isSchemaInit
-    @$el.html @template { schema: @schema }
+    @$el.html @template { schema: @schema, model: @model }
 
     # Render child views
     for name, value of @nestedForms
@@ -176,6 +179,7 @@ class Visio.Views.Form extends Backbone.View
     id = model.id || model.cid
     @nestedForms[model.name.plural][id] = new Visio.Views.Form
       model: model
+      template: @nestedTemplate
       parent: @
       isModal: true
 

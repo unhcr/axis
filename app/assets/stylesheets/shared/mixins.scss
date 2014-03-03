@@ -35,6 +35,35 @@
 /* Used on white backgrounds */
 
 @mixin text-theme-one {
+  input, textarea {
+    border: $light-gray 1px solid;
+    width: 100%;
+    @include box-shadow($off-white 0px 0px 15px 0px inset);
+    color: $primary;
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  label {
+    color: $primary-light;
+  }
+
+  .visio-checkbox {
+    label {
+      color: $primary;
+    }
+    input:checked + label {
+      color: $orange;
+    }
+  }
+
+  textarea {
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+    height: 150px;
+  }
+
   h2 {
     text-align: left;
     display: block;
@@ -55,6 +84,11 @@
     font-size: 18px;
     font-weight: bold;
     color: $primary-soft;
+  }
+
+  a {
+    color: $primary-light;
+    font-weight: bold;
   }
 
 }

@@ -828,6 +828,7 @@ button, input {
   top: .8em;
   right: .8em;
   cursor: pointer;
+  z-index: 10;
 }
 
 .parameter-list {
@@ -1976,4 +1977,13 @@ a {
   bottom: 0;
   background-color: white;
   opacity: .8;
+}
+
+.nested-items {
+  .nested-item {
+    padding-top: 4px;
+    padding-bottom: 4px;
+    overflow: hidden;
+    cursor: pointer;
+  }
 }

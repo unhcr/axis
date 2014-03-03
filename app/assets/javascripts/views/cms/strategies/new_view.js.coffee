@@ -16,6 +16,8 @@ class Visio.Views.StrategyCMSEditView extends Backbone.View
 
     @form = new Visio.Views.Form
       model: @model
+      template: HAML['shared/form_custom/cms']
+      nestedTemplate: HAML['shared/form_custom/nested']
 
     @form.on 'initialize:operations', (form, formField, formModel, modelField) =>
       modelField.fetch().done =>
@@ -33,8 +35,19 @@ class Visio.Views.StrategyCMSEditView extends Backbone.View
         else
           alert(msg)
 
-    _.each @cascadingParameters, (parameter) =>
+    @form.on 'change:name', (form, formField, modelField, value) ->
+      if value
+        form.$el.find('h2.name').text value
+      else
+        form.$el.find('h2.name').html '&nbsp;'
 
+    @form.on 'change:strategy_objectives:name', (form, nestedForm, nestedModel, formField, modelField, value) ->
+      if value
+        nestedForm.$el.find('h2.name').text value
+      else
+        nestedForm.$el.find('h2.name').html '&nbsp;'
+
+    _.each @cascadingParameters, (parameter) =>
 
       @form.on "initialize:strategy_objectives:#{parameter.plural}", (form, nestedForm, nestedModel, formField, modelField) =>
 
@@ -47,7 +60,6 @@ class Visio.Views.StrategyCMSEditView extends Backbone.View
         # Load selected
         _.each related.cascade, (cascadeParameter) =>
           @fetchRelatedParameter nestedForm, nestedModel, parameter, cascadeParameter
-
 
       @form.on "change:strategy_objectives:#{parameter.plural}", (form, nestedForm, nestedModel, formField, modelField, value, model) =>
 
