@@ -68,5 +68,6 @@ namespace :db do
   end
 end
 after "deploy:finalize_update", "db:config"
+after "deploy", "deploy:migrate"
 #after "deploy", "whenever"
 
