@@ -89,7 +89,7 @@ test 'nestedItem - new model', ->
   spy = sinon.spy()
 
   @form.on 'initialize:strategy_objectives:goals', spy
-  so = new Visio.Models.StrategyObjective { attr: 'ben' }
+  so = new Visio.Models.StrategyObjective { attr: 'ben', goals: [{ id: 1 }] }
   @form.nestedItem so
 
   ok spy.calledOnce, 'Should have called initialize event for Strategy Objective goals'
@@ -99,6 +99,7 @@ test 'nestedItem - new model', ->
 
   @form.nestedForms['strategy_objectives'][so.cid].saveAndClose()
   strictEqual @form.model.get('strategy_objectives').length, 1
+  strictEqual @form.model.get('strategy_objectives').at(0).get('goals').length, 1
 
 test 'nestedTrigger', ->
   @form.initSchema()

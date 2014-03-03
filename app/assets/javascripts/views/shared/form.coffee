@@ -32,8 +32,7 @@ class Visio.Views.Form extends Backbone.View
     _.each @schema, (field) =>
       switch field.type
         when 'collection'
-          if @model.isNew() or not @model.get field.name
-            @model.set field.name, field.collection()
+          @model.set field.name, field.collection() unless @model.get(field.name)?
           formField = @fields.findWhere { name: field.name }
           formField.setSelected @model.get(field.name).pluck 'id'
           formField.on 'change:selected', @render, @
