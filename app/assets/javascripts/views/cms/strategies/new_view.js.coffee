@@ -27,7 +27,8 @@ class Visio.Views.StrategyCMSEditView extends Backbone.View
     @form.on 'save', (form, formModel) =>
       @model.save(strategy: formModel.toJSON()).done (response, msg, xhr) =>
         if msg == 'success'
-          @collection.add response.strategy, merge: true
+          model = new Visio.Models.Strategy response.strategy
+          @collection.add model, merge: true
           Visio.router.navigate '/', { trigger: true }
         else
           alert(msg)
