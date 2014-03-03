@@ -71,6 +71,7 @@ line {
 
   .point-container {
     .label {
+      pointer-events: none;
       font-weight: bold;
     }
   }
