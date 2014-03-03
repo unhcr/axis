@@ -1,5 +1,6 @@
 %label{ :for => "form-#{context.formField.get('name')}" }
   = context.formField.get('human')
-%textarea{ :id => "form-#{context.formField.get('name')}",
-    :data => { :name => context.formField.get('name')  } }
-  = context.modelField
+.form-data
+  %textarea{ :id => "form-#{context.formField.get('name')}",
+      :data => { :name => context.formField.get('name')  } }
+    = context.modelField

@@ -1,12 +1,14 @@
 %label
   = context.formField.get('human')
 
-.nested-items
+.form-data.nested-items
   - context.modelField.each (item) ->
     .nested-item{ :data =>
       { :name => context.formField.get('name'),
-        :id => item.id } }
-      = item.toString()
+        :id => item.id || item.cid } }
+      .nested-content
+        = item.toString()
+      %a.nested-delete X
 
 %button.nested-item-add{ :data => { :name => context.formField.get('name') } } Add
 
