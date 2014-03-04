@@ -1,5 +1,6 @@
 require 'bundler/capistrano'
 require "capistrano-rbenv"
+require "whenever/capistrano"
 
 #set :whenever_command, 'bundle exec whenever'
 #set :whenever_environment, defer { rails_env }
@@ -58,10 +59,6 @@ task :query_login do
   run "shopt -q login_shell && echo 'Login shell' || echo 'Not login shell'"
 end
 
-task :whenever do
-  run "whenever -i"
-end
-
 namespace :db do
   task :config, :except => { :no_release => true }, :role => :app do
     run "cp -f ~/database.yml #{release_path}/config/database.yml"
@@ -69,5 +66,6 @@ namespace :db do
 end
 after "deploy:finalize_update", "db:config"
 after "deploy", "deploy:migrate"
-#after "deploy", "whenever"
+after "deploy", "whenever:clear_crontab"
+after "whenever:clear_crontab", "whenever:update_crontab"
 
