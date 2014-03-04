@@ -8,6 +8,8 @@ module 'Parameter Search',
       models = [{ id: 1 }, { id: 2 }]
       Visio.manager.get(hash.plural).reset(models)
 
+  teardown: ->
+    @view.close()
 
 test 'render', ->
   @view.render()

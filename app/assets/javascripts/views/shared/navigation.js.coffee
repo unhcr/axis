@@ -43,12 +43,22 @@ class Visio.Views.NavigationView extends Backbone.View
     type = typeid[0]
     id = typeid[1]
 
-    if $target.is(':checked')
-      Visio.manager.get('selected')[type][id] = true
-    else
-      delete Visio.manager.get('selected')[type][id]
+    strategy = Visio.manager.strategy()
+    # Hack for singular form of parameter
+    if strategy.include type.slice(0, type.length - 1), id
 
-    Visio.manager.trigger('change:selected')
+      if $target.is(':checked')
+        Visio.manager.get('selected')[type][id] = true
+      else
+        delete Visio.manager.get('selected')[type][id]
+
+      Visio.manager.trigger('change:selected')
+
+    else
+      # Need to load external parameters, equivalent to search
+      search = _.find @searches, (s) -> s.parameter().plural is type
+      search.add id
+
 
   onClickOpen: (e) ->
     type = $(e.currentTarget).attr('data-type')
@@ -61,5 +71,9 @@ class Visio.Views.NavigationView extends Backbone.View
     else
       $opened.removeClass('opened')
       @$el.find(".ui-accordion-content.#{type}").addClass('opened')
+
+  close: ->
+    @unbind()
+    @remove()
 
 
