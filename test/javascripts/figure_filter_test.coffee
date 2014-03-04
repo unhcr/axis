@@ -41,13 +41,43 @@ test 'Filters', ->
 
 test 'resetFilter', ->
 
+  callback = sinon.spy()
+
   filter = @filters.get('budget_type')
+  filter.set 'callback', callback
+
   ok filter.get('values').ADMIN
   ok not filter.get('values').PROJECT
 
+  # should be original values
   filter.resetFilter()
+  strictEqual callback.callCount, 0, "Don't call callback if nothing changed"
   ok filter.get('values').ADMIN
-  ok filter.get('values').PROJECT
+  ok not filter.get('values').PROJECT
+
+  filter.filter 'ADMIN', false
+  ok callback.calledOnce, "Should be called once and is #{callback.callCount}"
+  ok not filter.filter 'ADMIN'
+  ok not filter.filter 'PROJECT'
+
+  # should be original values
+  filter.resetFilter()
+  ok callback.calledTwice, "Should be called twice and is #{callback.callCount}"
+  ok filter.filter 'ADMIN'
+  ok not filter.filter 'PROJECT'
+
+  filter.filter 'ADMIN', false
+  filter.filter 'PROJECT', false
+  strictEqual callback.callCount, 4
+  filter.resetFilter()
+  strictEqual callback.callCount, 5
+
+  # What if no callback
+  filter.set 'callback', null
+  filter.filter 'ADMIN', false
+  filter.resetFilter()
+  ok filter.filter 'ADMIN'
+  ok not filter.filter 'PROJECT'
 
 test 'resetFilter - collection', ->
 
@@ -56,8 +86,8 @@ test 'resetFilter - collection', ->
 
   @filters.resetFilters()
 
-  ok _.every(@filters.pluck('values'), (values) ->
-    _.every(_.values(values), (value) -> value)), 'Every value should be true'
+  ok not _.every(@filters.pluck('values'), (values) ->
+    _.every(_.values(values), (value) -> value)), 'Every value should not be true'
 
 test 'Callback on filter', ->
   callback = sinon.spy()

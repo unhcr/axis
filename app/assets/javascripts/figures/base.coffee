@@ -52,3 +52,7 @@ class Visio.Figures.Base extends Backbone.View
     @subscribe() if config.isExport
 
   selectable: true
+
+  close: ->
+    @unbind()
+    @remove()

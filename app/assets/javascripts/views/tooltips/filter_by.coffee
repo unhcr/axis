@@ -19,13 +19,13 @@ class Visio.Views.FilterBy extends Backbone.View
     @figure = options.figure
 
   render: (isRerender) ->
-    @$el.html @template({ figure: @figure })
+    open = if isRerender? then @isOpen() else false
+    @$el.html @template({ figure: @figure, open: open })
     @
 
   onFilter: (e) ->
     e.stopPropagation()
     $target = $(e.currentTarget)
-    console.log $target.val()
 
     type = $target.val().split(Visio.Constants.SEPARATOR)[0]
     attr = $target.val().split(Visio.Constants.SEPARATOR)[1]
@@ -42,7 +42,6 @@ class Visio.Views.FilterBy extends Backbone.View
       @$el.find('.filters').removeClass 'styled'
 
   onToggleFilters: (e) =>
-    console.log 'here'
     @$el.find('.filters').toggleClass('open')
     if @isOpen()
       @$el.find('.filters').toggleClass('styled')
@@ -50,7 +49,7 @@ class Visio.Views.FilterBy extends Backbone.View
   onResetFilters: (e) =>
     @figure.filters.resetFilters()
     @figure.render()
-    @$el.find('input').prop 'checked', true
+    @render true
 
   close: ->
     @unbind()
