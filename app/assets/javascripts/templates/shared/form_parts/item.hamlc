@@ -1,0 +1,9 @@
+.row
+  .col-md-8
+    .nested-content
+      = context.content
+  .col-md-2.right-text
+    %a.nested-edit Edit
+  .col-md-2.right-text
+    %a.nested-delete Delete
+

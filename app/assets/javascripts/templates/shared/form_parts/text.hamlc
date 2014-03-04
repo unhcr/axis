@@ -1,0 +1,7 @@
+%label{ :for => "form-#{context.formField.get('name')}" }
+  = context.formField.get('human')
+%input{
+    :value => context.modelField,
+    :type => 'text',
+    :id => "form-#{context.formField.get('name')}",
+    :data => { :name => context.formField.get('name')  } }

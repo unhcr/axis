@@ -1,6 +1,6 @@
 class Visio.Views.ExportModule extends Backbone.View
 
-  className: 'overview-overlay export-module'
+  className: 'page-overlay export-module'
 
   template: HAML['shared/export_module']
 
@@ -17,7 +17,7 @@ class Visio.Views.ExportModule extends Backbone.View
 
     if @config.selectable
       $.subscribe "select.#{@figure.figureId()}", @select
-      @filtered = @figure.filtered @figure.collection
+      @filtered = @figure.filtered @figure.dataAccessor()
 
   render: ->
 

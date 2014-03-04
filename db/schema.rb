@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140220162236) do
+ActiveRecord::Schema.define(:version => 20140225092002) do
 
   create_table "budgets", :force => true do |t|
     t.string   "budget_type"
@@ -88,14 +88,14 @@ ActiveRecord::Schema.define(:version => 20140220162236) do
   add_index "expenditures", ["updated_at"], :name => "index_expenditures_on_updated_at"
 
   create_table "export_modules", :force => true do |t|
-    t.text     "state"
+    t.text     "state",                  :limit => 2147483647
     t.string   "title"
     t.text     "description"
-    t.boolean  "include_parameter_list", :default => false
-    t.boolean  "include_explaination",   :default => false
-    t.text     "figure_config"
-    t.datetime "created_at",                                :null => false
-    t.datetime "updated_at",                                :null => false
+    t.boolean  "include_parameter_list",                       :default => false
+    t.boolean  "include_explaination",                         :default => false
+    t.text     "figure_config",          :limit => 2147483647
+    t.datetime "created_at",                                                      :null => false
+    t.datetime "updated_at",                                                      :null => false
     t.integer  "user_id"
     t.text     "figure_type"
   end
@@ -121,7 +121,7 @@ ActiveRecord::Schema.define(:version => 20140220162236) do
     t.string "operation_id", :null => false
   end
 
-  create_table "goals_plans", :id => false, :force => true do |t|
+  create_table "goals_plans", :force => true do |t|
     t.string "goal_id", :null => false
     t.string "plan_id", :null => false
   end
@@ -186,6 +186,7 @@ ActiveRecord::Schema.define(:version => 20140220162236) do
   add_index "indicator_data", ["indicator_id"], :name => "index_indicator_data_on_indicator_id"
   add_index "indicator_data", ["is_deleted"], :name => "index_indicator_data_on_is_deleted"
   add_index "indicator_data", ["is_performance"], :name => "index_indicator_data_on_is_performance"
+  add_index "indicator_data", ["plan_id"], :name => "index_indicator_data_on_plan_id"
 
   create_table "indicators", :id => false, :force => true do |t|
     t.string   "id",                                :null => false
@@ -208,7 +209,7 @@ ActiveRecord::Schema.define(:version => 20140220162236) do
     t.string "indicator_id", :null => false
   end
 
-  create_table "indicators_plans", :id => false, :force => true do |t|
+  create_table "indicators_plans", :force => true do |t|
     t.string "plan_id",      :null => false
     t.string "indicator_id", :null => false
   end
@@ -280,7 +281,7 @@ ActiveRecord::Schema.define(:version => 20140220162236) do
     t.datetime "found_at"
   end
 
-  create_table "outputs_plans", :id => false, :force => true do |t|
+  create_table "outputs_plans", :force => true do |t|
     t.string "plan_id",   :null => false
     t.string "output_id", :null => false
   end
@@ -303,26 +304,31 @@ ActiveRecord::Schema.define(:version => 20140220162236) do
   end
 
   create_table "plans", :id => false, :force => true do |t|
-    t.string   "id",                                :null => false
+    t.string   "id",                                                 :null => false
     t.string   "operation_name"
     t.string   "name"
     t.integer  "year"
     t.string   "operation_id"
-    t.datetime "created_at",                        :null => false
-    t.datetime "updated_at",                        :null => false
-    t.boolean  "is_deleted",     :default => false
+    t.datetime "created_at",                                         :null => false
+    t.datetime "updated_at",                                         :null => false
+    t.boolean  "is_deleted",                      :default => false
     t.integer  "country_id"
     t.datetime "found_at"
+    t.integer  "custom_ppgs_count",               :default => 0,     :null => false
+    t.integer  "custom_indicators_count",         :default => 0,     :null => false
+    t.integer  "custom_outputs_count",            :default => 0,     :null => false
+    t.integer  "custom_problem_objectives_count", :default => 0,     :null => false
+    t.integer  "custom_goals_count",              :default => 0,     :null => false
   end
 
-  create_table "plans_ppgs", :id => false, :force => true do |t|
+  create_table "plans_ppgs", :force => true do |t|
     t.string "plan_id", :null => false
     t.string "ppg_id",  :null => false
   end
 
   add_index "plans_ppgs", ["plan_id", "ppg_id"], :name => "index_plans_ppgs_on_plan_id_and_ppg_id", :unique => true
 
-  create_table "plans_problem_objectives", :id => false, :force => true do |t|
+  create_table "plans_problem_objectives", :force => true do |t|
     t.string "problem_objective_id", :null => false
     t.string "plan_id",              :null => false
   end

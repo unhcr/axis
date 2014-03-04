@@ -1,27 +1,39 @@
-class Visio.Models.Strategy extends Backbone.Model
+class Visio.Models.Strategy extends Visio.Models.Syncable
 
   urlRoot: '/strategies'
 
-  paramRoot: 'strategy'
-
   constructor: ->
+    super
 
-    @schema.strategy_objectives =
-      type: 'List'
-      itemType: 'NestedModel'
-      model: Visio.Models.StrategyObjective
-
-
-    Backbone.Model.apply @, arguments
-
-  schema:
-    name:
-      type: 'Text'
-    description:
-      type: 'TextArea'
-    operations:
-      type: 'Checkboxes'
-      options: []
+  schema: [
+    {
+      name: 'name',
+      type: 'string',
+      human: 'Name',
+      formElement: 'text'
+    },
+    {
+      name: 'description',
+      human: 'Description',
+      type: 'string',
+      formElement: 'textarea'
+    },
+    {
+      name: 'operations',
+      human: 'Operations',
+      formElement: 'checkboxes',
+      type: 'collection',
+      collection: -> new Visio.Collections.Operation()
+    },
+    {
+      name: 'strategy_objectives',
+      human: 'Strategy Objectives',
+      formElement: 'list',
+      type: 'collection',
+      model: -> new Visio.Models.StrategyObjective(),
+      collection: -> new Visio.Collections.StrategyObjective()
+    }
+  ]
 
   defaults:
     'name': 'Generic Strategy'
@@ -41,6 +53,7 @@ class Visio.Models.Strategy extends Backbone.Model
   initialize: (options) ->
     options or= {}
     @set('operations', new Visio.Collections.Operation((options.operations || [])))
+    @set('strategy_objectives', new Visio.Collections.StrategyObjective((options.strategy_objectives || [])))
 
     # Initialize helper functions
     _.each _.values(Visio.Parameters), (hash) =>

@@ -34,7 +34,7 @@ class Visio.Models.IndicatorDatum extends Visio.Models.Syncable
 
     return result unless result.include
 
-    reported ||= Visio.Algorithms.REPORTED_VALUES.myr
+    reported ||= Visio.manager.get('reported_type')
 
     if @get(reported)?
       result.status = Visio.Algorithms.STATUS.reported
@@ -59,7 +59,7 @@ class Visio.Models.IndicatorDatum extends Visio.Models.Syncable
       result: null
       include: null
 
-    reported ||= Visio.Algorithms.REPORTED_VALUES.myr
+    reported ||= Visio.manager.get('reported_type')
     achievement_type = Visio.manager.get('achievement_type')
 
     # Exclude if no budget

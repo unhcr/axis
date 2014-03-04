@@ -40,51 +40,7 @@ asyncTest('setSyncDate with different ids', () ->
 
 )
 
-asyncTest 'getMap', ->
-  Visio.manager.set 'mapMD5', 'abc123'
-
-  sinon.stub $, 'get', (url, options) ->
-    if url == '/map'
-      return { object: 'my map object' }
-
-  Visio.manager.getMap().done((map) ->
-    # Should retreive via ajax
-    ok $.get.calledOnce, 'Should have been called once at this point'
-    ok(map, 'Should have map')
-  ).done(() ->
-    Visio.manager.getMap()
-  ).done((map) ->
-    # Should retreive local
-    ok $.get.calledOnce, 'Should not have been called a second time'
-    ok(map, 'Should have map')
-    $.get.restore()
-    start()
-  )
-
-asyncTest 'getMap - no local storage', ->
-  Visio.manager.set 'use_local_db', false
-
-  sinon.stub $, 'get', (url, options) ->
-    if url == '/map'
-      return $.Deferred().resolve({ object: 'my map object' }).promise()
-
-  Visio.manager.getMap().done((map) ->
-    ok $.get.calledOnce, 'Should have been called once at this point'
-    ok(map, 'Should have map')
-    strictEqual map.object, 'my map object'
-  ).done( ->
-    Visio.manager.getMap()
-  ).done((map) ->
-    ok $.get.calledTwice, 'Should have been called twice at this point'
-    ok map, 'Should have map'
-    strictEqual map.object, 'my map object'
-    $.get.restore()
-    start()
-  )
-
-
-
-test('strategies', () ->
+test 'strategies', ->
   Visio.manager.get('strategies').reset([
     {
       id: 1
@@ -112,9 +68,8 @@ test('strategies', () ->
   ok(strategies instanceof Visio.Collections.Strategy)
 
   strategies = Visio.manager.strategies([])
-  strictEqual(strategies.length, 3)
+  strictEqual(strategies.length, 0)
   ok(strategies instanceof Visio.Collections.Strategy, "Must be instance of Strategy. Was: #{strategies.contructor}")
-)
 
 test 'selected', () ->
   selected = Visio.manager.get('selected')

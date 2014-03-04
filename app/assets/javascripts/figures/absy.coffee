@@ -170,7 +170,7 @@ class Visio.Figures.Absy extends Visio.Figures.Base
           @info.render(d.point)
           @info.show()
           pointContainer = @g.select(".point-container.id-#{d.point.refId()}")
-          pointContainer.moveToFront() unless @isExport
+          pointContainer.moveToFront()
           pointContainer.classed 'focus', true
         ).on('mouseout', (d) =>
           @info.hide() if @info and not @entered

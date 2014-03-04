@@ -87,6 +87,14 @@ namespace :build do
       match_model_to_country(operation, operation.name)
     end
   end
+
+  task :counter_caches => :environment do
+    IndicatorsPlans.counter_culture_fix_counts
+    GoalsPlans.counter_culture_fix_counts
+    OutputsPlans.counter_culture_fix_counts
+    PlansProblemObjectives.counter_culture_fix_counts
+    PlansPpgs.counter_culture_fix_counts
+  end
 end
 
 

@@ -1,9 +1,9 @@
 .filter-toggle Filter By
-.filters
+.filters{ :class => ( "open styled" if context.open ) }
   - context.figure.filters.each (filter) ->
     .filter-group
       - for filterName, filterValue of filter.get('values')
-        %div{ :class => ["visio-#{filter.get('filterType')}", "visio-#{filter.get('filterType')}-left", "visio-#{filter.get('filterType')}-primary"].join(' ') }
+        %div{ :class => ["visio-#{filter.get('filterType')}", "visio-#{filter.get('filterType')}-left"].join(' ') }
           %input{ :value => "#{filter.id}#{Visio.Constants.SEPARATOR}#{filterName}",
                   :checked => filterValue,
                   :type => filter.get('filterType'),

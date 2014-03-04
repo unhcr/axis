@@ -205,6 +205,19 @@ body.splash {
 
 }
 
+body.layout-cms {
+  @include text-theme-one;
+  color: $black;
+
+  a {
+    color: $black;
+  }
+
+  a:hover {
+    color: $black;
+  }
+}
+
 body.layout-application {
 
   header section {
@@ -622,7 +635,7 @@ button, input {
 
 .visio-radio label:before {
   content: ' ';
-  border: 2px solid $primary;
+  border: 2px solid $primary-soft;
   border-radius: 12px;
   width: 12px;
   height: 12px;
@@ -640,7 +653,7 @@ button, input {
 
 .visio-radio-left input:checked + label:after {
   content: ' ';
-  border: 3px solid #0d2d46;
+  border: 3px solid $primary-soft;
   border-radius: 10px;
   width: 5px;
   height: 5px;
@@ -704,7 +717,7 @@ button, input {
 
 .visio-checkbox input:checked + label:before {
   content: ' ';
-  border: 3px solid $turquoise;
+  border: 3px solid $primary-soft;
 }
 
 .visio-checkbox-yellow label:before {
@@ -815,6 +828,7 @@ button, input {
   top: .8em;
   right: .8em;
   cursor: pointer;
+  z-index: 10;
 }
 
 .parameter-list {
@@ -1550,14 +1564,17 @@ a {
 }
 
 
-.overview-overlay {
+.page-overlay {
+  overflow: auto;
+  z-index: 2000;
+  border-left: $page-margin solid $off-white;
+  border-right: $page-margin solid $off-white;
+
   position: absolute;
   background-color: white;
   width: 100%;
   height: 100%;
   top: 0;
-  margin-left: $page-margin;
-  margin-right: $page-margin;
   .row {
     max-width: $row-inner-width;
     margin: 0 auto;
@@ -1566,16 +1583,10 @@ a {
 }
 
 .export-module {
+  @include text-theme-one;
+
   .overlay-header {
     text-align: center;
-  }
-
-  h4 {
-    text-align: left;
-    display: block;
-    border-bottom: 1px solid $primary-light;
-    color: $orange;
-    font-size: 2em;
   }
 
   .export-selections {
@@ -1789,26 +1800,46 @@ a {
 }
 
 .ok-criticality {
-  .foreground {
-    fill: $ok;
+  .svg-circle-figure {
+    .foreground {
+      fill: $ok;
+    }
+    .background {
+      stroke: $ok;
+    }
   }
 }
 
 .success-criticality {
-  .foreground {
-    fill: $success;
+  .svg-circle-figure {
+    .foreground {
+      fill: $success;
+    }
+    .background {
+      stroke: $success;
+    }
   }
 }
 
 .fail-criticality {
-  .foreground {
-    fill: $fail;
+  .svg-circle-figure {
+    .foreground {
+      fill: $fail;
+    }
+    .background {
+      stroke: $fail;
+    }
   }
 }
 
 .missing-criticality {
-  .foreground {
-    fill: $lighter-gray;
+  .svg-circle-figure {
+    .foreground {
+      fill: $lighter-gray;
+    }
+    .background {
+      stroke: $lighter-gray;
+    }
   }
 }
 
@@ -1905,7 +1936,7 @@ a {
   h5, h3 {
     margin: 0;
   }
-  padding-top: $parameter-show-padding-vertical / 2;
+  padding-top: 2 * $parameter-show-padding-vertical / 3;
   margin-top: $parameter-show-padding-vertical / 2;
   padding-bottom: $parameter-show-padding-vertical;
 }
@@ -1920,3 +1951,39 @@ a {
   background-color: darken($orange, 5%);
 }
 
+
+.form-data {
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.modal {
+  position: absolute;
+  z-index: 1000;
+  top: 100px;
+  width: $modal-width;
+  margin-left: -$modal-width / 2;
+  background-color: white;
+  border: 1px solid $primary-light;
+  padding: 20px;
+  left: 50%;
+}
+
+.white-overlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: white;
+  opacity: .8;
+}
+
+.nested-items {
+  .nested-item {
+    padding-top: 4px;
+    padding-bottom: 4px;
+    overflow: hidden;
+    cursor: pointer;
+  }
+}

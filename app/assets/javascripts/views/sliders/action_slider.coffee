@@ -9,7 +9,5 @@ class Visio.Views.ActionSliderView extends Visio.Views.SliderView
 
   onSlideChange: (e) ->
     slideNumber = $(e.currentTarget).val()
-    console.log @position
-    console.log slideNumber
     @move(-slideNumber - @position)
 

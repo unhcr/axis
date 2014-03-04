@@ -33,7 +33,7 @@ class Plan < ActiveRecord::Base
   belongs_to :operation
   belongs_to :country
 
-  default_scope { includes([:country]) }
+  default_scope { includes([:country, :strategies]) }
 
   def to_jbuilder(options = {})
     Jbuilder.new do |json|
@@ -42,11 +42,11 @@ class Plan < ActiveRecord::Base
       if options[:include]
 
         if options[:include][:counts]
-          json.indicators_count self.indicators.length
-          json.goals_count self.goals.length
-          json.ppgs_count self.ppgs.length
-          json.outputs_count self.outputs.length
-          json.problem_objectives_count self.problem_objectives.length
+          json.indicators_count self.custom_indicators_count
+          json.goals_count self.custom_goals_count
+          json.ppgs_count self.custom_ppgs_count
+          json.outputs_count self.custom_outputs_count
+          json.problem_objectives_count self.custom_problem_objectives_count
         end
 
         json.ppg_ids self.ppg_ids if options[:include][:ppg_ids].present?
@@ -54,6 +54,7 @@ class Plan < ActiveRecord::Base
         json.operation_ids self.operation_ids if options[:include][:operation_ids].present?
         json.output_ids self.output_ids if options[:include][:output_ids].present?
         json.indicator_ids self.indicator_ids if options[:include][:indicator_ids].present?
+        json.strategy_ids self.strategy_ids
         if options[:include][:problem_objective_ids].present?
           json.problem_objective_ids self.problem_objective_ids
         end

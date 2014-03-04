@@ -20,27 +20,48 @@ class Visio.Models.StrategyObjective extends Visio.Models.Parameter
 
   paramRoot: 'strategy_objective'
 
-  schema:
-    name:
-      type: 'Text'
-    description:
-      type: 'TextArea'
-    goals:
-      type: 'Checkboxes'
-      options: (callback) =>
-        callback(new Visio.Collections.Goal())
-    problem_objectives:
-      type: 'Checkboxes'
-      options: (callback) ->
-        callback(new Visio.Collections.ProblemObjective())
-    outputs:
-      type: 'Checkboxes'
-      options: (callback) ->
-        callback(new Visio.Collections.Output())
-    indicators:
-      type: 'Checkboxes'
-      options: (callback) ->
-        callback(new Visio.Collections.Indicator())
+  schema: [
+    {
+      name: 'name',
+      type: 'string',
+      formElement: 'text',
+      human: 'Name'
+    },
+    {
+      name: 'description',
+      type: 'string',
+      human: 'Description',
+      formElement: 'textarea'
+    },
+    {
+      name: 'goals',
+      type: 'collection',
+      human: 'Goals',
+      formElement: 'checkboxes',
+      collection: -> new Visio.Collections.Goal()
+    },
+    {
+      name: 'problem_objectives',
+      human: 'Problem Objectives',
+      type: 'collection',
+      formElement: 'checkboxes',
+      collection: -> new Visio.Collections.ProblemObjective()
+    },
+    {
+      name: 'outputs',
+      human: 'Outputs',
+      type: 'collection',
+      formElement: 'checkboxes',
+      collection: -> new Visio.Collections.Output()
+    },
+    {
+      name: 'indicators',
+      human: 'Indicators',
+      type: 'collection',
+      formElement: 'checkboxes',
+      collection: -> new Visio.Collections.Indicator()
+    },
+  ]
 
   defaults:
     'name': 'Everyday'

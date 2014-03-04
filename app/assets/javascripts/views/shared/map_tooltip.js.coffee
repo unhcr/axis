@@ -6,10 +6,10 @@ class Visio.Views.MapTooltipView extends Backbone.View
 
   initialize: (options) ->
     @point = options.point
+    @map = options.map
+    @boundingEl = options.map.$el.find('.svg-map-figure').parent().get(0)
     $('body').append(@el)
     @render()
-
-  boundingId: 'map'
 
   parameters: [
     Visio.Parameters.PPGS,
@@ -90,7 +90,7 @@ class Visio.Views.MapTooltipView extends Backbone.View
 
     bounds = true
 
-    @boundingRect ||= document.getElementById(@boundingId).getBoundingClientRect()
+    @boundingRect ||= @boundingEl.getBoundingClientRect()
 
     if @boundingRect.top > offset.top
       bounds = false
@@ -119,7 +119,7 @@ class Visio.Views.MapTooltipView extends Backbone.View
 
     filterWidth = $('.map-filters').width()
 
-    @boundingRect ||= document.getElementById(@boundingId).getBoundingClientRect()
+    @boundingRect ||= @boundingEl.getBoundingClientRect()
 
     dy = 0
     dx = 0
@@ -132,7 +132,7 @@ class Visio.Views.MapTooltipView extends Backbone.View
     if @boundingRect.right < offset.left + $content.width() + padding
       dx = @boundingRect.right - (offset.left + $content.width() + padding)
 
-    Visio.router.map.pan dx, dy
+    @map.pan dx, dy
 
     @render(true)
 

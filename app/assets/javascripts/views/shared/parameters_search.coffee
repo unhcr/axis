@@ -8,12 +8,16 @@ class Visio.Views.ParameterSearch extends Backbone.View
     'keyup input': 'onSearch'
     'click .search-item': 'onAdd'
 
+
   initialize: (options) ->
     @throttledSearch = _.throttle @search, 300
 
   render: ->
     @$el.html @template()
     @
+
+  parameter: =>
+    @collection.name
 
   onAdd: (e) ->
     $target = $(e.currentTarget)

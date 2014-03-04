@@ -1,4 +1,6 @@
 class Visio.Models.FigureFilter extends Backbone.Model
+  initialize: ->
+    @originalValues = _.clone @get('values')
 
   isFiltered: (datum) ->
     return false unless datum.get(@id)?
@@ -17,7 +19,9 @@ class Visio.Models.FigureFilter extends Backbone.Model
       @get('callback') name, active
 
   resetFilter: ->
-    _.each _.keys(@get('values')), (key) =>
-      @get('values')[key] = true
+    for name, active of @originalValues
+      continue if @get('filterType') == 'radio' and not active
+      if @get('values')[name] isnt active
+        @get('callback') name, active if @get('callback')?
 
-
+    @set 'values', _.clone(@originalValues)

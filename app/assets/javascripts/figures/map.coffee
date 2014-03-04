@@ -2,14 +2,18 @@ class Visio.Figures.Map extends Visio.Figures.Base
 
   type: Visio.FigureTypes.MAP
 
+  className: 'map-container'
+
   initialize: (config) ->
 
     super config
+    @$el.prepend $('<a class="export">export</a>')
 
     @scale = 500
 
     @views = {}
 
+    @collection or= new Visio.Collections.Plan()
     @zoomMax = 2.2
     @zoomMin = 0.5
 
@@ -45,39 +49,54 @@ class Visio.Figures.Map extends Visio.Figures.Base
 
     @svg.call @zoom
 
+  dataAccessor: => @model
+
+  selectable: false
+
+  setupFns: [ { name: 'getMap' } ]
+
+  config: ->
+    config = super
+    config.width = 700
+    config
+
   render: ->
 
     self = @
 
-    filtered = @filtered @model
+    filtered = @filtered @collection
+    features = topojson.feature(@model.get('map'), @model.get('map').objects.world_50m).features
+
     world = @g.selectAll('.country')
-      .data(filtered)
+      .data features
 
     world.enter().append 'path'
 
     world.attr('class', (d) ->
       ['country', d.properties.adm0_a3].join(' '))
       .attr('d', @path)
-      .on('click', (d) =>
+      .on('click', (d) ->
+        d3.select(self.el).selectAll('.country.active').classed 'active', false
+        el = d3.select @
         iso3 = d.properties.adm0_a3
-        if @expanded && @views[iso3] && @expanded.model.id == @views[iso3].model.id
-          if @expanded.isShrunk()
-            @expanded.expand()
+        if self.expanded && self.views[iso3] && self.expanded.model.id == self.views[iso3].model.id
+          if self.expanded.isShrunk()
+            self.expanded.expand()
+            el.classed 'active', true
           else
-            @expanded.shrink()
+            self.expanded.shrink()
+            el.classed 'active', false
         else
-          @expanded.shrink() if @expanded
-          @expanded = @views[d.properties.adm0_a3]
-          return unless @expanded
+          self.expanded.shrink() if self.expanded
+          self.expanded = self.views[d.properties.adm0_a3]
+          return unless self.expanded
 
-          @expanded.expand()
+          self.expanded.expand()
+          el.classed 'active', true
       )
 
-    centerData = Visio.manager.get(Visio.Syncables.PLANS.plural).filter (plan) ->
-      plan.get('country') and plan.get('year') == Visio.manager.year()
-
     centers = @g.selectAll('.center')
-      .data(centerData, (d) -> d.id)
+      .data(filtered, (d) -> d.id)
 
     centers.enter().append 'circle'
 
@@ -93,8 +112,11 @@ class Visio.Figures.Map extends Visio.Figures.Base
       .attr('r', 3)
       .each((d) ->
         unless self.views[d.get('country').iso3]
-          self.views[d.get('country').iso3] = new Visio.Views.MapTooltipView({ model: d, point: @ })
+          self.views[d.get('country').iso3] = new Visio.Views.MapTooltipView({
+            map: self, model: d, point: @ })
       )
+
+    @filterTooltips()
 
     @
 
@@ -134,6 +156,9 @@ class Visio.Figures.Map extends Visio.Figures.Base
     for key, value of @views
       value.render(true)
 
+  getMap: =>
+    @model.getMap()
+
   zoomIn: =>
     scale = zoom.scale()
     scale = if scale + @zoomStep > @zoom.scaleExtent()[1] then @zoom.scaleExtent()[1] else scale + @zoomStep
@@ -147,10 +172,12 @@ class Visio.Figures.Map extends Visio.Figures.Base
     @zoomed()
 
 
-  filterTooltips: (plan_ids) =>
+  filterTooltips: () =>
+    filtered = @filtered @collection
+    filteredCollection = new Visio.Collections.Plan filtered
     for key, value of @views
       id = value.model.id
-      if (not plan_ids? || _.isEmpty(plan_ids) || _.include(plan_ids, id)) && value.isCurrentYear()
+      if filteredCollection.get(id)?
         value.show()
         value.render(false)
       else
@@ -166,8 +193,14 @@ class Visio.Figures.Map extends Visio.Figures.Base
       value.close()
     @views = {}
 
-  filtered: (model) =>
-    topojson.feature(model.toJSON(), model.toJSON().objects.world_50m).features
+  filtered: (collection) =>
+    selectedStrategies = _.chain(Visio.manager.get('selected_strategies'))
+      .keys().map((id) -> +id).value()
+
+    collection.filter (plan) ->
+      plan.get('year') == Visio.manager.year() and
+      plan.get('country') and
+      (_.isEmpty(selectedStrategies) or _.any(plan.get('strategy_ids'), (id) -> _.include(selectedStrategies, id)))
 
   refreshTooltips: ->
     for key, value of @views

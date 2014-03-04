@@ -15,14 +15,14 @@
   .col-md-12
     .divider-thick.divider-primary
 .row
-  .country-name.col-md-12.ui-small-header.ui-primary
+  %h3.bottom-flush.country-name.col-md-12.ui-primary
     = context.parameter.get('name').toUpperCase()
 
 .row
   - list = ['budget', 'spent', 'expenditure']
   - _.each list, (keyFigure) ->
     - c = _.findWhere context.keyFigures, { fn: keyFigure }
-    .col-md-4{ :class => "keyFigure #{c.fn}" }
+    .col-md-4.top-flush{ :class => "keyFigure #{c.fn}" }
       .ui-big-number.number.ui-primary-light
         0
       %p

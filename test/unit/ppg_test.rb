@@ -93,6 +93,48 @@ class PpgTest < ActiveSupport::TestCase
 
   end
 
+  test "models with multiple join_id keys" do
+    i = [indicators(:one), indicators(:two), indicators(:impact)]
+    o = outputs(:one)
+    po = problem_objectives(:one)
+
+    i[0].outputs << o
+    i[0].problem_objectives << po
+
+    i[1].outputs << o
+
+    i[2].outputs << o
+    i[2].problem_objectives << problem_objectives(:two)
+
+    i.map(&:save)
+
+    models = Indicator.models({ :output_ids => [o.id], :problem_objective_ids => [po.id] })
+
+    assert_equal 1, models.length, "Should have 1 model and is #{models.length}"
+
+  end
+
+  test "models with no join_ids" do
+    i = [indicators(:one), indicators(:two), indicators(:impact)]
+    o = outputs(:one)
+    po = problem_objectives(:one)
+
+    i[0].outputs << o
+    i[0].problem_objectives << po
+
+    i[1].outputs << o
+
+    i[2].outputs << o
+    i[2].problem_objectives << problem_objectives(:two)
+
+    i.map(&:save)
+
+    models = Indicator.models({ :output_ids => [] })
+
+    assert_equal 0, models.length, "Should have 0 model and is #{models.length}"
+
+  end
+
   test "include options" do
     options = {
       :include => {

@@ -15,6 +15,6 @@
                 :value => p.hash.plural + Visio.Constants.SEPARATOR + d.id,
                 :checked => if Visio.manager.get('selected')[p.hash.plural][d.id] then true else false,
                 :type => 'checkbox',
-                :id => "check_#{d.id}" }
-              %label{ :for => "check_#{d.id}" }
+                :id => "check_#{d.id}_#{p.hash.plural}" }
+              %label{ :for => "check_#{d.id}_#{p.hash.plural}" }
                 = d.toString()
