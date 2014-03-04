@@ -635,7 +635,7 @@ button, input {
 
 .visio-radio label:before {
   content: ' ';
-  border: 2px solid $primary;
+  border: 2px solid $primary-soft;
   border-radius: 12px;
   width: 12px;
   height: 12px;
@@ -653,7 +653,7 @@ button, input {
 
 .visio-radio-left input:checked + label:after {
   content: ' ';
-  border: 3px solid #0d2d46;
+  border: 3px solid $primary-soft;
   border-radius: 10px;
   width: 5px;
   height: 5px;
@@ -717,7 +717,7 @@ button, input {
 
 .visio-checkbox input:checked + label:before {
   content: ' ';
-  border: 3px solid $turquoise;
+  border: 3px solid $primary-soft;
 }
 
 .visio-checkbox-yellow label:before {
