@@ -3,7 +3,9 @@ Visio.Mixins.Modal =
     @$el.addClass 'modal'
 
     $overlay = $('<div class="white-overlay"></div>')
-    $('body').append $overlay
+    $body = $ 'body'
+    $body.append $overlay
+    $overlay.css 'height', $(document).height() + 'px'
     $(document).scrollTop 0
 
     previousClose = @close
