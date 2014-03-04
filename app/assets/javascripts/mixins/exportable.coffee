@@ -19,6 +19,7 @@ Visio.Mixins.Exportable =
     config.selectable = @selectable
     config.viewLocation = @viewLocation
     config.pdfViewLocation = @pdfViewLocation
+    config.setupFns = @setupFns
     config
 
   # Returns where the data is stored. Usually is the collection, but can also be the model

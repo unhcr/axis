@@ -52,7 +52,7 @@ class Visio.Routers.IndexRouter extends Visio.Routers.GlobalRouter
           counts: true
           situation_analysis: true
     #NProgress.start()
-    @map.model.getMap().done( =>
+    @map.getMap().done( =>
       @filterView = new Visio.Views.MapFilterView()
       @map.render()
       Visio.manager.get('plans').fetchSynced(options)

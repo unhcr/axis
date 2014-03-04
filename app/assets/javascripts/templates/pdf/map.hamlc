@@ -18,4 +18,6 @@
         %span.ui-large-header
           = plan.toString()
 
+  %figure
+
 

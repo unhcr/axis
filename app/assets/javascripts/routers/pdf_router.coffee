@@ -39,7 +39,14 @@ class Visio.Routers.PdfRouter extends Backbone.Router
       options = _.extend { isPdf: true, el: $('body') }, figureConfig
 
       @view = new Visio[figureConfig.viewLocation][figureConfig.type.className](options)
-      @view.render()
+
+      # Run all setup functions
+      _.each figureConfig.setupFns, (fn) =>
+        @view[fn.name](fn.args)
+
+      $.when.apply(@, _.map(figureConfig.setupFns, (fn) =>
+        @view[fn.name](fn.args))).done =>
+          @view.render()
 
 
 

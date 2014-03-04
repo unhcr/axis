@@ -7,7 +7,7 @@ class Visio.Views.MapTooltipView extends Backbone.View
   initialize: (options) ->
     @point = options.point
     @map = options.map
-    @boundingEl = options.map.el
+    @boundingEl = options.map.$el.find('.svg-map-figure').parent().get(0)
     $('body').append(@el)
     @render()
 

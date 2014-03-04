@@ -53,6 +53,8 @@ class Visio.Figures.Map extends Visio.Figures.Base
 
   selectable: false
 
+  setupFns: [ { name: 'getMap' } ]
+
   config: ->
     config = super
     config.width = 700
@@ -153,6 +155,9 @@ class Visio.Figures.Map extends Visio.Figures.Base
 
     for key, value of @views
       value.render(true)
+
+  getMap: =>
+    @model.getMap()
 
   zoomIn: =>
     scale = zoom.scale()
