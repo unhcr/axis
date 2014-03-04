@@ -12,7 +12,6 @@ class Visio.Views.IsyTooltip extends Visio.Views.D3Tooltip
     @figure.$el.offset().top
 
   left: =>
-    console.log @isyIndex
     base = $(@figure.el).offset().left + @figure.xFn()(@isyIndex) + @figure.marginFn().left
     if @figure.xFn()(@isyIndex) > @figure.widthFn() / 2
       return base - @offset - @width()
