@@ -8,7 +8,7 @@ class Visio.Collections.IndicatorDatum extends Visio.Collections.Syncable
 
   situationAnalysis: (reported) ->
 
-    reported ||= Visio.Algorithms.REPORTED_VALUES.myr
+    reported ||= Visio.manager.get 'reported_type'
 
     counts = {}
     counts[Visio.Algorithms.ALGO_RESULTS.success] = 0
@@ -51,7 +51,7 @@ class Visio.Collections.IndicatorDatum extends Visio.Collections.Syncable
 
   achievement: (reported) ->
     return { category: null, result: null } if @length == 0
-    reported ||= Visio.Algorithms.REPORTED_VALUES.myr
+    reported ||= Visio.manager.get 'reported_type'
     results = []
 
     @each (datum) ->
