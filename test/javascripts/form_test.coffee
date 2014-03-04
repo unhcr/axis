@@ -173,6 +173,23 @@ test 'change', ->
   nested.change name, field, 'def'
   ok spy.calledTwice
 
+test 'onReset', ->
+  @model.id = 'something'
+  @model.set 'operations', new Visio.Collections.Operation [{ id: 1 }, { id: 2}]
+
+  @form.initSchema()
+  @form.render()
+
+  field = @form.fields.findWhere { name: 'operations' }
+  strictEqual field.getSelected().length, 2
+  strictEqual @form.$el.find('input:checked').length, 2
+  spy = sinon.spy()
+
+  @form.on 'reset:operations', spy
+  @form.$el.find('.form-operations .reset').trigger 'click'
+  strictEqual field.getSelected().length, 0
+  strictEqual @form.$el.find('input:checked').length, 0
+  ok spy.calledOnce
 
 test 'commit - no save', ->
   @model.id = 'something'

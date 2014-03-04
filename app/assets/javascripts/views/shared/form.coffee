@@ -55,6 +55,7 @@ class Visio.Views.Form extends Backbone.View
     'click .close': 'close'
     'click .cancel': 'close'
     'click .nested-delete': 'onDeleteNestedItem'
+    'click .reset': 'onReset'
 
   render: ->
     console.error 'Must call initSchema before rendering' unless @isSchemaInit
@@ -72,8 +73,20 @@ class Visio.Views.Form extends Backbone.View
         formField: formField })
 
     @nestedTrigger 'rendered'
-    console.log @model.get('strategy_objectives')
     @
+
+  onReset: (e) ->
+    e.stopPropagation()
+
+    $target = $(e.currentTarget)
+    name = $target.attr 'data-name'
+    $input = @$el.find "input[data-name=\"#{name}\"]"
+    field = @fields.findWhere { name: name }
+
+    $input.prop 'checked', false
+    field.setSelected []
+
+    @nestedTrigger 'reset', field
 
   onClickNestedItem: (e) ->
     $target = $(e.currentTarget)
