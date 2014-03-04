@@ -52,8 +52,8 @@ test 'resetFilter', ->
   # should be original values
   filter.resetFilter()
   strictEqual callback.callCount, 0, "Don't call callback if nothing changed"
-  ok filter.get('values').ADMIN
-  ok not filter.get('values').PROJECT
+  ok filter.filter 'ADMIN'
+  ok not filter.filter 'PROJECT'
 
   filter.filter 'ADMIN', false
   ok callback.calledOnce, "Should be called once and is #{callback.callCount}"
