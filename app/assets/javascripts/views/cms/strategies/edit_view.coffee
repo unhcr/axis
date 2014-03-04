@@ -61,12 +61,14 @@ class Visio.Views.StrategyCMSEditView extends Backbone.View
         _.each related.cascade, (cascadeParameter) =>
           @fetchRelatedParameter nestedForm, nestedModel, parameter, cascadeParameter
 
-      @form.on "change:strategy_objectives:#{parameter.plural}", (form, nestedForm, nestedModel, formField, modelField, value, model) =>
+      @form.on ["change:strategy_objectives:#{parameter.plural}",
+                "reset:strategy_objectives:#{parameter.plural}"].join(' '),
+        (form, nestedForm, nestedModel, formField, modelField, value, model) =>
 
-        related = @getRelatedParameters formField
+          related = @getRelatedParameters formField
 
-        _.each related.cascade, (cascadeParameter) =>
-          @fetchRelatedParameter nestedForm, nestedModel, parameter, cascadeParameter
+          _.each related.cascade, (cascadeParameter) =>
+            @fetchRelatedParameter nestedForm, nestedModel, parameter, cascadeParameter
 
     @form.initSchema()
 
@@ -81,17 +83,19 @@ class Visio.Views.StrategyCMSEditView extends Backbone.View
 
     # When we fetch related paramter, we have to make sure to fetch each dependent parameter since we
     # recompute parameter
-    _.each dependent, (parameter) ->
+    _.each dependent, (dependentParameter) ->
+      console.log parameter
       join_ids = {}
-      dependentField = form.fields.findWhere { name: parameter.plural }
+      dependentField = form.fields.findWhere { name: dependentParameter.plural }
 
       # Weird thing where data doesn't get passed in backbone if empty
       if _.isEmpty dependentField.getSelected()
         collection.set [], { remove: false }
+        form.render()
         return
 
 
-      join_ids["#{parameter.singular}_ids"] = dependentField.getSelected()
+      join_ids["#{dependentParameter.singular}_ids"] = dependentField.getSelected()
       data = { join_ids: join_ids }
 
       collection.fetch({ data: data, remove: false }).done ->
