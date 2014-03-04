@@ -2,6 +2,7 @@ module 'Map Figure',
   setup: ->
     Visio.user = new Visio.Models.User()
     Visio.manager = new Visio.Models.Manager()
+    Visio.manager.set 'reported_type', Visio.Algorithms.REPORTED_VALUES.myr
 
     country =
       latlng: [33, 65]
