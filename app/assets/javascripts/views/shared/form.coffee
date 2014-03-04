@@ -194,8 +194,9 @@ class Visio.Views.Form extends Backbone.View
         switch field.get 'formElement'
           when 'checkboxes'
             toCommit = []
-            @model.get(name).each (item) ->
-              toCommit.push item if field.selected item.id
+            @model.get(name).each (item) =>
+              $input = @$el.find(".form-#{name} input[data-id=\"#{item.id}\"]")
+              toCommit.push item if field.selected(item.id) and $input.is(':checked')
             @model.get(name).reset toCommit
           when 'text'
             @model.set name, @$el.find(".form-field.form-#{name} input").val()

@@ -97,6 +97,7 @@ test 'nestedItem - new model', ->
   ok @form.model.get('strategy_objectives') instanceof Visio.Collections.StrategyObjective
   strictEqual @form.model.get('strategy_objectives').length, 0
 
+  @form.nestedForms['strategy_objectives'][so.cid].render()
   @form.nestedForms['strategy_objectives'][so.cid].saveAndClose()
   strictEqual @form.model.get('strategy_objectives').length, 1
   strictEqual @form.model.get('strategy_objectives').at(0).get('goals').length, 1
