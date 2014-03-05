@@ -26,7 +26,7 @@ class Visio.Figures.Absy extends Visio.Figures.Base
     ])
 
     super config
-    @$el.prepend $('<a class="export">export</a>')
+    @$el.prepend $('<a class="export"></a>')
 
     @x = d3.scale.linear()
       .range([0, @adjustedWidth])

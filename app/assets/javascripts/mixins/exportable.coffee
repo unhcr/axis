@@ -38,7 +38,7 @@ Visio.Mixins.Exportable =
   type: null
 
   events:
-    'click a.export': 'onExport'
+    'click .export': 'onExport'
 
   onExport: (e) ->
     e.stopPropagation()

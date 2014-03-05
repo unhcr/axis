@@ -30,7 +30,7 @@ class Visio.Views.StrategySnapshotView extends Visio.Views.Dashboard
     'change .ui-blank-radio > input': 'onChangeOperation'
     'click .js-show-all': 'onClickShowAll'
     'click .grid-view': 'onGridView'
-    'click a.export': 'onExport'
+    'click .export': 'onExport'
 
   render: (isRerender) ->
     super isRerender

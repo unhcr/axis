@@ -92,3 +92,11 @@
   }
 
 }
+
+@mixin text-theme-two {
+  h2 {
+    font-size: 26px;
+    color: $primary;
+    margin: 0
+  }
+}

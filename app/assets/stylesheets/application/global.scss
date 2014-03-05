@@ -73,6 +73,7 @@ p.small {
 }
 
 .inner-content {
+  @include text-theme-two;
   border-left: $page-margin solid $off-white;
   border-right: $page-margin solid $off-white;
 
@@ -1986,4 +1987,32 @@ a {
     overflow: hidden;
     cursor: pointer;
   }
+}
+
+.export {
+  background-image: url(/assets/icons/export.png);
+  background-size: 18px;
+  height: 30px;
+  width: 60px;
+  margin: 5px;
+  display: inline-block;
+  position: relative;
+  background-repeat: no-repeat;
+  border: 1px $off-white solid;
+  background-position: center;
+  cursor: pointer;
+}
+
+.export::before {
+  content: 'Save and Export me';
+  position: absolute;
+  border: 1px $off-white solid;
+  border-right: none;
+  height: 30px;
+  width: 160px;
+  left: -160px;
+  top: -1px;
+  text-align: center;
+  padding-top: 6px;
+  color: black;
 }
