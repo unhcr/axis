@@ -78,6 +78,8 @@ class Visio.Views.ParameterSearch extends Backbone.View
     _.each dependencyTypes, (dependencyType) ->
       fetchOptions.include["#{dependencyType.singular}_ids"] = true
 
+    return if @collection.get(id)? and @collection.get(id).get('loaded')
+
     model = new Visio.Models[@collection.name.className]({ id: id })
 
     # First fetch the actual parameter
@@ -110,6 +112,7 @@ class Visio.Views.ParameterSearch extends Backbone.View
           $.when.apply(@, dataTypes.map (dataType) ->
             Visio.manager.get(dataType.plural).fetchSynced(dataOptions, null, 'post')).done =>
               # finally trigger redraw
+              model.set 'loaded', true
               Visio.manager.trigger 'change:navigation'
 
 

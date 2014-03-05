@@ -45,7 +45,7 @@ class Visio.Views.NavigationView extends Backbone.View
 
     strategy = Visio.manager.strategy()
     # Hack for singular form of parameter
-    if strategy.include type.slice(0, type.length - 1), id
+    if strategy.include(type.slice(0, type.length - 1), id) or Visio.manager.get(type).get(id)?.get('loaded')
 
       if $target.is(':checked')
         Visio.manager.get('selected')[type][id] = true
