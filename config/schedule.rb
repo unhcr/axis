@@ -2,7 +2,7 @@
 
 set :output, "./logs/cron.log"
 
-every :sunday, :at => '4:30 am' do
+every :day, :at => '4:30 am' do
   rake 'build:focus'
   rake 'build:countries'
   rake 'build:msrp'
