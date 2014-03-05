@@ -2012,3 +2012,24 @@ a {
   text-align: center;
   color: black;
 }
+
+.error {
+  position: fixed;
+  z-index: 1000;
+  background-color: $alert-red;
+  right: 0;
+  left: 0;
+  text-align: center;
+  padding: 10px;
+  color: $black;
+
+  .error-title {
+    font-weight: bold;
+  }
+
+  .error-close {
+    position: absolute;
+    right: 20px;
+    cursor: pointer;
+  }
+}

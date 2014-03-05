@@ -34,7 +34,7 @@ class Visio.Views.SearchView extends Backbone.View
 
   search: (query) =>
     searchTypes = [Visio.Parameters.INDICATORS, Visio.Parameters.OPERATIONS]
-    $.get('/global_search', { query: query }).done (response) =>
+    $.get('/global_search', { query: query }).done((response) =>
       $results = @$el.find('.results')
       if _.any(searchTypes, (hash) -> response[hash.plural].length > 0)
         $results.removeClass 'gone zero-height'
@@ -52,6 +52,7 @@ class Visio.Views.SearchView extends Backbone.View
           $results.find(".#{hash.singular}-results-container").removeClass 'gone zero-height'
         else
           $results.find(".#{hash.singular}-results-container").addClass 'gone zero-height'
+    )
 
 
   onKeyupSearch: (e) =>
