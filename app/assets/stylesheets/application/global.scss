@@ -220,9 +220,11 @@ body.layout-cms {
 }
 
 body.layout-application {
+  header {
+    border-bottom: 1px solid $primary-light;
+  }
 
   header section {
-    border-bottom: 1px solid $primary-light;
     .logo {
       margin-top: -10px;
       margin-bottom: 10px;
@@ -232,6 +234,7 @@ body.layout-application {
 
 header {
   background-color: inherit;
+  height: $header-height;
 
   section {
     background-color: inherit;
@@ -1584,6 +1587,8 @@ a {
 }
 
 .export-module {
+
+  top: $header-height;
   @include text-theme-one;
 
   .overlay-header {
@@ -1675,7 +1680,7 @@ a {
 }
 
 .filter-by {
-
+  @include header-button;
   .filter-toggle:before {
     content: 'ↆ';
     background: transparent;
@@ -1683,8 +1688,11 @@ a {
     margin-right: 10px;
   }
 
+  .filter-toggle {
+    text-align: center;
+  }
+
   width: 180px;
-  float: right;
   position: relative;
   cursor: pointer;
 
@@ -1990,29 +1998,27 @@ a {
 }
 
 .export {
+  @include header-button;
   background-image: url(/assets/icons/export.png);
   background-size: 18px;
-  height: 30px;
   width: 60px;
-  margin: 5px;
-  display: inline-block;
   position: relative;
+  border-right: 1px $off-white solid;
   background-repeat: no-repeat;
-  border: 1px $off-white solid;
   background-position: center;
   cursor: pointer;
+  margin-left: $export-label-length;
 }
 
 .export::before {
+  @include header-button;
+  margin: 0;
   content: 'Save and Export me';
   position: absolute;
-  border: 1px $off-white solid;
   border-right: none;
-  height: 30px;
-  width: 160px;
-  left: -160px;
+  width: $export-label-length;
+  left: -$export-label-length;
   top: -1px;
   text-align: center;
-  padding-top: 6px;
   color: black;
 }

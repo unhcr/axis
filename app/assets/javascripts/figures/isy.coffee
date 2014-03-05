@@ -1,5 +1,7 @@
 class Visio.Figures.Isy extends Visio.Figures.Base
 
+  @include Visio.Mixins.Exportable
+
   type: Visio.FigureTypes.ISY
 
   attrAccessible: ['x', 'y', 'width', 'height', 'collection', 'margin', 'goalType', 'isPerformance']

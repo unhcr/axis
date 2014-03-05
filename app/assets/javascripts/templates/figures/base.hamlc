@@ -1,1 +1,8 @@
+- if context.exportable and not context.isExport
+  .row
+    .col-md-6
+      %h2
+        = context.figure.type.human
+    .col-md-6.right-text.header-buttons
+      .export
 %figure

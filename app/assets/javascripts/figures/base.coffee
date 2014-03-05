@@ -1,7 +1,5 @@
 class Visio.Figures.Base extends Backbone.View
 
-  @include Visio.Mixins.Exportable
-
   template: HAML['figures/base']
 
   attrAccessible: ['x', 'y', 'width', 'height', 'collection', 'margin', 'model']
@@ -31,7 +29,7 @@ class Visio.Figures.Base extends Backbone.View
       @filters = new Visio.Collections.FigureFilter(config.filters)
 
     @template = HAML["pdf/#{@type.name}"] if @isPdf
-    @$el.html @template({ figure: @, model: @model, collection: @collection })
+    @$el.html @template({ figure: @, model: @model, collection: @collection, isExport: @isExport, exportable: @exportable })
     @selection = d3.select @$el.find('figure')[0]
 
 

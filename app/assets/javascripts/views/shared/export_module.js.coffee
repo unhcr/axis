@@ -6,7 +6,7 @@ class Visio.Views.ExportModule extends Backbone.View
 
   events:
     'change figcaption input': 'onSelectionChange'
-    'click .export': 'onClickExport'
+    'click .pdf': 'onClickPdf'
     'click .close': 'onClose'
 
   initialize: (options) ->
@@ -27,6 +27,7 @@ class Visio.Views.ExportModule extends Backbone.View
       @figure.render()
     else
       @figure.$el.html @figure.type.human
+    @$el.css 'height', $(document).height()
     @
 
   onSelectionChange: (e) ->
@@ -49,7 +50,7 @@ class Visio.Views.ExportModule extends Backbone.View
     # Toggle if it's check or not
     $input.prop 'checked', not checked
 
-  onClickExport: ->
+  onClickPdf: ->
     statusCodes =
       200: =>
         window.location.assign @model.pdfUrl()

@@ -16,7 +16,7 @@ class Visio.Routers.GlobalRouter extends Backbone.Router
         figure_config: config
 
       @exportView = new Visio.Views.ExportModule( model: model )
-      $('.content').append(@exportView.render().el)
+      $('body').append(@exportView.render().el)
   search: () =>
     $(document).scrollTop(0)
     @searchView.show()

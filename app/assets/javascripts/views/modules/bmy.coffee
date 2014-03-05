@@ -32,7 +32,7 @@ class Visio.Views.BmyView extends Visio.Views.AccordionIndexView
 
     unless isRerender
       @$el.find('.summary-figure').html @figure.el
-      @$el.find('.info-container .figure-header').html (new Visio.Views.FilterBy({ figure: @figure, })).render().el
+      @$el.find('.header-buttons').append (new Visio.Views.FilterBy({ figure: @figure, })).render().el
 
     @drawFigures()
     @

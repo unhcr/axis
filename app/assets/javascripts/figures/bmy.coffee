@@ -1,9 +1,10 @@
 class Visio.Figures.Bmy extends Visio.Figures.Base
 
+  @include Visio.Mixins.Exportable
+
   type: Visio.FigureTypes.BMY
 
   initialize: (config) ->
-    @$el.prepend $('<a class="export">export</a>')
     @filters = new Visio.Collections.FigureFilter([
       {
         id: 'budget_type'

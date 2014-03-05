@@ -100,3 +100,13 @@
     margin: 0
   }
 }
+
+@mixin header-button {
+  margin: 5px 0 ;
+  height: $header-button-height;
+  border: 1px $off-white solid;
+  border-right: none;
+  display: inline-block;
+  padding-top: 6px;
+  float: right;
+}

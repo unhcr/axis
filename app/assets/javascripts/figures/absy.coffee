@@ -1,5 +1,7 @@
 class Visio.Figures.Absy extends Visio.Figures.Base
 
+  @include Visio.Mixins.Exportable
+
   type: Visio.FigureTypes.ABSY
 
   initialize: (config) ->
@@ -26,7 +28,6 @@ class Visio.Figures.Absy extends Visio.Figures.Base
     ])
 
     super config
-    @$el.prepend $('<a class="export"></a>')
 
     @x = d3.scale.linear()
       .range([0, @adjustedWidth])
