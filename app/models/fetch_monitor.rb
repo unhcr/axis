@@ -11,7 +11,10 @@ class FetchMonitor < ActiveRecord::Base
   }
 
   validate do |monitor|
-    errors.add(:base, "You can only have one FetchMonitor") unless FetchMonitor.count == 0
+    if (FetchMonitor.count > 0 and monitor.new_record?) or
+        (not monitor.new_record? and FetchMonitor.count > 1)
+      errors.add(:base, "You can only have one FetchMonitor")
+    end
   end
 
   def reset(ids)
