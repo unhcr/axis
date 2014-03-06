@@ -62,7 +62,7 @@
               = 'TOTAL BUDGET'
           - else
             .col-sm-3.table-datum.table-total.cell
-              - budgets = context.model.selectedBudgetData().where({ scenario: scenario })
+              - budgets = context.model.selectedBudgetData(false, context.filters).where({ scenario: scenario })
               = Visio.Formats.LONG_MONEY((new Visio.Collections.Budget(budgets)).amount())
           .clearfix
 
@@ -73,4 +73,4 @@
 
   .row
     .col-sm-12.right-text.bold.cell
-      = Visio.Formats.LONG_MONEY(context.model.selectedBudget())
+      = Visio.Formats.LONG_MONEY(context.model.selectedBudget(false, context.filters))

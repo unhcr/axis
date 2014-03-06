@@ -23,7 +23,7 @@ class Visio.Views.ParameterShowView extends Backbone.View
       rows.push scenario if @filters.filter('scenario', scenario)
 
     achievement = @model.selectedAchievement().result
-    @$el.html @template({ model: @model, idx: @idx, cols: cols, rows: rows })
+    @$el.html @template({ model: @model, idx: @idx, cols: cols, rows: rows, filters: @filters })
     @achievementFigure = new Visio.Figures.Circle
       width: 20
       height: 20
