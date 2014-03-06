@@ -248,12 +248,15 @@ test 'close - no save nested, save parent', ->
   so = new Visio.Models.StrategyObjective()
   @form.nestedItem so
   nested = @form.nestedForms['strategy_objectives'][so.cid]
+  field = nested.fields.findWhere { name: 'goals' }
+  field.selected 1, true
   nested.close()
 
   json = @form.saveAndClose()
 
   strictEqual json.operations.length, 2
   strictEqual json.strategy_objectives.length, 2
+
 
 test 'close - save nested, save parent', ->
   @model.id = 'something'
@@ -265,13 +268,22 @@ test 'close - save nested, save parent', ->
 
   so = new Visio.Models.StrategyObjective()
   @form.nestedItem so
+  so.set 'goals', new Visio.Collections.Goal([{ id: 1 }])
   nested = @form.nestedForms['strategy_objectives'][so.cid]
+  nested.render()
+  nested.$el.find('.form-goals input').trigger 'click'
+  field = nested.fields.findWhere { name: 'goals' }
+  field.selected 1, true
+
   nested.saveAndClose()
 
   json = @form.saveAndClose()
 
   strictEqual json.operations.length, 2
   strictEqual json.strategy_objectives.length, 3
+  ok _.where(json.strategy_objectives, { id: so.id }).length
+  jsonSO = _.where(json.strategy_objectives, { id: so.id })
+  strictEqual jsonSO[0].goals.length, 1
 
 test 'remove nested model', ->
   @model.id = 'something'
