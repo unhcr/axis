@@ -146,9 +146,9 @@ class Visio.Figures.Absy extends Visio.Figures.Base
               .text((d) ->
                 if self.isPdf
                   console.log 'pdf'
-                  1 + _.indexOf self.selected, d.id
+                  Visio.Constants.ALPHABET[_.indexOf self.selected, d.id]
                 else
-                  i + 1
+                  Visio.Constants.ALPHABET[i]
               )
 
         )

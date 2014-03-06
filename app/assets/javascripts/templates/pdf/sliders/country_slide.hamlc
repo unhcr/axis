@@ -1,5 +1,5 @@
 .idx
-  = context.idx + 1
+  = Visio.Constants.ALPHABET[context.idx]
 
 .row
   .country-icon.col-md-4

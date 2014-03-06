@@ -23,7 +23,7 @@
                   :data => { :id => d.id },
                   :value => "#{i}"}
                 %label{:for => "datum-#{i}"}
-                  = i + 1
+                  = Visio.Constants.ALPHABET[i]
     %section.export-settings.row
       %h3 The Details
       %form

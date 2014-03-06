@@ -63,6 +63,7 @@ window.Visio =
   Constants:
     DB_NAME: 'visio'
     SEPARATOR: '___'
+    ALPHABET: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
   Stores:
     MAP: 'map'
     SYNC: 'sync_date'
