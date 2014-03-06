@@ -1,6 +1,6 @@
 != window.HAML['shared/form_parts/header']( field: context.formField.toJSON() )
 %a.reset{ :data => { :name => context.formField.get('name') } } reset
-.form-data
+.form-data.save-scroll{ :data => { :scrollname => context.formField.get('name') } }
   - context.modelField.each (item) ->
     .visio-checkbox.visio-checkbox-left
       %input{

@@ -13,6 +13,7 @@ class Visio.Views.Form extends Backbone.View
     @nestedForms = {}
     @isModal = options.isModal
     @nestedTemplate = options.nestedTemplate
+    store.clear()
 
     @initModal() if @isModal
 
@@ -68,12 +69,26 @@ class Visio.Views.Form extends Backbone.View
 
     _.each @schema, (field) =>
       formField = @fields.findWhere { name: field.name }
-      @$el.find(".form-#{field.name}").html HAML["shared/form_parts/#{field.formElement}"]({
+      @$el.find(".form-#{field.name}").append HAML["shared/form_parts/#{field.formElement}"]({
         modelField: @model.get(field.name),
         formField: formField })
+    @$el.find('.save-scroll').on 'scroll', @onSaveScroll
+    @setScrollPositions()
 
     @nestedTrigger 'rendered'
     @
+
+  setScrollPositions: =>
+    $scrolls = @$el.find('.save-scroll')
+    $scrolls.each (idx, ele) ->
+      $ele = $ ele
+      scrollname = $ele.attr 'data-scrollname'
+      $ele.scrollTop store.get(scrollname)
+
+
+  onSaveScroll: (e) ->
+    $target = $ e.currentTarget
+    store.set $target.attr('data-scrollname'), $target.scrollTop()
 
   onReset: (e) ->
     e.stopPropagation()
