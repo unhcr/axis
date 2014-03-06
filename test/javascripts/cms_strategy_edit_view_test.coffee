@@ -22,7 +22,6 @@ module 'CMS Strategy New/Edit View',
     @server = sinon.fakeServer.create()
     @server.respondWith 'GET', /.*/, (request) ->
       parts = request.url.split '?'
-      console.log parts[1]
       if parts[1]? and parts[1].indexOf('join_ids') != -1
         return [200, {'Content-Type': 'application/json'}, JSON.stringify([models[0]])]
 
@@ -45,9 +44,7 @@ test 'New View', ->
 
   spy = sinon.spy callback
 
-  console.log 'event'
   @view.form.on 'rendered', ->
-    console.log 'here'
     spy()
     ok spy.calledOnce, "Should be called once and is called #{spy.callCount}"
 

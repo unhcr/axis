@@ -84,7 +84,6 @@ class Visio.Views.StrategyCMSEditView extends Backbone.View
     # When we fetch related paramter, we have to make sure to fetch each dependent parameter since we
     # recompute parameter
     _.each dependent, (dependentParameter) ->
-      console.log parameter
       join_ids = {}
       dependentField = form.fields.findWhere { name: dependentParameter.plural }
 
