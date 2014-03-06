@@ -54,11 +54,25 @@ class Visio.Collections.IndicatorDatum extends Visio.Collections.Syncable
     reported ||= Visio.manager.get 'reported_type'
     results = []
 
+    counts = {}
+    counts[Visio.Algorithms.ALGO_RESULTS.high] = 0
+    counts[Visio.Algorithms.ALGO_RESULTS.medium] = 0
+    counts[Visio.Algorithms.ALGO_RESULTS.low] = 0
+    counts[Visio.Algorithms.STATUS.missing] = 0
+
     @each (datum) ->
       result = datum.achievement(reported)
 
       if result.include and result.status == Visio.Algorithms.STATUS.reported
         results.push(result.result)
+        counts[result.category] += 1
+      else if result.include and result.status == Visio.Algorithms.STATUS.missing
+        counts[result.status] += 1
+
+    count = counts[Visio.Algorithms.ALGO_RESULTS.high] +
+            counts[Visio.Algorithms.ALGO_RESULTS.medium] +
+            counts[Visio.Algorithms.ALGO_RESULTS.low] +
+            counts[Visio.Algorithms.STATUS.missing]
 
     average = _.reduce(results,
       (sum, num) -> return sum + num,
@@ -77,6 +91,8 @@ class Visio.Collections.IndicatorDatum extends Visio.Collections.Syncable
     result = {
       category: category
       result: average
+      counts: counts
+      total: count
     }
 
 

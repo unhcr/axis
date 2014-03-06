@@ -58,6 +58,7 @@ class Visio.Models.IndicatorDatum extends Visio.Models.Syncable
       status: null
       result: null
       include: null
+      category: null
 
     reported ||= Visio.manager.get('reported_type')
     achievement_type = Visio.manager.get('achievement_type')
@@ -81,19 +82,16 @@ class Visio.Models.IndicatorDatum extends Visio.Models.Syncable
     else
       if @get(reported) == @get(achievement_type)
         result.result = 1
-        return result
-
-      if @get('reversal')
+      else if @get('reversal')
         # Reverse indicator
         if @get(reported) > @get(achievement_type)
           if +@get('baseline') <= @get(reported)
             result.result = 0
-            return result
+          else
+            numerator = @get('baseline') - @get(reported)
+            denominator = @get('baseline') - @get(achievement_type)
 
-          numerator = @get('baseline') - @get(reported)
-          denominator = @get('baseline') - @get(achievement_type)
-
-          result.result =  numerator / denominator
+            result.result =  numerator / denominator
 
         else
           result.result = 1
@@ -105,16 +103,25 @@ class Visio.Models.IndicatorDatum extends Visio.Models.Syncable
           if +@get('baseline') >= @get(reported)
             result.result = 0
             return result
+          else
+            numerator = @get(reported) - @get('baseline')
+            denominator = @get(achievement_type) - @get('baseline')
 
-          numerator = @get(reported) - @get('baseline')
-          denominator = @get(achievement_type) - @get('baseline')
-
-          result.result = numerator / denominator
+            result.result = numerator / denominator
         else
 
           result.result = 1
 
     if isNaN(result.result)
       console.log result
+
+    divisor = if reported == Visio.Algorithms.REPORTED_VALUES.yer then 1 else 2
+
+    if result.result >= Visio.Algorithms.HIGH_THRESHOLD / divisor
+      result.category = Visio.Algorithms.ALGO_RESULTS.high
+    else if result.result >= Visio.Algorithms.MEDIUM_THRESHOLD / divisor
+      result.category = Visio.Algorithms.ALGO_RESULTS.medium
+    else
+      result.category = Visio.Algorithms.ALGO_RESULTS.low
 
     return result

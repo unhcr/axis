@@ -42,13 +42,28 @@ test 'achievement collection', () ->
       reversal: false
       baseline: 25
       missing_budget: false
+    },
+    {
+      id: 'jeff'
+      output_id: 'present'
+      problem_objective_id: 'present'
+      is_performance: true
+      comp_target: 100
+      standard: 20
+      reversal: false
+      baseline: 25
+      missing_budget: false
     }
+
   ])
 
   result = data.achievement()
 
-  strictEqual(.75, result.result)
-  strictEqual(Visio.Algorithms.ALGO_RESULTS.high, result.category)
+  strictEqual .75, result.result
+  strictEqual Visio.Algorithms.ALGO_RESULTS.high, result.category
+  strictEqual result.total, 3
+  strictEqual result.counts[Visio.Algorithms.STATUS.missing], 1
+  strictEqual result.counts[Visio.Algorithms.ALGO_RESULTS.high], 2, 'Should have 2 high'
 
   data.get('ben').set({
     baseline: 100
@@ -103,20 +118,25 @@ test 'achievement', () ->
     missing_budget: false
   })
 
-  strictEqual(1, datum.achievement().result)
+  strictEqual 1, datum.achievement().result
+  strictEqual datum.achievement().category, Visio.Algorithms.ALGO_RESULTS.high
 
   datum.set('comp_target', 40)
   strictEqual(1, datum.achievement().result)
+  strictEqual datum.achievement().category, Visio.Algorithms.ALGO_RESULTS.high
 
   datum.set('is_performance', false)
   strictEqual(0, datum.achievement().result)
+  strictEqual datum.achievement().category, Visio.Algorithms.ALGO_RESULTS.low
 
   datum.set('baseline', 100)
   datum.set('comp_target', 50)
   strictEqual(1 , datum.achievement().result)
+  strictEqual datum.achievement().category, Visio.Algorithms.ALGO_RESULTS.high
 
   datum.set('comp_target', 25)
   strictEqual(50/75 , datum.achievement().result)
+  strictEqual datum.achievement().category, Visio.Algorithms.ALGO_RESULTS.high
 
   datum.set('reversal', false)
   datum.set('baseline', 50)
@@ -134,6 +154,7 @@ test 'achievement', () ->
   strictEqual result.include, false
   strictEqual result.result, null
   strictEqual result.status, null
+  strictEqual result.category, null
 
   datum.set 'missing_budget', false
   datum.set 'myr', null
@@ -142,6 +163,7 @@ test 'achievement', () ->
   strictEqual result.include, true
   strictEqual result.status, Visio.Algorithms.STATUS.missing
   strictEqual result.result, null
+  strictEqual result.category, null
 
   datum.set 'reversal', true
   datum.set 'myr', 50
@@ -151,16 +173,20 @@ test 'achievement', () ->
   strictEqual result.include, true
   strictEqual result.status, Visio.Algorithms.STATUS.reported
   strictEqual result.result, 1
+  strictEqual result.category, Visio.Algorithms.ALGO_RESULTS.high
 
+  Visio.manager.set 'reported_type', 'yer'
   datum.set 'reversal', false
-  datum.set 'myr', 50
+  datum.set 'yer', 100
   datum.set 'baseline', 25
-  datum.set 'comp_target', 75
+  datum.set 'comp_target', 125
 
   result = datum.achievement()
   strictEqual result.include, true
   strictEqual result.status, Visio.Algorithms.STATUS.reported
-  strictEqual result.result, .5
+  strictEqual result.result, .75
+  strictEqual result.category, Visio.Algorithms.ALGO_RESULTS.medium
+  Visio.manager.set 'reported_type', 'myr'
 
   datum.set 'reversal', false
   datum.set 'myr', 50
