@@ -6,7 +6,7 @@
     %img{
       :width => "55",
       :height => "55",
-      :src => "/assets/countries/#{context.parameter.get('country').iso2}/128.png" }
+      :src => "/assets/countries/#{context.parameter.get('country').iso2.toLowerCase()}/128.png" }
   .col-md-8
     .pin.pin-medium.pull-right{ :class => "pin-#{context.category}" }
       .pin-tip

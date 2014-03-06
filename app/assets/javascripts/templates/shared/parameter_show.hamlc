@@ -7,7 +7,7 @@
       %img{
         :width => "55",
         :height => "55",
-        :src => "/assets/countries/#{context.model.get('country').iso2}/128.png" }
+        :src => "/assets/countries/#{context.model.get('country').iso2.toLowerCase()}/128.png" }
   .row
     .col-sm-offset-9.col-sm-3.right-text.achievement-figure
 
