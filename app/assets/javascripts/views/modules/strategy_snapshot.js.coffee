@@ -34,8 +34,12 @@ class Visio.Views.StrategySnapshotView extends Visio.Views.Dashboard
 
   render: (isRerender) ->
     super isRerender
-    @$el.find('.target-countries').html @countrySlider.render().el if @countrySlider?
-    @$el.find('.actions').html @actionSlider.render().el if @actionSlider?
+    if @countrySlider?
+      @$el.find('.target-countries').html @countrySlider.render().el
+      @countrySlider.delegateEvents()
+    if @actionSlider?
+      @$el.find('.actions').html @actionSlider.render().el
+      @actionSlider.delegateEvents()
 
 
     @
