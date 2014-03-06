@@ -6,7 +6,9 @@ class StrategiesController < ApplicationController
 
 
     s = update_strategy s, params[:strategy]
-    render :json => { :strategy => s.as_json({ :include => { :strategy_objectives => true } }) }
+    render :json => { :strategy => s.as_json({ :include => {
+      :operations => true,
+      :strategy_objectives => true } }) }
   end
 
   def update
@@ -17,7 +19,9 @@ class StrategiesController < ApplicationController
 
     s = update_strategy s, params[:strategy]
 
-    render :json => { :strategy => s.as_json({ :include => { :strategy_objectives => true } }) }
+    render :json => { :strategy => s.as_json({ :include => {
+      :operations => true,
+      :strategy_objectives => true } }) }
   end
 
   def destroy
