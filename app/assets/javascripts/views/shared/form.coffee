@@ -233,7 +233,7 @@ class Visio.Views.Form extends Backbone.View
 
       else
         switch field.get 'formElement'
-          when 'checkboxes', 'list' then @model.get(name).reset @original[name]
+          when 'checkboxes', 'list' then @model.get(name).reset _.clone(@original[name])
           when 'text', 'textarea' then @model.set name, @original[name]
 
     @model.toJSON()
