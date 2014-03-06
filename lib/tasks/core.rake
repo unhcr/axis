@@ -82,7 +82,6 @@ namespace :build do
     Plan.all.each do |plan|
       match_model_to_country(plan, plan.operation_name)
     end
-
     Operation.all.each do |operation|
       match_model_to_country(operation, operation.name)
     end
@@ -95,6 +94,29 @@ namespace :build do
     PlansProblemObjectives.counter_culture_fix_counts
     PlansPpgs.counter_culture_fix_counts
   end
+end
+
+namespace :utils do
+  task :strategy_to_yaml => :environment do
+
+    id = ENV['id']
+
+    unless Strategy.exists? id
+      p "No such strategy exists for id: #{id}"
+      return
+    end
+    strategy = Strategy.find id
+    yaml = strategy.as_json({ :include => { :strategy_objectives => true } }).as_json.as_json.to_yaml
+
+    name = strategy.name.downcase.gsub ' ', '_'
+
+    File.open("#{Rails.root}/data/strategies/#{name}.yml", 'w+') { |file| file.write yaml }
+  end
+
+  task :strategy_from_yaml => :environment do
+
+  end
+
 end
 
 
