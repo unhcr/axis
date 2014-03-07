@@ -8,8 +8,8 @@ class Visio.Views.Error extends Backbone.View
     'click .error-close': 'close'
 
   initialize: (options) ->
-    @title = options.title
-    @description = options.description
+    @title = options.title || ''
+    @description = options.description || ''
     @render()
     window.setTimeout @close.bind(@), 5000
 
