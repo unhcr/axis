@@ -4,6 +4,7 @@ Visio.Mixins.Exportable =
   # viewLocation: null
   # selectable: false
   # attrConfig: []
+  # hasAxis: false
 
   config: ->
     config = {}

@@ -62,13 +62,14 @@ class Visio.Views.ExportModule extends Backbone.View
         NProgress.done()
       503: (jqXHR, textStatus, errorThrown) =>
         wait = parseInt jqXHR.getResponseHeader('Retry-After')
+        NProgress.inc()
         setTimeout =>
           $.ajax
             url: @model.pdfUrl()
             statusCode: statusCodes
         , wait * 3000
 
-    formArray = @$el.find('.export-settings form').serializeArray()
+    formArray = @$el.find('form').serializeArray()
     _.each formArray, (formObj) => @model.set formObj.name, formObj.value
 
     selected = _.map @$el.find('figcaption input[type="checkbox"]:checked'), (ele) -> $(ele).attr('data-id')

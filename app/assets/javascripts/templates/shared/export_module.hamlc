@@ -23,10 +23,31 @@
                   :data => { :id => d.id },
                   :value => "#{i}"}
                 %label{:for => "datum-#{i}"}
-                  = Visio.Constants.ALPHABET[i]
-    %section.export-settings.row
-      %h3 The Details
-      %form
+    %form
+      - if context.model.figure_config.hasAxis
+        %section.export-axis
+          %h3 The Axis
+          .row
+            .col-md-12
+              %input{
+                :class => 'full-width',
+                :name => "xAxis",
+                :placeholder => 'X Axis',
+                :type => "text",
+                :maxlength => '80',
+                :value => ""}
+          .row
+            .col-md-12
+              %input{
+                :class => 'full-width',
+                :name => "yAxis",
+                :placeholder => 'Y Axis',
+                :type => "text",
+                :maxlength => '80',
+                :value => ""}
+
+      %section.export-settings.row
+        %h3 The Details
         .row
           .col-md-12
             %input{

@@ -8,6 +8,8 @@ class Visio.Figures.Base extends Backbone.View
 
   viewLocation: 'Figures'
 
+  hasAxis: true
+
   initialize: (config) ->
 
     # default margin
