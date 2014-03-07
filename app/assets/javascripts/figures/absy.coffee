@@ -136,7 +136,7 @@ class Visio.Figures.Absy extends Visio.Figures.Base
           else if self.isPdf and not _.isEmpty self.selected
             labels = pointContainer.selectAll('.label').data(_.filter([d], (d) => _.include self.selected, d.id))
 
-          if self.isExport or self.isPdf
+          if self.isExport or (self.isPdf and not _.isEmpty self.selected)
             labels.enter().append('text')
             labels.attr('class', 'label')
               .attr('x', (d) => self.x(d.selectedAmount(false, self.filters)))
