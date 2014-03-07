@@ -1,5 +1,6 @@
 class ProblemObjective < ActiveRecord::Base
   include SyncableModel
+  include SyncableParameterModel
   include Tire::Model::Search
   include Tire::Model::Callbacks
 
