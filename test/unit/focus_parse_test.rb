@@ -249,6 +249,7 @@ class FocusParseTest < ActiveSupport::TestCase
       assert !d.is_performance.nil?, "Must have a performance field"
       assert d.year, "Must be a year"
     end
+    assert IndicatorDatum.where('imp_target is not null').count > 0
 
     assert_equal COUNTS[:budgets], Budget.count, "Budget count"
     assert_equal 0, Budget.where('amount = 0').count

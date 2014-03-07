@@ -37,8 +37,9 @@ window.Visio =
       human: 'Strategy Overview'
       name: 'strategy_snapshot'
   AchievementTypes:
-    TARGET: 'comp_target'
+    TARGET: 'imp_target'
     STANDARD: 'standard'
+    COMP_TARGET: 'comp_target'
   Scenarios:
     OL: 'Operating Level'
     AOL: 'Above Operating Level'
@@ -154,7 +155,8 @@ window.Visio =
 
     GOAL_TYPES:
       standard: 'standard'
-      target: 'comp_target'
+      compTarget: 'comp_target'
+      target: 'imp_target'
 
 Visio.ProgressTypes =
   BASELINE_MYR:

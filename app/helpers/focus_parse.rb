@@ -218,6 +218,9 @@ module FocusParse
                   comp_target = xml_performance_indicator.search('./compTarget').text
                   d.comp_target = comp_target.empty? ? nil : comp_target.to_i
 
+                  imp_target = xml_performance_indicator.search('./impTarget').text
+                  d.imp_target = imp_target.empty? ? nil : imp_target.to_i
+
                   d.is_performance = true
                   d.year = plan.year
                 end).save
@@ -324,6 +327,9 @@ module FocusParse
 
                 comp_target = xml_impact_indicator.search('./compTarget').text
                 d.comp_target = comp_target.empty? ? nil : comp_target.to_i
+
+                imp_target = xml_impact_indicator.search('./impTarget').text
+                d.imp_target = imp_target.empty? ? nil : imp_target.to_i
 
                 d.threshold_red = xml_impact_indicator.search('./thresholdRed').text.to_i
                 d.threshold_green = xml_impact_indicator.search('./thresholdGreen').text.to_i

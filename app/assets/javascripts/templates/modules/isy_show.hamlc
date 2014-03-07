@@ -23,7 +23,7 @@
         .row.js-indicator-container
       .col-md-4.zero-padding
         .row
-          %input.goal-type{:checked => "", :type => "checkbox", :value => "comp_target"}
+          %input.goal-type{:checked => "", :type => "checkbox", :value => Visio.Algorithms.GOAL_TYPES.target }
           %label Target
         .row
           %input.is-performance{:checked => "", :type => "checkbox", :value => "true"}

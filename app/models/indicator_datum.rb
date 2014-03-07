@@ -1,7 +1,7 @@
 class IndicatorDatum < ActiveRecord::Base
   include SyncableModel
 
-  attr_accessible :baseline, :comp_target, :reversal, :standard, :stored_baseline, :threshold_green, :threshold_red, :yer, :myr, :is_performance, :year, :id, :opeartion_id, :missing_budget
+  attr_accessible :baseline, :imp_target, :comp_target, :reversal, :standard, :stored_baseline, :threshold_green, :threshold_red, :yer, :myr, :is_performance, :year, :id, :opeartion_id, :missing_budget
 
   self.primary_key = :id
   belongs_to :indicator
