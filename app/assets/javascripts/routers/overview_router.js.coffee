@@ -40,6 +40,7 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
       join_ids:
         strategy_id: Visio.manager.get('strategy_id')
 
+    NProgress.start()
     $.when(Visio.manager.get('ppgs').fetchSynced(options),
            Visio.manager.get('operations').fetchSynced(options),
            Visio.manager.get('goals').fetchSynced(options),
@@ -75,6 +76,7 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
       #  forceHeight: false
       #)
       Visio.manager.set('setup', true)
+      NProgress.done()
     )
 
 

@@ -51,7 +51,7 @@ class Visio.Routers.IndexRouter extends Visio.Routers.GlobalRouter
         include:
           counts: true
           situation_analysis: true
-    #NProgress.start()
+    NProgress.start()
     @map.getMap().done( =>
       @filterView = new Visio.Views.MapFilterView()
       @map.render()
@@ -60,6 +60,7 @@ class Visio.Routers.IndexRouter extends Visio.Routers.GlobalRouter
       @map.collectionFn new Visio.Collections.Plan(Visio.manager.get('plans').filter (plan) ->
         plan.get('year') == Visio.manager.year())
       @map.render()
+      NProgress.done()
 
   list: (plan_id, type) ->
 

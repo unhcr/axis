@@ -51,11 +51,15 @@ class Visio.Views.ExportModule extends Backbone.View
     $input.prop 'checked', not checked
 
   onClickPdf: ->
+    NProgress.start()
     statusCodes =
       200: =>
+        NProgress.done()
         window.location.assign @model.pdfUrl()
       504: ->
-       console.log "Shit's beeing wired"
+        new Visio.Views.Error
+          title: "Error generating PDF"
+        NProgress.done()
       503: (jqXHR, textStatus, errorThrown) =>
         wait = parseInt jqXHR.getResponseHeader('Retry-After')
         setTimeout =>
