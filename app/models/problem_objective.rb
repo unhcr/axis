@@ -25,9 +25,6 @@ class ProblemObjective < ActiveRecord::Base
   has_many :problem_objectives_strategies, :class_name     => 'ProblemObjectivesStrategies'
   has_many :strategies, :uniq => true, :through => :problem_objectives_strategies
 
-  has_many :problem_objectives_strategy_objectives, :class_name    => 'ProblemObjectivesStrategyObjectives'
-  has_many :strategy_objectives, :uniq => true, :through => :problem_objectives_strategy_objectives
-
   has_many :plans_problem_objectives, :class_name    => 'PlansProblemObjectives'
   has_many :plans, :uniq => true, :through => :plans_problem_objectives
 

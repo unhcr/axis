@@ -22,9 +22,6 @@ class Goal < ActiveRecord::Base
   has_many :goals_strategies, :class_name => 'GoalsStrategies'
   has_many :strategies, :uniq => true, :through => :goals_strategies
 
-  has_many :goals_strategy_objectives, :class_name => 'GoalsStrategyObjectives'
-  has_many :strategy_objectives, :uniq => true, :through => :goals_strategy_objectives
-
   has_many :goals_plans, :class_name => 'GoalsPlans'
   has_many :plans, :uniq => true, :through => :goals_plans
 
