@@ -94,6 +94,8 @@ namespace :build do
     OutputsPlans.counter_culture_fix_counts
     PlansProblemObjectives.counter_culture_fix_counts
     PlansPpgs.counter_culture_fix_counts
+
+    Plan.all.map &:touch
   end
 end
 
