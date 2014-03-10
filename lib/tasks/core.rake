@@ -44,7 +44,13 @@ namespace :build do
     include FocusFetch
     start = Time.now
 
-    ret = fetch n, n_days
+    ret = nil
+    if n_days
+      ret = fetch n, n_days
+    else
+      ret = fetch n
+    end
+
     p "Finished fetching FOCUS data in: #{Time.now - start}"
     p '-----------------'
     p "Files Read: #{ret[:files_read]}"
