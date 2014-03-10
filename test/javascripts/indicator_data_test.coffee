@@ -25,7 +25,7 @@ test 'achievement collection', () ->
       problem_objective_id: 'present'
       is_performance: true
       myr: 50
-      comp_target: 50
+      imp_target: 50
       standard: 60
       reversal: false
       baseline: 20
@@ -37,7 +37,7 @@ test 'achievement collection', () ->
       problem_objective_id: 'present'
       is_performance: true
       myr: 50
-      comp_target: 100
+      imp_target: 100
       standard: 20
       reversal: false
       baseline: 25
@@ -48,7 +48,7 @@ test 'achievement collection', () ->
       output_id: 'present'
       problem_objective_id: 'present'
       is_performance: true
-      comp_target: 100
+      imp_target: 100
       standard: 20
       reversal: false
       baseline: 25
@@ -67,7 +67,7 @@ test 'achievement collection', () ->
 
   data.get('ben').set({
     baseline: 100
-    comp_target: 100
+    imp_target: 100
     is_performance: false
   })
 
@@ -112,7 +112,7 @@ test 'achievement', () ->
     problem_objective_id: 'present'
     is_performance: true
     myr: 50
-    comp_target: 50
+    imp_target: 50
     reversal: true
     baseline: 20
     missing_budget: false
@@ -121,7 +121,7 @@ test 'achievement', () ->
   strictEqual 1, datum.achievement().result
   strictEqual datum.achievement().category, Visio.Algorithms.ALGO_RESULTS.high
 
-  datum.set('comp_target', 40)
+  datum.set('imp_target', 40)
   strictEqual(1, datum.achievement().result)
   strictEqual datum.achievement().category, Visio.Algorithms.ALGO_RESULTS.high
 
@@ -130,22 +130,22 @@ test 'achievement', () ->
   strictEqual datum.achievement().category, Visio.Algorithms.ALGO_RESULTS.low
 
   datum.set('baseline', 100)
-  datum.set('comp_target', 50)
+  datum.set('imp_target', 50)
   strictEqual(1 , datum.achievement().result)
   strictEqual datum.achievement().category, Visio.Algorithms.ALGO_RESULTS.high
 
-  datum.set('comp_target', 25)
+  datum.set('imp_target', 25)
   strictEqual(50/75 , datum.achievement().result)
   strictEqual datum.achievement().category, Visio.Algorithms.ALGO_RESULTS.high
 
   datum.set('reversal', false)
   datum.set('baseline', 50)
   datum.set('myr', 50)
-  datum.set('comp_target', 50)
+  datum.set('imp_target', 50)
 
   strictEqual(1, datum.achievement().result)
 
-  datum.set 'comp_target', 100
+  datum.set 'imp_target', 100
 
   strictEqual 0, datum.achievement().result
 
@@ -167,7 +167,7 @@ test 'achievement', () ->
 
   datum.set 'reversal', true
   datum.set 'myr', 50
-  datum.set 'comp_target', 100
+  datum.set 'imp_target', 100
 
   result = datum.achievement()
   strictEqual result.include, true
@@ -179,7 +179,7 @@ test 'achievement', () ->
   datum.set 'reversal', false
   datum.set 'yer', 100
   datum.set 'baseline', 25
-  datum.set 'comp_target', 125
+  datum.set 'imp_target', 125
 
   result = datum.achievement()
   strictEqual result.include, true
@@ -190,7 +190,7 @@ test 'achievement', () ->
 
   datum.set 'reversal', false
   datum.set 'myr', 50
-  datum.set 'comp_target', 25
+  datum.set 'imp_target', 25
   datum.set 'is_performance', false
 
   result = datum.achievement()
@@ -206,7 +206,7 @@ test 'achievement', () ->
   strictEqual result.status, Visio.Algorithms.STATUS.reported
   strictEqual result.result, 0
 
-  datum.set 'comp_target', 0
+  datum.set 'imp_target', 0
   datum.set 'myr', 10
   datum.set 'is_performance', true
 
