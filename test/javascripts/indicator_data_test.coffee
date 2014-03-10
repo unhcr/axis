@@ -74,7 +74,7 @@ test 'achievement collection', () ->
   result = data.achievement()
   strictEqual(Visio.Algorithms.ALGO_RESULTS.low, result.category)
 
-  Visio.manager.set 'achievement_type', Visio.AchievementTypes.STANDARD
+  Visio.manager.set 'achievement_type', Visio.Algorithms.GOAL_TYPES.standard
   data.get('ben').set({
     baseline: 20
     is_performance: false

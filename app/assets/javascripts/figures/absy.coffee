@@ -19,7 +19,7 @@ class Visio.Figures.Absy extends Visio.Figures.Base
       {
         id: 'achievement'
         filterType: 'radio'
-        values: _.object(_.values(Visio.AchievementTypes), _.values(Visio.AchievementTypes).map(
+        values: _.object(_.values(Visio.Algorithms.GOAL_TYPES), _.values(Visio.Algorithms.GOAL_TYPES).map(
           (achievement_type) ->
             Visio.manager.get('achievement_type') == achievement_type))
         callback: (name, attr) ->

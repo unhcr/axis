@@ -36,10 +36,6 @@ window.Visio =
       className: 'StrategySnapshotView'
       human: 'Strategy Overview'
       name: 'strategy_snapshot'
-  AchievementTypes:
-    TARGET: 'imp_target'
-    STANDARD: 'standard'
-    COMP_TARGET: 'comp_target'
   Scenarios:
     OL: 'Operating Level'
     AOL: 'Above Operating Level'
