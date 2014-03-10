@@ -23,6 +23,8 @@
       .ui-small-number.number
         0
       %div
+        %span.label-prefix
+          = context.labelPrefix + ' '
         = context.keyFigures[i].human
 .row
   - for i in [2..3]
@@ -30,4 +32,6 @@
       .ui-small-number.number
         0
       %div
+        %span.label-prefix
+          = context.labelPrefix + ' '
         = context.keyFigures[i].human

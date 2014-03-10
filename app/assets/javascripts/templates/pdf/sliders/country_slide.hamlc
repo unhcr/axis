@@ -26,6 +26,8 @@
       .ui-big-number.number.ui-primary-light
         0
       %p
+        %span.label-prefix
+          = context.labelPrefix + ' '
         != Visio.Utils.space2nbsp c.human
 
 .row

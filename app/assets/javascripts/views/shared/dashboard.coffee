@@ -9,10 +9,10 @@ class Visio.Views.Dashboard extends Backbone.View
   ]
 
   keyFigures: [
-    { fn: 'indicatorCount', human: 'Total Indicators', formatter: Visio.Formats.NUMBER },
-    { fn: 'budget', human: 'Total Budget', formatter: Visio.Formats.MONEY },
-    { fn: 'expenditure', human: 'Total Expenditure', formatter: Visio.Formats.MONEY },
-    { fn: 'spent', human: 'Total Spent', formatter: Visio.Formats.PERCENT }
+    { fn: 'indicatorCount', human: 'Indicators', formatter: Visio.Formats.NUMBER },
+    { fn: 'budget', human: 'Budget', formatter: Visio.Formats.MONEY },
+    { fn: 'expenditure', human: 'Expenditure', formatter: Visio.Formats.MONEY },
+    { fn: 'spent', human: 'Spent', formatter: Visio.Formats.PERCENT }
   ]
 
   criticalityConfig:
@@ -47,6 +47,20 @@ class Visio.Views.Dashboard extends Backbone.View
         figure: new Visio.Figures.Circle(_.extend({}, @criticalityConfig))
         criticality: criticality
 
+  labelPrefix: =>
+    filter = @filters.get('scenario')
+    values = filter.get('values')
+
+    if values[Visio.Scenarios.AOL] and values[Visio.Scenarios.OL]
+      label = 'Total'
+    else if values[Visio.Scenarios.AOL]
+      label = 'AOL'
+    else if values[Visio.Scenarios.OL]
+      label = 'OL'
+    else
+      label = 'Zero'
+
+    label
   indicatorCount: =>
     @parameter.strategyIndicatorData().length
 
@@ -70,6 +84,7 @@ class Visio.Views.Dashboard extends Backbone.View
         keyFigures: @keyFigures
         category: category
         idx: @idx
+        labelPrefix: @labelPrefix()
       )
 
       _.each @criticalityFigures, (figure) =>
@@ -88,6 +103,7 @@ class Visio.Views.Dashboard extends Backbone.View
   drawKeyFigures: =>
     _.each @keyFigures, (keyFigure) =>
       $keyFigure = @$el.find(".#{keyFigure.fn} .number:last")
+      $labelPrefix = @$el.find ".#{keyFigure.fn} .label-prefix:last"
       from = +$keyFigure.text().replace(/[^0-9\.]+/g,"")
       to = @[keyFigure.fn]()
 
@@ -96,6 +112,11 @@ class Visio.Views.Dashboard extends Backbone.View
         to: to
         speed: Visio.Durations.FAST
         formatter: keyFigure.formatter
+      if keyFigure.fn is 'budget' or
+         keyFigure.fn is 'expenditure' or
+         keyFigure.fn is 'spent'
+
+        $labelPrefix.text @labelPrefix()
 
   drawCriticalities: =>
     result = @parameter.strategySituationAnalysis()

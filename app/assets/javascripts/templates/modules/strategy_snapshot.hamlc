@@ -49,8 +49,10 @@
           .ui-huge-number.number
             0
           %div
+            %span.label-prefix
+              = context.labelPrefix + ' '
             = context.keyFigures[i].human
-          %span.js-operation-name All&nbsp;Target&nbsp;Countries
+          %span.ui-primary-soft.js-operation-name All&nbsp;Target&nbsp;Countries
 
   .row.divider-light-gray
   %section.row

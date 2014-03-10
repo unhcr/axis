@@ -36,6 +36,11 @@
             .ui-huge-number.number.ui-primary-light.light
               0
             .bold.ui-extra-small-header
+              %span.label-prefix
+                - if context.keyFigures[i].fn == 'indicatorCount'
+                  = 'Total '
+                - else
+                  = context.labelPrefix + ' '
               = context.keyFigures[i].human
             %span.ui-primary-second.ui-extra-small-header All&nbsp;Target&nbsp;Countries
       .row
@@ -44,6 +49,8 @@
             .ui-huge-number.number.ui-primary-light.light
               0
             .bold.ui-extra-small-header
+              %span.label-prefix
+                = context.labelPrefix + ' '
               = context.keyFigures[i].human
             %span.ui-primary-second.ui-extra-small-header All&nbsp;Target&nbsp;Countries
 
