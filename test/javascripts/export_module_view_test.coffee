@@ -10,7 +10,7 @@ module 'Export Module View',
           baseline: 0
           myr: 10
           yer: 20
-          comp_target: 50
+          imp_target: 50
           standard: 50
         },
         {
@@ -19,7 +19,7 @@ module 'Export Module View',
           baseline: 0
           myr: 10
           yer: 20
-          comp_target: 50
+          imp_target: 50
         },
         {
           id: 'lisa'
@@ -27,7 +27,7 @@ module 'Export Module View',
           baseline: 0
           myr: 10
           yer: 20
-          comp_target: 50
+          imp_target: 50
         }
       ])
     @config =
