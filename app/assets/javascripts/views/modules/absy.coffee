@@ -28,7 +28,7 @@ class Visio.Views.AbsyView extends Backbone.View
     if !isRerender
       @$el.html @template( figureId: @figure.figureId() )
       @$el.find('#bubble').html @figure.el
-      @$el.find('.header-buttons').append (new Visio.Views.FilterBy({ figure: @figure, })).render().el
+      @$el.find('.header-buttons').append (new Visio.Views.FilterBy({ figure: @figure })).render().el
 
 
     @figure.collectionFn(Visio.manager.selected(Visio.manager.get('aggregation_type')))
