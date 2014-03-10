@@ -35,6 +35,7 @@ namespace :build do
   task :focus => :environment do
 
     n = ENV['n']
+    n_days = ENV['days'].present? ? ENV['days'].to_i.days : nil
 
     n = n.nil? ? 1.0/0.0 : n.to_i
 
@@ -43,7 +44,7 @@ namespace :build do
     include FocusFetch
     start = Time.now
 
-    ret = fetch n
+    ret = fetch n, n_days
     p "Finished fetching FOCUS data in: #{Time.now - start}"
     p '-----------------'
     p "Files Read: #{ret[:files_read]}"
