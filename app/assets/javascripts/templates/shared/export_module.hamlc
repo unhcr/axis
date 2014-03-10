@@ -23,6 +23,7 @@
                   :data => { :id => d.id },
                   :value => "#{i}"}
                 %label{:for => "datum-#{i}"}
+                  = Visio.Constants.ALPHABET[i]
     %form
       - if context.model.figure_config.hasAxis
         %section.export-axis
