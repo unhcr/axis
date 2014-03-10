@@ -1686,7 +1686,9 @@ a {
   cursor: pointer;
 
   .filters {
+    width: 180px;
     text-align: left;
+    z-index: 1;
     @include transition-property(max-height);
     @include transition-duration($fast-transition);
     @include transition-timing-function(ease-in);
@@ -1694,6 +1696,7 @@ a {
     max-height: 0px;
     overflow: hidden;
     background-color: white;
+    margin-top: 6px;
   }
 
   .filter-group {
@@ -1702,8 +1705,8 @@ a {
 
   .filters.styled {
     padding: 15px 10px;
-    @include single-box-shadow;
-    border-top: 3px $primary-dark solid;
+    @include hover-shadow;
+    /*border-top: 3px $primary-dark solid;*/
   }
 
   .filters.open {
