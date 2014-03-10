@@ -207,7 +207,7 @@ class Visio.Figures.Absy extends Visio.Figures.Base
 
 
   filterFn: (d) ->
-    d.selectedAmount(false, @filters) && d.selectedAchievement(false, @filters).result
+    d.selectedAmount(false, @filters) && d.selectedAchievement(false, @filters).result >= 0
 
   filtered: (collection) => _.chain(collection.models).filter(@filterFn).value()
 
