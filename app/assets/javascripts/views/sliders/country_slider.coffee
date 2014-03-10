@@ -11,12 +11,19 @@ class Visio.Views.CountrySliderView extends Visio.Views.SliderView
     'mouseout': 'onMouseout'
 
   initialize: (options) ->
+    @filters = options.filters
     @isPdf = options.isPdf
     super options
+
+  drawFigures: =>
+    @collection.each (model) =>
+      @views[model.id]?.drawFigures()
 
   addOne: (model) =>
     return unless model.get('country')?
     super model
+    @views[model.id].filters = @filters
+
 
   toMove: (isNext) ->
     multiplier = if isNext then -1 else 1

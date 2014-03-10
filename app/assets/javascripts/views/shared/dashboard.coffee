@@ -26,7 +26,20 @@ class Visio.Views.Dashboard extends Backbone.View
       left: 2
       right: 2
 
-  initialize: ->
+  initialize: (options) ->
+    console.log options.filters
+    if _.isArray options.filters
+      @filters = new Visio.Collections.FigureFilter options.filters
+    else if options.filters instanceof Visio.Collections.FigureFilter
+      @filters = options.filters
+    else
+      @filters = new Visio.Collections.FigureFilter(
+        [{
+          id: 'scenario'
+          filterType: 'checkbox'
+          values: _.object(_.values(Visio.Scenarios), _.values(Visio.Scenarios).map(-> true))
+        }] )
+
     @criticalityFigures = []
 
     _.each @criticalities, (criticality) =>
@@ -38,10 +51,10 @@ class Visio.Views.Dashboard extends Backbone.View
     @parameter.strategyIndicatorData().length
 
   budget: =>
-    @parameter.strategyBudget()
+    @parameter.strategyBudget(false, @filters)
 
   expenditure: =>
-    @parameter.strategyExpenditure()
+    @parameter.strategyExpenditure(false, @filters)
 
   spent: =>
     (@expenditure() / @budget())

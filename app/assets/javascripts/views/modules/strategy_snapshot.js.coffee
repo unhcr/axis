@@ -10,13 +10,17 @@ class Visio.Views.StrategySnapshotView extends Visio.Views.Dashboard
       @criticalityConfig.width = 60
       @criticalityConfig.height = 60
 
-    else
+
+    super options
+
+    unless options.isPdf
       @actionSlider = new Visio.Views.ActionSliderView
         collection: Visio.manager.strategy()[Visio.Parameters.STRATEGY_OBJECTIVES.plural]()
 
-    @countrySlider = new Visio.Views.CountrySliderView({ collection: @collection, isPdf: options.isPdf })
-    super options
-
+    @countrySlider = new Visio.Views.CountrySliderView
+      filters: @filters
+      collection: @collection
+      isPdf: options.isPdf
 
     @parameter = @collection
 
@@ -34,12 +38,17 @@ class Visio.Views.StrategySnapshotView extends Visio.Views.Dashboard
 
   render: (isRerender) ->
     super isRerender
+    if !isRerender
+      @$el.find('.header-buttons').append (new Visio.Views.FilterBy({ figure: @ })).render().el
+      @$el.find('.target-countries').html @countrySlider?.render().el
+      @$el.find('.actions').html @actionSlider?.render().el
+      @countrySlider?.delegateEvents()
+      @actionSlider?.delegateEvents()
+
     if @countrySlider?
-      @$el.find('.target-countries').html @countrySlider.render().el
-      @countrySlider.delegateEvents()
+      @countrySlider.drawFigures()
     if @actionSlider?
-      @$el.find('.actions').html @actionSlider.render().el
-      @actionSlider.delegateEvents()
+      @actionSlider.drawFigures()
 
 
     @

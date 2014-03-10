@@ -80,12 +80,12 @@ class Visio.Models.Parameter extends Visio.Models.Syncable
   strategyExpenditureData: (strategy, isAnyYear = false, filters = null) ->
     @strategyData(Visio.Syncables.EXPENDITURES, strategy, isAnyYear, filters)
 
-  strategyExpenditure: ->
-    data = @strategyExpenditureData()
+  strategyExpenditure: (isAnyYear = false, filters = null) ->
+    data = @strategyExpenditureData(null, isAnyYear, filters)
     data.amount()
 
-  strategyBudget: () ->
-    data = @strategyBudgetData()
+  strategyBudget: (isAnyYear = false, filters = null) ->
+    data = @strategyBudgetData(null, isAnyYear, filters)
     data.amount()
 
   strategySituationAnalysis: () ->
@@ -93,7 +93,7 @@ class Visio.Models.Parameter extends Visio.Models.Syncable
     data.situationAnalysis()
 
   selectedAchievement: (isAnyYear = false, filters = null) ->
-    data = @selectedIndicatorData(isAnyYear = false, filters)
+    data = @selectedIndicatorData(isAnyYear, filters)
     data.achievement()
 
   selectedBudget: (isAnyYear = false, filters = null) ->

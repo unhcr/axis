@@ -33,14 +33,14 @@ class Visio.Collections.Parameter extends Visio.Collections.Syncable
       data.add model.strategyExpenditureData.apply(model, args).models, silent: true
     data
 
-  strategySituationAnalysis: ->
-    data = @strategyIndicatorData()
+  strategySituationAnalysis: (isAnyYear = false, filters = null) ->
+    data = @strategyIndicatorData(null, isAnyYear, filters)
     data.situationAnalysis()
 
-  strategyExpenditure: ->
-    data = @strategyExpenditureData()
+  strategyExpenditure: (isAnyYear = false, filters = null) ->
+    data = @strategyExpenditureData(null, isAnyYear, filters)
     data.amount()
 
-  strategyBudget: () ->
-    data = @strategyBudgetData()
+  strategyBudget: (isAnyYear = false, filters = null) ->
+    data = @strategyBudgetData(null, isAnyYear, filters)
     data.amount()
