@@ -24,12 +24,14 @@ class Visio.Routers.IndexRouter extends Visio.Routers.GlobalRouter
           include:
             counts: true
             situation_analysis: true
+      NProgress.start()
       Visio.manager.get('plans').fetchSynced(options).done () =>
         @map.clearTooltips()
         @map.collectionFn new Visio.Collections.Plan(Visio.manager.get('plans').filter (plan) ->
           plan.get('year') == Visio.manager.year())
         @map.render()
         @map.filterTooltips Visio.manager.selectedStrategyPlanIds()
+        NProgress.done()
 
     @setup()
 
