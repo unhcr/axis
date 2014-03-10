@@ -1,6 +1,6 @@
 # Use this file to easily define all of your cron jobs.
 
-set :output, "./logs/cron.log"
+set :output, "./log/cron.log"
 
 every :day, :at => '4:30 am' do
   rake 'build:focus'
