@@ -71,7 +71,9 @@ class Visio.Views.Dashboard extends Backbone.View
     @parameter.strategyExpenditure(false, @filters)
 
   spent: =>
-    (@expenditure() / @budget())
+    spent = @expenditure() / @budget()
+
+    if isNaN(spent) then 0 else spent
 
   render: (isRerender) ->
     situationAnalysis = @parameter.strategySituationAnalysis()
@@ -104,7 +106,16 @@ class Visio.Views.Dashboard extends Backbone.View
     _.each @keyFigures, (keyFigure) =>
       $keyFigure = @$el.find(".#{keyFigure.fn} .number:last")
       $labelPrefix = @$el.find ".#{keyFigure.fn} .label-prefix:last"
+      suffix = $keyFigure.text().match /([kMG%])$/
       from = +$keyFigure.text().replace(/[^0-9\.]+/g,"")
+
+      if suffix?
+        switch suffix[0]
+          when '%' then from /= 100
+          when 'k' then from *= 1000
+          when 'M' then from *= 1000000
+          when 'G' then from *= 1000000000
+
       to = @[keyFigure.fn]()
 
       $keyFigure.countTo
