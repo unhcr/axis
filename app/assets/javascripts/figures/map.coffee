@@ -196,7 +196,8 @@ class Visio.Figures.Map extends Visio.Figures.Base
     collection.filter (plan) ->
       plan.get('year') == Visio.manager.year() and
       plan.get('country') and
-      (_.isEmpty(selectedStrategies) or _.any(plan.get('strategy_ids'), (id) -> _.include(selectedStrategies, id)))
+      (_.isEmpty(selectedStrategies) or
+      _.every(selectedStrategies, (id) -> _.include(plan.get('strategy_ids'), id)))
 
   refreshTooltips: ->
     for key, value of @views
