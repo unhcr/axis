@@ -63,7 +63,7 @@
             %textarea{
               :class => 'full-width',
               :cols => "20",
-              :maxlength => '900',
+              :maxlength => Visio.Constants.CMS.TEXTAREA_MAXLEN,
               :name => "description",
               :placeholder => context.model.description,
               :rows => "5"}

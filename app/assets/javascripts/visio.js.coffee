@@ -61,6 +61,9 @@ window.Visio =
     DB_NAME: 'visio'
     SEPARATOR: '___'
     ALPHABET: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    CMS:
+      TEXTAREA_MAXLEN: 900
+
   Stores:
     MAP: 'map'
     SYNC: 'sync_date'
