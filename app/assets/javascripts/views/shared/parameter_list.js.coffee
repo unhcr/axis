@@ -78,8 +78,10 @@ class Visio.Views.ParameterListView extends Backbone.View
       unless _.isEmpty Visio.manager.get('selected_strategies')
         options.join_ids.strategy_ids = _.keys Visio.manager.get('selected_strategies')
 
+      NProgress.start()
       @model.fetchParameter(type, options).done =>
         @fetched[type] = true
+        NProgress.done()
         items = @model.get(type).map(@item)
         @$el.find('.items').html items.join(' ')
 
