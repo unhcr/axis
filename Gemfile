@@ -44,9 +44,9 @@ end
 
 group :development, :test do
   gem 'quiet_assets'
-  gem 'capistrano'
-  gem 'capistrano-rbenv'
-  gem 'qunit-rails'
+  gem 'capistrano', '~> 2.15.5'
+  gem 'capistrano-rbenv', '~> 1.0.5'
+  gem 'qunit-rails', '= 0.0.4'
   gem 'random-word'
   gem 'simplecov', :require => false
   gem 'teaspoon'

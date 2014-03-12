@@ -1,8 +1,8 @@
 GIT
   remote: https://github.com/benrudolph/shrimp.git
-  revision: f486ec27af0f5e4a19d06c465e59864a3cebb5de
+  revision: 5d513906f17a319d5e5aa81c61e253ccc387ba68
   specs:
-    shrimp (0.0.3)
+    shrimp (0.0.4)
       json
 
 GEM
@@ -116,7 +116,7 @@ GEM
       sprockets (~> 2.0)
       tilt (~> 1.1)
     hashr (0.0.22)
-    highline (1.6.19)
+    highline (1.6.21)
     hike (1.2.3)
     i18n (0.6.1)
     jbuilder (2.0.1)
@@ -140,7 +140,7 @@ GEM
       net-ssh (>= 2.6.5)
     net-sftp (2.1.2)
       net-ssh (>= 2.6.5)
-    net-ssh (2.6.8)
+    net-ssh (2.8.0)
     net-ssh-gateway (1.2.0)
       net-ssh (>= 2.6.5)
     nokogiri (1.6.1)
@@ -267,8 +267,8 @@ PLATFORMS
 
 DEPENDENCIES
   backbone-on-rails
-  capistrano
-  capistrano-rbenv
+  capistrano (~> 2.15.5)
+  capistrano-rbenv (~> 1.0.5)
   coffee-rails (~> 3.2.1)
   compass-rails
   counter_culture (~> 0.1.18)
@@ -290,7 +290,7 @@ DEPENDENCIES
   pry
   pry-rails
   quiet_assets
-  qunit-rails
+  qunit-rails (= 0.0.4)
   quoth
   rails (= 3.2.13)
   random-word
