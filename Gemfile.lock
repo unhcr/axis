@@ -1,8 +1,8 @@
 GIT
   remote: https://github.com/benrudolph/shrimp.git
-  revision: 5d513906f17a319d5e5aa81c61e253ccc387ba68
+  revision: 57f0299c32df04aed88f50b64a14bc9f65227f9e
   specs:
-    shrimp (0.0.4)
+    shrimp (0.0.5)
       json
 
 GEM
