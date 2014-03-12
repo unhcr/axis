@@ -2,6 +2,7 @@ class ExportModulesController < ApplicationController
   before_filter :authenticate_user!
 
   def create
+    Rails.logger.info `env`
     export_module = ExportModule.new(params[:export_module])
     export_module.user = current_user
     export_module.save
@@ -14,6 +15,7 @@ class ExportModulesController < ApplicationController
   end
 
   def pdf
+    Rails.logger.info `env`
     @export_module = ExportModule.find(current_user.export_modules.find(params[:id]))
     render :layout => 'report'
   end
