@@ -77,6 +77,37 @@ class Strategy < ActiveRecord::Base
     end
   end
 
+  def update_nested(strategy_json)
+    self.operation_ids = strategy_json[:operations].map { |o| o['id'] } if strategy_json[:operations]
+
+    # Load all related plans
+    self.plans = Plan.where(:operation_id => self.operation_ids) if strategy_json[:operations]
+
+    # Load all related ppgs
+    self.ppgs = Ppg.find((self.plans.map &:ppg_ids).flatten.uniq)
+
+    # Build out all strategy_objectives
+    self.strategy_objectives.clear
+    if strategy_json[:strategy_objectives]
+      strategy_json[:strategy_objectives].each do |json|
+        so = self.strategy_objectives.create(
+          :name => json[:name],
+          :description => json[:description])
+
+        params = [:goals, :outputs, :problem_objectives, :indicators]
+        params.each do |param|
+          next unless json[param].present?
+          method = (param.to_s.singularize + '_ids=').to_sym
+          ids = json[param].map { |p| p['id'] }
+          so.send method, ids
+        end
+        so.save
+      end
+    end
+    self.save
+    self
+  end
+
   def to_json(options = {})
     to_jbuilder(options).target!
   end

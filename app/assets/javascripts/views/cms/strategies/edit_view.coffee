@@ -27,7 +27,7 @@ class Visio.Views.StrategyCMSEditView extends Backbone.View
       form.render()
 
     @form.on 'save', (form, formModel) =>
-      @model.save(strategy: formModel.toJSON()).done (response, msg, xhr) =>
+      @model.save().done (response, msg, xhr) =>
         if msg == 'success'
           model = new Visio.Models.Strategy response.strategy
           @collection.add model, merge: true

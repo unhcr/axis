@@ -1,8 +1,8 @@
 module SyncableParameterModel
   def touch_data(assoc)
-    self.budgets.map &:touch if defined? self.budgets
-    self.indicator_data.map &:touch if defined? self.indicator_data
-    self.expenditures.map &:touch if defined? self.expenditures
+    self.budgets.update_all(:updated_at => Time.now) if defined? self.budgets
+    self.indicator_data.update_all(:updated_at => Time.now) if defined? self.indicator_data
+    self.expenditures.update_all(:updated_at => Time.now) if defined? self.expenditures
   end
 
   def self.included(base)
