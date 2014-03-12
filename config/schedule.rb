@@ -1,12 +1,11 @@
 # Use this file to easily define all of your cron jobs.
+#
+job_type :rake_env, "source ~/.bashrc; cd :path && :environment_variable=:environment bundle exec rake :task --silent :output"
 
 set :output, "./log/cron.log"
-env :PATH, '$HOME/.rbenv/bin:$PATH'
-env :http_proxy, 'http://proxy.unhcr.local:8080'
-env :https_proxy, 'https://proxy.unhcr.local:8080'
 
 every :day, :at => '4:30 am' do
-  rake 'build:focus'
-  rake 'build:countries'
-  rake 'build:msrp'
+  rake_env 'build:focus'
+  rake_env 'build:countries'
+  rake_env 'build:msrp'
 end
