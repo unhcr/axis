@@ -29,6 +29,9 @@ Visio::Application.configure do
   # Generate digests for assets URLs
   config.assets.digest = true
 
+  ENV['http_proxy'] = 'http://proxy.unhcr.local:8080'
+  ENV['https_proxy'] = 'https://proxy.unhcr.local:8080'
+
   # Defaults to nil and saved in location specified by config.assets.prefix
   # config.assets.manifest = YOUR_PATH
 
