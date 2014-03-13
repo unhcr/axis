@@ -6,11 +6,13 @@ gem 'equivalent-xml'
 gem 'rubyzip'
 gem 'pdfkit'
 gem 'quoth'
+gem 'resque'
 gem 'shrimp', :git => 'https://github.com/benrudolph/shrimp.git'
 gem 'pony'
 gem 'whenever', :require => false
 gem "devise_ldap_authenticatable"
 gem 'counter_culture', '~> 0.1.18'
+gem "capistrano-resque", "~> 0.1.0", require: false
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'

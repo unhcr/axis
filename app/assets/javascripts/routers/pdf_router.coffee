@@ -30,6 +30,11 @@ class Visio.Routers.PdfRouter extends Backbone.Router
 
     Visio.exportModule.set 'figure_config', figureConfig
 
+  map: ->
+    figureConfig = Visio.exportModule.get('figure_config')
+    figureConfig.width = $('body').width()
+    Visio.exportModule.set 'figure_config', figureConfig
+
   index: ->
 
     @setup().done =>
