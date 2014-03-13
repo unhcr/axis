@@ -73,8 +73,6 @@ end
 after "deploy:finalize_update", "db:config"
 after "deploy", "deploy:migrate"
 after "deploy", "whenever:clear_crontab"
-after "deploy", "redis:stop"
-after "deploy", "redis:start"
 after "deploy", "resque:restart"
 after "whenever:clear_crontab", "whenever:update_crontab"
 
