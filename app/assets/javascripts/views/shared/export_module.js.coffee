@@ -51,15 +51,19 @@ class Visio.Views.ExportModule extends Backbone.View
     $input.prop 'checked', not checked
 
   onClickPdf: ->
+    return if @loadingPdf
+    @loadingPdf = true
     NProgress.start()
     statusCodes =
       200: =>
         NProgress.done()
         window.location.assign @model.pdfUrl()
+        @loadingPdf = false
       504: ->
         new Visio.Views.Error
           title: "Error generating PDF"
         NProgress.done()
+        @loadingPdf = false
       503: (jqXHR, textStatus, errorThrown) =>
         wait = parseInt jqXHR.getResponseHeader('Retry-After')
         NProgress.inc()
@@ -75,7 +79,7 @@ class Visio.Views.ExportModule extends Backbone.View
     selected = _.map @$el.find('figcaption input[type="checkbox"]:checked'), (ele) -> $(ele).attr('data-id')
     @model.get('figure_config').selected = selected
 
-    @model.save().then =>
+    @model.save().done =>
       $.ajax
         url: @model.pdfUrl()
         statusCode: statusCodes

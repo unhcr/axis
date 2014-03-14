@@ -1,13 +1,13 @@
-class Visio.Views.CountrySliderView extends Visio.Views.SliderView
+class Visio.Views.ParameterSliderView extends Visio.Views.SliderView
 
   name:
-    singular: 'country'
-    className: 'Country'
+    singular: 'parameter'
+    className: 'Parameter'
 
   events:
     'click .next': 'onNext'
     'click .previous': 'onPrevious'
-    'mouseenter .country-slide': 'onMouseenter'
+    'mouseenter .parameter-slide': 'onMouseenter'
     'mouseout': 'onMouseout'
 
   initialize: (options) ->
@@ -20,7 +20,6 @@ class Visio.Views.CountrySliderView extends Visio.Views.SliderView
       @views[model.id]?.drawFigures()
 
   addOne: (model) =>
-    return unless model.get('country')?
     super model
     @views[model.id].filters = @filters
 
@@ -44,11 +43,11 @@ class Visio.Views.CountrySliderView extends Visio.Views.SliderView
     @move(@toMove(false)) unless @$el.find('.slider').hasClass 'grid'
 
   onMouseenter: (e) =>
-     #@$el.find('.country-slide').css('opacity', .5)
+     #@$el.find('.parameter-slide').css('opacity', .5)
      #$(e.currentTarget).css('opacity', 1)
 
   onMouseout: (e) =>
      #console.log 'out'
-     #@$el.find('.country-slide').css('opacity', 1)
+     #@$el.find('.parameter-slide').css('opacity', 1)
      #
 

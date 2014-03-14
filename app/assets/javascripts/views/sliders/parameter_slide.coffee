@@ -1,11 +1,11 @@
-class Visio.Views.CountrySlideView extends Visio.Views.Dashboard
+class Visio.Views.ParameterSlideView extends Visio.Views.Dashboard
 
   tagName: 'article'
 
-  template: HAML['sliders/country_slide']
+  template: HAML['sliders/parameter_slide']
 
   initialize: (options) ->
-    @template = HAML['pdf/sliders/country_slide'] if options.isPdf
+    @template = HAML['pdf/sliders/parameter_slide'] if options.isPdf
     @idx = options.idx
 
     if options.isPdf

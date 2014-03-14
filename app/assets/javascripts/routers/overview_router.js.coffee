@@ -12,7 +12,7 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
       @strategySnapshotView.render()
       @moduleView.render true
 
-    Visio.manager.on 'change:reported_type', =>
+    Visio.manager.on 'change:reported_type change:aggregation_type', =>
       @strategySnapshotView.render()
       @moduleView.render true
 
@@ -20,8 +20,7 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
       @navigation.render()
       @moduleView.render true
 
-    Visio.manager.on ['change:aggregation_type'
-                      'change:selected',
+    Visio.manager.on ['change:selected',
                       'change:achievement_type',
                       'change:scenario_type',
                       'change:budget_type',
@@ -61,10 +60,9 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
       })
       @navigation.render()
 
-      @strategySnapshotView = new Visio.Views.StrategySnapshotView(
+      @strategySnapshotView = new Visio.Views.StrategySnapshotView
         el: $('#strategy-snapshot')
-        collection: Visio.manager.strategy().operations()
-      )
+
       @strategySnapshotView.render()
 
       $('#navigation').removeClass('gone')

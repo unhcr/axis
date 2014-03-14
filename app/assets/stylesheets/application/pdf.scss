@@ -51,8 +51,8 @@ body.pdf {
     width: 435px;
   }
 
-  .country-slider {
-    .country-slide {
+  .parameter-slider {
+    .parameter-slide {
       @include article;
 
       margin: 0;
@@ -66,20 +66,20 @@ body.pdf {
       }
 
     }
-    .country-slide:nth-of-type(2n+1) {
+    .parameter-slide:nth-of-type(2n+1) {
       border-right: 1px solid $light-gray;
     }
 
     /* Last two should not have a bottom border */
-    .country-slide:nth-last-type-of(-n + 2) {
+    .parameter-slide:nth-last-type-of(-n + 2) {
       border-bottom: none;
     }
     /* However if their is a widow, we add back the border */
-    .country-slide:nth-of-type(odd) {
+    .parameter-slide:nth-of-type(odd) {
       border-bottom: 1px solid $light-gray;
     }
     /* Every 5th and 6th don't have border */
-    .country-slide:nth-of-type(6n), .country-slide:nth-of-type(6n-1) {
+    .parameter-slide:nth-of-type(6n), .parameter-slide:nth-of-type(6n-1) {
       border-bottom: none;
     }
   }

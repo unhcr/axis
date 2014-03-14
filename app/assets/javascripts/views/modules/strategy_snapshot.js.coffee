@@ -5,6 +5,7 @@ class Visio.Views.StrategySnapshotView extends Visio.Views.Dashboard
   template: HAML['modules/strategy_snapshot']
 
   initialize: (options) ->
+    @isPdf = options.isPdf
     if options.isPdf
       @template = HAML['pdf/strategy_snapshot']
       @criticalityConfig.width = 60
@@ -13,16 +14,19 @@ class Visio.Views.StrategySnapshotView extends Visio.Views.Dashboard
 
     super options
 
-    unless options.isPdf
+
+    @collection or= Visio.manager.strategy()[Visio.manager.get('aggregation_type')]()
+    @parameter = @collection
+
+    unless @isPdf
       @actionSlider = new Visio.Views.ActionSliderView
         collection: Visio.manager.strategy()[Visio.Parameters.STRATEGY_OBJECTIVES.plural]()
-
-    @countrySlider = new Visio.Views.CountrySliderView
+    @parameterSlider = new Visio.Views.ParameterSliderView
       filters: @filters
       collection: @collection
-      isPdf: options.isPdf
+      isPdf: @isPdf
 
-    @parameter = @collection
+
 
   title: 'Overview'
 
@@ -37,16 +41,23 @@ class Visio.Views.StrategySnapshotView extends Visio.Views.Dashboard
     'click .export': 'onExport'
 
   render: (isRerender) ->
+    if not isRerender and not @isPdf
+      @collection = Visio.manager.strategy()[Visio.manager.get('aggregation_type')]()
+      @parameter = @collection
+      @parameterSlider?.collection = @collection
+
     super isRerender
-    if !isRerender
+
+    unless isRerender
+
       @$el.find('.header-buttons').append (new Visio.Views.FilterBy({ figure: @ })).render().el
-      @$el.find('.target-countries').html @countrySlider?.render().el
+      @$el.find('.target-parameters').html @parameterSlider?.render().el
       @$el.find('.actions').html @actionSlider?.render().el
-      @countrySlider?.delegateEvents()
+      @parameterSlider?.delegateEvents()
       @actionSlider?.delegateEvents()
 
-    if @countrySlider?
-      @countrySlider.drawFigures()
+    if @parameterSlider?
+      @parameterSlider.drawFigures()
     if @actionSlider?
       @actionSlider.drawFigures()
 
@@ -54,5 +65,5 @@ class Visio.Views.StrategySnapshotView extends Visio.Views.Dashboard
     @
 
   onGridView: ->
-    @countrySlider.$el.find('.slider').toggleClass 'grid'
-    @countrySlider.reset()
+    @parameterSlider.$el.find('.slider').toggleClass 'grid'
+    @parameterSlider.reset()

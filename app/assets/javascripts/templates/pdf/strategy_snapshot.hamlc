@@ -5,7 +5,7 @@
         %span.ui-primary-light.ui-huge-number.bold
           = context.parameter.length
         %span
-          Target Countries
+          = "Target #{Visio.manager.get('aggregation_type')}"
 
     .row
       .col-sm-1
@@ -14,7 +14,7 @@
 
     .row
       .col-sm-9.ui-small-header.ui-primary-second
-        = (context.parameter.map (operation) -> operation.get('country')?.name).join ', '
+        = (context.parameter.map (p) -> p.toString()).join ', '
 
   .row
     .col-sm-8.ui-small-header.bold.ui-primary-second
@@ -72,4 +72,4 @@
           %label.col-sm-7.col-sm-offset-5.zero-padding
             = Visio.Utils.humanMetric(context.criticalities[i])
 
-.target-countries
+.target-parameters

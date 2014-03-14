@@ -2,15 +2,21 @@
   = Visio.Constants.ALPHABET[context.idx]
 
 .row
-  .country-icon.col-md-4
-    %img{
-      :width => "55",
-      :height => "55",
-      :src => "/assets/countries/#{context.parameter.get('country').iso2.toLowerCase()}/128.png" }
-  .col-md-8
-    .pin.pin-medium.pull-right{ :class => "pin-#{context.category}" }
-      .pin-tip
-      .pin-body
+  - if context.parameter.get('country')?
+    .country-icon.col-md-4
+      %img{
+        :width => "55",
+        :height => "55",
+        :src => "/assets/countries/#{context.parameter.get('country').iso2.toLowerCase()}/128.png" }
+    .col-md-8
+      .pin.pin-medium.pull-right{ :class => "pin-#{context.category}" }
+        .pin-tip
+        .pin-body
+  - else
+    .col-md-offset-4.col-md-8
+      .pin.pin-medium.pull-right{ :class => "pin-#{context.category}" }
+        .pin-tip
+        .pin-body
 .row
   .col-md-12
     .divider-thick.divider-primary

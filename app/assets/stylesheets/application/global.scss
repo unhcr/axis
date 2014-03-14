@@ -1710,7 +1710,7 @@ a {
   }
 }
 
-.target-countries {
+.target-parameters {
   margin: 0 -15px;
 }
 
@@ -1742,26 +1742,28 @@ a {
   }
 }
 
-.country-slider {
+.parameter-slider {
 
-  .country-slide {
+  .parameter-slide {
     border: 1px solid $light-gray;
-    width: $country-slide-width;
+    vertical-align: top;
+    width: $parameter-slide-width;
     padding: 0 22px;
     padding-bottom: 25px;
     margin: 8px 2px;
     white-space: normal
   }
 
-  .country-slide:hover {
+  .parameter-slide:hover {
     @include hover-shadow;
   }
 
-  .country-name {
+  .parameter-name {
     border-top: 4px black solid;
     padding-top: 2px;
     margin-top: 4px;
     color: $black;
+    height: 70px;
   }
 
   a, div {
@@ -1771,7 +1773,7 @@ a {
   .controls {
     position: absolute;
     display: block;
-    height: $country-slide-height;
+    height: $parameter-slide-height;
     right: -$slider-controls-width;
     width: $slider-controls-width;
     a {
