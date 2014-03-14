@@ -7,6 +7,7 @@ Visio::Application.routes.draw do
   get '/map' => 'application#map'
   get '/overview' => 'application#overview'
   get '/global_search' => 'application#global_search'
+  get '/healthz' => 'application#healthz'
 
   # CMS
   get '/cms/strategies' => 'cms#strategies'

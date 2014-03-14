@@ -5,7 +5,7 @@
     = stylesheet_link_tag    "application", :media => "all"
     = javascript_include_tag "application"
     = csrf_meta_tags
-  %body.ui-primary-theme{ :class => "#{controller.action_name} layout-#{controller.send(:_layout).virtual_path.name}" }
+  %body{ :class => "#{controller.action_name} layout-#{controller.send(:_layout).virtual_path.name}" }
 
     :javascript
       window.Visio.user = new Visio.Models.User(#{current_user.to_json.html_safe})

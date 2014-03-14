@@ -53,4 +53,30 @@ class ApplicationController < ActionController::Base
   def algorithms
     render :layout => 'application'
   end
+
+  def healthz
+    resque_up = true
+    begin
+      workers = Resque.workers
+    rescue
+      workers = []
+      resque_up = false
+    end
+
+    ldap_config = YAML.load(ERB.new(File.read(::Devise.ldap_config || "#{Rails.root}/config/ldap.yml")).result)[Rails.env]
+    @checks = {
+      :resque => resque_up,
+      :resque_workers => workers.length,
+      :database_connected => ActiveRecord::Base.connected?,
+      :ldap => up?("#{ldap_config['host']}:#{ldap_config['port']}")
+    }
+
+    render :layout => 'application'
+  end
+
+  private
+    def up?(server)
+      cmd = `ping -c -q  2 #{server}`
+      $?.exitstatus == 0
+    end
 end
