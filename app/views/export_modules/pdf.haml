@@ -2,6 +2,7 @@
   $(document).ready(function() {
 
     Visio.manager = new Visio.Models.Manager({
+      use_local_db: false,
       state: #{@export_module.state.to_json},
       ready: function() {
         var config = #{@export_module.to_json};
