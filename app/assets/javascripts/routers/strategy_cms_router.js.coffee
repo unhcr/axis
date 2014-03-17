@@ -24,14 +24,12 @@ class Visio.Routers.StrategyCMSRouter extends Backbone.Router
       el: @$content
 
   new: ->
-    @editView.close() if @editView?
     @editView = new Visio.Views.StrategyCMSEditView
       collection: @strategies
       model: new Visio.Models.Strategy()
     @$content.html @editView.render().el
 
   edit: (id) ->
-    @editView.close() if @editView?
     @editView = new Visio.Views.StrategyCMSEditView
       collection: @strategies
       model: @strategies.get(id)
