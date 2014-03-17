@@ -1,5 +1,0 @@
-%span.error-title
-  = context.title + ': '
-%span.error-description
-  = context.description
-%span.error-close X

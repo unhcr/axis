@@ -1,0 +1,6 @@
+%span.notification-title
+  = context.title
+%span :
+%span.notification-description
+  = context.description
+%span.notification-close X

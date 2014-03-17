@@ -1,17 +1,15 @@
-class Visio.Views.Error extends Backbone.View
+class Visio.Views.Notification extends Backbone.View
 
-  template: HAML['shared/error']
-
-  className: 'error'
+  template: HAML['shared/notifications/notification']
 
   events:
-    'click .error-close': 'close'
+    'click .notification-close': 'close'
 
   initialize: (options) ->
     @title = options.title || ''
     @description = options.description || ''
     @render()
-    window.setTimeout @close.bind(@), 5000
+    window.setTimeout @close.bind(@), if _.isNumber(options.timeout) then options.timeout else 5000
 
   render: ->
     @$el.html @template { title: @title, description: @description }

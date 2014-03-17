@@ -32,6 +32,7 @@
 //= require_tree ./collections/syncables
 //= require_tree ./models/
 //= require_tree ./collections
+//= require ./views/shared/notifications/notification
 //= require_tree ./views/cms
 //= require_tree ./views/shared
 //= require_tree ./routers

@@ -31,6 +31,10 @@ class Visio.Views.StrategyCMSEditView extends Backbone.View
         if msg == 'success'
           model = new Visio.Models.Strategy response.strategy
           @collection.add model, merge: true
+          notification = new Visio.Views.Success
+            title: 'Saved'
+            description: 'Strategy has successfully been saved.'
+
           Visio.router.navigate '/', { trigger: true }
         else
           alert(msg)

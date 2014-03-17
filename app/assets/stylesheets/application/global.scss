@@ -2014,23 +2014,32 @@ a {
   color: black;
 }
 
-.error {
+.notification {
   position: fixed;
   z-index: 1000;
-  background-color: $alert-red;
   right: 0;
   left: 0;
+  top: 0;
   text-align: center;
   padding: 10px;
-  color: $black;
 
-  .error-title {
+  .notification-title {
     font-weight: bold;
   }
 
-  .error-close {
+  .notification-close {
     position: absolute;
     right: 20px;
     cursor: pointer;
   }
+}
+
+.notification.error {
+  background-color: $alert-red;
+  color: $black;
+}
+
+.notification.success {
+  background-color: $success;
+  color: $black;
 }
