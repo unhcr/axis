@@ -9,6 +9,6 @@
       %a.rollover.count.ui-line-item-theme{
         :href => "/##{context.plan.id}/#{hash.plural}",
         :class => "#{hash.plural}" }
-        = "#{hash.human} (#{context.counts[hash.plural]})"
+        = "#{hash.human}"
     .tooltip-content-bottom
     .tooltip-close
