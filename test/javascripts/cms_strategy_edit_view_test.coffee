@@ -1,6 +1,7 @@
 module 'CMS Strategy New/Edit View',
   setup: ->
     Visio.manager = new Visio.Models.Manager()
+    Visio.router = { navigate: sinon.spy() }
 
     @strategies = new Visio.Collections.Strategy(
       [{ id: 1 }, { id: 2 }])

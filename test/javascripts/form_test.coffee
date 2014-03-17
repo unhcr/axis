@@ -98,7 +98,7 @@ test 'nestedItem - new model', ->
   strictEqual @form.model.get('strategy_objectives').length, 0
 
   @form.nestedForms['strategy_objectives'][so.cid].render()
-  @form.nestedForms['strategy_objectives'][so.cid].saveAndClose()
+  @form.nestedForms['strategy_objectives'][so.cid].onSaveAndClose()
   strictEqual @form.model.get('strategy_objectives').length, 1
   strictEqual @form.model.get('strategy_objectives').at(0).get('goals').length, 1
 
@@ -230,7 +230,7 @@ test 'commit - save', ->
   field = @form.fields.findWhere { name: 'operations' }
   field.selected 1, false
 
-  @form.nestedForms['strategy_objectives'][so.cid].saveAndClose()
+  @form.nestedForms['strategy_objectives'][so.cid].onSaveAndClose()
 
   json = @form.commit(true)
 
@@ -252,7 +252,7 @@ test 'close - no save nested, save parent', ->
   field.selected 1, true
   nested.close()
 
-  json = @form.saveAndClose()
+  json = @form.onSaveAndClose()
 
   strictEqual json.operations.length, 2
   strictEqual json.strategy_objectives.length, 2
@@ -275,9 +275,9 @@ test 'close - save nested, save parent', ->
   field = nested.fields.findWhere { name: 'goals' }
   field.selected 1, true
 
-  nested.saveAndClose()
+  nested.onSaveAndClose()
 
-  json = @form.saveAndClose()
+  json = @form.onSaveAndClose()
 
   strictEqual json.operations.length, 2
   strictEqual json.strategy_objectives.length, 3
