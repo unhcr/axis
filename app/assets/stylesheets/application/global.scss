@@ -1264,14 +1264,17 @@ a {
 
 .toolbar {
   background-color: $off-white;
-  padding: 12px 0;
+  padding: 12px 3px;
   z-index: 300;
   height: $toolbar-height;
+  @include row-gutter;
 }
 
 .fixed-top {
   position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
 }
 
 .module:before {
