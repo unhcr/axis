@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140311150705) do
+ActiveRecord::Schema.define(:version => 20140314134601) do
 
   create_table "budgets", :force => true do |t|
     t.string   "budget_type"
@@ -30,7 +30,6 @@ ActiveRecord::Schema.define(:version => 20140311150705) do
     t.string   "operation_id"
   end
 
-  add_index "budgets", ["created_at", "updated_at"], :name => "index_budgets_on_created_at_and_updated_at"
   add_index "budgets", ["created_at"], :name => "index_budgets_on_created_at"
   add_index "budgets", ["goal_id"], :name => "index_budgets_on_goal_id"
   add_index "budgets", ["is_deleted"], :name => "index_budgets_on_is_deleted"
@@ -83,7 +82,6 @@ ActiveRecord::Schema.define(:version => 20140311150705) do
     t.string   "operation_id"
   end
 
-  add_index "expenditures", ["created_at", "updated_at"], :name => "index_expenditures_on_created_at_and_updated_at"
   add_index "expenditures", ["created_at"], :name => "index_expenditures_on_created_at"
   add_index "expenditures", ["goal_id"], :name => "index_expenditures_on_goal_id"
   add_index "expenditures", ["is_deleted"], :name => "index_expenditures_on_is_deleted"
@@ -186,7 +184,6 @@ ActiveRecord::Schema.define(:version => 20140311150705) do
     t.integer  "imp_target"
   end
 
-  add_index "indicator_data", ["created_at", "updated_at"], :name => "index_indicator_data_on_created_at_and_updated_at"
   add_index "indicator_data", ["created_at"], :name => "index_indicator_data_on_created_at"
   add_index "indicator_data", ["goal_id"], :name => "index_indicator_data_on_goal_id"
   add_index "indicator_data", ["indicator_id"], :name => "index_indicator_data_on_indicator_id"

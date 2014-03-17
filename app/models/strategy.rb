@@ -86,13 +86,19 @@ class Strategy < ActiveRecord::Base
     # Load all related ppgs
     self.ppgs = Ppg.find((self.plans.map &:ppg_ids).flatten.uniq)
 
-    # Build out all strategy_objectives
-    self.strategy_objectives.clear
+    strategy_objective_ids = (strategy_json[:strategy_objectives] || [])
+      .select { |json| json['id'].present? }
+      .map { |json| json['id'] }
+    deleted_strategy_objective_ids = self.strategy_objective_ids - strategy_objective_ids
+    StrategyObjective.destroy(deleted_strategy_objective_ids)
+    self.strategy_objective_ids = strategy_objective_ids
     if strategy_json[:strategy_objectives]
       strategy_json[:strategy_objectives].each do |json|
-        so = self.strategy_objectives.create(
-          :name => json[:name],
-          :description => json[:description])
+        so = json['id'].present? ? self.strategy_objectives.find(json['id']) :
+          self.strategy_objectives.new()
+        so.update_attributes(
+          :name => json['name'],
+          :description => json['description'])
 
         params = [:goals, :outputs, :problem_objectives, :indicators]
         params.each do |param|
