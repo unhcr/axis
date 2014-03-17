@@ -52,9 +52,9 @@ class Visio.Views.Form extends Backbone.View
     'keyup textarea': 'onKeyup'
     'click .nested-item': 'onClickNestedItem'
     'click .nested-item-add': 'onAddNestedItem'
-    'click .save': 'saveAndClose'
-    'click .close': 'close'
-    'click .cancel': 'close'
+    'click .save': 'onSaveAndClose'
+    'click .close': 'onClose'
+    'click .cancel': 'onClose'
     'click .nested-delete': 'onDeleteNestedItem'
     'click .reset': 'onReset'
 
@@ -238,8 +238,11 @@ class Visio.Views.Form extends Backbone.View
 
     @model.toJSON()
 
-  saveAndClose: =>
+  onSaveAndClose: =>
     @close true
+
+  onClose: =>
+    @close false
 
   close: (save = false) =>
 
@@ -252,8 +255,8 @@ class Visio.Views.Form extends Backbone.View
      for id, view of @nestedForms[name]
        @nestedForms[name][id].close(save)
 
-    @nestedTrigger 'close'
     @nestedTrigger 'save' if save
+    @nestedTrigger 'close'
     @unbind()
     @remove()
 

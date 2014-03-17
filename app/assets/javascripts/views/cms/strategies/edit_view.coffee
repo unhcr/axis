@@ -35,6 +35,9 @@ class Visio.Views.StrategyCMSEditView extends Backbone.View
         else
           alert(msg)
 
+    @form.on 'close', =>
+      Visio.router.navigate '/', { trigger: true }
+
     @form.on 'change:name', (form, formField, modelField, value) ->
       if value
         form.$el.find('h2.name').text value
