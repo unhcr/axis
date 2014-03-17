@@ -12,6 +12,11 @@ class Visio.Views.ExportModule extends Backbone.View
   initialize: (options) ->
     $(document).scrollTop(0)
     @config = @model.get 'figure_config'
+    @loadingPdf = new Backbone.Model
+      loading: false
+
+    @loadingPdf.on 'change:loading', =>
+      @$el.find('.pdf').toggleClass 'disabled'
 
     @figure = @model.figure @config
 
@@ -51,19 +56,19 @@ class Visio.Views.ExportModule extends Backbone.View
     $input.prop 'checked', not checked
 
   onClickPdf: ->
-    return if @loadingPdf
-    @loadingPdf = true
+    return if @loadingPdf.get 'loading'
+    @loadingPdf.set 'loading', true
     NProgress.start()
     statusCodes =
       200: =>
         NProgress.done()
         window.location.assign @model.pdfUrl()
-        @loadingPdf = false
+        @loadingPdf.set 'loading', false
       504: ->
         new Visio.Views.Error
           title: "Error generating PDF"
         NProgress.done()
-        @loadingPdf = false
+        @loadingPdf.set 'loading', false
       503: (jqXHR, textStatus, errorThrown) =>
         wait = parseInt jqXHR.getResponseHeader('Retry-After')
         NProgress.inc()

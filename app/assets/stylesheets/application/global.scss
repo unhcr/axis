@@ -2014,6 +2014,11 @@ a {
   color: black;
 }
 
+.disabled {
+  opacity: .5;
+  cursor: default;
+}
+
 .notification {
   position: fixed;
   z-index: 1000;
