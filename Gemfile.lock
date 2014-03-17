@@ -1,8 +1,8 @@
 GIT
   remote: https://github.com/benrudolph/shrimp.git
-  revision: 1262103cf139f84e1eb84c72cb31474823a489fa
+  revision: 8573b701470a9c9d90ab0561e194e53171e6b0ea
   specs:
-    shrimp (0.0.8)
+    shrimp (0.0.9)
       json
       resque
 
