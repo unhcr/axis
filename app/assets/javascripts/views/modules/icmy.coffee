@@ -1,29 +1,30 @@
-class Visio.Views.BmyView extends Visio.Views.AccordionIndexView
+class Visio.Views.IcmyView extends Visio.Views.AccordionIndexView
 
-  showView: (options) -> new Visio.Views.BmyShowView(options)
+  showView: (options) -> new Visio.Views.IcmyShowView(options)
 
-  id: 'bmy'
+  className: 'module'
+
+  id: 'icmy'
 
   events:
     'click .js-parameter': 'onClickParameter'
     'transitionend': 'onTransitionEnd'
     'MSTransitionEnd': 'onTransitionEnd'
     'webkitTransitionEnd': 'onTransitionEnd'
-    'oTransitionEnd': 'onTransitionEnd'
 
   initialize: (options) ->
     super options
 
     @config =
+      width: 800
+      height: 420
       margin:
-        top: 10
-        bottom: 80
-        left: 120
-        right: 40
-      width: 650
-      height: 450
+        top: 40
+        bottom: 90
+        left: 90
+        right: 80
 
-    @figure = new Visio.Figures.Bmy @config
+    @figure = new Visio.Figures.Icmy @config
 
   render: (isRerender) ->
     super isRerender
@@ -32,16 +33,14 @@ class Visio.Views.BmyView extends Visio.Views.AccordionIndexView
       @$el.find('.summary-figure').html @figure.el
       @$el.find('.summary-figure .header-buttons').append (new Visio.Views.FilterBy({ figure: @figure, })).render().el
 
+
     @drawFigures()
     @
 
   drawFigures: ->
-    data = []
-    parameters = Visio.manager.selected(Visio.manager.get('aggregation_type')).models
-    _.each parameters, (model) ->
-      data = data.concat model.selectedBudgetData(true).models
+    parameters = Visio.manager.selected(Visio.manager.get('aggregation_type'))
 
-    @figure.collectionFn new Visio.Collections.Budget(data)
+    @figure.collectionFn parameters
     @figure.render()
 
   sort: (parameterA, parameterB) ->

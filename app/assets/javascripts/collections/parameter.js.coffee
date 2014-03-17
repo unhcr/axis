@@ -44,3 +44,10 @@ class Visio.Collections.Parameter extends Visio.Collections.Syncable
   strategyBudget: (isAnyYear = false, filters = null) ->
     data = @strategyBudgetData(null, isAnyYear, filters)
     data.amount()
+
+  selectedIndicatorData: (isAnyYear = false, filters = null) ->
+    args = arguments
+    data = new Visio.Collections.IndicatorDatum()
+    @each (model) ->
+      data.add model.strategyIndicatorData.apply(model, args).models, silent: true
+    data
