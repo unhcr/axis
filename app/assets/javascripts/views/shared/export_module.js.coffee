@@ -64,7 +64,7 @@ class Visio.Views.ExportModule extends Backbone.View
         NProgress.done()
         window.location.assign @model.pdfUrl()
         @loadingPdf.set 'loading', false
-      504: ->
+      504: =>
         new Visio.Views.Error
           title: "Error generating PDF"
         NProgress.done()
