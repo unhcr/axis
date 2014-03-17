@@ -88,11 +88,8 @@ line {
   }
 
   .y.axis line {
-    stroke: none;
-  }
-
-  .y.axis g:nth-of-type(-n+2) line {
-    stroke: none
+    stroke: $lighter-gray;
+    stroke-dasharray: 1;
   }
 
   .y.axis text, .x.axis > text {

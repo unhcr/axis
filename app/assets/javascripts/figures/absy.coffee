@@ -52,8 +52,8 @@ class Visio.Figures.Absy extends Visio.Figures.Base
       .orient('left')
       .ticks(5)
       .tickFormat((d) -> return d * 100)
-      .innerTickSize(14)
-      .tickPadding(0)
+      .tickPadding(20)
+      .tickSize(-@adjustedWidth)
 
     @domain = null
     @entered = false
@@ -193,7 +193,6 @@ class Visio.Figures.Absy extends Visio.Figures.Base
       .transition()
       .duration(Visio.Durations.FAST)
       .call(@yAxis)
-      .attr('transform', 'translate(-20,0)')
 
     # Generate legend view
     if @isPdf
