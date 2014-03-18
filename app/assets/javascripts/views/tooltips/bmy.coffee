@@ -8,7 +8,7 @@ class Visio.Views.BmyTooltip extends Visio.Views.D3Tooltip
 
   height: => @figure.heightFn()
 
-  top: => $(@figure.el).offset().top + 30
+  top: => $(@figure.el).offset().top + 60
 
   left: =>
     base = $(@figure.el).offset().left + @figure.xFn()(@year) + @figure.marginFn().left
