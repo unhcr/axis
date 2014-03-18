@@ -5,7 +5,7 @@ class Visio.Figures.Oasy extends Visio.Figures.Bar
   initialize: (config) ->
     super config
 
-    @x.domain [0, 1]
+    @variable.domain [0, 1]
 
   filtered: (model) ->
     counts = model.get('counts')
