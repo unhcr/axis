@@ -27,6 +27,7 @@
           %a.row{ :href => "#isy" } Indicators Single Year
           %a.row{ :href => "#absy" } Achievement vs. Budget
           %a.row{ :href => "#bmy" } Budget over time
+          %a.row{ :href => "#icmy" } Impact Criticality over time
   .row.divider-light-gray
   %section.row
     .row
