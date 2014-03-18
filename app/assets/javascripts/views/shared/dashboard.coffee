@@ -86,10 +86,10 @@ class Visio.Views.Dashboard extends Backbone.View
     @parameter.strategyIndicatorData().length
 
   budget: =>
-    @parameter.strategyBudget(false, @filters)
+    @parameter.strategyBudget(Visio.manager.year(), @filters)
 
   expenditure: =>
-    @parameter.strategyExpenditure(false, @filters)
+    @parameter.strategyExpenditure(Visio.manager.year(), @filters)
 
   spent: =>
     spent = @expenditure() / @budget()
@@ -166,7 +166,7 @@ class Visio.Views.Dashboard extends Backbone.View
         filterType: 'radio'
         values: { true: false, false: true }
       }]
-    result = @parameter.strategyAchievement false, filters
+    result = @parameter.strategyAchievement Visio.manager.year(), filters
     @barFigures[Visio.FigureTypes.PASY.name].modelFn new Backbone.Model result
     @barFigures[Visio.FigureTypes.PASY.name].render()
 
@@ -179,7 +179,7 @@ class Visio.Views.Dashboard extends Backbone.View
         filterType: 'radio'
         values: { true: true, false: false }
       }]
-    result = @parameter.strategyOutputAchievement false, filters
+    result = @parameter.strategyOutputAchievement Visio.manager.year(), filters
     @barFigures[Visio.FigureTypes.OASY.name].modelFn new Backbone.Model result
     @barFigures[Visio.FigureTypes.OASY.name].render()
 

@@ -61,8 +61,8 @@ class Visio.Figures.Absy extends Visio.Figures.Base
     @info = null
     @voronoi = d3.geom.voronoi()
       .clipExtent([[0, 0], [@adjustedWidth, @adjustedHeight]])
-      .x((d) => @x(d.selectedAmount(false, @filters)))
-      .y((d) => @y(d.selectedAchievement(false, @filters).result))
+      .x((d) => @x(d.selectedAmount(Visio.manager.year(), @filters)))
+      .y((d) => @y(d.selectedAchievement(Visio.manager.year(), @filters).result))
 
     @g.append('g')
       .attr('class', 'y axis')
@@ -87,7 +87,7 @@ class Visio.Figures.Absy extends Visio.Figures.Base
 
   render: ->
     filtered = @filtered @collection
-    maxAmount = d3.max filtered, (d) => d.selectedAmount(false, @filters)
+    maxAmount = d3.max filtered, (d) => d.selectedAmount(Visio.manager.year(), @filters)
 
     self = @
     if !@domain || @domain[1] < maxAmount || @domain[1] > 2 * maxAmount
@@ -124,9 +124,9 @@ class Visio.Figures.Absy extends Visio.Figures.Base
                 12
             )
             .attr('cy', (d) =>
-              return self.y(d.selectedAchievement(false, self.filters).result))
+              return self.y(d.selectedAchievement(Visio.manager.year(), self.filters).result))
             .attr('cx', (d) =>
-              return self.x(d.selectedAmount(false, self.filters)))
+              return self.x(d.selectedAmount(Visio.manager.year(), self.filters)))
 
           point.exit().transition().duration(Visio.Durations.FAST).attr('r', 0).remove()
 
@@ -139,8 +139,8 @@ class Visio.Figures.Absy extends Visio.Figures.Base
           if self.isExport or (self.isPdf and not _.isEmpty self.selected)
             labels.enter().append('text')
             labels.attr('class', 'label')
-              .attr('x', (d) => self.x(d.selectedAmount(false, self.filters)))
-              .attr('y', (d) => self.y(d.selectedAchievement(false, self.filters).result))
+              .attr('x', (d) => self.x(d.selectedAmount(Visio.manager.year(), self.filters)))
+              .attr('y', (d) => self.y(d.selectedAchievement(Visio.manager.year(), self.filters).result))
               .attr('dy', '.3em')
               .attr('text-anchor', 'middle')
               .text((d) ->
@@ -206,7 +206,7 @@ class Visio.Figures.Absy extends Visio.Figures.Base
 
 
   filterFn: (d) ->
-    d.selectedAmount(false, @filters) && d.selectedAchievement(false, @filters).result >= 0
+    d.selectedAmount(Visio.manager.year(), @filters) && d.selectedAchievement(Visio.manager.year(), @filters).result >= 0
 
   filtered: (collection) => _.chain(collection.models).filter(@filterFn).value()
 

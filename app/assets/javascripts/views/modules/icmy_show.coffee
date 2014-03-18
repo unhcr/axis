@@ -35,7 +35,7 @@ class Visio.Views.IcmyShowView extends Visio.Views.AccordionShowView
 
 
   drawFigures: ->
-    @figure.collectionFn @model.selectedIndicatorData(true)
+    @figure.collectionFn @model.selectedIndicatorData(Visio.Constants.ANY_YEAR)
     @figure.render()
 
   removeInstances: =>

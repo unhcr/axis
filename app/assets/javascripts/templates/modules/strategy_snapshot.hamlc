@@ -75,7 +75,7 @@
     .col-md-8
       .row
       - _.each context.barFigureData, (d) ->
-        .col-md-4{ :class => "#{d.figure.name}-figure-#{context.cid}" }
+        .col-md-4{ :class => "#{d.figure.name}-figure-#{context.cid} bar-figure" }
 
 .actions
 

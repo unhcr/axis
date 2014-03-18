@@ -85,6 +85,7 @@ window.Visio =
     NUMBER: d3.format('d')
     LONG_NUMBER: d3.format(',f')
   Constants:
+    ANY_YEAR: 'ANY_YEAR'
     DB_NAME: 'visio'
     SEPARATOR: '___'
     ALPHABET: 'abcdefghijklmnopqrstuvwxyz'

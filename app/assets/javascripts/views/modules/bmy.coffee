@@ -39,7 +39,7 @@ class Visio.Views.BmyView extends Visio.Views.AccordionIndexView
     data = []
     parameters = Visio.manager.selected(Visio.manager.get('aggregation_type')).models
     _.each parameters, (model) ->
-      data = data.concat model.selectedBudgetData(true).models
+      data = data.concat model.selectedBudgetData(Visio.Constants.ANY_YEAR).models
 
     @figure.collectionFn new Visio.Collections.Budget(data)
     @figure.render()

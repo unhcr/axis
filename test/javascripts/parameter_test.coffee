@@ -177,7 +177,7 @@ test 'selectedBudgetData - allYears', () ->
     strictEqual selected.length, 1, "There should be 1 #{hash.human} selected"
 
     selected.each (d) ->
-      data = d.selectedBudgetData(true)
+      data = d.selectedBudgetData(Visio.Constants.ANY_YEAR)
 
       if hash == Visio.Parameters.OUTPUTS
         len = 2
