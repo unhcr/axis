@@ -11,14 +11,26 @@ window.Visio =
       className: 'Map'
       human: 'Map'
       name: 'map'
+    # Indicator Criticality Multiple Year
     ICMY:
       className: 'Icmy'
       human: 'Impact Criticality over time'
       name: 'icmy'
+    # Indicator Criticality Single Year
     ICSY:
       className: 'Icsy'
       human: 'Impact Criticality single year'
       name: 'icmy'
+    # Performance Achievement Single Year
+    PASY:
+      className: 'Pasy'
+      human: 'Performance Achievement single year'
+      name: 'pasy'
+    # Output Achievement Single Year
+    OASY:
+      className: 'Oasy'
+      human: 'Output Achievement single year'
+      name: 'oasy'
     SPARK:
       className: 'Spark'
       human: 'Spark'
@@ -27,14 +39,17 @@ window.Visio =
       className: 'Circle'
       human: 'Circle'
       name: 'circle'
+    # Achievement Budget Single Year
     ABSY:
       className: 'Absy'
       human: 'Achievement vs Budget'
       name: 'absy'
+    # Budget Multiple Year
     BMY:
       className: 'Bmy'
       human: 'Budget vs Time'
       name: 'bmy'
+    # Indicators Single Year
     ISY:
       className: 'Isy'
       human: 'Indicators: Single Year'

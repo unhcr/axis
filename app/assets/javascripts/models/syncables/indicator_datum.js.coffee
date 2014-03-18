@@ -102,7 +102,6 @@ class Visio.Models.IndicatorDatum extends Visio.Models.Syncable
 
           if +@get('baseline') >= @get(reported)
             result.result = 0
-            return result
           else
             numerator = @get(reported) - @get('baseline')
             denominator = @get(achievement_type) - @get('baseline')

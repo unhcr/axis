@@ -4,6 +4,74 @@ module 'Indicator Data',
     Visio.manager = new Visio.Models.Manager()
     Visio.manager.set 'reported_type', Visio.Algorithms.REPORTED_VALUES.myr
 
+test 'output achievement collection', ->
+  Visio.manager.get('outputs').reset([
+    {
+      id: 'present'
+      budget: 40
+    },
+    {
+      id: 'other'
+      budget: 40
+    }
+  ])
+  Visio.manager.get('problem_objectives').reset([
+    {
+      id: 'present'
+      budget: 40
+    }
+  ])
+
+  data = new Visio.Collections.IndicatorDatum()
+  data.reset([{
+      id: 'high1'
+      output_id: 'present'
+      is_performance: true
+      myr: 50
+      imp_target: 50
+      reversal: false
+      baseline: 20
+      missing_budget: false
+    },
+    {
+      id: 'high2'
+      output_id: 'other'
+      is_performance: true
+      myr: 50
+      imp_target: 100
+      reversal: false
+      baseline: 25
+      missing_budget: false
+    },
+    {
+      id: 'low1'
+      output_id: 'other'
+      is_performance: true
+      imp_target: 100
+      myr: 25
+      reversal: false
+      baseline: 25
+      missing_budget: false
+    }
+
+  ])
+
+  result = data.outputAchievement()
+  console.log result
+
+  strictEqual result.total, 2
+  strictEqual result.counts[Visio.Algorithms.ALGO_RESULTS.high], 1
+  strictEqual result.counts[Visio.Algorithms.ALGO_RESULTS.medium], 1
+  strictEqual result.category, Visio.Algorithms.ALGO_RESULTS.high
+
+  data.get('high1').set 'myr', null
+  result = data.outputAchievement()
+  strictEqual result.total, 2
+  strictEqual result.counts[Visio.Algorithms.STATUS.missing], 1
+  strictEqual result.counts[Visio.Algorithms.ALGO_RESULTS.medium], 1
+  strictEqual result.category, Visio.Algorithms.ALGO_RESULTS.medium
+
+
 test 'achievement collection', () ->
   Visio.manager.get('outputs').reset([
     {

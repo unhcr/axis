@@ -24,6 +24,24 @@ class Visio.Views.Dashboard extends Backbone.View
       left: 2
       right: 2
 
+  achievementConfig:
+    width: 60
+    height: 40
+    margin:
+      top: 2
+      bottom: 2
+      left: 2
+      right: 2
+
+  outputAchievementConfig:
+    width: 60
+    height: 40
+    margin:
+      top: 2
+      bottom: 2
+      left: 2
+      right: 2
+
   initialize: (options) ->
 
     if _.isArray options.filters
@@ -39,6 +57,8 @@ class Visio.Views.Dashboard extends Backbone.View
         }] )
 
     @criticalityFigure = new Visio.Figures.Icsy @criticalityConfig
+    @achievementFigure = new Visio.Figures.Pasy @achievementConfig
+    @outputAchievementFigure = new Visio.Figures.Pasy @outputAchievementConfig
 
   labelPrefix: =>
     filter = @filters.get('scenario')
@@ -73,16 +93,17 @@ class Visio.Views.Dashboard extends Backbone.View
     category = if situationAnalysis.total == 0 then 'white' else situationAnalysis.category
 
     unless isRerender
-      @$el.html @template(
+      @$el.html @template
         parameter: @parameter
         criticalities: @criticalities
         keyFigures: @keyFigures
         category: category
         idx: @idx
         labelPrefix: @labelPrefix()
-      )
 
       @$el.find(".criticality-figure").html @criticalityFigure.el
+      @$el.find(".achievement-figure").html @achievementFigure.el
+      @$el.find(".output-achievement-figure").html @outputAchievementFigure.el
 
 
     @drawFigures()
@@ -92,6 +113,8 @@ class Visio.Views.Dashboard extends Backbone.View
   drawFigures: =>
     @drawCriticalities()
     @drawKeyFigures()
+    @drawAchievements()
+    @drawOutputAchievements()
 
 
   drawKeyFigures: =>
@@ -127,6 +150,29 @@ class Visio.Views.Dashboard extends Backbone.View
     @criticalityFigure.render()
 
     @$el.find('.total-count:last').text result.total
+
+  drawAchievements: =>
+    filters = new Visio.Collections.FigureFilter [{
+        id: 'is_performance'
+        filterType: 'radio'
+        values: { true: true, false: false }
+      }]
+    result = @parameter.strategyAchievement false, filters
+    @achievementFigure.modelFn new Backbone.Model result
+    @achievementFigure.render()
+
+    #@$el.find('.total-count:last').text result.total
+
+  drawOutputAchievements: =>
+    filters = new Visio.Collections.FigureFilter [{
+        id: 'is_performance'
+        filterType: 'radio'
+        values: { true: true, false: false }
+      }]
+    result = @parameter.strategyOutputAchievement false, filters
+
+    @outputAchievementFigure.modelFn new Backbone.Model result
+    @outputAchievementFigure.render()
 
   close: ->
     @unbind()

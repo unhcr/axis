@@ -201,6 +201,16 @@ line {
   fill: $dark-gray;
 }
 
+.bar.high {
+  fill: $high;
+}
+.bar.medium {
+  fill: $medium;
+}
+.bar.low {
+  fill: $low;
+}
+
 .graph-container {
   fill: transparent;
 }
