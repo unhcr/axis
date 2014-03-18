@@ -54,6 +54,10 @@ window.Visio =
       className: 'Isy'
       human: 'Indicators: Single Year'
       name: 'isy'
+    AXIS:
+      className: 'Axis'
+      human: ''
+      name: 'axis'
   ViewTypes:
     OVERVIEW:
       className: 'StrategySnapshotView'

@@ -10,6 +10,7 @@ class Visio.Figures.Bar extends Visio.Figures.Base
 
     # variable is the scale that will scale the bars to different heights
     @variable = d3.scale.linear()
+    @formatter or = Visio.Formats.PERCENT
 
     # fixed is the scale that scales the bars equally apart
     @fixed = d3.scale.linear()
@@ -94,8 +95,8 @@ class Visio.Figures.Bar extends Visio.Figures.Base
       @labels.enter().append('text')
       @labels.attr('class', (d) ->
         ['label', d.key].join ' ')
-        .text (d) ->
-          Visio.Formats.PERCENT(d.value)
+        .text (d) =>
+          @formatter(d.value)
 
       switch @orientation
         when 'left'

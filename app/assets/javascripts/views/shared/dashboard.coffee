@@ -2,10 +2,17 @@
 class Visio.Views.Dashboard extends Backbone.View
 
   criticalities: [
-    Visio.Algorithms.ALGO_RESULTS.success,
-    Visio.Algorithms.ALGO_RESULTS.ok,
-    Visio.Algorithms.ALGO_RESULTS.fail,
-    Visio.Algorithms.STATUS.missing,
+    { criticality: Visio.Algorithms.ALGO_RESULTS.success, human: 'Acceptable' }
+    { criticality: Visio.Algorithms.ALGO_RESULTS.ok, human: 'Critical' }
+    { criticality: Visio.Algorithms.ALGO_RESULTS.fail, human: 'Sub-Stanford' }
+    { criticality: Visio.Algorithms.STATUS.missing, human: 'Not-Reported' }
+  ]
+
+  thresholds: [
+    { threshold: Visio.Algorithms.ALGO_RESULTS.high, human: 'Met Target (Above 80%)' }
+    { threshold: Visio.Algorithms.ALGO_RESULTS.medium, human: 'Approaching Target (Above 60%)' }
+    { threshold: Visio.Algorithms.ALGO_RESULTS.low, human: 'Below Target (Below 60% of target)' }
+    { threshold: Visio.Algorithms.STATUS.missing, human: 'Not-Reported' }
   ]
 
   keyFigures: [
@@ -17,15 +24,15 @@ class Visio.Views.Dashboard extends Backbone.View
 
   barFigureData: [
     {
-      fn: 'drawOutputAchievements', figure: Visio.FigureTypes.OASY, title: 'Outputs.',
+      fn: 'drawOutputAchievements', figure: Visio.FigureTypes.OASY, title: 'Outputs',
       description: 'Achievement of Target'
     },
     {
-      fn: 'drawAchievements', figure: Visio.FigureTypes.PASY, title: 'Impact Indicators.',
+      fn: 'drawAchievements', figure: Visio.FigureTypes.PASY, title: 'Impact Indicators',
       description: 'Achievement of Standard'
     },
     {
-      fn: 'drawCriticalities', figure: Visio.FigureTypes.ICSY, title: 'Impact Criticality.',
+      fn: 'drawCriticalities', figure: Visio.FigureTypes.ICSY, title: 'Impact Criticality',
       description: 'Achievement of Standard'
     }
   ]
@@ -97,6 +104,7 @@ class Visio.Views.Dashboard extends Backbone.View
       @$el.html @template
         parameter: @parameter
         criticalities: @criticalities
+        thresholds: @thresholds
         keyFigures: @keyFigures
         barFigureData: @barFigureData
         category: category

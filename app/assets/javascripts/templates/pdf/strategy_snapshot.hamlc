@@ -39,25 +39,52 @@
 
 .pb_after.pdf-page
 
-  .row
-    .col-md-12
-      %h3
-        Achievement &amp; Criticality.
-      .divider-light-gray
-  .row
-    - _.each context.barFigureData, (d) ->
-      %div{ :class => "col-md-#{12 / context.barFigureData.length}" }
-        %div{ :class => "#{d.figure.name}-figure-#{context.cid}" }
+  .achievement-criticality
+    .row
+      .col-md-12
+        %h3
+          Achievement &amp; Criticality.
+        .divider-light-gray
+    .row
+      .col-md-11.col-md-offset-1
+        .row
+          .col-md-4
+            - _.each context.thresholds, (threshold) ->
+              .row
+                .col-md-12.bar-legend{ :class => threshold.threshold }
+                  = threshold.human
+          .col-md-4.col-md-offset-4
+            - _.each context.criticalities, (criticality) ->
+              .row
+                .col-md-12.bar-legend{ :class => criticality.criticality }
+                  = criticality.human
 
-  .row
-    .col-md-1
+    .row
+      .col-md-1
+        .bar-axis-container
+          .bar-axis
+      .col-md-11
+        .row
+          - _.each context.barFigureData, (d) ->
+            .bar-figure-container{ :class => "col-md-#{12 / context.barFigureData.length} #{d.figure.name}" }
 
-    .col-md-11
-      .row
-        .col-md-4
-        .col-md-4.col-md-offset-4
-      .row
-        .col-md-4
-        .col-md-4
-        .col-md-4
+              .bold
+                = d.title
+              %div
+                = d.description
+              %div
+                %span.ui-medium-number.number{ :class => "#{d.figure.name}-type-count-#{context.cid}" }
+
+                  0
+                %span
+                  = d.title
+              %div
+                %span.ui-medium-number.number{ :class => "#{d.figure.name}-type-count-#{context.cid}" }
+                  0
+                %span
+                  Times Selected
+
+
+              %div{ :class => "#{d.figure.name}-figure-#{context.cid} bar-figure" }
+
 .target-parameters

@@ -18,8 +18,9 @@
   .parameter-name.col-md-12
     = context.parameter.toString()
 
-.row
-  .col-xs-12.criticality-figure
+- _.each context.barFigureData, (d) ->
+  .row
+    .col-xs-12{ :class => "#{d.figure.name}-figure-#{context.cid}" }
 .row
   .col-xs-12.achievement-figure
 .row
@@ -27,20 +28,13 @@
 
 .row.divider-light-gray
 .row
-  - for i in [0..1]
-    .col-md-6{ :class => "keyFigure #{context.keyFigures[i].fn}" }
+  - list = ['budget', 'spent']
+  - _.each list, (keyFigure) ->
+    - c = _.findWhere context.keyFigures, { fn: keyFigure }
+    .col-md-6{ :class => "keyFigure #{c.fn}-#{context.cid}" }
       .ui-small-number.number
         0
       %div
         %span.label-prefix
           = context.labelPrefix + ' '
-        = context.keyFigures[i].human
-.row
-  - for i in [2..3]
-    .col-md-6{ :class => "keyFigure #{context.keyFigures[i].fn}" }
-      .ui-small-number.number
-        0
-      %div
-        %span.label-prefix
-          = context.labelPrefix + ' '
-        = context.keyFigures[i].human
+        = c.human

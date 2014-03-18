@@ -1,3 +1,4 @@
+@import "compass/css3";
 @import "../shared/variables";
 @import "../shared/mixins";
 
@@ -18,6 +19,7 @@
   width: 21cm;
   margin: 0;
   height: 29.7cm;
+  position: relative;
 }
 
 /* Warning lots of pixel perfect values needed. Makes for messy css */
@@ -125,6 +127,77 @@ body.pdf {
   .legend-body {
     position: relative;
   }
+
+  .bar-figure-container, .bar-axis-container {
+    height: 510px;
+    border-left: 1px $primary solid;
+    position: relative;
+
+    .bar-figure {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      text-align: center
+    }
+
+  }
+
+  .bar-axis-container {
+    border: none;
+    .bar-axis {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
+  }
+
+  .bar-figure-container:nth-child(2) {
+    border-left: 1px $primary dotted;
+  }
+
+  .bar-legend::before {
+    position: absolute;
+    content: ' ';
+    position: absolute;
+    content: ' ';
+    width: 15px;
+    height: 15px;
+    @include border-radius(15px);
+    left: -6.5px
+  }
+
+  .bar-legend.success::before {
+    background-color: $success;
+  }
+  .bar-legend.ok::before {
+    background-color: $ok;
+  }
+  .bar-legend.fail::before {
+    background-color: $fail;
+  }
+  .bar-legend.missing::before {
+    background-color: $dark-gray;
+  }
+
+  .bar-legend.high::before {
+    background-color: $high;
+  }
+  .bar-legend.medium::before {
+    background-color: $medium;
+  }
+  .bar-legend.low::before {
+    background-color: $low;
+  }
+
+  .achievement-criticality {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+
 
 }
 
