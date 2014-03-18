@@ -83,7 +83,7 @@ window.Visio =
   Constants:
     DB_NAME: 'visio'
     SEPARATOR: '___'
-    ALPHABET: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    ALPHABET: 'abcdefghijklmnopqrstuvwxyz'
     CMS:
       TEXTAREA_MAXLEN: 900
 
