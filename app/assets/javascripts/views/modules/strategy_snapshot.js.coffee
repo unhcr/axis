@@ -8,8 +8,10 @@ class Visio.Views.StrategySnapshotView extends Visio.Views.Dashboard
     @isPdf = options.isPdf
     if options.isPdf
       @template = HAML['pdf/strategy_snapshot']
-      @criticalityConfig.width = 60
-      @criticalityConfig.height = 60
+      @barConfig.width = 82
+      @barConfig.height = 340
+      @barConfig.orientation = 'bottom'
+      @barConfig.hasLabels = true
 
 
     super options

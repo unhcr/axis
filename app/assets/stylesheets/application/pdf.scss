@@ -17,7 +17,7 @@
 .pdf-page {
   width: 21cm;
   margin: 0;
-  height: 100%
+  height: 29.7cm;
 }
 
 /* Warning lots of pixel perfect values needed. Makes for messy css */
@@ -57,7 +57,6 @@ body.pdf {
 
       margin: 0;
       border: none;
-      border-bottom: 1px solid $light-gray;
       padding: 30px $parameter-show-padding-horizontal / 2;
       padding-top: 40px;
 
@@ -66,24 +65,8 @@ body.pdf {
       }
 
     }
-    .parameter-slide:nth-of-type(2n+1) {
-      border-right: 1px solid $light-gray;
-    }
 
-    /* Last two should not have a bottom border */
-    .parameter-slide:nth-last-type-of(-n + 2) {
-      border-bottom: none;
-    }
-    /* However if their is a widow, we add back the border */
-    .parameter-slide:nth-of-type(odd) {
-      border-bottom: 1px solid $light-gray;
-    }
-    /* Every 5th and 6th don't have border */
-    .parameter-slide:nth-of-type(6n), .parameter-slide:nth-of-type(6n-1) {
-      border-bottom: none;
-    }
   }
-
   .keyFigure {
     padding-bottom: 15px;
   }
@@ -181,7 +164,4 @@ body.pdf {
   text-align: center;
   line-height: $parameter-show-idx - 3px;
   font-weight: bold;
-  position: absolute;
-  top: 8px;
-  left: 15px;
 }
