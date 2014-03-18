@@ -60,6 +60,12 @@
       %h3
         Impact Criticality.
   .row
+    .col-xs-12.criticality-figure
+  .row
+    .col-xs-12.achievement-figure
+  .row
+    .col-xs-12.output-achievement-figure
+  .row
     .col-md-4
       The situation values range from:
 

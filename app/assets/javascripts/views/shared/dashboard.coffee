@@ -58,7 +58,7 @@ class Visio.Views.Dashboard extends Backbone.View
 
     @criticalityFigure = new Visio.Figures.Icsy @criticalityConfig
     @achievementFigure = new Visio.Figures.Pasy @achievementConfig
-    @outputAchievementFigure = new Visio.Figures.Pasy @outputAchievementConfig
+    @outputAchievementFigure = new Visio.Figures.Oasy @outputAchievementConfig
 
   labelPrefix: =>
     filter = @filters.get('scenario')

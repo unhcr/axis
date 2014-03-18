@@ -8,7 +8,7 @@ class Visio.Collections.IndicatorDatum extends Visio.Collections.Syncable
 
   situationAnalysis: (reported) ->
 
-    reported ||= Visio.manager.get 'reported_type'
+    reported or= Visio.manager.get 'reported_type'
 
     counts = {}
     counts[Visio.Algorithms.ALGO_RESULTS.success] = 0

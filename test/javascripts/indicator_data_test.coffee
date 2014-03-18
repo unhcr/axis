@@ -156,10 +156,14 @@ test 'achievement collection', () ->
   strictEqual(.875, result.result)
   strictEqual(Visio.Algorithms.ALGO_RESULTS.high, result.category)
 
-  data = new Visio.Collections.IndicatorDatum()
-  result = data.achievement()
+  empty = new Visio.Collections.IndicatorDatum()
+  result = empty.achievement()
   ok not result.category
   ok not result.result
+
+  Visio.manager.set 'reported_type', Visio.Algorithms.REPORTED_VALUES.yer
+  result = data.achievement()
+  strictEqual result.counts[Visio.Algorithms.STATUS.missing], 3
 
 test 'achievement', () ->
   Visio.manager.get('outputs').reset([
