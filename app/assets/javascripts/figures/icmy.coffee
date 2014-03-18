@@ -87,19 +87,40 @@ class Visio.Figures.Icmy extends Visio.Figures.Base
 
     @
 
+  mapFn: (arr) =>
+    console.log arr
+    _.map arr, (d) -> d.amount / arr.amount
+    arr
+
   reduceFn: (memo, model) =>
+    filters = new Visio.Collections.FigureFilter [{
+        id: 'is_performance'
+        filterType: 'radio'
+        values: { true: false, false: true }
+      }]
 
-    #_.each Visio.manager.get('yearList'), (year) ->
+    _.each Visio.manager.get('yearList'), (year) ->
 
-    #  situationAnalysis = model.selectedSituationAnalysis(false, )
+      situationAnalysis = model.selectedSituationAnalysis year, filters
 
-    #  arr = _.findWhere memo, { category: situationAnalysis.category }
-    #  console.log arr
+      arr = _.find memo, (d) -> d.category == situationAnalysis.category
 
-    #  datum = _.findWhere arr, { year: model.get('') }
+      # Keeps track of total in that category
+      arr.amount += 1
+      console.log arr
+
+      datum = _.findWhere arr, { year: year }
+      found = datum?
+
+      datum or= { amount: 0, year: year, category: situationAnalysis.category }
+
+      # Keeps track of total in that year
+      datum.amount += 1
+
+      arr.push datum unless found
 
 
-    #return memo
+    return memo
 
   filtered: (collection) =>
     categories = [
@@ -113,9 +134,10 @@ class Visio.Figures.Icmy extends Visio.Figures.Base
     _.each categories, (category) ->
       arr = []
       arr.category = category
-      memo.push category
+      arr.amount = 0
+      memo.push arr
 
-    _.chain(collection.models).reduce(@reduceFn, memo).value()
+    _.chain(collection.models).reduce(@reduceFn, memo).map(@mapFn).value()
 
   polygon: (d) ->
     return "M0 0" unless d? and d.length
