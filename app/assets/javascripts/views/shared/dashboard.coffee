@@ -15,32 +15,30 @@ class Visio.Views.Dashboard extends Backbone.View
     { fn: 'spent', human: 'Spent', formatter: Visio.Formats.PERCENT }
   ]
 
-  criticalityConfig:
-    width: 60
-    height: 40
-    margin:
-      top: 2
-      bottom: 2
-      left: 2
-      right: 2
+  barFigureData: [
+    {
+      fn: 'drawOutputAchievements', figure: Visio.FigureTypes.OASY, title: 'Outputs.',
+      description: 'Achievement of Target'
+    },
+    {
+      fn: 'drawAchievements', figure: Visio.FigureTypes.PASY, title: 'Impact Indicators.',
+      description: 'Achievement of Standard'
+    },
+    {
+      fn: 'drawCriticalities', figure: Visio.FigureTypes.ICSY, title: 'Impact Criticality.',
+      description: 'Achievement of Standard'
+    }
+  ]
 
-  achievementConfig:
+  barConfig:
     width: 60
     height: 40
+    orientation: 'left'
     margin:
       top: 2
       bottom: 2
       left: 2
-      right: 2
-
-  outputAchievementConfig:
-    width: 60
-    height: 40
-    margin:
-      top: 2
-      bottom: 2
-      left: 2
-      right: 2
+      right: 10
 
   initialize: (options) ->
 
@@ -56,6 +54,9 @@ class Visio.Views.Dashboard extends Backbone.View
           values: _.object(_.values(Visio.Scenarios), _.values(Visio.Scenarios).map(-> true))
         }] )
 
+    @barFigures = {}
+    _.each @barFigureData, (d) =>
+      @barFigures[d.figure.name] = new Visio.Figures[d.figure.className] _.extend({}, @barConfig)
     @criticalityFigure = new Visio.Figures.Icsy @criticalityConfig
     @achievementFigure = new Visio.Figures.Pasy @achievementConfig
     @outputAchievementFigure = new Visio.Figures.Oasy @outputAchievementConfig
@@ -97,32 +98,31 @@ class Visio.Views.Dashboard extends Backbone.View
         parameter: @parameter
         criticalities: @criticalities
         keyFigures: @keyFigures
+        barFigureData: @barFigureData
         category: category
         idx: @idx
         labelPrefix: @labelPrefix()
+        cid: @cid
 
-      @$el.find(".criticality-figure").html @criticalityFigure.el
-      @$el.find(".achievement-figure").html @achievementFigure.el
-      @$el.find(".output-achievement-figure").html @outputAchievementFigure.el
-
+      _.each @barFigureData, (d) =>
+        @$el.find(".#{d.figure.name}-figure-#{@cid}").html @barFigures[d.figure.name].el
 
     @drawFigures()
     @
 
 
   drawFigures: =>
-    @drawCriticalities()
     @drawKeyFigures()
-    @drawAchievements()
-    @drawOutputAchievements()
-
+    @drawCriticalities()
+    _.each @barFigureData, (d) =>
+      @[d.fn]()
 
   drawKeyFigures: =>
     _.each @keyFigures, (keyFigure) =>
-      $keyFigure = @$el.find(".#{keyFigure.fn} .number:last")
-      $labelPrefix = @$el.find ".#{keyFigure.fn} .label-prefix:last"
+      $keyFigure = @$el.find(".#{keyFigure.fn}-#{@cid} .number")
+      $labelPrefix = @$el.find ".#{keyFigure.fn}-#{@cid}  .label-prefix"
       suffix = $keyFigure.text().match /([kMG%])$/
-      from = +$keyFigure.text().replace(/[^0-9\.]+/g,"")
+      from = +$keyFigure.text().replace /[^0-9\.]+/g, ""
 
       if suffix?
         switch suffix[0]
@@ -146,22 +146,24 @@ class Visio.Views.Dashboard extends Backbone.View
 
   drawCriticalities: =>
     result = @parameter.strategySituationAnalysis()
-    @criticalityFigure.modelFn new Backbone.Model(result)
-    @criticalityFigure.render()
+    @barFigures[Visio.FigureTypes.ICSY.name].modelFn new Backbone.Model(result)
+    @barFigures[Visio.FigureTypes.ICSY.name].render()
 
-    @$el.find('.total-count:last').text result.total
+    @$el.find(".#{Visio.FigureTypes.ICSY.name}-type-count-#{@cid}").text result.typeTotal
+    @$el.find(".#{Visio.FigureTypes.ICSY.name}-selected-count-#{@cid}").text result.total
 
   drawAchievements: =>
     filters = new Visio.Collections.FigureFilter [{
         id: 'is_performance'
         filterType: 'radio'
-        values: { true: true, false: false }
+        values: { true: false, false: true }
       }]
     result = @parameter.strategyAchievement false, filters
-    @achievementFigure.modelFn new Backbone.Model result
-    @achievementFigure.render()
+    @barFigures[Visio.FigureTypes.PASY.name].modelFn new Backbone.Model result
+    @barFigures[Visio.FigureTypes.PASY.name].render()
 
-    #@$el.find('.total-count:last').text result.total
+    @$el.find(".#{Visio.FigureTypes.PASY.name}-type-count-#{@cid}").text result.typeTotal
+    @$el.find(".#{Visio.FigureTypes.PASY.name}-selected-count-#{@cid}").text result.total
 
   drawOutputAchievements: =>
     filters = new Visio.Collections.FigureFilter [{
@@ -170,9 +172,11 @@ class Visio.Views.Dashboard extends Backbone.View
         values: { true: true, false: false }
       }]
     result = @parameter.strategyOutputAchievement false, filters
+    @barFigures[Visio.FigureTypes.OASY.name].modelFn new Backbone.Model result
+    @barFigures[Visio.FigureTypes.OASY.name].render()
 
-    @outputAchievementFigure.modelFn new Backbone.Model result
-    @outputAchievementFigure.render()
+    @$el.find(".#{Visio.FigureTypes.OASY.name}-type-count-#{@cid}").text result.typeTotal
+    @$el.find(".#{Visio.FigureTypes.OASY.name}-selected-count-#{@cid}").text result.total
 
   close: ->
     @unbind()
