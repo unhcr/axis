@@ -9,11 +9,11 @@ class Visio.Views.ParameterSlideView extends Visio.Views.Dashboard
     @idx = options.idx
 
     if options.isPdf
-      @criticalityConfig.width = 34
-      @criticalityConfig.height = 34
+      @criticalityConfig.width = 60
+      @criticalityConfig.height = 30
     else
-      @criticalityConfig.width = 18
-      @criticalityConfig.height = 18
+      @criticalityConfig.width = 60
+      @criticalityConfig.height = 30
     super options
     @parameter = @model
 

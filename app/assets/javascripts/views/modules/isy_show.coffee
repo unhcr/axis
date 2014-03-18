@@ -24,16 +24,7 @@ class Visio.Views.IsyShowView extends Visio.Views.AccordionShowView
       width: 800
       height: 300
 
-    @sparkConfig =
-      margin:
-        left: 0
-        right: 10
-        top: 8
-        bottom: 0
-      width: 100
-
     @isyFigure = new Visio.Figures.Isy @config
-    @sparkFigure = new Visio.Figures.Spark @sparkConfig
 
   render: (isRerender) ->
     situationAnalysis = @model.selectedSituationAnalysis()
@@ -42,7 +33,6 @@ class Visio.Views.IsyShowView extends Visio.Views.AccordionShowView
       @$el.html @template({ parameter: @model, figureId: @isyFigure.figureId() })
 
       @$el.find('.indicator-bar-graph').html @isyFigure.el
-      @$el.find('.spark-bar-graph').html @sparkFigure.el
 
     category = if situationAnalysis.total == 0 then 'white' else situationAnalysis.category
 
@@ -60,8 +50,6 @@ class Visio.Views.IsyShowView extends Visio.Views.AccordionShowView
     else
       @$el.removeClass 'disabled'
 
-    @sparkFigure.modelFn @model
-    @sparkFigure.render()
 
     @drawFigures()
 

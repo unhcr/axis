@@ -31,6 +31,7 @@
 //= require ./views/shared/dashboard
 //= require ./views/sliders/slider
 //= require ./figures/base
+//= require ./figures/bar
 //= require_tree ./views
 //= require_tree ./figures
 //= require_tree ./routers

@@ -19,8 +19,7 @@
     = context.parameter.toString()
 
 .row
-  - _.each [0, 1, 2, 3], (i) ->
-    .col-xs-2.criticality{ :class => "#{context.criticalities[i]}-criticality" }
+  .col-xs-12.criticality-figure
 
 .row.divider-light-gray
 .row

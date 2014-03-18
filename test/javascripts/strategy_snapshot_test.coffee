@@ -47,7 +47,7 @@ test 'keyFigures', ->
 test 'render', ->
   @view.render()
 
-  count = @view.criticalities.length * (@view.collection.length + 1)
+  count = @view.collection.length + 1
 
   strictEqual @view.$el.find('.criticality').length, count
   strictEqual @view.$el.find('.keyFigure').length, count

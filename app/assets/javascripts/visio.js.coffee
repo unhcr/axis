@@ -15,6 +15,10 @@ window.Visio =
       className: 'Icmy'
       human: 'Impact Criticality over time'
       name: 'icmy'
+    ICSY:
+      className: 'Icsy'
+      human: 'Impact Criticality single year'
+      name: 'icmy'
     SPARK:
       className: 'Spark'
       human: 'Spark'

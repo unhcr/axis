@@ -16,10 +16,8 @@ class Visio.Views.Dashboard extends Backbone.View
   ]
 
   criticalityConfig:
-    width: 40
+    width: 60
     height: 40
-    number: 0
-    percent: 0
     margin:
       top: 2
       bottom: 2
@@ -27,7 +25,7 @@ class Visio.Views.Dashboard extends Backbone.View
       right: 2
 
   initialize: (options) ->
-    console.log options.filters
+
     if _.isArray options.filters
       @filters = new Visio.Collections.FigureFilter options.filters
     else if options.filters instanceof Visio.Collections.FigureFilter
@@ -40,12 +38,7 @@ class Visio.Views.Dashboard extends Backbone.View
           values: _.object(_.values(Visio.Scenarios), _.values(Visio.Scenarios).map(-> true))
         }] )
 
-    @criticalityFigures = []
-
-    _.each @criticalities, (criticality) =>
-      @criticalityFigures.push
-        figure: new Visio.Figures.Circle(_.extend({}, @criticalityConfig))
-        criticality: criticality
+    @criticalityFigure = new Visio.Figures.Icsy @criticalityConfig
 
   labelPrefix: =>
     filter = @filters.get('scenario')
@@ -89,8 +82,7 @@ class Visio.Views.Dashboard extends Backbone.View
         labelPrefix: @labelPrefix()
       )
 
-      _.each @criticalityFigures, (figure) =>
-        @$el.find(".#{figure.criticality}-criticality").html figure.figure.el
+      @$el.find(".criticality-figure").html @criticalityFigure.el
 
 
     @drawFigures()
@@ -131,14 +123,8 @@ class Visio.Views.Dashboard extends Backbone.View
 
   drawCriticalities: =>
     result = @parameter.strategySituationAnalysis()
-    _.each @criticalityFigures, (figure) =>
-      percent = (result.counts[figure.criticality] / result.total) || 0
-      figure.figure
-        .numberFn(result.counts[figure.criticality])
-        .percentFn(percent)
-        .render()
-
-      @$el.find(".#{figure.criticality}-count:last").text result.counts[figure.criticality]
+    @criticalityFigure.modelFn new Backbone.Model(result)
+    @criticalityFigure.render()
 
     @$el.find('.total-count:last').text result.total
 

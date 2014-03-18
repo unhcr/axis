@@ -12,7 +12,7 @@ class Visio.Figures.Base extends Backbone.View
 
   initialize: (config) ->
 
-    # default margin
+    # default margin, config will override if applicable
     @margin =
       left: 2
       right: 2
