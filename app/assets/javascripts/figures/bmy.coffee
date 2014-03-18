@@ -1,3 +1,4 @@
+# Budget Multiple Year
 class Visio.Figures.Bmy extends Visio.Figures.Base
 
   @include Visio.Mixins.Exportable
@@ -198,6 +199,3 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
     line = @g.select(".budget-line-#{d.budgetType}")
     isActive = line.classed 'active'
     line.classed 'active', not isActive
-
-  filter: (type, attr, active) =>
-    @filters[type].values[attr] = active
