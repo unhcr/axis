@@ -37,6 +37,14 @@ class Visio.Collections.Parameter extends Visio.Collections.Syncable
     data = @strategyIndicatorData(null, isAnyYear, filters)
     data.situationAnalysis()
 
+  strategyOutputAchievement: (isAnyYear = false, filters = null) ->
+    data = @strategyIndicatorData(null, isAnyYear, filters)
+    data.outputAchievement()
+
+  strategyAchievement: (isAnyYear = false, filters = null) ->
+    data = @strategyIndicatorData(null, isAnyYear, filters)
+    data.achievement()
+
   strategyExpenditure: (isAnyYear = false, filters = null) ->
     data = @strategyExpenditureData(null, isAnyYear, filters)
     data.amount()

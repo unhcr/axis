@@ -92,6 +92,10 @@ class Visio.Models.Parameter extends Visio.Models.Syncable
     data = @strategyIndicatorData()
     data.situationAnalysis()
 
+  strategyOutputAchievement: (isAnyYear = false, filters = null) ->
+    data = @strategyIndicatorData(null, isAnyYear, filters)
+    data.outputAchievement()
+
   selectedAchievement: (isAnyYear = false, filters = null) ->
     data = @selectedIndicatorData(isAnyYear, filters)
     data.achievement()

@@ -49,6 +49,59 @@ class Visio.Collections.IndicatorDatum extends Visio.Collections.Syncable
       total: count
     }
 
+  outputAchievement: (reported) ->
+    return { category: null, result: null } if @length == 0
+    reported ||= Visio.manager.get 'reported_type'
+    results = []
+
+    counts = {}
+    counts[Visio.Algorithms.ALGO_RESULTS.high] = 0
+    counts[Visio.Algorithms.ALGO_RESULTS.medium] = 0
+    counts[Visio.Algorithms.ALGO_RESULTS.low] = 0
+    counts[Visio.Algorithms.STATUS.missing] = 0
+
+    groups = @groupBy 'output_id'
+
+    _.each groups, (group) ->
+      cGroup = new Visio.Collections.IndicatorDatum group
+      result = cGroup.achievement()
+
+      # Push result if there are some data that was recorded
+      if result.total and (result.counts[Visio.Algorithms.ALGO_RESULTS.high] or
+                           result.counts[Visio.Algorithms.ALGO_RESULTS.medium] or
+                           result.counts[Visio.Algorithms.ALGO_RESULTS.low])
+        results.push result.result
+        counts[result.category] += 1
+      else if result.total and result.counts[Visio.Algorithms.STATUS.missing]
+        counts[Visio.Algorithms.STATUS.missing] += 1
+
+    total = counts[Visio.Algorithms.ALGO_RESULTS.high] +
+            counts[Visio.Algorithms.ALGO_RESULTS.medium] +
+            counts[Visio.Algorithms.ALGO_RESULTS.low] +
+            counts[Visio.Algorithms.STATUS.missing]
+
+    average = _.reduce(results,
+      (sum, num) -> return sum + num,
+      0) / results.length
+
+    divisor = if reported == Visio.Algorithms.REPORTED_VALUES.yer then 1 else 2
+
+    if average >= Visio.Algorithms.HIGH_THRESHOLD / divisor
+      category = Visio.Algorithms.ALGO_RESULTS.high
+    else if average >= Visio.Algorithms.MEDIUM_THRESHOLD / divisor
+      category = Visio.Algorithms.ALGO_RESULTS.medium
+    else
+      category = Visio.Algorithms.ALGO_RESULTS.low
+
+    result =
+      counts: counts
+      total: total
+      category: category
+      result: average
+
+    result
+
+
   achievement: (reported) ->
     return { category: null, result: null } if @length == 0
     reported ||= Visio.manager.get 'reported_type'
@@ -88,12 +141,11 @@ class Visio.Collections.IndicatorDatum extends Visio.Collections.Syncable
     else
       category = Visio.Algorithms.ALGO_RESULTS.low
 
-    result = {
+    result =
       category: category
       result: average
       counts: counts
       total: count
-    }
 
 
     result
