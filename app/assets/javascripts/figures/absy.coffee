@@ -79,7 +79,7 @@ class Visio.Figures.Absy extends Visio.Figures.Base
         .attr("x", -@adjustedHeight / 2)
         .attr("dy", "-.21em")
         .style("text-anchor", "middle")
-        .text('Achievement (%)')
+        .text('Progress Towards Target (%)')
 
     @g.append('g')
       .attr('class', 'x axis')
@@ -171,6 +171,7 @@ class Visio.Figures.Absy extends Visio.Figures.Base
           @entered = true
           @info or= new Visio.Views.BubbleInfoView({
             el: $('.info-container .bubble-info')
+            filters: @filters
           })
           # Hack for when we move from one to voronoi to another to which fires enter, enter, out in Chrome
           window.setTimeout(( -> @entered = false), 50)
