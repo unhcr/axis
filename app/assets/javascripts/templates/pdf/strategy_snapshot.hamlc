@@ -79,7 +79,7 @@
                 %span
                   = d.title
               %div
-                %span.ui-medium-number.number{ :class => "#{d.figure.name}-type-count-#{context.cid}" }
+                %span.ui-medium-number.number{ :class => "#{d.figure.name}-selected-count-#{context.cid}" }
                   0
                 %span
                   Times Selected
