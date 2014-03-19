@@ -141,10 +141,13 @@ class Visio.Views.Dashboard extends Backbone.View
 
       to = @[keyFigure.fn]()
 
+      console.log @isPdf
+      speed = if @isPdf then 1 else Visio.Durations.FAST
+
       $keyFigure.countTo
         from: from
         to: to
-        speed: Visio.Durations.FAST
+        speed: speed
         formatter: keyFigure.formatter
       if keyFigure.fn is 'budget' or
          keyFigure.fn is 'expenditure' or

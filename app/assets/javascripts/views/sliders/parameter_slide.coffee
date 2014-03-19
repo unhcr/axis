@@ -8,8 +8,9 @@ class Visio.Views.ParameterSlideView extends Visio.Views.Dashboard
     @template = HAML['pdf/sliders/parameter_slide'] if options.isPdf
     @idx = options.idx
     @barConfig.orientation = 'left'
+    @isPdf = options.isPdf
 
-    if options.isPdf
+    if @isPdf
       @barConfig.width = 250
       @barConfig.height = 56
       @barConfig.hasLabels = true
