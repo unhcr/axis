@@ -126,6 +126,9 @@ line {
     stroke-width: 4px;
   }
 
+  .ic-line.active {
+    stroke: red;
+  }
 }
 
 .svg-isy-figure {
