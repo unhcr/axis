@@ -2,4 +2,3 @@
   %figcaption
     %p
       != Visio.exportModule.get('description')
-    .filler

@@ -3,28 +3,35 @@
 %section
 
   - if context.model.get('country')
-    .country-img.col-sm-offset-1
-      %img{
-        :width => "55",
-        :height => "55",
-        :src => "/assets/countries/#{context.model.get('country').iso2.toLowerCase()}/128.png" }
-  .row
-    .col-sm-offset-9.col-sm-3.right-text.achievement-figure
+    .row
+      .col-md-12
+        .country-img
+          %img{
+            :width => "55",
+            :height => "55",
+            :src => "/assets/countries/#{context.model.get('country').iso2.toLowerCase()}/128.png" }
 
   .row.header
-    .col-sm-8.col-sm-offset-1.top-flush
+    .col-sm-8
       %h5.ui-primary
         - if context.model.name == Visio.Parameters.OPERATIONS
           = context.model.toString().toUpperCase()
         - else
           = context.model.toString()
 
-    .col-sm-3.right-text.top-flush
-      - achievement = context.model.selectedAchievement().result
-      %h3.number
-        = Visio.Formats.PERCENT achievement
-      .ui-primary.bold.achievement-label
-        Achievement
+  .row
+    .col-sm-8
+      .ui-big-number
+        = context.achievement.total
+      = context.filters.get('is_performance')
+    .col-sm-4.center-text
+      .achievement-figure
+      .top-flush
+        - context.achievement.result
+        %h3.number
+          = Visio.Formats.PERCENT context.achievement.result
+        .ui-primary.bold.achievement-label
+          Achievement
 
   .row
     .col-sm-12.top-flush

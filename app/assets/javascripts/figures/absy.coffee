@@ -17,6 +17,12 @@ class Visio.Figures.Absy extends Visio.Figures.Base
         values: _.object(_.values(Visio.Scenarios), _.values(Visio.Scenarios).map(-> true))
       },
       {
+        id: 'is_performance'
+        filterType: 'radio'
+        values: { true: true, false: false }
+        human: { true: 'performance', false: 'impact' }
+      },
+      {
         id: 'achievement'
         filterType: 'radio'
         values: _.object(_.values(Visio.Algorithms.GOAL_TYPES), _.values(Visio.Algorithms.GOAL_TYPES).map(

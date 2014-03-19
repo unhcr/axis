@@ -49,7 +49,7 @@ test 'render', ->
 
   count = @view.collection.length + 1
 
-  strictEqual @view.$el.find('.criticality').length, count
+  strictEqual @view.$el.find('.bar-figure').length, count * 3
   strictEqual @view.$el.find('.keyFigure').length, count
 
 test 'sliders', ->
