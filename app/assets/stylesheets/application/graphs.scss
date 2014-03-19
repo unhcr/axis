@@ -121,6 +121,13 @@ line {
   fill: transparent;
 }
 
+.svg-icmy-figure {
+  .ic-line {
+    stroke-width: 4px;
+  }
+
+}
+
 .svg-isy-figure {
   .myr-bar {
     fill: $purple-dark;
@@ -209,6 +216,36 @@ line {
 }
 .bar.low {
   fill: $low;
+}
+
+path.success {
+  stroke: $success;
+  fill: none;
+}
+path.ok {
+  stroke: $ok;
+  fill: none;
+}
+path.fail {
+  stroke: $fail;
+  fill: none;
+}
+path.missing {
+  stroke: $dark-gray;
+  fill: none;
+}
+
+path.high {
+  stroke: $high;
+  fill: none;
+}
+path.medium {
+  stroke: $medium;
+  fill: none;
+}
+path.low {
+  stroke: $low;
+  fill: none;
 }
 
 .graph-container {

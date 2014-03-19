@@ -16,6 +16,7 @@ class Visio.Figures.Icmy extends Visio.Figures.Base
       .domain(Visio.manager.get('yearList'))
 
     @y = d3.scale.linear()
+      .domain([0, 1])
       .range([@adjustedHeight, 0])
 
     @lineFn = d3.svg.line()
@@ -40,6 +41,7 @@ class Visio.Figures.Icmy extends Visio.Figures.Base
       .orient('left')
       .ticks(5)
       .innerTickSize(14)
+      .tickFormat(Visio.Formats.PERCENT)
       .tickPadding(20)
 
     @g.append('g')
@@ -87,9 +89,10 @@ class Visio.Figures.Icmy extends Visio.Figures.Base
 
     @
 
-  mapFn: (arr) =>
-    console.log arr
-    _.map arr, (d) -> d.amount / arr.amount
+  mapFn: (arr, idx, memo) =>
+    _.each arr, (d) ->
+      d.amount /= memo["amount#{d.year}"]
+      d.amount = 0 if _.isNaN d.amount
     arr
 
   reduceFn: (memo, model) =>
@@ -103,21 +106,27 @@ class Visio.Figures.Icmy extends Visio.Figures.Base
 
       situationAnalysis = model.selectedSituationAnalysis year, filters
 
-      arr = _.find memo, (d) -> d.category == situationAnalysis.category
 
-      # Keeps track of total in that category
-      arr.amount += 1
-      console.log arr
-
-      datum = _.findWhere arr, { year: year }
-      found = datum?
-
-      datum or= { amount: 0, year: year, category: situationAnalysis.category }
 
       # Keeps track of total in that year
-      datum.amount += 1
+      memo["amount#{year}"] = 0 unless memo["amount#{year}"]?
+      memo["amount#{year}"] += situationAnalysis.total
 
-      arr.push datum unless found
+      for category, count of situationAnalysis.counts
+        arr = _.find memo, (d) -> d.category == category
+
+        # Keeps track of total in that category
+        arr.amount += count
+
+        datum = _.findWhere arr, { year: year, category: category }
+        found = datum?
+
+        datum or= { amount: 0, year: year, category: category }
+
+        # Keeps track of total in that year for that category
+        datum.amount += count
+
+        arr.push datum unless found
 
 
     return memo
