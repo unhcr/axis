@@ -9,7 +9,7 @@ class Visio.Views.IsyTooltip extends Visio.Views.D3Tooltip
   height: -> 300
 
   top: =>
-    @figure.$el.offset().top
+    @figure.$el.offset().top + 60
 
   left: =>
     base = $(@figure.el).offset().left + @figure.xFn()(@isyIndex) + @figure.marginFn().left
