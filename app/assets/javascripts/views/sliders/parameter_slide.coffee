@@ -14,8 +14,8 @@ class Visio.Views.ParameterSlideView extends Visio.Views.Dashboard
       @barConfig.height = 56
       @barConfig.hasLabels = true
     else
-      @barConfig.width = 100
-      @barConfig.height = 20
+      @barConfig.width = 150
+      @barConfig.height = 30
 
     super options
     @parameter = @model
