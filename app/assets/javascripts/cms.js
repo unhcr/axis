@@ -15,7 +15,7 @@
 //= require underscore
 //= require hamlcoffee
 //= require backbone
-//= require ./vendor/d3.v3
+//= require ./vendor/d3
 //= require visio
 //= require backbone_ext
 //= require_tree ./mixins
