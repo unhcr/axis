@@ -147,7 +147,10 @@ class Visio.Collections.IndicatorDatum extends Visio.Collections.Syncable
 
     divisor = if reported == Visio.Algorithms.REPORTED_VALUES.yer then 1 else 2
 
-    if average >= Visio.Algorithms.HIGH_THRESHOLD / divisor
+    if results.length == 0 and counts[Visio.Algorithms.STATUS.missing] > 0
+      average = 0
+      category = Visio.Algorithms.STATUS.missing
+    else if average >= Visio.Algorithms.HIGH_THRESHOLD / divisor
       category = Visio.Algorithms.ALGO_RESULTS.high
     else if average >= Visio.Algorithms.MEDIUM_THRESHOLD / divisor
       category = Visio.Algorithms.ALGO_RESULTS.medium
