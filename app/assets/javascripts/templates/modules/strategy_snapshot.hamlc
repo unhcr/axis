@@ -77,6 +77,10 @@
       .row
       - _.each context.barFigureData, (d) ->
         .col-md-4{ :class => "#{d.figure.name}-figure-#{context.cid} bar-figure" }
+      .row
+      - _.each context.barFigureData, (d) ->
+        .col-md-4
+          = d.title
 
 .actions
 

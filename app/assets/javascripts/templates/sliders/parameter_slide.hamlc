@@ -20,6 +20,9 @@
 
 - _.each context.barFigureData, (d) ->
   .row
+    .col-xs-12
+      = d.title
+  .row
     .col-xs-12{ :class => "#{d.figure.name}-figure-#{context.cid} bar-figure" }
 .row
   .col-xs-12.achievement-figure
