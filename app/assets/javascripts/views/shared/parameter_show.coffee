@@ -6,10 +6,21 @@ class Visio.Views.ParameterShowView extends Backbone.View
 
   template: HAML['shared/parameter_show']
 
+  barConfig:
+    width: 200
+    height: 80
+    orientation: 'left'
+    hasLabels: true
+    margin:
+      top: 2
+      bottom: 2
+      left: 30
+      right: 10
+
   initialize: (options) ->
     @idx = options.idx
     @filters = options.filters
-
+    @achievementFigure = new Visio.Figures.Pasy _.clone(@barConfig)
 
   render: ->
 
@@ -32,12 +43,23 @@ class Visio.Views.ParameterShowView extends Backbone.View
       filters: @filters
       achievement: achievement
 
-    @achievementFigure = new Visio.Figures.Circle
+    @achievementPercent = new Visio.Figures.Circle
       width: 20
       height: 20
       percent: achievement.result
       number: 0
 
 
-    @$el.find('.achievement-figure').html @achievementFigure.render().el
+    @$el.find('.achievement-percent').html @achievementPercent.render().el
+    @$el.find('.achievement-figure').html @achievementFigure.el
+    @drawAchievements()
     @
+
+  drawAchievements: =>
+    result = @model.strategyAchievement Visio.manager.year(), @filters
+    @achievementFigure.modelFn new Backbone.Model result
+    @achievementFigure.render()
+
+    @$el.find(".#{Visio.FigureTypes.PASY.name}-type-count-#{@cid}").text result.typeTotal
+    @$el.find(".#{Visio.FigureTypes.PASY.name}-selected-count-#{@cid}").text result.total
+
