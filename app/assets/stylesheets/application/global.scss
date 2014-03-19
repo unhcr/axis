@@ -1276,6 +1276,9 @@ a {
   top: 0;
   left: 0;
   right: 0;
+  @include transition-property(left);
+  @include transition-duration($very-fast-transition);
+  @include transition-timing-function(ease-in);
 }
 
 .module:before {
@@ -1338,6 +1341,10 @@ a {
 
 .shift {
   left: $navigation-width;
+
+  .fixed-top {
+    left: $navigation-width + 15px;
+  }
 }
 
 .actions {
