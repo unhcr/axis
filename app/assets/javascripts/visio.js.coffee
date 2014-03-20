@@ -52,7 +52,7 @@ window.Visio =
     # Indicators Single Year
     ISY:
       className: 'Isy'
-      human: 'Indicators: Single Year'
+      human: 'Indicators'
       name: 'isy'
     AXIS:
       className: 'Axis'

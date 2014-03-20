@@ -26,10 +26,11 @@ class Visio.Views.IsyTooltip extends Visio.Views.D3Tooltip
 
   render: ->
     values = [
-      { value: 'comp_target', human: 'TARGET' },
-      { value: 'yer', human: 'YER' },
-      { value: 'myr', human: 'MYR' },
-      { value: 'baseline', human: 'BASELINE' },
+      { value: Visio.Algorithms.GOAL_TYPES.target, human: 'TARGET' },
+      { value: Visio.Algorithms.GOAL_TYPES.compTarget, human: 'COMP TARGET' },
+      { value: Visio.Algorithms.REPORTED_VALUES.yer, human: 'YER' },
+      { value: Visio.Algorithms.REPORTED_VALUES.myr, human: 'MYR' },
+      { value: Visio.Algorithms.REPORTED_VALUES.baseline, human: 'BASELINE' },
     ]
     values.push { value: 'standard', human: 'STANDARD' } if @model.get 'standard'
 
