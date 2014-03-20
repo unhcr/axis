@@ -7,6 +7,7 @@ class StrategiesControllerTest < ActionController::TestCase
       :name => 'ben',
       :description => 'rudolph',
       :operations => Operation.all.as_json,
+      :ppgs => Ppg.all.as_json,
       :strategy_objectives => [
         {
           :name => 'lisa',
@@ -28,6 +29,7 @@ class StrategiesControllerTest < ActionController::TestCase
     s = Strategy.find(json["strategy"]["id"])
 
     assert_equal Operation.all.count, s.operations.count
+    assert_equal Ppg.all.count, s.ppgs.count
     assert_equal Goal.all.count, s.goals.count
     assert_equal Output.all.count, s.outputs.count
     assert_equal ProblemObjective.all.count, s.problem_objectives.count
@@ -48,6 +50,7 @@ class StrategiesControllerTest < ActionController::TestCase
       :name => 'new',
       :description => 'new',
       :operations => Operation.all.as_json,
+      :ppgs => Ppg.all.as_json,
       :strategy_objectives => [
         {
           :name => 'lisa',
@@ -79,6 +82,7 @@ class StrategiesControllerTest < ActionController::TestCase
 
     assert_equal 2, s.strategy_objectives.count
     assert_equal Operation.all.count, s.operations.count
+    assert_equal Ppg.all.count, s.ppgs.count
     assert_equal Goal.all.count, s.goals.count
     assert_equal Output.all.count, s.outputs.count
     assert_equal ProblemObjective.all.count, s.problem_objectives.count
