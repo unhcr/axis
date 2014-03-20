@@ -141,7 +141,6 @@ class Visio.Views.Dashboard extends Backbone.View
 
       to = @[keyFigure.fn]()
 
-      console.log @isPdf
       speed = if @isPdf then 1 else Visio.Durations.FAST
 
       $keyFigure.countTo

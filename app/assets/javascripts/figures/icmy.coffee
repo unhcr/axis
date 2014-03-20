@@ -89,11 +89,11 @@ class Visio.Figures.Icmy extends Visio.Figures.Base
 
     @
 
-  mapFn: (arr, idx, memo) =>
-    _.each arr, (d) ->
+  mapFn: (lineData, idx, memo) =>
+    _.each lineData, (d) ->
       d.amount /= memo["amount#{d.year}"]
       d.amount = 0 if _.isNaN d.amount
-    arr
+    lineData
 
   reduceFn: (memo, model) =>
     filters = new Visio.Collections.FigureFilter [{
@@ -104,6 +104,8 @@ class Visio.Figures.Icmy extends Visio.Figures.Base
 
     _.each Visio.manager.get('yearList'), (year) ->
 
+      return if year + 1 > (new Date()).getFullYear()
+
       situationAnalysis = model.selectedSituationAnalysis year, filters
 
 
@@ -113,12 +115,12 @@ class Visio.Figures.Icmy extends Visio.Figures.Base
       memo["amount#{year}"] += situationAnalysis.total
 
       for category, count of situationAnalysis.counts
-        arr = _.find memo, (d) -> d.category == category
+        lineData = _.find memo, (d) -> d.category == category
 
         # Keeps track of total in that category
-        arr.amount += count
+        lineData.amount += count
 
-        datum = _.findWhere arr, { year: year, category: category }
+        datum = _.findWhere lineData, { year: year, category: category }
         found = datum?
 
         datum or= { amount: 0, year: year, category: category }
@@ -126,8 +128,7 @@ class Visio.Figures.Icmy extends Visio.Figures.Base
         # Keeps track of total in that year for that category
         datum.amount += count
 
-        arr.push datum unless found
-
+        lineData.push datum unless found
 
     return memo
 
@@ -141,10 +142,10 @@ class Visio.Figures.Icmy extends Visio.Figures.Base
 
     memo = []
     _.each categories, (category) ->
-      arr = []
-      arr.category = category
-      arr.amount = 0
-      memo.push arr
+      lineData = []
+      lineData.category = category
+      lineData.amount = 0
+      memo.push lineData
 
     _.chain(collection.models).reduce(@reduceFn, memo).map(@mapFn).value()
 
