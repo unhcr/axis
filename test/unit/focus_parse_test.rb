@@ -231,8 +231,9 @@ class FocusParseTest < ActiveSupport::TestCase
     assert_equal COUNTS[:outputs], operation.outputs.count, "Operation's outputs count"
     assert_equal COUNTS[:outputs], plan.outputs.count, "Plan's outputs count"
     assert_equal COUNTS[:output_instances], Instance.count
-    require 'pry'; binding.pry
     assert Instance.first.id.is_a? String
+    assert Instance.first.id.length > 0
+
     Output.all.each do |output|
       assert output.indicators.length >= 0
       assert output.indicators.length <= Indicator.count

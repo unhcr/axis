@@ -167,13 +167,10 @@ module FocusParse
 
 
               instance_id = xml_output.attribute('ID').value
-              if not Instance.exists? instance_id and not instance_id.nil?
-                instance = Instance.create()
-                instance.id = instance_id
-                instance.save
-                output.instances << instance
-                output.save
-              end
+              (instance = Instance.find_or_initialize_by_id(:id => instance_id).tap do |ins|
+                ins.id = instance_id
+              end).save
+              output.instances << instance unless output.instances.include? instance
 
               priority = xml_output.search('./priority').text
               missing_budget = false if priority != PRIORITIES[:aol]
