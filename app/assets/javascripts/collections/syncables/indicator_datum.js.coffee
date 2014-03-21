@@ -15,9 +15,12 @@ class Visio.Collections.IndicatorDatum extends Visio.Collections.Syncable
     counts[Visio.Algorithms.ALGO_RESULTS.ok] = 0
     counts[Visio.Algorithms.ALGO_RESULTS.fail] = 0
     counts[Visio.Algorithms.STATUS.missing] = 0
+    types = {}
 
     @each((datum) ->
       result = datum.situationAnalysis()
+
+      types[datum.get('indicator_id')] = true if result.include
 
       if result.include and result.status == Visio.Algorithms.STATUS.reported
         counts[result.category] += 1
@@ -25,6 +28,7 @@ class Visio.Collections.IndicatorDatum extends Visio.Collections.Syncable
         counts[result.status] += 1
     )
 
+    typeTotal = _.keys(types).length
     count = counts[Visio.Algorithms.ALGO_RESULTS.success] +
             counts[Visio.Algorithms.ALGO_RESULTS.ok] +
             counts[Visio.Algorithms.ALGO_RESULTS.fail] +
@@ -47,6 +51,7 @@ class Visio.Collections.IndicatorDatum extends Visio.Collections.Syncable
       category: category
       counts: counts
       total: count
+      typeTotal: typeTotal
     }
 
   outputAchievement: (reported) ->
@@ -75,10 +80,12 @@ class Visio.Collections.IndicatorDatum extends Visio.Collections.Syncable
       else if result.total and result.counts[Visio.Algorithms.STATUS.missing]
         counts[Visio.Algorithms.STATUS.missing] += 1
 
-    total = counts[Visio.Algorithms.ALGO_RESULTS.high] +
+    typeTotal = counts[Visio.Algorithms.ALGO_RESULTS.high] +
             counts[Visio.Algorithms.ALGO_RESULTS.medium] +
             counts[Visio.Algorithms.ALGO_RESULTS.low] +
             counts[Visio.Algorithms.STATUS.missing]
+
+    total = @where({ missing_budget: false }).length
 
     average = _.reduce(results,
       (sum, num) -> return sum + num,
@@ -96,6 +103,7 @@ class Visio.Collections.IndicatorDatum extends Visio.Collections.Syncable
     result =
       counts: counts
       total: total
+      typeTotal: typeTotal
       category: category
       result: average
 
@@ -113,8 +121,12 @@ class Visio.Collections.IndicatorDatum extends Visio.Collections.Syncable
     counts[Visio.Algorithms.ALGO_RESULTS.low] = 0
     counts[Visio.Algorithms.STATUS.missing] = 0
 
+    types = {}
+
     @each (datum) ->
       result = datum.achievement(reported)
+
+      types[datum.get('indicator_id')] = true if result.include
 
       if result.include and result.status == Visio.Algorithms.STATUS.reported
         results.push(result.result)
@@ -131,10 +143,14 @@ class Visio.Collections.IndicatorDatum extends Visio.Collections.Syncable
       (sum, num) -> return sum + num,
       0) / results.length
 
+    typeTotal = _.keys(types).length
 
     divisor = if reported == Visio.Algorithms.REPORTED_VALUES.yer then 1 else 2
 
-    if average >= Visio.Algorithms.HIGH_THRESHOLD / divisor
+    if results.length == 0 and counts[Visio.Algorithms.STATUS.missing] > 0
+      average = 0
+      category = Visio.Algorithms.STATUS.missing
+    else if average >= Visio.Algorithms.HIGH_THRESHOLD / divisor
       category = Visio.Algorithms.ALGO_RESULTS.high
     else if average >= Visio.Algorithms.MEDIUM_THRESHOLD / divisor
       category = Visio.Algorithms.ALGO_RESULTS.medium
@@ -146,6 +162,7 @@ class Visio.Collections.IndicatorDatum extends Visio.Collections.Syncable
       result: average
       counts: counts
       total: count
+      typeTotal: typeTotal
 
 
     result

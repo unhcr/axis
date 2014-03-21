@@ -5,7 +5,7 @@
       %h1 Create a PDF.
 
       - if context.model.figure_config.selectable
-        %h3 Select Indicators.
+        %h3 Select Data.
     %section.overlay-content.export-figure.row
       %figure
       - if context.model.figure_config.selectable

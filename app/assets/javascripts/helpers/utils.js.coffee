@@ -103,6 +103,14 @@ Visio.Utils.humanMetric = (metric) ->
     return 'Sub-standard'
   else if metric == Visio.Algorithms.STATUS.missing
     return 'Non-reported'
+  else if metric == Visio.Algorithms.ALGO_RESULTS.high
+    return 'Met Target'
+  else if metric == Visio.Algorithms.ALGO_RESULTS.medium
+    return 'Approaching Target'
+  else if metric == Visio.Algorithms.ALGO_RESULTS.low
+    return 'Below Target'
+  else if metric == Visio.Algorithms.STATUS.missing
+    return 'Not Reported'
   else
     return 'N/A'
 

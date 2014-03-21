@@ -38,7 +38,7 @@ class Visio.Models.Manager extends Backbone.Model
     'expenditures': new Visio.Collections.Expenditure()
     'strategies': new Visio.Collections.Strategy()
     'strategy_objectives': new Visio.Collections.StrategyObjective()
-    'date': new Date(2012, 1)
+    'date': new Date(2013, 1)
     'use_local_db': true
     'setup': false
     'db': null

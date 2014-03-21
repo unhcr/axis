@@ -28,14 +28,16 @@ class Visio.Views.IcmyShowView extends Visio.Views.AccordionShowView
 
     unless isRerender
       @$el.html @template( parameter: @model, figureId: @figure.figureId() )
-      @$el.find('.bmy-figure').html @figure.el
+      @$el.find('.icmy-figure').html @figure.el
       @$el.find('.header-buttons').append @filterBy.render().el
     @drawFigures()
     @
 
 
   drawFigures: ->
-    @figure.collectionFn @model.selectedIndicatorData(true)
+    parameters = new Visio.Collections[@model.name.className](@model)
+
+    @figure.collectionFn parameters
     @figure.render()
 
   removeInstances: =>

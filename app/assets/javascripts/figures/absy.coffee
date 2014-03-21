@@ -5,6 +5,9 @@ class Visio.Figures.Absy extends Visio.Figures.Base
   type: Visio.FigureTypes.ABSY
 
   initialize: (config) ->
+    values = {}
+    values[Visio.Scenarios.AOL] = false
+    values[Visio.Scenarios.OL] = true
     @filters = new Visio.Collections.FigureFilter([
       {
         id: 'budget_type'
@@ -14,7 +17,13 @@ class Visio.Figures.Absy extends Visio.Figures.Base
       {
         id: 'scenario'
         filterType: 'checkbox'
-        values: _.object(_.values(Visio.Scenarios), _.values(Visio.Scenarios).map(-> true))
+        values: values
+      },
+      {
+        id: 'is_performance'
+        filterType: 'radio'
+        values: { true: true, false: false }
+        human: { true: 'performance', false: 'impact' }
       },
       {
         id: 'achievement'
@@ -61,8 +70,8 @@ class Visio.Figures.Absy extends Visio.Figures.Base
     @info = null
     @voronoi = d3.geom.voronoi()
       .clipExtent([[0, 0], [@adjustedWidth, @adjustedHeight]])
-      .x((d) => @x(d.selectedAmount(false, @filters)))
-      .y((d) => @y(d.selectedAchievement(false, @filters).result))
+      .x((d) => @x(d.selectedAmount(Visio.manager.year(), @filters)))
+      .y((d) => @y(d.selectedAchievement(Visio.manager.year(), @filters).result))
 
     @g.append('g')
       .attr('class', 'y axis')
@@ -73,7 +82,7 @@ class Visio.Figures.Absy extends Visio.Figures.Base
         .attr("x", -@adjustedHeight / 2)
         .attr("dy", "-.21em")
         .style("text-anchor", "middle")
-        .text('Achievement (%)')
+        .text('Progress Towards Target (%)')
 
     @g.append('g')
       .attr('class', 'x axis')
@@ -87,7 +96,7 @@ class Visio.Figures.Absy extends Visio.Figures.Base
 
   render: ->
     filtered = @filtered @collection
-    maxAmount = d3.max filtered, (d) => d.selectedAmount(false, @filters)
+    maxAmount = d3.max filtered, (d) => d.selectedAmount(Visio.manager.year(), @filters)
 
     self = @
     if !@domain || @domain[1] < maxAmount || @domain[1] > 2 * maxAmount
@@ -124,9 +133,9 @@ class Visio.Figures.Absy extends Visio.Figures.Base
                 12
             )
             .attr('cy', (d) =>
-              return self.y(d.selectedAchievement(false, self.filters).result))
+              return self.y(d.selectedAchievement(Visio.manager.year(), self.filters).result))
             .attr('cx', (d) =>
-              return self.x(d.selectedAmount(false, self.filters)))
+              return self.x(d.selectedAmount(Visio.manager.year(), self.filters)))
 
           point.exit().transition().duration(Visio.Durations.FAST).attr('r', 0).remove()
 
@@ -139,8 +148,8 @@ class Visio.Figures.Absy extends Visio.Figures.Base
           if self.isExport or (self.isPdf and not _.isEmpty self.selected)
             labels.enter().append('text')
             labels.attr('class', 'label')
-              .attr('x', (d) => self.x(d.selectedAmount(false, self.filters)))
-              .attr('y', (d) => self.y(d.selectedAchievement(false, self.filters).result))
+              .attr('x', (d) => self.x(d.selectedAmount(Visio.manager.year(), self.filters)))
+              .attr('y', (d) => self.y(d.selectedAchievement(Visio.manager.year(), self.filters).result))
               .attr('dy', '.3em')
               .attr('text-anchor', 'middle')
               .text((d) ->
@@ -165,6 +174,7 @@ class Visio.Figures.Absy extends Visio.Figures.Base
           @entered = true
           @info or= new Visio.Views.BubbleInfoView({
             el: $('.info-container .bubble-info')
+            filters: @filters
           })
           # Hack for when we move from one to voronoi to another to which fires enter, enter, out in Chrome
           window.setTimeout(( -> @entered = false), 50)
@@ -206,7 +216,7 @@ class Visio.Figures.Absy extends Visio.Figures.Base
 
 
   filterFn: (d) ->
-    d.selectedAmount(false, @filters) && d.selectedAchievement(false, @filters).result >= 0
+    d.selectedAmount(Visio.manager.year(), @filters) && d.selectedAchievement(Visio.manager.year(), @filters).result >= 0
 
   filtered: (collection) => _.chain(collection.models).filter(@filterFn).value()
 

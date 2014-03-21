@@ -10,7 +10,7 @@ class Visio.Figures.Oasy extends Visio.Figures.Bar
   filtered: (model) ->
     counts = model.get('counts')
     for key, val of counts
-      counts[key] /= model.get 'total'
+      counts[key] /= model.get 'typeTotal'
       counts[key] = 0 if _.isNaN counts[key]
     return d3.map(counts).entries()
 

@@ -59,14 +59,14 @@ test 'output achievement collection', ->
   result = data.outputAchievement()
   console.log result
 
-  strictEqual result.total, 2
+  strictEqual result.typeTotal, 2
   strictEqual result.counts[Visio.Algorithms.ALGO_RESULTS.high], 1
   strictEqual result.counts[Visio.Algorithms.ALGO_RESULTS.medium], 1
   strictEqual result.category, Visio.Algorithms.ALGO_RESULTS.high
 
   data.get('high1').set 'myr', null
   result = data.outputAchievement()
-  strictEqual result.total, 2
+  strictEqual result.typeTotal, 2
   strictEqual result.counts[Visio.Algorithms.STATUS.missing], 1
   strictEqual result.counts[Visio.Algorithms.ALGO_RESULTS.medium], 1
   strictEqual result.category, Visio.Algorithms.ALGO_RESULTS.medium

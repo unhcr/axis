@@ -11,8 +11,6 @@ class Visio.Views.IsyShowView extends Visio.Views.AccordionShowView
     'MSTransitionEnd': 'onTransitionEnd'
     'webkitTransitionEnd': 'onTransitionEnd'
     'oTransitionEnd': 'onTransitionEnd'
-    'change .goal-type': 'onGoalTypeChange'
-    'change .is-performance': 'onIsPerformanceChange'
 
   initialize: (options) ->
     @config =
@@ -25,6 +23,7 @@ class Visio.Views.IsyShowView extends Visio.Views.AccordionShowView
       height: 300
 
     @isyFigure = new Visio.Figures.Isy @config
+    @filterBy = new Visio.Views.FilterBy({ figure: @isyFigure, })
 
   render: (isRerender) ->
     situationAnalysis = @model.selectedSituationAnalysis()
@@ -33,6 +32,7 @@ class Visio.Views.IsyShowView extends Visio.Views.AccordionShowView
       @$el.html @template({ parameter: @model, figureId: @isyFigure.figureId() })
 
       @$el.find('.indicator-bar-graph').html @isyFigure.el
+      @$el.find('.header-buttons').append @filterBy.render().el
 
     category = if situationAnalysis.total == 0 then 'white' else situationAnalysis.category
 
@@ -54,17 +54,6 @@ class Visio.Views.IsyShowView extends Visio.Views.AccordionShowView
     @drawFigures()
 
     @
-
-  onGoalTypeChange: (e) ->
-    $target = $(e.currentTarget)
-    if $target.is ':checked'
-      @isyFigure.goalTypeFn(Visio.Algorithms.GOAL_TYPES.target).render()
-    else
-      @isyFigure.goalTypeFn(Visio.Algorithms.GOAL_TYPES.standard).render()
-
-  onIsPerformanceChange: (e) ->
-    $target = $(e.currentTarget)
-    @isyFigure.isPerformanceFn($target.is(':checked')).render()
 
   drawFigures: ->
     @isyFigure.collectionFn @model.selectedIndicatorData()

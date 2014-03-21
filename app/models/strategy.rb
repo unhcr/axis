@@ -74,6 +74,7 @@ class Strategy < ActiveRecord::Base
         json.strategy_objectives self.strategy_objectives
       end
       json.operations self.operations if options[:include][:operations]
+      json.ppgs self.ppgs if options[:include][:ppgs]
     end
   end
 
@@ -84,7 +85,7 @@ class Strategy < ActiveRecord::Base
     self.plans = Plan.where(:operation_id => self.operation_ids) if strategy_json[:operations]
 
     # Load all related ppgs
-    self.ppgs = Ppg.find((self.plans.map &:ppg_ids).flatten.uniq)
+    self.ppg_ids = strategy_json[:ppgs].map { |ppg| ppg['id'] } if strategy_json[:ppgs]
 
     strategy_objective_ids = (strategy_json[:strategy_objectives] || [])
       .select { |json| json['id'].present? }

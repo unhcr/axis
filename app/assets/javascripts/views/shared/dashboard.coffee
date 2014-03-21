@@ -2,10 +2,17 @@
 class Visio.Views.Dashboard extends Backbone.View
 
   criticalities: [
-    Visio.Algorithms.ALGO_RESULTS.success,
-    Visio.Algorithms.ALGO_RESULTS.ok,
-    Visio.Algorithms.ALGO_RESULTS.fail,
-    Visio.Algorithms.STATUS.missing,
+    { criticality: Visio.Algorithms.ALGO_RESULTS.success, human: 'Acceptable' }
+    { criticality: Visio.Algorithms.ALGO_RESULTS.ok, human: 'Critical' }
+    { criticality: Visio.Algorithms.ALGO_RESULTS.fail, human: 'Sub-Stanford' }
+    { criticality: Visio.Algorithms.STATUS.missing, human: 'Not-Reported' }
+  ]
+
+  thresholds: [
+    { threshold: Visio.Algorithms.ALGO_RESULTS.high, human: 'Met Target (Above 80%)' }
+    { threshold: Visio.Algorithms.ALGO_RESULTS.medium, human: 'Approaching Target (Above 60%)' }
+    { threshold: Visio.Algorithms.ALGO_RESULTS.low, human: 'Below Target (Below 60% of target)' }
+    { threshold: Visio.Algorithms.STATUS.missing, human: 'Not-Reported' }
   ]
 
   keyFigures: [
@@ -17,16 +24,16 @@ class Visio.Views.Dashboard extends Backbone.View
 
   barFigureData: [
     {
-      fn: 'drawOutputAchievements', figure: Visio.FigureTypes.OASY, title: 'Outputs.',
-      description: 'Achievement of Target'
+      fn: 'drawOutputAchievements', figure: Visio.FigureTypes.OASY, title: 'Output Achievements',
+      description: 'Achievement of Target', unit: 'Outputs', short: 'Outputs'
     },
     {
-      fn: 'drawAchievements', figure: Visio.FigureTypes.PASY, title: 'Impact Indicators.',
-      description: 'Achievement of Standard'
+      fn: 'drawAchievements', figure: Visio.FigureTypes.PASY, title: 'Impact Achievements',
+      description: 'Achievement of Target', unit: 'Indicators', short: 'Impact'
     },
     {
-      fn: 'drawCriticalities', figure: Visio.FigureTypes.ICSY, title: 'Impact Criticality.',
-      description: 'Achievement of Standard'
+      fn: 'drawCriticalities', figure: Visio.FigureTypes.ICSY, title: 'Impact Criticality',
+      description: 'Achievement of Standard', unit: 'Indicators', short: 'Criticality'
     }
   ]
 
@@ -47,11 +54,14 @@ class Visio.Views.Dashboard extends Backbone.View
     else if options.filters instanceof Visio.Collections.FigureFilter
       @filters = options.filters
     else
+      values = {}
+      values[Visio.Scenarios.AOL] = false
+      values[Visio.Scenarios.OL] = true
       @filters = new Visio.Collections.FigureFilter(
         [{
           id: 'scenario'
           filterType: 'checkbox'
-          values: _.object(_.values(Visio.Scenarios), _.values(Visio.Scenarios).map(-> true))
+          values: values
         }] )
 
     @barFigures = {}
@@ -79,10 +89,10 @@ class Visio.Views.Dashboard extends Backbone.View
     @parameter.strategyIndicatorData().length
 
   budget: =>
-    @parameter.strategyBudget(false, @filters)
+    @parameter.strategyBudget(Visio.manager.year(), @filters)
 
   expenditure: =>
-    @parameter.strategyExpenditure(false, @filters)
+    @parameter.strategyExpenditure(Visio.manager.year(), @filters)
 
   spent: =>
     spent = @expenditure() / @budget()
@@ -97,8 +107,10 @@ class Visio.Views.Dashboard extends Backbone.View
       @$el.html @template
         parameter: @parameter
         criticalities: @criticalities
+        thresholds: @thresholds
         keyFigures: @keyFigures
         barFigureData: @barFigureData
+        selectedBarFigure: @selectedBarFigure
         category: category
         idx: @idx
         labelPrefix: @labelPrefix()
@@ -133,10 +145,12 @@ class Visio.Views.Dashboard extends Backbone.View
 
       to = @[keyFigure.fn]()
 
+      speed = if @isPdf then 1 else Visio.Durations.FAST
+
       $keyFigure.countTo
         from: from
         to: to
-        speed: Visio.Durations.FAST
+        speed: speed
         formatter: keyFigure.formatter
       if keyFigure.fn is 'budget' or
          keyFigure.fn is 'expenditure' or
@@ -158,7 +172,7 @@ class Visio.Views.Dashboard extends Backbone.View
         filterType: 'radio'
         values: { true: false, false: true }
       }]
-    result = @parameter.strategyAchievement false, filters
+    result = @parameter.strategyAchievement Visio.manager.year(), filters
     @barFigures[Visio.FigureTypes.PASY.name].modelFn new Backbone.Model result
     @barFigures[Visio.FigureTypes.PASY.name].render()
 
@@ -171,7 +185,7 @@ class Visio.Views.Dashboard extends Backbone.View
         filterType: 'radio'
         values: { true: true, false: false }
       }]
-    result = @parameter.strategyOutputAchievement false, filters
+    result = @parameter.strategyOutputAchievement Visio.manager.year(), filters
     @barFigures[Visio.FigureTypes.OASY.name].modelFn new Backbone.Model result
     @barFigures[Visio.FigureTypes.OASY.name].render()
 

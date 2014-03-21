@@ -20,13 +20,13 @@ module Visio
     OpenURI::Buffer.const_set 'StringMax', 0
 
     require 'shrimp'
-    config.middleware.use Shrimp::Middleware, :cache_ttl => 0, :out_path => "#{Rails.root}/public/reports/pdf", :polling_interval => 3
+    config.middleware.use Shrimp::Middleware, :cache_ttl => 0, :out_path => "#{Rails.root}/public/reports/pdf", :polling_interval => 4
 
     Shrimp.configure do |config|
       config.viewport_width = 896
       config.viewport_height = 1270
       config.margin = '0cm'
-      config.rendering_time = 6000
+      config.rendering_time = 7000
       config.logfile = '~/access.log'
     end
 

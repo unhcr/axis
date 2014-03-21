@@ -26,6 +26,13 @@ class Visio.Models.Strategy extends Visio.Models.Syncable
       collection: -> new Visio.Collections.Operation()
     },
     {
+      name: 'ppgs',
+      human: 'PPGs',
+      formElement: 'checkboxes',
+      type: 'collection',
+      collection: -> new Visio.Collections.Ppg()
+    },
+    {
       name: 'strategy_objectives',
       human: 'Strategy Objectives',
       formElement: 'list',
@@ -53,6 +60,7 @@ class Visio.Models.Strategy extends Visio.Models.Syncable
   initialize: (options) ->
     options or= {}
     @set('operations', new Visio.Collections.Operation((options.operations || [])))
+    @set('ppgs', new Visio.Collections.Ppg((options.ppgs || [])))
     @set('strategy_objectives', new Visio.Collections.StrategyObjective((options.strategy_objectives || [])))
 
     # Initialize helper functions

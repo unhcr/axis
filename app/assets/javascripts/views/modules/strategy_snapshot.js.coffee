@@ -6,16 +6,26 @@ class Visio.Views.StrategySnapshotView extends Visio.Views.Dashboard
 
   initialize: (options) ->
     @isPdf = options.isPdf
+    @barConfig.orientation = 'bottom'
+    @barConfig.width = 82
+    @barConfig.height = 380
+    @barConfig.margin.bottom = 0
+    axisHeight = 380
     if options.isPdf
       @template = HAML['pdf/strategy_snapshot']
-      @barConfig.width = 82
       @barConfig.height = 340
-      @barConfig.orientation = 'bottom'
       @barConfig.hasLabels = true
+      axisHeight = 340
 
+    @axis = new Visio.Figures.Axis
+      margin:
+        top: 10
+        bottom: 10
+        left: 40
+      width: 50
+      height: axisHeight
 
     super options
-
 
     @collection or= Visio.manager.strategy()[Visio.manager.get('aggregation_type')]()
     @parameter = @collection
@@ -27,8 +37,6 @@ class Visio.Views.StrategySnapshotView extends Visio.Views.Dashboard
       filters: @filters
       collection: @collection
       isPdf: @isPdf
-
-
 
   title: 'Overview'
 
@@ -51,10 +59,10 @@ class Visio.Views.StrategySnapshotView extends Visio.Views.Dashboard
     super isRerender
 
     unless isRerender
-
       @$el.find('.header-buttons').append (new Visio.Views.FilterBy({ figure: @ })).render().el
       @$el.find('.target-parameters').html @parameterSlider?.render().el
       @$el.find('.actions').html @actionSlider?.render().el
+      @$el.find('.bar-axis').html @axis?.render().el
       @parameterSlider?.delegateEvents()
       @actionSlider?.delegateEvents()
 
@@ -62,7 +70,6 @@ class Visio.Views.StrategySnapshotView extends Visio.Views.Dashboard
       @parameterSlider.drawFigures()
     if @actionSlider?
       @actionSlider.drawFigures()
-
 
     @
 

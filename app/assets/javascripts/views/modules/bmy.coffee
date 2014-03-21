@@ -16,11 +16,11 @@ class Visio.Views.BmyView extends Visio.Views.AccordionIndexView
 
     @config =
       margin:
-        top: 10
+        top: 40
         bottom: 80
         left: 120
         right: 40
-      width: 650
+      width: 800
       height: 450
 
     @figure = new Visio.Figures.Bmy @config
@@ -39,7 +39,7 @@ class Visio.Views.BmyView extends Visio.Views.AccordionIndexView
     data = []
     parameters = Visio.manager.selected(Visio.manager.get('aggregation_type')).models
     _.each parameters, (model) ->
-      data = data.concat model.selectedBudgetData(true).models
+      data = data.concat model.selectedBudgetData(Visio.Constants.ANY_YEAR).models
 
     @figure.collectionFn new Visio.Collections.Budget(data)
     @figure.render()
