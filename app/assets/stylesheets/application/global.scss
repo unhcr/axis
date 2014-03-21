@@ -1639,17 +1639,50 @@ a {
     border-bottom: 1px $dark-gray solid;
   }
 
-  .bmy-tooltip .budget-type {
+  .icmy-tooltip .category, .bmy-tooltip .budget-type {
     border: 1px solid $black;
     margin: 5px 0;
     background-color: white;
     padding: 0 12px;
   }
-  .bmy-tooltip {
+  .bmy-tooltip, .icmy-tooltip {
     .title {
       margin-top: 4px;
       padding-top: 8px;
     }
+
+    .ok {
+      color: $ok;
+      .title { border-top: 2px solid $ok }
+
+    }
+    .fail {
+      color: $fail;
+      .title { border-top: 2px solid $fail }
+
+    }
+    .missing {
+      color: $missing;
+      .title { border-top: 2px solid $missing }
+
+    }
+    .success {
+      color: $success;
+      .title { border-top: 2px solid $success }
+    }
+    .high {
+      color: $high;
+      .title { border-top: 2px solid $high }
+    }
+    .medium {
+      color: $medium;
+      .title { border-top: 2px solid $medium }
+    }
+    .low {
+      color: $low;
+      .title { border-top: 2px solid $low }
+    }
+
 
     .ADMIN {
       color: $admin;

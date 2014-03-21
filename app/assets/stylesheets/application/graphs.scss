@@ -122,6 +122,32 @@ line {
 }
 
 .svg-icmy-figure {
+  .point {
+    fill: white;
+    stroke-width: 2px;
+  }
+  .point.ok {
+    stroke: $ok;
+  }
+  .point.success {
+    stroke: $success;
+  }
+  .point.fail {
+    stroke: $fail;
+  }
+  .point.missing {
+    stroke: $missing;
+  }
+  .point.high {
+    stroke: $high;
+  }
+  .point.medium {
+    stroke: $medium;
+  }
+  .point.low {
+    stroke: $low;
+  }
+
   .ic-line {
     stroke-width: 4px;
   }

@@ -6,10 +6,35 @@ class Visio.Figures.Icmy extends Visio.Figures.Base
   type: Visio.FigureTypes.ICMY
 
   initialize: (config) ->
+    values = {}
+    values['selectedSituationAnalysis'] = true
+    values['selectedAchievement'] = false
+    values['selectedOutputAchievement'] = false
     @filters = new Visio.Collections.FigureFilter([
+      {
+        id: 'algorithm'
+        filterType: 'radio'
+        values: values
+        human: {
+          'selectedSituationAnalysis': 'Criticality',
+          'selectedAchievement': 'Achievement'
+          'selectedOutputAchievement': 'Output' }
+        callback: (name, attr) =>
+          @algorithm = name
+          @render()
+      },
     ])
 
+    config.algorithm or= 'selectedSituationAnalysis'
     super config
+    self = @
+
+    @tooltip = null
+    @svg.on('mouseleave', () ->
+      self.tooltip.close() if self.tooltip?
+      self.tooltip = null
+      d3.select(@).selectAll('.point').transition().duration(Visio.Durations.VERY_FAST).attr('r', 0).remove()
+    )
 
     @x = d3.scale.ordinal()
       .rangePoints([0, @adjustedWidth])
@@ -73,6 +98,30 @@ class Visio.Figures.Icmy extends Visio.Figures.Base
     voronoi.enter().append('path')
     voronoi.attr('class', (d, i) -> 'voronoi')
       .attr('d', @polygon)
+      .on('mouseenter', (d) =>
+        pointData = _.chain(filtered).flatten().where({ year: d.point.year }).value()
+        points = @g.selectAll('.point').data pointData
+        points.enter().append 'circle'
+        points
+          .attr('r', 5)
+          .attr('class', (d) -> ['point', d.category].join(' '))
+        points.transition().duration(Visio.Durations.VERY_FAST).ease('ease-in')
+          .attr('cx', (d) => @x(d.year))
+          .attr('cy', (d) => @y(d.amount))
+        points.exit().remove()
+
+
+        if @tooltip?
+          @tooltip.year = d.point.year
+          @tooltip.collection = new Backbone.Collection(pointData)
+          @tooltip.render(true)
+        else
+          @tooltip = new Visio.Views.IcmyTooltip
+            figure: @
+            year: d.point.year
+            collection: new Backbone.Collection(pointData)
+
+      )
 
     voronoi.exit().remove()
 
@@ -102,20 +151,25 @@ class Visio.Figures.Icmy extends Visio.Figures.Base
         values: { true: false, false: true }
       }]
 
-    _.each Visio.manager.get('yearList'), (year) ->
+    _.each Visio.manager.get('yearList'), (year) =>
 
       return if year + 1 > (new Date()).getFullYear()
 
-      situationAnalysis = model.selectedSituationAnalysis year, filters
+      result = model[@algorithm] year, filters
 
 
 
       # Keeps track of total in that year
       memo["amount#{year}"] = 0 unless memo["amount#{year}"]?
-      memo["amount#{year}"] += situationAnalysis.total
+      memo["amount#{year}"] += result.total
 
-      for category, count of situationAnalysis.counts
+      for category, count of result.counts
         lineData = _.find memo, (d) -> d.category == category
+        unless lineData?
+          lineData = []
+          lineData.amount = 0
+          lineData.category = category
+          memo.push lineData
 
         # Keeps track of total in that category
         lineData.amount += count
@@ -133,20 +187,7 @@ class Visio.Figures.Icmy extends Visio.Figures.Base
     return memo
 
   filtered: (collection) =>
-    categories = [
-      Visio.Algorithms.ALGO_RESULTS.success,
-      Visio.Algorithms.ALGO_RESULTS.ok,
-      Visio.Algorithms.ALGO_RESULTS.fail,
-      Visio.Algorithms.STATUS.missing,
-    ]
-
     memo = []
-    _.each categories, (category) ->
-      lineData = []
-      lineData.category = category
-      lineData.amount = 0
-      memo.push lineData
-
     _.chain(collection.models).reduce(@reduceFn, memo).map(@mapFn).value()
 
   polygon: (d) ->

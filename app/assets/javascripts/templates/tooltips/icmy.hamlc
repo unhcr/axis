@@ -1,0 +1,11 @@
+.container.icmy-tooltip.full-width.zero-padding
+  - _.each context.sortedModels, (model) ->
+    %section{ :class => "row #{model.get('category')} category" }
+      %div.title
+        = model.get('category').toUpperCase()
+      %div.ui-small-header
+        = Visio.Formats.PERCENT(model.get('amount'))
+
+
+
+
