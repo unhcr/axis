@@ -1,43 +1,47 @@
-.row
-  - if context.parameter.get('country')?
-    .country-icon.col-md-4
-      %img{
-        :width => "55",
-        :height => "55",
-        :src => "/assets/countries/#{context.parameter.get('country').iso2.toLowerCase()}/128.png" }
-    .col-md-8
+%header
+  .row
+    .country-icon.col-md-10
+      - if context.parameter.get('country')?
+        %img{
+          :width => "60",
+          :height => "60",
+          :src => "/assets/countries/#{context.parameter.get('country').iso2.toLowerCase()}/128.png" }
+      .parameter-name
+        = context.parameter.toString()
+    .col-md-2
       .pin.pin-medium.pull-right{ :class => "pin-#{context.category}" }
         .pin-tip
         .pin-body
-  - else
-    .col-md-offset-4.col-md-8
-      .pin.pin-medium.pull-right{ :class => "pin-#{context.category}" }
-        .pin-tip
-        .pin-body
-.row
-  .parameter-name.col-md-12
-    = context.parameter.toString()
 
-- _.each context.barFigureData, (d) ->
-  .row
-    .col-xs-12
-      = d.title
-  .row
-    .col-xs-12{ :class => "#{d.figure.name}-figure-#{context.cid} bar-figure" }
-.row
-  .col-xs-12.achievement-figure
-.row
-  .col-xs-12.output-achievement-figure
-
-.row.divider-light-gray
 .row
   - list = ['budget', 'spent']
   - _.each list, (keyFigure) ->
     - c = _.findWhere context.keyFigures, { fn: keyFigure }
-    .col-md-6{ :class => "keyFigure #{c.fn}-#{context.cid}" }
+    .col-md-4{ :class => "keyFigure #{c.fn}-#{context.cid}" }
       .ui-small-number.number
         0
       %div
         %span.label-prefix
           = context.labelPrefix + ' '
         = c.human
+
+.row
+  .col-xs-12
+    .row.tabs
+      - _.each context.barFigureData, (d) ->
+        .ui-tab-radio.col-md-4.sides-flush
+          %input{ :id => "#{d.title}-#{context.parameter.id}",
+            :name => context.parameter.id,
+            :checked => context.selectedBarFigure == d.figure,
+            :value => d.figure.name,
+            :type => 'radio' }
+          %label{ :for => "#{d.title}-#{context.parameter.id}" }
+            = d.short
+- _.each context.barFigureData, (d) ->
+  .row
+    .col-xs-12{ :class => ["#{d.figure.name}-figure-#{context.cid}",
+        "bar-figure", ("gone" unless context.selectedBarFigure == d.figure)].join(' ') }
+.row
+  .col-xs-12.achievement-figure
+.row
+  .col-xs-12.output-achievement-figure

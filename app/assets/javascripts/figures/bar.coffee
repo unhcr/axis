@@ -13,21 +13,20 @@ class Visio.Figures.Bar extends Visio.Figures.Base
     @formatter or = Visio.Formats.PERCENT
 
     # fixed is the scale that scales the bars equally apart
-    @fixed = d3.scale.linear()
+    @fixed = d3.scale.ordinal()
     @zeroPadding = 3
+    @labelHeight = 18
 
     switch @orientation
       when 'left'
 
         @variable.range [0, @adjustedWidth - @zeroPadding - 1]
         @fixed
-          .domain([0, @adjustedHeight])
-          .range([@adjustedHeight, 0])
+          .rangeBands([@adjustedHeight, 0])
       when 'bottom'
         @variable.range [@adjustedHeight - @zeroPadding - 1, 0]
         @fixed
-          .domain([0, @adjustedWidth])
-          .range([0, @adjustedWidth])
+          .rangeBands([0, @adjustedWidth])
 
 
 
@@ -37,9 +36,15 @@ class Visio.Figures.Bar extends Visio.Figures.Base
     # Choose collection over model
     filtered = @filtered(@collection || @model)
 
+    @fixed.domain _.times(filtered.length, (n) -> n)
+
     @barWidth = switch @orientation
       when 'top', 'bottom' then @adjustedWidth / filtered.length
-      when 'right', 'left' then @adjustedHeight / filtered.length
+      when 'right', 'left'
+        if @hasLabels
+          (@adjustedHeight - (@labelHeight * filtered.length)) / filtered.length
+        else
+          @adjustedHeight / filtered.length
 
     @barWidth = 0 if _.isNaN @barWidth
 
@@ -56,13 +61,16 @@ class Visio.Figures.Bar extends Visio.Figures.Base
       when 'bottom'
         @bars.transition().duration(Visio.Durations.FAST)
           .attr('height', (d) => @variable(0) - @variable(d.value))
-          .attr('x', (d, i) => @fixed(i * @barWidth))
+          .attr('x', (d, i) => @fixed(i))
           .attr('y', (d) => @variable(d.value))
           .attr('width', @barWidth)
       when 'left'
         @bars.transition().duration(Visio.Durations.FAST)
           .attr('x', (d) => @variable(0) + @zeroPadding + 1)
-          .attr('y', (d, i) => @fixed(i * @barWidth) - @barWidth)
+          .attr('y', (d, i) =>
+            y = @fixed(i)
+            y += @labelHeight if @hasLabels
+            y)
           .attr('width', (d) => @variable(d.value))
           .attr('height', () => @barWidth)
 
@@ -77,14 +85,17 @@ class Visio.Figures.Bar extends Visio.Figures.Base
       when 'bottom'
         @zeroPad
           .attr('height', (d) => @zeroPadding - 1)
-          .attr('x', (d, i) => @fixed(i * @barWidth))
+          .attr('x', (d, i) => @fixed(i))
           .attr('y', (d) => @adjustedHeight - @zeroPadding)
           .attr('width', @barWidth)
           .attr('text-anchor', 'middle')
       when 'left'
         @zeroPad
           .attr('x', (d) => 0)
-          .attr('y', (d, i) => @fixed(i * @barWidth) - @barWidth)
+          .attr('y', (d, i) =>
+            y = @fixed(i)
+            y += @labelHeight if @hasLabels
+            y)
           .attr('width', (d) => @zeroPadding)
           .attr('height', () => @barWidth)
 
@@ -95,20 +106,25 @@ class Visio.Figures.Bar extends Visio.Figures.Base
       @labels.enter().append('text')
       @labels.attr('class', (d) ->
         ['label', d.key].join ' ')
-        .text (d) =>
-          @formatter(d.value)
 
       switch @orientation
         when 'left'
           @labels
-            .attr('x', (d) => @variable(d.value) + 11)
-            .attr('y', (d, i) => @fixed(i * @barWidth) - @barWidth)
+            .attr('x', (d) => )
+            .attr('y', (d, i) =>
+              y = @fixed(i) - @labelHeight
+              y += @labelHeight if @hasLabels
+              y)
             .attr('dy', '1em')
+            .text (d) =>
+                Visio.Utils.humanMetric(d.key) + ' ' + @formatter(d.value)
         when 'bottom'
           @labels
-            .attr('x', (d, i) => @fixed(i * @barWidth))
+            .attr('x', (d, i) => @fixed(i))
             .attr('y', (d) => @variable(d.value))
             .attr('dy', '-.3em')
             .attr('width', @barWidth)
+            .text (d) =>
+              @formatter(d.value)
 
     @

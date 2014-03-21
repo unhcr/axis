@@ -8,18 +8,22 @@ class Visio.Views.StrategySnapshotView extends Visio.Views.Dashboard
     @isPdf = options.isPdf
     @barConfig.orientation = 'bottom'
     @barConfig.width = 82
-    @barConfig.height = 150
+    @barConfig.height = 380
+    @barConfig.margin.bottom = 0
+    axisHeight = 380
     if options.isPdf
       @template = HAML['pdf/strategy_snapshot']
       @barConfig.height = 340
       @barConfig.hasLabels = true
-      @axis = new Visio.Figures.Axis
-        margin:
-          top: 10
-          bottom: 10
-          left: 40
-        width: 50
-        height: 340
+      axisHeight = 340
+
+    @axis = new Visio.Figures.Axis
+      margin:
+        top: 10
+        bottom: 10
+        left: 40
+      width: 50
+      height: axisHeight
 
     super options
 
@@ -55,7 +59,6 @@ class Visio.Views.StrategySnapshotView extends Visio.Views.Dashboard
     super isRerender
 
     unless isRerender
-
       @$el.find('.header-buttons').append (new Visio.Views.FilterBy({ figure: @ })).render().el
       @$el.find('.target-parameters').html @parameterSlider?.render().el
       @$el.find('.actions').html @actionSlider?.render().el

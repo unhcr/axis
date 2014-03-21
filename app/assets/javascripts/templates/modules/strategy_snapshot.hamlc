@@ -40,52 +40,54 @@
       .col-md-12
         .target-parameters.row
   .row.divider-light-gray
-  %section.row
+  %section.row.bottom-flush
     .col-md-12
-      %h3
-        Education Key Figures.
-    .row.center-text
-      - list = ['budget', 'spent']
-      - _.each list, (name) ->
-        - keyFigure = _.findWhere context.keyFigures, { fn: name }
-        .col-sm-3.col-sm-6{ :class => "keyFigure #{keyFigure.fn}-#{context.cid}" }
-          .ui-huge-number.number
-            0
-          %div
-            %span.label-prefix
-              = context.labelPrefix + ' '
-            = keyFigure.human
-          %span.ui-primary-soft.js-operation-name All&nbsp;Target&nbsp;Countries
+      .row
+        .col-md-12
+          %h3
+            Education Key Figures.
+      .row
+        .col-md-6
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+      .row
+        .col-md-3
+          - list = ['budget', 'spent']
+          - _.each list, (name) ->
+            - keyFigure = _.findWhere context.keyFigures, { fn: name }
+            .row
+              .col-sm-12{ :class => "keyFigure #{keyFigure.fn}-#{context.cid}" }
+                .ui-huge-number.number
+                  0
+                %div
+                  %span.label-prefix
+                    = context.labelPrefix + ' '
+                  = keyFigure.human
+                %span.ui-primary-soft.js-operation-name All&nbsp;Target&nbsp;Countries
+        .col-md-9
+          .row
+          - _.each context.barFigureData, (d, idx) ->
+            .col-md-4.snapshot-bar-figure-container
+              - if idx == 1
+                .bar-axis
+              %div{ :class => "#{d.figure.name}-figure-#{context.cid} bar-figure" }
 
   .row.divider-light-gray
   %section.row
-    .col-md-12
-      %h3
-        Impact Criticality.
-  .row
-    .col-md-4
-      The situation values range from:
-
-      %ul
-        %li 0.0
-        %li 0.5
-        %li 1.0
-
-      The more indicators in the green range, the higher the situation value. The situation value is calculated by adding the percentage of indicators in green and half the percentage of indicators in amber.
-
-    .col-md-8
-      .row
-      - _.each context.barFigureData, (d) ->
-        .col-md-4{ :class => "#{d.figure.name}-figure-#{context.cid} bar-figure" }
+    .col-md-9.col-md-offset-3
       .row
       - _.each context.barFigureData, (d) ->
         .col-md-4
+          %div
+            = d.title
+          %div
+            = d.description
           %div
             %span.ui-medium-number.number{ :class => "#{d.figure.name}-type-count-#{context.cid}" }
 
               0
             %span
-              = d.title
+              = d.unit
           %div
             %span.ui-medium-number.number{ :class => "#{d.figure.name}-selected-count-#{context.cid}" }
               0

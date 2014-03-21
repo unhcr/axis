@@ -24,16 +24,16 @@ class Visio.Views.Dashboard extends Backbone.View
 
   barFigureData: [
     {
-      fn: 'drawOutputAchievements', figure: Visio.FigureTypes.OASY, title: 'Outputs',
-      description: 'Achievement of Target'
+      fn: 'drawOutputAchievements', figure: Visio.FigureTypes.OASY, title: 'Output Achievements',
+      description: 'Achievement of Target', unit: 'Outputs', short: 'Outputs'
     },
     {
-      fn: 'drawAchievements', figure: Visio.FigureTypes.PASY, title: 'Impact Indicators',
-      description: 'Achievement of Standard'
+      fn: 'drawAchievements', figure: Visio.FigureTypes.PASY, title: 'Impact Achievements',
+      description: 'Achievement of Target', unit: 'Indicators', short: 'Impact'
     },
     {
       fn: 'drawCriticalities', figure: Visio.FigureTypes.ICSY, title: 'Impact Criticality',
-      description: 'Achievement of Standard'
+      description: 'Achievement of Standard', unit: 'Indicators', short: 'Criticality'
     }
   ]
 
@@ -110,6 +110,7 @@ class Visio.Views.Dashboard extends Backbone.View
         thresholds: @thresholds
         keyFigures: @keyFigures
         barFigureData: @barFigureData
+        selectedBarFigure: @selectedBarFigure
         category: category
         idx: @idx
         labelPrefix: @labelPrefix()
