@@ -54,11 +54,14 @@ class Visio.Views.Dashboard extends Backbone.View
     else if options.filters instanceof Visio.Collections.FigureFilter
       @filters = options.filters
     else
+      values = {}
+      values[Visio.Scenarios.AOL] = false
+      values[Visio.Scenarios.OL] = true
       @filters = new Visio.Collections.FigureFilter(
         [{
           id: 'scenario'
           filterType: 'checkbox'
-          values: _.object(_.values(Visio.Scenarios), _.values(Visio.Scenarios).map(-> true))
+          values: values
         }] )
 
     @barFigures = {}

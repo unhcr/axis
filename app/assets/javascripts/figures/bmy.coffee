@@ -6,6 +6,9 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
   type: Visio.FigureTypes.BMY
 
   initialize: (config) ->
+    values = {}
+    values[Visio.Scenarios.AOL] = false
+    values[Visio.Scenarios.OL] = true
     @filters = new Visio.Collections.FigureFilter([
       {
         id: 'budget_type'
@@ -15,7 +18,7 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
       {
         id: 'scenario'
         filterType: 'checkbox'
-        values: _.object(_.values(Visio.Scenarios), _.values(Visio.Scenarios).map(-> true))
+        values: values
       }
     ])
 

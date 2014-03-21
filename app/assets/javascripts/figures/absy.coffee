@@ -5,6 +5,9 @@ class Visio.Figures.Absy extends Visio.Figures.Base
   type: Visio.FigureTypes.ABSY
 
   initialize: (config) ->
+    values = {}
+    values[Visio.Scenarios.AOL] = false
+    values[Visio.Scenarios.OL] = true
     @filters = new Visio.Collections.FigureFilter([
       {
         id: 'budget_type'
@@ -14,7 +17,7 @@ class Visio.Figures.Absy extends Visio.Figures.Base
       {
         id: 'scenario'
         filterType: 'checkbox'
-        values: _.object(_.values(Visio.Scenarios), _.values(Visio.Scenarios).map(-> true))
+        values: values
       },
       {
         id: 'is_performance'
