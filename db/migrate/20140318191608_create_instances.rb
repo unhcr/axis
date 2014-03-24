@@ -1,6 +1,8 @@
 class CreateInstances < ActiveRecord::Migration
   def change
-    drop_table :instances
+    if table_exists?(:instances)
+      drop_table :instances
+    end
     create_table :instances, :id => false, :force => true do |t|
 
       t.timestamps
