@@ -18,4 +18,6 @@
                 :type => 'checkbox',
                 :id => "check_#{d.id}_#{p.hash.plural}" }
               %label{ :for => "check_#{d.id}_#{p.hash.plural}" }
+                - unless context.strategy.include(p.hash.singular, d.id)
+                  [NOT IN STRATEGY]
                 = d.toString()
