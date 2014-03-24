@@ -194,6 +194,10 @@ class Visio.Figures.Icmy extends Visio.Figures.Base
     return "M0 0" unless d? and d.length
     "M" + d.join("L") + "Z"
 
+  selectable: false
+
+  previewable: true
+
   select: (e, d, i) =>
     line = @g.select(".ic-line-#{d.category}")
     isActive = line.classed 'active'

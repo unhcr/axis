@@ -5,6 +5,7 @@ Visio.Mixins.Exportable =
   # selectable: false
   # attrConfig: []
   # hasAxis: false
+  # previewable: false
 
   config: ->
     config = {}
@@ -24,6 +25,7 @@ Visio.Mixins.Exportable =
       config.filters = @filters.toJSON()
     config.type = @type
     config.selectable = @selectable
+    config.previewable = @previewable
     config.viewLocation = @viewLocation
     config.pdfViewLocation = @pdfViewLocation
     config.setupFns = @setupFns

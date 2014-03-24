@@ -28,7 +28,7 @@ class Visio.Views.ExportModule extends Backbone.View
 
     @$el.html @template( model: @model.toJSON(), filtered: @filtered )
     @$el.find('.export-figure figure').html @figure.el
-    if @config.selectable
+    if @config.selectable or @config.previewable
       @figure.render()
     else
       @figure.$el.html @figure.type.human
