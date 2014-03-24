@@ -121,6 +121,17 @@ line {
   fill: transparent;
 }
 
+.svg-oasy-figure, .svg-pasy-figure, .svg-icsy-figure {
+  .label {
+    fill: $primary-soft;
+    font-weight: bold;
+
+    tspan {
+      fill: $orange;
+    }
+  }
+}
+
 .svg-icmy-figure {
   .point {
     fill: white;
@@ -155,6 +166,12 @@ line {
   .ic-line.active {
     stroke: red;
   }
+
+  .y.axis line {
+    stroke: $lighter-gray;
+    stroke-dasharray: 1;
+  }
+
 }
 
 .svg-isy-figure {

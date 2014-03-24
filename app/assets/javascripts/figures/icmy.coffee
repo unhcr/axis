@@ -68,6 +68,7 @@ class Visio.Figures.Icmy extends Visio.Figures.Base
       .innerTickSize(14)
       .tickFormat(Visio.Formats.PERCENT)
       .tickPadding(20)
+      .tickSize(-@adjustedWidth)
 
     @g.append('g')
       .attr('class', 'y axis')
@@ -134,7 +135,6 @@ class Visio.Figures.Icmy extends Visio.Figures.Base
       .transition()
       .duration(Visio.Durations.FAST)
       .call(@yAxis)
-      .attr('transform', 'translate(-20,0)')
 
     @
 

@@ -45,12 +45,16 @@ body.pdf {
     font-size: 14px;
   }
 
+
+  section {
+    @include section;
+  }
   article {
     @include article;
   }
 
   .parameter-show {
-    width: 435px;
+    width: 406px;
   }
 
   .parameter-slider {
@@ -113,9 +117,11 @@ body.pdf {
     font-weight: 200;
   }
 
-  header {
-    padding-top: 66px;
-    padding-bottom: 50px;
+  .pdf-strategy-snapshot {
+    header {
+      padding-top: 66px;
+      padding-bottom: 50px;
+    }
   }
 
   p {
@@ -216,17 +222,15 @@ body.pdf {
   }
 }
 
-/*
-
 .parameter-show:nth-of-type(2n+4) {
-  padding-left: $parameter-show-padding-horizontal
+  margin-left: 2px;
 }
 .parameter-show:nth-of-type(2n+3) {
-  padding-right: $parameter-show-padding-horizontal
+  margin-right: 2px;
 }
 .parameter-show:nth-of-type(-n+2) {
-  padding-left: $parameter-show-padding-horizontal
-}*/
+  margin-left: 2px;
+}
 
 .idx {
   @include number;

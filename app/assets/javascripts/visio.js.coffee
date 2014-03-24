@@ -20,7 +20,7 @@ window.Visio =
     ICSY:
       className: 'Icsy'
       human: 'Impact Criticality single year'
-      name: 'icmy'
+      name: 'icsy'
     # Performance Achievement Single Year
     PASY:
       className: 'Pasy'

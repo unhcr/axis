@@ -116,8 +116,10 @@ class Visio.Figures.Bar extends Visio.Figures.Base
               y += @labelHeight if @hasLabels
               y)
             .attr('dy', '1em')
-            .text (d) =>
-                Visio.Utils.humanMetric(d.key) + ' ' + @formatter(d.value)
+            .text((d) =>
+                Visio.Utils.humanMetric(d.key).toUpperCase() + ' ')
+              .append('tspan')
+              .text((d) => @formatter(d.value))
         when 'bottom'
           @labels
             .attr('x', (d, i) => @fixed(i))

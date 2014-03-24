@@ -1,9 +1,16 @@
 @mixin article {
-  width: 465px;
+  width: 445px;
   display: inline-block;
   position: relative;
-  padding-left: $parameter-show-padding-horizontal / 2;
-  padding-right: $parameter-show-padding-horizontal / 2;
+  margin-left: $parameter-show-padding-horizontal / 2;
+  margin-right: $parameter-show-padding-horizontal / 2;
+  border: 1px solid $primary;
+  padding-top: 0;
+}
+
+@mixin section {
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
 @mixin number {

@@ -76,7 +76,7 @@ class Visio.Views.ExportModule extends Backbone.View
           $.ajax
             url: @model.pdfUrl()
             statusCode: statusCodes
-        , wait * 7000
+        , wait * 6000
 
     formArray = @$el.find('form').serializeArray()
     _.each formArray, (formObj) => @model.set formObj.name, formObj.value

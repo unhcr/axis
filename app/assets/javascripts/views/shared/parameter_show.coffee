@@ -8,7 +8,7 @@ class Visio.Views.ParameterShowView extends Backbone.View
 
   barConfig:
     width: 200
-    height: 80
+    height: 110
     orientation: 'left'
     hasLabels: true
     margin:

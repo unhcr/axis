@@ -1,6 +1,6 @@
-.idx
-  = Visio.Constants.ALPHABET[context.idx]
-%section
+%header
+  .idx
+    = Visio.Constants.ALPHABET[context.idx]
 
   - if context.model.get('country')
     .row
@@ -12,7 +12,7 @@
             :src => "/assets/countries/#{context.model.get('country').iso2.toLowerCase()}/128.png" }
 
   .row.header
-    .col-sm-8
+    .col-sm-6
       %h5.ui-primary
         - if context.model.name == Visio.Parameters.OPERATIONS
           = context.model.toString().toUpperCase()
@@ -22,12 +22,13 @@
 %section
   .row
     .col-sm-8
-      .ui-big-number
+      .ui-big-number.ui-primary-light
         = context.achievement.total
-      - if context.filters.get('is_performance').filter('true')
-        = "Performance Indicators"
-      - else
-        = "Impact Indicators"
+      .bold
+        - if context.filters.get('is_performance').filter('true')
+          = "Performance Indicators"
+        - else
+          = "Impact Indicators"
     .col-sm-4.center-text
       .achievement-percent
       .top-flush
@@ -38,14 +39,25 @@
           Achievement
 
   .row
-    .col-sm-12.top-flush
-      .col-sm-11.divider-thick.divider-light-gray.col-sm-offset-1
+    .col-sm-12
+      .col-sm-12.top-flush.divider-light-gray
+
+  .row
+    .col-sm-12
+      .bold
+        Progress Towards Target.
 
   .row
     .col-md-12
       .achievement-figure
 
 %section
+  .row.divider-dotted-primary
+
+  .row
+    .col-sm-12
+      .bold
+        Budget Overview
   .row
     .col-sm-12
       - colSize = Math.floor 12 / context.cols.length

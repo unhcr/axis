@@ -1941,6 +1941,20 @@ a {
 }
 
 .parameter-show {
+  margin-top: 15px;;
+  margin-bottom: 15px;;
+  header {
+    @include section;
+    background-color: $off-white;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid $primary;
+    height: auto;
+  }
+
+  .idx {
+    margin: 0 auto;
+  }
 
   .divider-thick {
     padding-top: 4px;
@@ -2002,7 +2016,6 @@ a {
     margin: 0;
   }
   padding-top: 2 * $parameter-show-padding-vertical / 3;
-  margin-top: $parameter-show-padding-vertical / 2;
   padding-bottom: $parameter-show-padding-vertical;
 }
 
