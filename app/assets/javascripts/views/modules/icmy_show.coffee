@@ -30,7 +30,6 @@ class Visio.Views.IcmyShowView extends Visio.Views.AccordionShowView
       @$el.html @template( parameter: @model, figureId: @figure.figureId() )
       @$el.find('.icmy-figure').html @figure.el
       @$el.find('.header-buttons').append @filterBy.render().el
-    @drawFigures()
     @
 
 
