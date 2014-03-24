@@ -22,9 +22,10 @@ class Output < ActiveRecord::Base
   has_many :outputs_plans, :class_name     => 'OutputsPlans'
   has_many :plans, :uniq => true, :through => :outputs_plans
 
-
   has_many :indicator_data
   has_many :budgets
+
+  has_many :instances
 
 
   def to_jbuilder(options = {})
