@@ -119,6 +119,7 @@ class FocusParseTest < ActiveSupport::TestCase
     assert_equal COUNTS[:outputs], Output.count, "Output count"
     assert_equal COUNTS[:operations], Operation.count, "Operation count"
     assert_equal COUNTS[:budgets], Budget.count, "Budget count"
+    assert_equal COUNTS[:output_instances], Instance.count
 
     [Goal, RightsGroup, ProblemObjective, Indicator].each do |resource|
       models = resource.synced_models(timestamp)
