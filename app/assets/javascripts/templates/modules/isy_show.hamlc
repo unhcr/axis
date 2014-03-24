@@ -9,7 +9,6 @@
         = context.parameter.toString()
         .counts
     .row.data-container
-      .col-md-9.tabs
       %figure.indicator-bar-graph
 %aside.container.full-width.ui-primary-soft-theme.data-container
   .row
