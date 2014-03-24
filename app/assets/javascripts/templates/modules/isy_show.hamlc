@@ -10,11 +10,3 @@
         .counts
     .row.data-container
       %figure.indicator-bar-graph
-%aside.container.full-width.ui-primary-soft-theme.data-container
-  .row
-    .col-md-12.col-centered
-      .js-ppg-container{ :data => { :prefix => "PPG" } }
-      .js-goal-container{ :data => { :prefix => "Goal" } }
-      .divider-white
-      .bold Indicator
-      .js-indicator-container

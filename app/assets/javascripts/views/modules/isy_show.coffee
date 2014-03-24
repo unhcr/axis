@@ -6,7 +6,6 @@ class Visio.Views.IsyShowView extends Visio.Views.AccordionShowView
 
   events:
     'click .js-parameter': 'onClickParameter'
-    'mouseenter .box': 'onMouseenterBox'
     'transitionend': 'onTransitionEnd'
     'MSTransitionEnd': 'onTransitionEnd'
     'webkitTransitionEnd': 'onTransitionEnd'
@@ -56,13 +55,5 @@ class Visio.Views.IsyShowView extends Visio.Views.AccordionShowView
   drawFigures: ->
     @isyFigure.collectionFn @model.selectedIndicatorData()
     @isyFigure.render()
-
-  onMouseenterBox: (e) ->
-    d = d3.select(e.currentTarget).datum()
-
-    containerTypes = ['ppg', 'goal', 'indicator']
-    _.each containerTypes, (type) =>
-      @$el.find(".js-#{type}-container").text Visio.manager.get("#{type}s").get(d.get("#{type}_id"))
-
 
   removeInstances: =>
