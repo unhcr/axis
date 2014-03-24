@@ -7,6 +7,7 @@ class Visio.Views.NavigationView extends Backbone.View
 
   events:
     'click .open': 'onClickOpen'
+    'click .deselect': 'onDeselect'
     'change .visio-checkbox input': 'onChangeSelection'
 
   render: () ->
@@ -63,6 +64,15 @@ class Visio.Views.NavigationView extends Backbone.View
   onClickOpen: (e) ->
     type = $(e.currentTarget).attr('data-type')
     @open(type)
+
+  onDeselect: (e) ->
+    type = $(e.currentTarget).attr('data-type')
+    @$el.find(".#{type} input").prop 'checked', false
+
+    # Clear out any selection
+    Visio.manager.get('selected')[type] = {}
+
+    Visio.manager.trigger 'change:selected'
 
   open: (type) =>
     $opened = @$el.find('.ui-accordion-content.opened')

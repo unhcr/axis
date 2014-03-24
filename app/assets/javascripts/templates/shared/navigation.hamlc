@@ -9,6 +9,7 @@
         .ui-accordion-content{ :class => p.hash.plural,
                                :data => { :type => p.hash.plural } }
 
+          %a.deselect{ :data => { :type => p.hash.plural }} Deselect All
           - p.data.each (d) ->
             .visio-checkbox.visio-checkbox-yellow.ui-line-item-theme
               %input{
