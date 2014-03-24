@@ -10,6 +10,18 @@ class Visio.Figures.Absy extends Visio.Figures.Base
     values[Visio.Scenarios.OL] = true
     @filters = new Visio.Collections.FigureFilter([
       {
+        id: 'amount_type'
+        filterType: 'radio'
+        values: {
+          EXPENDITURES: false,
+          BUDGETS: true
+        }
+        human: { EXPENDITURES: 'Expenditure', BUDGETS: 'Budget' }
+        callback: (name, attr) ->
+          Visio.manager.set 'amount_type', Visio.Syncables[name]
+
+      }
+      {
         id: 'budget_type'
         filterType: 'checkbox'
         values: _.object(_.values(Visio.Budgets), _.values(Visio.Budgets).map(-> true))
@@ -92,7 +104,7 @@ class Visio.Figures.Absy extends Visio.Figures.Base
         .attr("x", @adjustedWidth / 2)
         .attr("dy", "-.21em")
         .style("text-anchor", "middle")
-        .text('Budget (Dollars)')
+        .text("#{Visio.manager.get('amount_type').human} (Dollars)")
 
   render: ->
     filtered = @filtered @collection
@@ -198,6 +210,9 @@ class Visio.Figures.Absy extends Visio.Figures.Base
       .delay(Visio.Durations.FAST)
       .duration(Visio.Durations.FAST)
       .call(@xAxis)
+
+    @g.select('.x.axis text')
+      .text("#{Visio.manager.get('amount_type').human} (Dollars)")
 
     @g.select('.y.axis')
       .transition()
