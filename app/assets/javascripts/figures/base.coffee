@@ -32,6 +32,7 @@ class Visio.Figures.Base extends Backbone.View
 
     @template = HAML["pdf/#{@type.name}"] if @isPdf
     @$el.html @template({ figure: @, model: @model, collection: @collection, isExport: @isExport, exportable: @exportable })
+    @template = HAML["pdf/figures/#{@type.name}"] if @isPdf
     @selection = d3.select @$el.find('figure')[0]
 
 
