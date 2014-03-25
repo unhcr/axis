@@ -25,3 +25,13 @@ class Visio.Models.FigureFilter extends Backbone.Model
         @get('callback') name, active if @get('callback')?
 
     @set 'values', _.clone(@originalValues)
+
+  active: ->
+    if @get('filterType') == 'radio'
+      for name, active of @get('values')
+        return name if active
+    else if @get('filterType') == 'checkbox'
+      actives = []
+      for name, active of @get('values')
+        actives.push name if active
+      return actives
