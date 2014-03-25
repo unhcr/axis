@@ -10,7 +10,11 @@ class Visio.Figures.Bar extends Visio.Figures.Base
 
     # variable is the scale that will scale the bars to different heights
     @variable = d3.scale.linear()
-    @formatter or = Visio.Formats.PERCENT
+
+    if @orientation == 'bottom'
+      @formatter or= Visio.Formats.PERCENT_NOSIGN
+    else
+      @formatter or= Visio.Formats.PERCENT
 
     # fixed is the scale that scales the bars equally apart
     @fixed = d3.scale.ordinal()
@@ -122,10 +126,11 @@ class Visio.Figures.Bar extends Visio.Figures.Base
               .text((d) => @formatter(d.value))
         when 'bottom'
           @labels
-            .attr('x', (d, i) => @fixed(i))
+            .attr('x', (d, i) => @fixed(i) + @barWidth / 2)
             .attr('y', (d) => @variable(d.value))
             .attr('dy', '-.3em')
             .attr('width', @barWidth)
+            .attr('text-anchor', 'middle')
             .text (d) =>
               @formatter(d.value)
 

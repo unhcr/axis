@@ -163,8 +163,8 @@ line {
     stroke-width: 4px;
   }
 
-  .ic-line.active {
-    stroke: red;
+  .x.axis .active {
+    fill: red;
   }
 
   .y.axis line {

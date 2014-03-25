@@ -15,7 +15,7 @@
           %div
             = "Select up 10 [something] to export. Simply click the checkboxes."
           %figcaption
-            - _.each context.filtered, (d, i) ->
+            - _.each context.selectableData, (d, i) ->
               .visio-checkbox.visio-checkbox-vertical
                 %input{
                   :id => "datum-#{i}",
@@ -23,7 +23,7 @@
                   :data => { :id => d.id },
                   :value => "#{i}"}
                 %label{:for => "datum-#{i}"}
-                  = Visio.Constants.ALPHABET[i]
+                  = context.selectableLabel d, i
     %form
       - if context.model.figure_config.hasAxis
         %section.export-axis

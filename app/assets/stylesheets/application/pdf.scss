@@ -207,7 +207,7 @@ body.pdf {
 
 }
 
-.pdf.absy {
+.pdf.absy, .pdf.icmy {
   figcaption {
     width: 435px;
     float: left;
@@ -219,6 +219,23 @@ body.pdf {
     height: 100%;
     width: 100%;
     border: 1px solid $primary-light;
+  }
+}
+
+.pdf.icmy {
+  article {
+    width: 380px;
+    border: none;
+    border-bottom: 1px dotted $primary;
+    margin-top: 15px;
+  }
+
+  .bar-figure-container, .bar-axis-container {
+    height: 176px;
+
+    svg {
+      vertical-align: bottom;
+    }
   }
 }
 

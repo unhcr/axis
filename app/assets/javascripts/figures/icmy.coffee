@@ -23,10 +23,25 @@ class Visio.Figures.Icmy extends Visio.Figures.Base
           @algorithm = name
           @render()
       },
+      {
+        id: 'is_performance'
+        filterType: 'radio'
+        values: { true: false, false: true }
+      }
     ])
 
     config.algorithm or= 'selectedSituationAnalysis'
-    super config
+    opts = {}
+    if config.isPdf
+      opts.keys = switch config.algorithm
+        when 'selectedOutputAchievement'
+          Visio.Algorithms.THRESHOLDS
+        when 'selectedAchievement'
+          Visio.Algorithms.THRESHOLDS
+        when 'selectedSituationAnalysis'
+          Visio.Algorithms.CRITICALITIES
+
+    super config, opts
     self = @
 
     @tooltip = null
@@ -73,12 +88,11 @@ class Visio.Figures.Icmy extends Visio.Figures.Base
     @g.append('g')
       .attr('class', 'y axis')
       .attr('transform', 'translate(0,0)')
-      .append("text")
 
     @g.append('g')
       .attr('class', 'x axis')
       .attr('transform', "translate(0,#{@adjustedHeight})")
-      .append("text")
+
 
 
   render: ->
@@ -99,7 +113,7 @@ class Visio.Figures.Icmy extends Visio.Figures.Base
     voronoi.enter().append('path')
     voronoi.attr('class', (d, i) -> 'voronoi')
       .attr('d', @polygon)
-      .on('mouseenter', (d) =>
+      .on 'mouseenter', (d) =>
         pointData = _.chain(filtered).flatten().where({ year: d.point.year }).value()
         points = @g.selectAll('.point').data pointData
         points.enter().append 'circle'
@@ -122,8 +136,6 @@ class Visio.Figures.Icmy extends Visio.Figures.Base
             year: d.point.year
             collection: new Backbone.Collection(pointData)
 
-      )
-
     voronoi.exit().remove()
 
     @g.select('.x.axis')
@@ -131,10 +143,21 @@ class Visio.Figures.Icmy extends Visio.Figures.Base
       .duration(Visio.Durations.FAST)
       .call(@xAxis)
 
+    @g.selectAll('.x.axis text')
+      .attr 'class', (d, i) =>
+        'label-' + @x.domain()[i]
+
     @g.select('.y.axis')
       .transition()
       .duration(Visio.Durations.FAST)
       .call(@yAxis)
+
+    if @isPdf
+      @legendView = new Visio.Figures.IcmyLegend
+        figure: @
+        collection: @collection
+        selected: @selected
+      @$el.find('.legend-container').html @legendView.render().el
 
     @
 
@@ -145,17 +168,12 @@ class Visio.Figures.Icmy extends Visio.Figures.Base
     lineData
 
   reduceFn: (memo, model) =>
-    filters = new Visio.Collections.FigureFilter [{
-        id: 'is_performance'
-        filterType: 'radio'
-        values: { true: false, false: true }
-      }]
 
     _.each Visio.manager.get('yearList'), (year) =>
 
       return if year + 1 > (new Date()).getFullYear()
 
-      result = model[@algorithm] year, filters
+      result = model[@algorithm] year, @filters
 
 
 
@@ -194,11 +212,17 @@ class Visio.Figures.Icmy extends Visio.Figures.Base
     return "M0 0" unless d? and d.length
     "M" + d.join("L") + "Z"
 
-  selectable: false
+  selectable: true
 
   previewable: true
 
+  selectableData: =>
+    (new Backbone.Collection(Visio.manager.get('yearList').map (year) -> { id: year })).models
+
+  selectableLabel: (d, i) =>
+    d.id
+
   select: (e, d, i) =>
-    line = @g.select(".ic-line-#{d.category}")
-    isActive = line.classed 'active'
-    line.classed 'active', not isActive
+    label = @g.select(".label-#{d.id}")
+    isActive = label.classed 'active'
+    label.classed 'active', not isActive
