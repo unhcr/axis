@@ -10,7 +10,7 @@ class Visio.Figures.Base extends Backbone.View
 
   hasAxis: true
 
-  initialize: (config) ->
+  initialize: (config, templateOpts) ->
 
     # default margin, config will override if applicable
     @margin =
@@ -30,9 +30,17 @@ class Visio.Figures.Base extends Backbone.View
     if config?.filters?
       @filters = new Visio.Collections.FigureFilter(config.filters)
 
-    @template = HAML["pdf/#{@type.name}"] if @isPdf
-    @$el.html @template({ figure: @, model: @model, collection: @collection, isExport: @isExport, exportable: @exportable })
     @template = HAML["pdf/figures/#{@type.name}"] if @isPdf
+
+    opts =
+      figure: @
+      model: @model
+      collection: @collection
+      isExport: @isExport
+      exportable: @exportable
+
+    @$el.html @template(_.extend(opts, templateOpts))
+
     @selection = d3.select @$el.find('figure')[0]
 
 
