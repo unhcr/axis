@@ -66,7 +66,7 @@ test 'render', ->
 test 'select', ->
   @exportView.render()
   i = 0
-  d = @exportView.filtered[i]
+  d = @exportView.selectableData[i]
   strictEqual $(@exportView.el).find('figcaption input').length, 2
   strictEqual $(@exportView.el).find('figure .box').length, 2
 

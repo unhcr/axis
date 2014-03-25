@@ -22,11 +22,15 @@ class Visio.Views.ExportModule extends Backbone.View
 
     if @config.selectable
       $.subscribe "select.#{@figure.figureId()}", @select
-      @filtered = @figure.filtered @figure.dataAccessor()
+      @selectableData = @figure.selectableData()
 
   render: ->
 
-    @$el.html @template( model: @model.toJSON(), filtered: @filtered )
+    @$el.html @template
+      model: @model.toJSON()
+      selectableData: @selectableData
+      selectableLabel: @figure.selectableLabel
+
     @$el.find('.export-figure figure').html @figure.el
     if @config.selectable or @config.previewable
       @figure.render()
@@ -38,7 +42,7 @@ class Visio.Views.ExportModule extends Backbone.View
   onSelectionChange: (e) ->
     e.preventDefault()
     $target = $(e.currentTarget)
-    d = _.find @filtered, (d, i) ->
+    d = _.find @selectableData, (d, i) ->
       i == +$target.val()
 
     unless d

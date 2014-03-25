@@ -51,6 +51,12 @@ Visio.Mixins.Exportable =
   subscribe: ->
     $.subscribe "select.#{@cid}.figure", @select
 
+  selectableData: (e) ->
+    @filtered @collection || @model
+
+  selectableLabel: (d, i) ->
+    Visio.Constants.ALPHABET[i]
+
   events:
     'click .export': 'onExport'
 
