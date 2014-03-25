@@ -51,12 +51,12 @@
           .col-md-4
             - _.each context.thresholds, (threshold) ->
               .row
-                .col-md-12.bar-legend{ :class => threshold.threshold }
+                .col-md-12.bar-legend{ :class => threshold.value }
                   = threshold.human
           .col-md-4.col-md-offset-4
             - _.each context.criticalities, (criticality) ->
               .row
-                .col-md-12.bar-legend{ :class => criticality.criticality }
+                .col-md-12.bar-legend{ :class => criticality.value }
                   = criticality.human
 
     .row

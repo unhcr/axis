@@ -21,16 +21,19 @@ window.Visio =
       className: 'Icsy'
       human: 'Impact Criticality single year'
       name: 'icsy'
+      description: 'Achievement of Standard'
     # Performance Achievement Single Year
     PASY:
       className: 'Pasy'
       human: 'Performance Achievement single year'
       name: 'pasy'
+      description: 'Achievement of Target'
     # Output Achievement Single Year
     OASY:
       className: 'Oasy'
       human: 'Output Achievement single year'
       name: 'oasy'
+      description: 'Achievement of Target'
     SPARK:
       className: 'Spark'
       human: 'Spark'
@@ -81,6 +84,7 @@ window.Visio =
     LONG_MONEY: d3.format('$,f')
     SI: d3.format('0.3s')
     PERCENT: d3.format(".0%")
+    PERCENT_NOSIGN: (d) -> (d * 100).toFixed()
     COMMA: d3.format(',')
     NUMBER: d3.format('d')
     LONG_NUMBER: d3.format(',f')
@@ -200,6 +204,20 @@ Visio.AggregationTypes = [
     Visio.Parameters.OUTPUTS,
     Visio.Parameters.PROBLEM_OBJECTIVES,
     Visio.Parameters.STRATEGY_OBJECTIVES,
+  ]
+
+Visio.Algorithms.CRITICALITIES = [
+    { value: Visio.Algorithms.ALGO_RESULTS.success, human: 'Acceptable' }
+    { value: Visio.Algorithms.ALGO_RESULTS.ok, human: 'Critical' }
+    { value: Visio.Algorithms.ALGO_RESULTS.fail, human: 'Sub-Stanford' }
+    { value: Visio.Algorithms.STATUS.missing, human: 'Not-Reported' }
+  ]
+
+Visio.Algorithms.THRESHOLDS = [
+    { value: Visio.Algorithms.ALGO_RESULTS.high, human: 'Met Target (Above 80%)' }
+    { value: Visio.Algorithms.ALGO_RESULTS.medium, human: 'Approaching Target (Above 60%)' }
+    { value: Visio.Algorithms.ALGO_RESULTS.low, human: 'Below Target (Below 60% of target)' }
+    { value: Visio.Algorithms.STATUS.missing, human: 'Not-Reported' }
   ]
 
 Visio.Schema =

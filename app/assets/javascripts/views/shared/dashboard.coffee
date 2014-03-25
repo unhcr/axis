@@ -1,19 +1,9 @@
 # Provides functions implementing dashboard stats for a parameter
 class Visio.Views.Dashboard extends Backbone.View
 
-  criticalities: [
-    { criticality: Visio.Algorithms.ALGO_RESULTS.success, human: 'Acceptable' }
-    { criticality: Visio.Algorithms.ALGO_RESULTS.ok, human: 'Critical' }
-    { criticality: Visio.Algorithms.ALGO_RESULTS.fail, human: 'Sub-Stanford' }
-    { criticality: Visio.Algorithms.STATUS.missing, human: 'Not-Reported' }
-  ]
+  criticalities: Visio.Algorithms.CRITICALITIES
 
-  thresholds: [
-    { threshold: Visio.Algorithms.ALGO_RESULTS.high, human: 'Met Target (Above 80%)' }
-    { threshold: Visio.Algorithms.ALGO_RESULTS.medium, human: 'Approaching Target (Above 60%)' }
-    { threshold: Visio.Algorithms.ALGO_RESULTS.low, human: 'Below Target (Below 60% of target)' }
-    { threshold: Visio.Algorithms.STATUS.missing, human: 'Not-Reported' }
-  ]
+  thresholds: Visio.Algorithms.THRESHOLDS
 
   keyFigures: [
     { fn: 'indicatorCount', human: 'Indicators', formatter: Visio.Formats.NUMBER },
