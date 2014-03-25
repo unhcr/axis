@@ -4,7 +4,7 @@ class Visio.Views.FilterBy extends Backbone.View
 
   template: HAML['tooltips/filter_by']
 
-  className: 'filter-by'
+  className: 'filter-by header-button'
 
   events:
     'change input': 'onFilter'

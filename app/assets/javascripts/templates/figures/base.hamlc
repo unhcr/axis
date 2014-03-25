@@ -4,5 +4,5 @@
       %h2
         = context.figure.type.human
     .col-md-6.right-text.header-buttons
-      .export
+      .export.header-button
 %figure

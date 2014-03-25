@@ -1720,6 +1720,8 @@ a {
 
 .filter-by {
   @include header-button;
+  padding-top: 0px;
+
   .filter-toggle:before {
     content: 'ↆ';
     background: transparent;
@@ -1729,6 +1731,8 @@ a {
 
   .filter-toggle {
     text-align: center;
+    height: 100%;
+    padding-top: 6px;
   }
 
   width: 180px;
@@ -1746,7 +1750,7 @@ a {
     max-height: 0px;
     overflow: hidden;
     background-color: white;
-    margin-top: 6px;
+    margin-top: 1px;
   }
 
   .filter-group {
@@ -2144,4 +2148,8 @@ a {
 }
 .snapshot-bar-figure-container:last-child {
   border-left: 1px solid $light-gray;
+}
+
+.header-buttons .header-button:hover {
+  background-color: $off-white;
 }
