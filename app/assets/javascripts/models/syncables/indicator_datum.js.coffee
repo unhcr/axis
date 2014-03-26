@@ -20,8 +20,12 @@ class Visio.Models.IndicatorDatum extends Visio.Models.Syncable
     myr = @get Visio.Algorithms.REPORTED_VALUES.myr
     yer = @get Visio.Algorithms.REPORTED_VALUES.yer
 
-    return myr >= baseline and
-      (yer >= myr or not _.isNumber(yer))
+    if @get 'reversal'
+      return myr <= baseline and
+        (yer <= myr or not _.isNumber(yer))
+    else
+      return myr >= baseline and
+        (yer >= myr or not _.isNumber(yer))
 
 
   situationAnalysis: (reported) ->

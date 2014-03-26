@@ -439,3 +439,24 @@ test 'isConsistent', () ->
 
   datum.set 'yer', null
   ok datum.isConsistent(datum), 'Should be consistent'
+
+test 'isConsistent - reversed', ->
+  datum = new Visio.Models.IndicatorDatum({
+    baseline: 0
+    myr: 10
+    yer: 5
+    reversal: true
+  })
+
+  ok not datum.isConsistent(datum), 'Should not be consistent'
+
+  datum.set 'baseline', 20
+  ok datum.isConsistent(datum), 'Should be consistent'
+
+  datum.set 'baseline', 10
+  datum.set 'myr', 2
+  datum.set 'yer', 5
+  ok not datum.isConsistent(datum), 'Should not be consistent'
+
+  datum.set 'yer', null
+  ok datum.isConsistent(datum), 'Should be consistent'
