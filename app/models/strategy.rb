@@ -54,6 +54,97 @@ class Strategy < ActiveRecord::Base
     resource.synced_models(ids, synced_date, limit, where)
   end
 
+  def to_sheet
+    session = GoogleDrive.login(ENV['DRIVE_USERNAME'], ENV['DRIVE_PASSWORD'])
+
+    template = session.spreadsheet_by_key(ENV['DRIVE_SHEET_KEY'])
+
+    sheet = template.duplicate
+    sheet.title = "#{self.name} -- #{Time.now}"
+
+    strategy_ws = sheet.worksheets[0]
+    strategy_objective_ws = sheet.worksheets[1]
+
+    cols = {
+      :strategy => 1,
+      :operation => 2,
+      :ppg => 3,
+    }
+
+    # Write first table
+
+    # Headings
+    strategy_ws[1, cols[:strategy]] = 'Strategy'
+    strategy_ws[1, cols[:operation]] = 'Operation'
+    strategy_ws[1, cols[:ppg]] = 'PPG'
+
+    # Content
+    offset = 0
+    self.operations.each_with_index do |operation, i|
+      operation_ppgs = self.ppgs.merge(operation.ppgs)
+      len = operation_ppgs.count
+      operation_ppgs.each_with_index do |ppg, j|
+        row = offset + j + 2
+        strategy_ws[row, cols[:strategy]] = self.name
+        strategy_ws[row, cols[:operation]] = operation.name
+        strategy_ws[row, cols[:ppg]] = ppg.name
+      end
+      offset += len
+    end
+
+    cols = {
+      :strategy_objective => 1,
+      :problem_objective => 2,
+      :impact_indicator => 3,
+      :output => 4,
+      :performance_indicator => 5
+    }
+
+    # Write second table
+
+    # Headings
+    strategy_objective_ws[1, cols[:strategy_objective]] = 'Strategy Objective'
+    strategy_objective_ws[1, cols[:problem_objective]] = 'Objective'
+    strategy_objective_ws[1, cols[:impact_indicator]] = 'Impact Indicator'
+    strategy_objective_ws[1, cols[:output]] = 'Output'
+    strategy_objective_ws[1, cols[:performance_indicator]] = 'Performance Indicator'
+
+    # Content
+    offset = 2
+    self.strategy_objectives.each_with_index do |so, i|
+      so.problem_objectives.each_with_index do |po, j|
+        so.outputs.merge(po.outputs).each_with_index do |o, k|
+
+          so_indicators = so.indicators.merge(o.indicators)
+          count_ind = so_indicators.count
+          so_indicators.each_with_index do |ind, l|
+
+            row = offset + l
+            strategy_objective_ws[row, cols[:strategy_objective]] = so.name
+            strategy_objective_ws[row, cols[:output]] = o.name
+            strategy_objective_ws[row, cols[:performance_indicator]] = ind.name
+          end
+          offset += count_ind
+        end
+
+        so_indicators = so.indicators.merge(po.indicators)
+        count_ind = so_indicators.count
+        so_indicators.each_with_index do |ind, m|
+            row = offset + m
+            strategy_objective_ws[row, cols[:strategy_objective]] = so.name
+            strategy_objective_ws[row, cols[:problem_objective]] = po.objective_name
+            strategy_objective_ws[row, cols[:impact_indicator]] = ind.name
+            count_ind = m
+        end
+        offset += count_ind
+      end
+    end
+
+    strategy_ws.save
+    strategy_objective_ws.save
+
+  end
+
   def to_jbuilder(options = {})
     options[:include] ||= {}
     Jbuilder.new do |json|
