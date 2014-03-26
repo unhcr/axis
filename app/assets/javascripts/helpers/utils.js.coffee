@@ -119,3 +119,9 @@ Visio.Utils.nl2br = (string) ->
 
 Visio.Utils.space2nbsp = (string) ->
   string.replace(/\ /g, '&nbsp;')
+
+Visio.Utils.generateOverviewUrl = ->
+  [Visio.router.moduleView.id,
+   Visio.manager.year(),
+   Visio.manager.get('aggregation_type'),
+   Visio.manager.get('reported_type')].join '/'

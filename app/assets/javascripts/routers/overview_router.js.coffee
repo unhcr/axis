@@ -11,24 +11,29 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
       @navigation.render()
       @strategySnapshotView.render()
       @moduleView.render true
+      Visio.router.navigate Visio.Utils.generateOverviewUrl(), { silent: true }
 
     Visio.manager.on 'change:reported_type change:aggregation_type', =>
       @strategySnapshotView.render()
       @moduleView.render true
+      Visio.router.navigate Visio.Utils.generateOverviewUrl(), { silent: true }
 
     Visio.manager.on ['change:navigation'].join(' '), =>
       @navigation.render()
       @moduleView.render true
+      Visio.router.navigate Visio.Utils.generateOverviewUrl(), { silent: true }
 
     Visio.manager.on 'change:selected', =>
       @strategySnapshotView.render true
       @moduleView.render true
+      Visio.router.navigate Visio.Utils.generateOverviewUrl(), { silent: true }
 
     Visio.manager.on ['change:achievement_type',
                       'change:scenario_type',
                       'change:budget_type',
                       'change:amount_type'].join(' '), =>
       @moduleView.render true
+      Visio.router.navigate Visio.Utils.generateOverviewUrl(), { silent: true }
 
     @module = $('#module')
 
@@ -84,16 +89,19 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
   routes:
     'menu' : 'menu'
     'search': 'search'
+    ':figureType/:year/:aggregationType/:reportedType': 'figure'
+    ':figureType/:year/:aggregationType': 'figure'
     ':figureType/:year': 'figure'
     ':figureType': 'figure'
     '*default': 'index'
 
-  figure: (figureType, year) ->
+  figure: (figureType, year, aggregationType, reportedType) ->
     Visio.manager.year year, { silent: true } if year?
+    Visio.manager.set { 'aggregation_type': aggregationType }, { silent: true } if aggregationType?
+    Visio.manager.set { 'reported_type': reportedType }, { silent: true } if reportedType?
     @setup().done(() =>
       viewClass = figureType[0].toUpperCase() + figureType.slice(1) + 'View'
 
-      @figureView.close() if @figureView
       @moduleView = new Visio.Views[viewClass]()
 
       @module.html @moduleView.render().el
