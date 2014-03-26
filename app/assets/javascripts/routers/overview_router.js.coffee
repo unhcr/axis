@@ -20,8 +20,11 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
       @navigation.render()
       @moduleView.render true
 
-    Visio.manager.on ['change:selected',
-                      'change:achievement_type',
+    Visio.manager.on 'change:selected', =>
+      @strategySnapshotView.render true
+      @moduleView.render true
+
+    Visio.manager.on ['change:achievement_type',
                       'change:scenario_type',
                       'change:budget_type',
                       'change:amount_type'].join(' '), =>

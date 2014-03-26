@@ -16,8 +16,12 @@ class Visio.Views.ParameterSliderView extends Visio.Views.SliderView
     super options
 
   drawFigures: =>
-    @collection.each (model) =>
-      @views[model.id]?.drawFigures()
+    for id, view of @views
+      if @collection.get id
+        @views[id]?.drawFigures()
+      else
+        @views[id]?.close()
+        delete @views[id]
 
   addOne: (model) =>
     super model

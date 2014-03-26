@@ -51,10 +51,9 @@ class Visio.Views.StrategySnapshotView extends Visio.Views.Dashboard
     'click .export': 'onExport'
 
   render: (isRerender) ->
-    if not isRerender and not @isPdf
-      @collection = Visio.manager.strategy()[Visio.manager.get('aggregation_type')]()
-      @parameter = @collection
-      @parameterSlider?.collection = @collection
+    @collection = Visio.manager.selected Visio.manager.get('aggregation_type') unless @isPdf
+    @parameter = @collection
+    @parameterSlider?.collection = @collection
 
     super isRerender
 
