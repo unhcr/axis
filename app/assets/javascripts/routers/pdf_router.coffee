@@ -1,9 +1,10 @@
 class Visio.Routers.PdfRouter extends Backbone.Router
 
   initialize: (options) ->
+    @selector = options.selector || 'body'
 
     Visio.exportModule = new Visio.Models.ExportModule options.config
-    $('body').addClass Visio.exportModule.get('figure_type').name
+    $(@selector).addClass Visio.exportModule.get('figure_config').type.name
 
   routes:
     '*default': 'index'
@@ -12,7 +13,7 @@ class Visio.Routers.PdfRouter extends Backbone.Router
     # Return empty promise if we've setup already
     return $.Deferred().resolve().promise() if Visio.manager.get('setup')
 
-    @[Visio.exportModule.get('figure_type').name]() if @[Visio.exportModule.get('figure_type').name]?
+    @[Visio.exportModule.get('figure_config').type.name]() if @[Visio.exportModule.get('figure_config').type.name]?
 
     $.when Visio.manager.get('expenditures').fetch(data :{ strategy_id: Visio.manager.get('strategy_id') }),
            Visio.manager.get('budgets').fetch(data :{ strategy_id: Visio.manager.get('strategy_id') }),
@@ -20,7 +21,7 @@ class Visio.Routers.PdfRouter extends Backbone.Router
 
   absy: ->
     figureConfig = Visio.exportModule.get('figure_config')
-    figureConfig.width = $('body').width()
+    figureConfig.width = $(@selector).width()
     figureConfig.height = 470
     figureConfig.margin =
       left: 80
@@ -32,7 +33,7 @@ class Visio.Routers.PdfRouter extends Backbone.Router
 
   map: ->
     figureConfig = Visio.exportModule.get('figure_config')
-    figureConfig.width = $('body').width()
+    figureConfig.width = $(@selector).width()
     Visio.exportModule.set 'figure_config', figureConfig
 
   index: ->
@@ -41,13 +42,9 @@ class Visio.Routers.PdfRouter extends Backbone.Router
       figureConfig = Visio.exportModule.get('figure_config')
       figureConfig.isExport = false
 
-      options = _.extend { isPdf: true, el: $('body') }, figureConfig
+      options = _.extend { isPdf: true, el: $(@selector) }, figureConfig
 
       @view = new Visio[figureConfig.viewLocation][figureConfig.type.className](options)
-
-      # Run all setup functions
-      _.each figureConfig.setupFns, (fn) =>
-        @view[fn.name](fn.args)
 
       $.when.apply(@, _.map(figureConfig.setupFns, (fn) =>
         @view[fn.name](fn.args))).done =>

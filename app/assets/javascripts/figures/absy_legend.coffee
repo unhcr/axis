@@ -2,7 +2,7 @@ class Visio.Figures.AbsyLegend extends Backbone.View
 
   className: 'legend'
 
-  template: HAML['figures/absy_legend']
+  template: HAML['pdf/figures/absy_legend']
 
   initialize: (options) ->
     @figure = options.figure
