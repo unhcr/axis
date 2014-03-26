@@ -16,6 +16,7 @@
 
 # Ignore application configuration
 /config/application.yml
+/config/drive.yml
 /config/capistrano_credentials.rb
 
 coverage

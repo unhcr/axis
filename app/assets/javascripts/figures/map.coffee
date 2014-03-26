@@ -1,5 +1,7 @@
 class Visio.Figures.Map extends Visio.Figures.Base
 
+  @include Visio.Mixins.Exportable
+
   type: Visio.FigureTypes.MAP
 
   className: 'map-container'
@@ -7,7 +9,6 @@ class Visio.Figures.Map extends Visio.Figures.Base
   initialize: (config) ->
 
     super config
-    @$el.prepend $('<a class="export">export</a>')
 
     @scale = 500
 
@@ -54,11 +55,6 @@ class Visio.Figures.Map extends Visio.Figures.Base
   selectable: false
 
   setupFns: [ { name: 'getMap' } ]
-
-  config: ->
-    config = super
-    config.width = 700
-    config
 
   render: ->
 
@@ -200,7 +196,8 @@ class Visio.Figures.Map extends Visio.Figures.Base
     collection.filter (plan) ->
       plan.get('year') == Visio.manager.year() and
       plan.get('country') and
-      (_.isEmpty(selectedStrategies) or _.any(plan.get('strategy_ids'), (id) -> _.include(selectedStrategies, id)))
+      (_.isEmpty(selectedStrategies) or
+      _.every(selectedStrategies, (id) -> _.include(plan.get('strategy_ids'), id)))
 
   refreshTooltips: ->
     for key, value of @views

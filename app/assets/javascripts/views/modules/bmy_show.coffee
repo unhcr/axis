@@ -29,13 +29,12 @@ class Visio.Views.BmyShowView extends Visio.Views.AccordionShowView
     unless isRerender
       @$el.html @template( parameter: @model, figureId: @figure.figureId() )
       @$el.find('.bmy-figure').html @figure.el
-      @$el.find('.figure-header').html @filterBy.render().el
-    @drawFigures()
+      @$el.find('.header-buttons').append @filterBy.render().el
     @
 
 
   drawFigures: ->
-    @figure.collectionFn @model.selectedBudgetData(true)
+    @figure.collectionFn @model.selectedBudgetData(Visio.Constants.ANY_YEAR)
     @figure.render()
 
   removeInstances: =>

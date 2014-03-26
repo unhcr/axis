@@ -4,7 +4,7 @@ class Visio.Views.FilterBy extends Backbone.View
 
   template: HAML['tooltips/filter_by']
 
-  className: 'filter-by'
+  className: 'filter-by header-button'
 
   events:
     'change input': 'onFilter'
@@ -32,7 +32,7 @@ class Visio.Views.FilterBy extends Backbone.View
     active = $target.is ':checked'
 
     @figure.filters.get(type).filter(attr, active)
-    @figure.render()
+    @figure.render true
 
   isOpen: =>
     @$el.find('.filters').hasClass 'open'
@@ -48,7 +48,7 @@ class Visio.Views.FilterBy extends Backbone.View
 
   onResetFilters: (e) =>
     @figure.filters.resetFilters()
-    @figure.render()
+    @figure.render true
     @render true
 
   close: ->

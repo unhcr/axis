@@ -1,16 +1,15 @@
 .info-container
   .row
-    .col-md-8.col-centered.ui-primary-light
+    .col-md-12.col-centered.ui-primary-light
       Lorem ipsum
   .row
-    .zero-padding.col-md-8.col-centered.ui-primary-soft.ui-small-header
+    .zero-padding.col-md-12.col-centered.ui-primary-soft.ui-small-header
       = context.humanName
       Results
   .row
-    .col-md-8.col-centered
+    .col-md-12.col-centered
       Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
   .row
-    .col-md-8.col-centered.zero-padding
-      .figure-header
+    .col-md-12.col-centered.zero-padding
       %figure.summary-figure
 

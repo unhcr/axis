@@ -38,7 +38,7 @@ class Visio.Models.Manager extends Backbone.Model
     'expenditures': new Visio.Collections.Expenditure()
     'strategies': new Visio.Collections.Strategy()
     'strategy_objectives': new Visio.Collections.StrategyObjective()
-    'date': new Date(2012, 1)
+    'date': new Date(2013, 1)
     'use_local_db': true
     'setup': false
     'db': null
@@ -49,7 +49,7 @@ class Visio.Models.Manager extends Backbone.Model
     'aggregation_type': Visio.Parameters.OPERATIONS.plural
     'scenario_type': {}
     'budget_type': {}
-    'achievement_type': Visio.AchievementTypes.TARGET
+    'achievement_type': Visio.Algorithms.GOAL_TYPES.target
     'amount_type': Visio.Syncables.BUDGETS
     'reported_type': Visio.Algorithms.REPORTED_VALUES.yer
 
@@ -147,7 +147,7 @@ class Visio.Models.Manager extends Backbone.Model
     unless _.include Visio.AggregationTypes.map((d) -> d.plural), attrs.aggregation_type
       throw "Current aggregation_type: #{attrs.aggregation_type}, is not a valid aggregation type"
 
-    unless _.include _.values(Visio.AchievementTypes), attrs.achievement_type
+    unless _.include _.values(Visio.Algorithms.GOAL_TYPES), attrs.achievement_type
       throw "Current achievement_type: #{attrs.achievement_type}, is not a valid achievement type"
 
   set: (key, val, options) ->
@@ -169,6 +169,7 @@ class Visio.Models.Manager extends Backbone.Model
       @set 'achievement_type', _state.achievement_type
       @set 'scenario_type', _state.scenario_type
       @set 'budget_type', _state.budget_type
+      @set 'aggregation_type', _state.aggregation_type
       @set 'amount_type', _state.amount_type
       @set 'strategies', new Visio.Collections.Strategy _state.strategies
       @set 'selected_strategies', _state.selected_strategies
@@ -179,6 +180,7 @@ class Visio.Models.Manager extends Backbone.Model
         selected: @get 'selected'
         year: @year()
         achievement_type: @get 'achievement_type'
+        aggregation_type: @get 'aggregation_type'
         scenario_type: @get 'scenario_type'
         budget_type: @get 'budget_type'
         amount_type: @get 'amount_type'

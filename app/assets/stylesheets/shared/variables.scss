@@ -17,8 +17,6 @@ $dark-gray: rgb(133, 135, 134);
 $light-gray: rgb(177, 177, 177);
 $lighter-gray: rgb(217, 217, 217);
 $black: rgb(39,38,34);
-$fail: #c6302a;
-$fail-dark: #710d09;
 $turquoise: rgb(32, 180, 180);
 $pink: rgb(200, 85, 145);
 $yellow-green: rgb(158, 196, 59);
@@ -26,10 +24,6 @@ $yellow: rgb(222, 229, 29);
 $bright-yellow: rgb(246, 236, 0);
 $neutral: rgb(209, 211, 212);
 $neutral-dark: rgb(150, 152, 155);
-$success: rgb(70, 190, 30);
-$success-dark: rgb(7, 113, 15);
-$ok: rgb(242, 211, 25);
-$ok-dark: rgb(170, 173, 25);
 $purple: rgb(175,0,107);
 $purple-dark: rgb(141, 77, 189);
 $orange: rgb(229, 86, 28);
@@ -39,6 +33,20 @@ $lightblue: rgb(123, 184, 238);
 $divider-top: rgb(41, 82, 161);
 $divider-bottom: rgb(92, 133, 212);
 $alert-red: #fc9bd6;
+
+/* algorithm colors */
+$success: rgb(70, 190, 30);
+$success-dark: rgb(7, 113, 15);
+$ok: rgb(242, 211, 25);
+$ok-dark: rgb(170, 173, 25);
+$fail: #c6302a;
+$fail-dark: #710d09;
+$high: rgb(48, 73, 136);
+$medium: rgb(90, 104, 159);
+$low: rgb(133, 141, 186);
+$missing: $dark-gray;
+
+
 
 /* bmy colors */
 $admin: rgb(0, 139, 211);
@@ -74,11 +82,14 @@ $page-margin: 40px;
 $search-icon: 29px;
 $header-height: 65px;
 $toolbar-height: 42px;
-$country-slide-height: 290px;
-$country-slide-width: 220px;
+$parameter-slide-height: 290px;
+$parameter-slide-width: 306px;
 $slider-controls-width: 62px;
 $control-radius: 17px;
 $parameter-show-idx: 24px;
-$parameter-show-padding-horizontal: 70px;
+$parameter-show-padding-horizontal: 50px;
 $parameter-show-padding-vertical: 30px;
 $modal-width: 960px;
+$header-button-height: 30px;
+$export-label-length: 160px;
+$snapshot-bar-container-height: 370px;

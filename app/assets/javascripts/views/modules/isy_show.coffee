@@ -6,13 +6,10 @@ class Visio.Views.IsyShowView extends Visio.Views.AccordionShowView
 
   events:
     'click .js-parameter': 'onClickParameter'
-    'mouseenter .box': 'onMouseenterBox'
     'transitionend': 'onTransitionEnd'
     'MSTransitionEnd': 'onTransitionEnd'
     'webkitTransitionEnd': 'onTransitionEnd'
     'oTransitionEnd': 'onTransitionEnd'
-    'change .goal-type': 'onGoalTypeChange'
-    'change .is-performance': 'onIsPerformanceChange'
 
   initialize: (options) ->
     @config =
@@ -24,16 +21,8 @@ class Visio.Views.IsyShowView extends Visio.Views.AccordionShowView
       width: 800
       height: 300
 
-    @sparkConfig =
-      margin:
-        left: 0
-        right: 10
-        top: 8
-        bottom: 0
-      width: 100
-
     @isyFigure = new Visio.Figures.Isy @config
-    @sparkFigure = new Visio.Figures.Spark @sparkConfig
+    @filterBy = new Visio.Views.FilterBy({ figure: @isyFigure, })
 
   render: (isRerender) ->
     situationAnalysis = @model.selectedSituationAnalysis()
@@ -42,7 +31,7 @@ class Visio.Views.IsyShowView extends Visio.Views.AccordionShowView
       @$el.html @template({ parameter: @model, figureId: @isyFigure.figureId() })
 
       @$el.find('.indicator-bar-graph').html @isyFigure.el
-      @$el.find('.spark-bar-graph').html @sparkFigure.el
+      @$el.find('.header-buttons').append @filterBy.render().el
 
     category = if situationAnalysis.total == 0 then 'white' else situationAnalysis.category
 
@@ -60,34 +49,11 @@ class Visio.Views.IsyShowView extends Visio.Views.AccordionShowView
     else
       @$el.removeClass 'disabled'
 
-    @sparkFigure.modelFn @model
-    @sparkFigure.render()
-
-    @drawFigures()
 
     @
-
-  onGoalTypeChange: (e) ->
-    $target = $(e.currentTarget)
-    if $target.is ':checked'
-      @isyFigure.goalTypeFn(Visio.Algorithms.GOAL_TYPES.target).render()
-    else
-      @isyFigure.goalTypeFn(Visio.Algorithms.GOAL_TYPES.standard).render()
-
-  onIsPerformanceChange: (e) ->
-    $target = $(e.currentTarget)
-    @isyFigure.isPerformanceFn($target.is(':checked')).render()
 
   drawFigures: ->
     @isyFigure.collectionFn @model.selectedIndicatorData()
     @isyFigure.render()
-
-  onMouseenterBox: (e) ->
-    d = d3.select(e.currentTarget).datum()
-
-    containerTypes = ['ppg', 'goal', 'indicator']
-    _.each containerTypes, (type) =>
-      @$el.find(".js-#{type}-container").text Visio.manager.get("#{type}s").get(d.get("#{type}_id"))
-
 
   removeInstances: =>

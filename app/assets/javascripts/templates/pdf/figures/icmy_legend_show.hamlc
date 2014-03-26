@@ -1,0 +1,15 @@
+.row
+  .col-sm-12.bold.bottom-flush
+    = context.year
+
+.row
+  .col-sm-12.top-flush
+    = context.type.description
+
+.row
+  .col-sm-1
+    .bar-axis-container
+      .bar-axis
+  .col-sm-11
+    .bar-figure-container
+      %figure.bar-figure

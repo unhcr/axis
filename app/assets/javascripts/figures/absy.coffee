@@ -1,9 +1,26 @@
 class Visio.Figures.Absy extends Visio.Figures.Base
 
+  @include Visio.Mixins.Exportable
+
   type: Visio.FigureTypes.ABSY
 
   initialize: (config) ->
+    values = {}
+    values[Visio.Scenarios.AOL] = false
+    values[Visio.Scenarios.OL] = true
     @filters = new Visio.Collections.FigureFilter([
+      {
+        id: 'amount_type'
+        filterType: 'radio'
+        values: {
+          EXPENDITURES: false,
+          BUDGETS: true
+        }
+        human: { EXPENDITURES: 'Expenditure', BUDGETS: 'Budget' }
+        callback: (name, attr) ->
+          Visio.manager.set 'amount_type', Visio.Syncables[name]
+
+      }
       {
         id: 'budget_type'
         filterType: 'checkbox'
@@ -12,12 +29,18 @@ class Visio.Figures.Absy extends Visio.Figures.Base
       {
         id: 'scenario'
         filterType: 'checkbox'
-        values: _.object(_.values(Visio.Scenarios), _.values(Visio.Scenarios).map(-> true))
+        values: values
+      },
+      {
+        id: 'is_performance'
+        filterType: 'radio'
+        values: { true: true, false: false }
+        human: { true: 'performance', false: 'impact' }
       },
       {
         id: 'achievement'
         filterType: 'radio'
-        values: _.object(_.values(Visio.AchievementTypes), _.values(Visio.AchievementTypes).map(
+        values: _.object(_.values(Visio.Algorithms.GOAL_TYPES), _.values(Visio.Algorithms.GOAL_TYPES).map(
           (achievement_type) ->
             Visio.manager.get('achievement_type') == achievement_type))
         callback: (name, attr) ->
@@ -26,7 +49,6 @@ class Visio.Figures.Absy extends Visio.Figures.Base
     ])
 
     super config
-    @$el.prepend $('<a class="export">export</a>')
 
     @x = d3.scale.linear()
       .range([0, @adjustedWidth])
@@ -51,8 +73,8 @@ class Visio.Figures.Absy extends Visio.Figures.Base
       .orient('left')
       .ticks(5)
       .tickFormat((d) -> return d * 100)
-      .innerTickSize(14)
-      .tickPadding(0)
+      .tickPadding(20)
+      .tickSize(-@adjustedWidth)
 
     @domain = null
     @entered = false
@@ -60,8 +82,8 @@ class Visio.Figures.Absy extends Visio.Figures.Base
     @info = null
     @voronoi = d3.geom.voronoi()
       .clipExtent([[0, 0], [@adjustedWidth, @adjustedHeight]])
-      .x((d) => @x(d.selectedAmount(false, @filters)))
-      .y((d) => @y(d.selectedAchievement(false, @filters).result))
+      .x((d) => @x(d.selectedAmount(Visio.manager.year(), @filters)))
+      .y((d) => @y(d.selectedAchievement(Visio.manager.year(), @filters).result))
 
     @g.append('g')
       .attr('class', 'y axis')
@@ -72,7 +94,7 @@ class Visio.Figures.Absy extends Visio.Figures.Base
         .attr("x", -@adjustedHeight / 2)
         .attr("dy", "-.21em")
         .style("text-anchor", "middle")
-        .text('Achievement (%)')
+        .text('Progress Towards Target (%)')
 
     @g.append('g')
       .attr('class', 'x axis')
@@ -82,11 +104,11 @@ class Visio.Figures.Absy extends Visio.Figures.Base
         .attr("x", @adjustedWidth / 2)
         .attr("dy", "-.21em")
         .style("text-anchor", "middle")
-        .text('Budget (Dollars)')
+        .text("#{Visio.manager.get('amount_type').human} (Dollars)")
 
   render: ->
     filtered = @filtered @collection
-    maxAmount = d3.max filtered, (d) => d.selectedAmount(false, @filters)
+    maxAmount = d3.max filtered, (d) => d.selectedAmount(Visio.manager.year(), @filters)
 
     self = @
     if !@domain || @domain[1] < maxAmount || @domain[1] > 2 * maxAmount
@@ -123,9 +145,9 @@ class Visio.Figures.Absy extends Visio.Figures.Base
                 12
             )
             .attr('cy', (d) =>
-              return self.y(d.selectedAchievement(false, self.filters).result))
+              return self.y(d.selectedAchievement(Visio.manager.year(), self.filters).result))
             .attr('cx', (d) =>
-              return self.x(d.selectedAmount(false, self.filters)))
+              return self.x(d.selectedAmount(Visio.manager.year(), self.filters)))
 
           point.exit().transition().duration(Visio.Durations.FAST).attr('r', 0).remove()
 
@@ -135,19 +157,19 @@ class Visio.Figures.Absy extends Visio.Figures.Base
           else if self.isPdf and not _.isEmpty self.selected
             labels = pointContainer.selectAll('.label').data(_.filter([d], (d) => _.include self.selected, d.id))
 
-          if self.isExport or self.isPdf
+          if self.isExport or (self.isPdf and not _.isEmpty self.selected)
             labels.enter().append('text')
             labels.attr('class', 'label')
-              .attr('x', (d) => self.x(d.selectedAmount(false, self.filters)))
-              .attr('y', (d) => self.y(d.selectedAchievement(false, self.filters).result))
+              .attr('x', (d) => self.x(d.selectedAmount(Visio.manager.year(), self.filters)))
+              .attr('y', (d) => self.y(d.selectedAchievement(Visio.manager.year(), self.filters).result))
               .attr('dy', '.3em')
               .attr('text-anchor', 'middle')
               .text((d) ->
                 if self.isPdf
                   console.log 'pdf'
-                  1 + _.indexOf self.selected, d.id
+                  Visio.Constants.ALPHABET[_.indexOf self.selected, d.id]
                 else
-                  i + 1
+                  Visio.Constants.ALPHABET[i]
               )
 
         )
@@ -164,6 +186,7 @@ class Visio.Figures.Absy extends Visio.Figures.Base
           @entered = true
           @info or= new Visio.Views.BubbleInfoView({
             el: $('.info-container .bubble-info')
+            filters: @filters
           })
           # Hack for when we move from one to voronoi to another to which fires enter, enter, out in Chrome
           window.setTimeout(( -> @entered = false), 50)
@@ -188,11 +211,13 @@ class Visio.Figures.Absy extends Visio.Figures.Base
       .duration(Visio.Durations.FAST)
       .call(@xAxis)
 
+    @g.select('.x.axis text')
+      .text("#{Visio.manager.get('amount_type').human} (Dollars)")
+
     @g.select('.y.axis')
       .transition()
       .duration(Visio.Durations.FAST)
       .call(@yAxis)
-      .attr('transform', 'translate(-20,0)')
 
     # Generate legend view
     if @isPdf
@@ -206,7 +231,7 @@ class Visio.Figures.Absy extends Visio.Figures.Base
 
 
   filterFn: (d) ->
-    d.selectedAmount(false, @filters) && d.selectedAchievement(false, @filters).result
+    d.selectedAmount(Visio.manager.year(), @filters) && d.selectedAchievement(Visio.manager.year(), @filters).result >= 0
 
   filtered: (collection) => _.chain(collection.models).filter(@filterFn).value()
 

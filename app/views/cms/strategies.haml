@@ -11,6 +11,7 @@
     Visio.manager = new Visio.Models.Manager({
       strategies: new Visio.Collections.Strategy(#{@strategies.to_json(:include => {
         :strategy_objectives => true,
+        :ppgs => true,
         :operations => true
       }).html_safe}),
       ready: function() {

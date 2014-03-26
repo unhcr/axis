@@ -5,20 +5,38 @@ class Visio.Views.StrategySnapshotView extends Visio.Views.Dashboard
   template: HAML['modules/strategy_snapshot']
 
   initialize: (options) ->
+    @isPdf = options.isPdf
+    @barConfig.orientation = 'bottom'
+    @barConfig.width = 82
+    @barConfig.height = 380
+    @barConfig.margin.bottom = 0
+    axisHeight = 380
     if options.isPdf
       @template = HAML['pdf/strategy_snapshot']
-      @criticalityConfig.width = 60
-      @criticalityConfig.height = 60
+      @barConfig.height = 340
+      @barConfig.hasLabels = true
+      axisHeight = 340
 
-    else
-      @actionSlider = new Visio.Views.ActionSliderView
-        collection: Visio.manager.strategy()[Visio.Parameters.STRATEGY_OBJECTIVES.plural]()
+    @axis = new Visio.Figures.Axis
+      margin:
+        top: 10
+        bottom: 10
+        left: 40
+      width: 50
+      height: axisHeight
 
-    @countrySlider = new Visio.Views.CountrySliderView({ collection: @collection, isPdf: options.isPdf })
     super options
 
-
+    @collection or= Visio.manager.strategy()[Visio.manager.get('aggregation_type')]()
     @parameter = @collection
+
+    unless @isPdf
+      @actionSlider = new Visio.Views.ActionSliderView
+        collection: Visio.manager.strategy()[Visio.Parameters.STRATEGY_OBJECTIVES.plural]()
+    @parameterSlider = new Visio.Views.ParameterSliderView
+      filters: @filters
+      collection: @collection
+      isPdf: @isPdf
 
   title: 'Overview'
 
@@ -30,16 +48,31 @@ class Visio.Views.StrategySnapshotView extends Visio.Views.Dashboard
     'change .ui-blank-radio > input': 'onChangeOperation'
     'click .js-show-all': 'onClickShowAll'
     'click .grid-view': 'onGridView'
-    'click a.export': 'onExport'
+    'click .export': 'onExport'
 
   render: (isRerender) ->
-    super isRerender
-    @$el.find('.target-countries').html @countrySlider.render().el if @countrySlider?
-    @$el.find('.actions').html @actionSlider.render().el if @actionSlider?
+    if not isRerender and not @isPdf
+      @collection = Visio.manager.strategy()[Visio.manager.get('aggregation_type')]()
+      @parameter = @collection
+      @parameterSlider?.collection = @collection
 
+    super isRerender
+
+    unless isRerender
+      @$el.find('.header-buttons').append (new Visio.Views.FilterBy({ figure: @ })).render().el
+      @$el.find('.target-parameters').html @parameterSlider?.render().el
+      @$el.find('.actions').html @actionSlider?.render().el
+      @$el.find('.bar-axis').html @axis?.render().el
+      @parameterSlider?.delegateEvents()
+      @actionSlider?.delegateEvents()
+
+    if @parameterSlider?
+      @parameterSlider.drawFigures()
+    if @actionSlider?
+      @actionSlider.drawFigures()
 
     @
 
   onGridView: ->
-    @countrySlider.$el.find('.slider').toggleClass 'grid'
-    @countrySlider.reset()
+    @parameterSlider.$el.find('.slider').toggleClass 'grid'
+    @parameterSlider.reset()

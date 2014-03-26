@@ -1,5 +1,5 @@
 .row
-  .col-md-10.col-centered.ui-primary-light.zero-padding
+  .col-md-12.col-centered.ui-primary-light.zero-padding
     .col-md-1.ui-purple.right-text.zero-padding
       Aggregate by
     .col-md-2.ui-purple.zero-padding
@@ -9,14 +9,22 @@
             :selected => (hash.plural == Visio.manager.get('aggregation_type')),
             :value => "aggregation_type#{Visio.Constants.SEPARATOR + hash.plural}" }
             = hash.human
-    %a.col-md-2.center-text.zero-padding{:href => "#absy"}
+    %a.col-md-1.center-text.zero-padding{:href => "#absy"}
       Budget
-    %a.col-md-2.center-text.zero-padding{:href => "#isy"}
+    %a.col-md-1.center-text.zero-padding{:href => "#isy"}
       Indicators
     %a.col-md-1.center-text.zero-padding{:href => "#bmy"}
       BMY
-    %a.col-md-2.center-text.zero-padding
-      Summary Stats
+    %a.col-md-1.center-text.zero-padding{:href => "#icmy"}
+      ICMY
+    .col-md-2.zero-padding
+      %select.dropdown
+        - _.each [Visio.Algorithms.REPORTED_VALUES.myr, Visio.Algorithms.REPORTED_VALUES.yer], (type) ->
+          %option{
+            :selected => (type == Visio.manager.get('reported_type')),
+            :value => "reported_type#{Visio.Constants.SEPARATOR + type}" }
+            = type.toUpperCase()
+
     .col-md-2.zero-padding
       %select.dropdown
         - _.each Visio.manager.get('yearList'), (year) ->

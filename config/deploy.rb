@@ -1,6 +1,8 @@
 require 'bundler/capistrano'
 require "capistrano-rbenv"
 require "whenever/capistrano"
+require "capistrano-resque"
+load 'config/deploy/recipes/redis'
 
 #set :whenever_command, 'bundle exec whenever'
 #set :whenever_environment, defer { rails_env }
@@ -27,6 +29,7 @@ set :rails_env,     "production"
 set :user, :deploy
 set :deploy_to, "/var/www/#{application}"
 set :use_sudo, false
+set :sudo_user, "resque_worker"
 
 set :ssh_options, { :forward_agent => true }
 default_run_options[:pty] = true
@@ -34,6 +37,9 @@ default_run_options[:pty] = true
 role :web, "10.9.43.153"                          # Your HTTP server, Apache/etc
 role :app, "10.9.43.153"                          # This may be the same as your `Web` server
 role :db,  "10.9.43.153", :primary => true # This is where Rails migrations will run
+role :resque_worker, "10.9.43.153"
+
+set :workers, { "shrimp" => 5 }
 
 # ensure http_proxy variables are set
 set :default_environment, {
@@ -64,8 +70,16 @@ namespace :db do
     run "cp -f ~/database.yml #{release_path}/config/database.yml"
   end
 end
+
+namespace :drive do
+  task :config, :except => { :no_release => true }, :role => :app do
+    run "cp -f ~/drive.yml #{release_path}/config/drive.yml"
+  end
+end
 after "deploy:finalize_update", "db:config"
+after "deploy:finalize_update", "drive:config"
 after "deploy", "deploy:migrate"
 after "deploy", "whenever:clear_crontab"
+after "deploy", "resque:restart"
 after "whenever:clear_crontab", "whenever:update_crontab"
 

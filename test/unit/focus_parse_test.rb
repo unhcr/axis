@@ -22,6 +22,7 @@ class FocusParseTest < ActiveSupport::TestCase
     :problem_objectives => 22,
     :indicators => 120,
     :outputs => 53,
+    :output_instances => 53,
     :operations => 139,
     :indicator_data => 120,
     :budgets => 232
@@ -35,6 +36,7 @@ class FocusParseTest < ActiveSupport::TestCase
     RightsGroup.destroy_all
     ProblemObjective.destroy_all
     Output.destroy_all
+    Instance.destroy_all
     Indicator.destroy_all
     IndicatorDatum.destroy_all
     Operation.destroy_all
@@ -117,6 +119,7 @@ class FocusParseTest < ActiveSupport::TestCase
     assert_equal COUNTS[:outputs], Output.count, "Output count"
     assert_equal COUNTS[:operations], Operation.count, "Operation count"
     assert_equal COUNTS[:budgets], Budget.count, "Budget count"
+    assert_equal COUNTS[:output_instances], Instance.count
 
     [Goal, RightsGroup, ProblemObjective, Indicator].each do |resource|
       models = resource.synced_models(timestamp)
@@ -228,9 +231,14 @@ class FocusParseTest < ActiveSupport::TestCase
     assert_equal COUNTS[:outputs], Output.count, "Output count"
     assert_equal COUNTS[:outputs], operation.outputs.count, "Operation's outputs count"
     assert_equal COUNTS[:outputs], plan.outputs.count, "Plan's outputs count"
+    assert_equal COUNTS[:output_instances], Instance.count
+    assert Instance.first.id.is_a? String
+    assert Instance.first.id.length > 0
+
     Output.all.each do |output|
       assert output.indicators.length >= 0
       assert output.indicators.length <= Indicator.count
+      assert_equal output.instances.length, 1
     end
 
     assert_equal COUNTS[:indicators], Indicator.count, "Indicator count"
@@ -249,6 +257,7 @@ class FocusParseTest < ActiveSupport::TestCase
       assert !d.is_performance.nil?, "Must have a performance field"
       assert d.year, "Must be a year"
     end
+    assert IndicatorDatum.where('imp_target is not null').count > 0
 
     assert_equal COUNTS[:budgets], Budget.count, "Budget count"
     assert_equal 0, Budget.where('amount = 0').count

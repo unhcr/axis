@@ -12,35 +12,62 @@ class Visio.Collections.Parameter extends Visio.Collections.Syncable
   search: (query) ->
     $.get("#{@url}/search", { query: query })
 
-  strategyIndicatorData: (strategy, isAnyYear = false, filters = null) ->
+  strategyIndicatorData: (strategy, year, filters = null) ->
     args = arguments
     data = new Visio.Collections.IndicatorDatum()
     @each (model) ->
       data.add model.strategyIndicatorData.apply(model, args).models, silent: true
     data
 
-  strategyBudgetData: (strategy, isAnyYear = false, filters = null) ->
+  strategyBudgetData: (strategy, year, filters = null) ->
     args = arguments
     data = new Visio.Collections.Budget()
     @each (model) ->
       data.add model.strategyBudgetData.apply(model, args).models, silent: true
     data
 
-  strategyExpenditureData: (strategy, isAnyYear = false, filters = null) ->
+  strategyExpenditureData: (strategy, year, filters = null) ->
     args = arguments
     data = new Visio.Collections.Expenditure()
     @each (model) ->
       data.add model.strategyExpenditureData.apply(model, args).models, silent: true
     data
 
-  strategySituationAnalysis: ->
-    data = @strategyIndicatorData()
+  strategySituationAnalysis: (year, filters = null) ->
+    data = @strategyIndicatorData(null, year, filters)
     data.situationAnalysis()
 
-  strategyExpenditure: ->
-    data = @strategyExpenditureData()
+  strategyOutputAchievement: (year, filters = null) ->
+    data = @strategyIndicatorData(null, year, filters)
+    data.outputAchievement()
+
+  strategyAchievement: (year, filters = null) ->
+    data = @strategyIndicatorData(null, year, filters)
+    data.achievement()
+
+  strategyExpenditure: (year, filters = null) ->
+    data = @strategyExpenditureData(null, year, filters)
     data.amount()
 
-  strategyBudget: () ->
-    data = @strategyBudgetData()
+  strategyBudget: (year, filters = null) ->
+    data = @strategyBudgetData(null, year, filters)
     data.amount()
+
+  selectedSituationAnalysis: (year, filters = null) ->
+    data = @selectedIndicatorData year, filters
+    data.situationAnalysis()
+
+  selectedOutputAchievement: (year, filters = null) ->
+    data = @selectedIndicatorData year, filters
+    data.outputAchievement()
+
+  selectedAchievement: (year, filters = null) ->
+    data = @selectedIndicatorData year, filters
+    data.achievement()
+
+  selectedIndicatorData: (year, filters = null) ->
+    args = arguments
+    data = new Visio.Collections.IndicatorDatum()
+    @each (model) ->
+      data.add model.selectedIndicatorData.apply(model, args).models, silent: true
+    data

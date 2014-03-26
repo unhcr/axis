@@ -1,7 +1,7 @@
 .col-md-8.col-centered
   .row.ui-small-header
-    = context.datum.toString()
+    = context.title
   .row
-    = Visio.manager.get('amount_type').human + ': $' + Visio.Utils.commaNumber(context.datum.selectedAmount())
+    = Visio.manager.get('amount_type').human + ': $' + Visio.Utils.commaNumber(context.amount)
   .row
-    = "Achievement: #{Math.round(100 * context.datum.selectedAchievement().result)}"
+    = "Achievement: #{Math.round(100 * context.achievement.result)}"

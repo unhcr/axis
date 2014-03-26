@@ -35,6 +35,7 @@ namespace :build do
   task :focus => :environment do
 
     n = ENV['n']
+    n_days = ENV['days'].present? ? ENV['days'].to_i.days : nil
 
     n = n.nil? ? 1.0/0.0 : n.to_i
 
@@ -43,7 +44,13 @@ namespace :build do
     include FocusFetch
     start = Time.now
 
-    ret = fetch n
+    ret = nil
+    if n_days
+      ret = fetch n, n_days
+    else
+      ret = fetch n
+    end
+
     p "Finished fetching FOCUS data in: #{Time.now - start}"
     p '-----------------'
     p "Files Read: #{ret[:files_read]}"
@@ -82,7 +89,6 @@ namespace :build do
     Plan.all.each do |plan|
       match_model_to_country(plan, plan.operation_name)
     end
-
     Operation.all.each do |operation|
       match_model_to_country(operation, operation.name)
     end
@@ -94,7 +100,32 @@ namespace :build do
     OutputsPlans.counter_culture_fix_counts
     PlansProblemObjectives.counter_culture_fix_counts
     PlansPpgs.counter_culture_fix_counts
+
+    Plan.all.map &:touch
   end
+end
+
+namespace :utils do
+  task :strategy_to_yaml => :environment do
+
+    id = ENV['id']
+
+    unless Strategy.exists? id
+      p "No such strategy exists for id: #{id}"
+      return
+    end
+    strategy = Strategy.find id
+    yaml = strategy.as_json({ :include => { :strategy_objectives => true } }).as_json.as_json.to_yaml
+
+    name = strategy.name.downcase.gsub ' ', '_'
+
+    File.open("#{Rails.root}/data/strategies/#{name}.yml", 'w+') { |file| file.write yaml }
+  end
+
+  task :strategy_from_yaml => :environment do
+
+  end
+
 end
 
 

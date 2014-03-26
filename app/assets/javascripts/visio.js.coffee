@@ -11,6 +11,29 @@ window.Visio =
       className: 'Map'
       human: 'Map'
       name: 'map'
+    # Indicator Criticality Multiple Year
+    ICMY:
+      className: 'Icmy'
+      human: 'Impact Criticality over time'
+      name: 'icmy'
+    # Indicator Criticality Single Year
+    ICSY:
+      className: 'Icsy'
+      human: 'Impact Criticality single year'
+      name: 'icsy'
+      description: 'Achievement of Standard'
+    # Performance Achievement Single Year
+    PASY:
+      className: 'Pasy'
+      human: 'Performance Achievement single year'
+      name: 'pasy'
+      description: 'Achievement of Target'
+    # Output Achievement Single Year
+    OASY:
+      className: 'Oasy'
+      human: 'Output Achievement single year'
+      name: 'oasy'
+      description: 'Achievement of Target'
     SPARK:
       className: 'Spark'
       human: 'Spark'
@@ -19,26 +42,30 @@ window.Visio =
       className: 'Circle'
       human: 'Circle'
       name: 'circle'
+    # Achievement Budget Single Year
     ABSY:
       className: 'Absy'
       human: 'Achievement vs Budget'
       name: 'absy'
+    # Budget Multiple Year
     BMY:
       className: 'Bmy'
       human: 'Budget vs Time'
       name: 'bmy'
+    # Indicators Single Year
     ISY:
       className: 'Isy'
-      human: 'Indicators: Single Year'
+      human: 'Indicators'
       name: 'isy'
+    AXIS:
+      className: 'Axis'
+      human: ''
+      name: 'axis'
   ViewTypes:
     OVERVIEW:
       className: 'StrategySnapshotView'
       human: 'Strategy Overview'
       name: 'strategy_snapshot'
-  AchievementTypes:
-    TARGET: 'comp_target'
-    STANDARD: 'standard'
   Scenarios:
     OL: 'Operating Level'
     AOL: 'Above Operating Level'
@@ -57,12 +84,18 @@ window.Visio =
     LONG_MONEY: d3.format('$,f')
     SI: d3.format('0.3s')
     PERCENT: d3.format(".0%")
+    PERCENT_NOSIGN: (d) -> (d * 100).toFixed()
     COMMA: d3.format(',')
     NUMBER: d3.format('d')
     LONG_NUMBER: d3.format(',f')
   Constants:
+    ANY_YEAR: 'ANY_YEAR'
     DB_NAME: 'visio'
     SEPARATOR: '___'
+    ALPHABET: 'abcdefghijklmnopqrstuvwxyz'
+    CMS:
+      TEXTAREA_MAXLEN: 900
+
   Stores:
     MAP: 'map'
     SYNC: 'sync_date'
@@ -153,7 +186,8 @@ window.Visio =
 
     GOAL_TYPES:
       standard: 'standard'
-      target: 'comp_target'
+      compTarget: 'comp_target'
+      target: 'imp_target'
 
 Visio.ProgressTypes =
   BASELINE_MYR:
@@ -170,6 +204,20 @@ Visio.AggregationTypes = [
     Visio.Parameters.OUTPUTS,
     Visio.Parameters.PROBLEM_OBJECTIVES,
     Visio.Parameters.STRATEGY_OBJECTIVES,
+  ]
+
+Visio.Algorithms.CRITICALITIES = [
+    { value: Visio.Algorithms.ALGO_RESULTS.success, human: 'Acceptable' }
+    { value: Visio.Algorithms.ALGO_RESULTS.ok, human: 'Critical' }
+    { value: Visio.Algorithms.ALGO_RESULTS.fail, human: 'Sub-Stanford' }
+    { value: Visio.Algorithms.STATUS.missing, human: 'Not-Reported' }
+  ]
+
+Visio.Algorithms.THRESHOLDS = [
+    { value: Visio.Algorithms.ALGO_RESULTS.high, human: 'Met Target (Above 80%)' }
+    { value: Visio.Algorithms.ALGO_RESULTS.medium, human: 'Approaching Target (Above 60%)' }
+    { value: Visio.Algorithms.ALGO_RESULTS.low, human: 'Below Target (Below 60% of target)' }
+    { value: Visio.Algorithms.STATUS.missing, human: 'Not-Reported' }
   ]
 
 Visio.Schema =

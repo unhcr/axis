@@ -1,4 +1,14 @@
 @Fixtures = {}
+@Fixtures.outputs = new Visio.Collections.Output([
+  {
+    id: 'abc-def'
+    name: 'earth'
+  },
+  {
+    id: 'def-abc'
+    name: 'mars'
+  }
+])
 @Fixtures.budgets = new Visio.Collections.Budget([
     {
       id: 'r'
@@ -38,6 +48,7 @@
       myr: 10
       yer: 20
       comp_target: 50
+      imp_target: 50
       standard: 50
     },
     {
@@ -47,6 +58,7 @@
       myr: 10
       yer: 20
       comp_target: 50
+      imp_target: 50
     },
     {
       id: 'lisa'
@@ -55,6 +67,7 @@
       myr: 10
       yer: 20
       comp_target: 50
+      imp_target: 50
     }
   ])
 

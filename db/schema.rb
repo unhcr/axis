@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140225092002) do
+ActiveRecord::Schema.define(:version => 20140318194900) do
 
   create_table "budgets", :force => true do |t|
     t.string   "budget_type"
@@ -30,8 +30,8 @@ ActiveRecord::Schema.define(:version => 20140225092002) do
     t.string   "operation_id"
   end
 
-  add_index "budgets", ["created_at", "updated_at"], :name => "index_budgets_on_created_at_and_updated_at"
   add_index "budgets", ["created_at"], :name => "index_budgets_on_created_at"
+  add_index "budgets", ["goal_id"], :name => "index_budgets_on_goal_id"
   add_index "budgets", ["is_deleted"], :name => "index_budgets_on_is_deleted"
   add_index "budgets", ["output_id"], :name => "index_budgets_on_output_id"
   add_index "budgets", ["plan_id", "ppg_id", "goal_id"], :name => "index_budgets_on_plan_id_and_ppg_id_and_goal_id"
@@ -82,9 +82,11 @@ ActiveRecord::Schema.define(:version => 20140225092002) do
     t.string   "operation_id"
   end
 
-  add_index "expenditures", ["created_at", "updated_at"], :name => "index_expenditures_on_created_at_and_updated_at"
   add_index "expenditures", ["created_at"], :name => "index_expenditures_on_created_at"
+  add_index "expenditures", ["goal_id"], :name => "index_expenditures_on_goal_id"
   add_index "expenditures", ["is_deleted"], :name => "index_expenditures_on_is_deleted"
+  add_index "expenditures", ["output_id"], :name => "index_expenditures_on_output_id"
+  add_index "expenditures", ["problem_objective_id"], :name => "index_expenditures_on_problem_objective_id"
   add_index "expenditures", ["updated_at"], :name => "index_expenditures_on_updated_at"
 
   create_table "export_modules", :force => true do |t|
@@ -179,14 +181,17 @@ ActiveRecord::Schema.define(:version => 20140225092002) do
     t.integer  "year"
     t.datetime "found_at"
     t.boolean  "missing_budget",       :default => false
+    t.integer  "imp_target"
   end
 
-  add_index "indicator_data", ["created_at", "updated_at"], :name => "index_indicator_data_on_created_at_and_updated_at"
   add_index "indicator_data", ["created_at"], :name => "index_indicator_data_on_created_at"
+  add_index "indicator_data", ["goal_id"], :name => "index_indicator_data_on_goal_id"
   add_index "indicator_data", ["indicator_id"], :name => "index_indicator_data_on_indicator_id"
   add_index "indicator_data", ["is_deleted"], :name => "index_indicator_data_on_is_deleted"
   add_index "indicator_data", ["is_performance"], :name => "index_indicator_data_on_is_performance"
+  add_index "indicator_data", ["output_id"], :name => "index_indicator_data_on_output_id"
   add_index "indicator_data", ["plan_id"], :name => "index_indicator_data_on_plan_id"
+  add_index "indicator_data", ["problem_objective_id"], :name => "index_indicator_data_on_problem_objective_id"
 
   create_table "indicators", :id => false, :force => true do |t|
     t.string   "id",                                :null => false
@@ -229,6 +234,13 @@ ActiveRecord::Schema.define(:version => 20140225092002) do
   create_table "indicators_strategy_objectives", :id => false, :force => true do |t|
     t.integer "strategy_objective_id", :null => false
     t.string  "indicator_id",          :null => false
+  end
+
+  create_table "instances", :id => false, :force => true do |t|
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.string   "id",         :null => false
+    t.string   "output_id"
   end
 
   create_table "operations", :id => false, :force => true do |t|

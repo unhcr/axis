@@ -1,0 +1,17 @@
+.row
+  .col-sm-10
+    .ui-medium-header
+      - if context.collection
+        Summary:
+      - else
+        Aggregated by:
+      = Visio.manager.year()
+
+  .col-sm-2
+    - _.each context.keys, (key) ->
+      .row
+        .col-md-12.bar-legend{ :class => key.value }
+          = key.human
+%figure
+.divider-thick.divider-light-gray
+.legend-container

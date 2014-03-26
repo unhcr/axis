@@ -9,9 +9,9 @@ class Visio.Views.AccordionIndexView extends Backbone.View
 
   humanName: 'My Accordion View'
 
-  render: (isRerender) ->
+  render: (isRerender, opts = {}) ->
     if !isRerender
-      @$el.html @template({ humanName: @humanName })
+      @$el.html @template(_.extend({ humanName: @humanName }, opts))
 
     parameters = Visio.manager.selected(Visio.manager.get('aggregation_type')).models.sort @sort
 

@@ -1,4 +1,12 @@
 Visio.Mixins.Exportable =
+  # Properties to override
+  #
+  # viewLocation: null
+  # selectable: false
+  # attrConfig: []
+  # hasAxis: false
+  # previewable: false
+
   config: ->
     config = {}
 
@@ -17,6 +25,7 @@ Visio.Mixins.Exportable =
       config.filters = @filters.toJSON()
     config.type = @type
     config.selectable = @selectable
+    config.previewable = @previewable
     config.viewLocation = @viewLocation
     config.pdfViewLocation = @pdfViewLocation
     config.setupFns = @setupFns
@@ -25,20 +34,15 @@ Visio.Mixins.Exportable =
   # Returns where the data is stored. Usually is the collection, but can also be the model
   dataAccessor: -> @collection
 
-  attrConfig: []
-
-  viewLocation: null
 
   pdfView: null
-
-  selectable: false
 
   title: 'My Awesome View'
 
   type: null
 
   events:
-    'click a.export': 'onExport'
+    'click .export': 'onExport'
 
   onExport: (e) ->
     e.stopPropagation()
@@ -47,8 +51,14 @@ Visio.Mixins.Exportable =
   subscribe: ->
     $.subscribe "select.#{@cid}.figure", @select
 
+  selectableData: (e) ->
+    @filtered @collection || @model
+
+  selectableLabel: (d, i) ->
+    Visio.Constants.ALPHABET[i]
+
   events:
-    'click a.export': 'onExport'
+    'click .export': 'onExport'
 
   unsubscribe: => $.unsubscribe "select.#{@cid}.figure"
 
@@ -57,3 +67,5 @@ Visio.Mixins.Exportable =
   filtered: (data) -> data
 
   figureId: -> @cid
+
+  exportable: true

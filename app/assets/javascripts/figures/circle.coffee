@@ -40,7 +40,13 @@ class Visio.Figures.Circle extends Visio.Figures.Base
       .tween("percent", () =>
         return (t) =>
           @percent = i(t)
-          @foreground.attr('d', @arc.endAngle(@twoPi * @percent)))
+          if _.isNumber @percent
+            d = @arc.endAngle @twoPi * @percent
+          else
+            d = "M0 0Z"
+
+
+          @foreground.attr('d', d))
 
     #$(@text.node()).countTo
     #  from: @oldNumber

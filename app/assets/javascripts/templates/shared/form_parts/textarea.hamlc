@@ -1,5 +1,6 @@
 %label{ :for => "form-#{context.formField.get('name')}" }
   = context.formField.get('human')
 %textarea{ :id => "form-#{context.formField.get('name')}",
+    :maxlength => Visio.Constants.CMS.TEXTAREA_MAXLEN,
     :data => { :name => context.formField.get('name')  } }
   = context.modelField

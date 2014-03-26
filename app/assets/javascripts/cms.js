@@ -15,7 +15,7 @@
 //= require underscore
 //= require hamlcoffee
 //= require backbone
-//= require ./vendor/d3.v3
+//= require ./vendor/d3
 //= require visio
 //= require backbone_ext
 //= require_tree ./mixins
@@ -32,6 +32,7 @@
 //= require_tree ./collections/syncables
 //= require_tree ./models/
 //= require_tree ./collections
+//= require ./views/shared/notifications/notification
 //= require_tree ./views/cms
 //= require_tree ./views/shared
 //= require_tree ./routers

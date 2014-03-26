@@ -68,7 +68,7 @@ test 'render', ->
       baseline: 0
       myr: 10
       yer: 20
-      comp_target: 50
+      imp_target: 50
       standard: 50
     },
     {
@@ -77,7 +77,7 @@ test 'render', ->
       baseline: 0
       myr: 10
       yer: 20
-      comp_target: 50
+      imp_target: 50
       standard: 50
     },
     {
@@ -86,7 +86,7 @@ test 'render', ->
       baseline: 0
       myr: 10
       yer: 20
-      comp_target: 50
+      imp_target: 50
       standard: 50
     }
   ])

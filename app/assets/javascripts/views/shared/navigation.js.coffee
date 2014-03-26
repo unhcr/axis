@@ -7,6 +7,7 @@ class Visio.Views.NavigationView extends Backbone.View
 
   events:
     'click .open': 'onClickOpen'
+    'click .deselect': 'onDeselect'
     'change .visio-checkbox input': 'onChangeSelection'
 
   render: () ->
@@ -45,7 +46,7 @@ class Visio.Views.NavigationView extends Backbone.View
 
     strategy = Visio.manager.strategy()
     # Hack for singular form of parameter
-    if strategy.include type.slice(0, type.length - 1), id
+    if strategy.include(type.slice(0,  -1), id) or Visio.manager.get(type).get(id)?.get('loaded')
 
       if $target.is(':checked')
         Visio.manager.get('selected')[type][id] = true
@@ -63,6 +64,15 @@ class Visio.Views.NavigationView extends Backbone.View
   onClickOpen: (e) ->
     type = $(e.currentTarget).attr('data-type')
     @open(type)
+
+  onDeselect: (e) ->
+    type = $(e.currentTarget).attr('data-type')
+    @$el.find(".#{type} input").prop 'checked', false
+
+    # Clear out any selection
+    Visio.manager.get('selected')[type] = {}
+
+    Visio.manager.trigger 'change:selected'
 
   open: (type) =>
     $opened = @$el.find('.ui-accordion-content.opened')

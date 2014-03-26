@@ -10,7 +10,7 @@
                   :id => "#{context.figure.figureId()}_#{filterName}",
                   :name => "#{context.figure.figureId()}_#{filter.id}" }
           %label{ :for => "#{context.figure.figureId()}_#{filterName}" }
-            = filterName
+            = filter.get('human')?[filterName] or filterName
     .divider-primary
   %a.reset-filters
     Reset Filters

@@ -13,14 +13,24 @@ Visio::Application.configure do
   # Disable Rails's static asset server (Apache or nginx will already do this)
   config.serve_static_assets = false
 
+  class NoCompression
+    def compress(string)
+      string
+    end
+  end
   # Compress JavaScripts and CSS
   config.assets.compress = true
+  config.assets.js_compressor = NoCompression.new
+  config.assets.css_compressor = NoCompression.new
 
   # Don't fallback to assets pipeline if a precompiled asset is missed
   config.assets.compile = false
 
   # Generate digests for assets URLs
   config.assets.digest = true
+
+  ENV['http_proxy'] = 'http://proxy.unhcr.local:8080'
+  ENV['https_proxy'] = 'https://proxy.unhcr.local:8080'
 
   # Defaults to nil and saved in location specified by config.assets.prefix
   # config.assets.manifest = YOUR_PATH

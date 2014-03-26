@@ -6,33 +6,43 @@ class Visio.Views.ExportModule extends Backbone.View
 
   events:
     'change figcaption input': 'onSelectionChange'
-    'click .export': 'onClickExport'
+    'click .pdf': 'onClickPdf'
     'click .close': 'onClose'
 
   initialize: (options) ->
     $(document).scrollTop(0)
     @config = @model.get 'figure_config'
+    @loadingPdf = new Backbone.Model
+      loading: false
+
+    @loadingPdf.on 'change:loading', =>
+      @$el.find('.pdf').toggleClass 'disabled'
 
     @figure = @model.figure @config
 
     if @config.selectable
       $.subscribe "select.#{@figure.figureId()}", @select
-      @filtered = @figure.filtered @figure.dataAccessor()
+      @selectableData = @figure.selectableData()
 
   render: ->
 
-    @$el.html @template( model: @model.toJSON(), filtered: @filtered )
+    @$el.html @template
+      model: @model.toJSON()
+      selectableData: @selectableData
+      selectableLabel: @figure.selectableLabel
+
     @$el.find('.export-figure figure').html @figure.el
-    if @config.selectable
+    if @config.selectable or @config.previewable
       @figure.render()
     else
       @figure.$el.html @figure.type.human
+    @$el.css 'height', $(document).height()
     @
 
   onSelectionChange: (e) ->
     e.preventDefault()
     $target = $(e.currentTarget)
-    d = _.find @filtered, (d, i) ->
+    d = _.find @selectableData, (d, i) ->
       i == +$target.val()
 
     unless d
@@ -49,27 +59,36 @@ class Visio.Views.ExportModule extends Backbone.View
     # Toggle if it's check or not
     $input.prop 'checked', not checked
 
-  onClickExport: ->
+  onClickPdf: ->
+    return if @loadingPdf.get 'loading'
+    @loadingPdf.set 'loading', true
+    NProgress.start()
     statusCodes =
       200: =>
+        NProgress.done()
         window.location.assign @model.pdfUrl()
-      504: ->
-       console.log "Shit's beeing wired"
+        @loadingPdf.set 'loading', false
+      504: =>
+        new Visio.Views.Error
+          title: "Error generating PDF"
+        NProgress.done()
+        @loadingPdf.set 'loading', false
       503: (jqXHR, textStatus, errorThrown) =>
         wait = parseInt jqXHR.getResponseHeader('Retry-After')
+        NProgress.inc()
         setTimeout =>
           $.ajax
             url: @model.pdfUrl()
             statusCode: statusCodes
-        , wait * 3000
+        , wait * 6000
 
-    formArray = @$el.find('.export-settings form').serializeArray()
+    formArray = @$el.find('form').serializeArray()
     _.each formArray, (formObj) => @model.set formObj.name, formObj.value
 
     selected = _.map @$el.find('figcaption input[type="checkbox"]:checked'), (ele) -> $(ele).attr('data-id')
     @model.get('figure_config').selected = selected
 
-    @model.save().then =>
+    @model.save().done =>
       $.ajax
         url: @model.pdfUrl()
         statusCode: statusCodes

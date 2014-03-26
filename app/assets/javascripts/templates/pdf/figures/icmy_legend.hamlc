@@ -1,0 +1,5 @@
+.legend-body
+  %figcaption
+    %p
+      != Visio.exportModule.get('description')
+

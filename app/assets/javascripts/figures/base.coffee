@@ -1,7 +1,5 @@
 class Visio.Figures.Base extends Backbone.View
 
-  @include Visio.Mixins.Exportable
-
   template: HAML['figures/base']
 
   attrAccessible: ['x', 'y', 'width', 'height', 'collection', 'margin', 'model']
@@ -10,9 +8,11 @@ class Visio.Figures.Base extends Backbone.View
 
   viewLocation: 'Figures'
 
-  initialize: (config) ->
+  hasAxis: true
 
-    # default margin
+  initialize: (config, templateOpts) ->
+
+    # default margin, config will override if applicable
     @margin =
       left: 2
       right: 2
@@ -30,8 +30,17 @@ class Visio.Figures.Base extends Backbone.View
     if config?.filters?
       @filters = new Visio.Collections.FigureFilter(config.filters)
 
-    @template = HAML["pdf/#{@type.name}"] if @isPdf
-    @$el.html @template({ figure: @, model: @model, collection: @collection })
+    @template = HAML["pdf/figures/#{@type.name}"] if @isPdf
+
+    opts =
+      figure: @
+      model: @model
+      collection: @collection
+      isExport: @isExport
+      exportable: @exportable
+
+    @$el.html @template(_.extend(opts, templateOpts))
+
     @selection = d3.select @$el.find('figure')[0]
 
 

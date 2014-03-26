@@ -1,68 +1,90 @@
-.pb_after
+.pb_after.pdf-strategy-snapshot
   %header
     .row
       .col-sm-10.ui-large-header
         %span.ui-primary-light.ui-huge-number.bold
           = context.parameter.length
         %span
-          Target Countries
-
-    .row
-      .col-sm-1
-        .col-sm-4.zero-padding
-          .divider-primary-second.divider-extra-thick
+          = "Priority #{Visio.manager.get('aggregation_type')}"
 
     .row
       .col-sm-9.ui-small-header.ui-primary-second
-        = (context.parameter.map (operation) -> operation.get('country')?.name).join ', '
+        = (context.parameter.map (p) -> p.toString()).join ', '
 
-  .row
-    .col-sm-8.ui-small-header.bold.ui-primary-second
-      Key Figures
-    .col-sm-3.ui-small-header.bold.ui-primary-second
-      Impact Criticality
-
-  .row
-    .col-sm-8
-      .divider-light-gray.divider-thick
-    .col-sm-3
-      .divider-light-gray.divider-thick
+    .row
+      .col-sm-12
+        .divider-light-gray.divider-thick
 
   .row
     .col-sm-8
-      .row
-        - for i in [0..1]
-          .col-sm-6{ :class => "keyFigure #{context.keyFigures[i].fn}" }
+      %p
+        != Visio.Utils.nl2br Visio.exportModule.get 'description'
+
+    .col-sm-4
+      - list = ['budget', 'spent']
+      - _.each list, (name) ->
+        - keyFigure = _.findWhere context.keyFigures, { fn: name }
+        .row
+          .col-sm-12{ :class => "keyFigure #{keyFigure.fn}-#{context.cid}" }
             .ui-huge-number.number.ui-primary-light.light
               0
             .bold.ui-extra-small-header
-              = context.keyFigures[i].human
-            %span.ui-primary-second.ui-extra-small-header All&nbsp;Target&nbsp;Countries
-      .row
-        - for i in [2..3]
-          .col-sm-6{ :class => "keyFigure #{context.keyFigures[i].fn}" }
-            .ui-huge-number.number.ui-primary-light.light
-              0
-            .bold.ui-extra-small-header
-              = context.keyFigures[i].human
+              %span.label-prefix
+                = context.labelPrefix + ' '
+              = keyFigure.human
             %span.ui-primary-second.ui-extra-small-header All&nbsp;Target&nbsp;Countries
 
       .row
         .col-sm-12
-          %p
-            != Visio.Utils.nl2br Visio.exportModule.get 'description'
 
+.pb_after.pdf-page
 
-    .col-sm-3
-      - for i in [0..3]
-        .row.center-text
-          .col-sm-12.left-flush.criticality{ :class => "#{context.criticalities[i]}-criticality" }
+  .achievement-criticality
+    .row
+      .col-md-12
+        %h3
+          Achievement &amp; Criticality.
+        .divider-light-gray
+    .row
+      .col-md-11.col-md-offset-1
         .row
-          .col-sm-7.col-sm-offset-5.zero-padding.number.ui-small-number.ui-primary-light.count{
-            :class => "#{context.criticalities[i]}-count" }
-            0
-        .row
-          %label.col-sm-7.col-sm-offset-5.zero-padding
-            = Visio.Utils.humanMetric(context.criticalities[i])
+          .col-md-4
+            - _.each context.thresholds, (threshold) ->
+              .row
+                .col-md-12.bar-legend{ :class => threshold.value }
+                  = threshold.human
+          .col-md-4.col-md-offset-4
+            - _.each context.criticalities, (criticality) ->
+              .row
+                .col-md-12.bar-legend{ :class => criticality.value }
+                  = criticality.human
 
-.target-countries
+    .row
+      .col-md-1
+        .bar-axis-container
+          .bar-axis
+      .col-md-11
+        .row
+          - _.each context.barFigureData, (d) ->
+            .bar-figure-container{ :class => "col-md-#{12 / context.barFigureData.length} #{d.figure.name}" }
+
+              .bold
+                = d.title
+              %div
+                = d.description
+              %div
+                %span.ui-medium-number.number{ :class => "#{d.figure.name}-type-count-#{context.cid}" }
+
+                  0
+                %span
+                  = d.title
+              %div
+                %span.ui-medium-number.number{ :class => "#{d.figure.name}-selected-count-#{context.cid}" }
+                  0
+                %span
+                  Times Selected
+
+
+              %div{ :class => "#{d.figure.name}-figure-#{context.cid} bar-figure" }
+
+.target-parameters

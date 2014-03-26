@@ -1,0 +1,47 @@
+%header
+  .row
+    .country-icon.col-md-10
+      - if context.parameter.get('country')?
+        %img{
+          :width => "60",
+          :height => "60",
+          :src => "/assets/countries/#{context.parameter.get('country').iso2.toLowerCase()}/128.png" }
+      .parameter-name
+        = context.parameter.toString()
+    .col-md-2
+      .pin.pin-medium.pull-right{ :class => "pin-#{context.category}" }
+        .pin-tip
+        .pin-body
+
+.row
+  - list = ['budget', 'spent']
+  - _.each list, (keyFigure) ->
+    - c = _.findWhere context.keyFigures, { fn: keyFigure }
+    .col-md-4{ :class => "keyFigure #{c.fn}-#{context.cid}" }
+      .ui-small-number.number
+        0
+      %div
+        %span.label-prefix
+          = context.labelPrefix + ' '
+        = c.human
+
+.row
+  .col-xs-12
+    .row.tabs
+      - _.each context.barFigureData, (d) ->
+        .ui-tab-radio.col-md-4.sides-flush
+          %input{ :id => "#{d.title}-#{context.parameter.id}",
+            :name => context.parameter.id,
+            :checked => context.selectedBarFigure == d.figure,
+            :value => d.figure.name,
+            :type => 'radio' }
+          %label{ :for => "#{d.title}-#{context.parameter.id}" }
+            = d.short
+- _.each context.barFigureData, (d) ->
+  .row
+    .col-xs-12{ :class => ["#{d.figure.name}-figure-#{context.cid}",
+        "bar-figure", ("gone" unless context.selectedBarFigure == d.figure)].join(' ') }
+.row
+  .col-xs-12.achievement-figure
+.row
+  .col-xs-12.output-achievement-figure

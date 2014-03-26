@@ -118,3 +118,11 @@ test 'filtered', ->
   filtered = @map.filtered @plans
   strictEqual filtered.length, 1
   ok _.findWhere(filtered, { id: 1 })
+
+  # Should take intersection of plans, not union
+  selectedStrategies = { 1: true, 2: true }
+  Visio.manager.set 'selected_strategies', selectedStrategies
+
+  filtered = @map.filtered @plans
+  strictEqual filtered.length, 1
+  ok _.findWhere(filtered, { id: 1 })

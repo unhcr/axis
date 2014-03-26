@@ -2,6 +2,7 @@ class Indicator < ActiveRecord::Base
   self.primary_key  = :id
 
   include SyncableModel
+  include SyncableParameterModel
   include Tire::Model::Search
   include Tire::Model::Callbacks
 
@@ -21,10 +22,6 @@ class Indicator < ActiveRecord::Base
 
   has_many :indicators_strategies, :class_name     => 'IndicatorsStrategies'
   has_many :strategies, :uniq => true, :through => :indicators_strategies
-
-  has_many :indicators_strategy_objectives, :class_name    => 'IndicatorsStrategyObjectives'
-  has_many :strategy_objectives, :uniq => true, :through => :indicators_strategy_objectives
-
 
   has_many :indicator_data
 

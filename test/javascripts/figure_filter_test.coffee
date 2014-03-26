@@ -99,3 +99,13 @@ test 'Callback on filter', ->
 
   strictEqual callback.callCount, 1, 'Callback should be called once'
   ok callback.calledWith('ADMIN', false), 'Callback should be called with params'
+
+test 'active', ->
+
+  year = @filters.get('year').active()
+  strictEqual year, '2013'
+
+  types = @filters.get('budget_type').active()
+  strictEqual types.length, 1
+  strictEqual types[0], 'ADMIN'
+

@@ -26,6 +26,7 @@ module FocusFetch
       headers_zip = open(server_url(HEADERS), opts)
     rescue Exception => e
       Rails.logger.fatal "Failed fetching header file: #{e.message}"
+      p "Failed fetching header file: #{e.message}"
       exit
     end
 

@@ -1,5 +1,6 @@
 class Goal < ActiveRecord::Base
   include SyncableModel
+  include SyncableParameterModel
   include Tire::Model::Search
   include Tire::Model::Callbacks
   attr_accessible :name
@@ -7,6 +8,7 @@ class Goal < ActiveRecord::Base
   self.primary_key  = :id
   has_many :indicator_data
   has_many :budgets
+  has_many :expenditures
 
   has_many :goals_ppgs, :class_name => 'GoalsPpgs'
   has_many :ppgs, :uniq => true, :through => :goals_ppgs
@@ -19,9 +21,6 @@ class Goal < ActiveRecord::Base
 
   has_many :goals_strategies, :class_name => 'GoalsStrategies'
   has_many :strategies, :uniq => true, :through => :goals_strategies
-
-  has_many :goals_strategy_objectives, :class_name => 'GoalsStrategyObjectives'
-  has_many :strategy_objectives, :uniq => true, :through => :goals_strategy_objectives
 
   has_many :goals_plans, :class_name => 'GoalsPlans'
   has_many :plans, :uniq => true, :through => :goals_plans

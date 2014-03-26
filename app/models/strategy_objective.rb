@@ -5,34 +5,34 @@ class StrategyObjective < ActiveRecord::Base
   attr_accessible :description, :name
   belongs_to :strategy
 
-  default_scope :include => [:goals, :problem_objectives, :outputs, :indicators]
+  def self.parameters
+    [Goal, ProblemObjective, Output, Indicator]
+  end
 
-  has_many :goals_strategy_objectives, :class_name => 'GoalsStrategyObjectives'
-  has_many :goals, :uniq => true, :through => :goals_strategy_objectives,
-    :after_add => :add_to_strategy,
-    :after_remove => :remove_from_strategy
+  default_scope :include => [parameters.map { |p| p.table_name.to_sym }]
 
-  has_many :problem_objectives_strategy_objectives, :class_name => 'ProblemObjectivesStrategyObjectives'
-  has_many :problem_objectives, :uniq => true, :through => :problem_objectives_strategy_objectives,
-    :after_add => :add_to_strategy,
-    :after_remove => :remove_from_strategy
+  self.parameters.each do |p|
+    through = [p.table_name, 'strategy_objectives'].sort.join('_').to_sym
+    class_name = [p.to_s.pluralize, StrategyObjective.to_s.pluralize].sort.join
 
-  has_many :outputs_strategy_objectives, :class_name => 'OutputsStrategyObjectives'
-  has_many :outputs, :uniq => true, :through => :outputs_strategy_objectives,
-    :after_add => :add_to_strategy,
-    :after_remove => :remove_from_strategy
+    has_many through, :class_name => class_name
+    has_many p.table_name.to_sym, :uniq => true, :through => through,
+      :after_add => [:add_to_strategy, :touch_data],
+      :after_remove => [:remove_from_strategy, :touch_data]
 
-  has_many :indicators_strategy_objectives, :class_name => 'IndicatorsStrategyObjectives'
-  has_many :indicators, :uniq => true, :through => :indicators_strategy_objectives,
-    :after_add => :add_to_strategy,
-    :after_remove => :remove_from_strategy
+  end
 
   def add_to_strategy(assoc)
     self.strategy.send(assoc.class.table_name) << assoc if self.strategy
   end
 
+  def touch_data(assoc)
+    assoc.touch_data self
+  end
+
   def remove_from_strategy(assoc)
     self.strategy.send(assoc.class.table_name).delete(assoc) if self.strategy
+    assoc.touch_data self
   end
 
   def self.search_models(query, options = {})

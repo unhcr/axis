@@ -1,3 +1,4 @@
+@import "compass/css3";
 @import "../shared/variables";
 @import "../shared/mixins";
 
@@ -17,7 +18,8 @@
 .pdf-page {
   width: 21cm;
   margin: 0;
-  height: 100%
+  height: 29.7cm;
+  position: relative;
 }
 
 /* Warning lots of pixel perfect values needed. Makes for messy css */
@@ -43,21 +45,24 @@ body.pdf {
     font-size: 14px;
   }
 
+
+  section {
+    @include section;
+  }
   article {
     @include article;
   }
 
   .parameter-show {
-    width: 435px;
+    width: 406px;
   }
 
-  .country-slider {
-    .country-slide {
+  .parameter-slider {
+    .parameter-slide {
       @include article;
 
       margin: 0;
       border: none;
-      border-bottom: 1px solid $light-gray;
       padding: 30px $parameter-show-padding-horizontal / 2;
       padding-top: 40px;
 
@@ -66,24 +71,8 @@ body.pdf {
       }
 
     }
-    .country-slide:nth-of-type(2n+1) {
-      border-right: 1px solid $light-gray;
-    }
 
-    /* Last two should not have a bottom border */
-    .country-slide:nth-last-type-of(-n + 2) {
-      border-bottom: none;
-    }
-    /* However if their is a widow, we add back the border */
-    .country-slide:nth-of-type(odd) {
-      border-bottom: 1px solid $light-gray;
-    }
-    /* Every 5th and 6th don't have border */
-    .country-slide:nth-of-type(6n), .country-slide:nth-of-type(6n-1) {
-      border-bottom: none;
-    }
   }
-
   .keyFigure {
     padding-bottom: 15px;
   }
@@ -128,9 +117,11 @@ body.pdf {
     font-weight: 200;
   }
 
-  header {
-    padding-top: 66px;
-    padding-bottom: 50px;
+  .pdf-strategy-snapshot {
+    header {
+      padding-top: 66px;
+      padding-bottom: 50px;
+    }
   }
 
   p {
@@ -143,9 +134,80 @@ body.pdf {
     position: relative;
   }
 
+  .bar-figure-container, .bar-axis-container {
+    height: 510px;
+    border-left: 1px $primary solid;
+    position: relative;
+
+    .bar-figure {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      text-align: center
+    }
+
+  }
+
+  .bar-axis-container {
+    border: none;
+    .bar-axis {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
+  }
+
+  .bar-figure-container:nth-child(2) {
+    border-left: 1px $primary dotted;
+  }
+
+  .bar-legend::before {
+    position: absolute;
+    content: ' ';
+    position: absolute;
+    content: ' ';
+    width: 15px;
+    height: 15px;
+    @include border-radius(15px);
+    left: -6.5px
+  }
+
+  .bar-legend.success::before {
+    background-color: $success;
+  }
+  .bar-legend.ok::before {
+    background-color: $ok;
+  }
+  .bar-legend.fail::before {
+    background-color: $fail;
+  }
+  .bar-legend.missing::before {
+    background-color: $dark-gray;
+  }
+
+  .bar-legend.high::before {
+    background-color: $high;
+  }
+  .bar-legend.medium::before {
+    background-color: $medium;
+  }
+  .bar-legend.low::before {
+    background-color: $low;
+  }
+
+  .achievement-criticality {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+
+
 }
 
-.pdf.absy {
+.pdf.absy, .pdf.icmy {
   figcaption {
     width: 435px;
     float: left;
@@ -160,17 +222,32 @@ body.pdf {
   }
 }
 
-/*
+.pdf.icmy {
+  article {
+    width: 380px;
+    border: none;
+    border-bottom: 1px dotted $primary;
+    margin-top: 15px;
+  }
+
+  .bar-figure-container, .bar-axis-container {
+    height: 176px;
+
+    svg {
+      vertical-align: bottom;
+    }
+  }
+}
 
 .parameter-show:nth-of-type(2n+4) {
-  padding-left: $parameter-show-padding-horizontal
+  margin-left: 2px;
 }
 .parameter-show:nth-of-type(2n+3) {
-  padding-right: $parameter-show-padding-horizontal
+  margin-right: 2px;
 }
 .parameter-show:nth-of-type(-n+2) {
-  padding-left: $parameter-show-padding-horizontal
-}*/
+  margin-left: 2px;
+}
 
 .idx {
   @include number;
@@ -181,7 +258,4 @@ body.pdf {
   text-align: center;
   line-height: $parameter-show-idx - 3px;
   font-weight: bold;
-  position: absolute;
-  top: 8px;
-  left: 15px;
 }

@@ -1,9 +1,16 @@
 @mixin article {
-  width: 465px;
+  width: 445px;
   display: inline-block;
   position: relative;
-  padding-left: $parameter-show-padding-horizontal / 2;
-  padding-right: $parameter-show-padding-horizontal / 2;
+  margin-left: $parameter-show-padding-horizontal / 2;
+  margin-right: $parameter-show-padding-horizontal / 2;
+  border: 1px solid $primary;
+  padding-top: 0;
+}
+
+@mixin section {
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
 @mixin number {
@@ -91,4 +98,31 @@
     font-weight: bold;
   }
 
+}
+
+@mixin text-theme-two {
+  h2 {
+    font-size: 26px;
+    color: $primary;
+    margin: 0
+  }
+}
+
+@mixin header-button {
+  margin: 5px 0 ;
+  height: $header-button-height;
+  border: 1px $off-white solid;
+  border-right: none;
+  display: inline-block;
+  padding-top: 6px;
+  float: right;
+}
+
+@mixin hover-shadow {
+  @include box-shadow(0px 5px 13px -3px $primary-soft)
+}
+
+@mixin row-gutter {
+  margin-left: -15px;
+  margin-right: -15px;
 }

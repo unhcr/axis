@@ -19,6 +19,8 @@ module 'BMY Figure',
     @d.selectedBudgetData.restore()
 
 test 'filtered', ->
+  @figure.filters.get('scenario').filter(Visio.Scenarios.AOL, true)
+  @figure.filters.get('scenario').filter(Visio.Scenarios.OL, true)
 
   memo = @figure.filtered @budgets
 
@@ -26,6 +28,8 @@ test 'filtered', ->
   ok _.find memo, ((array) -> array.budgetType == Visio.Budgets.ADMIN), 'One line should have ADMIN type'
   ok _.find memo, ((array) -> array.budgetType == Visio.Budgets.PROJECT), 'One line should have PROJECT type'
   ok _.find memo, ((array) -> array.budgetType == 'total'), 'One line should have total type'
+
+  console.log memo
 
   lineData = _.find memo, (array) -> array.budgetType == Visio.Budgets.ADMIN
   strictEqual lineData.length, 2, 'Should have two datums'

@@ -1,11 +1,32 @@
 class Visio.Figures.Isy extends Visio.Figures.Base
 
+  @include Visio.Mixins.Exportable
+
   type: Visio.FigureTypes.ISY
 
   attrAccessible: ['x', 'y', 'width', 'height', 'collection', 'margin', 'goalType', 'isPerformance']
 
   initialize: (config) ->
-    @$el.prepend $('<a class="export">export</a>')
+
+    @filters = new Visio.Collections.FigureFilter([
+      {
+        id: 'is_performance'
+        filterType: 'radio'
+        values: { true: true, false: false }
+        human: { true: 'performance', false: 'impact' }
+        callback: (name, attr) =>
+          @isPerformanceFn(name == 'true').render()
+      },
+      {
+        id: 'achievement'
+        filterType: 'radio'
+        values: _.object(_.values(Visio.Algorithms.GOAL_TYPES), _.values(Visio.Algorithms.GOAL_TYPES).map(
+          (achievement_type) ->
+            Visio.manager.get('achievement_type') == achievement_type))
+        callback: (name, attr) =>
+          @goalTypeFn(name).render()
+      }
+    ])
 
     super config
 
@@ -22,7 +43,6 @@ class Visio.Figures.Isy extends Visio.Figures.Base
 
     @y = d3.scale.linear()
       .range([@adjustedHeight, 0])
-      .clamp(true)
 
     @goalType = config.goalType || Visio.Algorithms.GOAL_TYPES.target
 
@@ -130,10 +150,11 @@ class Visio.Figures.Isy extends Visio.Figures.Base
         container.exit().remove()
 
         _.each metrics, (metric, idx) ->
-          value = d.get(metric)
+          value = if d.get(metric) > d.get(self.goalType) then d.get(self.goalType) else d.get(metric)
 
 
           reversed = baseline > value
+
           barHeight = Math.abs(baseline - value)
           bars = box.selectAll(".#{metric}-bar").data([d])
           bars.enter().append('rect')
@@ -155,20 +176,13 @@ class Visio.Figures.Isy extends Visio.Figures.Base
               return self.y(0) - self.y(barHeight))
           bars.exit().remove()
 
-        max = d3.max metrics, (metric) ->
-          +d.get(metric)
-
-        reversed = baseline > max
-
-        box.classed 'reversed', reversed
-
         center = box.selectAll('.center').data([d])
         center.enter().append('line')
         center.attr('class', 'center')
         center.transition()
           .duration(Visio.Durations.FAST)
           .attr('x1', self.barWidth)
-          .attr('y1', (d) -> if reversed then self.y(baseline) else self.y(max))
+          .attr('y1', (d) -> self.y baseline )
           .attr('x2', self.barWidth)
           .attr('y2', (d) -> self.y(d.get(Visio.Algorithms.GOAL_TYPES.target)))
         center.exit().remove()

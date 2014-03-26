@@ -13,6 +13,7 @@ class Visio.Views.Form extends Backbone.View
     @nestedForms = {}
     @isModal = options.isModal
     @nestedTemplate = options.nestedTemplate
+    store.clear()
 
     @initModal() if @isModal
 
@@ -51,9 +52,9 @@ class Visio.Views.Form extends Backbone.View
     'keyup textarea': 'onKeyup'
     'click .nested-item': 'onClickNestedItem'
     'click .nested-item-add': 'onAddNestedItem'
-    'click .save': 'saveAndClose'
-    'click .close': 'close'
-    'click .cancel': 'close'
+    'click .save': 'onSaveAndClose'
+    'click .close': 'onClose'
+    'click .cancel': 'onClose'
     'click .nested-delete': 'onDeleteNestedItem'
     'click .reset': 'onReset'
 
@@ -68,12 +69,26 @@ class Visio.Views.Form extends Backbone.View
 
     _.each @schema, (field) =>
       formField = @fields.findWhere { name: field.name }
-      @$el.find(".form-#{field.name}").html HAML["shared/form_parts/#{field.formElement}"]({
+      @$el.find(".form-#{field.name}").append HAML["shared/form_parts/#{field.formElement}"]({
         modelField: @model.get(field.name),
         formField: formField })
+    @$el.find('.save-scroll').on 'scroll', @onSaveScroll
+    @setScrollPositions()
 
     @nestedTrigger 'rendered'
     @
+
+  setScrollPositions: =>
+    $scrolls = @$el.find('.save-scroll')
+    $scrolls.each (idx, ele) ->
+      $ele = $ ele
+      scrollname = $ele.attr 'data-scrollname'
+      $ele.scrollTop store.get(scrollname)
+
+
+  onSaveScroll: (e) ->
+    $target = $ e.currentTarget
+    store.set $target.attr('data-scrollname'), $target.scrollTop()
 
   onReset: (e) ->
     e.stopPropagation()
@@ -218,13 +233,16 @@ class Visio.Views.Form extends Backbone.View
 
       else
         switch field.get 'formElement'
-          when 'checkboxes', 'list' then @model.get(name).reset @original[name]
+          when 'checkboxes', 'list' then @model.get(name).reset _.clone(@original[name])
           when 'text', 'textarea' then @model.set name, @original[name]
 
     @model.toJSON()
 
-  saveAndClose: =>
+  onSaveAndClose: =>
     @close true
+
+  onClose: =>
+    @close false
 
   close: (save = false) =>
 
@@ -237,8 +255,8 @@ class Visio.Views.Form extends Backbone.View
      for id, view of @nestedForms[name]
        @nestedForms[name][id].close(save)
 
-    @nestedTrigger 'close'
     @nestedTrigger 'save' if save
+    @nestedTrigger 'close'
     @unbind()
     @remove()
 

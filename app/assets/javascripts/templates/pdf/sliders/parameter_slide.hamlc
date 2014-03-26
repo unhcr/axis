@@ -1,0 +1,76 @@
+.row
+  .col-md-2
+    .idx
+      = Visio.Constants.ALPHABET[context.idx]
+
+.row
+  - if context.parameter.get('country')?
+    .country-icon.col-md-4
+      %img{
+        :width => "55",
+        :height => "55",
+        :src => "/assets/countries/#{context.parameter.get('country').iso2.toLowerCase()}/128.png" }
+    .col-md-8
+      .pin.pin-medium.pull-right{ :class => "pin-#{context.category}" }
+        .pin-tip
+        .pin-body
+  - else
+    .col-md-offset-4.col-md-8
+      .pin.pin-medium.pull-right{ :class => "pin-#{context.category}" }
+        .pin-tip
+        .pin-body
+.row
+  .col-md-12
+    .divider-thick.divider-primary
+.row
+  %h3.bottom-flush.country-name.col-md-12.ui-primary
+    = context.parameter.get('name').toUpperCase()
+
+.row
+  - list = ['budget', 'spent', 'expenditure']
+  - _.each list, (keyFigure) ->
+    - c = _.findWhere context.keyFigures, { fn: keyFigure }
+    .col-md-4.top-flush{ :class => "keyFigure #{c.fn}-#{context.cid}" }
+      .ui-medium-number.number.ui-primary-light
+        0
+      %p
+        %span.label-prefix
+          = context.labelPrefix + ' '
+        != Visio.Utils.space2nbsp c.human
+
+.row
+  .col-md-12
+    .divider-light-gray
+
+- _.each context.barFigureData, (d) ->
+  .row
+    .col-md-12
+      .row
+        .col-md-12
+          %div{ :class => "#{d.figure.name}-figure-#{context.cid}" }
+      .row
+        .col-md-8
+          %div.bold
+            = d.title
+          %div
+            = d.description
+        .col-md-4.top-flush
+          .row
+            .col-md-12.top-flush
+              %span.ui-medium-number.number.ui-primary-light{ :class => "#{d.figure.name}-type-count-#{context.cid}" }
+                0
+              %span
+                - if d.figure == Visio.FigureTypes.OASY
+                  Outputs
+                - else
+                  Indicators
+          .row
+            .col-md-12.top-flush
+              %span.ui-medium-number.number.ui-primary-light{ :class => "#{d.figure.name}-selected-count-#{context.cid}" }
+                0
+              %span
+                Times Selected
+  .row
+    .col-md-12
+      .divider-dotted-primary
+

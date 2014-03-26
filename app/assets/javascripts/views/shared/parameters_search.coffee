@@ -78,6 +78,8 @@ class Visio.Views.ParameterSearch extends Backbone.View
     _.each dependencyTypes, (dependencyType) ->
       fetchOptions.include["#{dependencyType.singular}_ids"] = true
 
+    return if @collection.get(id)? and @collection.get(id).get('loaded')
+
     model = new Visio.Models[@collection.name.className]({ id: id })
 
     # First fetch the actual parameter
@@ -92,13 +94,15 @@ class Visio.Views.ParameterSearch extends Backbone.View
     dataOptions = {}
 
 
-
+    NProgress.start()
     # Have to cascade promises since jquery's when doesn't properly return promise when called with apply
     dfd.done =>
       Visio.manager.get(model.name.plural).add model
+      NProgress.inc()
       # Fetch all parameter dependencies
       $.when.apply(@, dependencyTypes.map (dependencyType) ->
         Visio.manager.get(dependencyType.plural).fetchSynced(dependencyOptions)).done =>
+          NProgress.inc()
 
           # Select model and dependencies
           Visio.manager.select model.name.plural, id
@@ -109,7 +113,9 @@ class Visio.Views.ParameterSearch extends Backbone.View
             filter_ids: @filterIds @collection.name, id
           $.when.apply(@, dataTypes.map (dataType) ->
             Visio.manager.get(dataType.plural).fetchSynced(dataOptions, null, 'post')).done =>
+              NProgress.done()
               # finally trigger redraw
+              model.set 'loaded', true
               Visio.manager.trigger 'change:navigation'
 
 

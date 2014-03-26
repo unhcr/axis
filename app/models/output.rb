@@ -1,5 +1,6 @@
 class Output < ActiveRecord::Base
   include SyncableModel
+  include SyncableParameterModel
   include Tire::Model::Search
   include Tire::Model::Callbacks
 
@@ -18,15 +19,13 @@ class Output < ActiveRecord::Base
   has_many :outputs_strategies, :class_name    => 'OutputsStrategies'
   has_many :strategies, :uniq => true, :through => :outputs_strategies
 
-  has_many :outputs_strategy_objectives, :class_name     => 'OutputsStrategyObjectives'
-  has_many :strategy_objectives, :uniq => true, :through => :outputs_strategy_objectives
-
   has_many :outputs_plans, :class_name     => 'OutputsPlans'
   has_many :plans, :uniq => true, :through => :outputs_plans
 
-
   has_many :indicator_data
   has_many :budgets
+
+  has_many :instances
 
 
   def to_jbuilder(options = {})

@@ -28,6 +28,49 @@ class StrategyTest < ActiveSupport::TestCase
     @s.strategy_objectives << @so
   end
 
+  test "update nested" do
+    s = Strategy.create()
+
+    s_json = ActiveSupport::HashWithIndifferentAccess.new(
+      :operations => [Operation.first.as_json]
+    )
+
+    s.update_nested s_json
+
+    s.reload
+    assert_equal s.operations.length, 1
+
+    s_json[:strategy_objectives] = [{ :name => 'weird', :goals => [Goal.first.as_json] }]
+
+    s.update_nested s_json
+
+    s.reload
+    assert_equal s.operations.length, 1
+    assert_equal s.strategy_objectives.length, 1
+    assert_equal s.strategy_objectives[0].goals.length, 1
+
+    s_json[:strategy_objectives] = [
+      { :name => 'weird', :goals => [Goal.first.as_json] },
+      s.strategy_objectives[0].as_json.as_json
+    ]
+
+    s.update_nested s_json
+
+    s.reload
+    assert_equal s.operations.length, 1
+    assert_equal s.strategy_objectives.length, 2
+
+    s_json[:strategy_objectives] = nil
+    s.update_nested s_json
+
+    s.reload
+    assert_equal s.operations.length, 1
+    assert_equal s.strategy_objectives.length, 0
+
+
+
+  end
+
   test "should get indicator data for strategy" do
 
     datum = IndicatorDatum.new()

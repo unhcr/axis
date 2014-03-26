@@ -1,5 +1,6 @@
 class Plan < ActiveRecord::Base
   include SyncableModel
+  include SyncableParameterModel
 
   attr_accessible :name, :operation_name, :year, :operation_id
 

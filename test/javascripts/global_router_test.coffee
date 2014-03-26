@@ -12,6 +12,7 @@ module 'Global Router',
     })
   teardown: ->
     Visio.manager.get('db').clear()
+    Visio.router.exportView?.close()
 
 test 'search', ->
 

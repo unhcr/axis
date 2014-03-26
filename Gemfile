@@ -6,11 +6,14 @@ gem 'equivalent-xml'
 gem 'rubyzip'
 gem 'pdfkit'
 gem 'quoth'
+gem 'resque'
 gem 'shrimp', :git => 'https://github.com/benrudolph/shrimp.git'
 gem 'pony'
 gem 'whenever', :require => false
 gem "devise_ldap_authenticatable"
 gem 'counter_culture', '~> 0.1.18'
+gem "capistrano-resque", "~> 0.1.0", require: false
+gem 'google_drive'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -44,9 +47,9 @@ end
 
 group :development, :test do
   gem 'quiet_assets'
-  gem 'capistrano'
-  gem 'capistrano-rbenv'
-  gem 'qunit-rails'
+  gem 'capistrano', '~> 2.15.5'
+  gem 'capistrano-rbenv', '~> 1.0.5'
+  gem 'qunit-rails', '= 0.0.4'
   gem 'random-word'
   gem 'simplecov', :require => false
   gem 'teaspoon'

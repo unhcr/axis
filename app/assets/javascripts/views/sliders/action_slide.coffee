@@ -9,3 +9,6 @@ class Visio.Views.ActionSlideView extends Backbone.View
     @$el.html @template({ model: @model, idx: @idx })
     @
 
+  close: =>
+    @unbind()
+    @remove()

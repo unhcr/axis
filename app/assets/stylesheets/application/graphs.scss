@@ -88,11 +88,8 @@ line {
   }
 
   .y.axis line {
-    stroke: none;
-  }
-
-  .y.axis g:nth-of-type(-n+2) line {
-    stroke: none
+    stroke: $lighter-gray;
+    stroke-dasharray: 1;
   }
 
   .y.axis text, .x.axis > text {
@@ -122,6 +119,59 @@ line {
 
 .voronoi, .voronoiPoint {
   fill: transparent;
+}
+
+.svg-oasy-figure, .svg-pasy-figure, .svg-icsy-figure {
+  .label {
+    fill: $primary-soft;
+    font-weight: bold;
+
+    tspan {
+      fill: $orange;
+    }
+  }
+}
+
+.svg-icmy-figure {
+  .point {
+    fill: white;
+    stroke-width: 2px;
+  }
+  .point.ok {
+    stroke: $ok;
+  }
+  .point.success {
+    stroke: $success;
+  }
+  .point.fail {
+    stroke: $fail;
+  }
+  .point.missing {
+    stroke: $missing;
+  }
+  .point.high {
+    stroke: $high;
+  }
+  .point.medium {
+    stroke: $medium;
+  }
+  .point.low {
+    stroke: $low;
+  }
+
+  .ic-line {
+    stroke-width: 4px;
+  }
+
+  .x.axis .active {
+    fill: red;
+  }
+
+  .y.axis line {
+    stroke: $lighter-gray;
+    stroke-dasharray: 1;
+  }
+
 }
 
 .svg-isy-figure {
@@ -202,6 +252,46 @@ line {
 }
 .bar.missing {
   fill: $dark-gray;
+}
+
+.bar.high {
+  fill: $high;
+}
+.bar.medium {
+  fill: $medium;
+}
+.bar.low {
+  fill: $low;
+}
+
+path.success {
+  stroke: $success;
+  fill: none;
+}
+path.ok {
+  stroke: $ok;
+  fill: none;
+}
+path.fail {
+  stroke: $fail;
+  fill: none;
+}
+path.missing {
+  stroke: $dark-gray;
+  fill: none;
+}
+
+path.high {
+  stroke: $high;
+  fill: none;
+}
+path.medium {
+  stroke: $medium;
+  fill: none;
+}
+path.low {
+  stroke: $low;
+  fill: none;
 }
 
 .graph-container {

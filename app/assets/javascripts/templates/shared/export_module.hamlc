@@ -5,7 +5,7 @@
       %h1 Create a PDF.
 
       - if context.model.figure_config.selectable
-        %h3 Select Indicators.
+        %h3 Select Data.
     %section.overlay-content.export-figure.row
       %figure
       - if context.model.figure_config.selectable
@@ -15,7 +15,7 @@
           %div
             = "Select up 10 [something] to export. Simply click the checkboxes."
           %figcaption
-            - _.each context.filtered, (d, i) ->
+            - _.each context.selectableData, (d, i) ->
               .visio-checkbox.visio-checkbox-vertical
                 %input{
                   :id => "datum-#{i}",
@@ -23,10 +23,32 @@
                   :data => { :id => d.id },
                   :value => "#{i}"}
                 %label{:for => "datum-#{i}"}
-                  = i + 1
-    %section.export-settings.row
-      %h4 The Details
-      %form
+                  = context.selectableLabel d, i
+    %form
+      - if context.model.figure_config.hasAxis
+        %section.export-axis
+          %h3 The Axis
+          .row
+            .col-md-12
+              %input{
+                :class => 'full-width',
+                :name => "xAxis",
+                :placeholder => 'X Axis',
+                :type => "text",
+                :maxlength => '80',
+                :value => ""}
+          .row
+            .col-md-12
+              %input{
+                :class => 'full-width',
+                :name => "yAxis",
+                :placeholder => 'Y Axis',
+                :type => "text",
+                :maxlength => '80',
+                :value => ""}
+
+      %section.export-settings.row
+        %h3 The Details
         .row
           .col-md-12
             %input{
@@ -41,10 +63,10 @@
             %textarea{
               :class => 'full-width',
               :cols => "20",
-              :maxlength => '900',
+              :maxlength => Visio.Constants.CMS.TEXTAREA_MAXLEN,
               :name => "description",
               :placeholder => context.model.description,
               :rows => "5"}
     %section.row
-      %h4 Go Time.
-      %button.export Export
+      %h3 Go Time.
+      %button.pdf Export

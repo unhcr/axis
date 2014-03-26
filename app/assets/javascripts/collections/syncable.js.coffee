@@ -49,6 +49,10 @@ class Visio.Collections.Syncable extends Backbone.Collection
       timestamp = if record then record.synced_timestamp / 1000 else undefined
       options.synced_timestamp = timestamp
       return $[method](url, options)
+    ).fail((xhr) =>
+      new Visio.Views.Error
+        title: xhr.statusText
+        description: "Failed fetching #{url}"
     ).done((parameters) =>
       @setSynced(parameters, timestampId)
     ).done((id) =>

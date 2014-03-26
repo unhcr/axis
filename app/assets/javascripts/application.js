@@ -15,7 +15,7 @@
 //= require underscore
 //= require hamlcoffee
 //= require backbone
-//= require ./vendor/d3.v3
+//= require ./vendor/d3
 //= require_tree ./templates
 //= require visio
 //= require backbone_ext
@@ -27,9 +27,11 @@
 //= require ./collections/syncables/amount_type
 //= require ./models/syncables/amount_type
 //= require ./views/tooltips/d3_tooltip
+//= require ./views/shared/notifications/notification
 //= require ./views/shared/dashboard
 //= require ./views/sliders/slider
 //= require ./figures/base
+//= require ./figures/bar
 //= require_tree ./views
 //= require_tree ./figures
 //= require_tree ./routers

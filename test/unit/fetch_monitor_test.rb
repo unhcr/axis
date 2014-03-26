@@ -3,7 +3,7 @@ require 'test_helper'
 class FetchMonitorTest < ActiveSupport::TestCase
   test "only one monitor allowed" do
     m = fetch_monitors(:one)
-    m.save
+    assert m.save
 
     m2 = FetchMonitor.new()
     assert !m2.save
@@ -16,7 +16,9 @@ class FetchMonitorTest < ActiveSupport::TestCase
     m = fetch_monitors(:one)
     assert_nil m.starttime
 
-    m.reset ids
+    saved = m.reset ids
+
+    assert saved, "Should be allowed to save"
 
     m.plans.each do |p|
       assert_equal FetchMonitor::MONITOR_STATES[:incomplete], p[:state]

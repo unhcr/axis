@@ -20,17 +20,23 @@ class Visio.Views.SliderView extends Backbone.View
     @addAll()
     @
 
+  drawFigures: ->
+    console.warn 'drawFigures not implemented for this slider'
+
   addAll: =>
     @collection.each @addOne
 
   addOne: (model) =>
-
-    @views[model.id] = new Visio.Views["#{@name.className}SlideView"]({
+    opts =
       model: model
       className: "#{@name.singular}-slide slide"
       idx: @collection.indexOf model
       isPdf: @isPdf
-    })
+
+    unless @views[model.id]?
+      @views[model.id] = new Visio.Views["#{@name.className}SlideView"](opts)
+    else
+      @views[model.id].delegateEvents()
     @$el.find('.slider').append @views[model.id].render().el
 
   move: (toMove = 0) =>
@@ -62,3 +68,10 @@ class Visio.Views.SliderView extends Backbone.View
   reset: =>
     @$el.find('.slide').css 'left', 0
     @position = 0
+
+  close: =>
+    for id, view of @views
+      view.close()
+
+    @unbind()
+    @remove()

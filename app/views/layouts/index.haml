@@ -35,16 +35,7 @@
       #global-search.zero-max-height.row
     :javascript
       window.Visio.user = new Visio.Models.User(#{current_user.to_json.html_safe})
-      $(document).ready(function() {
-        $(document).ajaxStart(function() {
-          NProgress.start()
-        });
-        $(document).ajaxStop(function() {
-          NProgress.done()
-        });
-
-
-      })
+      window.Visio.env = "#{Rails.env}"
     .content
       = yield
 

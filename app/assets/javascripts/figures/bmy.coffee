@@ -1,9 +1,14 @@
+# Budget Multiple Year
 class Visio.Figures.Bmy extends Visio.Figures.Base
+
+  @include Visio.Mixins.Exportable
 
   type: Visio.FigureTypes.BMY
 
   initialize: (config) ->
-    @$el.prepend $('<a class="export">export</a>')
+    values = {}
+    values[Visio.Scenarios.AOL] = false
+    values[Visio.Scenarios.OL] = true
     @filters = new Visio.Collections.FigureFilter([
       {
         id: 'budget_type'
@@ -13,7 +18,7 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
       {
         id: 'scenario'
         filterType: 'checkbox'
-        values: _.object(_.values(Visio.Scenarios), _.values(Visio.Scenarios).map(-> true))
+        values: values
       }
     ])
 
@@ -197,6 +202,3 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
     line = @g.select(".budget-line-#{d.budgetType}")
     isActive = line.classed 'active'
     line.classed 'active', not isActive
-
-  filter: (type, attr, active) =>
-    @filters[type].values[attr] = active

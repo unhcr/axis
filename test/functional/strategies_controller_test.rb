@@ -4,22 +4,21 @@ class StrategiesControllerTest < ActionController::TestCase
   test "create" do
     Plan.all.map { |p| p.operation = Operation.first; p.save }
     post :create, {
-      :strategy => {
-        :name => 'ben',
-        :description => 'rudolph',
-        :operations => Operation.all.as_json,
-        :strategy_objectives => [
-          {
-            :name => 'lisa',
-            :description => 'walker',
-            :goals => Goal.all.as_json,
-            :outputs => Output.all.as_json,
-            :problem_objectives => ProblemObjective.all.as_json,
-            :indicators => Indicator.all.as_json
-          }
-        ]
+      :name => 'ben',
+      :description => 'rudolph',
+      :operations => Operation.all.as_json,
+      :ppgs => Ppg.all.as_json,
+      :strategy_objectives => [
+        {
+          :name => 'lisa',
+          :description => 'walker',
+          :goals => Goal.all.as_json,
+          :outputs => Output.all.as_json,
+          :problem_objectives => ProblemObjective.all.as_json,
+          :indicators => Indicator.all.as_json
+        }
+      ]
 
-      }
     }
 
     assert_response :success
@@ -30,6 +29,7 @@ class StrategiesControllerTest < ActionController::TestCase
     s = Strategy.find(json["strategy"]["id"])
 
     assert_equal Operation.all.count, s.operations.count
+    assert_equal Ppg.all.count, s.ppgs.count
     assert_equal Goal.all.count, s.goals.count
     assert_equal Output.all.count, s.outputs.count
     assert_equal ProblemObjective.all.count, s.problem_objectives.count
@@ -47,21 +47,28 @@ class StrategiesControllerTest < ActionController::TestCase
 
     post :update, {
       :id => s.id,
-      :strategy => {
-        :name => 'new',
-        :description => 'new',
-        :operations => Operation.all.as_json,
-        :strategy_objectives => [
-          {
-            :name => 'lisa',
-            :description => 'walker',
-            :goals => Goal.all.as_json,
-            :outputs => Output.all.as_json,
-            :problem_objectives => ProblemObjective.all.as_json,
-            :indicators => Indicator.all.as_json
-          }
-        ]
-      }
+      :name => 'new',
+      :description => 'new',
+      :operations => Operation.all.as_json,
+      :ppgs => Ppg.all.as_json,
+      :strategy_objectives => [
+        {
+          :name => 'lisa',
+          :description => 'walker',
+          :goals => Goal.all.as_json,
+          :outputs => Output.all.as_json,
+          :problem_objectives => ProblemObjective.all.as_json,
+          :indicators => Indicator.all.as_json
+        },
+        {
+          :name => 'newblisa',
+          :description => 'walker',
+          :goals => [Goal.first.as_json],
+          :outputs => [Output.first.as_json],
+          :problem_objectives => [ProblemObjective.first.as_json],
+          :indicators => [Indicator.first.as_json]
+        }
+      ]
     }
 
     assert_response :success
@@ -73,8 +80,9 @@ class StrategiesControllerTest < ActionController::TestCase
     assert_equal s.name, 'new'
     assert_equal s.description, 'new'
 
-    assert_equal 1, s.strategy_objectives.count
+    assert_equal 2, s.strategy_objectives.count
     assert_equal Operation.all.count, s.operations.count
+    assert_equal Ppg.all.count, s.ppgs.count
     assert_equal Goal.all.count, s.goals.count
     assert_equal Output.all.count, s.outputs.count
     assert_equal ProblemObjective.all.count, s.problem_objectives.count
