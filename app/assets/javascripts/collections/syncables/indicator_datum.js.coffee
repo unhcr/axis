@@ -65,9 +65,9 @@ class Visio.Collections.IndicatorDatum extends Visio.Collections.Syncable
     counts[Visio.Algorithms.ALGO_RESULTS.low] = 0
     counts[Visio.Algorithms.STATUS.missing] = 0
 
-    groups = @groupBy 'output_id'
+    groups = @groupBy (d) -> "#{d.get('ppg_id')}#{d.get('goal_id')}#{d.get('output_id')}"
 
-    _.each groups, (group) ->
+    for name, group of groups
       cGroup = new Visio.Collections.IndicatorDatum group
       result = cGroup.achievement()
 
@@ -80,12 +80,12 @@ class Visio.Collections.IndicatorDatum extends Visio.Collections.Syncable
       else if result.total and result.counts[Visio.Algorithms.STATUS.missing]
         counts[Visio.Algorithms.STATUS.missing] += 1
 
-    typeTotal = counts[Visio.Algorithms.ALGO_RESULTS.high] +
+    total = counts[Visio.Algorithms.ALGO_RESULTS.high] +
             counts[Visio.Algorithms.ALGO_RESULTS.medium] +
             counts[Visio.Algorithms.ALGO_RESULTS.low] +
             counts[Visio.Algorithms.STATUS.missing]
 
-    total = @where({ missing_budget: false }).length
+    typeTotal = _.uniq(@pluck('output_id')).length
 
     average = _.reduce(results,
       (sum, num) -> return sum + num,

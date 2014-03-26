@@ -27,6 +27,8 @@ test 'output achievement collection', ->
       id: 'high1'
       output_id: 'present'
       is_performance: true
+      goal_id: 'lame'
+      ppg_id: 'ben'
       myr: 50
       imp_target: 50
       reversal: false
@@ -36,6 +38,8 @@ test 'output achievement collection', ->
     {
       id: 'high2'
       output_id: 'other'
+      ppg_id: 'ben'
+      goal_id: 'lame'
       is_performance: true
       myr: 50
       imp_target: 100
@@ -46,6 +50,20 @@ test 'output achievement collection', ->
     {
       id: 'low1'
       output_id: 'other'
+      goal_id: 'lame'
+      ppg_id: 'ben'
+      is_performance: true
+      imp_target: 100
+      myr: 25
+      reversal: false
+      baseline: 25
+      missing_budget: false
+    },
+    {
+      id: 'low2'
+      output_id: 'other'
+      goal_id: 'lamed'
+      ppg_id: 'chen'
       is_performance: true
       imp_target: 100
       myr: 25
@@ -57,11 +75,12 @@ test 'output achievement collection', ->
   ])
 
   result = data.outputAchievement()
-  console.log result
 
+  strictEqual result.total, 3
   strictEqual result.typeTotal, 2
   strictEqual result.counts[Visio.Algorithms.ALGO_RESULTS.high], 1
   strictEqual result.counts[Visio.Algorithms.ALGO_RESULTS.medium], 1
+  strictEqual result.counts[Visio.Algorithms.ALGO_RESULTS.low], 1
   strictEqual result.category, Visio.Algorithms.ALGO_RESULTS.high
 
   data.get('high1').set 'myr', null
@@ -69,6 +88,7 @@ test 'output achievement collection', ->
   strictEqual result.typeTotal, 2
   strictEqual result.counts[Visio.Algorithms.STATUS.missing], 1
   strictEqual result.counts[Visio.Algorithms.ALGO_RESULTS.medium], 1
+  strictEqual result.counts[Visio.Algorithms.ALGO_RESULTS.low], 1
   strictEqual result.category, Visio.Algorithms.ALGO_RESULTS.medium
 
 
