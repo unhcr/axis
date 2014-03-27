@@ -108,6 +108,8 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
 
       if $('header').height() < $(document).scrollTop()
         $('.toolbar').addClass('fixed-top')
+      Visio.router.navigate Visio.Utils.generateOverviewUrl(), { silent: true }
+
     ).fail (e) =>
       console.log e
 
