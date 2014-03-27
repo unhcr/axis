@@ -5,6 +5,7 @@ class Visio.Figures.Absy extends Visio.Figures.Base
   type: Visio.FigureTypes.ABSY
 
   initialize: (config) ->
+    @attrConfig.push 'algorithm'
     values = {}
     values[Visio.Scenarios.AOL] = false
     values[Visio.Scenarios.OL] = true
