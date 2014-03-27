@@ -142,6 +142,7 @@ class Strategy < ActiveRecord::Base
 
     strategy_ws.save
     strategy_objective_ws.save
+    sheet
 
   end
 

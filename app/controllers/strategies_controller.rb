@@ -32,4 +32,15 @@ class StrategiesController < ApplicationController
     render :json => s
   end
 
+  def download
+    s = Strategy.find(params[:id])
+
+    sheet = s.to_sheet
+
+    send_data sheet.export_as_string('xls'),
+      :filename => "#{s.name} -- #{Time.now}",
+      :disposition => 'inline',
+      :type => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+  end
+
 end

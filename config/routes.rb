@@ -34,7 +34,11 @@ Visio::Application.routes.draw do
       get 'search'
     end
   end
-  resources :strategies
+  resources :strategies do
+    member do
+      get 'download'
+    end
+  end
   resources :users
 
   root :to => 'application#index'
