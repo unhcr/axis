@@ -5,10 +5,14 @@ class Visio.Views.BubbleInfoView extends Backbone.View
   initialize: (options) ->
     @filters = options.filters
 
-  render: (datum) ->
+  render: (datum, algorithm) ->
     achievement = datum.selectedAchievement Visio.manager.year(), @filters
-    amount = datum.selectedAmount Visio.manager.year(), @filters
-    @$el.html @template({ title: datum.toString(), achievement: achievement, amount: amount })
+    value = datum[algorithm] Visio.manager.year(), @filters
+    @$el.html @template
+      title: datum.toString()
+      achievement: achievement
+      value: value
+      algorithm: algorithm
 
   show: () ->
     @$el.removeClass('gone')

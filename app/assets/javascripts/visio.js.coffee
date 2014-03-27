@@ -83,6 +83,7 @@ window.Visio =
     MONEY: d3.format('$0.3s')
     LONG_MONEY: d3.format('$,f')
     SI: d3.format('0.3s')
+    SI_SIMPLE: d3.format('s')
     PERCENT: d3.format(".0%")
     PERCENT_NOSIGN: (d) -> (d * 100).toFixed()
     COMMA: d3.format(',')
