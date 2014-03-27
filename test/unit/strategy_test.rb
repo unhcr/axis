@@ -206,4 +206,21 @@ class StrategyTest < ActiveSupport::TestCase
 
   end
 
+  test "to workbook" do
+    @operations[0].ppgs << @ppgs[0]
+    pkg = @s.to_workbook
+
+    assert_equal 2, pkg.workbook.worksheets.length
+    assert_equal 'Strategy', pkg.workbook.worksheets[0].name
+    assert_equal 'Strategy Objectives', pkg.workbook.worksheets[1].name
+
+    sheet = pkg.workbook.worksheets[0]
+
+    assert_equal @s.name, sheet.cells[0].value
+    assert_equal @s.name, sheet.cells[4].value
+    assert_equal @s.operations[0].name, sheet.cells[5].value
+    assert_equal @s.ppgs[0].name, sheet.cells[6].value
+    assert_nil sheet.cells[7]
+  end
+
 end
