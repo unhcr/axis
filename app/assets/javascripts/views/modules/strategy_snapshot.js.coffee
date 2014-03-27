@@ -64,6 +64,8 @@ class Visio.Views.StrategySnapshotView extends Visio.Views.Dashboard
       @$el.find('.bar-axis').html @axis?.render().el
       @parameterSlider?.delegateEvents()
       @actionSlider?.delegateEvents()
+      @parameterSlider?.position = 0
+      @actionSlider?.position = 0
 
     if @parameterSlider?
       @parameterSlider.drawFigures()
