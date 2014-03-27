@@ -100,9 +100,6 @@ test 'strategyExpenditureData', () ->
     selected = Visio.manager.strategy().get("#{hash.singular}_ids")
     selectedArr = _.keys selected
 
-    if hash == Visio.Parameters.STRATEGY_OBJECTIVES
-      console.log hash
-
     strictEqual(selectedArr.length, 1)
 
     _.each selectedArr, (id) ->

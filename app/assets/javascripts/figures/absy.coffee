@@ -181,7 +181,6 @@ class Visio.Figures.Absy extends Visio.Figures.Base
               .attr('text-anchor', 'middle')
               .text((d) ->
                 if self.isPdf
-                  console.log 'pdf'
                   Visio.Constants.ALPHABET[_.indexOf self.selected, d.id]
                 else
                   Visio.Constants.ALPHABET[i]

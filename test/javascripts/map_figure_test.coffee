@@ -88,7 +88,6 @@ test 'pan', ->
 
   dx = extent.right - @map.zoom.translate()[0]
 
-  console.log @map.zoom.translate()
   @map.pan(dx, 0)
   strictEqual @map.zoom.translate()[0], extent.right, 'Should move to the right most extent'
 

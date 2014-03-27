@@ -29,8 +29,6 @@ test 'filtered', ->
   ok _.find memo, ((array) -> array.budgetType == Visio.Budgets.PROJECT), 'One line should have PROJECT type'
   ok _.find memo, ((array) -> array.budgetType == 'total'), 'One line should have total type'
 
-  console.log memo
-
   lineData = _.find memo, (array) -> array.budgetType == Visio.Budgets.ADMIN
   strictEqual lineData.length, 2, 'Should have two datums'
   strictEqual _.where(lineData, { year: 2012 }).length, 1, 'One should be from 2012'
