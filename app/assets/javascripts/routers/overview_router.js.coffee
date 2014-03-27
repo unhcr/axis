@@ -9,11 +9,11 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
     Visio.manager.set 'selected_strategies', selectedStrategies
     Visio.manager.on 'change:date', () =>
       @navigation.render()
-      @strategySnapshotView.render()
+      @strategySnapshotView.render true
       @moduleView.render true
       Visio.router.navigate Visio.Utils.generateOverviewUrl(), { silent: true }
 
-    Visio.manager.on 'change:reported_type change:aggregation_type', =>
+    Visio.manager.on 'change:aggregation_type', =>
       @strategySnapshotView.render()
       @moduleView.render true
       Visio.router.navigate Visio.Utils.generateOverviewUrl(), { silent: true }
@@ -23,7 +23,7 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
       @moduleView.render true
       Visio.router.navigate Visio.Utils.generateOverviewUrl(), { silent: true }
 
-    Visio.manager.on 'change:selected', =>
+    Visio.manager.on 'change:selected change:reported_type', =>
       @strategySnapshotView.render true
       @moduleView.render true
       Visio.router.navigate Visio.Utils.generateOverviewUrl(), { silent: true }
