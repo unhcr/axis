@@ -50,3 +50,37 @@ test 'index - absy', ->
   strictEqual Visio.router.view.$el.find('.parameter-show').length, 1
 
   Visio.router.setup.restore()
+
+test 'index - icmy', ->
+  Backbone.history.start({ silent: true}) unless Backbone.History.started
+  @icmy = new Visio.Figures.Icmy
+    margin:
+      left: 0
+      right: 0
+      top: 0
+      bottom: 0
+    width: 100
+    height: 100
+    collection: @o
+
+  config = @icmy.config()
+  config.selected = [2012]
+
+  Visio.router = new Visio.Routers.PdfRouter
+    selector: $('<div></div>')
+    config:
+      figure_config: config
+
+  sinon.stub Visio.router, 'setup', ->
+    Visio.router.absy()
+    return $.Deferred().resolve().promise()
+  Visio.router.index()
+
+  ok Visio.router.view?
+  ok Visio.router.view.isPdf
+  strictEqual Visio.router.view.$el.find('.svg-icmy-figure').length, 1
+  strictEqual Visio.router.view.$el.find('.svg-icsy-figure').length, 1
+
+  Visio.router.setup.restore()
+
+
