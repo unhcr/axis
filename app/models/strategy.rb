@@ -59,12 +59,6 @@ class Strategy < ActiveRecord::Base
     workbook = p.workbook
 
     workbook.add_worksheet(:name => 'Strategy') do |strategy_ws|
-      cols = {
-        :strategy => 1,
-        :operation => 2,
-        :ppg => 3,
-      }
-
       # Headings
       strategy_ws.add_row [self.name], :sz => 24
       strategy_ws.merge_cells('A1:C1')
@@ -79,21 +73,12 @@ class Strategy < ActiveRecord::Base
       end
     end
 
-    cols = {
-      :strategy_objective => 1,
-      :problem_objective => 2,
-      :impact_indicator => 3,
-      :output => 4,
-      :performance_indicator => 5
-    }
-
     # Write second table
 
     workbook.add_worksheet(:name => 'Strategy Objectives') do |strategy_objective_ws|
 
       strategy_objective_ws.add_row ['Strategy Objective', 'Objective', 'Impact Indicator', 'Output', 'Performance Indicator'], :sz => 16
 
-      offset = 2
       self.strategy_objectives.each_with_index do |so, i|
         so.problem_objectives.each_with_index do |po, j|
           so.outputs.merge(po.outputs).each_with_index do |o, k|
