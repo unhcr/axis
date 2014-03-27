@@ -10,12 +10,12 @@ module 'PDF Router',
     })
     @o = Fixtures.outputs
 
-    sinon.stub Visio.Models.Output.prototype, 'selectedAmount', -> 10
+    sinon.stub Visio.Models.Output.prototype, 'selectedBudget', -> 10
     sinon.stub Visio.Models.Output.prototype, 'selectedAchievement', -> { result: 10 }
 
   teardown: ->
     Visio.manager.get('db').clear()
-    Visio.Models.Output.prototype.selectedAmount.restore()
+    Visio.Models.Output.prototype.selectedBudget.restore()
     Visio.Models.Output.prototype.selectedAchievement.restore()
 
 

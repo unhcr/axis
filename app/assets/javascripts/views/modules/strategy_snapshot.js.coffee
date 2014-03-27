@@ -27,12 +27,12 @@ class Visio.Views.StrategySnapshotView extends Visio.Views.Dashboard
 
     super options
 
-    @collection or= Visio.manager.strategy()[Visio.manager.get('aggregation_type')]()
+    @collection or= Visio.manager.selected Visio.manager.get('aggregation_type')
     @parameter = @collection
 
     unless @isPdf
       @actionSlider = new Visio.Views.ActionSliderView
-        collection: Visio.manager.strategy()[Visio.Parameters.STRATEGY_OBJECTIVES.plural]()
+        collection: Visio.manager.selected Visio.Parameters.STRATEGY_OBJECTIVES.plural
     @parameterSlider = new Visio.Views.ParameterSliderView
       filters: @filters
       collection: @collection

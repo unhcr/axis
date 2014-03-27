@@ -11,12 +11,14 @@ module 'ABSY Figure',
       height: 100
       )
     @d = new Visio.Models.Output({ id: 1 })
-    sinon.stub @d, 'selectedAmount', -> 10
+    sinon.stub @d, 'selectedBudget', -> 10
+    sinon.stub @d, 'selectedExpenditureRate', -> .5
     sinon.stub @d, 'selectedAchievement', -> { result: 10 }
 
   teardown: ->
     @figure.unsubscribe()
-    @d.selectedAmount.restore()
+    @d.selectedBudget.restore()
+    @d.selectedExpenditureRate.restore()
     @d.selectedAchievement.restore()
 
 test 'render', ->
@@ -35,11 +37,15 @@ test 'render', ->
   @figure.render()
   strictEqual d3.select(@figure.el).selectAll('.point').size(), 1
 
-  @d.selectedAmount.restore()
-  sinon.stub @d, 'selectedAmount', -> 0
+  @d.selectedBudget.restore()
+  sinon.stub @d, 'selectedBudget', -> 0
 
   @figure.render()
   strictEqual d3.select(@figure.el).selectAll('.point').size(), 0
+
+  @figure.algorithm = 'selectedExpenditureRate'
+  @figure.render()
+  strictEqual d3.select(@figure.el).selectAll('.point').size(), 1
 
 test 'filtered', ->
 
@@ -47,13 +53,13 @@ test 'filtered', ->
 
   strictEqual @figure.filtered(collection).length, 1, 'Should not be filtered'
 
-  @d.selectedAmount.restore()
-  sinon.stub @d, 'selectedAmount', -> 0
+  @d.selectedBudget.restore()
+  sinon.stub @d, 'selectedBudget', -> 0
   ok not @figure.filtered(collection).length, 'Should be filtered'
 
-  @d.selectedAmount.restore()
+  @d.selectedBudget.restore()
   @d.selectedAchievement.restore()
-  sinon.stub @d, 'selectedAmount', -> 10
+  sinon.stub @d, 'selectedBudget', -> 10
   sinon.stub @d, 'selectedAchievement', -> { result: undefined }
   ok not @figure.filtered(collection).length, 'Should be filtered'
 
