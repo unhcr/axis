@@ -40,8 +40,3 @@ class Visio.Routers.StrategyCMSRouter extends Backbone.Router
     @strategies.get(id).destroy().done =>
 
       @navigate '/', { trigger: true }
-
-  download: (id) ->
-    NProgress.start()
-    $.get("/strategies/#{id}/download").done ->
-      NProgress.done()

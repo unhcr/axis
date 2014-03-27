@@ -21,7 +21,7 @@ class StrategiesController < ApplicationController
     s.update_nested params
 
     render :json => { :strategy => s.as_json({ :include => {
-      :operations => true,
+      :operations => truend,
       :strategy_objectives => true } }) }
   end
 
@@ -35,9 +35,9 @@ class StrategiesController < ApplicationController
   def download
     s = Strategy.find(params[:id])
 
-    sheet = s.to_sheet
+    workbook = s.to_workbook
 
-    send_data sheet.export_as_string('xls'),
+    send_data workbook.to_stream.read,
       :filename => "#{s.name} -- #{Time.now}",
       :disposition => 'inline',
       :type => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
