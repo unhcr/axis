@@ -170,8 +170,10 @@ class StrategyTest < ActiveSupport::TestCase
     assert_equal 1, @s.outputs.length
     assert_equal 1, @s.indicators.length
 
+    start = Time.now
     @so.goals << goals(:two)
     assert_equal 2, Strategy.find(@s.id).goals.length
+    assert start < goals(:two).updated_at
 
     @so2 = strategy_objectives(:two)
     @so2.goals << goals(:three)

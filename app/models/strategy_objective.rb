@@ -27,6 +27,7 @@ class StrategyObjective < ActiveRecord::Base
   end
 
   def touch_data(assoc)
+    assoc.touch :updated_at
     assoc.touch_data self
   end
 
