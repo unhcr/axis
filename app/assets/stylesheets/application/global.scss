@@ -1718,29 +1718,35 @@ a {
   }
 }
 
-.filter-by {
-  @include header-button;
+.header-button:hover {
+  background-color: $off-white;
+}
+
+.header-button {
+  @include header-button
+}
+
+.filter-by, .visio-dropdown-container {
   padding-top: 0px;
 
-  .filter-toggle:before {
+  .filter-toggle:before, .visio-dropdown-toggle:before {
     content: 'ↆ';
     background: transparent;
     display: inline-block;
     margin-right: 10px;
   }
 
-  .filter-toggle {
+  .filter-toggle, .visio-dropdown-toggle {
     text-align: center;
     height: 100%;
     padding-top: 6px;
   }
 
-  width: 180px;
   position: relative;
   cursor: pointer;
 
-  .filters {
-    width: 180px;
+  .filters, .visio-dropdown {
+    width: $header-button-width;
     text-align: left;
     z-index: 1;
     @include transition-property(max-height);
@@ -1757,13 +1763,12 @@ a {
     padding: 10px 0;
   }
 
-  .filters.styled {
+  .filters.styled, .visio-dropdown.styled {
     padding: 15px 10px;
     @include hover-shadow;
-    /*border-top: 3px $primary-dark solid;*/
   }
 
-  .filters.open {
+  .filters.open, .visio-dropdown.open {
     max-height: 400px;
   }
 }
@@ -2070,7 +2075,6 @@ a {
 }
 
 .export {
-  @include header-button;
   background-image: url(/assets/icons/export.png);
   background-size: 18px;
   width: 60px;
@@ -2150,6 +2154,3 @@ a {
   border-left: 1px solid $light-gray;
 }
 
-.header-buttons .header-button:hover {
-  background-color: $off-white;
-}
