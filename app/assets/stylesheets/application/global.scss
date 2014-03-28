@@ -232,6 +232,12 @@ body.layout-application {
   }
 }
 
+body.splash {
+  header {
+    border-bottom: none;
+  }
+}
+
 header {
   background-color: inherit;
   height: $header-height;
