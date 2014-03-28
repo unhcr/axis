@@ -72,16 +72,6 @@ Visio.Utils.parseTransform = (string) ->
 Visio.Utils.countToFormatter = (value) ->
   d3.format('d')(value.toFixed(0)) || 0
 
-Visio.Utils.progressTypeToName = (type) ->
-  if type == Visio.ProgressTypes.BASELINE_MYR
-    return 'Baseline-MYR'
-  else if type == Visio.ProgressTypes.BASELINE_YER
-    return 'Baseline-YER'
-  else if type == Visio.ProgressTypes.MYR_YER
-    return 'MYR-YER'
-
-  return ''
-
 Visio.Utils.humanMetric = (metric) ->
   if metric == Visio.Algorithms.REPORTED_VALUES.myr
     return 'MYR'
