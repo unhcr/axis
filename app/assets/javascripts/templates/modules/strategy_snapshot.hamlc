@@ -15,7 +15,7 @@
         %h2
           Strategy Overview.
       .col-md-6.right-text.header-buttons
-        .export
+        .export.header-button
     .row
       .col-md-6.col-sm-6
         %p
