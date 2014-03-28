@@ -18,12 +18,20 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
       @moduleView.render true
       Visio.router.navigate Visio.Utils.generateOverviewUrl(), { silent: true }
 
+    Visio.manager.on 'change:selected', (parameterTypeChanged) =>
+      if parameterTypeChanged == Visio.manager.get('aggregation_type')
+        @strategySnapshotView.render()
+      else
+        @strategySnapshotView.render true
+      @moduleView.render true
+      Visio.router.navigate Visio.Utils.generateOverviewUrl(), { silent: true }
+
     Visio.manager.on ['change:navigation'].join(' '), =>
       @navigation.render()
       @moduleView.render true
       Visio.router.navigate Visio.Utils.generateOverviewUrl(), { silent: true }
 
-    Visio.manager.on 'change:selected change:reported_type', =>
+    Visio.manager.on 'change:reported_type', =>
       @strategySnapshotView.render true
       @moduleView.render true
       Visio.router.navigate Visio.Utils.generateOverviewUrl(), { silent: true }
