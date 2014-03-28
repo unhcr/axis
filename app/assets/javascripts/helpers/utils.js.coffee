@@ -96,9 +96,9 @@ Visio.Utils.humanMetric = (metric) ->
   else if metric == Visio.Algorithms.ALGO_RESULTS.success
     return 'Acceptable'
   else if metric == Visio.Algorithms.ALGO_RESULTS.ok
-    return 'Critical'
+    return 'Not Acceptable'
   else if metric == Visio.Algorithms.ALGO_RESULTS.fail
-    return 'Sub-standard'
+    return 'Critical'
   else if metric == Visio.Algorithms.STATUS.missing
     return 'Non-reported'
   else if metric == Visio.Algorithms.ALGO_RESULTS.high
@@ -110,7 +110,7 @@ Visio.Utils.humanMetric = (metric) ->
   else if metric == Visio.Algorithms.STATUS.missing
     return 'Not Reported'
   else
-    return 'N/A'
+    return metric
 
 Visio.Utils.nl2br = (string) ->
   string.replace(/\n/g, '<br />')

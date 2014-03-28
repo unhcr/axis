@@ -208,17 +208,17 @@ Visio.AggregationTypes = [
   ]
 
 Visio.Algorithms.CRITICALITIES = [
-    { value: Visio.Algorithms.ALGO_RESULTS.success, human: 'Acceptable' }
-    { value: Visio.Algorithms.ALGO_RESULTS.ok, human: 'Critical' }
-    { value: Visio.Algorithms.ALGO_RESULTS.fail, human: 'Sub-Stanford' }
-    { value: Visio.Algorithms.STATUS.missing, human: 'Not-Reported' }
+    { value: Visio.Algorithms.ALGO_RESULTS.success }
+    { value: Visio.Algorithms.ALGO_RESULTS.ok }
+    { value: Visio.Algorithms.ALGO_RESULTS.fail }
+    { value: Visio.Algorithms.STATUS.missing }
   ]
 
 Visio.Algorithms.THRESHOLDS = [
-    { value: Visio.Algorithms.ALGO_RESULTS.high, human: 'Met Target (Above 80%)' }
-    { value: Visio.Algorithms.ALGO_RESULTS.medium, human: 'Approaching Target (Above 60%)' }
-    { value: Visio.Algorithms.ALGO_RESULTS.low, human: 'Below Target (Below 60% of target)' }
-    { value: Visio.Algorithms.STATUS.missing, human: 'Not-Reported' }
+    { value: Visio.Algorithms.ALGO_RESULTS.high }
+    { value: Visio.Algorithms.ALGO_RESULTS.medium }
+    { value: Visio.Algorithms.ALGO_RESULTS.low }
+    { value: Visio.Algorithms.STATUS.missing }
   ]
 
 Visio.Schema =
