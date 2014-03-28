@@ -2,6 +2,8 @@ class Visio.Views.SliderView extends Backbone.View
 
   className: 'slider-container row'
 
+  slideDelay: 20
+
   initialize: (options) ->
     @template = HAML["sliders/#{@name.singular}_slider"]
     @$el.addClass "#{@name.singular}-slider"
@@ -54,7 +56,7 @@ class Visio.Views.SliderView extends Backbone.View
     left = (@position * slideWidth)
 
     $slides.each (idx, ele) =>
-      delay = if toMove < 0 then 50 * idx else 50 * (len - idx - 1)
+      delay = if toMove < 0 then @slideDelay * idx else @slideDelay * (len - idx - 1)
       window.setTimeout  (->
         $(ele).css 'left', left + 'px'),
         delay
