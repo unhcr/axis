@@ -1,0 +1,17 @@
+.visio-dropdown-toggle
+  - if context.title?
+    = context.title
+  - else
+    - d = _.findWhere(context.data, { checked: true }) or context.data[0]
+    = d.label
+
+.visio-dropdown{ :class => ( "open styled" if context.open ) }
+  - _.each context.data, (d) ->
+    %div{ :class => ["visio-radio", "visio-radio-left"].join(' ') }
+      %input{ :value => d.value,
+              :checked => if d.checked then true else false,
+              :type => 'radio',
+              :id => "#{context.cid}-#{d.value}",
+              :name => context.cid }
+      %label{ :for => "#{context.cid}-#{d.value}" }
+        = d.label

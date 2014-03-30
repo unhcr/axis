@@ -192,11 +192,17 @@ window.Visio =
 
 Visio.ProgressTypes =
   BASELINE_MYR:
-    "#{Visio.Algorithms.REPORTED_VALUES.baseline}#{Visio.Constants.SEPARATOR}#{Visio.Algorithms.REPORTED_VALUES.myr}"
+    start: Visio.Algorithms.REPORTED_VALUES.baseline
+    end: Visio.Algorithms.REPORTED_VALUES.myr
+    value: "#{Visio.Algorithms.REPORTED_VALUES.baseline}#{Visio.Constants.SEPARATOR}#{Visio.Algorithms.REPORTED_VALUES.myr}"
   BASELINE_YER:
-    "#{Visio.Algorithms.REPORTED_VALUES.baseline}#{Visio.Constants.SEPARATOR}#{Visio.Algorithms.REPORTED_VALUES.yer}"
+    start: Visio.Algorithms.REPORTED_VALUES.baseline
+    end: Visio.Algorithms.REPORTED_VALUES.yer
+    value: "#{Visio.Algorithms.REPORTED_VALUES.baseline}#{Visio.Constants.SEPARATOR}#{Visio.Algorithms.REPORTED_VALUES.yer}"
   MYR_YER:
-    "#{Visio.Algorithms.REPORTED_VALUES.myr}#{Visio.Constants.SEPARATOR}#{Visio.Algorithms.REPORTED_VALUES.yer}"
+    start: Visio.Algorithms.REPORTED_VALUES.myr
+    end: Visio.Algorithms.REPORTED_VALUES.yer
+    value: "#{Visio.Algorithms.REPORTED_VALUES.myr}#{Visio.Constants.SEPARATOR}#{Visio.Algorithms.REPORTED_VALUES.yer}"
 
 Visio.AggregationTypes = [
     Visio.Parameters.OPERATIONS,

@@ -23,6 +23,17 @@ class Visio.Views.IsyShowView extends Visio.Views.AccordionShowView
 
     @isyFigure = new Visio.Figures.Isy @config
     @filterBy = new Visio.Views.FilterBy({ figure: @isyFigure, })
+    @sortBy = new Visio.Views.Dropdown
+      title: 'Sort By'
+      data: [
+          { label: 'Baseline to MYR', value: Visio.ProgressTypes.BASELINE_MYR.value, checked: true },
+          { label: 'Baseline to YER', value: Visio.ProgressTypes.BASELINE_YER.value },
+          { label: 'MYR to YER', value: Visio.ProgressTypes.MYR_YER.value },
+        ]
+      callback: (value, data) =>
+        progress = _.findWhere _.values(Visio.ProgressTypes), { value: value }
+        @isyFigure.sortAttribute = progress
+        @isyFigure.render()
 
   render: (isRerender) ->
     situationAnalysis = @model.selectedSituationAnalysis()
@@ -32,6 +43,12 @@ class Visio.Views.IsyShowView extends Visio.Views.AccordionShowView
 
       @$el.find('.indicator-bar-graph').html @isyFigure.el
       @$el.find('.header-buttons').append @filterBy.render().el
+      @$el.find('.header-buttons').append @sortBy.render().el
+
+      @$el.find('.slider').slider
+        animate: true
+        slide: @onSlide
+        min: 0
 
     category = if situationAnalysis.total == 0 then 'white' else situationAnalysis.category
 
@@ -49,11 +66,14 @@ class Visio.Views.IsyShowView extends Visio.Views.AccordionShowView
     else
       @$el.removeClass 'disabled'
 
-
     @
 
+  onSlide: (e, ui) ->
+    console.log ui.value
   drawFigures: ->
     @isyFigure.collectionFn @model.selectedIndicatorData()
+
     @isyFigure.render()
+    @$el.find('.slider').slider 'option', 'max', @isyFigure.filtered(@isyFigure.collection).length
 
   removeInstances: =>

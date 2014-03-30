@@ -46,10 +46,7 @@ class Visio.Figures.Isy extends Visio.Figures.Base
 
     @goalType = config.goalType || Visio.Algorithms.GOAL_TYPES.target
 
-    @progress =
-      start: Visio.Algorithms.REPORTED_VALUES.baseline
-      end: Visio.Algorithms.REPORTED_VALUES.myr
-
+    @sortAttribute = Visio.ProgressTypes.BASELINE_MYR
 
   render: ->
     filtered = @filtered @collection
@@ -206,15 +203,17 @@ class Visio.Figures.Isy extends Visio.Figures.Base
     @
 
   sortFn: (a, b) =>
-    reversedA = if a.get(@progress.start) > a.get(@progress.end) then -1 else 1
-    reversedB = if b.get(@progress.start) > b.get(@progress.end) then -1 else 1
-    (reversedA * @scaledBarHeight(a)) - (reversedB * @scaledBarHeight(b))
+
+    reversedA = if a.get('reversal') then -1 else 1
+    reversedB = if b.get('reversal') then -1 else 1
+
+    (reversedB * @progressDifference(b)) - (reversedA * @progressDifference(a))
 
   filterFn: (d) => d.get('is_performance') == @isPerformance
 
-  scaledBarHeight: (d) =>
-    @y.domain [0, +d.get(@goalType)]
-    v = Math.abs(+d.get(@progress.start) - +d.get(@progress.end))
+  progressDifference: (d) =>
+    (+d.get(@sortAttribute.end) - +d.get(@sortAttribute.start)) /
+      (+d.get(@sortAttribute.start) + +d.get(@sortAttribute.end))
 
   filtered: (collection) => _.chain(collection.models).filter(@filterFn).sort(@sortFn).value()
 
