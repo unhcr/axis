@@ -185,12 +185,32 @@ class StrategyTest < ActiveSupport::TestCase
     assert_equal 3, Strategy.find(@s.id).goals.length
 
     @so2.goals.delete(goals(:three))
-    assert_equal 1, StrategyObjective.find(@so2.id).goals.length
-    assert_equal 2, Strategy.find(@s.id).goals.length
+    assert_equal 1, @so2.reload.goals.length
+    assert_equal 2, @s.reload.goals.length
+
+    @so2.goals.delete goals(:two)
+    assert_equal 0, @so2.reload.goals.length
+    assert_equal 2, @s.reload.goals.length
 
     @so2.goals.delete_all
     @so.goals.delete_all
     assert_equal 0, Strategy.find(@s.id).goals.length
+  end
+
+  test "params should be removed when strategy objective is removed" do
+    @so2 = strategy_objectives(:two)
+    @so2.goals << goals(:three)
+    @so2.goals << goals(:one)
+
+    @s.strategy_objectives << @so2
+    assert_equal 2, @s.reload.goals.length
+
+    @s.strategy_objectives.delete @so
+    assert_equal 2, @s.goals.length
+    assert_equal 0, @s.problem_objectives.length
+    assert_equal 0, @s.outputs.length
+    assert_equal 0, @s.indicators.length
+
   end
 
   test "strategy objectives should be destroyed when strategy is destoryed" do

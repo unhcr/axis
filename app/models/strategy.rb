@@ -2,7 +2,9 @@ class Strategy < ActiveRecord::Base
   attr_accessible :name, :description
 
   has_many :strategy_objectives,
-    :before_add => :add_strategy_objective_parameters, :dependent => :destroy
+    :after_remove => :remove_strategy_objective_parameters,
+    :before_add => :add_strategy_objective_parameters,
+    :dependent => :destroy
 
   has_many :operations_strategies, :class_name     => 'OperationsStrategies'
   has_many :operations, :uniq => true, :through => :operations_strategies
@@ -34,6 +36,32 @@ class Strategy < ActiveRecord::Base
     self.problem_objectives << strategy_objective.problem_objectives
     self.outputs << strategy_objective.outputs
     self.indicators << strategy_objective.indicators
+  end
+
+  def remove_strategy_objective_parameters(strategy_objective)
+    parameters = StrategyObjective.parameters
+    parameters.each do |p|
+      name = p.table_name
+      collection = []
+      self.strategy_objectives.each do |so|
+        collection += so.send(name)
+      end
+      self.send(name.singularize + '_ids=', collection.map(&:id))
+    end
+  end
+
+  # This function shouldn't never have to be used. It is used to sync the parameters with the strategy
+  # objectives in the case of any bugs so we don't need to rewrite strategy in cms.
+  def normalize
+    parameters = StrategyObjective.parameters
+    parameters.each do |p|
+      name = p.table_name
+      collection = []
+      self.strategy_objectives.each do |so|
+        collection += so.send(name)
+      end
+      self.send(name.singularize + '_ids=', collection.map(&:id))
+    end
   end
 
   def belongs_to_strategy_objective(assoc)
