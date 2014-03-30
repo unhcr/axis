@@ -27,6 +27,7 @@ class Visio.Figures.Icmy extends Visio.Figures.Base
         id: 'is_performance'
         filterType: 'radio'
         values: { true: false, false: true }
+        human: { true: 'performance', false: 'impact' }
       }
     ])
 
