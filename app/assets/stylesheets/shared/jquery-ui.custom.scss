@@ -95,8 +95,8 @@
 .ui-slider .ui-slider-handle {
 	position: absolute;
 	z-index: 2;
-	width: 1.2em;
-	height: 1.2em;
+	width: 2em;
+	height: 2em;
 	cursor: default;
   border: 1px solid $light-gray;
   background-color: white;
@@ -121,16 +121,44 @@
 .ui-slider .ui-slider-handle {
   outline: none;
 }
+.ui-slider::before {
+  content: attr(data-min);
+  position: absolute;
+  left: -15px;
+  top: -5px;
+}
+
+.ui-slider::after {
+  content: attr(data-max);
+  position: absolute;
+  right: -15px;
+  top: -5px;
+}
+
 
 .ui-slider-horizontal {
 	height: .3em;
   border-bottom: 1px solid $light-gray;
-  margin-bottom: .7em;
+  margin-bottom: 1.2em;
+  margin-top: 1.2em;
 }
+
 .ui-slider-horizontal .ui-slider-handle {
-	top: -.3em;
+	top: -.7em;
 	margin-left: -.6em;
 }
+
+.ui-slider-horizontal .ui-slider-handle::before {
+  content: attr(data-value);
+  left: 0;
+  top: -1.4em;
+  width: 2em;
+  text-align: center;
+  text-decoration: none;
+  color: black;
+  position: absolute;
+}
+
 .ui-slider-horizontal .ui-slider-range {
 	top: 0;
 	height: 100%;

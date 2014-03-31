@@ -1325,7 +1325,7 @@ a {
   background-color: white;
 
   .data-container {
-    max-height: 460px;
+    max-height: 580px;
   }
 
   .js-parameter:hover:before{
@@ -1754,7 +1754,7 @@ a {
   .filters, .visio-dropdown {
     width: $header-button-width;
     text-align: left;
-    z-index: 1;
+    z-index: 101;
     @include transition-property(max-height);
     @include transition-duration($fast-transition);
     @include transition-timing-function(ease-in);

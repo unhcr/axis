@@ -176,10 +176,15 @@ line {
 
 .svg-isy-figure {
   .myr-bar {
-    fill: $purple-dark;
+    fill: orange;
   }
   .yer-bar {
-    fill: $lightblue;
+    fill: rgb(11, 217, 255);
+  }
+  .axis {
+    line:last-child {
+      stroke: black;
+    }
   }
   .bar {
     stroke: white;
@@ -192,17 +197,17 @@ line {
     fill: $alert-red;
   }
   .box.faded {
-    opacity: .4;
+    opacity: .6;
   }
   .box.active {
     stroke: black;
     stroke-width: 1px;
   }
   .box {
-    -moz-transition:opacity $medium-transition;
-    -webkit-transition:opacity $medium-transition;
-    -o-transition:opacity $medium-transition;
-    transition:opacity $medium-transition;
+    -moz-transition:opacity $fast-transition;
+    -webkit-transition:opacity $fast-transition;
+    -o-transition:opacity $fast-transition;
+    transition:opacity $fast-transition;
     line {
       stroke: $dark-gray;
       pointer-events: none;
@@ -235,24 +240,14 @@ line {
     pointer-events: none;
   }
 
-  .text {
-    fill: white;
-  }
-
   .label {
     pointer-events: none;
   }
 
-  .tag.tag-myr {
-    fill: $primary-medium;
+  .tag {
+    fill: white;
+    stroke: $black;
   }
-  .tag.tag-yer, .tag.tag-comp_target {
-    fill: $primary-light;
-  }
-  .tag.tag-baseline {
-    fill: $primary-dark;
-  }
-
 }
 
 .spark-bar-graph {

@@ -14,12 +14,12 @@ class Visio.Views.IsyShowView extends Visio.Views.AccordionShowView
   initialize: (options) ->
     @config =
       margin:
-        top: 10
+        top: 200
         bottom: 10
-        left: 10
-        right: 10
+        left: 40
+        right: 30
       width: 800
-      height: 300
+      height: 460
 
     @isyFigure = new Visio.Figures.Isy @config
     @filterBy = new Visio.Views.FilterBy({ figure: @isyFigure, })
@@ -35,6 +35,11 @@ class Visio.Views.IsyShowView extends Visio.Views.AccordionShowView
         @isyFigure.sortAttribute = progress
         @isyFigure.render()
 
+    $.subscribe "hover.#{@isyFigure.cid}.figure", (e, value) =>
+      @$el.find('.slider').slider 'value', value
+      @$el.find('.slider .ui-slider-handle').attr 'data-value', value + 1
+    $.subscribe "drawFigures.#{@isyFigure.cid}.figure", @drawFigures
+
   render: (isRerender) ->
     situationAnalysis = @model.selectedSituationAnalysis()
 
@@ -48,6 +53,7 @@ class Visio.Views.IsyShowView extends Visio.Views.AccordionShowView
       @$el.find('.slider').slider
         animate: true
         slide: @onSlide
+        stop: @onStop
         min: 0
 
     category = if situationAnalysis.total == 0 then 'white' else situationAnalysis.category
@@ -68,12 +74,26 @@ class Visio.Views.IsyShowView extends Visio.Views.AccordionShowView
 
     @
 
-  onSlide: (e, ui) ->
-    console.log ui.value
-  drawFigures: ->
+  onStop: (e, ui) =>
+    $.publish "mouseout.#{@isyFigure.cid}.figure", ui.value
+
+  onSlide: (e, ui) =>
+    $.publish "hover.#{@isyFigure.cid}.figure", ui.value
+    @$el.find('.slider .ui-slider-handle').attr 'data-value', ui.value + 1
+
+  drawFigures: =>
     @isyFigure.collectionFn @model.selectedIndicatorData()
+    max = @isyFigure.filtered(@isyFigure.collection).length
 
     @isyFigure.render()
-    @$el.find('.slider').slider 'option', 'max', @isyFigure.filtered(@isyFigure.collection).length
+    @$el.find('.slider').slider 'option', 'max', max - 1
+    @$el.find('.slider').attr('data-max', max)
 
   removeInstances: =>
+    $.unsubscribe "drawFigures.#{@isyFigure.cid}.figure"
+    $.unsubscribe "hover.#{@isyFigure.cid}.figure"
+    @isyFigure.close()
+
+  onClickParameter: (e) =>
+    super arguments
+    @isyFigure.tooltip?.close() unless @isOpen()

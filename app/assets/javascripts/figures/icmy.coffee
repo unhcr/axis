@@ -135,6 +135,7 @@ class Visio.Figures.Icmy extends Visio.Figures.Base
             figure: @
             year: d.point.year
             collection: new Backbone.Collection(pointData)
+          @tooltip.render()
 
     voronoi.exit().remove()
 

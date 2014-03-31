@@ -122,6 +122,7 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
             figure: @
             year: d.point.year
             collection: new Backbone.Collection(pointData)
+          @tooltip.render()
 
       )
 
