@@ -34,6 +34,7 @@ class Visio.Figures.Isy extends Visio.Figures.Base
 
     @isPerformance = if config.isPerformance? then config.isPerformance else true
 
+    @tipHeight = 8
     @barWidth = 10
     @barMargin = 8
 
@@ -154,23 +155,49 @@ class Visio.Figures.Isy extends Visio.Figures.Base
 
           barHeight = Math.abs(baseline - value)
           bars = box.selectAll(".#{metric}-bar").data([d])
-          bars.enter().append('rect')
+
+          bars.enter().append('polygon')
           bars.attr('class', (d) ->
             classList = ["#{metric}-bar", 'bar']
             classList.push 'reversed' if reversed
             classList.join ' '
-          ).attr('x', idx * self.barWidth)
-
+          )
           bars.transition()
             .duration(Visio.Durations.FAST)
-            .attr('y', (d) ->
-              if reversed
-                return self.y(value + barHeight)
+            .attr('points', (d) ->
+              points = []
+
+              y = if reversed
+                self.y(value + barHeight)
               else
-                return self.y(baseline + barHeight)
-            ).attr('width', self.barWidth)
-            .attr('height', (d) ->
-              return self.y(0) - self.y(barHeight))
+                self.y(baseline + barHeight)
+
+              height = self.y(0) - self.y(barHeight)
+              # BaseLeft
+              points.push [idx * self.barWidth, y]
+
+              # BaseRight
+              points.push [(idx + 1) * self.barWidth, y]
+
+              # VariableRight
+              points.push [(idx + 1) * self.barWidth, y + height]
+
+              # VariableLeft
+              points.push [idx * self.barWidth, y + height]
+
+              if metric == Visio.Algorithms.REPORTED_VALUES.yer and reversed
+                points[2][1] -= self.tipHeight
+              else if metric == Visio.Algorithms.REPORTED_VALUES.yer and not reversed
+                points[0][1] -= self.tipHeight
+              else if metric == Visio.Algorithms.REPORTED_VALUES.myr and reversed
+                points[3][1] -= self.tipHeight
+              else if metric == Visio.Algorithms.REPORTED_VALUES.myr and not reversed
+                points[1][1] -= self.tipHeight
+
+              path = _.map(points, (point) -> point.join(',')).join(' ')
+
+              path)
+
           bars.exit().remove()
 
         center = box.selectAll('.center').data([d])
@@ -184,23 +211,48 @@ class Visio.Figures.Isy extends Visio.Figures.Base
           .attr('y2', (d) -> self.y(d.get(Visio.Algorithms.GOAL_TYPES.target)))
         center.exit().remove()
 
-        whisker = box.selectAll('.whisker').data([d])
-        whisker.enter().append('line')
-        whisker.attr('class', 'whisker')
-        whisker.transition()
+        target = box.selectAll('.target').data([d])
+        target.enter().append('g')
+        target.attr('class', 'target')
+        target.transition()
           .duration(Visio.Durations.FAST)
-          .attr('x1', self.barWidth / 2 + 2)
-          .attr('y1', (d) -> self.y(d.get(Visio.Algorithms.GOAL_TYPES.target)))
-          .attr('x2', 1.5 * self.barWidth - 2)
-          .attr('y2', (d) -> self.y(d.get(Visio.Algorithms.GOAL_TYPES.target)))
-        whisker.exit().remove()
+          .attr('transform', (d) ->
+            'translate(0, ' + self.y(d.get(Visio.Algorithms.GOAL_TYPES.target)) + ')')
+          .each((d) -> self.circleLabel(d, @, 'T'))
 
+        target.enter().append('circle')
+        target.exit().remove()
+
+        baseline = box.selectAll('.baseline').data([d])
+        baseline.enter().append('g')
+        baseline.attr('class', 'baseline')
+        baseline.transition()
+          .duration(Visio.Durations.FAST)
+          .attr('transform', (d) ->
+            'translate(0, ' + self.y(d.get(Visio.Algorithms.REPORTED_VALUES.baseline)) + ')')
+          .each((d) -> self.circleLabel(d, @, 'B'))
+
+        baseline.enter().append('circle')
+        baseline.exit().remove()
       )
     boxes.on 'click', (d, i) =>
       $.publish "select.#{@figureId()}", [d, i]
 
     boxes.exit().remove()
     @
+
+  circleLabel: (d, svgEl, letter) ->
+    g = d3.select svgEl
+    circle = g.selectAll('circle').data([d])
+    circle.enter().append('circle')
+    circle.attr('cx', @barWidth)
+      .attr('r', 8)
+    text = g.selectAll('text').data([d])
+    text.enter().append('text')
+    text.attr('x', @barWidth)
+      .attr('text-anchor', 'middle')
+      .attr('dy', '.4em')
+      .text(letter)
 
   sortFn: (a, b) =>
 

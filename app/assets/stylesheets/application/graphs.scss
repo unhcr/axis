@@ -209,6 +209,24 @@ line {
     }
   }
 
+  .target {
+    fill: yellow;
+    stroke: $black;
+
+    text {
+      font-size: 11px;
+    }
+  }
+
+  .baseline {
+    fill: $primary;
+    stroke: $black;
+
+    text {
+      stroke: white;
+      font-size: 11px;
+    }
+  }
 
   .circle {
     fill: white;
