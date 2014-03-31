@@ -4,7 +4,7 @@ class Visio.Views.IsyTooltip extends Visio.Views.D3Tooltip
 
   offset: 140
 
-  width: => ((2*@figure.widthFn() / 3) - @offset)
+  width: => @figure.widthFn()
 
   height: -> 300
 
@@ -12,15 +12,11 @@ class Visio.Views.IsyTooltip extends Visio.Views.D3Tooltip
     @figure.$el.offset().top + 60
 
   left: =>
-    base = $(@figure.el).offset().left + @figure.xFn()(@isyIndex) + @figure.marginFn().left
-    if @figure.xFn()(@isyIndex) > @figure.widthFn() / 2
-      return base - @offset - @width()
-    else
-      return base + @offset
+    $(@figure.el).offset().left
 
   initialize: (options) ->
-    @figure = options.figure
-    @isyIndex = options.isyIndex
+    @figure = options?.figure
+    @isyIndex = options?.isyIndex
 
     super options
 

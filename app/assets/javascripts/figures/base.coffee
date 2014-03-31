@@ -30,6 +30,8 @@ class Visio.Figures.Base extends Backbone.View
     if config?.filters?
       @filters = new Visio.Collections.FigureFilter(config.filters)
 
+    @template = HAML["figures/#{@type.name}"] if HAML["figures/#{@type.name}"]?
+
     @template = HAML["pdf/figures/#{@type.name}"] if @isPdf
 
     opts =

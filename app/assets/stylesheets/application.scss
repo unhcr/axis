@@ -13,11 +13,13 @@
  */
  @import 'compass/css3';
 
+ @import 'shared/jquery-ui.custom';
+ @import 'shared/variables';
+ @import 'shared/nprogress';
+ @import 'shared/easydropdown.metro';
+
  @import 'application/bootstrap';
  @import 'application/global';
  @import 'application/graphs';
  @import 'application/pdf';
 
- @import 'shared/variables';
- @import 'shared/nprogress';
- @import 'shared/easydropdown.metro';
