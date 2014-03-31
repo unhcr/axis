@@ -12,6 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require ./vendor/jquery-ui-1.10.4.custom
 //= require underscore
 //= require hamlcoffee
 //= require backbone
