@@ -38,7 +38,7 @@ class StrategyObjective < ActiveRecord::Base
       self.strategy.strategy_objectives.each do |so|
         included = true if so.send(name).include? assoc and so != self
       end
-      self.strategy.send(name).delete(assoc) unless included
+      self.strategy.send(name).destroy(assoc) unless included
     end
     assoc.touch_data self
   end
