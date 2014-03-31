@@ -11,6 +11,7 @@ load 'deploy/assets'
 set :rbenv_ruby_version, "2.0.0-p353"
 set :rbenv_repository, "https://github.com/sstephenson/rbenv.git"
 set :bundle_flags, "--deployment --quiet --binstubs"
+set :keep_releases, 3
 
 set :application, "visio"
 
