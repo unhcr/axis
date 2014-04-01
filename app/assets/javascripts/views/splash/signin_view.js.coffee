@@ -35,13 +35,15 @@ class Visio.Views.SigninView extends Backbone.View
     if login && password
       Visio.Utils.signin(login, password).done (resp) =>
         if resp.success
-          window.location.href = '/'
+          @routeToHomepage()
         else
           $login.val('')
           $password.val('')
           Visio.Utils.flash($login, 'Authentication Failed')
           Visio.Utils.flash($password, 'Authentication Failed')
 
+  routeToHomepage: ->
+    window.location.href = '/'
 
   onFocus: (e) ->
     $('body').addClass('ui-primary-dark-theme')

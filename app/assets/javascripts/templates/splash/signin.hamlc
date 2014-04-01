@@ -1,6 +1,6 @@
 %header.clearfix
   .account-menu
-    %a.pull-right.menu-item{:href => "#signup"} Create an account
+    <!-- %a.pull-right.menu-item{:href => "#signup"} Create an account -->
     %span.pull-right.menu-item New to VISIO?
 .container
   .row
@@ -15,13 +15,18 @@
       .light.center-text Let's Get Started
   .row
     .col-md-8.col-centered
-      %form
-        .col-md-5.center-text
-          %input.login.pull-left.full-width{:name => "login", :placeholder => "Enter your ldap username", :type => "text"}
-        .col-md-5.center-text
-          %input.password.pull-left.full-width{:name => "password", :placeholder => "Password", :type => "password"}
-        .col-md-2.center-text
-          %input.signin.ui-active.full-width.btn.pull-left{:type => "submit", :value => "GO"}
+      - if Visio.user? and Visio.user.isLoggedIn()
+        %h5
+          = "Thank you for using AXIS, #{Visio.user.get('login')}, please find the homepage"
+          %a{ :href => '/' } here
+      - else
+        %form
+          .col-md-5.center-text
+            %input.login.pull-left.full-width{:name => "login", :placeholder => "Enter your ldap username", :type => "text"}
+          .col-md-5.center-text
+            %input.password.pull-left.full-width{:name => "password", :placeholder => "Password", :type => "password"}
+          .col-md-2.center-text
+            %input.signin.ui-active.full-width.btn.pull-left{:type => "submit", :value => "GO"}
   .row
     .col-md-8.col-centered
       .col-md-4.center-text.logo-circle
