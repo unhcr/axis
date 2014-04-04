@@ -170,19 +170,37 @@ class StrategyTest < ActiveSupport::TestCase
     assert_equal 1, @s.outputs.length
     assert_equal 1, @s.indicators.length
 
+    goal2 = goals(:two)
+    goal2.indicator_data = [indicator_data(:one)]
+    goal2.budgets = [budgets(:one)]
+    goal2.expenditures = [expenditures(:one)]
+    goal2.save
+
+    assert Time.now > goal2.updated_at
+    assert Time.now > goal2.indicator_data[0].updated_at
+    assert Time.now > goal2.budgets[0].updated_at
+    assert Time.now > goal2.expenditures[0].updated_at
+
     start = Time.now
-    @so.goals << goals(:two)
-    assert_equal 2, Strategy.find(@s.id).goals.length
-    assert start < goals(:two).updated_at
+    sleep 2
+
+    @so.goals << goal2
+    assert_equal 2, @s.reload.goals.length
+    goal2.reload
+
+    assert start < goal2.updated_at, 'Should update goal'
+    assert start < goal2.indicator_data[0].updated_at, 'Should update Indicator data'
+    assert start < goal2.budgets[0].updated_at, 'Should update Budget data'
+    assert start < goal2.expenditures[0].updated_at, 'Should update Expenditure data'
 
     @so2 = strategy_objectives(:two)
     @so2.goals << goals(:three)
 
     @s.strategy_objectives << @so2
-    assert_equal 3, Strategy.find(@s.id).goals.length
+    assert_equal 3, @s.reload.goals.length
 
     @so2.goals << goals(:two)
-    assert_equal 3, Strategy.find(@s.id).goals.length
+    assert_equal 3, @s.reload.goals.length
 
     @so2.goals.delete(goals(:three))
     assert_equal 1, @so2.reload.goals.length

@@ -28,7 +28,7 @@ class StrategyObjective < ActiveRecord::Base
 
   def touch_data(assoc)
     assoc.touch :updated_at
-    assoc.touch_data self
+    assoc.touch_data
   end
 
   def remove_from_strategy(assoc)
@@ -38,9 +38,9 @@ class StrategyObjective < ActiveRecord::Base
       self.strategy.strategy_objectives.each do |so|
         included = true if so.send(name).include? assoc and so != self
       end
-      self.strategy.send(name).destroy(assoc) unless included
+      self.strategy.send(name).delete(assoc) unless included
     end
-    assoc.touch_data self
+    assoc.touch_data
   end
 
   def self.search_models(query, options = {})
