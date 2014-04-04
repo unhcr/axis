@@ -45,7 +45,7 @@
       .row
         .col-md-12
           %h3
-            Education Key Figures.
+            Key Figures.
       .row
         .col-md-3
           - list = ['budget', 'spent']
