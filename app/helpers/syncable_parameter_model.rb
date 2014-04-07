@@ -1,5 +1,5 @@
 module SyncableParameterModel
-  def touch_data
+  def touch_data(assoc)
     self.budgets.update_all(:updated_at => Time.now) if defined? self.budgets
     self.indicator_data.update_all(:updated_at => Time.now) if defined? self.indicator_data
     self.expenditures.update_all(:updated_at => Time.now) if defined? self.expenditures

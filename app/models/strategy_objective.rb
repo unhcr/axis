@@ -28,7 +28,7 @@ class StrategyObjective < ActiveRecord::Base
 
   def touch_data(assoc)
     assoc.touch :updated_at
-    assoc.touch_data
+    assoc.touch_data self
   end
 
   def remove_from_strategy(assoc)
@@ -40,7 +40,7 @@ class StrategyObjective < ActiveRecord::Base
       end
       self.strategy.send(name).delete(assoc) unless included
     end
-    assoc.touch_data
+    assoc.touch_data self
   end
 
   def self.search_models(query, options = {})

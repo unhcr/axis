@@ -224,6 +224,7 @@ class StrategyTest < ActiveSupport::TestCase
     assert_equal 2, @s.reload.goals.length
 
     @s.strategy_objectives.delete @so
+    @s.reload
     assert_equal 2, @s.goals.length
     assert_equal 0, @s.problem_objectives.length
     assert_equal 0, @s.outputs.length

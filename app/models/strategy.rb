@@ -39,19 +39,9 @@ class Strategy < ActiveRecord::Base
   end
 
   def remove_strategy_objective_parameters(strategy_objective)
-    parameters = StrategyObjective.parameters
-    parameters.each do |p|
-      name = p.table_name
-      collection = []
-      self.strategy_objectives.each do |so|
-        collection += so.send(name)
-      end
-      self.send(name.singularize + '_ids=', collection.map(&:id))
-    end
+    self.normalize
   end
 
-  # This function shouldn't never have to be used. It is used to sync the parameters with the strategy
-  # objectives in the case of any bugs so we don't need to rewrite strategy in cms.
   def normalize
     parameters = StrategyObjective.parameters
     parameters.each do |p|
@@ -60,7 +50,7 @@ class Strategy < ActiveRecord::Base
       self.strategy_objectives.each do |so|
         collection += so.send(name)
       end
-      self.send(name.singularize + '_ids=', collection.map(&:id))
+      self.send(name + '=', collection)
     end
   end
 
