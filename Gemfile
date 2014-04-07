@@ -55,7 +55,7 @@ group :development, :test do
   gem 'simplecov', :require => false
   gem 'teaspoon'
   gem 'single_test'
-  gem 'selenium-webdriver', '~> 2.38.0'
+  gem 'selenium-webdriver', '~> 2.41.0'
   gem 'rspec-rails', '~> 3.0.0.beta'
   gem 'pry-rails'
   gem 'pry'
