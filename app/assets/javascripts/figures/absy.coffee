@@ -5,20 +5,26 @@ class Visio.Figures.Absy extends Visio.Figures.Base
   type: Visio.FigureTypes.ABSY
 
   initialize: (config) ->
+    @attrConfig.push 'algorithm'
     values = {}
     values[Visio.Scenarios.AOL] = false
     values[Visio.Scenarios.OL] = true
     @filters = new Visio.Collections.FigureFilter([
       {
-        id: 'amount_type'
+        id: 'algorithm'
         filterType: 'radio'
         values: {
-          EXPENDITURES: false,
-          BUDGETS: true
+          selectedBudget: true,
+          selectedExpenditureRate: false
         }
-        human: { EXPENDITURES: 'Expenditure', BUDGETS: 'Budget' }
-        callback: (name, attr) ->
-          Visio.manager.set 'amount_type', Visio.Syncables[name]
+        human: { selectedExpenditureRate: 'Expenditure Rate', selectedBudget: 'Budget' }
+        callback: (name, attr) =>
+          @algorithm = name
+          if @algorithm == 'selectedBudget'
+            @xAxis.tickFormat Visio.Formats.SI_SIMPLE
+          else
+            @xAxis.tickFormat Visio.Formats.PERCENT
+          @render()
 
       }
       {
@@ -50,6 +56,8 @@ class Visio.Figures.Absy extends Visio.Figures.Base
 
     super config
 
+    @algorithm or= 'selectedBudget'
+
     @x = d3.scale.linear()
       .range([0, @adjustedWidth])
 
@@ -64,7 +72,7 @@ class Visio.Figures.Absy extends Visio.Figures.Base
     @xAxis = d3.svg.axis()
       .scale(@x)
       .orient('bottom')
-      .tickFormat(d3.format('s'))
+      .tickFormat(Visio.Formats.SI_SIMPLE)
       .ticks(Math.floor(@adjustedWidth / 100))
       .innerTickSize(14)
 
@@ -82,7 +90,7 @@ class Visio.Figures.Absy extends Visio.Figures.Base
     @info = null
     @voronoi = d3.geom.voronoi()
       .clipExtent([[0, 0], [@adjustedWidth, @adjustedHeight]])
-      .x((d) => @x(d.selectedAmount(Visio.manager.year(), @filters)))
+      .x((d) => @x(d[@algorithm](Visio.manager.year(), @filters)))
       .y((d) => @y(d.selectedAchievement(Visio.manager.year(), @filters).result))
 
     @g.append('g')
@@ -104,11 +112,19 @@ class Visio.Figures.Absy extends Visio.Figures.Base
         .attr("x", @adjustedWidth / 2)
         .attr("dy", "-.21em")
         .style("text-anchor", "middle")
-        .text("#{Visio.manager.get('amount_type').human} (Dollars)")
+        .text =>
+          if @algorithm == 'selectedBudget'
+            'Budget (Dollars)'
+          else
+            'Expenditure Rate (%)'
 
   render: ->
     filtered = @filtered @collection
-    maxAmount = d3.max filtered, (d) => d.selectedAmount(Visio.manager.year(), @filters)
+
+    if @algorithm == 'selectedBudget'
+      maxAmount = d3.max filtered, (d) => d[@algorithm](Visio.manager.year(), @filters)
+    else
+      maxAmount = 1
 
     self = @
     if !@domain || @domain[1] < maxAmount || @domain[1] > 2 * maxAmount
@@ -147,7 +163,7 @@ class Visio.Figures.Absy extends Visio.Figures.Base
             .attr('cy', (d) =>
               return self.y(d.selectedAchievement(Visio.manager.year(), self.filters).result))
             .attr('cx', (d) =>
-              return self.x(d.selectedAmount(Visio.manager.year(), self.filters)))
+              return self.x(d[self.algorithm](Visio.manager.year(), self.filters)))
 
           point.exit().transition().duration(Visio.Durations.FAST).attr('r', 0).remove()
 
@@ -160,13 +176,12 @@ class Visio.Figures.Absy extends Visio.Figures.Base
           if self.isExport or (self.isPdf and not _.isEmpty self.selected)
             labels.enter().append('text')
             labels.attr('class', 'label')
-              .attr('x', (d) => self.x(d.selectedAmount(Visio.manager.year(), self.filters)))
+              .attr('x', (d) => self.x(d[self.algorithm](Visio.manager.year(), self.filters)))
               .attr('y', (d) => self.y(d.selectedAchievement(Visio.manager.year(), self.filters).result))
               .attr('dy', '.3em')
               .attr('text-anchor', 'middle')
               .text((d) ->
                 if self.isPdf
-                  console.log 'pdf'
                   Visio.Constants.ALPHABET[_.indexOf self.selected, d.id]
                 else
                   Visio.Constants.ALPHABET[i]
@@ -190,7 +205,7 @@ class Visio.Figures.Absy extends Visio.Figures.Base
           })
           # Hack for when we move from one to voronoi to another to which fires enter, enter, out in Chrome
           window.setTimeout(( -> @entered = false), 50)
-          @info.render(d.point)
+          @info.render(d.point, @algorithm)
           @info.show()
           pointContainer = @g.select(".point-container.id-#{d.point.refId()}")
           pointContainer.moveToFront()
@@ -212,7 +227,11 @@ class Visio.Figures.Absy extends Visio.Figures.Base
       .call(@xAxis)
 
     @g.select('.x.axis text')
-      .text("#{Visio.manager.get('amount_type').human} (Dollars)")
+      .text =>
+        if @algorithm == 'selectedBudget'
+          'Budget (Dollars)'
+        else
+          'Expenditure Rate (%)'
 
     @g.select('.y.axis')
       .transition()
@@ -230,8 +249,8 @@ class Visio.Figures.Absy extends Visio.Figures.Base
     @
 
 
-  filterFn: (d) ->
-    d.selectedAmount(Visio.manager.year(), @filters) && d.selectedAchievement(Visio.manager.year(), @filters).result >= 0
+  filterFn: (d) =>
+    d[@algorithm](Visio.manager.year(), @filters) && d.selectedAchievement(Visio.manager.year(), @filters).result >= 0
 
   filtered: (collection) => _.chain(collection.models).filter(@filterFn).value()
 

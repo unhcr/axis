@@ -15,7 +15,6 @@ class Visio.Views.D3Tooltip extends Backbone.View
 
   initialize: ->
     @childTemplate = window.HAML["tooltips/#{@name}"]
-    @render()
 
   render: (isRerender) ->
 

@@ -204,8 +204,6 @@ test 'commit - no save', ->
   field = @form.fields.findWhere { name: 'operations' }
   field.selected 1, false
 
-  console.log @form.model.get 'operations'
-
   json = @form.commit()
 
   strictEqual json.operations.length, 2

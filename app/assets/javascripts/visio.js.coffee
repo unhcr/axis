@@ -83,6 +83,7 @@ window.Visio =
     MONEY: d3.format('$0.3s')
     LONG_MONEY: d3.format('$,f')
     SI: d3.format('0.3s')
+    SI_SIMPLE: d3.format('s')
     PERCENT: d3.format(".0%")
     PERCENT_NOSIGN: (d) -> (d * 100).toFixed()
     COMMA: d3.format(',')
@@ -191,11 +192,17 @@ window.Visio =
 
 Visio.ProgressTypes =
   BASELINE_MYR:
-    "#{Visio.Algorithms.REPORTED_VALUES.baseline}#{Visio.Constants.SEPARATOR}#{Visio.Algorithms.REPORTED_VALUES.myr}"
+    start: Visio.Algorithms.REPORTED_VALUES.baseline
+    end: Visio.Algorithms.REPORTED_VALUES.myr
+    value: "#{Visio.Algorithms.REPORTED_VALUES.baseline}#{Visio.Constants.SEPARATOR}#{Visio.Algorithms.REPORTED_VALUES.myr}"
   BASELINE_YER:
-    "#{Visio.Algorithms.REPORTED_VALUES.baseline}#{Visio.Constants.SEPARATOR}#{Visio.Algorithms.REPORTED_VALUES.yer}"
+    start: Visio.Algorithms.REPORTED_VALUES.baseline
+    end: Visio.Algorithms.REPORTED_VALUES.yer
+    value: "#{Visio.Algorithms.REPORTED_VALUES.baseline}#{Visio.Constants.SEPARATOR}#{Visio.Algorithms.REPORTED_VALUES.yer}"
   MYR_YER:
-    "#{Visio.Algorithms.REPORTED_VALUES.myr}#{Visio.Constants.SEPARATOR}#{Visio.Algorithms.REPORTED_VALUES.yer}"
+    start: Visio.Algorithms.REPORTED_VALUES.myr
+    end: Visio.Algorithms.REPORTED_VALUES.yer
+    value: "#{Visio.Algorithms.REPORTED_VALUES.myr}#{Visio.Constants.SEPARATOR}#{Visio.Algorithms.REPORTED_VALUES.yer}"
 
 Visio.AggregationTypes = [
     Visio.Parameters.OPERATIONS,
@@ -207,17 +214,17 @@ Visio.AggregationTypes = [
   ]
 
 Visio.Algorithms.CRITICALITIES = [
-    { value: Visio.Algorithms.ALGO_RESULTS.success, human: 'Acceptable' }
-    { value: Visio.Algorithms.ALGO_RESULTS.ok, human: 'Critical' }
-    { value: Visio.Algorithms.ALGO_RESULTS.fail, human: 'Sub-Stanford' }
-    { value: Visio.Algorithms.STATUS.missing, human: 'Not-Reported' }
+    { value: Visio.Algorithms.ALGO_RESULTS.success }
+    { value: Visio.Algorithms.ALGO_RESULTS.ok }
+    { value: Visio.Algorithms.ALGO_RESULTS.fail }
+    { value: Visio.Algorithms.STATUS.missing }
   ]
 
 Visio.Algorithms.THRESHOLDS = [
-    { value: Visio.Algorithms.ALGO_RESULTS.high, human: 'Met Target (Above 80%)' }
-    { value: Visio.Algorithms.ALGO_RESULTS.medium, human: 'Approaching Target (Above 60%)' }
-    { value: Visio.Algorithms.ALGO_RESULTS.low, human: 'Below Target (Below 60% of target)' }
-    { value: Visio.Algorithms.STATUS.missing, human: 'Not-Reported' }
+    { value: Visio.Algorithms.ALGO_RESULTS.high }
+    { value: Visio.Algorithms.ALGO_RESULTS.medium }
+    { value: Visio.Algorithms.ALGO_RESULTS.low }
+    { value: Visio.Algorithms.STATUS.missing }
   ]
 
 Visio.Schema =

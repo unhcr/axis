@@ -53,7 +53,7 @@ class Visio.Views.NavigationView extends Backbone.View
       else
         delete Visio.manager.get('selected')[type][id]
 
-      Visio.manager.trigger('change:selected')
+      Visio.manager.trigger 'change:selected', type
 
     else
       # Need to load external parameters, equivalent to search
@@ -72,7 +72,7 @@ class Visio.Views.NavigationView extends Backbone.View
     # Clear out any selection
     Visio.manager.get('selected')[type] = {}
 
-    Visio.manager.trigger 'change:selected'
+    Visio.manager.trigger 'change:selected', type
 
   open: (type) =>
     $opened = @$el.find('.ui-accordion-content.opened')

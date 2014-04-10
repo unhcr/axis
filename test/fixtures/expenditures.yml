@@ -1,0 +1,10 @@
+
+one:
+  budget_type: STAFF
+  scenario: AOL
+  amount: 10
+
+two:
+  budget_type: ADMIN
+  scenario: OL
+  amount: 20

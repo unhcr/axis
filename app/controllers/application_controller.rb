@@ -28,6 +28,7 @@ class ApplicationController < ActionController::Base
   end
 
   def overview
+    redirect_to :splash and return unless user_signed_in?
     options = {
       :include => {
         :ids => true

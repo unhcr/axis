@@ -5,7 +5,7 @@ Visio::Application.routes.draw do
   get '/splash' => 'application#splash'
   get '/algorithms' => 'application#algorithms'
   get '/map' => 'application#map'
-  get '/overview' => 'application#overview'
+  get '/overview/:strategy_id' => 'application#overview'
   get '/global_search' => 'application#global_search'
   get '/healthz' => 'application#healthz'
 
@@ -34,7 +34,11 @@ Visio::Application.routes.draw do
       get 'search'
     end
   end
-  resources :strategies
+  resources :strategies do
+    member do
+      get 'download'
+    end
+  end
   resources :users
 
   root :to => 'application#index'

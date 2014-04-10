@@ -27,6 +27,7 @@ class Visio.Figures.Icmy extends Visio.Figures.Base
         id: 'is_performance'
         filterType: 'radio'
         values: { true: false, false: true }
+        human: { true: 'performance', false: 'impact' }
       }
     ])
 
@@ -135,6 +136,7 @@ class Visio.Figures.Icmy extends Visio.Figures.Base
             figure: @
             year: d.point.year
             collection: new Backbone.Collection(pointData)
+          @tooltip.render()
 
     voronoi.exit().remove()
 

@@ -13,7 +13,8 @@ gem 'whenever', :require => false
 gem "devise_ldap_authenticatable"
 gem 'counter_culture', '~> 0.1.18'
 gem "capistrano-resque", "~> 0.1.0", require: false
-gem 'google_drive'
+gem 'axlsx'
+gem 'zip-zip'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -54,7 +55,7 @@ group :development, :test do
   gem 'simplecov', :require => false
   gem 'teaspoon'
   gem 'single_test'
-  gem 'selenium-webdriver', '~> 2.38.0'
+  gem 'selenium-webdriver', '~> 2.41.0'
   gem 'rspec-rails', '~> 3.0.0.beta'
   gem 'pry-rails'
   gem 'pry'

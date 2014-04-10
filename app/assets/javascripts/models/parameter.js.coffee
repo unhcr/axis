@@ -123,6 +123,11 @@ class Visio.Models.Parameter extends Visio.Models.Syncable
     data = @selectedExpenditureData(year, filters)
     data.amount()
 
+  selectedExpenditureRate: (year, filters = null) ->
+    expenditures = @selectedExpenditureData(year, filters)
+    budgets = @selectedBudgetData(year, filters)
+    expenditures.amount() / budgets.amount()
+
   refId: ->
     @id
 

@@ -11,6 +11,7 @@ load 'deploy/assets'
 set :rbenv_ruby_version, "2.0.0-p353"
 set :rbenv_repository, "https://github.com/sstephenson/rbenv.git"
 set :bundle_flags, "--deployment --quiet --binstubs"
+set :keep_releases, 3
 
 set :application, "visio"
 
@@ -71,13 +72,7 @@ namespace :db do
   end
 end
 
-namespace :drive do
-  task :config, :except => { :no_release => true }, :role => :app do
-    run "cp -f ~/drive.yml #{release_path}/config/drive.yml"
-  end
-end
 after "deploy:finalize_update", "db:config"
-after "deploy:finalize_update", "drive:config"
 after "deploy", "deploy:migrate"
 after "deploy", "whenever:clear_crontab"
 after "deploy", "resque:restart"

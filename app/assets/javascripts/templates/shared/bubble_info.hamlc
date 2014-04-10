@@ -2,6 +2,9 @@
   .row.ui-small-header
     = context.title
   .row
-    = Visio.manager.get('amount_type').human + ': $' + Visio.Utils.commaNumber(context.amount)
+    - if context.algorithm == 'selectedBudget'
+      = 'Budget: $' + Visio.Formats.COMMA(context.value)
+    - else
+      = 'Expenditure Rate: ' + Visio.Formats.PERCENT(context.value)
   .row
     = "Achievement: #{Math.round(100 * context.achievement.result)}"

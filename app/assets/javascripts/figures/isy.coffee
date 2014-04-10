@@ -16,6 +16,7 @@ class Visio.Figures.Isy extends Visio.Figures.Base
         human: { true: 'performance', false: 'impact' }
         callback: (name, attr) =>
           @isPerformanceFn(name == 'true').render()
+          $.publish "drawFigures.#{@cid}.figure"
       },
       {
         id: 'achievement'
@@ -34,22 +35,42 @@ class Visio.Figures.Isy extends Visio.Figures.Base
 
     @isPerformance = if config.isPerformance? then config.isPerformance else true
 
+    @tipHeight = 8
     @barWidth = 10
     @barMargin = 8
+    @maxIndicators = Math.floor @adjustedWidth / (2 * @barWidth + @barMargin)
 
     @x = d3.scale.linear()
-      .domain([0, @adjustedWidth / ((2 * @barWidth) + @barMargin)])
+      .domain([0, @maxIndicators])
       .range([0, @adjustedWidth])
 
     @y = d3.scale.linear()
       .range([@adjustedHeight, 0])
 
+    @scale = d3.scale.linear()
+      .range([0, @adjustedHeight])
+      .domain([1, 0])
+
+    @yAxis = d3.svg.axis()
+      .scale(@scale)
+      .orient('left')
+      .ticks(5)
+      .tickFormat(Visio.Formats.PERCENT)
+      .tickSize(-@adjustedWidth)
+
+    @g.append('g')
+      .attr('class', 'y axis')
+      .attr('transform', 'translate(0,0)')
+
     @goalType = config.goalType || Visio.Algorithms.GOAL_TYPES.target
 
-    @progress =
-      start: Visio.Algorithms.REPORTED_VALUES.baseline
-      end: Visio.Algorithms.REPORTED_VALUES.myr
+    @$el.on 'mouseleave', (e) =>
+      @tooltip?.close()
 
+    $.subscribe "hover.#{@cid}.figure", @hover
+    $.subscribe "mouseout.#{@cid}.figure", @mouseout
+
+    @sortAttribute = Visio.ProgressTypes.BASELINE_MYR
 
   render: ->
     filtered = @filtered @collection
@@ -59,6 +80,7 @@ class Visio.Figures.Isy extends Visio.Figures.Base
     boxes = @g.selectAll('g.box').data filtered, (d) -> d.id
     boxes.enter().append('g')
     boxes.attr('class', (d) -> ['box', "box-#{d.id}"].join(' '))
+      .style('opacity', (d, i) -> if self.x(i) < 0 then 0 else 1)
       .transition()
       .duration(Visio.Durations.FAST)
       .attr('transform', (d, i) -> 'translate(' + self.x(i) + ', 0)')
@@ -81,71 +103,11 @@ class Visio.Figures.Isy extends Visio.Figures.Base
             classList.push 'inconsistent' unless d.isConsistent()
             return classList.join ' ')
 
-        container.on 'mouseover', (d) ->
-          self.g.selectAll('.box').classed 'faded', true
-          box.classed 'faded', false
-
-          self.tooltip = new Visio.Views.IsyTooltip
-            figure: self
-            isyIndex: i
-            model: d
-
-          self.y.domain [0, +d.get(self.goalType)]
-          circles = box.selectAll('.circle').data(_.values(Visio.Algorithms.REPORTED_VALUES))
-          circles.enter().append('circle')
-          circles.attr('r', 0)
-            .attr('cx', self.barWidth)
-            .attr('cy', (reportedValue) -> self.y(d.get(reportedValue)))
-            .attr('class', 'circle')
-          circles.transition()
-            .duration(Visio.Durations.VERY_FAST)
-            .attr('r', self.barWidth / 2)
-
-          # can't be in box svg since it need to be top level element
-          labels = self.g.selectAll('.label')
-            .data(_.values(Visio.Algorithms.REPORTED_VALUES).concat(Visio.Algorithms.GOAL_TYPES.target))
-          labels.enter().append('g')
-
-          labels
-            .attr('class', 'label')
-            .attr('transform', (type) ->
-              i = $(self.g.selectAll('.box')[0]).index(box[0][0])
-              "translate(#{self.x(i) + self.barWidth * 3}, #{self.y(d.get(type))})"
-            ).each (p) ->
-              label = d3.select @
-
-              tag = label.selectAll('.tag').data([p])
-              tag.enter().append('rect')
-              tag.attr('x', 0)
-                .attr('y', -10)
-                .attr('width', 100)
-                .attr('height', 20)
-                .attr('rx', 5)
-                .attr('ry', 5)
-                .attr('class', (type) -> ['tag', "tag-#{type}"].join(' '))
-
-              texts = label.selectAll('.text').data([p])
-              texts.enter().append('text')
-              texts.attr('x', 10)
-                .attr('y', 10)
-                .attr('dy', '-.43em')
-                .attr('class', 'text')
-                .text () ->
-                  humanGoal = Visio.Utils.humanMetric(self.goalType)
-                  if p != self.goalType
-                    percent = d.get(p) / +d.get(self.goalType)
-                    humanMetric = Visio.Utils.humanMetric(p)
-                    return "#{Visio.Formats.PERCENT(percent)} #{humanMetric}"
-                  else
-                    return "#{humanGoal} is #{d.get(self.goalType)}"
-
+        container.on 'mouseenter', (d) ->
+          $.publish "hover.#{self.cid}.figure", i
 
         container.on 'mouseout', (d) ->
-          self.tooltip.close() if self.tooltip?
-          self.g.selectAll('.box').classed 'faded', false
-          box.selectAll('.circle').data([])
-            .exit().transition().duration(Visio.Durations.VERY_FAST).attr('r', 0).remove()
-          self.g.selectAll('.label').remove()
+          $.publish "mouseout.#{self.cid}.figure", i
 
         container.exit().remove()
 
@@ -157,23 +119,49 @@ class Visio.Figures.Isy extends Visio.Figures.Base
 
           barHeight = Math.abs(baseline - value)
           bars = box.selectAll(".#{metric}-bar").data([d])
-          bars.enter().append('rect')
+
+          bars.enter().append('polygon')
           bars.attr('class', (d) ->
             classList = ["#{metric}-bar", 'bar']
             classList.push 'reversed' if reversed
             classList.join ' '
-          ).attr('x', idx * self.barWidth)
-
+          )
           bars.transition()
             .duration(Visio.Durations.FAST)
-            .attr('y', (d) ->
-              if reversed
-                return self.y(value + barHeight)
+            .attr('points', (d) ->
+              points = []
+
+              y = if reversed
+                self.y(value + barHeight)
               else
-                return self.y(baseline + barHeight)
-            ).attr('width', self.barWidth)
-            .attr('height', (d) ->
-              return self.y(0) - self.y(barHeight))
+                self.y(baseline + barHeight)
+
+              height = self.y(0) - self.y(barHeight)
+              # BaseLeft
+              points.push [idx * self.barWidth, y]
+
+              # BaseRight
+              points.push [(idx + 1) * self.barWidth, y]
+
+              # VariableRight
+              points.push [(idx + 1) * self.barWidth, y + height]
+
+              # VariableLeft
+              points.push [idx * self.barWidth, y + height]
+
+              if metric == Visio.Algorithms.REPORTED_VALUES.yer and reversed
+                points[2][1] -= self.tipHeight
+              else if metric == Visio.Algorithms.REPORTED_VALUES.yer and not reversed
+                points[0][1] -= self.tipHeight
+              else if metric == Visio.Algorithms.REPORTED_VALUES.myr and reversed
+                points[3][1] -= self.tipHeight
+              else if metric == Visio.Algorithms.REPORTED_VALUES.myr and not reversed
+                points[1][1] -= self.tipHeight
+
+              path = _.map(points, (point) -> point.join(',')).join(' ')
+
+              path)
+
           bars.exit().remove()
 
         center = box.selectAll('.center').data([d])
@@ -187,34 +175,74 @@ class Visio.Figures.Isy extends Visio.Figures.Base
           .attr('y2', (d) -> self.y(d.get(Visio.Algorithms.GOAL_TYPES.target)))
         center.exit().remove()
 
-        whisker = box.selectAll('.whisker').data([d])
-        whisker.enter().append('line')
-        whisker.attr('class', 'whisker')
-        whisker.transition()
+        target = box.selectAll('.target').data([d])
+        target.enter().append('g')
+        target.attr('class', 'target')
+        target.transition()
           .duration(Visio.Durations.FAST)
-          .attr('x1', self.barWidth / 2 + 2)
-          .attr('y1', (d) -> self.y(d.get(Visio.Algorithms.GOAL_TYPES.target)))
-          .attr('x2', 1.5 * self.barWidth - 2)
-          .attr('y2', (d) -> self.y(d.get(Visio.Algorithms.GOAL_TYPES.target)))
-        whisker.exit().remove()
+          .attr('transform', (d) ->
+            'translate(0, ' + self.y(d.get(Visio.Algorithms.GOAL_TYPES.target)) + ')')
+          .each((d) -> self.circleLabel(d, @, 'T'))
 
+        target.enter().append('circle')
+        target.exit().remove()
+
+        baseline = box.selectAll('.baseline').data([d])
+        baseline.enter().append('g')
+        baseline.attr('class', 'baseline')
+        baseline.transition()
+          .duration(Visio.Durations.FAST)
+          .attr('transform', (d) ->
+            'translate(0, ' + self.y(d.get(Visio.Algorithms.REPORTED_VALUES.baseline)) + ')')
+          .each((d) -> self.circleLabel(d, @, 'B'))
+
+        baseline.enter().append('circle')
+        baseline.exit().remove()
       )
+
     boxes.on 'click', (d, i) =>
       $.publish "select.#{@figureId()}", [d, i]
 
     boxes.exit().remove()
+    @g.select('.y.axis')
+      .transition()
+      .duration(Visio.Durations.FAST)
+      .call(@yAxis)
     @
 
+  circleLabel: (d, svgEl, letter) ->
+    g = d3.select svgEl
+    circle = g.selectAll('circle').data([d])
+    circle.enter().append('circle')
+    circle.attr('cx', @barWidth)
+      .attr('r', 8)
+    text = g.selectAll('text').data([d])
+    text.enter().append('text')
+    text.attr('x', @barWidth)
+      .attr('text-anchor', 'middle')
+      .attr('dy', '.4em')
+      .text(letter)
+
   sortFn: (a, b) =>
-    reversedA = if a.get(@progress.start) > a.get(@progress.end) then -1 else 1
-    reversedB = if b.get(@progress.start) > b.get(@progress.end) then -1 else 1
-    (reversedA * @scaledBarHeight(a)) - (reversedB * @scaledBarHeight(b))
+
+    reversedA = if a.get('reversal') then -1 else 1
+    reversedB = if b.get('reversal') then -1 else 1
+
+    (reversedB * @progressDifference(b)) - (reversedA * @progressDifference(a))
 
   filterFn: (d) => d.get('is_performance') == @isPerformance
 
-  scaledBarHeight: (d) =>
-    @y.domain [0, +d.get(@goalType)]
-    v = Math.abs(+d.get(@progress.start) - +d.get(@progress.end))
+  progressDifference: (d) =>
+    scale = d3.scale.linear()
+      .domain([0, +d.get(@goalType)])
+      .range([0, 1])
+
+
+    end = +d.get(@sortAttribute.end)
+    start = +d.get(@sortAttribute.start)
+
+    delta = start - end
+    -scale delta
 
   filtered: (collection) => _.chain(collection.models).filter(@filterFn).sort(@sortFn).value()
 
@@ -223,4 +251,99 @@ class Visio.Figures.Isy extends Visio.Figures.Base
     isActive = box.classed 'active'
     box.classed 'active', not isActive
 
+  hover: (e, idx) =>
+    datum = null
+    box = null
 
+    boxes = @g.selectAll('.box')
+    boxes.sort(@sortFn).each (d, i) ->
+      el = d3.select(@)
+      el.classed 'faded', true
+      if idx == i
+        el.classed 'faded', false
+        datum = d
+        box = el
+
+    if idx >= @maxIndicators
+      difference = idx - @maxIndicators
+      @x.domain [0 + difference, @maxIndicators + difference]
+      @render()
+    else if @x.domain()[0] >= 0
+      @x.domain [0, @maxIndicators]
+      @render()
+
+    self = @
+
+    @g.selectAll('.circle').data([])
+      .exit().transition().duration(Visio.Durations.VERY_FAST).attr('r', 0).remove()
+    @g.selectAll('.label').remove()
+
+    @tooltip or= new Visio.Views.IsyTooltip
+    @tooltip.figure = self
+    @tooltip.isyIndex = i
+    @tooltip.model = datum
+    @tooltip.render()
+
+    @y.domain [0, +datum.get(@goalType)]
+
+    labelData = [Visio.Algorithms.REPORTED_VALUES.yer, Visio.Algorithms.REPORTED_VALUES.myr]
+
+    circles = box.selectAll('.circle').data(labelData)
+    circles.enter().append('circle')
+    circles.attr('r', 0)
+      .attr('cx', @barWidth)
+      .attr('cy', (reportedValue) => @y(datum.get(reportedValue)))
+      .attr('class', 'circle')
+    circles.transition()
+      .duration(Visio.Durations.VERY_FAST)
+      .attr('r', @barWidth / 2)
+
+    # can't be in box svg since it need to be top level element
+    labels = @g.selectAll('.label')
+      .data(_.values(Visio.Algorithms.REPORTED_VALUES).concat(Visio.Algorithms.GOAL_TYPES.target))
+    labels.enter().append('g')
+
+    labels
+      .attr('class', 'label')
+      .attr('transform', (type) =>
+        "translate(#{@x(idx) + @barWidth * 3}, #{@y(datum.get(type))})"
+      ).each (p) ->
+        label = d3.select @
+
+        tag = label.selectAll('.tag').data([p])
+        tag.enter().append('rect')
+        tag.attr('x', 0)
+          .attr('y', -10)
+          .attr('width', 100)
+          .attr('height', 20)
+          .attr('rx', 5)
+          .attr('ry', 5)
+          .attr('class', (type) -> ['tag', "tag-#{type}"].join(' '))
+
+        texts = label.selectAll('.text').data([p])
+        texts.enter().append('text')
+        texts.attr('x', 10)
+          .attr('y', 10)
+          .attr('dy', '-.43em')
+          .attr('class', 'text')
+          .text () ->
+            humanGoal = Visio.Utils.humanMetric(self.goalType)
+            if p != self.goalType
+              percent = datum.get(p) / +datum.get(self.goalType)
+              humanMetric = Visio.Utils.humanMetric(p)
+              return "#{Visio.Formats.PERCENT(percent)} #{humanMetric}"
+            else
+              return "#{humanGoal} is #{datum.get(self.goalType)}"
+
+  mouseout: =>
+    @g.selectAll('.box').classed 'faded', false
+    @g.selectAll('.circle').data([])
+      .exit().transition().duration(Visio.Durations.VERY_FAST).attr('r', 0).remove()
+    @g.selectAll('.label').remove()
+
+  close: ->
+    @unbind()
+    $.unsubscribe "hover.#{@cid}.figure"
+    $.unsubscribe "mouseout.#{@cid}.figure"
+    @tooltip?.close()
+    @remove()

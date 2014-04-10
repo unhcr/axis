@@ -110,12 +110,14 @@
 
 @mixin header-button {
   margin: 5px 0 ;
+  width: $header-button-width;
   height: $header-button-height;
   border: 1px $off-white solid;
   border-right: none;
   display: inline-block;
   padding-top: 6px;
   float: right;
+  text-align: center;
 }
 
 @mixin hover-shadow {

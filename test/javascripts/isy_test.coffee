@@ -56,6 +56,18 @@ test 'render', ->
   strictEqual _.keys(@view.views).length, 2
   ok Visio.manager.get Visio.Parameters.OPERATIONS.plural
 
+test 'showView', ->
+  @view.render()
+  keys = _.keys @view.views
+  showView = @view.views[keys[0]]
+  sinon.spy showView, 'drawFigures'
+
+  strictEqual showView.drawFigures.callCount, 0
+  ok not showView.isOpen()
+  showView.$el.find('.js-parameter').trigger 'click'
+  ok showView.isOpen()
+  strictEqual showView.drawFigures.callCount, 1
+
 test 'sort', ->
   sinon.stub Visio.Models.Operation.prototype, 'selectedIndicatorData', ->
     if @id == 'ben'

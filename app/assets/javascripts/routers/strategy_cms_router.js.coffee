@@ -10,6 +10,7 @@ class Visio.Routers.StrategyCMSRouter extends Backbone.Router
     'edit/:id': 'edit'
     'destroy/:id': 'destroy'
     'show/:id': 'show'
+    'download/:id': 'download'
     '*default': 'index'
 
   index: ->
@@ -39,4 +40,3 @@ class Visio.Routers.StrategyCMSRouter extends Backbone.Router
     @strategies.get(id).destroy().done =>
 
       @navigate '/', { trigger: true }
-

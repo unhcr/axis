@@ -27,11 +27,19 @@ class StrategyObjective < ActiveRecord::Base
   end
 
   def touch_data(assoc)
+    assoc.touch :updated_at
     assoc.touch_data self
   end
 
   def remove_from_strategy(assoc)
-    self.strategy.send(assoc.class.table_name).delete(assoc) if self.strategy
+    included = false
+    name = assoc.class.table_name
+    if self.strategy
+      self.strategy.strategy_objectives.each do |so|
+        included = true if so.send(name).include? assoc and so != self
+      end
+      self.strategy.send(name).delete(assoc) unless included
+    end
     assoc.touch_data self
   end
 

@@ -76,13 +76,13 @@ class Visio.Views.Dashboard extends Backbone.View
 
     label
   indicatorCount: =>
-    @parameter.strategyIndicatorData().length
+    @parameter.selectedIndicatorData().length
 
   budget: =>
-    @parameter.strategyBudget(Visio.manager.year(), @filters)
+    @parameter.selectedBudget(Visio.manager.year(), @filters)
 
   expenditure: =>
-    @parameter.strategyExpenditure(Visio.manager.year(), @filters)
+    @parameter.selectedExpenditure(Visio.manager.year(), @filters)
 
   spent: =>
     spent = @expenditure() / @budget()
@@ -90,7 +90,7 @@ class Visio.Views.Dashboard extends Backbone.View
     if isNaN(spent) then 0 else spent
 
   render: (isRerender) ->
-    situationAnalysis = @parameter.strategySituationAnalysis()
+    situationAnalysis = @parameter.selectedSituationAnalysis()
     category = if situationAnalysis.total == 0 then 'white' else situationAnalysis.category
 
     unless isRerender
@@ -149,7 +149,7 @@ class Visio.Views.Dashboard extends Backbone.View
         $labelPrefix.text @labelPrefix()
 
   drawCriticalities: =>
-    result = @parameter.strategySituationAnalysis()
+    result = @parameter.selectedSituationAnalysis()
     @barFigures[Visio.FigureTypes.ICSY.name].modelFn new Backbone.Model(result)
     @barFigures[Visio.FigureTypes.ICSY.name].render()
 
@@ -162,7 +162,7 @@ class Visio.Views.Dashboard extends Backbone.View
         filterType: 'radio'
         values: { true: false, false: true }
       }]
-    result = @parameter.strategyAchievement Visio.manager.year(), filters
+    result = @parameter.selectedAchievement Visio.manager.year(), filters
     @barFigures[Visio.FigureTypes.PASY.name].modelFn new Backbone.Model result
     @barFigures[Visio.FigureTypes.PASY.name].render()
 
@@ -175,7 +175,7 @@ class Visio.Views.Dashboard extends Backbone.View
         filterType: 'radio'
         values: { true: true, false: false }
       }]
-    result = @parameter.strategyOutputAchievement Visio.manager.year(), filters
+    result = @parameter.selectedOutputAchievement Visio.manager.year(), filters
     @barFigures[Visio.FigureTypes.OASY.name].modelFn new Backbone.Model result
     @barFigures[Visio.FigureTypes.OASY.name].render()
 

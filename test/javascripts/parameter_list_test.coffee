@@ -15,6 +15,10 @@ test 'search', () ->
     {
       name: 'efg'
     }])
+
+  # Ensure we don't make call to render since we do not want to make ajax call
+  sinon.stub Visio.Views.ParameterListView.prototype, 'render', () ->
+
   view = new Visio.Views.ParameterListView({
     model: plan
     type: Visio.Parameters.INDICATORS.plural
@@ -30,3 +34,5 @@ test 'search', () ->
 
   models = view.search('hhh')
   strictEqual(0, models.length)
+
+  Visio.Views.ParameterListView.prototype.render.restore()

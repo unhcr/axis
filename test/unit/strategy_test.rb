@@ -170,25 +170,66 @@ class StrategyTest < ActiveSupport::TestCase
     assert_equal 1, @s.outputs.length
     assert_equal 1, @s.indicators.length
 
-    @so.goals << goals(:two)
-    assert_equal 2, Strategy.find(@s.id).goals.length
+    goal2 = goals(:two)
+    goal2.indicator_data = [indicator_data(:one)]
+    goal2.budgets = [budgets(:one)]
+    goal2.expenditures = [expenditures(:one)]
+    goal2.save
+
+    assert Time.now > goal2.updated_at
+    assert Time.now > goal2.indicator_data[0].updated_at
+    assert Time.now > goal2.budgets[0].updated_at
+    assert Time.now > goal2.expenditures[0].updated_at
+
+    start = Time.now
+    sleep 2
+
+    @so.goals << goal2
+    assert_equal 2, @s.reload.goals.length
+    goal2.reload
+
+    assert start < goal2.updated_at, 'Should update goal'
+    assert start < goal2.indicator_data[0].updated_at, 'Should update Indicator data'
+    assert start < goal2.budgets[0].updated_at, 'Should update Budget data'
+    assert start < goal2.expenditures[0].updated_at, 'Should update Expenditure data'
 
     @so2 = strategy_objectives(:two)
     @so2.goals << goals(:three)
 
     @s.strategy_objectives << @so2
-    assert_equal 3, Strategy.find(@s.id).goals.length
+    assert_equal 3, @s.reload.goals.length
 
     @so2.goals << goals(:two)
-    assert_equal 3, Strategy.find(@s.id).goals.length
+    assert_equal 3, @s.reload.goals.length
 
     @so2.goals.delete(goals(:three))
-    assert_equal 1, StrategyObjective.find(@so2.id).goals.length
-    assert_equal 2, Strategy.find(@s.id).goals.length
+    assert_equal 1, @so2.reload.goals.length
+    assert_equal 2, @s.reload.goals.length
+
+    @so2.goals.delete goals(:two)
+    assert_equal 0, @so2.reload.goals.length
+    assert_equal 2, @s.reload.goals.length
 
     @so2.goals.delete_all
     @so.goals.delete_all
     assert_equal 0, Strategy.find(@s.id).goals.length
+  end
+
+  test "params should be removed when strategy objective is removed" do
+    @so2 = strategy_objectives(:two)
+    @so2.goals << goals(:three)
+    @so2.goals << goals(:one)
+
+    @s.strategy_objectives << @so2
+    assert_equal 2, @s.reload.goals.length
+
+    @s.strategy_objectives.delete @so
+    @s.reload
+    assert_equal 2, @s.goals.length
+    assert_equal 0, @s.problem_objectives.length
+    assert_equal 0, @s.outputs.length
+    assert_equal 0, @s.indicators.length
+
   end
 
   test "strategy objectives should be destroyed when strategy is destoryed" do
@@ -202,6 +243,23 @@ class StrategyTest < ActiveSupport::TestCase
       assert !StrategyObjective.exists?(so.id)
     end
 
+  end
+
+  test "to workbook" do
+    @operations[0].ppgs << @ppgs[0]
+    pkg = @s.to_workbook
+
+    assert_equal 2, pkg.workbook.worksheets.length
+    assert_equal 'Strategy', pkg.workbook.worksheets[0].name
+    assert_equal 'Strategy Objectives', pkg.workbook.worksheets[1].name
+
+    sheet = pkg.workbook.worksheets[0]
+
+    assert_equal @s.name, sheet.cells[0].value
+    assert_equal @s.name, sheet.cells[4].value
+    assert_equal @s.operations[0].name, sheet.cells[5].value
+    assert_equal @s.ppgs[0].name, sheet.cells[6].value
+    assert_nil sheet.cells[7]
   end
 
 end

@@ -27,12 +27,12 @@ class Visio.Views.StrategySnapshotView extends Visio.Views.Dashboard
 
     super options
 
-    @collection or= Visio.manager.strategy()[Visio.manager.get('aggregation_type')]()
+    @collection or= Visio.manager.selected Visio.manager.get('aggregation_type')
     @parameter = @collection
 
     unless @isPdf
       @actionSlider = new Visio.Views.ActionSliderView
-        collection: Visio.manager.strategy()[Visio.Parameters.STRATEGY_OBJECTIVES.plural]()
+        collection: Visio.manager.selected Visio.Parameters.STRATEGY_OBJECTIVES.plural
     @parameterSlider = new Visio.Views.ParameterSliderView
       filters: @filters
       collection: @collection
@@ -51,10 +51,9 @@ class Visio.Views.StrategySnapshotView extends Visio.Views.Dashboard
     'click .export': 'onExport'
 
   render: (isRerender) ->
-    if not isRerender and not @isPdf
-      @collection = Visio.manager.strategy()[Visio.manager.get('aggregation_type')]()
-      @parameter = @collection
-      @parameterSlider?.collection = @collection
+    @collection = Visio.manager.selected Visio.manager.get('aggregation_type') unless @isPdf
+    @parameter = @collection
+    @parameterSlider?.collection = @collection
 
     super isRerender
 
@@ -65,6 +64,8 @@ class Visio.Views.StrategySnapshotView extends Visio.Views.Dashboard
       @$el.find('.bar-axis').html @axis?.render().el
       @parameterSlider?.delegateEvents()
       @actionSlider?.delegateEvents()
+      @parameterSlider?.position = 0
+      @actionSlider?.position = 0
 
     if @parameterSlider?
       @parameterSlider.drawFigures()

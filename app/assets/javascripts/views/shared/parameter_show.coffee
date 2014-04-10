@@ -34,7 +34,6 @@ class Visio.Views.ParameterShowView extends Backbone.View
       rows.push scenario if @filters.filter('scenario', scenario)
 
     achievement = @model.selectedAchievement(Visio.manager.year(), @filters)
-    console.log achievement
     @$el.html @template
       model: @model
       idx: @idx

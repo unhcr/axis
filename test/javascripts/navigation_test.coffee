@@ -29,6 +29,7 @@ test 'render', ->
 
 test 'onChangeSelection', ->
   @view.render()
+  $('body').append @view.el
 
   strictEqual @view.searches.length, _.values(Visio.Parameters).length
   strictEqual @view.$el.find('input:checked').length, 4
@@ -38,13 +39,11 @@ test 'onChangeSelection', ->
   strictEqual $input.length, 1
 
   $input.trigger 'click'
-  $input.trigger 'change'
   strictEqual @view.$el.find('input:checked').length, 3
 
-  ok not Visio.manager.get('selected')['operations'][1]
+  ok not Visio.manager.get('selected')['operations'][1], 'Should deselect'
 
   $input.trigger 'click'
-  $input.trigger 'change'
   strictEqual @view.$el.find('input:checked').length, 4
 
   ok Visio.manager.get('selected')['operations'][1]
@@ -57,9 +56,8 @@ test 'onChangeSelection', ->
   sinon.stub search, 'add', sinon.spy()
 
   $input.trigger 'click'
-  $input.trigger 'change'
   strictEqual @view.$el.find('input:checked').length, 5
 
-  ok search.add.calledOnce
+  ok search.add.calledOnce, 'add should be called once, but was ' + search.add.callCount
   search.add.restore()
 

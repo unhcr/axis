@@ -65,9 +65,31 @@ class Visio.Collections.Parameter extends Visio.Collections.Syncable
     data = @selectedIndicatorData year, filters
     data.achievement()
 
+  selectedBudget: (year, filters = null) ->
+    data = @selectedBudgetData(year, filters)
+    data.amount()
+
+  selectedExpenditure: (year, filters = null) ->
+    data = @selectedExpenditureData(year, filters)
+    data.amount()
+
   selectedIndicatorData: (year, filters = null) ->
     args = arguments
     data = new Visio.Collections.IndicatorDatum()
     @each (model) ->
       data.add model.selectedIndicatorData.apply(model, args).models, silent: true
+    data
+
+  selectedBudgetData: (year, filters = null) ->
+    args = arguments
+    data = new Visio.Collections.Budget()
+    @each (model) ->
+      data.add model.selectedBudgetData.apply(model, args).models, silent: true
+    data
+
+  selectedExpenditureData: (year, filters = null) ->
+    args = arguments
+    data = new Visio.Collections.Expenditure()
+    @each (model) ->
+      data.add model.selectedExpenditureData.apply(model, args).models, silent: true
     data

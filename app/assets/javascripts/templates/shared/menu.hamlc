@@ -5,7 +5,7 @@
   .row.divider-stack-orange
   .row
     .medium-item.ui-medium-header.light.col-md-8.col-centered
-      %a{:href => "/overview?strategy_id=#{strategy.id}"}
+      %a{:href => "/overview/#{strategy.id}"}
         = strategy.name.toUpperCase()
 .row
   .medium-item.ui-medium-header

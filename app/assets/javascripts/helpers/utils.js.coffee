@@ -72,18 +72,6 @@ Visio.Utils.parseTransform = (string) ->
 Visio.Utils.countToFormatter = (value) ->
   d3.format('d')(value.toFixed(0)) || 0
 
-Visio.Utils.progressTypeToName = (type) ->
-  if type == Visio.ProgressTypes.BASELINE_MYR
-    return 'Baseline-MYR'
-  else if type == Visio.ProgressTypes.BASELINE_YER
-    return 'Baseline-YER'
-  else if type == Visio.ProgressTypes.MYR_YER
-    return 'MYR-YER'
-
-  return ''
-
-Visio.Utils.commaNumber = d3.format(',d')
-
 Visio.Utils.humanMetric = (metric) ->
   if metric == Visio.Algorithms.REPORTED_VALUES.myr
     return 'MYR'
@@ -98,9 +86,9 @@ Visio.Utils.humanMetric = (metric) ->
   else if metric == Visio.Algorithms.ALGO_RESULTS.success
     return 'Acceptable'
   else if metric == Visio.Algorithms.ALGO_RESULTS.ok
-    return 'Critical'
+    return 'Not Acceptable'
   else if metric == Visio.Algorithms.ALGO_RESULTS.fail
-    return 'Sub-standard'
+    return 'Critical'
   else if metric == Visio.Algorithms.STATUS.missing
     return 'Non-reported'
   else if metric == Visio.Algorithms.ALGO_RESULTS.high
@@ -112,10 +100,16 @@ Visio.Utils.humanMetric = (metric) ->
   else if metric == Visio.Algorithms.STATUS.missing
     return 'Not Reported'
   else
-    return 'N/A'
+    return metric
 
 Visio.Utils.nl2br = (string) ->
   string.replace(/\n/g, '<br />')
 
 Visio.Utils.space2nbsp = (string) ->
   string.replace(/\ /g, '&nbsp;')
+
+Visio.Utils.generateOverviewUrl = ->
+  [Visio.router.moduleView.id,
+   Visio.manager.year(),
+   Visio.manager.get('aggregation_type'),
+   Visio.manager.get('reported_type')].join '/'

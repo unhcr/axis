@@ -13,7 +13,7 @@ module FocusFetch
   require 'zip'
   include FocusParse
 
-  def fetch(max_files = +1.0/0.0, expires = 1.week)
+  def fetch(max_files = +1.0/0.0, expires = 1.day)
     monitor = FetchMonitor.first || FetchMonitor.create
     proxy = nil
     proxy = ENV['http_proxy'] unless ENV['http_proxy'].nil?

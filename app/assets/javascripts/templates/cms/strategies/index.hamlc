@@ -7,10 +7,12 @@
 
 - _.each context.strategies, (strategy) ->
   .row
-    .col-md-8
+    .col-md-6
       %h4
         %a{ :href => "#edit/#{strategy.id}" }
           = strategy.name
+    .col-md-2.right-text
+      %a{ :href => "/strategies/#{strategy.id}/download" } Download
     .col-md-2.right-text
       %a{ :href => "#edit/#{strategy.id}" } Edit
     .col-md-2.right-text

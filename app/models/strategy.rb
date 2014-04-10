@@ -2,7 +2,9 @@ class Strategy < ActiveRecord::Base
   attr_accessible :name, :description
 
   has_many :strategy_objectives,
-    :before_add => :add_strategy_objective_parameters, :dependent => :destroy
+    :after_remove => :remove_strategy_objective_parameters,
+    :before_add => :add_strategy_objective_parameters,
+    :dependent => :destroy
 
   has_many :operations_strategies, :class_name     => 'OperationsStrategies'
   has_many :operations, :uniq => true, :through => :operations_strategies
@@ -36,6 +38,22 @@ class Strategy < ActiveRecord::Base
     self.indicators << strategy_objective.indicators
   end
 
+  def remove_strategy_objective_parameters(strategy_objective)
+    self.normalize
+  end
+
+  def normalize
+    parameters = StrategyObjective.parameters
+    parameters.each do |p|
+      name = p.table_name
+      collection = []
+      self.strategy_objectives.each do |so|
+        collection += so.send(name)
+      end
+      self.send(name + '=', collection)
+    end
+  end
+
   def belongs_to_strategy_objective(assoc)
     raise 'Association does not belong to a Strategy Objective' if assoc.strategy_objectives.empty?
   end
@@ -54,95 +72,48 @@ class Strategy < ActiveRecord::Base
     resource.synced_models(ids, synced_date, limit, where)
   end
 
-  def to_sheet
-    session = GoogleDrive.login(ENV['DRIVE_USERNAME'], ENV['DRIVE_PASSWORD'])
+  def to_workbook
+    p = Axlsx::Package.new
+    workbook = p.workbook
 
-    template = session.spreadsheet_by_key(ENV['DRIVE_SHEET_KEY'])
+    workbook.add_worksheet(:name => 'Strategy') do |strategy_ws|
+      # Headings
+      strategy_ws.add_row [self.name], :sz => 24
+      strategy_ws.merge_cells('A1:C1')
 
-    sheet = template.duplicate
-    sheet.title = "#{self.name} -- #{Time.now}"
+      strategy_ws.add_row ['Strategy', 'Operation', 'PPG'], :sz => 16
 
-    strategy_ws = sheet.worksheets[0]
-    strategy_objective_ws = sheet.worksheets[1]
-
-    cols = {
-      :strategy => 1,
-      :operation => 2,
-      :ppg => 3,
-    }
-
-    # Write first table
-
-    # Headings
-    strategy_ws[1, cols[:strategy]] = 'Strategy'
-    strategy_ws[1, cols[:operation]] = 'Operation'
-    strategy_ws[1, cols[:ppg]] = 'PPG'
-
-    # Content
-    offset = 0
-    self.operations.each_with_index do |operation, i|
-      operation_ppgs = self.ppgs.merge(operation.ppgs)
-      len = operation_ppgs.count
-      operation_ppgs.each_with_index do |ppg, j|
-        row = offset + j + 2
-        strategy_ws[row, cols[:strategy]] = self.name
-        strategy_ws[row, cols[:operation]] = operation.name
-        strategy_ws[row, cols[:ppg]] = ppg.name
+      # Content
+      self.operations.each_with_index do |operation, i|
+        operation.ppgs.merge(self.ppgs).each_with_index do |ppg, j|
+          strategy_ws.add_row [self.name, operation.name, ppg.name]
+        end
       end
-      offset += len
     end
-
-    cols = {
-      :strategy_objective => 1,
-      :problem_objective => 2,
-      :impact_indicator => 3,
-      :output => 4,
-      :performance_indicator => 5
-    }
 
     # Write second table
 
-    # Headings
-    strategy_objective_ws[1, cols[:strategy_objective]] = 'Strategy Objective'
-    strategy_objective_ws[1, cols[:problem_objective]] = 'Objective'
-    strategy_objective_ws[1, cols[:impact_indicator]] = 'Impact Indicator'
-    strategy_objective_ws[1, cols[:output]] = 'Output'
-    strategy_objective_ws[1, cols[:performance_indicator]] = 'Performance Indicator'
+    workbook.add_worksheet(:name => 'Strategy Objectives') do |strategy_objective_ws|
 
-    # Content
-    offset = 2
-    self.strategy_objectives.each_with_index do |so, i|
-      so.problem_objectives.each_with_index do |po, j|
-        so.outputs.merge(po.outputs).each_with_index do |o, k|
+      strategy_objective_ws.add_row ['Strategy Objective', 'Objective', 'Impact Indicator', 'Output', 'Performance Indicator'], :sz => 16
 
-          so_indicators = so.indicators.merge(o.indicators)
-          count_ind = so_indicators.count
-          so_indicators.each_with_index do |ind, l|
+      self.strategy_objectives.each_with_index do |so, i|
+        so.problem_objectives.each_with_index do |po, j|
+          so.outputs.merge(po.outputs).each_with_index do |o, k|
+            so.indicators.merge(o.indicators).each_with_index do |ind, l|
 
-            row = offset + l
-            strategy_objective_ws[row, cols[:strategy_objective]] = so.name
-            strategy_objective_ws[row, cols[:output]] = o.name
-            strategy_objective_ws[row, cols[:performance_indicator]] = ind.name
+              strategy_objective_ws.add_row [so.name, '', '', o.name, ind.name]
+            end
           end
-          offset += count_ind
-        end
 
-        so_indicators = so.indicators.merge(po.indicators)
-        count_ind = so_indicators.count
-        so_indicators.each_with_index do |ind, m|
-            row = offset + m
-            strategy_objective_ws[row, cols[:strategy_objective]] = so.name
-            strategy_objective_ws[row, cols[:problem_objective]] = po.objective_name
-            strategy_objective_ws[row, cols[:impact_indicator]] = ind.name
-            count_ind = m
+          so.indicators.merge(po.indicators).each_with_index do |ind, m|
+            strategy_objective_ws.add_row [so.name, po.objective_name, ind.name]
+          end
         end
-        offset += count_ind
       end
+
     end
-
-    strategy_ws.save
-    strategy_objective_ws.save
-
+    p
   end
 
   def to_jbuilder(options = {})

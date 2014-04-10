@@ -23,7 +23,7 @@ test 'humanMetric', ->
   strictEqual Visio.Utils.humanMetric(Visio.Algorithms.REPORTED_VALUES.baseline), 'Baseline'
   strictEqual Visio.Utils.humanMetric(Visio.Algorithms.GOAL_TYPES.target), 'Target'
   strictEqual Visio.Utils.humanMetric(Visio.Algorithms.GOAL_TYPES.standard), 'Standard'
-  strictEqual Visio.Utils.humanMetric('abc'), 'N/A'
+  strictEqual Visio.Utils.humanMetric('abc'), 'abc'
 
 test 'nl2br', ->
   breaks = Visio.Utils.nl2br 'break\nbreak\n'
