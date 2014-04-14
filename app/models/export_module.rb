@@ -10,6 +10,6 @@ class ExportModule < ActiveRecord::Base
   def email(host, cookies, to)
     url = "#{host}/export_modules/#{self.id}/pdf"
     name = self.title.empty? ? 'dummy' : self.title
-    Resque.enqueue(EmailPhantomJob, url, cookies, "#{name}.pdf", to)
+    Resque.enqueue(EmailPhantomJob, url, cookies, name, to)
   end
 end

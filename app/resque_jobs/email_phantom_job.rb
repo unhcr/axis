@@ -11,15 +11,16 @@ module EmailPhantomJob
 
   @output = "#{Rails.root}/public/reports/pdf"
 
-  def self.perform(url, cookies, filename, to)
+  def self.perform(url, cookies, name, to)
+    filename = "#{name.strip.tr(' ', '_')}-#{Time.now.to_i}.pdf"
     path = "#{@output}/#{filename}"
     p = Shrimp::Phantom.new(url, @options, cookies)
     fullpath = p.to_pdf(path)
 
     Pony.mail(:to => to,
               :from => 'rudolph@unhcr.org',
-              :subject => 'Your report',
-              :body => 'Hello there.',
+              :subject => name,
+              :body => Quoth.get,
               :attachments => { filename => File.read(fullpath) })
   end
 end
