@@ -16,9 +16,10 @@
   .row
     .col-md-8.col-centered
       - if Visio.user? and Visio.user.isLoggedIn()
-        %h5
+        %h5.center-text
           = "Thank you for using AXIS, #{Visio.user.get('login')}, please find the homepage"
-          %a{ :href => '/' } here
+          %a{ :href => '/' }
+            %i here
       - else
         %form
           .col-md-5.center-text
