@@ -2,6 +2,7 @@
   .row
     .col-md-offset-2.col-md-10.right-text.header-buttons
       .export.header-button
+  .row.tooltip-container
 .row
   .col-md-12
     %figure

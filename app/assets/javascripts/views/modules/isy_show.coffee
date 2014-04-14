@@ -14,12 +14,12 @@ class Visio.Views.IsyShowView extends Visio.Views.AccordionShowView
   initialize: (options) ->
     @config =
       margin:
-        top: 200
+        top: 10
         bottom: 10
         left: 40
         right: 30
       width: 800
-      height: 460
+      height: 260
 
     @isyFigure = new Visio.Figures.Isy @config
     @filterBy = new Visio.Views.FilterBy({ figure: @isyFigure, })
@@ -56,6 +56,7 @@ class Visio.Views.IsyShowView extends Visio.Views.AccordionShowView
         stop: @onStop
         min: 0
 
+
     category = if situationAnalysis.total == 0 then 'white' else situationAnalysis.category
 
     # Remove any previous category class from pin
@@ -86,6 +87,11 @@ class Visio.Views.IsyShowView extends Visio.Views.AccordionShowView
     max = @isyFigure.filtered(@isyFigure.collection).length
 
     @isyFigure.render()
+
+    # Make sure something is there
+    unless @isyFigure.tooltip.hasRendered()
+      $.publish "hover.#{@isyFigure.cid}.figure", 0
+
     @$el.find('.slider').slider 'option', 'max', max - 1
     @$el.find('.slider').attr('data-max', max)
 
@@ -93,7 +99,3 @@ class Visio.Views.IsyShowView extends Visio.Views.AccordionShowView
     $.unsubscribe "drawFigures.#{@isyFigure.cid}.figure"
     $.unsubscribe "hover.#{@isyFigure.cid}.figure"
     @isyFigure.close()
-
-  onClickParameter: (e) =>
-    super arguments
-    @isyFigure.tooltip?.close() unless @isOpen()

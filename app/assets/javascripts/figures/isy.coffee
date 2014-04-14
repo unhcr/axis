@@ -31,7 +31,10 @@ class Visio.Figures.Isy extends Visio.Figures.Base
 
     super config
 
-    @tooltip = null
+    @tooltip = new Visio.Views.IsyTooltip
+      figure: @
+
+    @$el.find('.tooltip-container').html @tooltip.el
 
     @isPerformance = if config.isPerformance? then config.isPerformance else true
 
@@ -63,9 +66,6 @@ class Visio.Figures.Isy extends Visio.Figures.Base
       .attr('transform', 'translate(0,0)')
 
     @goalType = config.goalType || Visio.Algorithms.GOAL_TYPES.target
-
-    @$el.on 'mouseleave', (e) =>
-      @tooltip?.close()
 
     $.subscribe "hover.#{@cid}.figure", @hover
     $.subscribe "mouseout.#{@cid}.figure", @mouseout
@@ -264,6 +264,7 @@ class Visio.Figures.Isy extends Visio.Figures.Base
         datum = d
         box = el
 
+    return unless datum?
     if idx >= @maxIndicators
       difference = idx - @maxIndicators
       @x.domain [0 + difference, @maxIndicators + difference]
@@ -278,11 +279,7 @@ class Visio.Figures.Isy extends Visio.Figures.Base
       .exit().transition().duration(Visio.Durations.VERY_FAST).attr('r', 0).remove()
     @g.selectAll('.label').remove()
 
-    @tooltip or= new Visio.Views.IsyTooltip
-    @tooltip.figure = self
-    @tooltip.isyIndex = i
-    @tooltip.model = datum
-    @tooltip.render()
+    @tooltip.render datum
 
     @y.domain [0, +datum.get(@goalType)]
 
