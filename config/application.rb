@@ -20,7 +20,7 @@ module Visio
     OpenURI::Buffer.const_set 'StringMax', 0
 
     require 'shrimp'
-    config.middleware.use Shrimp::Middleware, :cache_ttl => 1000, :out_path => "#{Rails.root}/public/reports/pdf", :polling_interval => 4
+    config.middleware.use Shrimp::Middleware, :cache_ttl => 0, :out_path => "#{Rails.root}/public/reports/pdf", :polling_interval => 4
 
     Shrimp.configure do |config|
       config.viewport_width = 896
