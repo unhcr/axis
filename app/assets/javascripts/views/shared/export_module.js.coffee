@@ -79,7 +79,7 @@ class Visio.Views.ExportModule extends Backbone.View
           NProgress.done()
           new Visio.Views.Success
             title: "PDF Report"
-            description: 'Report is being generated, check email in a few minutes'
+            description: "Report is being sent to #{resp.email}"
           @loadingPdf.set 'loading', false
         error: =>
           new Visio.Views.Error

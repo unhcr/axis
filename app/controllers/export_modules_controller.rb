@@ -32,6 +32,6 @@ class ExportModulesController < ApplicationController
     export_module = ExportModule.find(current_user.export_modules.find(params[:id]))
     export_module.email "#{request.protocol}#{request.host_with_port}", request.cookies, self.current_user.email
 
-    render :json => { :success => true }
+    render :json => { :success => true, :email => self.current_user.email }
   end
 end
