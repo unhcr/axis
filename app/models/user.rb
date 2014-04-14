@@ -18,4 +18,8 @@ class User < ActiveRecord::Base
   def as_json(options = {})
     to_jbuilder(options).attributes!
   end
+
+  def email
+    self.login + '@unhcr.org'
+  end
 end
