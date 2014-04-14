@@ -27,6 +27,7 @@ Visio::Application.routes.draw do
   resources :export_modules do
     member do
       get 'pdf'
+      get 'email'
     end
   end
   resources :strategy_objectives do

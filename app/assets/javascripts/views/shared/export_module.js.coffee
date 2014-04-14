@@ -7,6 +7,7 @@ class Visio.Views.ExportModule extends Backbone.View
   events:
     'change figcaption input': 'onSelectionChange'
     'click .pdf': 'onClickPdf'
+    'click .email': 'onClickEmail'
     'click .close': 'onClose'
 
   initialize: (options) ->
@@ -59,6 +60,33 @@ class Visio.Views.ExportModule extends Backbone.View
     # Toggle if it's check or not
     $input.prop 'checked', not checked
 
+  buildModule: =>
+    formArray = @$el.find('form').serializeArray()
+    _.each formArray, (formObj) => @model.set formObj.name, formObj.value
+
+    selected = _.map @$el.find('figcaption input[type="checkbox"]:checked'), (ele) -> $(ele).attr('data-id')
+    @model.get('figure_config').selected = selected
+
+  onClickEmail: ->
+    return if @loadingPdf.get 'loading'
+    NProgress.start()
+    @buildModule()
+    @model.save().done =>
+      $.ajax
+        method: 'GET'
+        url: @model.emailUrl()
+        success: (resp) =>
+          NProgress.done()
+          new Visio.Views.Success
+            title: "PDF Report"
+            description: 'Report is being generated, check email in a few minutes'
+          @loadingPdf.set 'loading', false
+        error: =>
+          new Visio.Views.Error
+            title: "Error generating PDF"
+          NProgress.done()
+          @loadingPdf.set 'loading', false
+
   onClickPdf: ->
     return if @loadingPdf.get 'loading'
     @loadingPdf.set 'loading', true
@@ -82,12 +110,7 @@ class Visio.Views.ExportModule extends Backbone.View
             statusCode: statusCodes
         , wait * 6000
 
-    formArray = @$el.find('form').serializeArray()
-    _.each formArray, (formObj) => @model.set formObj.name, formObj.value
-
-    selected = _.map @$el.find('figcaption input[type="checkbox"]:checked'), (ele) -> $(ele).attr('data-id')
-    @model.get('figure_config').selected = selected
-
+    @buildModule()
     @model.save().done =>
       $.ajax
         url: @model.pdfUrl()
