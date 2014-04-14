@@ -5,7 +5,7 @@ module EmailPhantomJob
     :viewport_width => 896,
     :viewport_height => 1270,
     :margin => '0cm',
-    :rendering_time => 11000,
+    :rendering_time => 20000,
     :logfile => '~/access.log'
   }
 
