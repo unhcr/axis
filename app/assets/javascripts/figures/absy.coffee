@@ -136,7 +136,7 @@ class Visio.Figures.Absy extends Visio.Figures.Base
     pointContainers.attr('class', (d, i) ->
           classList = ['point-container', "id-#{d.refId()}"]
 
-          if self.isPdf and _.include self.selected, d.id
+          if self.isPdf and self.isSelected(d.id)
             classList.push 'active'
             d3.select(@).moveToFront()
           return classList.join(' '))
@@ -155,7 +155,7 @@ class Visio.Figures.Absy extends Visio.Figures.Base
             .transition()
             .duration(Visio.Durations.FAST)
             .attr('r', (d) =>
-              if self.isPdf and _.include self.selected, d.id
+              if self.isPdf and self.isSelected(d.id)
                 16
               else
                 12
@@ -171,7 +171,7 @@ class Visio.Figures.Absy extends Visio.Figures.Base
           if self.isExport
             labels = pointContainer.selectAll('.label').data([d])
           else if self.isPdf and not _.isEmpty self.selected
-            labels = pointContainer.selectAll('.label').data(_.filter([d], (d) => _.include self.selected, d.id))
+            labels = pointContainer.selectAll('.label').data(_.filter([d], (d) => self.isSelected(d.id)))
 
           if self.isExport or (self.isPdf and not _.isEmpty self.selected)
             labels.enter().append('text')
@@ -182,7 +182,7 @@ class Visio.Figures.Absy extends Visio.Figures.Base
               .attr('text-anchor', 'middle')
               .text((d) ->
                 if self.isPdf
-                  Visio.Constants.ALPHABET[_.indexOf self.selected, d.id]
+                  Visio.Constants.ALPHABET[_.indexOf self.selected, "#{d.id}"]
                 else
                   Visio.Constants.ALPHABET[i]
               )
@@ -242,7 +242,7 @@ class Visio.Figures.Absy extends Visio.Figures.Base
     if @isPdf
       @legendView = new Visio.Figures.AbsyLegend
         figure: @
-        collection: new @collection.constructor(_.filter(filtered, (d) => _.include @selected, d.id))
+        collection: new @collection.constructor(_.filter(filtered, (d) => self.isSelected(d.id)))
       @$el.find('.legend-container').html @legendView.render().el
 
 
@@ -263,3 +263,6 @@ class Visio.Figures.Absy extends Visio.Figures.Base
     console.warn 'Selected element is empty' if pointContainer.empty()
     isActive = pointContainer.classed 'active'
     pointContainer.classed 'active', not isActive
+
+  isSelected: (id) =>
+    _.include @selected, "#{id}"

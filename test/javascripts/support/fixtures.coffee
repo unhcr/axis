@@ -1,4 +1,14 @@
 @Fixtures = {}
+@Fixtures.strategyObjectives = new Visio.Collections.StrategyObjective([
+  {
+    id: 130
+    name: 'earth'
+  },
+  {
+    id: 131
+    name: 'mars'
+  }
+])
 @Fixtures.outputs = new Visio.Collections.Output([
   {
     id: 'abc-def'
