@@ -6,7 +6,7 @@
     %a{ :href => "#new" } Add
 
 - _.each context.strategies, (strategy) ->
-  .row
+  .row.strategy
     .col-md-6
       %h4
         %a{ :href => "#edit/#{strategy.id}" }
