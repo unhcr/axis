@@ -113,3 +113,9 @@ Visio.Utils.generateOverviewUrl = ->
    Visio.manager.year(),
    Visio.manager.get('aggregation_type'),
    Visio.manager.get('reported_type')].join '/'
+
+Visio.Utils.parameterByPlural = (plural) ->
+
+  for parameter, hash of Visio.Parameters
+    return hash if hash.plural == plural
+  null
