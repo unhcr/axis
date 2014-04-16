@@ -16,11 +16,14 @@ class Visio.Figures.Icmy extends Visio.Figures.Base
         filterType: 'radio'
         values: values
         human: {
-          'selectedSituationAnalysis': 'Criticality',
-          'selectedAchievement': 'Achievement'
-          'selectedOutputAchievement': 'Output' }
+          'selectedSituationAnalysis': 'Impact Criticality',
+          'selectedAchievement': 'Impact Achievement'
+          'selectedOutputAchievement': 'Output Achievement' }
         callback: (name, attr) =>
           @algorithm = name
+          @isPerformance = @algorithm == 'selectedOutputAchievement'
+          @filters.get('is_performance').filter @isPerformance
+
           @render()
       },
       {
@@ -28,6 +31,7 @@ class Visio.Figures.Icmy extends Visio.Figures.Base
         filterType: 'radio'
         values: { true: false, false: true }
         human: { true: 'performance', false: 'impact' }
+        hidden: true
       }
     ])
 
