@@ -21,17 +21,22 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
 
     @filters = new Visio.Collections.FigureFilter([
       {
-        id: 'budget_type'
-        filterType: 'checkbox'
-        values: _.object(_.values(Visio.Budgets), _.values(Visio.Budgets).map(-> true))
-      },
-      {
         id: 'group_by'
         filterType: 'radio'
         values: groupByValues
         callback: (name, attr) =>
           @groupBy = name
           @render()
+      },
+      {
+        id: 'budget_type'
+        filterType: 'checkbox'
+        values: _.object(_.values(Visio.Budgets), _.values(Visio.Budgets).map(-> true))
+      },
+      {
+        id: 'pillar'
+        filterType: 'checkbox'
+        values: _.object(_.values(Visio.Pillars), _.values(Visio.Pillars).map(-> true))
       },
       {
         id: 'scenario'

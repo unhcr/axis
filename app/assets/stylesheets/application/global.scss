@@ -1696,9 +1696,22 @@ a {
       color: $primary-light;
       .title { border-top: 2px solid $primary-light }
     }
-    .ADMIN {
-      color: $admin;
-      .title { border-top: 2px solid $admin }
+
+    .PILLAR-1 {
+      color: $pillar1;
+      .title { border-top: 2px solid $pillar1 }
+    }
+    .PILLAR-2 {
+      color: $pillar2;
+      .title { border-top: 2px solid $pillar2 }
+    }
+    .PILLAR-3 {
+      color: $pillar3;
+      .title { border-top: 2px solid $pillar3 }
+    }
+    .PILLAR-4 {
+      color: $pillar4;
+      .title { border-top: 2px solid $pillar4 }
     }
 
     .ADMIN {

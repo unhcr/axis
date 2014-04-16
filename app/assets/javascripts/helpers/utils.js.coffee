@@ -109,6 +109,7 @@ Visio.Utils.space2nbsp = (string) ->
   string.replace(/\ /g, '&nbsp;')
 
 Visio.Utils.stringToCssClass = (string) ->
+  return string unless string
   string.replace(/\ /g, '-')
 
 Visio.Utils.generateOverviewUrl = ->
