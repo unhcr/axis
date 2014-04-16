@@ -16,6 +16,7 @@ class Visio.Figures.Isy extends Visio.Figures.Base
         human: { true: 'performance', false: 'impact' }
         callback: (name, attr) =>
           @isPerformanceFn(name == 'true').render()
+          @x.domain [0, @maxIndicators]
           $.publish "drawFigures.#{@cid}.figure"
       },
       {
@@ -104,7 +105,7 @@ class Visio.Figures.Isy extends Visio.Figures.Base
             return classList.join ' ')
 
         container.on 'mouseenter', (d) ->
-          $.publish "hover.#{self.cid}.figure", i
+          $.publish "hover.#{self.cid}.figure", [i, false]
 
         container.on 'mouseout', (d) ->
           $.publish "mouseout.#{self.cid}.figure", i
@@ -264,7 +265,7 @@ class Visio.Figures.Isy extends Visio.Figures.Base
     isActive = box.classed 'active'
     box.classed 'active', not isActive
 
-  hover: (e, idx) =>
+  hover: (e, idx, scroll = true) =>
     datum = null
     box = null
 
@@ -278,11 +279,11 @@ class Visio.Figures.Isy extends Visio.Figures.Base
         box = el
 
     return unless datum?
-    if idx >= @maxIndicators
+    if idx >= @maxIndicators and scroll
       difference = idx - @maxIndicators
       @x.domain [0 + difference, @maxIndicators + difference]
       @render()
-    else if @x.domain()[0] >= 0
+    else if @x.domain()[0] >= 0 and scroll
       @x.domain [0, @maxIndicators]
       @render()
 
