@@ -64,6 +64,7 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
       .scale(@y)
       .orient('left')
       .ticks(5)
+      .tickFormat(Visio.Formats.MONEY)
       .innerTickSize(14)
       .tickPadding(20)
 
