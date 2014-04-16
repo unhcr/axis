@@ -21,5 +21,5 @@ class Visio.Views.YearFilterView extends Backbone.View
 
   onChangeYear: (selected) ->
     attribute = selected.value.split(Visio.Constants.SEPARATOR)[0]
-    value = selected.value.split(Visio.Constants.SEPARATOR)[1]
-    Visio.manager.set attribute, value
+    year = selected.value.split(Visio.Constants.SEPARATOR)[1]
+    Visio.manager.year year
