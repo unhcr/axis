@@ -261,6 +261,7 @@ class FocusParseTest < ActiveSupport::TestCase
 
     assert_equal COUNTS[:budgets], Budget.count, "Budget count"
     assert_equal 0, Budget.where('amount = 0').count
+    assert_equal 0, Budget.where('pillar is NULL').count
 
   end
 
