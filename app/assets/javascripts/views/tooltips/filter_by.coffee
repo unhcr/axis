@@ -21,6 +21,8 @@ class Visio.Views.FilterBy extends Backbone.View
   render: (isRerender) ->
     open = if isRerender? then @isOpen() else false
     @$el.html @template({ figure: @figure, open: open })
+
+    @$el.find('.filters').on 'mouseleave', @onToggleFilters
     @
 
   onFilter: (e) ->
