@@ -22,4 +22,8 @@ class User < ActiveRecord::Base
   def email
     self.login + '@unhcr.org'
   end
+
+  def self.reset_local_db(users)
+    users.each { |u| u.reset_local_db = true; u.save }
+  end
 end
