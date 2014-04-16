@@ -5,15 +5,33 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
 
   type: Visio.FigureTypes.BMY
 
+  groupBy: 'budget_type'
+
   initialize: (config) ->
     values = {}
     values[Visio.Scenarios.AOL] = false
     values[Visio.Scenarios.OL] = true
+
+    groupByValues = {}
+
+    groupByValues['scenario'] = false
+    groupByValues['budget_type'] = false
+    groupByValues['pillar'] = false
+    groupByValues[@groupBy] = true
+
     @filters = new Visio.Collections.FigureFilter([
       {
         id: 'budget_type'
         filterType: 'checkbox'
         values: _.object(_.values(Visio.Budgets), _.values(Visio.Budgets).map(-> true))
+      },
+      {
+        id: 'group_by'
+        filterType: 'radio'
+        values: groupByValues
+        callback: (name, attr) =>
+          @groupBy = name
+          @render()
       },
       {
         id: 'scenario'
@@ -70,7 +88,7 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
 
     @g.append('g')
       .attr('class', 'y axis')
-      .attr('transform', 'translate(0,0)')
+      .attr('transform', 'tran#448slate(0,0)')
       .append("text")
 
     @g.append('g')
@@ -84,11 +102,13 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
     filtered = @filtered @collection
     @y.domain [0, d3.max(_.flatten(filtered), (d) -> d.amount)]
 
-    lines = @g.selectAll('.budget-line').data(filtered, (d) -> d.budgetType)
+    lines = @g.selectAll('.budget-line').data(filtered, (d) -> d[d.groupBy])
     lines.enter().append 'path'
     lines
       .each((d) -> d.sort((a, b) -> a.year - b.year))
-      .attr('class', (d) -> ['budget-line', "budget-line-#{d.budgetType}", d.budgetType].join(' '))
+      .attr('class', (d) ->
+        clazz = Visio.Utils.stringToCssClass(d[d.groupBy])
+        ['budget-line', "budget-line-#{clazz}", clazz].join(' '))
       .transition()
       .duration(Visio.Durations.FAST)
       .attr('d', (d) => if d.length then @lineFn(d) else 'M0 0')
@@ -107,7 +127,7 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
         points.enter().append 'circle'
         points
           .attr('r', 5)
-          .attr('class', (d) -> ['point', d.budgetType].join(' '))
+          .attr('class', (d) -> ['point', Visio.Utils.stringToCssClass(d[d.groupBy])].join(' '))
         points.transition().duration(Visio.Durations.VERY_FAST).ease('ease-in')
           .attr('cx', (d) => @x(d.year))
           .attr('cy', (d) => @y(d.amount))
@@ -160,47 +180,54 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
       console.warn 'No year for budget: ' + budget.id
       return memo
 
-    # Add budget type array
-    lineData = _.find memo, (array) -> array.budgetType == budget.get 'budget_type'
+    return memo if @filters.isFiltered budget
+
+    # Add groupBy array
+    lineData = _.find memo, (array) => array[@groupBy] == budget.get @groupBy
     unless lineData
       lineData = []
-      lineData.budgetType = budget.get 'budget_type'
-      memo.push lineData unless @filters.get('budget_type').isFiltered budget
+      lineData['groupBy'] = @groupBy
+      lineData[@groupBy] = budget.get @groupBy
+      memo.push lineData unless @filters.get(@groupBy).isFiltered budget
 
-    return memo if @filters.get('budget_type').isFiltered budget
 
     # Add line datum
     datum = _.findWhere lineData, { year: budget.get 'year' }
     unless datum
-      datum = { amount: 0, year: budget.get('year'), budgetType: budget.get('budget_type') }
-      lineData.push datum unless @filters.get('scenario').isFiltered budget
+      datum = { amount: 0, year: budget.get('year') }
+      datum['groupBy'] = @groupBy
+      datum[@groupBy] = budget.get @groupBy
+      lineData.push datum unless @filters.isFiltered budget
 
-    return memo if @filters.get('scenario').isFiltered budget
     datum.amount += budget.get 'amount'
 
     # Add 'total' array
-    totalData = _.find memo, (array) -> array.budgetType == 'total'
+    totalData = _.find memo, (array) => array[@groupBy] == 'total'
     unless totalData
       totalData = []
-      totalData.budgetType = 'total'
+      totalData.groupBy = @groupBy
+      totalData[@groupBy] = 'total'
       memo.push totalData
 
     # Add total datum
     total = _.findWhere totalData, { year: budget.get 'year' }
     unless total
-      total = { amount: 0, year: budget.get('year'), budgetType: 'total' }
+      total = { amount: 0, year: budget.get('year') }
+      total['groupBy'] = @groupBy
+      total[@groupBy] = 'total'
       totalData.push total
     total.amount += budget.get 'amount'
 
     return memo
 
-  filtered: (collection) => _.chain(collection.models).reduce(@reduceFn, []).value()
+  filtered: (collection) =>
+    _.chain(collection.models).reduce(@reduceFn, []).value()
 
   polygon: (d) ->
     return "M0 0" unless d? and d.length
     "M" + d.join("L") + "Z"
 
   select: (e, d, i) =>
-    line = @g.select(".budget-line-#{d.budgetType}")
+    line = @g.select(".budget-line-#{d[d.groupBy]}")
     isActive = line.classed 'active'
     line.classed 'active', not isActive

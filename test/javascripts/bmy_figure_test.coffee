@@ -25,17 +25,19 @@ test 'filtered', ->
   memo = @figure.filtered @budgets
 
   strictEqual memo.length, 3, 'Should have two lines'
-  ok _.find memo, ((array) -> array.budgetType == Visio.Budgets.ADMIN), 'One line should have ADMIN type'
-  ok _.find memo, ((array) -> array.budgetType == Visio.Budgets.PROJECT), 'One line should have PROJECT type'
-  ok _.find memo, ((array) -> array.budgetType == 'total'), 'One line should have total type'
+  ok _.find memo, ((array) -> array[array.groupBy] == Visio.Budgets.ADMIN), 'One line should have ADMIN type'
+  ok _.find memo, ((array) -> array[array.groupBy] == Visio.Budgets.PROJECT), 'One line should have PROJECT type'
+  ok _.find memo, ((array) -> array[array.groupBy] == 'total'), 'One line should have total type'
 
-  lineData = _.find memo, (array) -> array.budgetType == Visio.Budgets.ADMIN
+  lineData = _.find memo, (array) -> array[array.groupBy] == Visio.Budgets.ADMIN
   strictEqual lineData.length, 2, 'Should have two datums'
   strictEqual _.where(lineData, { year: 2012 }).length, 1, 'One should be from 2012'
   strictEqual _.where(lineData, { year: 2013 }).length, 1, 'One should be from 2013'
 
 
 test 'render', ->
+  @figure.filters.get('scenario').filter(Visio.Scenarios.AOL, true)
+  @figure.filters.get('scenario').filter(Visio.Scenarios.OL, true)
   @figure.collectionFn @budgets
   @figure.render()
 

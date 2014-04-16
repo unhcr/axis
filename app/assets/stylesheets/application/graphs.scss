@@ -41,6 +41,12 @@ line {
   .PARTNER {
     stroke: $partner;
   }
+  .Above-Operating-Level {
+    stroke: $primary-soft;
+  }
+  .Operating-Level {
+    stroke: $primary-light;
+  }
   .total {
     stroke: $total;
     stroke-width: 6px;

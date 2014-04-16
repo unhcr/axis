@@ -108,6 +108,9 @@ Visio.Utils.nl2br = (string) ->
 Visio.Utils.space2nbsp = (string) ->
   string.replace(/\ /g, '&nbsp;')
 
+Visio.Utils.stringToCssClass = (string) ->
+  string.replace(/\ /g, '-')
+
 Visio.Utils.generateOverviewUrl = ->
   [Visio.router.moduleView.id,
    Visio.manager.year(),

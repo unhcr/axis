@@ -1644,7 +1644,7 @@ a {
     border-bottom: 1px $dark-gray solid;
   }
 
-  .icmy-tooltip .category, .bmy-tooltip .budget-type {
+  .icmy-tooltip .category, .bmy-tooltip .group-type {
     border: 1px solid $black;
     margin: 5px 0;
     background-color: white;
@@ -1688,6 +1688,18 @@ a {
       .title { border-top: 2px solid $low }
     }
 
+    .Above-Operating-Level {
+      color: $primary-soft;
+      .title { border-top: 2px solid $primary-soft }
+    }
+    .Operating-Level {
+      color: $primary-light;
+      .title { border-top: 2px solid $primary-light }
+    }
+    .ADMIN {
+      color: $admin;
+      .title { border-top: 2px solid $admin }
+    }
 
     .ADMIN {
       color: $admin;
