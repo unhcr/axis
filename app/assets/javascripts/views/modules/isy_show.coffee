@@ -15,7 +15,7 @@ class Visio.Views.IsyShowView extends Visio.Views.AccordionShowView
     @config =
       margin:
         top: 10
-        bottom: 10
+        bottom: 18
         left: 40
         right: 30
       width: 800

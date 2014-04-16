@@ -111,6 +111,19 @@ class Visio.Figures.Isy extends Visio.Figures.Base
 
         container.exit().remove()
 
+        footer = box.selectAll('.bar-footer').data([d])
+        footer.enter().append('rect')
+        footer.attr('width', self.barWidth * 2)
+          .attr('height', self.barMargin)
+          .attr('x', 0)
+          .attr('y', self.adjustedHeight + self.barMargin + 2)
+          .attr('class', (d) ->
+            classList = ['bar-footer']
+            unless d.get('is_performance')
+              category = d.situationAnalysis().category
+              classList.push category if category
+            return classList.join ' ')
+
         _.each metrics, (metric, idx) ->
           value = if d.get(metric) > d.get(self.goalType) then d.get(self.goalType) else d.get(metric)
 

@@ -214,6 +214,18 @@ line {
   .bar-container.inconsistent {
     fill: $alert-red;
   }
+  .bar-footer.success {
+    fill: $success;
+  }
+  .bar-footer.ok {
+    fill: $ok;
+  }
+  .bar-footer.fail {
+    fill: $fail;
+  }
+  .bar-footer.missing {
+    fill: $missing;
+  }
   .box.faded {
     opacity: .6;
   }
