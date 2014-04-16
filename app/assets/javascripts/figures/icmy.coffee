@@ -165,6 +165,8 @@ class Visio.Figures.Icmy extends Visio.Figures.Base
 
   mapFn: (lineData, idx, memo) =>
     _.each lineData, (d) ->
+      d.numerator = d.amount
+      d.denominator = memo["amount#{d.year}"]
       d.amount /= memo["amount#{d.year}"]
       d.amount = 0 if _.isNaN d.amount
     lineData

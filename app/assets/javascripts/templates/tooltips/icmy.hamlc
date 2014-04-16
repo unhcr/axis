@@ -4,7 +4,7 @@
       %div.title
         = Visio.Utils.humanMetric model.get('category')
       %div.ui-small-header
-        = Visio.Formats.PERCENT(model.get('amount'))
+        = "#{Visio.Formats.PERCENT(model.get('amount'))} - #{model.get('numerator')} / #{model.get('denominator')}"
 
 
 
