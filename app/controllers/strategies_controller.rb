@@ -19,6 +19,7 @@ class StrategiesController < ApplicationController
       :description => params[:description])
 
     s.update_nested params
+    s.reload
 
     render :json => { :strategy => s.as_json({ :include => {
       :operations => true,

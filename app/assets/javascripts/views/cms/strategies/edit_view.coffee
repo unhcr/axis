@@ -43,7 +43,7 @@ class Visio.Views.StrategyCMSEditView extends Backbone.View
             title: 'Saved'
             description: 'Strategy has successfully been saved.'
 
-          Visio.router.navigate '/', { trigger: true }
+          Visio.router.index()
         else
           alert(msg)
 
