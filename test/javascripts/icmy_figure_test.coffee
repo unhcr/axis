@@ -10,7 +10,17 @@ module 'ICMY Figure',
       width: 100
       height: 100
 
-    @outputs = Fixtures.outputs
+    @outputs = new Visio.Collections.Output([
+      {
+        id: 'abc-def'
+        name: 'earth'
+      },
+      {
+        id: 'def-abc'
+        name: 'mars'
+      }
+    ])
+
     sinon.stub Visio.Models.Output.prototype, 'selectedSituationAnalysis', ->
       if @id == 'abc-def'
         counts = {}
