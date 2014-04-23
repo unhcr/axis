@@ -41,6 +41,24 @@ line {
   .PARTNER {
     stroke: $partner;
   }
+  .PILLAR-1 {
+    stroke: $pillar1;
+  }
+  .PILLAR-2 {
+    stroke: $pillar2;
+  }
+  .PILLAR-3 {
+    stroke: $pillar3;
+  }
+  .PILLAR-4 {
+    stroke: $pillar4;
+  }
+  .Above-Operating-Level {
+    stroke: $primary-soft;
+  }
+  .Operating-Level {
+    stroke: $primary-light;
+  }
   .total {
     stroke: $total;
     stroke-width: 6px;
@@ -195,6 +213,18 @@ line {
   }
   .bar-container.inconsistent {
     fill: $alert-red;
+  }
+  .bar-footer.success {
+    fill: $success;
+  }
+  .bar-footer.ok {
+    fill: $ok;
+  }
+  .bar-footer.fail {
+    fill: $fail;
+  }
+  .bar-footer.missing {
+    fill: $missing;
   }
   .box.faded {
     opacity: .6;

@@ -15,9 +15,13 @@ class Visio.Routers.PdfRouter extends Backbone.Router
 
     @[Visio.exportModule.get('figure_config').type.name]() if @[Visio.exportModule.get('figure_config').type.name]?
 
-    $.when Visio.manager.get('expenditures').fetch(data :{ strategy_id: Visio.manager.get('strategy_id') }),
-           Visio.manager.get('budgets').fetch(data :{ strategy_id: Visio.manager.get('strategy_id') }),
-           Visio.manager.get('indicator_data').fetch(data :{ strategy_id: Visio.manager.get('strategy_id') })
+    filterIds = {}
+    for plural, ids of Visio.manager.get('selected')
+      filterIds["#{Visio.Utils.parameterByPlural(plural).singular}_ids"] = _.keys ids
+
+    $.when Visio.manager.get('expenditures').fetch(data :{ filter_ids: filterIds }, type: 'POST'),
+           Visio.manager.get('budgets').fetch(data :{ filter_ids: filterIds }, type: 'POST'),
+           Visio.manager.get('indicator_data').fetch(data :{ filter_ids: filterIds }, type: 'POST')
 
   absy: ->
     figureConfig = Visio.exportModule.get('figure_config')

@@ -55,7 +55,6 @@ class Visio.Collections.IndicatorDatum extends Visio.Collections.Syncable
     }
 
   outputAchievement: (reported) ->
-    return { category: null, result: null } if @length == 0
     reported ||= Visio.manager.get 'reported_type'
     results = []
 
@@ -64,6 +63,7 @@ class Visio.Collections.IndicatorDatum extends Visio.Collections.Syncable
     counts[Visio.Algorithms.ALGO_RESULTS.medium] = 0
     counts[Visio.Algorithms.ALGO_RESULTS.low] = 0
     counts[Visio.Algorithms.STATUS.missing] = 0
+    return { category: null, result: null, counts: counts, total: 0 } if @length == 0
 
     groups = @groupBy (d) -> "#{d.get('ppg_id')}#{d.get('goal_id')}#{d.get('output_id')}"
 
@@ -111,7 +111,6 @@ class Visio.Collections.IndicatorDatum extends Visio.Collections.Syncable
 
 
   achievement: (reported) ->
-    return { category: null, result: null } if @length == 0
     reported ||= Visio.manager.get 'reported_type'
     results = []
 
@@ -120,6 +119,7 @@ class Visio.Collections.IndicatorDatum extends Visio.Collections.Syncable
     counts[Visio.Algorithms.ALGO_RESULTS.medium] = 0
     counts[Visio.Algorithms.ALGO_RESULTS.low] = 0
     counts[Visio.Algorithms.STATUS.missing] = 0
+    return { category: null, result: null, counts: counts, total: 0 } if @length == 0
 
     types = {}
 

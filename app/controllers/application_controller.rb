@@ -75,6 +75,11 @@ class ApplicationController < ActionController::Base
     render :layout => 'application'
   end
 
+  def reset_local_db
+    User.reset_local_db(User.all)
+    render :json => { :success => true }
+  end
+
   private
     def up?(server)
       cmd = `ping -c -q  2 #{server}`

@@ -16,6 +16,7 @@ class Visio.Figures.Isy extends Visio.Figures.Base
         human: { true: 'performance', false: 'impact' }
         callback: (name, attr) =>
           @isPerformanceFn(name == 'true').render()
+          @x.domain [0, @maxIndicators]
           $.publish "drawFigures.#{@cid}.figure"
       },
       {
@@ -31,7 +32,10 @@ class Visio.Figures.Isy extends Visio.Figures.Base
 
     super config
 
-    @tooltip = null
+    @tooltip = new Visio.Views.IsyTooltip
+      figure: @
+
+    @$el.find('.tooltip-container').html @tooltip.el
 
     @isPerformance = if config.isPerformance? then config.isPerformance else true
 
@@ -63,9 +67,6 @@ class Visio.Figures.Isy extends Visio.Figures.Base
       .attr('transform', 'translate(0,0)')
 
     @goalType = config.goalType || Visio.Algorithms.GOAL_TYPES.target
-
-    @$el.on 'mouseleave', (e) =>
-      @tooltip?.close()
 
     $.subscribe "hover.#{@cid}.figure", @hover
     $.subscribe "mouseout.#{@cid}.figure", @mouseout
@@ -104,12 +105,25 @@ class Visio.Figures.Isy extends Visio.Figures.Base
             return classList.join ' ')
 
         container.on 'mouseenter', (d) ->
-          $.publish "hover.#{self.cid}.figure", i
+          $.publish "hover.#{self.cid}.figure", [i, false]
 
         container.on 'mouseout', (d) ->
           $.publish "mouseout.#{self.cid}.figure", i
 
         container.exit().remove()
+
+        footer = box.selectAll('.bar-footer').data([d])
+        footer.enter().append('rect')
+        footer.attr('width', self.barWidth * 2)
+          .attr('height', self.barMargin)
+          .attr('x', 0)
+          .attr('y', self.adjustedHeight + self.barMargin + 2)
+          .attr('class', (d) ->
+            classList = ['bar-footer']
+            unless d.get('is_performance')
+              category = d.situationAnalysis().category
+              classList.push category if category
+            return classList.join ' ')
 
         _.each metrics, (metric, idx) ->
           value = if d.get(metric) > d.get(self.goalType) then d.get(self.goalType) else d.get(metric)
@@ -251,7 +265,7 @@ class Visio.Figures.Isy extends Visio.Figures.Base
     isActive = box.classed 'active'
     box.classed 'active', not isActive
 
-  hover: (e, idx) =>
+  hover: (e, idx, scroll = true) =>
     datum = null
     box = null
 
@@ -264,11 +278,12 @@ class Visio.Figures.Isy extends Visio.Figures.Base
         datum = d
         box = el
 
-    if idx >= @maxIndicators
+    return unless datum?
+    if idx >= @maxIndicators and scroll
       difference = idx - @maxIndicators
       @x.domain [0 + difference, @maxIndicators + difference]
       @render()
-    else if @x.domain()[0] >= 0
+    else if @x.domain()[0] >= 0 and scroll
       @x.domain [0, @maxIndicators]
       @render()
 
@@ -278,11 +293,7 @@ class Visio.Figures.Isy extends Visio.Figures.Base
       .exit().transition().duration(Visio.Durations.VERY_FAST).attr('r', 0).remove()
     @g.selectAll('.label').remove()
 
-    @tooltip or= new Visio.Views.IsyTooltip
-    @tooltip.figure = self
-    @tooltip.isyIndex = i
-    @tooltip.model = datum
-    @tooltip.render()
+    @tooltip.render datum
 
     @y.domain [0, +datum.get(@goalType)]
 

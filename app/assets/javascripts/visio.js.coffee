@@ -74,6 +74,11 @@ window.Visio =
     PARTNER: 'PARTNER'
     PROJECT: 'PROJECT'
     STAFF: 'STAFF'
+  Pillars:
+    P1: 'PILLAR 1'
+    P2: 'PILLAR 2'
+    P3: 'PILLAR 3'
+    P4: 'PILLAR 4'
   Durations:
     VERY_FAST: 100
     FAST: 500

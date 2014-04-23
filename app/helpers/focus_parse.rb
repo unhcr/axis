@@ -111,6 +111,8 @@ module FocusParse
         end).save
         goal.found
 
+        pillar = xml_goal.search('./pillar').text
+
         ppg.goals << goal unless ppg.goals.include? goal
         operation.goals << goal unless operation.goals.include? goal
         plan.goals << goal unless plan.goals.include? goal
@@ -276,6 +278,7 @@ module FocusParse
                 b.output = output
                 b.problem_objective = problem_objective
                 b.operation = operation
+                b.pillar = pillar
 
                 b.amount = hash[:amount]
                 b.scenario = hash[:scenario]

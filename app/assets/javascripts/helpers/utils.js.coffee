@@ -108,8 +108,18 @@ Visio.Utils.nl2br = (string) ->
 Visio.Utils.space2nbsp = (string) ->
   string.replace(/\ /g, '&nbsp;')
 
+Visio.Utils.stringToCssClass = (string) ->
+  return string unless string
+  string.replace(/\ /g, '-')
+
 Visio.Utils.generateOverviewUrl = ->
   [Visio.router.moduleView.id,
    Visio.manager.year(),
    Visio.manager.get('aggregation_type'),
    Visio.manager.get('reported_type')].join '/'
+
+Visio.Utils.parameterByPlural = (plural) ->
+
+  for parameter, hash of Visio.Parameters
+    return hash if hash.plural == plural
+  null

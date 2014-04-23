@@ -1,0 +1,10 @@
+.row
+  .col-sm-10
+    .ui-medium-header
+      - if context.collection
+        Summary:
+      - else
+        Aggregated by:
+      = Visio.manager.year()
+
+%figure

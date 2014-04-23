@@ -6,4 +6,10 @@ class ExportModule < ActiveRecord::Base
   serialize :figure_type, Hash
 
   belongs_to :user
+
+  def email(host, cookies, to)
+    url = "#{host}/export_modules/#{self.id}/pdf"
+    name = self.title.empty? ? 'dummy' : self.title
+    Resque.enqueue(EmailPhantomJob, url, cookies, name, to)
+  end
 end

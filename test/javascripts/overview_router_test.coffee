@@ -42,5 +42,15 @@ asyncTest 'setup', ->
   @server.respond()
 
 
+asyncTest 'figure', ->
 
+  Visio.router.setup().done ->
+    Visio.router.figure 'absy', 2013, Visio.Parameters.GOALS.plural, Visio.Algorithms.REPORTED_VALUES.yer
 
+    ok Visio.router.moduleView instanceof Visio.Views.AbsyView
+    strictEqual Visio.manager.year(), 2013
+    strictEqual Visio.manager.get('aggregation_type'), Visio.Parameters.GOALS.plural
+    strictEqual Visio.manager.get('reported_type'), Visio.Algorithms.REPORTED_VALUES.yer
+    start()
+
+  @server.respond()

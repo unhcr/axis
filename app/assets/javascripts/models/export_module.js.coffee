@@ -36,4 +36,7 @@ class Visio.Models.ExportModule extends Backbone.Model
   pdfUrl: ->
     "#{@urlRoot}/#{@id}/pdf.pdf"
 
+  emailUrl: ->
+    "#{@urlRoot}/#{@id}/email"
+
   paramRoot: 'export_module'

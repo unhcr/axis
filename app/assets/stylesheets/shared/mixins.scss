@@ -110,6 +110,7 @@
 
 @mixin header-button {
   margin: 5px 0 ;
+  margin-bottom: 0;
   width: $header-button-width;
   height: $header-button-height;
   border: 1px $off-white solid;

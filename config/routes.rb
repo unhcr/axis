@@ -8,6 +8,7 @@ Visio::Application.routes.draw do
   get '/overview/:strategy_id' => 'application#overview'
   get '/global_search' => 'application#global_search'
   get '/healthz' => 'application#healthz'
+  get '/reset_local_db' => 'application#reset_local_db'
 
   # CMS
   get '/cms/strategies' => 'cms#strategies'
@@ -27,6 +28,7 @@ Visio::Application.routes.draw do
   resources :export_modules do
     member do
       get 'pdf'
+      get 'email'
     end
   end
   resources :strategy_objectives do

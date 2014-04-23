@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140318194900) do
+ActiveRecord::Schema.define(:version => 20140416085105) do
 
   create_table "budgets", :force => true do |t|
     t.string   "budget_type"
@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(:version => 20140318194900) do
     t.integer  "year"
     t.datetime "found_at"
     t.string   "operation_id"
+    t.string   "pillar"
   end
 
   add_index "budgets", ["created_at"], :name => "index_budgets_on_created_at"

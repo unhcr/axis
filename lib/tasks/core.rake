@@ -162,8 +162,5 @@ task :random_strategy => :environment do
 end
 
 task :reset_local_db => :environment do
-  User.all.each do |u|
-    u.reset_local_db = true
-    u.save
-  end
+  User.reset_local_db(User.all)
 end

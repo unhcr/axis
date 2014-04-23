@@ -1644,7 +1644,7 @@ a {
     border-bottom: 1px $dark-gray solid;
   }
 
-  .icmy-tooltip .category, .bmy-tooltip .budget-type {
+  .icmy-tooltip .category, .bmy-tooltip .group-type {
     border: 1px solid $black;
     margin: 5px 0;
     background-color: white;
@@ -1688,6 +1688,31 @@ a {
       .title { border-top: 2px solid $low }
     }
 
+    .Above-Operating-Level {
+      color: $primary-soft;
+      .title { border-top: 2px solid $primary-soft }
+    }
+    .Operating-Level {
+      color: $primary-light;
+      .title { border-top: 2px solid $primary-light }
+    }
+
+    .PILLAR-1 {
+      color: $pillar1;
+      .title { border-top: 2px solid $pillar1 }
+    }
+    .PILLAR-2 {
+      color: $pillar2;
+      .title { border-top: 2px solid $pillar2 }
+    }
+    .PILLAR-3 {
+      color: $pillar3;
+      .title { border-top: 2px solid $pillar3 }
+    }
+    .PILLAR-4 {
+      color: $pillar4;
+      .title { border-top: 2px solid $pillar4 }
+    }
 
     .ADMIN {
       color: $admin;

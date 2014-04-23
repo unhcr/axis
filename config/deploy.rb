@@ -40,7 +40,7 @@ role :app, "10.9.43.153"                          # This may be the same as your
 role :db,  "10.9.43.153", :primary => true # This is where Rails migrations will run
 role :resque_worker, "10.9.43.153"
 
-set :workers, { "shrimp" => 5 }
+set :workers, { "shrimp" => 5, "pdf_email" => 5 }
 
 # ensure http_proxy variables are set
 set :default_environment, {

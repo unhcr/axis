@@ -1,26 +1,18 @@
-class Visio.Views.IsyTooltip extends Visio.Views.D3Tooltip
+class Visio.Views.IsyTooltip extends Backbone.View
 
   name: 'isy'
 
-  offset: 140
-
-  width: => @figure.widthFn()
-
-  height: -> 300
-
-  top: =>
-    @figure.$el.offset().top + 60
-
-  left: =>
-    $(@figure.el).offset().left
+  template: HAML['tooltips/isy']
 
   initialize: (options) ->
     @figure = options?.figure
-    @isyIndex = options?.isyIndex
+    @rendered = false
 
     super options
 
-  render: ->
+  render: (d) ->
+    return unless d?
+    @rendered = true
     values = [
       { value: Visio.Algorithms.GOAL_TYPES.target, human: 'TARGET' },
       { value: Visio.Algorithms.GOAL_TYPES.compTarget, human: 'COMP TARGET' },
@@ -28,10 +20,17 @@ class Visio.Views.IsyTooltip extends Visio.Views.D3Tooltip
       { value: Visio.Algorithms.REPORTED_VALUES.myr, human: 'MYR' },
       { value: Visio.Algorithms.REPORTED_VALUES.baseline, human: 'BASELINE' },
     ]
-    values.push { value: 'standard', human: 'STANDARD' } if @model.get 'standard'
+    values.push { value: 'standard', human: 'STANDARD' } if d.get 'standard'
 
-    @$el.html @template({ model: @model, values: values })
+    @$el.html @template({ d: d, values: values })
 
     super
 
     @
+
+  hasRendered: =>
+    @rendered
+
+  close: =>
+    @remove()
+    @unbind()
