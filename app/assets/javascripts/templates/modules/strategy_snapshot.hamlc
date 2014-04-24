@@ -33,7 +33,7 @@
     .row
       .col-md-11
         %h3
-          = "Target #{Visio.manager.get('aggregation_type')}"
+          = "Priority #{Visio.Utils.parameterByPlural(Visio.manager.get('aggregation_type')).human}s"
       .col-md-1
         .grid-view grid
     .row

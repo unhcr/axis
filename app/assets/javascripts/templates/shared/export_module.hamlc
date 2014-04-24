@@ -70,4 +70,4 @@
     %section.row
       %h3 Go Time.
       %button.pdf Export
-      %button.email Email
+      <!-- %button.email Email -->
