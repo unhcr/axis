@@ -22,7 +22,7 @@ class Visio.Figures.Icmy extends Visio.Figures.Base
         callback: (name, attr) =>
           @algorithm = name
           @isPerformance = @algorithm == 'selectedOutputAchievement'
-          @filters.get('is_performance').filter @isPerformance
+          @filters.get('is_performance').filter 'true', @isPerformance
 
           @render()
       },
@@ -175,13 +175,14 @@ class Visio.Figures.Icmy extends Visio.Figures.Base
       d.amount = 0 if _.isNaN d.amount
     lineData
 
-  reduceFn: (memo, model) =>
-
+  transformFn: (collection) =>
+    memo = []
     _.each Visio.manager.get('yearList'), (year) =>
 
       return if year + 1 > (new Date()).getFullYear()
 
-      result = model[@algorithm] year, @filters
+      result = collection[@algorithm] year, @filters
+      console.log @filters.toJSON()
 
 
 
@@ -213,8 +214,7 @@ class Visio.Figures.Icmy extends Visio.Figures.Base
     return memo
 
   filtered: (collection) =>
-    memo = []
-    _.chain(collection.models).reduce(@reduceFn, memo).map(@mapFn).value()
+    _.map @transformFn(collection), @mapFn
 
   polygon: (d) ->
     return "M0 0" unless d? and d.length
