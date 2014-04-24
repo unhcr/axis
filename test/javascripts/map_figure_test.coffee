@@ -95,7 +95,7 @@ test 'pan', ->
   strictEqual @map.zoom.translate()[0], extent.right, 'Should not move past extent'
 
 test 'filtered', ->
-  Visio.manager.year(2012)
+  Visio.manager.year 2012
 
   filtered = @map.filtered @plans
 

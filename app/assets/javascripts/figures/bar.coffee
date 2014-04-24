@@ -57,9 +57,6 @@ class Visio.Figures.Bar extends Visio.Figures.Base
     @bars.enter().append('rect')
     @bars.attr('class', (d) ->
       ['bar', d.key].join ' ' )
-    @bars.on 'mouseenter', (d) =>
-      console.log d
-      console.log @model.toJSON()
 
     switch @orientation
       when 'bottom'

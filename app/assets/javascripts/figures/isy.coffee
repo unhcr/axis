@@ -327,8 +327,8 @@ class Visio.Figures.Isy extends Visio.Figures.Base
           .attr('y', -10)
           .attr('width', 100)
           .attr('height', 20)
-          .attr('rx', 5)
-          .attr('ry', 5)
+          .attr('rx', 3)
+          .attr('ry', 3)
           .attr('class', (type) -> ['tag', "tag-#{type}"].join(' '))
 
         texts = label.selectAll('.text').data([p])
