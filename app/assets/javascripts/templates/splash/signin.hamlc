@@ -23,7 +23,11 @@
       - else
         %form
           .col-md-5.center-text
-            %input.login.pull-left.full-width{:name => "login", :placeholder => "Enter your ldap username", :type => "text"}
+            %input.login.pull-left.full-width{
+              :name => "login",
+              :autofocus => "autofocus",
+              :placeholder => "Enter your ldap username",
+              :type => "text"}
           .col-md-5.center-text
             %input.password.pull-left.full-width{:name => "password", :placeholder => "Password", :type => "password"}
           .col-md-2.center-text
