@@ -2124,7 +2124,7 @@ a {
   position: absolute;
   border-right: none;
   width: $export-label-length;
-  left: -$export-label-length;
+  left: -$export-label-length - 1;
   top: -1px;
   text-align: center;
   color: black;
@@ -2185,3 +2185,7 @@ a {
   border-left: 1px solid $light-gray;
 }
 
+.login-container {
+  padding-left: 2px;
+  padding-right: 2px;
+}

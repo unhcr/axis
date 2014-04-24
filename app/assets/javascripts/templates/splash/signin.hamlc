@@ -22,15 +22,15 @@
             %i here
       - else
         %form
-          .col-md-5.center-text
+          .col-md-5.center-text.login-container
             %input.login.pull-left.full-width{
               :name => "login",
               :autofocus => "autofocus",
               :placeholder => "Enter your ldap username",
               :type => "text"}
-          .col-md-5.center-text
+          .col-md-5.center-text.login-container
             %input.password.pull-left.full-width{:name => "password", :placeholder => "Password", :type => "password"}
-          .col-md-2.center-text
+          .col-md-2.center-text.login-container
             %input.signin.ui-active.full-width.btn.pull-left{:type => "submit", :value => "GO"}
   .row
     .col-md-8.col-centered
