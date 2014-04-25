@@ -101,11 +101,12 @@ class Visio.Figures.Isy extends Visio.Figures.Base
           .attr('y', -self.barMargin / 2)
           .attr('class', () ->
             classList = ['bar-container']
-            classList.push 'inconsistent' unless d.isConsistent()
+            classList.push 'inconsistent' unless d.consistent().isConsistent
             return classList.join ' ')
 
         container.on 'mouseenter', (d) ->
           $.publish "hover.#{self.cid}.figure", [i, false]
+          console.log d.consistent().inconsistencies
 
         container.on 'mouseout', (d) ->
           $.publish "mouseout.#{self.cid}.figure", i

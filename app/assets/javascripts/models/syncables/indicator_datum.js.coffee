@@ -15,18 +15,70 @@ class Visio.Models.IndicatorDatum extends Visio.Models.Syncable
     id = @get "#{parameterHash.singular}_id"
     Visio.manager.get(parameterHash.plural).get(id)
 
-  isConsistent: ->
+  consistencyFnList: [
+    'myrGreaterThanBaseline',
+    'yerGreaterThanBaseline',
+    'yerGreaterThanMyr',
+    'targetGreaterThanBaseline']
+
+  myrGreaterThanBaseline: =>
+    inconsistency = 'MYR is less than baseline'
     baseline = @get Visio.Algorithms.REPORTED_VALUES.baseline
+    myr = @get Visio.Algorithms.REPORTED_VALUES.myr
+
+    if @get 'reversal'
+      return inconsistency if myr >= baseline and _.isNumber(myr)
+    else
+      return inconsistency if myr < baseline and _.isNumber(myr)
+    null
+
+  yerGreaterThanBaseline: =>
+    inconsistency = 'YER is less than baseline'
+    baseline = @get Visio.Algorithms.REPORTED_VALUES.baseline
+    yer = @get Visio.Algorithms.REPORTED_VALUES.yer
+
+    if @get 'reversal'
+      return inconsistency if yer >= baseline and _.isNumber(yer)
+    else
+      return inconsistency if yer < baseline and _.isNumber(yer)
+    null
+
+  yerGreaterThanMyr: =>
+    inconsistency = 'YER is less than MYR'
     myr = @get Visio.Algorithms.REPORTED_VALUES.myr
     yer = @get Visio.Algorithms.REPORTED_VALUES.yer
 
     if @get 'reversal'
-      return myr <= baseline and
-        (yer <= myr or not _.isNumber(yer))
+      return inconsistency if yer >= myr and _.isNumber(yer) and _.isNumber(myr)
     else
-      return myr >= baseline and
-        (yer >= myr or not _.isNumber(yer))
+      return inconsistency if yer < myr and _.isNumber(yer) and _.isNumber(myr)
+    null
 
+  targetGreaterThanBaseline: =>
+    inconsistency = 'Impact target is less than basline'
+    impTarget = @get Visio.Algorithms.GOAL_TYPES.imp_target
+    baseline = @get Visio.Algorithms.REPORTED_VALUES.baseline
+
+    if @get 'reversal'
+      return inconsistency if impTarget >= baseline
+    else
+      return inconsistency if impTarget < baseline
+    null
+
+
+  consistent: ->
+
+    result =
+      inconsistencies: []
+      isConsistent: true
+
+    _.each @consistencyFnList, (consistencyFn) =>
+      inconsistency = @[consistencyFn]()
+      if inconsistency?
+        result.isConsistent = false
+        result.inconsistencies.push inconsistency
+
+    result
 
   situationAnalysis: (reported) ->
     result =
