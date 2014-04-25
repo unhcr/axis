@@ -13,7 +13,7 @@
       .ui-primary
         = hash.human.toUpperCase()
       .ui-primary-light
-        = context.d[hash.singular]().get('name')
+        = context.d[hash.singular]().toString()
   .col-md-3.zebra
     - _.each context.values, (value) ->
       .row
