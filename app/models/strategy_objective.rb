@@ -55,6 +55,17 @@ class StrategyObjective < ActiveRecord::Base
     s
   end
 
+  def synced(resource = IndicatorDatum, synced_date = nil, limit = nil, where = {})
+    ids = {
+      :goal_ids => self.goal_ids,
+      :problem_objective_ids => self.problem_objective_ids,
+      :output_ids => self.output_ids,
+    }
+
+    ids[:indicator_ids] = self.indicator_ids if resource == IndicatorDatum
+
+    resource.synced_models(ids, synced_date, limit, where)
+  end
 
   def to_jbuilder(options = {})
     options ||= {}

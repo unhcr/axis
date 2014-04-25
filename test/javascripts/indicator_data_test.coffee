@@ -421,24 +421,31 @@ test 'situation analysis collection', () ->
 
 
 
-test 'isConsistent', () ->
+test 'consistent', () ->
   datum = new Visio.Models.IndicatorDatum({
     baseline: 0
     myr: 10
     yer: 20
   })
 
-  ok datum.isConsistent(datum), 'Should be consistent'
+  ok datum.consistent(datum).isConsistent, 'Should be consistent'
+  strictEqual datum.consistent(datum).inconsistencies.length, 0
 
   datum.set 'baseline', 20
-  ok !datum.isConsistent(datum), 'Should not be consistent'
+  ok !datum.consistent(datum).isConsistent, 'Should not be consistent'
+  ok datum.consistent(datum).inconsistencies.length, 1
+
+  datum.set 'baseline', 21
+  ok !datum.consistent(datum).isConsistent, 'Should not be consistent'
+  ok datum.consistent(datum).inconsistencies.length, 2
 
   datum.set 'baseline', 0
   datum.set 'yer', 5
-  ok !datum.isConsistent(datum), 'Should not be consistent'
+  ok !datum.consistent(datum).isConsistent, 'Should not be consistent'
+  ok datum.consistent(datum).inconsistencies.length, 1
 
   datum.set 'yer', null
-  ok datum.isConsistent(datum), 'Should be consistent'
+  ok datum.consistent(datum).isConsistent, 'Should be consistent'
 
 test 'isConsistent - reversed', ->
   datum = new Visio.Models.IndicatorDatum({
@@ -448,15 +455,19 @@ test 'isConsistent - reversed', ->
     reversal: true
   })
 
-  ok not datum.isConsistent(datum), 'Should not be consistent'
+  ok !datum.consistent(datum).isConsistent, 'Should not be consistent'
+  strictEqual datum.consistent(datum).inconsistencies.length, 2
 
   datum.set 'baseline', 20
-  ok datum.isConsistent(datum), 'Should be consistent'
+  ok datum.consistent(datum).isConsistent, 'Should be consistent'
+  strictEqual datum.consistent(datum).inconsistencies.length, 0
 
   datum.set 'baseline', 10
   datum.set 'myr', 2
   datum.set 'yer', 5
-  ok not datum.isConsistent(datum), 'Should not be consistent'
+  ok !datum.consistent(datum).isConsistent, 'Should not be consistent'
+  strictEqual datum.consistent(datum).inconsistencies.length, 1
 
   datum.set 'yer', null
-  ok datum.isConsistent(datum), 'Should be consistent'
+  ok datum.consistent(datum).isConsistent, 'Should be consistent'
+  strictEqual datum.consistent(datum).inconsistencies.length, 0
