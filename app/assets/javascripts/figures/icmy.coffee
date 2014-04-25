@@ -22,7 +22,8 @@ class Visio.Figures.Icmy extends Visio.Figures.Base
         callback: (name, attr) =>
           @algorithm = name
           @isPerformance = @algorithm == 'selectedOutputAchievement'
-          @filters.get('is_performance').filter 'true', @isPerformance
+
+          @filters.get('is_performance').filter @isPerformance, true
 
           @render()
       },
