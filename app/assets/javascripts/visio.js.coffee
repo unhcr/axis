@@ -115,7 +115,7 @@ window.Visio =
       singular: 'ppg'
       plural: 'ppgs'
       className: 'Ppg'
-      human: 'PPGs'
+      human: 'PPG'
     GOALS:
       singular: 'goal'
       plural: 'goals'
@@ -125,17 +125,17 @@ window.Visio =
       singular: 'indicator'
       plural: 'indicators'
       className: 'Indicator'
-      human: 'Indicators'
+      human: 'Indicator'
     OUTPUTS:
       singular: 'output'
       plural: 'outputs'
       className: 'Output'
-      human: 'Outputs'
+      human: 'Output'
     PROBLEM_OBJECTIVES:
       singular: 'problem_objective'
       plural: 'problem_objectives'
       className: 'ProblemObjective'
-      human: 'Objectives'
+      human: 'Objective'
     STRATEGY_OBJECTIVES:
       singular: 'strategy_objective'
       plural: 'strategy_objectives'

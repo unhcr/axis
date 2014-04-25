@@ -5,7 +5,7 @@
         %span.ui-primary-light.ui-huge-number.bold
           = context.parameter.length
         %span
-          = "Priority #{Visio.manager.get('aggregation_type')}"
+          = "Priority #{Visio.Utils.parameterByPlural(Visio.manager.get('aggregation_type')).human}s"
 
     .row
       .col-sm-9.ui-small-header.ui-primary-second
