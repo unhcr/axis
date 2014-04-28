@@ -229,6 +229,12 @@ class Visio.Figures.Isy extends Visio.Figures.Base
       )
 
     boxes.on 'click', (d, i) =>
+      if @selectedDatum?.id == d.id
+        barContainer = @g.select ".box-#{d.id} .bar-container"
+        barContainer.classed 'selected', false
+        @selectedDatum = null
+        return
+
       @selectedDatum = d
       @g.selectAll('.bar-container').classed 'selected', false
       barContainer = @g.select ".box-#{d.id} .bar-container"
