@@ -78,6 +78,7 @@ class Visio.Views.IsyShowView extends Visio.Views.AccordionShowView
     else
       @$el.removeClass 'disabled'
 
+    @drawFigures() if @isOpen()
     @
 
   onStop: (e, ui) =>
