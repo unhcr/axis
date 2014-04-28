@@ -210,7 +210,20 @@ line {
   }
   .bar-container {
     fill: $off-white;
+    stroke: none;
   }
+
+
+  .bar-container.hover {
+    stroke: $dark-gray;
+    stroke-width: 8px;
+  }
+
+  .bar-container.selected {
+    stroke: $black;
+    stroke-width: 8px;
+  }
+
   .bar-container.inconsistent {
     fill: url(#stripes-alert);
   }
@@ -247,6 +260,7 @@ line {
   .target {
     fill: yellow;
     stroke: $black;
+    pointer-events: none;
 
     text {
       font-size: 11px;
@@ -254,6 +268,7 @@ line {
   }
 
   .baseline {
+    pointer-events: none;
     fill: $primary;
     stroke: $black;
 

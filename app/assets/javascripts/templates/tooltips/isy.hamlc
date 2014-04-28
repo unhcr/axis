@@ -13,17 +13,19 @@
       .ui-primary
         = hash.human.toUpperCase()
       .ui-primary-light
-        = context.d[hash.singular]().toString()
+        = context.d[hash.singular]()?.toString()
   .col-md-3.zebra
     - _.each context.values, (value) ->
       .row
         .col-md-6.ui-orange.zero-padding
           = value.human
         .col-md-6.ui-primary-light.zero-padding.right-text
-          - if context.d.indicator().get('name')[0] == '%'
+          - if context.d.get(value.value)? and context.d.indicator()?.get('name')[0] == '%'
             = Visio.Formats.PERCENT context.d.get(value.value) / 100
-          - else
+          - else if context.d.get(value.value)?
             = Visio.Formats.COMMA context.d.get(value.value)
+          - else
+            N/A
 %section.row
   .col-md-12
     = "* ALL PERCENTAGES ARE TOWARDS THE TARGET"
