@@ -105,6 +105,10 @@ line {
     pointer-events: none;
   }
 
+  .point.external {
+    fill: lighten($pink, 20%);
+  }
+
   .y.axis line {
     stroke: $lighter-gray;
     stroke-dasharray: 1;
