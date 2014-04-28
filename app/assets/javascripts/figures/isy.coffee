@@ -363,21 +363,27 @@ class Visio.Figures.Isy extends Visio.Figures.Base
       .duration(Visio.Durations.VERY_FAST)
       .attr('r', @barWidth / 2)
 
-    labels = box.selectAll('.label')
-      .data(_.values(Visio.Algorithms.REPORTED_VALUES).concat(Visio.Algorithms.GOAL_TYPES.target))
-    labels.enter().append('g')
+    labelData = _.values(Visio.Algorithms.REPORTED_VALUES).concat(Visio.Algorithms.GOAL_TYPES.target)
+    labelHeight = 20
+    labelPositions = @computeLabelPositions labelData, self.hoverDatum, labelHeight
 
+
+    labels = box.selectAll('.label')
+      .data(labelData)
+    labels.enter().append('g')
     labels
       .attr('class', 'label')
       .each (p) ->
         label = d3.select @
+        offset = 10
 
         tag = label.selectAll('.tag').data([p])
         tag.enter().append('rect')
         tag.attr('x', self.barWidth * 3)
-          .attr('y', (reportedValue) => self.y(self.hoverDatum.get(reportedValue)) - 10)
+          .attr('y', (reportedValue) =>
+            labelPositions[reportedValue] - offset)
           .attr('width', 100)
-          .attr('height', 20)
+          .attr('height', labelHeight)
           .attr('rx', 3)
           .attr('ry', 3)
           .attr('class', (type) -> ['tag', "tag-#{type}"].join(' '))
@@ -385,7 +391,8 @@ class Visio.Figures.Isy extends Visio.Figures.Base
         texts = label.selectAll('.text').data([p])
         texts.enter().append('text')
         texts.attr('x', self.barWidth * 4)
-          .attr('y', (reportedValue) => self.y(self.hoverDatum.get(reportedValue)) + 10)
+          .attr('y', (reportedValue) =>
+            labelPositions[reportedValue] + offset)
           .attr('dy', '-.43em')
           .attr('class', 'text')
           .text () ->
@@ -398,6 +405,32 @@ class Visio.Figures.Isy extends Visio.Figures.Base
               return "#{humanGoal} is #{self.hoverDatum.get(self.goalType)}"
 
     box.moveToFront()
+
+  computeLabelPositions: (attributes, datum, length) =>
+    values = _.map attributes, (attr) =>
+      value = @y(+datum.get(attr))
+      return {
+        value: value
+        attr: attr
+      }
+
+    values.sort (a, b) -> a.value - b.value
+
+    positions = []
+    positionsHash = {}
+
+    _.each values, (value) =>
+
+      last = positions[positions.length - 1]
+
+      if last?
+        delta = value.value - last.value
+        value.value += (length - delta) if delta < length
+
+      positions.push value
+      positionsHash[value.attr] = value.value
+
+    positionsHash
 
   mouseout: (e, i) =>
     @g.selectAll('.bar-container').classed 'hover', false
