@@ -26,8 +26,6 @@ class Visio.Views.ParameterListView extends Backbone.View
     @type = options.type
     @fetched = {}
 
-    @render()
-
   render: () ->
     @$el.html @template(
       plan: @model.toJSON()
@@ -97,7 +95,7 @@ class Visio.Views.ParameterListView extends Backbone.View
 
 
   search: (query) =>
-    re = new RegExp('.*' + query.split('').join('.*') + '.*', 'g')
+    re = new RegExp('.*' + query.split('').join('.*') + '.*', 'gi')
 
     @model.get(@type).filter((parameter) ->
       name = parameter.toString()

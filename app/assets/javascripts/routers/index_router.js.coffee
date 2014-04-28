@@ -68,9 +68,10 @@ class Visio.Routers.IndexRouter extends Visio.Routers.GlobalRouter
 
     @listView.close() if @listView
 
-    @listView = new Visio.Views.ParameterListView(
+    @listView = new Visio.Views.ParameterListView
       model: Visio.manager.plan(plan_id)
       type: type || Visio.Parameters.INDICATORS.plural
-    )
 
-    $('header').after(@listView.el)
+    @listView.render()
+
+    $('header').after @listView.el
