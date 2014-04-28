@@ -18,7 +18,7 @@ class Visio.Figures.Bar extends Visio.Figures.Base
 
     # fixed is the scale that scales the bars equally apart
     @fixed = d3.scale.ordinal()
-    @zeroPadding = 3
+    @zeroPadding = if @hasZeroPad? then 3 else 0
     @labelHeight = 18
 
     switch @orientation
@@ -31,9 +31,6 @@ class Visio.Figures.Bar extends Visio.Figures.Base
         @variable.range [@adjustedHeight - @zeroPadding - 1, 0]
         @fixed
           .rangeBands([0, @adjustedWidth])
-
-
-
 
   render: ->
 
@@ -85,7 +82,7 @@ class Visio.Figures.Bar extends Visio.Figures.Base
     switch @orientation
       when 'bottom'
         @zeroPad
-          .attr('height', (d) => @zeroPadding - 1)
+          .attr('height', (d) => @zeroPadding)
           .attr('x', (d, i) => @fixed(i))
           .attr('y', (d) => @adjustedHeight - @zeroPadding)
           .attr('width', @barWidth)

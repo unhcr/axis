@@ -15,6 +15,7 @@ class Visio.Views.ParameterSlideView extends Visio.Views.Dashboard
     @barConfig.orientation = 'left'
     @isPdf = options.isPdf
     @barConfig.hasLabels = true
+    @barConfig.hasZeroPad = true
 
     if @isPdf
       @barConfig.width = 250
