@@ -203,29 +203,31 @@ class Visio.Figures.Isy extends Visio.Figures.Base
           .attr('y2', (d) -> self.y(d.get(Visio.Algorithms.GOAL_TYPES.target)))
         center.exit().remove()
 
-        target = box.selectAll('.target').data([d])
-        target.enter().append('g')
-        target.attr('class', 'target')
-        target.transition()
-          .duration(Visio.Durations.FAST)
-          .attr('transform', (d) ->
-            'translate(0, ' + self.y(d.get(Visio.Algorithms.GOAL_TYPES.target)) + ')')
-          .each((d) -> self.circleLabel(d, @, 'T'))
+        if d.get(Visio.Algorithms.GOAL_TYPES.target)?
+          target = box.selectAll('.target').data([d])
+          target.enter().append('g')
+          target.attr('class', 'target')
+          target.transition()
+            .duration(Visio.Durations.FAST)
+            .attr('transform', (d) ->
+              'translate(0, ' + self.y(d.get(Visio.Algorithms.GOAL_TYPES.target)) + ')')
+            .each((d) -> self.circleLabel(d, @, 'T'))
 
-        target.enter().append('circle')
-        target.exit().remove()
+          target.enter().append('circle')
+          target.exit().remove()
 
-        baseline = box.selectAll('.baseline').data([d])
-        baseline.enter().append('g')
-        baseline.attr('class', 'baseline')
-        baseline.transition()
-          .duration(Visio.Durations.FAST)
-          .attr('transform', (d) ->
-            'translate(0, ' + self.y(d.get(Visio.Algorithms.REPORTED_VALUES.baseline)) + ')')
-          .each((d) -> self.circleLabel(d, @, 'B'))
+        if d.get(Visio.Algorithms.REPORTED_VALUES.baseline)?
+          baseline = box.selectAll('.baseline').data([d])
+          baseline.enter().append('g')
+          baseline.attr('class', 'baseline')
+          baseline.transition()
+            .duration(Visio.Durations.FAST)
+            .attr('transform', (d) ->
+              'translate(0, ' + self.y(d.get(Visio.Algorithms.REPORTED_VALUES.baseline)) + ')')
+            .each((d) -> self.circleLabel(d, @, 'B'))
 
-        baseline.enter().append('circle')
-        baseline.exit().remove()
+          baseline.enter().append('circle')
+          baseline.exit().remove()
       )
 
     boxes.on 'click', (d, i) =>
@@ -357,9 +359,9 @@ class Visio.Figures.Isy extends Visio.Figures.Base
 
     @y.domain [0, +@hoverDatum.get(@goalType)]
 
-    labelData = [Visio.Algorithms.REPORTED_VALUES.yer, Visio.Algorithms.REPORTED_VALUES.myr]
+    circleData = [Visio.Algorithms.REPORTED_VALUES.yer, Visio.Algorithms.REPORTED_VALUES.myr]
 
-    circles = box.selectAll('.circle').data(labelData)
+    circles = box.selectAll('.circle').data(circleData)
     circles.enter().append('circle')
     circles.attr('r', 0)
       .attr('cx', @barWidth)
