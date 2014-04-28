@@ -212,7 +212,7 @@ line {
     fill: $off-white;
   }
   .bar-container.inconsistent {
-    fill: $alert-red;
+    fill: url(#stripes-alert);
   }
   .bar-footer.success {
     fill: $success;
@@ -296,7 +296,7 @@ line {
   fill: $fail;
 }
 .bar.missing {
-  fill: $dark-gray;
+  fill: url(#stripes);
 }
 
 .bar.high {
