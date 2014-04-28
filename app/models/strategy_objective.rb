@@ -67,6 +67,10 @@ class StrategyObjective < ActiveRecord::Base
     resource.synced_models(ids, synced_date, limit, where)
   end
 
+  def data(resource = IndicatorDatum, limit = nil, where = {})
+    synced(resource, nil, limit, where)[:new]
+  end
+
   def to_jbuilder(options = {})
     options ||= {}
     options[:include] ||= {}

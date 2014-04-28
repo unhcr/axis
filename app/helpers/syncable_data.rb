@@ -16,7 +16,7 @@ module SyncableData
   def index
     if params[:strategy_id]
       strategy = Strategy.find(params[:strategy_id])
-      render :json => strategy.synced(resource)[:new]
+      render :json => strategy.data(resource)
     elsif params[:filter_ids]
       render :json => resource.synced_models(params[:filter_ids])[:new]
     else

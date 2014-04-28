@@ -72,6 +72,10 @@ class Strategy < ActiveRecord::Base
     resource.synced_models(ids, synced_date, limit, where)
   end
 
+  def data(resource = IndicatorDatum, limit = nil, where = {})
+    self.synced(resource, nil, limit, where)[:new]
+  end
+
   def to_workbook
     p = Axlsx::Package.new
     workbook = p.workbook
