@@ -4,7 +4,7 @@ job_type :rake_env, "source ~/.cronrc; cd :path && :environment_variable=:enviro
 
 set :output, "./log/cron.log"
 
-every :day, :at => '11 pm' do
+every 3.day, :at => '11 pm' do
   rake_env 'build:focus'
   rake_env 'build:countries'
   rake_env 'build:msrp'
