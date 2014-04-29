@@ -1757,6 +1757,7 @@ a {
   @include header-button
 }
 
+
 .filter-by, .visio-dropdown-container {
   padding-top: 0px;
 
@@ -2128,6 +2129,17 @@ a {
   top: -1px;
   text-align: center;
   color: black;
+}
+
+.map-export {
+  position: absolute;
+  right: 2em;
+  top: 1em;
+  background-color: white;
+}
+
+.map-export::before {
+  background-color: white;
 }
 
 .disabled {
