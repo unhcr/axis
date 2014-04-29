@@ -55,19 +55,23 @@ Visio.Utils.flash = ($ele, msg) ->
   $ele.attr('placeholder', msg)
 
 Visio.Utils.parseTransform = (string) ->
-  matchTranslate = string.match(/translate\(([0-9]+,[ ]*[0-9]+)\)/)
-  matchScale = string.match(/scale\(([0-9]*\.[0-9]*)\)/)
+  result =
+    translate: [0, 0]
+    scale: 1
+  return result unless string
+
+  matchTranslate = string.match(/translate\(([0-9\.]+,[ ]*[0-9\.]+)\)/)
+  matchScale = string.match(/scale\(([0-9\.]*\.[0-9\.]*)\)/)
 
   if matchTranslate && matchTranslate[1]
     translate = matchTranslate[1].split(',').map((d) -> return +d )
+    result.translate = translate if translate?
 
   if matchScale && matchScale[1]
     scale = +matchScale[1]
+    result.scale = scale if scale?
 
-  return {
-    translate: translate || [0, 0]
-    scale: scale || 1
-  }
+  return result
 
 Visio.Utils.countToFormatter = (value) ->
   d3.format('d')(value.toFixed(0)) || 0

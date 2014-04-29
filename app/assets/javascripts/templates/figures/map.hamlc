@@ -1,0 +1,4 @@
+- if context.exportable and not context.isExport
+    .map-export.export.header-button
+%figure
+

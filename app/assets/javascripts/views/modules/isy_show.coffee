@@ -35,7 +35,12 @@ class Visio.Views.IsyShowView extends Visio.Views.AccordionShowView
         @isyFigure.sortAttribute = progress
         @isyFigure.render()
 
-    $.subscribe "hover.#{@isyFigure.cid}.figure", (e, value) =>
+    $.subscribe "hover.#{@isyFigure.cid}.figure", (e, idxOrDatum) =>
+      if idxOrDatum instanceof Visio.Models.IndicatorDatum
+        value = @isyFigure.findBoxByDatum(idxOrDatum).idx
+      else
+        value = idxOrDatum
+
       @$el.find('.slider').slider 'value', value
       @$el.find('.slider .ui-slider-handle').attr 'data-value', value + 1
     $.subscribe "drawFigures.#{@isyFigure.cid}.figure", @drawFigures
@@ -73,6 +78,7 @@ class Visio.Views.IsyShowView extends Visio.Views.AccordionShowView
     else
       @$el.removeClass 'disabled'
 
+    @drawFigures() if @isOpen()
     @
 
   onStop: (e, ui) =>

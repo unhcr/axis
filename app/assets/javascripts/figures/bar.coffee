@@ -18,7 +18,7 @@ class Visio.Figures.Bar extends Visio.Figures.Base
 
     # fixed is the scale that scales the bars equally apart
     @fixed = d3.scale.ordinal()
-    @zeroPadding = 3
+    @zeroPadding = if @hasZeroPad? then 3 else 0
     @labelHeight = 18
 
     switch @orientation
@@ -28,12 +28,9 @@ class Visio.Figures.Bar extends Visio.Figures.Base
         @fixed
           .rangeBands([@adjustedHeight, 0])
       when 'bottom'
-        @variable.range [@adjustedHeight - @zeroPadding - 1, 0]
+        @variable.range [@adjustedHeight - @zeroPadding, 0]
         @fixed
           .rangeBands([0, @adjustedWidth])
-
-
-
 
   render: ->
 
@@ -57,9 +54,9 @@ class Visio.Figures.Bar extends Visio.Figures.Base
     @bars.enter().append('rect')
     @bars.attr('class', (d) ->
       ['bar', d.key].join ' ' )
-    @bars.on 'mouseenter', (d) =>
-      console.log d
-      console.log @model.toJSON()
+      .style('fill', (d) ->
+        'url(#stripes)' if d.key == Visio.Algorithms.STATUS.missing
+      )
 
     switch @orientation
       when 'bottom'
@@ -84,11 +81,14 @@ class Visio.Figures.Bar extends Visio.Figures.Base
     @zeroPad.enter().append('rect')
     @zeroPad.attr('class', (d) ->
       ['zero-pad', 'bar', d.key].join ' ' )
+      .style('fill', (d) ->
+        'url(#stripes)' if d.key == Visio.Algorithms.STATUS.missing
+      )
 
     switch @orientation
       when 'bottom'
         @zeroPad
-          .attr('height', (d) => @zeroPadding - 1)
+          .attr('height', (d) => @zeroPadding)
           .attr('x', (d, i) => @fixed(i))
           .attr('y', (d) => @adjustedHeight - @zeroPadding)
           .attr('width', @barWidth)

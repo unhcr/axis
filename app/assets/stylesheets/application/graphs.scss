@@ -105,6 +105,10 @@ line {
     pointer-events: none;
   }
 
+  .point.external {
+    fill: lighten($pink, 20%);
+  }
+
   .y.axis line {
     stroke: $lighter-gray;
     stroke-dasharray: 1;
@@ -210,7 +214,20 @@ line {
   }
   .bar-container {
     fill: $off-white;
+    stroke: none;
   }
+
+
+  .bar-container.hover {
+    stroke: $dark-gray;
+    stroke-width: 8px;
+  }
+
+  .bar-container.selected {
+    stroke: $black;
+    stroke-width: 8px;
+  }
+
   .bar-container.inconsistent {
     fill: $alert-red;
   }
@@ -247,6 +264,7 @@ line {
   .target {
     fill: yellow;
     stroke: $black;
+    pointer-events: none;
 
     text {
       font-size: 11px;
@@ -254,6 +272,7 @@ line {
   }
 
   .baseline {
+    pointer-events: none;
     fill: $primary;
     stroke: $black;
 
@@ -272,6 +291,8 @@ line {
 
   .label {
     pointer-events: none;
+    -webkit-filter: drop-shadow( -5px -5px 5px #000 );
+            filter: drop-shadow( -5px -5px 5px #000 ); /* Same syntax as box-shadow */
   }
 
   .tag {
@@ -294,7 +315,7 @@ line {
   fill: $fail;
 }
 .bar.missing {
-  fill: $dark-gray;
+  fill: $missing;
 }
 
 .bar.high {

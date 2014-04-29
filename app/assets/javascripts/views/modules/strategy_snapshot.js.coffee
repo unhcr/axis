@@ -9,12 +9,12 @@ class Visio.Views.StrategySnapshotView extends Visio.Views.Dashboard
     @barConfig.orientation = 'bottom'
     @barConfig.width = 82
     @barConfig.height = 380
+    @barConfig.hasLabels = true
     @barConfig.margin.bottom = 0
     axisHeight = 380
     if options.isPdf
       @template = HAML['pdf/strategy_snapshot']
       @barConfig.height = 340
-      @barConfig.hasLabels = true
       axisHeight = 340
 
     @axis = new Visio.Figures.Axis

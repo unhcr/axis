@@ -29,7 +29,7 @@
   .col-xs-12
     .row.tabs
       - _.each context.barFigureData, (d) ->
-        .ui-tab-radio.col-md-4.sides-flush
+        .ui-tab-radio.col-md-4.horizontal-flush
           %input{ :id => "#{d.title}-#{context.parameter.id}",
             :name => context.parameter.id,
             :checked => context.selectedBarFigure == d.figure,

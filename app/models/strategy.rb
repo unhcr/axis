@@ -58,7 +58,7 @@ class Strategy < ActiveRecord::Base
     raise 'Association does not belong to a Strategy Objective' if assoc.strategy_objectives.empty?
   end
 
-  def synced(resource, synced_date = nil, limit = nil, where = {})
+  def synced(resource = IndicatorDatum, synced_date = nil, limit = nil, where = {})
     ids = {
       :operation_ids => self.operation_ids,
       :ppg_ids => self.ppg_ids,
@@ -70,6 +70,10 @@ class Strategy < ActiveRecord::Base
     ids[:indicator_ids] = self.indicator_ids if resource == IndicatorDatum
 
     resource.synced_models(ids, synced_date, limit, where)
+  end
+
+  def data(resource = IndicatorDatum, limit = nil, where = {})
+    self.synced(resource, nil, limit, where)[:new]
   end
 
   def to_workbook

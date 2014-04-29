@@ -1,2 +1,2 @@
-.zoom-out.zoom-btn -
-.zoom-in.zoom-btn +
+<!-- Must be in html format to avoid spacing issue -->
+<span class="zoom-out zoom-btn">-</span><span class="zoom-in zoom-btn">+</span>

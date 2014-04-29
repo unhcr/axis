@@ -7,7 +7,7 @@
   .col-md-8.col-centered.zero-padding
     .col-md-4.ui-small-header.ui-primary-light.zero-padding
       = context.plan.operation_name.toUpperCase()
-    .tabs.col-md-8.zero-padding
+    .col-md-8.zero-padding
       - _.each context.tabs, (tab) ->
         %span.ui-primary-light.tab.pull-right{
           :class => [('selected' if tab.plural == context.selectedTab.plural), (tab.plural)].join(' '),

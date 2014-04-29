@@ -29,17 +29,6 @@
           %a.row{ :href => "#bmy" } Budget over time
           %a.row{ :href => "#icmy" } Impact Criticality over time
   .row.divider-light-gray
-  %section.row
-    .row
-      .col-md-11
-        %h3
-          = "Target #{Visio.manager.get('aggregation_type')}"
-      .col-md-1
-        .grid-view grid
-    .row
-      .col-md-12
-        .target-parameters.row
-  .row.divider-light-gray
   %section.row.bottom-flush
     .col-md-12
       .row
@@ -90,5 +79,16 @@
             %span
               Times Selected
 
+  .row.divider-light-gray
+  %section.row
+    .row
+      .col-md-11
+        %h3
+          = "Priority #{Visio.Utils.parameterByPlural(Visio.manager.get('aggregation_type')).human}s"
+      .col-md-1
+        .grid-view grid
+    .row
+      .col-md-12
+        .target-parameters.row
 .actions
 

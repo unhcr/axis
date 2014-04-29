@@ -708,6 +708,10 @@ button, input {
   display: none;
 }
 
+.visio-checkbox-hover:hover {
+  background-color: $off-white;
+}
+
 .visio-checkbox label {
   display: block;
   cursor: pointer;
@@ -837,12 +841,30 @@ button, input {
 .close {
   width: 3em;
   height: 3em;
-  background-color: $light-gray;
   position: absolute;
   top: .8em;
   right: .8em;
   cursor: pointer;
   z-index: 10;
+
+  border-radius: 30px;
+  background-color: $white;
+  border: 2px $primary-soft solid;
+}
+
+.close:hover {
+  background-color: darken($white, 10%);
+}
+
+.close:before {
+  content: "X";
+  width: 100%;
+  display: block;
+  text-align: center;
+  font-size: 15px;
+  font-weight: bold;
+  color: $primary-soft;
+  padding-top: 5px
 }
 
 .parameter-list {
@@ -1757,6 +1779,7 @@ a {
   @include header-button
 }
 
+
 .filter-by, .visio-dropdown-container {
   padding-top: 0px;
 
@@ -1781,7 +1804,7 @@ a {
     text-align: left;
     z-index: 101;
     @include transition-property(max-height);
-    @include transition-duration($fast-transition);
+    @include transition-duration($very-fast-transition);
     @include transition-timing-function(ease-in);
     position: absolute;
     max-height: 0px;
@@ -1948,11 +1971,18 @@ a {
   }
 }
 
-.sides-flush {
+.horizontal-flush {
   padding-right: 0px;
   margin-right: 0px;
   padding-left: 0px;
   margin-left: 0px;
+}
+
+.vertical-flush {
+  padding-top: 0px;
+  margin-top: 0px;
+  padding-bottom: 0px;
+  margin-bottom: 0px;
 }
 
 .right-flush {
@@ -2124,10 +2154,21 @@ a {
   position: absolute;
   border-right: none;
   width: $export-label-length;
-  left: -$export-label-length;
+  left: -$export-label-length - 1;
   top: -1px;
   text-align: center;
   color: black;
+}
+
+.map-export {
+  position: absolute;
+  right: 2em;
+  top: 1em;
+  background-color: white;
+}
+
+.map-export::before {
+  background-color: white;
 }
 
 .disabled {
@@ -2185,3 +2226,14 @@ a {
   border-left: 1px solid $light-gray;
 }
 
+.login-container {
+  padding-left: 2px;
+  padding-right: 2px;
+}
+
+.strategies {
+  .strategy {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+}

@@ -150,6 +150,7 @@ class Visio.Figures.Absy extends Visio.Figures.Base
           point
             .attr('class', (d) ->
               classList = ['point']
+              classList.push 'external' unless Visio.manager.strategy()?.include d.name.singular, d.id
               return classList.join(' '))
           point
             .transition()
