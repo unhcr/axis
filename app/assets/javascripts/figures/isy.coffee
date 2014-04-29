@@ -117,6 +117,7 @@ class Visio.Figures.Isy extends Visio.Figures.Base
             perimeter = (self.barWidth * 4) + ((self.height + self.barMargin) * 2)
 
             [topDash, perimeter - topDash].join ' ' )
+          .style('fill', (d) -> 'url(#stripes-alert)' unless d.consistent().isConsistent)
 
         container.on 'mouseenter', (d) ->
           $.publish "hover.#{self.cid}.figure", [i, false]

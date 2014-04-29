@@ -54,6 +54,9 @@ class Visio.Figures.Bar extends Visio.Figures.Base
     @bars.enter().append('rect')
     @bars.attr('class', (d) ->
       ['bar', d.key].join ' ' )
+      .style('fill', (d) ->
+        'url(#stripes)' if d.key == Visio.Algorithms.STATUS.missing
+      )
 
     switch @orientation
       when 'bottom'
@@ -78,6 +81,9 @@ class Visio.Figures.Bar extends Visio.Figures.Base
     @zeroPad.enter().append('rect')
     @zeroPad.attr('class', (d) ->
       ['zero-pad', 'bar', d.key].join ' ' )
+      .style('fill', (d) ->
+        'url(#stripes)' if d.key == Visio.Algorithms.STATUS.missing
+      )
 
     switch @orientation
       when 'bottom'
