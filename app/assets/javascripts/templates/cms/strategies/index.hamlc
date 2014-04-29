@@ -5,15 +5,16 @@
   .col-md-2.right-text
     %a{ :href => "#new" } Add
 
-- _.each context.strategies, (strategy) ->
-  .row.strategy
-    .col-md-6
-      %h4
-        %a{ :href => "#edit/#{strategy.id}" }
-          = strategy.name
-    .col-md-2.right-text
-      %a{ :href => "/strategies/#{strategy.id}/download" } Download
-    .col-md-2.right-text
-      %a{ :href => "#edit/#{strategy.id}" } Edit
-    .col-md-2.right-text
-      %a{ :href => "#destroy/#{strategy.id}" } Delete
+.strategies.zebra
+  - _.each context.strategies, (strategy) ->
+    .row.strategy
+      .col-md-6
+        %h4.vertical-flush
+          %a{ :href => "#edit/#{strategy.id}" }
+            = strategy.name
+      .col-md-2.right-text
+        %a{ :href => "/strategies/#{strategy.id}/download" } Download
+      .col-md-2.right-text
+        %a{ :href => "#edit/#{strategy.id}" } Edit
+      .col-md-2.right-text
+        %a{ :href => "#destroy/#{strategy.id}" } Delete

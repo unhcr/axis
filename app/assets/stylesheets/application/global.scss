@@ -1949,11 +1949,18 @@ a {
   }
 }
 
-.sides-flush {
+.horizontal-flush {
   padding-right: 0px;
   margin-right: 0px;
   padding-left: 0px;
   margin-left: 0px;
+}
+
+.vertical-flush {
+  padding-top: 0px;
+  margin-top: 0px;
+  padding-bottom: 0px;
+  margin-bottom: 0px;
 }
 
 .right-flush {
@@ -2200,4 +2207,11 @@ a {
 .login-container {
   padding-left: 2px;
   padding-right: 2px;
+}
+
+.strategies {
+  .strategy {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
 }
