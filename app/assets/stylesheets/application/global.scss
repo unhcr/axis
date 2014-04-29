@@ -708,6 +708,10 @@ button, input {
   display: none;
 }
 
+.visio-checkbox-hover:hover {
+  background-color: $off-white;
+}
+
 .visio-checkbox label {
   display: block;
   cursor: pointer;
@@ -837,12 +841,30 @@ button, input {
 .close {
   width: 3em;
   height: 3em;
-  background-color: $light-gray;
   position: absolute;
   top: .8em;
   right: .8em;
   cursor: pointer;
   z-index: 10;
+
+  border-radius: 30px;
+  background-color: $white;
+  border: 2px $primary-soft solid;
+}
+
+.close:hover {
+  background-color: darken($white, 10%);
+}
+
+.close:before {
+  content: "X";
+  width: 100%;
+  display: block;
+  text-align: center;
+  font-size: 15px;
+  font-weight: bold;
+  color: $primary-soft;
+  padding-top: 5px
 }
 
 .parameter-list {

@@ -1,7 +1,7 @@
 .row
   .col-md-8.col-centered
     %section.overlay-header.row
-      %a.close Close
+      .close
       %h1 Create a PDF.
 
       - if context.model.figure_config.selectable

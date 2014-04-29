@@ -2,7 +2,7 @@
 %a.reset{ :data => { :name => context.formField.get('name') } } reset
 .form-data.save-scroll{ :data => { :scrollname => context.formField.get('name') } }
   - context.modelField.each (item) ->
-    .visio-checkbox.visio-checkbox-left
+    .visio-checkbox.visio-checkbox-left.visio-checkbox-hover
       %input{
           :data => { :name => context.formField.get('name'), :id => item.id },
           :type => 'checkbox',
