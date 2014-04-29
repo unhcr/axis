@@ -285,6 +285,7 @@ module FocusParse
                 b.budget_type = hash[:budget_type]
                 b.year = plan.year
                 b.save
+                p "No pillar for budget: #{b.id}" unless b.pillar
                 b.found
               end
               output.save
