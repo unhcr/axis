@@ -28,7 +28,7 @@ class Visio.Figures.Bar extends Visio.Figures.Base
         @fixed
           .rangeBands([@adjustedHeight, 0])
       when 'bottom'
-        @variable.range [@adjustedHeight - @zeroPadding - 1, 0]
+        @variable.range [@adjustedHeight - @zeroPadding, 0]
         @fixed
           .rangeBands([0, @adjustedWidth])
 
