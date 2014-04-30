@@ -66,8 +66,8 @@ class Visio.Figures.Absy extends Visio.Figures.Base
       .range([@adjustedHeight, 0])
 
     @r = d3.scale.sqrt()
-      .domain([0, 1000000])
-      .range([0, 20])
+      .domain([0, 100])
+      .range([2, 32])
 
     @xAxis = d3.svg.axis()
       .scale(@x)
@@ -156,10 +156,10 @@ class Visio.Figures.Absy extends Visio.Figures.Base
             .transition()
             .duration(Visio.Durations.FAST)
             .attr('r', (d) =>
+              r = self.r d.selectedIndicatorData(Visio.manager.year(), self.filters).length
               if self.isPdf and self.isSelected(d.id)
-                16
-              else
-                12
+                r += 4
+              r
             )
             .attr('cy', (d) =>
               return self.y(d.selectedAchievement(Visio.manager.year(), self.filters).result))
