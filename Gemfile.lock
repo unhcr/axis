@@ -107,6 +107,9 @@ GEM
     equivalent-xml (0.4.0)
       nokogiri (>= 1.4.3)
     erubis (2.7.0)
+    exception_notification (4.0.1)
+      actionmailer (>= 3.0.4)
+      activesupport (>= 3.0.4)
     execjs (2.0.2)
     ffi (1.9.3)
     figaro (0.7.0)
@@ -235,6 +238,7 @@ GEM
       rspec-expectations (= 3.0.0.beta1)
       rspec-mocks (= 3.0.0.beta1)
     rspec-support (3.0.0.beta1)
+    ruby-ntlm (0.0.1)
     rubyzip (1.1.0)
     rufus-scheduler (2.0.24)
       tzinfo (>= 0.3.22)
@@ -314,6 +318,7 @@ DEPENDENCIES
   devise
   devise_ldap_authenticatable
   equivalent-xml
+  exception_notification
   execjs
   figaro
   haml
@@ -335,6 +340,7 @@ DEPENDENCIES
   random-word
   resque
   rspec-rails (~> 3.0.0.beta)
+  ruby-ntlm
   rubyzip
   sass-rails (~> 3.2.3)
   selenium-webdriver (~> 2.41.0)

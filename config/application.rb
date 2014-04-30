@@ -26,7 +26,26 @@ module Visio
 
     end
 
+    config.middleware.use ExceptionNotification::Rack,
+      :email => {
+        :email_prefix => "[AXIS] ",
+        :sender_address => %{axis@unhcr.org},
+        :exception_recipients => %w{rudolph@unhcr.org}
+      }
 
+    config.active_support.deprecation = :notify
+    config.action_mailer.raise_delivery_errors = true
+    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.perform_deliveries = true
+    config.action_mailer.smtp_settings = {
+      openssl_verify_mode: 'none',
+      address:              'smtphub.unhcr.local',
+      port:                 25,
+      domain:               'unhcr.org',
+      user_name:            'hqaxis',
+      password:             ENV['EMAIL_PASSWORD'],
+      authentication:       :ntlm,
+    }
     # Custom directories with classes and modules you want to be autoloadable.
     # config.autoload_paths += %W(#{config.root}/extras)
 
