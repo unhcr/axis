@@ -19,17 +19,6 @@ module Visio
     OpenURI::Buffer.send :remove_const, 'StringMax' if OpenURI::Buffer.const_defined?('StringMax')
     OpenURI::Buffer.const_set 'StringMax', 0
 
-    require 'shrimp'
-    config.middleware.use Shrimp::Middleware, :cache_ttl => 0, :out_path => "#{Rails.root}/public/reports/pdf", :polling_interval => 4
-
-    Shrimp.configure do |config|
-      config.viewport_width = 896
-      config.viewport_height = 1270
-      config.margin = '0cm'
-      config.rendering_time = 11000
-      config.logfile = '~/access.log'
-    end
-
     if defined? ::HamlCoffeeAssets
       config.hamlcoffee.dependencies = { '_' => 'underscore', :hc => 'hamlcoffee_amd', 'Visio' => 'Visio' }
       config.hamlcoffee.context = false
