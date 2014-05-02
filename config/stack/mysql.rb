@@ -1,6 +1,10 @@
 package :mysql, :provides => :database do
   description 'MySQL Database'
-  yum %w( mysql-server mysql mysql-devel )
+  pkgs = %w( mysql-server mysql mysql-devel )
+
+  pkgs.each do |pkg|
+    runner "sudo yum install #{pkg} -y"
+  end
 
   verify do
     has_executable 'mysql'
@@ -15,5 +19,5 @@ package :mysql_driver, :provides => :ruby_database_driver do
     has_gem 'mysql'
   end
 
-  requires :mysql, :ruby
+  requires :mysql, :ruby, :sqlite3
 end

@@ -1,0 +1,53 @@
+server {
+  # Use this for the default server
+  # listen 80 default_server deferred;
+  # And this for all others
+  listen 80;
+
+
+
+  # Name the server is accessed with
+  # Can be an IP, an FQDN...
+  # Space separated list
+  server_name 10.9.43.153;
+
+  charset utf-8;
+
+  # Where the site is
+  root /var/www/visio/current/public;
+  rails_env production;
+
+  # Try to access an actual file, else pass it to Passenger
+  try_files $uri /system/maintenance.html @passenger;
+
+  location @passenger {
+    passenger_enabled on;
+  }
+
+ # Gzipping for Rails apps
+  # For apps that don't MD5 their assets,
+  # set a lower expires time
+  location ^~ /assets/ {
+    # Only use gzip_static if you have .gz compressed assets *precompiled*
+    #gzip_static on;
+    expires max;
+    add_header Cache-Control public;
+  }
+
+  # A more generic caching solution.
+  # Change expires max to something like `expires 720h` (one month, or 1M) if
+  # you don't have cache-busting filenames (e.g. asset pipeline MD5 hashes)
+  # location ~ ^/(assets|images|javascripts|stylesheets|swfs|system)/ {
+  #   expires     max;
+  #   add_header  Cache-Control public;
+  #   add_header  Last-Modified "";
+  #   add_header  ETag "";
+  #   break;
+  # }
+
+  client_max_body_size 4G;
+  keepalive_timeout 10;
+  # Uncomment these for no logging
+  access_log /var/log/nginx/access.log;
+  error_log /var/log/nginx/error.log;
+}
