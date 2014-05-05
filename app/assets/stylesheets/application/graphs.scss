@@ -77,14 +77,18 @@ line {
 }
 
 .svg-absy-figure {
-  .point-container.focus .point {
+  .point-container.focus .point, .point-container.focus .point-shadow {
     fill: $orange;
   }
 
-  .point-container.active .point {
+  .point-container.active .point, .point-container.active .point-shadow {
     fill: white;
     stroke: $primary;
     stroke-width: 2px;
+  }
+
+  .point-container .point-shadow {
+    opacity: .4;
   }
 
   .point-container {
@@ -100,7 +104,7 @@ line {
     pointer-events: none;
   }
 
-  .point {
+  .point, .point-container {
     fill: $pink;
     pointer-events: none;
   }
@@ -197,6 +201,9 @@ line {
 }
 
 .svg-isy-figure {
+  .y.axis .tick:last-child line {
+    stroke: $lighter-gray;
+  }
   .myr-bar {
     fill: orange;
   }

@@ -93,6 +93,8 @@ class Visio.Figures.Absy extends Visio.Figures.Base
       .x((d) => @x(d[@algorithm](Visio.manager.year(), @filters)))
       .y((d) => @y(d.selectedAchievement(Visio.manager.year(), @filters).result))
 
+    @shadowWidth = 3
+
     @g.append('g')
       .attr('class', 'y axis')
       .attr('transform', 'translate(0,0)')
@@ -143,6 +145,29 @@ class Visio.Figures.Absy extends Visio.Figures.Base
         .each((d, i) ->
 
           pointContainer = d3.select @
+          radius = self.r d.selectedIndicatorData(Visio.manager.year(), self.filters).length
+          achievement = d.selectedAchievement(Visio.manager.year(), self.filters).result
+          cxValue = d[self.algorithm](Visio.manager.year(), self.filters)
+
+          pointShadows = pointContainer.selectAll('.point-shadow').data([d])
+          pointShadows.enter().append('circle')
+          pointShadows.attr('class', (d) ->
+            classList = ['point-shadow']
+            return classList.join(' '))
+          pointShadows
+            .transition()
+            .duration(Visio.Durations.FAST)
+            .attr('r', (d) =>
+              if self.isPdf and self.isSelected(d.id)
+                radius += 4
+              radius + self.shadowWidth
+            )
+            .attr('cy', (d) =>
+              return self.y(achievement))
+            .attr('cx', (d) =>
+              return self.x(cxValue))
+
+          pointShadows.exit().transition().duration(Visio.Durations.FAST).attr('r', 0).remove()
 
           # Points
           point = pointContainer.selectAll('.point').data([d])
@@ -156,17 +181,17 @@ class Visio.Figures.Absy extends Visio.Figures.Base
             .transition()
             .duration(Visio.Durations.FAST)
             .attr('r', (d) =>
-              r = self.r d.selectedIndicatorData(Visio.manager.year(), self.filters).length
               if self.isPdf and self.isSelected(d.id)
-                r += 4
-              r
+                radius += 4
+              radius
             )
             .attr('cy', (d) =>
-              return self.y(d.selectedAchievement(Visio.manager.year(), self.filters).result))
+              return self.y(achievement))
             .attr('cx', (d) =>
-              return self.x(d[self.algorithm](Visio.manager.year(), self.filters)))
+              return self.x(cxValue))
 
           point.exit().transition().duration(Visio.Durations.FAST).attr('r', 0).remove()
+
 
           # Conditional Labels
           if self.isExport
