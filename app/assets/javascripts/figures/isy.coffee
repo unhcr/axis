@@ -16,7 +16,7 @@ class Visio.Figures.Isy extends Visio.Figures.Base
         human: { true: 'performance', false: 'impact' }
         callback: (name, attr) =>
           @selectedDatum = null
-          @isPerformanceFn(name == 'true').render()
+          @isPerformanceFn(name == 'true')
           @x.domain [0, @maxIndicators]
           $.publish "drawFigures.#{@cid}.figure"
           $.publish "hover.#{@cid}.figure", 0
@@ -348,7 +348,7 @@ class Visio.Figures.Isy extends Visio.Figures.Base
       difference = idx - @maxIndicators
       @x.domain [0 + difference, @maxIndicators + difference]
       @render()
-    else if @x.domain()[0] >= 0 and scroll
+    else if @x.domain()[0] > 0 and scroll
       @x.domain [0, @maxIndicators]
       @render()
 
