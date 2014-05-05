@@ -68,6 +68,11 @@ class Visio.Figures.Isy extends Visio.Figures.Base
     @g.append('g')
       .attr('class', 'y axis')
       .attr('transform', 'translate(0,0)')
+      .append("text")
+        .attr("y", -10)
+        .attr("x", 40)
+        .attr("dy", "-.21em")
+        .text('Standard')
 
     @goalType = config.goalType || Visio.Algorithms.GOAL_TYPES.target
 
