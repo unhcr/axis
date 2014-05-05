@@ -8,6 +8,7 @@ class Visio.Views.ExportModule extends Backbone.View
     'change figcaption input': 'onSelectionChange'
     'click .pdf': 'onClickPdf'
     'click .email': 'onClickEmail'
+    'click .png': 'onClickPng'
     'click .close': 'onClose'
 
   initialize: (options) ->
@@ -115,6 +116,16 @@ class Visio.Views.ExportModule extends Backbone.View
       $.ajax
         url: @model.pdfUrl()
         statusCode: statusCodes
+
+  onClickPng: =>
+    html = d3.select(@el).select('svg')
+      .attr('version', 1.1)
+      .attr("xmlns", "http://www.w3.org/2000/svg")
+      .node().parentNode.innerHTML
+
+    imgsrc = 'data:image/svg+xml;base64,'+ btoa(html)
+    img = '<img src="'+imgsrc+'">'
+    @$el.prepend img
 
   onClose: ->
     @close()
