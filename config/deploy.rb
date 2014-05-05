@@ -24,7 +24,6 @@ set :local_repository, "."
 require './config/capistrano_credentials.rb'
 set :deploy_via, :copy
 set :branch, "master"
-set :rails_env,     "production"
 
 
 set :user, :deploy
@@ -35,10 +34,15 @@ set :sudo_user, "resque_worker"
 set :ssh_options, { :forward_agent => true }
 default_run_options[:pty] = true
 
-role :web, "10.9.43.153"                          # Your HTTP server, Apache/etc
-role :app, "10.9.43.153"                          # This may be the same as your `Web` server
-role :db,  "10.9.43.153", :primary => true # This is where Rails migrations will run
-role :resque_worker, "10.9.43.153"
+server = '10.9.43.173'
+if rails_env == 'production'
+  server = '10.9.43.153'
+end
+
+role :web, server
+role :app, server                          # This may be the same as your `Web` server
+role :db,  server, :primary => true # This is where Rails migrations will run
+role :resque_worker, server
 
 set :workers, { "shrimp" => 5, "pdf_email" => 5 }
 
