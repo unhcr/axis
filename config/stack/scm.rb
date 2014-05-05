@@ -14,7 +14,11 @@ end
 
 package :git_dependencies do
   description 'Git Build Dependencies'
-  yum %w(expat-devel curl zlib-devel openssl-devel gcc)
+  pkgs = %w(expat-devel curl zlib-devel openssl-devel gcc)
+
+  pkgs.each do |pkg|
+    runner "sudo yum install #{pkg} -y"
+  end
 
   verify do
     has_yum 'expat-devel'

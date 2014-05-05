@@ -1,7 +1,8 @@
 # Require our stack
-%w(essential nginx scm ruby mysql).each do |r|
+%w(essential nginx scm ruby mysql services).each do |r|
   require File.join('./config/stack', r)
 end
+
 
 # What we're installing to your server
 # Take what you want, leave what you don't
