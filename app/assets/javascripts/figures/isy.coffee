@@ -7,6 +7,7 @@ class Visio.Figures.Isy extends Visio.Figures.Base
   attrAccessible: ['x', 'y', 'width', 'height', 'collection', 'margin', 'goalType', 'isPerformance']
 
   initialize: (config) ->
+    config.query or= ''
 
     @filters = new Visio.Collections.FigureFilter([
       {
@@ -298,7 +299,11 @@ class Visio.Figures.Isy extends Visio.Figures.Base
     delta = start - end
     -scale delta
 
-  filtered: (collection) => _.chain(collection.models).filter(@filterFn).sort(@sortFn).value()
+  queryByFn: (d) =>
+    _.isEmpty(@query) or d.indicator().toString().toLowerCase().indexOf(@query.toLowerCase()) != -1
+
+  filtered: (collection) =>
+    _.chain(collection.models).filter(@filterFn).filter(@queryByFn).sort(@sortFn).value()
 
   findBoxByIndex: (idx) =>
     boxes = @g.selectAll('.box')
@@ -432,8 +437,9 @@ class Visio.Figures.Isy extends Visio.Figures.Base
 
     positions = []
     positionsHash = {}
+    nValues = values.length
 
-    _.each values, (value) =>
+    _.each values, (value, idx) =>
 
       last = positions[positions.length - 1]
 

@@ -6,6 +6,8 @@ class Visio.Figures.Absy extends Visio.Figures.Base
 
   initialize: (config) ->
     @attrConfig.push 'algorithm'
+    config.query or= ''
+
     values = {}
     values[Visio.Scenarios.AOL] = false
     values[Visio.Scenarios.OL] = true
@@ -137,6 +139,9 @@ class Visio.Figures.Absy extends Visio.Figures.Base
     pointContainers.enter().append('g')
     pointContainers.attr('class', (d, i) ->
           classList = ['point-container', "id-#{d.refId()}"]
+
+          if !_.isEmpty(self.query) and d.toString().toLowerCase().indexOf(self.query.toLowerCase()) != -1
+            classList.push 'queried'
 
           if self.isPdf and self.isSelected(d.id)
             classList.push 'active'
