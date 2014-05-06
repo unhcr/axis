@@ -118,14 +118,24 @@ class Visio.Views.ExportModule extends Backbone.View
         statusCode: statusCodes
 
   onClickPng: =>
+    @buildModule()
     html = d3.select(@el).select('svg')
       .attr('version', 1.1)
       .attr("xmlns", "http://www.w3.org/2000/svg")
-      .node().parentNode.innerHTML
+      .node()
 
-    imgsrc = 'data:image/svg+xml;base64,'+ btoa(html)
-    img = '<img src="'+imgsrc+'">'
-    @$el.prepend img
+    $html = $ html
+
+    Visio.Utils.recursiveInlineCssStyles $html
+
+    imgsrc = 'data:image/svg+xml;base64,'+ btoa($html[0].parentNode.innerHTML)
+    img = new Image()
+    img.src = imgsrc
+    img.onload = =>
+      a = document.createElement 'a'
+      a.download = "#{@model.get('title') or 'sample'}.svg"
+      a.href = imgsrc
+      a.click()
 
   onClose: ->
     @close()
