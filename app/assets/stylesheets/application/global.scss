@@ -1779,6 +1779,15 @@ a {
   @include header-button
 }
 
+.query-by {
+  padding-top: 0px;
+  input {
+    padding: 0px;
+    width: 100%;
+    height: 100%;
+    padding-left: 10px;
+  }
+}
 
 .filter-by, .visio-dropdown-container {
   padding-top: 0px;

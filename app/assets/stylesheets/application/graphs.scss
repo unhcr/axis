@@ -77,6 +77,7 @@ line {
 }
 
 .svg-absy-figure {
+
   .point-container.focus .point, .point-container.focus .point-shadow {
     fill: $orange;
   }
@@ -111,6 +112,11 @@ line {
 
   .point.external {
     fill: lighten($pink, 20%);
+  }
+
+  .point-container.queried {
+    fill: black;
+    opacity: 1;
   }
 
   .y.axis line {
