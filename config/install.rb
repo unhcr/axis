@@ -1,5 +1,5 @@
 # Require our stack
-%w(essential nginx scm ruby mysql services).each do |r|
+%w(essential nginx scm ruby mysql services node).each do |r|
   require File.join('./config/stack', r)
 end
 
@@ -15,6 +15,7 @@ policy :passenger_stack, :roles => :staging do
   # requires :ruby_database_driver    # mysql or postgres gems
   requires :scm                     # Git
   requires :services                # Elasticsearch, redis, etc.
+  requires :js_runtime
 end
 
 deployment do

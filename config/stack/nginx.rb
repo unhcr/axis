@@ -1,7 +1,7 @@
 package :nginx, :provides => :webserver do
   description 'Nginx web server.'
   REE_PATH = "/usr/local" unless defined?(REE_PATH)
-  requires :passenger, :ruby, :add_rbenv_bundler, :gcc_cplusplus
+  requires :passenger, :ruby, :add_rbenv_bundler, :gcc_cplusplus, :log_dir
 
   template_search_path('config/stack/templates')
 
@@ -76,5 +76,15 @@ package :gcc_cplusplus do
 
   verify do
     has_yum 'gcc-c++'
+  end
+end
+
+package :log_dir do
+  description 'Directory for logs'
+
+  runner 'sudo mkdir -p /var/log/nginx'
+
+  verify do
+    has_dir '/var/log/nginx'
   end
 end
