@@ -10,6 +10,17 @@ module 'ISY Figure',
       width: 100
       height: 100
 
+    Visio.manager.get('indicators').reset [
+      {
+        id: 'wilson'
+        name: 'willy'
+      },
+      {
+        id: 'george'
+        name: 'bigG'
+      }
+    ]
+
     @data = new Visio.Collections.IndicatorDatum([
         {
           id: 'ben'
@@ -19,6 +30,7 @@ module 'ISY Figure',
           yer: 20
           imp_target: 50
           standard: 50
+          indicator_id: 'wilson'
         },
         {
           id: 'jeff'
@@ -28,6 +40,7 @@ module 'ISY Figure',
           yer: 20
           imp_target: 50
           standard: 50
+          indicator_id: 'wilson'
         },
         {
           id: 'lisa'
@@ -37,6 +50,7 @@ module 'ISY Figure',
           yer: 20
           imp_target: 50
           standard: 50
+          indicator_id: 'george'
         }
       ])
 
@@ -181,3 +195,15 @@ test 'computeLabelPositions', ->
 
   ok positions[1] > positions[0]
   strictEqual positions[1] - positions[0], length
+
+test 'query', ->
+
+  @figure.isPerformanceFn true
+  @figure.query = 'willy'
+  strictEqual @figure.filtered(@data).length, 1, 'Should not be filtered'
+
+  @figure.query = ''
+  strictEqual @figure.filtered(@data).length, 2, 'Should not be filtered'
+
+  @figure.query = 'g'
+  strictEqual @figure.filtered(@data).length, 1, 'Should not be filtered'
