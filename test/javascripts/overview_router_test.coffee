@@ -11,6 +11,7 @@ module 'Overview Router',
         start()
 
     })
+    Visio.manager.set 'dashboard', Visio.manager.strategy()
 
     models = [{ id: 20 }, { id: 'abc-efg' }]
     sinon.stub $, 'get', (url, options) ->

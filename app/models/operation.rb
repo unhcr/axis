@@ -52,15 +52,15 @@ class Operation < ActiveRecord::Base
     options[:include] ||= {}
     Jbuilder.new do |json|
       json.extract! self, :name, :id, :years
-      json.plan_ids self.plan_ids
 
-      json.ppg_ids self.ppg_ids if options[:include][:ppg_ids].present?
-      json.goal_ids self.goal_ids if options[:include][:goal_ids].present?
-      json.output_ids self.output_ids if options[:include][:output_ids].present?
-      if options[:include][:problem_objective_ids].present?
-        json.problem_objective_ids self.problem_objective_ids
+      if options[:include][:ids]
+        json.indicator_ids self.indicator_ids.inject({}) { |h, id| h[id] = true; h }
+        json.goal_ids self.goal_ids.inject({}) { |h, id| h[id] = true; h }
+        json.ppg_ids self.ppg_ids.inject({}) { |h, id| h[id] = true; h }
+        json.output_ids self.output_ids.inject({}) { |h, id| h[id] = true; h }
+        json.plan_ids self.plan_ids.inject({}) { |h, id| h[id] = true; h }
+        json.problem_objective_ids self.problem_objective_ids.inject({}) { |h, id| h[id] = true; h }
       end
-      json.indicator_ids self.indicator_ids if options[:include][:indicator_ids].present?
       json.country self.country
     end
   end

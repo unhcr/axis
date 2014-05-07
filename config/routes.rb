@@ -6,6 +6,7 @@ Visio::Application.routes.draw do
   get '/algorithms' => 'application#algorithms'
   get '/map' => 'application#map'
   get '/overview/:strategy_id' => 'application#overview'
+  get '/operation/:operation_id' => 'application#operation'
   get '/global_search' => 'application#global_search'
   get '/healthz' => 'application#healthz'
   get '/reset_local_db' => 'application#reset_local_db'

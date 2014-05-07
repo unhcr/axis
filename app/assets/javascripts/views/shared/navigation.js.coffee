@@ -20,6 +20,9 @@ class Visio.Views.NavigationView extends Backbone.View
 
     _.each _.values(Visio.Parameters), (hash) ->
 
+      # Skip if it is operation dashboard then don't include the operation in the navigation
+      return if Visio.manager.get('dashboard').name == hash
+
       data = Visio.manager.get(hash.plural)
 
       parameters.push
@@ -27,7 +30,7 @@ class Visio.Views.NavigationView extends Backbone.View
         hash: hash
 
     @$el.html @template(
-      strategy: Visio.manager.strategy()
+      dashboard: Visio.manager.get('dashboard')
       parameters: parameters)
 
     _.each @searches, (view) =>
@@ -44,9 +47,9 @@ class Visio.Views.NavigationView extends Backbone.View
     type = typeid[0]
     id = typeid[1]
 
-    strategy = Visio.manager.strategy()
+    dashboard = Visio.manager.get('dashboard')
     # Hack for singular form of parameter
-    if strategy.include(type.slice(0,  -1), id) or Visio.manager.get(type).get(id)?.get('loaded')
+    if dashboard.include(type.slice(0,  -1), id) or Visio.manager.get(type).get(id)?.get('loaded')
 
       if $target.is(':checked')
         Visio.manager.get('selected')[type][id] = true

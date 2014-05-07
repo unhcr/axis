@@ -52,12 +52,22 @@ class Visio.Models.Manager extends Backbone.Model
     'achievement_type': Visio.Algorithms.GOAL_TYPES.target
     'amount_type': Visio.Syncables.BUDGETS
     'reported_type': Visio.Algorithms.REPORTED_VALUES.yer
+    'dashboard': null
 
   resetSelectedDefaults: () ->
     _.each _.values(Visio.Parameters), (hash) ->
       Visio.manager.get('selected')[hash.plural] = {}
       _.extend Visio.manager.get('selected')[hash.plural],
-        Visio.manager.strategy().get("#{hash.singular}_ids")
+        Visio.manager.get('dashboard').get("#{hash.singular}_ids")
+
+      # include dashboard's own id
+      if Visio.manager.get('dashboard').name == hash
+        Visio.manager.select hash.plural, Visio.manager.get('dashboard').id
+
+    # include all strategy objectives if we are not looking at a strategy dashboard
+    unless Visio.manager.get('dashboard').get('isStrategy')
+      Visio.manager.select Visio.Parameters.STRATEGY_OBJECTIVES.plural,
+        Visio.manager.get(Visio.Parameters.STRATEGY_OBJECTIVES.plural).pluck('id')
 
   resetBudgetDefaults: () ->
     _.each Visio.Scenarios, (scenario) =>

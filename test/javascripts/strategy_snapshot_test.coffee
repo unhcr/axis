@@ -18,6 +18,7 @@ module 'Strategy Snapshot',
       description: 'the description'
     }])
     Visio.manager.set 'strategy_id', 1
+    Visio.manager.set 'dashboard', Visio.manager.strategy()
 
     Visio.manager.set { 'aggregation_type': Visio.Parameters.OPERATIONS.plural }, { silent: true }
     @o = new Visio.Collections.Operation([

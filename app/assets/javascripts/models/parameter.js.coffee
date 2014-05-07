@@ -134,6 +134,11 @@ class Visio.Models.Parameter extends Visio.Models.Syncable
   search: (query) ->
     $.get("#{@url}/search", { query: query })
 
+
+  include: (singular, id) ->
+
+    id == @id or @get("#{singular}_ids")?[id]?
+
   selectedAmount: (year, filters = null) ->
     # Either Budget or Expenditure
     @["selected#{Visio.manager.get('amount_type').className}"](year, filters)

@@ -28,7 +28,7 @@ class Visio.Views.SearchView extends Backbone.View
     @$el.find('input').val('')
     @$el.find('.results').addClass 'gone zero-height'
 
-  onBlurSearch: () =>
+  onBlurSearch: =>
     Visio.router.navigate '/'
     @hide()
 

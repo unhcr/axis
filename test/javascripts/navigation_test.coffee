@@ -10,6 +10,7 @@ module 'Navigation',
         output_ids: { 1: true }
       }]
     Visio.manager.set 'strategy_id', 1
+    Visio.manager.set 'dashboard', Visio.manager.strategy()
     Visio.manager.resetSelectedDefaults()
 
     _.each _.values(Visio.Parameters), (hash) ->

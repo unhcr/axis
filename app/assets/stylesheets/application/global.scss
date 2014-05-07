@@ -1579,11 +1579,14 @@ a {
   padding-top: 4px;
   padding-bottom: 4px;
   padding-left: 25px;
+  display: block;
+  color: white;
 
   em {
     font-style: normal;
     color: $bright-yellow;
   }
+  cursor: pointer;
 }
 
 #achievement-budget-single-year {

@@ -310,3 +310,14 @@ test 'search', ->
       strictEqual $.get.callCount, 2 * i + 2
 
   $.get.restore()
+
+test 'include', ->
+
+  operation = new Visio.Models.Operation
+    ppg_ids: {'abc': true, 'efg': true}
+
+  ok operation.include('ppg', 'abc'), 'Should include that ppg'
+  ok operation.include('operation', operation.id), 'Should include its own'
+
+  ok not operation.include('ppg', 'no'), 'Should not include not found'
+  ok not operation.include('weird', 'no'), 'Should not include not found'
