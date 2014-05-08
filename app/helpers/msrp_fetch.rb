@@ -69,7 +69,7 @@ module MsrpFetch
   end
 
   class AntBuild
-    DB_URL = "jdbc:oracle:thin:@dp01.msrp.hcrnet.ch:1521:RAFCPRD"
+    DB_URL = "jdbc:oracle:thin:@ironwood.svc.unicc.org:1521:GFPRD"
     JAR_LOCATION = "#{Rails.root}/vendor/jars/ojdbc6.jar"
     BUILD_NAME = "expenses"
     OUTPUT_FILEPATH = "generated_output.csv"
