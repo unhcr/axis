@@ -159,14 +159,19 @@ test 'resetSelectedDefaults - operation dashboard', ->
       def: true
 
   Visio.manager.set 'dashboard', operation
-  Visio.manager.get('strategy_objectives').reset [{ '123': true }]
+  Visio.manager.get('strategy_objectives').reset [{ id: '123' }]
   Visio.manager.get('ppgs').reset [{ id: 'abc' }, { id: 'def' }]
   Visio.manager.get('operations').reset [operation]
+  Visio.manager.includeExternalStrategyData true
 
   Visio.manager.resetSelectedDefaults()
 
   strictEqual Visio.manager.selected('ppgs').length, 2
-  strictEqual Visio.manager.selected('strategy_objectives').length, 1
+
+  strictEqual Visio.manager.selected('strategy_objectives').length, 2
+  ok Visio.manager.get('strategy_objectives').get(Visio.Constants.ANY_STRATEGY_OBJECTIVE)
+  ok Visio.manager.get('strategy_objectives').get('123')
+
   strictEqual Visio.manager.selected('operations').length, 1
 
 test 'selectedStrategyPlanIds', ->
@@ -200,6 +205,18 @@ test 'selectedStrategyPlanIds', ->
   _.each ids, (id) ->
     ok _.include _.intersection(_.keys(strategies[0].plan_ids),
                                 _.keys(strategies[1].plan_ids)), id
+
+test 'includeExternalStrategyData', ->
+
+  Visio.manager.includeExternalStrategyData true
+
+  ok Visio.manager.get('strategy_objectives').get Visio.Constants.ANY_STRATEGY_OBJECTIVE
+  ok Visio.manager.includeExternalStrategyData()
+
+  Visio.manager.includeExternalStrategyData false
+  ok !Visio.manager.get('strategy_objectives').get Visio.Constants.ANY_STRATEGY_OBJECTIVE
+  ok !Visio.manager.includeExternalStrategyData()
+
 
 test 'validation', ->
 

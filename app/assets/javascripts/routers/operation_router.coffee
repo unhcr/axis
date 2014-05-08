@@ -66,6 +66,8 @@ class Visio.Routers.OperationRouter extends Visio.Routers.GlobalRouter
            Visio.manager.get('budgets').fetchSynced(dataOptions),
            Visio.manager.get('indicator_data').fetchSynced(dataOptions)
     ).done( =>
+      Visio.manager.includeExternalStrategyData true
+
       # Initialize selected to be strategy
       Visio.manager.resetSelectedDefaults()
 

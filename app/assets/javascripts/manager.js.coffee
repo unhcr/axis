@@ -69,6 +69,10 @@ class Visio.Models.Manager extends Backbone.Model
       Visio.manager.select Visio.Parameters.STRATEGY_OBJECTIVES.plural,
         Visio.manager.get(Visio.Parameters.STRATEGY_OBJECTIVES.plural).pluck('id')
 
+    if Visio.manager.includeExternalStrategyData()
+      Visio.manager.select Visio.Parameters.STRATEGY_OBJECTIVES.plural,
+        Visio.Constants.ANY_STRATEGY_OBJECTIVE
+
   resetBudgetDefaults: () ->
     _.each Visio.Scenarios, (scenario) =>
       @get('scenario_type')[scenario] = true
@@ -80,6 +84,18 @@ class Visio.Models.Manager extends Backbone.Model
     @resetBudgetDefaults()
     @resetSelectedDefaults()
     Visio.manager.trigger('change:selected')
+
+  includeExternalStrategyData: (include) =>
+    unless include?
+      return Visio.manager.get('strategy_objectives').get(Visio.Constants.ANY_STRATEGY_OBJECTIVE)?
+
+
+    if include
+      Visio.manager.get('strategy_objectives').add
+        id: Visio.Constants.ANY_STRATEGY_OBJECTIVE
+        name: 'External SOs'
+    else
+      Visio.manager.get('strategy_objectives').remove Visio.Constants.ANY_STRATEGY_OBJECTIVE
 
   year: (_year, options) ->
     return @get('date').getFullYear() if arguments.length == 0

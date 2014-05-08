@@ -50,6 +50,18 @@ module 'Parameter',
         strategy_objective_ids: [2]
         year: 2012
       },
+      # Should never be selected unless we inlcude external data
+      {
+        id: 'purple'
+        operation_id: 1
+        ppg_id: 1
+        goal_id: 1
+        problem_objective_id: 1
+        output_id: null
+        ol_admin_budget: 100
+        strategy_objective_ids: []
+        year: 2012
+      }
       # Should always be selected
       {
         id: 'blue'
@@ -228,6 +240,45 @@ test 'selectedIndicatorData', () ->
         len = 2
         ok data.get('green'), "Should always have green for #{hash.human}"
         ok data.get('blue'), "Should always have blue #{hash.human}"
+
+      strictEqual data.length, len, "There should be #{len} when aggr by #{hash.human}"
+
+test 'selectedIndicatorData - no strategy objs', ->
+  Visio.manager.includeExternalStrategyData true
+  Visio.manager.select Visio.Parameters.STRATEGY_OBJECTIVES.plural,
+    Visio.Constants.ANY_STRATEGY_OBJECTIVE
+
+  _.each _.values(Visio.Parameters), (hash) ->
+    selected = Visio.manager.selected(hash.plural)
+
+    if hash == Visio.Parameters.STRATEGY_OBJECTIVES
+      strictEqual selected.length, 2, 'Should have two SOs'
+    else
+      strictEqual selected.length, 1
+
+    selected.each (d) ->
+      data = d.selectedIndicatorData()
+
+      ok data instanceof Visio.Collections.IndicatorDatum
+      if hash.plural == Visio.Parameters.OUTPUTS.plural
+        len = 1
+        ok data.get 'blue'
+      else if hash.plural == Visio.Parameters.STRATEGY_OBJECTIVES.plural and d.id == Visio.Constants.ANY_STRATEGY_OBJECTIVE
+        len = 1
+
+        # SOs are ignored so should be selected
+        ok data.get('purple'), "Should always have purple #{hash.human}"
+      else if hash.plural == Visio.Parameters.STRATEGY_OBJECTIVES.plural and d.id != Visio.Constants.ANY_STRATEGY_OBJECTIVE
+        len = 2
+        ok data.get('green'), "Should always have green for #{hash.human}"
+        ok data.get('blue'), "Should always have blue #{hash.human}"
+      else
+        len = 3
+        ok data.get('green'), "Should always have green for #{hash.human}"
+        ok data.get('blue'), "Should always have blue #{hash.human}"
+
+        # SOs are ignored so should be selected
+        ok data.get('purple'), "Should always have purple #{hash.human}"
 
       strictEqual data.length, len, "There should be #{len} when aggr by #{hash.human}"
 
