@@ -12,6 +12,7 @@
     var $navigationIcon = $('.navigation-activation-icon');
     var $toolbar = $('.toolbar')
     var headerHeight = $('header').height();
+    var bottomOffset = 300
 
     $('.navigation-activation').on('mouseenter', function(e) {
       if (!Visio.manager.get('setup')) return;
@@ -32,6 +33,10 @@
           $toolbar.addClass('fixed-top');
       } else {
         $toolbar.removeClass('fixed-top');
+      }
+
+      if (scrollTop + $(window).height() + bottomOffset > $(document).height()) {
+        $.publish('scroll.bottom')
       }
 
 
