@@ -21,6 +21,7 @@ class Visio.Views.AccordionIndexView extends Backbone.View
 
     @parameters = Visio.manager.selected(Visio.manager.get('aggregation_type')).models.sort @sort
 
+    @page = 0
     @addPage @parameters, @page
     @page += 1
     @
