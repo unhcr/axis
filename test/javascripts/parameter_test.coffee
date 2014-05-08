@@ -243,7 +243,7 @@ test 'selectedIndicatorData', () ->
 
       strictEqual data.length, len, "There should be #{len} when aggr by #{hash.human}"
 
-test 'selectedIndicatorData - no strategy objs', ->
+test 'selectedIndicatorData - external data', ->
   Visio.manager.includeExternalStrategyData true
   Visio.manager.select Visio.Parameters.STRATEGY_OBJECTIVES.plural,
     Visio.Constants.ANY_STRATEGY_OBJECTIVE
