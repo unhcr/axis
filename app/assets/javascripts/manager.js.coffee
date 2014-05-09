@@ -93,7 +93,7 @@ class Visio.Models.Manager extends Backbone.Model
     if include
       Visio.manager.get('strategy_objectives').add
         id: Visio.Constants.ANY_STRATEGY_OBJECTIVE
-        name: 'External SOs'
+        name: 'External Data'
     else
       Visio.manager.get('strategy_objectives').remove Visio.Constants.ANY_STRATEGY_OBJECTIVE
 
