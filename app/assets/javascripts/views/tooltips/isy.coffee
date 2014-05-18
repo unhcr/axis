@@ -24,8 +24,6 @@ class Visio.Views.IsyTooltip extends Backbone.View
 
     @$el.html @template({ d: d, values: values })
 
-    super
-
     @
 
   hasRendered: =>

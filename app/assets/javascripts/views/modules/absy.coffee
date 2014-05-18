@@ -6,11 +6,6 @@ class Visio.Views.AbsyView extends Backbone.View
 
   id: 'absy'
 
-  events:
-    'click .scenario .visio-checkbox input': 'onClickScenario'
-    'click .budget .visio-checkbox input': 'onClickBudget'
-    'change .achievement-type-toggle': 'onAchievementTypeChange'
-
   initialize: (options) ->
     @config =
       width: 800
