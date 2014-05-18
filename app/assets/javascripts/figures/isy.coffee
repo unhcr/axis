@@ -357,10 +357,12 @@ class Visio.Figures.Isy extends Visio.Figures.Base
     if idx >= @maxIndicators and scroll
       difference = idx - @maxIndicators
       @x.domain [0 + difference, @maxIndicators + difference]
-      @render()
+      @g.selectAll('g.box').attr('transform', (d, i) => 'translate(' + @x(i) + ', 0)')
+        .style('opacity', (d, i) -> if self.x(i) < 0 then 0 else 1)
     else if @x.domain()[0] > 0 and scroll
       @x.domain [0, @maxIndicators]
-      @render()
+      @g.selectAll('g.box').attr('transform', (d, i) => 'translate(' + @x(i) + ', 0)')
+        .style('opacity', (d, i) -> if self.x(i) < 0 then 0 else 1)
 
     @g.selectAll('.circle').data([])
       .exit().transition().duration(Visio.Durations.VERY_FAST).attr('r', 0).remove()

@@ -206,6 +206,69 @@ line {
 
 }
 
+.svg-bsy-figure {
+  .bar {
+    stroke: white;
+    pointer-events: none;
+  }
+  .bar-container {
+    fill: $off-white;
+    stroke: none;
+  }
+
+
+  .bar-container.hover {
+    stroke: $dark-gray;
+    stroke-width: 8px;
+  }
+
+  .bar-container.selected {
+    stroke: $black;
+    stroke-width: 8px;
+  }
+  .box.faded {
+    opacity: .6;
+  }
+  .box.active {
+    stroke: black;
+    stroke-width: 1px;
+  }
+  .box {
+    -moz-transition:opacity $fast-transition;
+    -webkit-transition:opacity $fast-transition;
+    -o-transition:opacity $fast-transition;
+    transition:opacity $fast-transition;
+    line {
+      stroke: $dark-gray;
+      pointer-events: none;
+    }
+  }
+  .ADMIN-bar {
+    fill: $admin;
+  }
+  .STAFF-bar {
+    fill: $staff;
+  }
+  .PROJECT-bar {
+    fill: $project;
+  }
+  .PARTNER-bar {
+    fill: $partner;
+  }
+  .PILLAR-1-bar {
+    fill: $pillar1;
+  }
+  .PILLAR-2-bar {
+    fill: $pillar2;
+  }
+  .PILLAR-3-bar {
+    fill: $pillar3;
+  }
+  .PILLAR-4-bar {
+    fill: $pillar4;
+  }
+}
+
 .svg-isy-figure {
   .y.axis .tick:last-child line {
     stroke: $lighter-gray;

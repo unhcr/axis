@@ -15,6 +15,8 @@
       Indicators
     %a.col-md-1.center-text.zero-padding{:href => "#bmy"}
       BMY
+    %a.col-md-1.center-text.zero-padding{:href => "#bsy"}
+      BSY
     %a.col-md-1.center-text.zero-padding{:href => "#icmy"}
       ICMY
     .col-md-2.zero-padding

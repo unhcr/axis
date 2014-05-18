@@ -47,6 +47,11 @@ window.Visio =
       className: 'Absy'
       human: 'Achievement vs Budget'
       name: 'absy'
+    # Achievement Budget Single Year
+    BSY:
+      className: 'Bsy'
+      human: 'Budget Single Year'
+      name: 'bsy'
     # Budget Multiple Year
     BMY:
       className: 'Bmy'
