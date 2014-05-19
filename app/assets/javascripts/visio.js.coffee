@@ -126,7 +126,7 @@ window.Visio =
       singular: 'goal'
       plural: 'goals'
       className: 'Goal'
-      human: 'Goals'
+      human: 'Goal'
     INDICATORS:
       singular: 'indicator'
       plural: 'indicators'
