@@ -9,7 +9,7 @@ class Visio.Views.BsyView extends Backbone.View
   initialize: (options) ->
     @config =
       width: 800
-      height: 420
+      height: 360
       margin:
         top: 40
         bottom: 30
