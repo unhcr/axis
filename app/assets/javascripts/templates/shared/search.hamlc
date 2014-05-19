@@ -4,9 +4,9 @@
       %input.full-width{:type => "text"}
   .results.row.overlay.full-width.gone.ui-primary-theme
     .col-centered.col-md-8
-      .operation-results-container
+      .operation-results-container.results-container
         .ui-bright-yellow OPERATIONS
         .operation-results
-      .indicator-results-container
+      .indicator-results-container.results-container
         .ui-bright-yellow INDICATORS
         .indicator-results
