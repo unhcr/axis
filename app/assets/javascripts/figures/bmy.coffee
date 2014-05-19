@@ -18,8 +18,17 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
     groupByValues['budget_type'] = false
     groupByValues['pillar'] = false
     groupByValues[@groupBy] = true
+    @showTotal = true
 
     @filters = new Visio.Collections.FigureFilter([
+      {
+        id: 'show_total'
+        filterType: 'checkbox'
+        values: { 'Show Total': true }
+        callback: (name, attr) =>
+          @showTotal = attr
+          @render()
+      },
       {
         id: 'group_by'
         filterType: 'radio'
@@ -179,7 +188,9 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
 
     @
 
-
+  # Transforms parameter into data for the BMY graph
+  # Data structure:
+  # [ [ { amount: xxx, groupby: <group>, year: 2012 }, { .. year: 2013 }, ... ] ... ]
   reduceFn: (memo, budget) =>
     unless budget.get('year')
       console.warn 'No year for budget: ' + budget.id
@@ -193,7 +204,7 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
       lineData = []
       lineData['groupBy'] = @groupBy
       lineData[@groupBy] = budget.get @groupBy
-      memo.push lineData unless @filters.get(@groupBy).isFiltered budget
+      memo.push lineData unless @filters.isFiltered budget
 
 
     # Add line datum
@@ -206,22 +217,23 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
 
     datum.amount += budget.get 'amount'
 
-    # Add 'total' array
-    totalData = _.find memo, (array) => array[@groupBy] == 'total'
-    unless totalData
-      totalData = []
-      totalData.groupBy = @groupBy
-      totalData[@groupBy] = 'total'
-      memo.push totalData
+    if @showTotal
+      # Add 'total' array
+      totalData = _.find memo, (array) => array[@groupBy] == 'total'
+      unless totalData
+        totalData = []
+        totalData.groupBy = @groupBy
+        totalData[@groupBy] = 'total'
+        memo.push totalData
 
-    # Add total datum
-    total = _.findWhere totalData, { year: budget.get 'year' }
-    unless total
-      total = { amount: 0, year: budget.get('year') }
-      total['groupBy'] = @groupBy
-      total[@groupBy] = 'total'
-      totalData.push total
-    total.amount += budget.get 'amount'
+      # Add total datum
+      total = _.findWhere totalData, { year: budget.get 'year' }
+      unless total
+        total = { amount: 0, year: budget.get('year') }
+        total['groupBy'] = @groupBy
+        total[@groupBy] = 'total'
+        totalData.push total
+      total.amount += budget.get 'amount'
 
     return memo
 
