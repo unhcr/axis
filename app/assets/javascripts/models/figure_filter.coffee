@@ -7,7 +7,7 @@ class Visio.Models.FigureFilter extends Backbone.Model
 
     not @get('values')[datum.get(@id)]
 
-  filter: (name, active) ->
+  filter: (name, active, opts = {}) ->
     return @get('values')[name] unless active?
     # Only one can be true for radio type
     if @get('filterType') == 'radio'
@@ -15,7 +15,7 @@ class Visio.Models.FigureFilter extends Backbone.Model
         @get('values')[key] = false
 
     @get('values')[name] = active
-    if @get('callback')?
+    if @get('callback')? and not opts.silent
       @get('callback') name, active
 
   resetFilter: ->
