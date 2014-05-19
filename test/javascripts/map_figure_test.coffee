@@ -94,6 +94,20 @@ test 'pan', ->
   @map.pan(-20, 0)
   strictEqual @map.zoom.translate()[0], extent.right, 'Should not move past extent'
 
+test 'zoom', ->
+  @map.render()
+
+  scale = @map.zoom.scale()
+  strictEqual scale, 1
+
+  @map.zoomIn()
+  scale = @map.zoom.scale()
+  strictEqual scale, 1 + @map.zoomStep
+
+  @map.zoomOut()
+  scale = @map.zoom.scale()
+  ok .99 < scale < 1.01
+
 test 'filtered', ->
   Visio.manager.year 2012
 
