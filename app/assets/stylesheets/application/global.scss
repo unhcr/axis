@@ -1335,6 +1335,7 @@ a {
   @include transition-property(all);
   @include transition-duration($fast-transition);
   @include transition-timing-function(ease-in-out);
+  border-bottom: 1px solid rgb(240, 240, 240);
 }
 
 .accordion-show-container:hover {
