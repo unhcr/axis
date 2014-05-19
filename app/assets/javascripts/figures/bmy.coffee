@@ -18,7 +18,6 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
     groupByValues['budget_type'] = false
     groupByValues['pillar'] = false
     groupByValues[@groupBy] = true
-    @showTotal = true
 
     @filters = new Visio.Collections.FigureFilter([
       {
@@ -26,7 +25,6 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
         filterType: 'checkbox'
         values: { 'Show Total': true }
         callback: (name, attr) =>
-          @showTotal = attr
           @render()
       },
       {
@@ -217,7 +215,7 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
 
     datum.amount += budget.get 'amount'
 
-    if @showTotal
+    if @filters.get('show_total').filter('Show Total')
       # Add 'total' array
       totalData = _.find memo, (array) => array[@groupBy] == 'total'
       unless totalData
