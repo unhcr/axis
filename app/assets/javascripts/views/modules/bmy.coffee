@@ -23,7 +23,7 @@ class Visio.Views.BmyView extends Visio.Views.AccordionIndexView
       width: 800
       height: 450
 
-    @figure = new Visio.Figures.Bmy @config
+    @figure = new Visio.Figures.BmySummary @config
 
   render: (isRerender) ->
     super isRerender
