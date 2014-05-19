@@ -12,7 +12,7 @@ class Visio.Views.BsyView extends Backbone.View
       height: 420
       margin:
         top: 40
-        bottom: 90
+        bottom: 30
         left: 90
         right: 80
 
