@@ -4,6 +4,10 @@ class Visio.Views.SliderView extends Backbone.View
 
   slideDelay: 20
 
+  perPage: 5
+
+  page: 0
+
   initialize: (options) ->
     @template = HAML["sliders/#{@name.singular}_slider"]
     @$el.addClass "#{@name.singular}-slider"
@@ -19,7 +23,11 @@ class Visio.Views.SliderView extends Backbone.View
     @$el.html @template({ collection: @collection, isPdf: @isPdf })
 
     @$el.find('.slider').addClass 'grid' if @isPdf
-    @addAll()
+
+    @page = 0
+    @addPage @page
+    @page += 1
+
     @
 
   drawFigures: ->
@@ -28,6 +36,12 @@ class Visio.Views.SliderView extends Backbone.View
   addAll: =>
     @collection.each @addOne
 
+  addPage: (page) =>
+    start = page * @perPage
+    end = (page + 1) * @perPage
+
+    _.each @collection.models[start..end], @addOne
+
   addOne: (model) =>
     opts =
       model: model
@@ -35,10 +49,10 @@ class Visio.Views.SliderView extends Backbone.View
       idx: @collection.indexOf model
       isPdf: @isPdf
 
-    unless @views[model.id]?
-      @views[model.id] = new Visio.Views["#{@name.className}SlideView"](opts)
-    else
+    if @views[model.id]?
       @views[model.id].delegateEvents()
+    else
+      @views[model.id] = new Visio.Views["#{@name.className}SlideView"](opts)
     @$el.find('.slider').append @views[model.id].render().el
 
   move: (toMove = 0) =>
@@ -49,6 +63,11 @@ class Visio.Views.SliderView extends Backbone.View
 
     # new left
     @position += toMove
+
+    if Math.abs(@position) + @perPage >= @page * @perPage
+      @addPage @page
+      @page += 1
+
     if -@position >= $slides.length
       @position = -1 * ($slides.length + toMove)
     else if @position > 0
@@ -62,10 +81,10 @@ class Visio.Views.SliderView extends Backbone.View
         delay
 
   onNext: (e) =>
-    @move(-1)
+    @move -1
 
   onPrevious: (e) =>
-    @move(1)
+    @move 1
 
   reset: =>
     @$el.find('.slide').css 'left', 0

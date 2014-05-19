@@ -33,7 +33,7 @@ class Visio.Views.ParameterSliderView extends Visio.Views.SliderView
 
     $slides = @$el.find(".#{@name.singular}-slide")
 
-    slideWidth = $slides.outerWidth(true)
+    slideWidth = $slides.outerWidth true
     sliderWidth = @$el.width()
 
     # How many we can show on the page
