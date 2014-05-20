@@ -85,6 +85,6 @@ package :log_dir do
   runner 'sudo mkdir -p /var/log/nginx'
 
   verify do
-    has_dir '/var/log/nginx'
+    has_directory '/var/log/nginx'
   end
 end
