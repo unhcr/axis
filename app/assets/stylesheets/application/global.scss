@@ -1298,6 +1298,7 @@ a {
 .toolbar {
   background-color: $off-white;
   padding: 12px 3px;
+  padding-top: 0px;
   z-index: 300;
   height: $toolbar-height;
   @include row-gutter;
