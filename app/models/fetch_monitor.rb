@@ -18,7 +18,7 @@ class FetchMonitor < ActiveRecord::Base
   end
 
   def reset(ids)
-    self.mark_deleted
+    self.mark_deleted ids
 
     self.starttime = DateTime.now
     self.plans = ids.map { |id| { :id => id, :state => MONITOR_STATES[:incomplete] } }
@@ -26,7 +26,8 @@ class FetchMonitor < ActiveRecord::Base
     self.save
   end
 
-  def mark_deleted
+  def mark_deleted(plan_ids)
+    p 'Marking deleted parameters'
     return unless self.starttime
 
     parameters = [Plan, Ppg, Goal, RightsGroup, ProblemObjective, Output, Indicator, IndicatorDatum, Budget]
@@ -41,6 +42,11 @@ class FetchMonitor < ActiveRecord::Base
       to_undelete.each do |p|
         p.update_column(:is_deleted, false)
       end
+    end
+
+    # If plan is not in new plan ids, mark as deleted
+    Plan.all.each do |plan|
+      plan.update_column(:is_deleted, true) unless plan_ids.include? plan.id
     end
   end
 
