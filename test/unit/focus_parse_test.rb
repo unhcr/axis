@@ -366,8 +366,8 @@ class FocusParseTest < ActiveSupport::TestCase
     parse_plan(file)
 
 
-    assert_equal 1, Office.where(:head_office_id => nil).count
-    assert_equal 6, Office.where('head_office_id is not NULL').count
+    assert_equal 1, Office.where(:parent_office_id => nil).count
+    assert_equal 6, Office.where('parent_office_id is not NULL').count
 
     Office.all.each do |o|
       assert o.operation
@@ -375,8 +375,8 @@ class FocusParseTest < ActiveSupport::TestCase
       assert o.positions.count > 0
     end
 
-    assert_equal 7, Position.where('head_position_id is NULL').count
-    assert_equal 184, Position.where('head_position_id is not NULL').count
+    assert_equal 7, Position.where('parent_position_id is NULL').count
+    assert_equal 184, Position.where('parent_position_id is not NULL').count
 
     Position.all.each do |o|
       assert o.operation
@@ -395,16 +395,16 @@ class FocusParseTest < ActiveSupport::TestCase
     parse_plan(file)
 
 
-    assert_equal 1, Office.where(:head_office_id => nil).count
-    assert_equal 6, Office.where('head_office_id is not NULL').count
+    assert_equal 1, Office.where(:parent_office_id => nil).count
+    assert_equal 6, Office.where('parent_office_id is not NULL').count
 
     Office.all.each do |o|
       assert o.operation
       assert o.plan
     end
 
-    assert_equal 7, Position.where('head_position_id is NULL').count
-    assert_equal 184, Position.where('head_position_id is not NULL').count
+    assert_equal 7, Position.where('parent_position_id is NULL').count
+    assert_equal 184, Position.where('parent_position_id is not NULL').count
 
     Position.all.each do |o|
       assert o.operation

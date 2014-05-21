@@ -374,14 +374,14 @@ module FocusParse
       o.name = xml_office.search('./name').text
       o.operation = operation
       o.plan = plan
-      o.head_office = parent_office
+      o.parent_office = parent_office
 
     end).save
     office.found
 
-    xml_head_position = xml_office.search('./headPosition')
+    xml_parent_position = xml_office.search('./headPosition')
 
-    recursive_position_parse(xml_head_position, nil, operation, plan, office) if xml_head_position
+    recursive_position_parse(xml_parent_position, nil, operation, plan, office) if xml_parent_position
     xml_sub_offices = xml_office.search('./subOffice')
 
     xml_sub_offices.each do |xml_sub_office|
@@ -409,7 +409,7 @@ module FocusParse
       p.operation = operation
       p.plan = plan
 
-      p.head_position = parent_position
+      p.parent_position = parent_position
 
     end).save
     position.found
