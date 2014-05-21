@@ -355,7 +355,7 @@ module FocusParse
 
     xml_office = xml_plan.search('./office')[0]
 
-    recursive_office_parse(xml_office, nil, operation, plan)
+    recursive_office_parse(xml_office, nil, operation, plan) if xml_office
 
   end
 
