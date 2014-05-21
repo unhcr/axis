@@ -1,0 +1,2353 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Plan ID="03ea1f94-b488-40a0-a308-592bedc9d0df">
+  <operation>Yemen</operation>
+  <operationID>7U7</operationID>
+  <year>2013</year>
+  <name>Operations Plan</name>
+  <office ID="62a01cdf-8e01-41f0-91d0-ddf50a01b089">
+    <name>Sana&apos;a - 32161</name>
+    <subOffice ID="53ab51e1-0d7b-45c6-9205-92fecdaa2c5e">
+      <name>Aden - 32162</name>
+      <subOffice ID="8e71c9ec-ea68-4bb4-80d8-75d323167108">
+        <name>Al Kharaz - 32162</name>
+        <headPosition ID="7dc3f682-6b53-45dd-b4ab-72eddd0b7410">
+          <positionID>10008213</positionID>
+          <title>Head of Field Office P3</title>
+          <incumbent>UWURUKUNDO, Emmanuel</incumbent>
+          <type>UNHCR</type>
+          <grade>P3</grade>
+          <epmJobCode>YEMP3</epmJobCode>
+          <hrJobCode>000270</hrJobCode>
+          <fastTrack>N</fastTrack>
+          <subPosition ID="c8e2c3ec-2a35-45f8-b13e-f3a20ca4d551">
+            <positionID>AW_70940</positionID>
+            <title>IUNV - Assoc Shelter Engineer, P2</title>
+            <grade>99</grade>
+            <hrJobCode>AW0001</hrJobCode>
+            <fastTrack>N</fastTrack>
+            <timedCost>0</timedCost>
+          </subPosition>
+          <subPosition ID="efcacfe3-6ef4-4579-b07c-966914a82f4e">
+            <positionID>10014041</positionID>
+            <title>Snr Comty Services Assistant</title>
+            <incumbent>FADAAQ, Abdul Rahman Alawi</incumbent>
+            <type>UNHCR</type>
+            <grade>G5</grade>
+            <epmJobCode>YEMG5</epmJobCode>
+            <hrJobCode>000521</hrJobCode>
+            <fastTrack>N</fastTrack>
+            <timedCost>37153.48</timedCost>
+          </subPosition>
+          <subPosition ID="ca4d2dfe-c3d8-4db2-b00d-8566930779a5">
+            <positionID>10012961</positionID>
+            <title>Snr Field Assistant</title>
+            <incumbent>OMER, Abdalla Saleh</incumbent>
+            <type>UNHCR</type>
+            <grade>G5</grade>
+            <epmJobCode>YEMG5</epmJobCode>
+            <hrJobCode>000555</hrJobCode>
+            <fastTrack>N</fastTrack>
+            <timedCost>37153.48</timedCost>
+          </subPosition>
+          <subPosition ID="e6b3bd14-59c2-4a1d-b179-a796b5d76235">
+            <positionID>AW_70532</positionID>
+            <title>IUNV - Assoc Protection Officer, P2</title>
+            <type>UNV</type>
+            <fastTrack>N</fastTrack>
+            <timedCost>0</timedCost>
+          </subPosition>
+          <subPosition ID="de7c23d1-8fc8-4ce2-80ce-9359f8180af7">
+            <positionID>10012538</positionID>
+            <title>Driver</title>
+            <incumbent>ALKHULAIDI, Abdul Aziz Saeed</incumbent>
+            <type>UNHCR</type>
+            <grade>G2</grade>
+            <epmJobCode>YEMG2</epmJobCode>
+            <hrJobCode>000197</hrJobCode>
+            <fastTrack>N</fastTrack>
+            <timedCost>21670.79</timedCost>
+          </subPosition>
+          <subPosition ID="a8033e21-2cc6-4e16-8897-da4f00028a05">
+            <positionID>10012470</positionID>
+            <title>Telecoms Operator</title>
+            <incumbent>AHMED, Salah Ali Mohamed</incumbent>
+            <type>UNHCR</type>
+            <grade>G4</grade>
+            <epmJobCode>YEMG4</epmJobCode>
+            <hrJobCode>000789</hrJobCode>
+            <fastTrack>N</fastTrack>
+            <timedCost>30701.78</timedCost>
+          </subPosition>
+          <subPosition ID="d1130000-2dd1-48c2-b996-e5b6e2c80a78">
+            <positionID>AW_60243</positionID>
+            <title>NUNV - Protection Assistant/Field Specialist</title>
+            <grade>99</grade>
+            <hrJobCode>AW0001</hrJobCode>
+            <fastTrack>N</fastTrack>
+            <timedCost>0</timedCost>
+          </subPosition>
+          <timedCost>176919.52</timedCost>
+        </headPosition>
+        <adminBudgets/>
+        <supplementPositions/>
+        <adjustments/>
+      </subOffice>
+      <subOffice ID="51966166-9de4-41d5-9f0b-912f26a7a2ec">
+        <name>Mayfa&apos;a - 32162</name>
+        <headPosition ID="c75f02ea-8167-4d52-97db-f074f51d2f7c">
+          <positionID>10012572</positionID>
+          <title>Asst Field Officer</title>
+          <incumbent>RAJEH, Majed Gazem</incumbent>
+          <type>UNHCR</type>
+          <grade>NA</grade>
+          <epmJobCode>YEMNA</epmJobCode>
+          <hrJobCode>000104</hrJobCode>
+          <fastTrack>N</fastTrack>
+          <subPosition ID="33100241-8822-4a11-8abf-c8500e7cb193">
+            <positionID>10012963</positionID>
+            <title>Driver</title>
+            <incumbent>BAODAH, Mahmood Saleh</incumbent>
+            <type>UNHCR</type>
+            <grade>G2</grade>
+            <epmJobCode>YEMG2</epmJobCode>
+            <hrJobCode>000197</hrJobCode>
+            <fastTrack>N</fastTrack>
+            <timedCost>21670.79</timedCost>
+          </subPosition>
+          <subPosition ID="5e3b97a1-977a-4d28-b082-f76bf1bfcbff">
+            <positionID>10012471</positionID>
+            <title>Snr Field Assistant</title>
+            <incumbent>SALEH, Ahmed Saleh Mohammed</incumbent>
+            <type>UNHCR</type>
+            <grade>G5</grade>
+            <epmJobCode>YEMG5</epmJobCode>
+            <hrJobCode>000555</hrJobCode>
+            <fastTrack>N</fastTrack>
+            <timedCost>37153.48</timedCost>
+          </subPosition>
+          <timedCost>70578.78</timedCost>
+        </headPosition>
+        <adminBudgets/>
+        <supplementPositions/>
+        <adjustments/>
+      </subOffice>
+      <headPosition ID="a325c3d2-4529-427b-93d5-66e17aa0a90d">
+        <positionID>10008208</positionID>
+        <title>Head of Sub-Office P5</title>
+        <incumbent>HUSSAIN, Syed Mahmood</incumbent>
+        <type>UNHCR</type>
+        <grade>P5</grade>
+        <epmJobCode>YEMP5</epmJobCode>
+        <hrJobCode>000279</hrJobCode>
+        <fastTrack>N</fastTrack>
+        <subPosition ID="184bcb8d-e9a0-4878-baaf-5f83ce481bdb">
+          <positionID>10008221</positionID>
+          <title>Project Control Officer</title>
+          <incumbent>TESFAYE, Anteneh</incumbent>
+          <type>UNHCR</type>
+          <grade>P3</grade>
+          <epmJobCode>YEMP3</epmJobCode>
+          <hrJobCode>000249</hrJobCode>
+          <fastTrack>N</fastTrack>
+          <timedCost>176919.52</timedCost>
+        </subPosition>
+        <subPosition ID="39d31e39-ef82-4b95-ad58-e06b38d24509">
+          <positionID>10008230</positionID>
+          <title>Asst Comty Srvs Officer</title>
+          <incumbent>MOHAMED SAEED, Aisha</incumbent>
+          <type>UNHCR</type>
+          <grade>NA</grade>
+          <epmJobCode>YEMNA</epmJobCode>
+          <hrJobCode>N00100</hrJobCode>
+          <fastTrack>N</fastTrack>
+          <timedCost>70578.78</timedCost>
+          <subPosition ID="0fcda2ea-5fc7-4c8c-b644-5331b012ac21">
+            <positionID>AW_3580</positionID>
+            <title>Snr Comty Services Assistant</title>
+            <grade>99</grade>
+            <hrJobCode>AW0001</hrJobCode>
+            <fastTrack>N</fastTrack>
+            <timedCost>0</timedCost>
+          </subPosition>
+          <subPosition ID="6d261be6-f408-4cd4-bf16-7726870d9708">
+            <positionID>AW_71290</positionID>
+            <title>NUNV - Snr. Community Srvcs. Clerk, G5</title>
+            <grade>99</grade>
+            <hrJobCode>AW0001</hrJobCode>
+            <fastTrack>N</fastTrack>
+            <timedCost>0</timedCost>
+          </subPosition>
+          <subPosition ID="c0ec6c8f-b5ea-434f-9cad-768f0ca2ef0a">
+            <positionID>10015526</positionID>
+            <title>Comty Srvs Associate</title>
+            <incumbent>BANWAIR, Sameera Ahmed</incumbent>
+            <type>UNHCR</type>
+            <grade>G6</grade>
+            <epmJobCode>YEMG6</epmJobCode>
+            <hrJobCode>000160</hrJobCode>
+            <fastTrack>N</fastTrack>
+            <timedCost>44943.07</timedCost>
+          </subPosition>
+        </subPosition>
+        <subPosition ID="4ccbac81-b0f0-4af9-9d7c-835835c6afc7">
+          <positionID>10018917</positionID>
+          <title>Prog Officer</title>
+          <incumbent>SIDI MOHAMED, Bounena</incumbent>
+          <grade>P3</grade>
+          <epmJobCode>YEMP3</epmJobCode>
+          <hrJobCode>000401</hrJobCode>
+          <fastTrack>N</fastTrack>
+          <timedCost>176919.52</timedCost>
+          <subPosition ID="bc93edfe-cf91-4fa0-afe0-334bfbb585d9">
+            <positionID>10008219</positionID>
+            <title>Asst Prog Officer</title>
+            <incumbent>MOHAMED H. BAWAZIR, Mayada</incumbent>
+            <type>UNHCR</type>
+            <grade>NA</grade>
+            <epmJobCode>YEMNA</epmJobCode>
+            <hrJobCode>N00114</hrJobCode>
+            <fastTrack>N</fastTrack>
+            <timedCost>57866.28</timedCost>
+          </subPosition>
+          <subPosition ID="749e3569-f21f-48ce-9e31-cdea63051fe5">
+            <positionID>10012956</positionID>
+            <title>Assc Supply Officer</title>
+            <incumbent>GOSA, Shenkute</incumbent>
+            <type>UNHCR</type>
+            <grade>P2</grade>
+            <epmJobCode>YEMP2</epmJobCode>
+            <hrJobCode>000091</hrJobCode>
+            <fastTrack>N</fastTrack>
+            <timedCost>145079.72</timedCost>
+            <subPosition ID="0a650971-dca4-4d97-bb1f-2dd72d63321d">
+              <positionID>10012960</positionID>
+              <title>Supply Associate</title>
+              <incumbent>ABDULLAH, Majed Awahab Sharaf</incumbent>
+              <type>UNHCR</type>
+              <grade>G6</grade>
+              <epmJobCode>YEMG6</epmJobCode>
+              <hrJobCode>000769</hrJobCode>
+              <fastTrack>N</fastTrack>
+              <timedCost>44943.07</timedCost>
+              <subPosition ID="b0bba448-c761-4142-a240-4d396bb29dd4">
+                <positionID>10015994</positionID>
+                <title>Snr Supply Assistant</title>
+                <incumbent>DAWOOD, Ayman Shafiq Hasson</incumbent>
+                <type>UNHCR</type>
+                <grade>G5</grade>
+                <epmJobCode>YEMG5</epmJobCode>
+                <hrJobCode>000727</hrJobCode>
+                <fastTrack>N</fastTrack>
+                <timedCost>37153.48</timedCost>
+              </subPosition>
+            </subPosition>
+          </subPosition>
+          <subPosition ID="86a04532-bd22-4d1a-9ed9-cc724013306d">
+            <positionID>AW_70529</positionID>
+            <title>IUNV - Assoc Porgramme Officer, P2</title>
+            <type>UNV</type>
+            <fastTrack>N</fastTrack>
+            <timedCost>0</timedCost>
+          </subPosition>
+          <subPosition ID="62f88c9a-86c3-49a3-b6c5-99cdbe916c9d">
+            <positionID>10015527</positionID>
+            <title>Field Associate (E)</title>
+            <incumbent>AL-SADI, Sabri Saleh Mohammed</incumbent>
+            <type>UNHCR</type>
+            <grade>G6</grade>
+            <epmJobCode>YEMG6</epmJobCode>
+            <hrJobCode>101119</hrJobCode>
+            <fastTrack>N</fastTrack>
+            <timedCost>44943.07</timedCost>
+            <subPosition ID="b2fd84fc-96bc-4121-9d17-ea96dbd67157">
+              <positionID>AW_60241</positionID>
+              <title>N UNV- Engineer/WatSan Specialist</title>
+              <grade>99</grade>
+              <hrJobCode>AW0001</hrJobCode>
+              <fastTrack>N</fastTrack>
+              <timedCost>0</timedCost>
+            </subPosition>
+          </subPosition>
+          <subPosition ID="0df99679-4e4b-4860-9957-f01de78e53dd">
+            <positionID>10012958</positionID>
+            <title>Programme Associate</title>
+            <incumbent>RAMADHAN, Mirfat Farid Ibrahim</incumbent>
+            <type>UNHCR</type>
+            <grade>G6</grade>
+            <epmJobCode>YEMG6</epmJobCode>
+            <hrJobCode>000396</hrJobCode>
+            <fastTrack>N</fastTrack>
+            <timedCost>44943.07</timedCost>
+          </subPosition>
+          <subPosition ID="924ea125-dc74-4455-81e2-24a198884328">
+            <positionID>10012959</positionID>
+            <title>Snr Prog Assistant GL</title>
+            <incumbent>BURHAN, Lamees Anwar</incumbent>
+            <type>UNHCR</type>
+            <grade>G5</grade>
+            <epmJobCode>YEMG5</epmJobCode>
+            <hrJobCode>000656</hrJobCode>
+            <fastTrack>N</fastTrack>
+            <timedCost>37153.48</timedCost>
+          </subPosition>
+        </subPosition>
+        <subPosition ID="3f6a5a52-c92c-46ed-88f0-f9529c88c134">
+          <positionID>AW_3476</positionID>
+          <title>Assc Ext Rel Officer</title>
+          <grade>99</grade>
+          <hrJobCode>AW0001</hrJobCode>
+          <fastTrack>N</fastTrack>
+          <timedCost>0</timedCost>
+          <subPosition ID="04784fba-4106-42a0-9ea8-c10110f8d3a5">
+            <positionID>AW_3477</positionID>
+            <title>PI Assistant</title>
+            <grade>99</grade>
+            <hrJobCode>AW0001</hrJobCode>
+            <fastTrack>N</fastTrack>
+            <timedCost>0</timedCost>
+          </subPosition>
+        </subPosition>
+        <subPosition ID="9911437f-5fe5-4c2d-909d-fd5d37bdd17e">
+          <positionID>AW_70527</positionID>
+          <title>IUNV - Assoc PI/Reporting Officer, P2</title>
+          <type>UNV</type>
+          <fastTrack>N</fastTrack>
+          <timedCost>0</timedCost>
+        </subPosition>
+        <subPosition ID="a6f52c25-6a23-4cf5-acd8-b15aac6a99c8">
+          <positionID>10018864</positionID>
+          <title>Education Officer</title>
+          <incumbent>ALAFOORI, Siham</incumbent>
+          <grade>NC</grade>
+          <epmJobCode>YEMNC</epmJobCode>
+          <hrJobCode>N00213</hrJobCode>
+          <fastTrack>N</fastTrack>
+          <timedCost>112733.67</timedCost>
+        </subPosition>
+        <subPosition ID="3fa182d6-2dc1-42b2-87b1-a6f17a204b3d">
+          <positionID>10017387</positionID>
+          <title>Resett Officer</title>
+          <incumbent>GHANEM, Manas</incumbent>
+          <grade>P3</grade>
+          <epmJobCode>YEMP3</epmJobCode>
+          <hrJobCode>000473</hrJobCode>
+          <fastTrack>N</fastTrack>
+          <timedCost>43623.99</timedCost>
+          <subPosition ID="1e2054c1-923b-4fb9-9100-005655f06b61">
+            <positionID>AW_60238</positionID>
+            <title>ICMC deployee</title>
+            <grade>99</grade>
+            <hrJobCode>AW0001</hrJobCode>
+            <fastTrack>N</fastTrack>
+            <timedCost>0</timedCost>
+          </subPosition>
+          <subPosition ID="cf63d5a6-f2e3-4867-9c68-a302a6d65ee7">
+            <positionID>AW_60239</positionID>
+            <title>NUNV - Resetllement Specialist</title>
+            <grade>99</grade>
+            <hrJobCode>AW0001</hrJobCode>
+            <fastTrack>N</fastTrack>
+            <timedCost>0</timedCost>
+          </subPosition>
+          <subPosition ID="a62b6d51-4b3d-4fe2-94cb-c61b1ef51832">
+            <positionID>10008229</positionID>
+            <title>Snr Dur Sol Assistant</title>
+            <incumbent>BINSHEBA, Ahmad Saeed Ali Awad</incumbent>
+            <type>UNHCR</type>
+            <grade>G5</grade>
+            <epmJobCode>YEMG5</epmJobCode>
+            <hrJobCode>000536</hrJobCode>
+            <fastTrack>N</fastTrack>
+            <timedCost>37153.48</timedCost>
+            <subPosition ID="3e3eeae5-96cd-4d3e-90ba-dd116e8c8db0">
+              <positionID>AW_3581</positionID>
+              <title>Data Entry Assistant</title>
+              <grade>99</grade>
+              <hrJobCode>AW0001</hrJobCode>
+              <fastTrack>N</fastTrack>
+              <timedCost>0</timedCost>
+            </subPosition>
+          </subPosition>
+        </subPosition>
+        <subPosition ID="a82c8e93-2d2d-49ec-89fa-18b3f3df578d">
+          <positionID>10008211</positionID>
+          <title>Snr Secretary GS5</title>
+          <incumbent>BIN ABRI, Abdullah Ahmed</incumbent>
+          <type>UNHCR</type>
+          <grade>G5</grade>
+          <epmJobCode>YEMG5</epmJobCode>
+          <hrJobCode>000714</hrJobCode>
+          <fastTrack>N</fastTrack>
+          <timedCost>37153.48</timedCost>
+        </subPosition>
+        <subPosition ID="c10bf0d1-22a9-48ea-a621-db6b6570c0f4">
+          <positionID>10012571</positionID>
+          <title>Admin Officer</title>
+          <incumbent>GYASI-DENTEH, Frank</incumbent>
+          <type>UNHCR</type>
+          <grade>P3</grade>
+          <epmJobCode>YEMP3</epmJobCode>
+          <hrJobCode>000009</hrJobCode>
+          <fastTrack>N</fastTrack>
+          <timedCost>176919.52</timedCost>
+          <subPosition ID="ce301408-8479-4f5f-a7b4-c495a0e105e1">
+            <positionID>10008232</positionID>
+            <title>IT Associate</title>
+            <incumbent>AHMED, Khaled Ebrahim Md</incumbent>
+            <type>UNHCR</type>
+            <grade>G6</grade>
+            <epmJobCode>YEMG6</epmJobCode>
+            <hrJobCode>000314</hrJobCode>
+            <fastTrack>N</fastTrack>
+            <timedCost>44943.07</timedCost>
+          </subPosition>
+          <subPosition ID="d1bec239-b57e-496a-80ad-7902e5832d2d">
+            <positionID>10012962</positionID>
+            <title>Snr Admin Assistant</title>
+            <incumbent>ABDUL-RAHMAN, Naveel Mohamed</incumbent>
+            <type>UNHCR</type>
+            <grade>G5</grade>
+            <epmJobCode>YEMG5</epmJobCode>
+            <hrJobCode>001161</hrJobCode>
+            <fastTrack>N</fastTrack>
+            <timedCost>37153.48</timedCost>
+            <subPosition ID="a6df8363-2b95-4a6a-90ca-b1f386668a94">
+              <positionID>10008228</positionID>
+              <title>Driver</title>
+              <incumbent>SALEH, Mohamed Omer</incumbent>
+              <type>UNHCR</type>
+              <grade>G2</grade>
+              <epmJobCode>YEMG2</epmJobCode>
+              <hrJobCode>000197</hrJobCode>
+              <fastTrack>N</fastTrack>
+              <timedCost>21670.79</timedCost>
+            </subPosition>
+            <subPosition ID="50c9b16b-2d05-429c-92ea-32199738b219">
+              <positionID>10015529</positionID>
+              <title>Driver</title>
+              <incumbent>AHMED, Nassr Hussein</incumbent>
+              <type>UNHCR</type>
+              <grade>G2</grade>
+              <epmJobCode>YEMG2</epmJobCode>
+              <hrJobCode>000197</hrJobCode>
+              <fastTrack>N</fastTrack>
+              <timedCost>21670.79</timedCost>
+            </subPosition>
+            <subPosition ID="b1caa69d-a998-4325-ab03-a85e62e1fb10">
+              <positionID>10008215</positionID>
+              <title>Driver</title>
+              <incumbent>AWAD, Ayad Obad</incumbent>
+              <type>UNHCR</type>
+              <grade>G2</grade>
+              <epmJobCode>YEMG2</epmJobCode>
+              <hrJobCode>000197</hrJobCode>
+              <fastTrack>N</fastTrack>
+              <timedCost>21670.79</timedCost>
+            </subPosition>
+            <subPosition ID="41665aa7-e544-435a-bcfa-173d2bea1503">
+              <positionID>10008214</positionID>
+              <title>Snr/Driver</title>
+              <incumbent>MUBARAK BIN TAHEEN, Salem Farag</incumbent>
+              <type>UNHCR</type>
+              <grade>G3</grade>
+              <epmJobCode>YEMG3</epmJobCode>
+              <hrJobCode>000534</hrJobCode>
+              <fastTrack>N</fastTrack>
+              <timedCost>25795.86</timedCost>
+            </subPosition>
+            <subPosition ID="650b3a4b-6748-485b-b0de-5dd999603b6e">
+              <positionID>10008220</positionID>
+              <title>Driver</title>
+              <incumbent>ALREEMI, Fath Ahmed</incumbent>
+              <type>UNHCR</type>
+              <grade>G2</grade>
+              <epmJobCode>YEMG2</epmJobCode>
+              <hrJobCode>000197</hrJobCode>
+              <fastTrack>N</fastTrack>
+              <timedCost>21670.79</timedCost>
+            </subPosition>
+            <subPosition ID="6ababb22-db45-44e4-9f33-fbb47a03c090">
+              <positionID>10008212</positionID>
+              <title>Driver</title>
+              <incumbent>ALI, Ahmed Mohamed</incumbent>
+              <type>UNHCR</type>
+              <grade>G2</grade>
+              <epmJobCode>YEMG2</epmJobCode>
+              <hrJobCode>000197</hrJobCode>
+              <fastTrack>N</fastTrack>
+              <timedCost>21670.79</timedCost>
+            </subPosition>
+          </subPosition>
+          <subPosition ID="b4aaf9c9-84f9-48db-aed9-0d47caf2694e">
+            <positionID>10008210</positionID>
+            <title>Snr Admin/Finance Associate</title>
+            <incumbent>AIDEED, Alia Mohdar Hussein</incumbent>
+            <type>UNHCR</type>
+            <grade>G7</grade>
+            <epmJobCode>YEMG7</epmJobCode>
+            <hrJobCode>000494</hrJobCode>
+            <fastTrack>N</fastTrack>
+            <timedCost>54396.81</timedCost>
+            <subPosition ID="4f3fe27c-3b31-479f-b1cb-57bc48a29e7d">
+              <positionID>10008226</positionID>
+              <title>Finance Assistant</title>
+              <incumbent>SAEED, Yousra Abdo Sheikh</incumbent>
+              <type>UNHCR</type>
+              <grade>G4</grade>
+              <epmJobCode>YEMG4</epmJobCode>
+              <hrJobCode>000246</hrJobCode>
+              <fastTrack>N</fastTrack>
+              <timedCost>30701.78</timedCost>
+            </subPosition>
+          </subPosition>
+          <subPosition ID="fce36fda-0960-40bb-8efe-e4e2317088cb">
+            <positionID>10008222</positionID>
+            <title>HR Associate</title>
+            <incumbent>SALLAM, Diana Abdulhamid</incumbent>
+            <type>UNHCR</type>
+            <grade>G6</grade>
+            <epmJobCode>YEMG6</epmJobCode>
+            <hrJobCode>000297</hrJobCode>
+            <fastTrack>N</fastTrack>
+            <timedCost>44943.07</timedCost>
+            <subPosition ID="db4586b1-2c80-4d19-8e99-d81eb42f6b24">
+              <positionID>10012573</positionID>
+              <title>Admin Assistant</title>
+              <incumbent>SALEM, Hana Mohamed Ali</incumbent>
+              <type>UNHCR</type>
+              <grade>G4</grade>
+              <epmJobCode>YEMG4</epmJobCode>
+              <hrJobCode>000007</hrJobCode>
+              <fastTrack>N</fastTrack>
+              <timedCost>30701.78</timedCost>
+            </subPosition>
+          </subPosition>
+        </subPosition>
+        <subPosition ID="d6c72396-ed63-e8cc-e040-a8c06d346ef1">
+          <positionID>10008231</positionID>
+          <title>Field Safety Adviser</title>
+          <incumbent>SHALABI, Islam</incumbent>
+          <type>UNHCR</type>
+          <grade>P3</grade>
+          <epmJobCode>YEMP3</epmJobCode>
+          <hrJobCode>000236</hrJobCode>
+          <fastTrack>N</fastTrack>
+          <timedCost>148321.57</timedCost>
+          <subPosition ID="692d66f6-cff6-4b74-8e91-602a7f9cb088">
+            <positionID>10011359</positionID>
+            <title>Field Safety Associate</title>
+            <incumbent>AL-GAMRA, Ali Mohammed</incumbent>
+            <type>UNHCR</type>
+            <grade>G6</grade>
+            <epmJobCode>YEMG6</epmJobCode>
+            <hrJobCode>000237</hrJobCode>
+            <fastTrack>N</fastTrack>
+            <timedCost>44943.07</timedCost>
+            <subPosition ID="b1112ab8-a935-4eb9-a478-a17c9d1559af">
+              <positionID>10008216</positionID>
+              <title>Guard</title>
+              <incumbent>BAKHALA, Abdullah Md. Mbarak</incumbent>
+              <type>UNHCR</type>
+              <grade>G1</grade>
+              <epmJobCode>YEMG1</epmJobCode>
+              <hrJobCode>000264</hrJobCode>
+              <fastTrack>N</fastTrack>
+              <timedCost>18214.17</timedCost>
+            </subPosition>
+            <subPosition ID="5c3bfdc8-1567-44a4-8ddf-6f735d1d2251">
+              <positionID>10008217</positionID>
+              <title>Guard</title>
+              <incumbent>BIN-SMEIR, Omar Ferej</incumbent>
+              <type>UNHCR</type>
+              <grade>G1</grade>
+              <epmJobCode>YEMG1</epmJobCode>
+              <hrJobCode>000264</hrJobCode>
+              <fastTrack>N</fastTrack>
+              <timedCost>18214.17</timedCost>
+            </subPosition>
+          </subPosition>
+        </subPosition>
+        <subPosition ID="d1d522e2-fbcf-4af0-905d-4bd66b102b00">
+          <positionID>10018072</positionID>
+          <title>Snr Prot Officer</title>
+          <incumbent>MESSIAEN, Anne-Marie</incumbent>
+          <type>UNHCR</type>
+          <grade>P4</grade>
+          <epmJobCode>YEMP4</epmJobCode>
+          <hrJobCode>000661</hrJobCode>
+          <fastTrack>N</fastTrack>
+          <timedCost>104199.02</timedCost>
+        </subPosition>
+        <subPosition ID="e063e51c-5dba-5f7f-e040-a8c06d343807">
+          <positionID>10008188</positionID>
+          <title>Prot Officer</title>
+          <incumbent>MWANGI, Annabel</incumbent>
+          <type>UNHCR</type>
+          <grade>P3</grade>
+          <epmJobCode>YEMP3</epmJobCode>
+          <hrJobCode>000409</hrJobCode>
+          <fastTrack>N</fastTrack>
+          <timedCost>89186.82</timedCost>
+          <subPosition ID="b9c5b8d2-b834-4e32-a2fa-53dd91cc7cc1">
+            <positionID>AW_70937</positionID>
+            <title>IUNV - Assoc RSD Eligibility Officer, P2</title>
+            <grade>99</grade>
+            <hrJobCode>AW0001</hrJobCode>
+            <fastTrack>N</fastTrack>
+            <timedCost>0</timedCost>
+          </subPosition>
+          <subPosition ID="47e80b5f-5afe-4021-8403-13cf247a5661">
+            <positionID>AW_70936</positionID>
+            <title>IUNV - Assoc RSD Eligibiity Officer, P2</title>
+            <grade>99</grade>
+            <hrJobCode>AW0001</hrJobCode>
+            <fastTrack>N</fastTrack>
+            <timedCost>0</timedCost>
+          </subPosition>
+          <subPosition ID="e820f477-870f-4f9e-b67d-048bc415cc40">
+            <positionID>AW_70523</positionID>
+            <title>IUNV - Assoc Protection Officer, P2</title>
+            <type>UNV</type>
+            <fastTrack>N</fastTrack>
+            <timedCost>0</timedCost>
+            <subPosition ID="051851e9-7895-4fd5-9c3c-c31d7dcd1285">
+              <positionID>AW_3579</positionID>
+              <title>Prot Assistant</title>
+              <grade>99</grade>
+              <hrJobCode>AW0001</hrJobCode>
+              <fastTrack>N</fastTrack>
+              <timedCost>0</timedCost>
+            </subPosition>
+          </subPosition>
+          <subPosition ID="c564eb31-2660-4e09-9a71-124cff843406">
+            <positionID>10014042</positionID>
+            <title>Snr Prot Assistant</title>
+            <incumbent>MAHMOUD, Abdul Aziz Mohamed</incumbent>
+            <type>UNHCR</type>
+            <grade>G5</grade>
+            <epmJobCode>YEMG5</epmJobCode>
+            <hrJobCode>000659</hrJobCode>
+            <fastTrack>N</fastTrack>
+            <timedCost>37153.48</timedCost>
+            <subPosition ID="08f6870c-88f6-4bd5-932d-9be948f42c25">
+              <positionID>10015528</positionID>
+              <title>Driver</title>
+              <incumbent>BOSET, Mohammed Yuslem</incumbent>
+              <type>UNHCR</type>
+              <grade>G2</grade>
+              <epmJobCode>YEMG2</epmJobCode>
+              <hrJobCode>000197</hrJobCode>
+              <fastTrack>N</fastTrack>
+              <timedCost>21670.79</timedCost>
+            </subPosition>
+            <subPosition ID="d4ee5326-9bf8-44f1-891b-8c96458c4244">
+              <positionID>10014043</positionID>
+              <title>Field Assistant</title>
+              <incumbent>AZAZI, Mahfuz Ahmed Mohammed</incumbent>
+              <type>UNHCR</type>
+              <grade>G4</grade>
+              <epmJobCode>YEMG4</epmJobCode>
+              <hrJobCode>000231</hrJobCode>
+              <fastTrack>N</fastTrack>
+              <timedCost>30701.78</timedCost>
+            </subPosition>
+          </subPosition>
+          <subPosition ID="270a5e66-b1b0-4148-9b46-6795c53f3b3e">
+            <positionID>AW_3480</positionID>
+            <title>Assc Field Officer (Prot)</title>
+            <grade>99</grade>
+            <hrJobCode>AW0001</hrJobCode>
+            <fastTrack>N</fastTrack>
+            <timedCost>0</timedCost>
+          </subPosition>
+          <subPosition ID="f1a577a5-c678-4a36-8ae7-e0692d73ae09">
+            <positionID>AW_3481</positionID>
+            <title>Assc Field Officer</title>
+            <grade>99</grade>
+            <hrJobCode>AW0001</hrJobCode>
+            <fastTrack>N</fastTrack>
+            <timedCost>0</timedCost>
+          </subPosition>
+          <subPosition ID="437ea663-f7a6-4e16-b4d1-2ef3be0cfbb0">
+            <positionID>10017838</positionID>
+            <title>Asst Prot Officer</title>
+            <incumbent>BAFAQEEH, Aisha Abdul Gadir</incumbent>
+            <grade>NA</grade>
+            <epmJobCode>YEMNA</epmJobCode>
+            <hrJobCode>N00115</hrJobCode>
+            <fastTrack>N</fastTrack>
+            <timedCost>70578.78</timedCost>
+            <subPosition ID="b14749ee-340e-42cc-8d17-abdb1e3414a8">
+              <positionID>10008227</positionID>
+              <title>Snr Regis Assistant</title>
+              <incumbent>MOHAMED ABDO ALI, Dalia</incumbent>
+              <type>UNHCR</type>
+              <grade>G5</grade>
+              <epmJobCode>YEMG5</epmJobCode>
+              <hrJobCode>000698</hrJobCode>
+              <fastTrack>N</fastTrack>
+              <timedCost>37153.48</timedCost>
+              <subPosition ID="0d1d6a93-47c9-4b9d-853b-45bc2b72dede">
+                <positionID>AW_70942</positionID>
+                <title>NUNV - Field Data Entry Clerk</title>
+                <grade>99</grade>
+                <hrJobCode>AW0001</hrJobCode>
+                <fastTrack>N</fastTrack>
+                <timedCost>0</timedCost>
+              </subPosition>
+              <subPosition ID="2aa88ad8-a78a-46eb-bb86-0129b52ea8a1">
+                <positionID>AW_3621</positionID>
+                <title>Regis Associate</title>
+                <grade>99</grade>
+                <hrJobCode>AW0001</hrJobCode>
+                <fastTrack>N</fastTrack>
+                <timedCost>0</timedCost>
+              </subPosition>
+            </subPosition>
+            <subPosition ID="e3edc084-7777-498f-a556-f4383cd16c74">
+              <positionID>10008209</positionID>
+              <title>Prot Associate</title>
+              <incumbent>AL-AKHDARY, Abdu Farea</incumbent>
+              <type>UNHCR</type>
+              <grade>G6</grade>
+              <epmJobCode>YEMG6</epmJobCode>
+              <hrJobCode>000408</hrJobCode>
+              <fastTrack>N</fastTrack>
+              <timedCost>44943.07</timedCost>
+              <subPosition ID="1a3b54e8-2520-420f-874a-a93b4ec3b939">
+                <positionID>AW_71291</positionID>
+                <title>NUNV - Legal Assistant, G6</title>
+                <grade>99</grade>
+                <hrJobCode>AW0001</hrJobCode>
+                <fastTrack>N</fastTrack>
+                <timedCost>0</timedCost>
+              </subPosition>
+              <subPosition ID="31bf783a-a517-45f2-8043-19e3abfec258">
+                <positionID>AW_70533</positionID>
+                <title>NUNV - Field Assistant, G6</title>
+                <type>UNV</type>
+                <fastTrack>N</fastTrack>
+                <timedCost>0</timedCost>
+              </subPosition>
+              <subPosition ID="6b814175-865b-4652-abf8-1a2015d7183a">
+                <positionID>AW_3622</positionID>
+                <title>Legal Associate</title>
+                <grade>99</grade>
+                <hrJobCode>AW0001</hrJobCode>
+                <fastTrack>N</fastTrack>
+                <timedCost>0</timedCost>
+              </subPosition>
+              <subPosition ID="9b6afbe8-8d65-4403-844f-0224b6f5f722">
+                <positionID>AW_70941</positionID>
+                <title>NUNV - Field Protection Clerk/Basateen</title>
+                <grade>99</grade>
+                <hrJobCode>AW0001</hrJobCode>
+                <fastTrack>N</fastTrack>
+                <timedCost>0</timedCost>
+              </subPosition>
+            </subPosition>
+            <subPosition ID="85f5290e-8be8-440c-b91d-a6c830b21ec8">
+              <positionID>AW_3623</positionID>
+              <title>Prot Associate</title>
+              <grade>99</grade>
+              <hrJobCode>AW0001</hrJobCode>
+              <fastTrack>N</fastTrack>
+              <timedCost>0</timedCost>
+            </subPosition>
+            <subPosition ID="985d70d9-1b39-43e7-bfd2-8de15f2b5034">
+              <positionID>AW_3624</positionID>
+              <title>Prot Associate</title>
+              <grade>99</grade>
+              <hrJobCode>AW0001</hrJobCode>
+              <fastTrack>N</fastTrack>
+              <timedCost>0</timedCost>
+            </subPosition>
+            <subPosition ID="28964680-48eb-4cb8-9b39-f0f98df08653">
+              <positionID>AW_3625</positionID>
+              <title>Field Associate (Prot)</title>
+              <grade>99</grade>
+              <hrJobCode>AW0001</hrJobCode>
+              <fastTrack>N</fastTrack>
+              <timedCost>0</timedCost>
+            </subPosition>
+            <subPosition ID="3dbd44af-5cb8-41be-845e-2017787d3f66">
+              <positionID>10011358</positionID>
+              <title>Snr Prot Assistant</title>
+              <incumbent>SALEH, Mohammed Ahmed</incumbent>
+              <type>UNHCR</type>
+              <grade>G5</grade>
+              <epmJobCode>YEMG5</epmJobCode>
+              <hrJobCode>000659</hrJobCode>
+              <fastTrack>N</fastTrack>
+              <timedCost>37153.48</timedCost>
+            </subPosition>
+          </subPosition>
+          <subPosition ID="dcf0a87e-3bdf-4f9d-93ab-fde9266f18b9">
+            <positionID>10008218</positionID>
+            <title>Field Associate (R)</title>
+            <incumbent>AL-JASEEM, Mohamed T. M.</incumbent>
+            <type>UNHCR</type>
+            <grade>G6</grade>
+            <epmJobCode>YEMG6</epmJobCode>
+            <hrJobCode>001317</hrJobCode>
+            <fastTrack>N</fastTrack>
+            <timedCost>44943.07</timedCost>
+          </subPosition>
+        </subPosition>
+        <timedCost>243351.39</timedCost>
+      </headPosition>
+      <adminBudgets>
+        <AdminBudgetLine ID="01e4f0b2-aa97-4051-b152-19bef1cced6f">
+          <chapterType>03X</chapterType>
+          <chapterName>Temporary Assistance</chapterName>
+          <chapterMsrp>620300</chapterMsrp>
+          <wolAdmin>7000</wolAdmin>
+          <wolSecurity>0</wolSecurity>
+          <aolAdmin>0</aolAdmin>
+          <aolSecurity>0</aolSecurity>
+        </AdminBudgetLine>
+        <AdminBudgetLine ID="01e4f0b2-aa97-4051-b152-19bef1cced6f">
+          <chapterType>04X</chapterType>
+          <chapterName>Consultants Costs</chapterName>
+          <chapterMsrp>615000</chapterMsrp>
+          <wolAdmin>0</wolAdmin>
+          <wolSecurity>0</wolSecurity>
+          <aolAdmin>0</aolAdmin>
+          <aolSecurity>0</aolSecurity>
+        </AdminBudgetLine>
+        <AdminBudgetLine ID="01e4f0b2-aa97-4051-b152-19bef1cced6f">
+          <chapterType>05X</chapterType>
+          <chapterName>Overtime</chapterName>
+          <chapterMsrp>620500</chapterMsrp>
+          <wolAdmin>12700</wolAdmin>
+          <wolSecurity>0</wolSecurity>
+          <aolAdmin>0</aolAdmin>
+          <aolSecurity>0</aolSecurity>
+        </AdminBudgetLine>
+        <AdminBudgetLine ID="01e4f0b2-aa97-4051-b152-19bef1cced6f">
+          <chapterType>2XX</chapterType>
+          <chapterName>Travel on Official Business</chapterName>
+          <chapterMsrp>622000</chapterMsrp>
+          <wolAdmin>122330</wolAdmin>
+          <wolSecurity>0</wolSecurity>
+          <aolAdmin>0</aolAdmin>
+          <aolSecurity>0</aolSecurity>
+        </AdminBudgetLine>
+        <AdminBudgetLine ID="01e4f0b2-aa97-4051-b152-19bef1cced6f">
+          <chapterType>31X</chapterType>
+          <chapterName>Training Services</chapterName>
+          <chapterMsrp>623100</chapterMsrp>
+          <wolAdmin>0</wolAdmin>
+          <wolSecurity>0</wolSecurity>
+          <aolAdmin>0</aolAdmin>
+          <aolSecurity>0</aolSecurity>
+        </AdminBudgetLine>
+        <AdminBudgetLine ID="01e4f0b2-aa97-4051-b152-19bef1cced6f">
+          <chapterType>3XX</chapterType>
+          <chapterName>Contractual Services</chapterName>
+          <chapterMsrp>623000</chapterMsrp>
+          <wolAdmin>82500</wolAdmin>
+          <wolSecurity>0</wolSecurity>
+          <aolAdmin>0</aolAdmin>
+          <aolSecurity>0</aolSecurity>
+        </AdminBudgetLine>
+        <AdminBudgetLine ID="01e4f0b2-aa97-4051-b152-19bef1cced6f">
+          <chapterType>41X</chapterType>
+          <chapterName>Rental and Maintenance of Premises</chapterName>
+          <chapterMsrp>624100</chapterMsrp>
+          <wolAdmin>138586</wolAdmin>
+          <wolSecurity>323905</wolSecurity>
+          <aolAdmin>0</aolAdmin>
+          <aolSecurity>0</aolSecurity>
+        </AdminBudgetLine>
+        <AdminBudgetLine ID="01e4f0b2-aa97-4051-b152-19bef1cced6f">
+          <chapterType>42X</chapterType>
+          <chapterName>Utilities</chapterName>
+          <chapterMsrp>624200</chapterMsrp>
+          <wolAdmin>80800</wolAdmin>
+          <wolSecurity>0</wolSecurity>
+          <aolAdmin>0</aolAdmin>
+          <aolSecurity>0</aolSecurity>
+        </AdminBudgetLine>
+        <AdminBudgetLine ID="01e4f0b2-aa97-4051-b152-19bef1cced6f">
+          <chapterType>43X</chapterType>
+          <chapterName>Rental of Equipment and Vehicles</chapterName>
+          <chapterMsrp>624300</chapterMsrp>
+          <wolAdmin>28800</wolAdmin>
+          <wolSecurity>0</wolSecurity>
+          <aolAdmin>0</aolAdmin>
+          <aolSecurity>0</aolSecurity>
+        </AdminBudgetLine>
+        <AdminBudgetLine ID="01e4f0b2-aa97-4051-b152-19bef1cced6f">
+          <chapterType>44X</chapterType>
+          <chapterName>Communications</chapterName>
+          <chapterMsrp>624400</chapterMsrp>
+          <wolAdmin>93243</wolAdmin>
+          <wolSecurity>0</wolSecurity>
+          <aolAdmin>0</aolAdmin>
+          <aolSecurity>0</aolSecurity>
+        </AdminBudgetLine>
+        <AdminBudgetLine ID="01e4f0b2-aa97-4051-b152-19bef1cced6f">
+          <chapterType>45X</chapterType>
+          <chapterName>Hospitality</chapterName>
+          <chapterMsrp>624500</chapterMsrp>
+          <wolAdmin>1650</wolAdmin>
+          <wolSecurity>0</wolSecurity>
+          <aolAdmin>0</aolAdmin>
+          <aolSecurity>0</aolSecurity>
+        </AdminBudgetLine>
+        <AdminBudgetLine ID="01e4f0b2-aa97-4051-b152-19bef1cced6f">
+          <chapterType>46X</chapterType>
+          <chapterName>Maintenance of Furniture, Equip &amp; Vehicles</chapterName>
+          <chapterMsrp>624600</chapterMsrp>
+          <wolAdmin>44464</wolAdmin>
+          <wolSecurity>0</wolSecurity>
+          <aolAdmin>0</aolAdmin>
+          <aolSecurity>0</aolSecurity>
+        </AdminBudgetLine>
+        <AdminBudgetLine ID="01e4f0b2-aa97-4051-b152-19bef1cced6f">
+          <chapterType>49X</chapterType>
+          <chapterName>Miscellaneous Services</chapterName>
+          <chapterMsrp>624900</chapterMsrp>
+          <wolAdmin>7480</wolAdmin>
+          <wolSecurity>0</wolSecurity>
+          <aolAdmin>0</aolAdmin>
+          <aolSecurity>0</aolSecurity>
+        </AdminBudgetLine>
+        <AdminBudgetLine ID="01e4f0b2-aa97-4051-b152-19bef1cced6f">
+          <chapterType>4XX</chapterType>
+          <chapterName>General Operating Expenses</chapterName>
+          <chapterMsrp>624000</chapterMsrp>
+          <wolAdmin>50</wolAdmin>
+          <wolSecurity>0</wolSecurity>
+          <aolAdmin>0</aolAdmin>
+          <aolSecurity>0</aolSecurity>
+        </AdminBudgetLine>
+        <AdminBudgetLine ID="01e4f0b2-aa97-4051-b152-19bef1cced6f">
+          <chapterType>4XX</chapterType>
+          <chapterName>Staff/Guest Accommodations</chapterName>
+          <chapterMsrp>676100</chapterMsrp>
+          <wolAdmin>5500</wolAdmin>
+          <wolSecurity>0</wolSecurity>
+          <aolAdmin>0</aolAdmin>
+          <aolSecurity>0</aolSecurity>
+        </AdminBudgetLine>
+        <AdminBudgetLine ID="01e4f0b2-aa97-4051-b152-19bef1cced6f">
+          <chapterType>517</chapterType>
+          <chapterName>Petrol, diesel and other lubricants</chapterName>
+          <chapterMsrp>606000</chapterMsrp>
+          <wolAdmin>56000</wolAdmin>
+          <wolSecurity>0</wolSecurity>
+          <aolAdmin>0</aolAdmin>
+          <aolSecurity>0</aolSecurity>
+        </AdminBudgetLine>
+        <AdminBudgetLine ID="01e4f0b2-aa97-4051-b152-19bef1cced6f">
+          <chapterType>5XX</chapterType>
+          <chapterName>Materials and Office Supplies</chapterName>
+          <chapterMsrp>601000</chapterMsrp>
+          <wolAdmin>28800</wolAdmin>
+          <wolSecurity>5500</wolSecurity>
+          <aolAdmin>0</aolAdmin>
+          <aolSecurity>0</aolSecurity>
+        </AdminBudgetLine>
+        <AdminBudgetLine ID="01e4f0b2-aa97-4051-b152-19bef1cced6f">
+          <chapterType>6XX</chapterType>
+          <chapterName>Non-expendable Property</chapterName>
+          <chapterMsrp>605000</chapterMsrp>
+          <wolAdmin>117175</wolAdmin>
+          <wolSecurity>13497</wolSecurity>
+          <aolAdmin>0</aolAdmin>
+          <aolSecurity>0</aolSecurity>
+        </AdminBudgetLine>
+        <AdminBudgetLine ID="01e4f0b2-aa97-4051-b152-19bef1cced6f">
+          <chapterType>7XX</chapterType>
+          <chapterName>Improvements to Premises</chapterName>
+          <chapterMsrp>627000</chapterMsrp>
+          <wolAdmin>0</wolAdmin>
+          <wolSecurity>5500</wolSecurity>
+          <aolAdmin>0</aolAdmin>
+          <aolSecurity>0</aolSecurity>
+        </AdminBudgetLine>
+        <AdminBudgetLine ID="01e4f0b2-aa97-4051-b152-19bef1cced6f">
+          <chapterType>8XX</chapterType>
+          <chapterName>Seminars - Other group activities</chapterName>
+          <chapterMsrp>628000</chapterMsrp>
+          <wolAdmin>0</wolAdmin>
+          <wolSecurity>11000</wolSecurity>
+          <aolAdmin>0</aolAdmin>
+          <aolSecurity>0</aolSecurity>
+        </AdminBudgetLine>
+        <AdminBudgetLine ID="01e4f0b2-aa97-4051-b152-19bef1cced6f">
+          <chapterType>9XX</chapterType>
+          <chapterName>Joint UN Activities</chapterName>
+          <chapterMsrp>629000</chapterMsrp>
+          <wolAdmin>3000</wolAdmin>
+          <wolSecurity>0</wolSecurity>
+          <aolAdmin>0</aolAdmin>
+          <aolSecurity>0</aolSecurity>
+        </AdminBudgetLine>
+      </adminBudgets>
+      <supplementPositions>
+        <SupplementPostion ID="3b118250-0449-46fa-bacf-866c7c795bf1">
+          <function>Protection</function>
+          <epmJobCode>YEMP3</epmJobCode>
+          <unitCost>176919.52</unitCost>
+          <category>PG</category>
+          <personYears>1</personYears>
+          <comment>PROTECTION OFFICER(IDPs)</comment>
+          <total>176919.52</total>
+        </SupplementPostion>
+      </supplementPositions>
+      <adjustments/>
+    </subOffice>
+    <subOffice ID="2a4c4790-8972-43ba-bf0d-0329a6b98807">
+      <name>Amran - 32161</name>
+      <headPosition ID="7c64de0b-05c4-487a-b160-caf1d72c557c">
+        <positionID>10013692</positionID>
+        <title>Head of Field Office P3</title>
+        <incumbent>YACOUT, Gamal Mohamed Nour</incumbent>
+        <type>UNHCR</type>
+        <grade>P3</grade>
+        <epmJobCode>YEMP3</epmJobCode>
+        <hrJobCode>000270</hrJobCode>
+        <fastTrack>N</fastTrack>
+        <subPosition ID="199e7ec2-194a-4bc8-85b4-d42a18370703">
+          <positionID>10015999</positionID>
+          <title>Driver</title>
+          <incumbent>AL-HAGRAH, Amer Ali</incumbent>
+          <type>UNHCR</type>
+          <grade>G2</grade>
+          <epmJobCode>YEMG2</epmJobCode>
+          <hrJobCode>000197</hrJobCode>
+          <fastTrack>N</fastTrack>
+          <timedCost>10746.34</timedCost>
+        </subPosition>
+        <subPosition ID="3fa3fe99-94e5-4cc5-bb7f-1e8606acb497">
+          <positionID>10015990</positionID>
+          <title>Driver</title>
+          <incumbent>HAMZAH, Fadhl Mohammed</incumbent>
+          <type>UNHCR</type>
+          <grade>G2</grade>
+          <epmJobCode>YEMG2</epmJobCode>
+          <hrJobCode>000197</hrJobCode>
+          <fastTrack>N</fastTrack>
+          <timedCost>10746.34</timedCost>
+        </subPosition>
+        <subPosition ID="7aaabbc5-beca-4b3b-ac68-583cc9c081bb">
+          <positionID>10015996</positionID>
+          <title>Snr Comty Services Assistant</title>
+          <incumbent>AL-SABRI, Arwa Ali Mohamed</incumbent>
+          <type>UNHCR</type>
+          <grade>G5</grade>
+          <epmJobCode>YEMG5</epmJobCode>
+          <hrJobCode>000521</hrJobCode>
+          <fastTrack>N</fastTrack>
+          <timedCost>18424.05</timedCost>
+        </subPosition>
+        <subPosition ID="38863d4b-f8cc-41d3-9e9d-7ec8b8a1dba8">
+          <positionID>10015993</positionID>
+          <title>Prot Associate</title>
+          <incumbent>GAHLAN, Kaseem Kaseem Saleh</incumbent>
+          <type>UNHCR</type>
+          <grade>G6</grade>
+          <epmJobCode>YEMG6</epmJobCode>
+          <hrJobCode>000408</hrJobCode>
+          <fastTrack>N</fastTrack>
+          <timedCost>22286.84</timedCost>
+        </subPosition>
+        <timedCost>87732.69</timedCost>
+      </headPosition>
+      <adminBudgets/>
+      <supplementPositions/>
+      <adjustments/>
+    </subOffice>
+    <subOffice ID="354414a9-fc02-4f32-a3e0-32c722eeccfc">
+      <name>Haradh - 32161</name>
+      <headPosition ID="256e5401-c2a8-49e1-820b-daeb044e4a9f">
+        <positionID>10016001</positionID>
+        <title>Head of Field Office P3</title>
+        <incumbent>NDAULA, Richard</incumbent>
+        <type>UNHCR</type>
+        <grade>P3</grade>
+        <epmJobCode>YEMP3</epmJobCode>
+        <hrJobCode>000270</hrJobCode>
+        <fastTrack>N</fastTrack>
+        <subPosition ID="8f3e7820-9782-4629-9338-de7b5e611028">
+          <positionID>AW_3422</positionID>
+          <title>Field Associate (Prot)</title>
+          <grade>99</grade>
+          <hrJobCode>AW0001</hrJobCode>
+          <fastTrack>N</fastTrack>
+          <timedCost>0</timedCost>
+        </subPosition>
+        <subPosition ID="9afa70cc-2d25-4782-b65f-c33e6068d8c6">
+          <positionID>AW_70932</positionID>
+          <title>IUNV - Assoc. Community Service Officer</title>
+          <grade>99</grade>
+          <hrJobCode>AW0001</hrJobCode>
+          <fastTrack>N</fastTrack>
+          <timedCost>0</timedCost>
+          <subPosition ID="c1c4cce7-c493-416d-b9b9-32b50cf809bc">
+            <positionID>10016007</positionID>
+            <title>Snr Comty Services Assistant</title>
+            <incumbent>AL-KHADARI, Samah Yahya</incumbent>
+            <type>UNHCR</type>
+            <grade>G5</grade>
+            <epmJobCode>YEMG5</epmJobCode>
+            <hrJobCode>000521</hrJobCode>
+            <fastTrack>N</fastTrack>
+            <timedCost>37153.48</timedCost>
+          </subPosition>
+        </subPosition>
+        <subPosition ID="c66302fd-f04f-44ca-a23f-f80e81b36967">
+          <positionID>AW_3424</positionID>
+          <title>Field Associate (Prot)</title>
+          <grade>99</grade>
+          <hrJobCode>AW0001</hrJobCode>
+          <fastTrack>N</fastTrack>
+          <timedCost>0</timedCost>
+        </subPosition>
+        <subPosition ID="5b3998cc-9445-48ac-9b8f-c54ecfd976a4">
+          <positionID>AW_60248</positionID>
+          <title>NUNV - Supply Specialist (Associate)</title>
+          <grade>99</grade>
+          <hrJobCode>AW0001</hrJobCode>
+          <fastTrack>N</fastTrack>
+          <timedCost>0</timedCost>
+        </subPosition>
+        <subPosition ID="087099a6-6ebf-487e-8b1f-9db4496ab143">
+          <positionID>10016006</positionID>
+          <title>Snr Admin/Finance Assistant</title>
+          <incumbent>AL-MUHAZIMA, Abdulaziz</incumbent>
+          <type>UNHCR</type>
+          <grade>G5</grade>
+          <epmJobCode>YEMG5</epmJobCode>
+          <hrJobCode>000495</hrJobCode>
+          <fastTrack>N</fastTrack>
+          <timedCost>37153.48</timedCost>
+          <subPosition ID="81f39159-d650-43b9-b7c7-b1ec80483b89">
+            <positionID>10016630</positionID>
+            <title>Driver</title>
+            <incumbent>AL-WOSABI, Adnan Ali Hassan</incumbent>
+            <grade>G2</grade>
+            <epmJobCode>YEMG2</epmJobCode>
+            <hrJobCode>000197</hrJobCode>
+            <fastTrack>N</fastTrack>
+            <timedCost>21670.79</timedCost>
+          </subPosition>
+          <subPosition ID="4d17f228-7e80-463d-8eaf-12edd8502fd5">
+            <positionID>10014877</positionID>
+            <title>Driver</title>
+            <incumbent>MUYASER, Abdul Latif Hussein</incumbent>
+            <type>UNHCR</type>
+            <grade>G2</grade>
+            <epmJobCode>YEMG2</epmJobCode>
+            <hrJobCode>000197</hrJobCode>
+            <fastTrack>N</fastTrack>
+            <timedCost>21670.79</timedCost>
+          </subPosition>
+          <subPosition ID="44ed220f-c316-494a-9ff9-881bc39338c6">
+            <positionID>10014876</positionID>
+            <title>Driver</title>
+            <incumbent>AL-SHOMI, Ameen Nasser Ahmed</incumbent>
+            <type>UNHCR</type>
+            <grade>G2</grade>
+            <epmJobCode>YEMG2</epmJobCode>
+            <hrJobCode>000197</hrJobCode>
+            <fastTrack>N</fastTrack>
+            <timedCost>21670.79</timedCost>
+          </subPosition>
+        </subPosition>
+        <subPosition ID="c0a70d8c-bd10-4703-b4a1-52abbefc95d5">
+          <positionID>10016004</positionID>
+          <title>Field Associate</title>
+          <incumbent>AL-MUNTASSER, Abdullah Ali</incumbent>
+          <type>UNHCR</type>
+          <grade>G6</grade>
+          <epmJobCode>YEMG6</epmJobCode>
+          <hrJobCode>000230</hrJobCode>
+          <fastTrack>N</fastTrack>
+          <timedCost>44943.07</timedCost>
+          <subPosition ID="79b23864-5453-415a-bc79-8544361eab47">
+            <positionID>10016005</positionID>
+            <title>Snr Field Assistant</title>
+            <incumbent>MOUSA, Basel Mohammed Ali</incumbent>
+            <type>UNHCR</type>
+            <grade>G5</grade>
+            <epmJobCode>YEMG5</epmJobCode>
+            <hrJobCode>000555</hrJobCode>
+            <fastTrack>N</fastTrack>
+            <timedCost>37153.48</timedCost>
+          </subPosition>
+        </subPosition>
+        <subPosition ID="2b8c4c48-373f-437f-9a20-ca9cccb0bda7">
+          <positionID>10016002</positionID>
+          <title>Assc Protection Officer</title>
+          <incumbent>HAKIMI, Jawid Wali</incumbent>
+          <type>UNHCR</type>
+          <grade>P2</grade>
+          <epmJobCode>YEMP2</epmJobCode>
+          <hrJobCode>000079</hrJobCode>
+          <fastTrack>N</fastTrack>
+          <timedCost>145079.72</timedCost>
+          <subPosition ID="df879f80-6d22-4857-8312-d3f888eebe53">
+            <positionID>AW_60247</positionID>
+            <title>IUNV - Assoc. Protection Officer</title>
+            <grade>99</grade>
+            <hrJobCode>AW0001</hrJobCode>
+            <fastTrack>N</fastTrack>
+            <timedCost>0</timedCost>
+            <subPosition ID="998b79b8-38e7-44f6-8571-8f9b264d50bd">
+              <positionID>AW_71261</positionID>
+              <title>NUNV - Snr. Protection Clerk</title>
+              <grade>99</grade>
+              <hrJobCode>AW0001</hrJobCode>
+              <fastTrack>N</fastTrack>
+              <timedCost>0</timedCost>
+            </subPosition>
+          </subPosition>
+          <subPosition ID="89ae05b3-27a3-4a45-8e78-d5c9ac17275a">
+            <positionID>10016008</positionID>
+            <title>Regis Assistant</title>
+            <incumbent>AL-SHARAFI, Abdulmalik Ahmed</incumbent>
+            <type>UNHCR</type>
+            <grade>G4</grade>
+            <epmJobCode>YEMG4</epmJobCode>
+            <hrJobCode>000452</hrJobCode>
+            <fastTrack>N</fastTrack>
+            <timedCost>30701.78</timedCost>
+          </subPosition>
+          <subPosition ID="545c7b7e-d7e5-43e2-8b3b-84f6ee9a7a68">
+            <positionID>10013695</positionID>
+            <title>Regis Assistant</title>
+            <incumbent>SHARAFADDIN, Hamed Abdullah</incumbent>
+            <type>UNHCR</type>
+            <grade>G4</grade>
+            <epmJobCode>YEMG4</epmJobCode>
+            <hrJobCode>000452</hrJobCode>
+            <fastTrack>N</fastTrack>
+            <timedCost>30701.78</timedCost>
+          </subPosition>
+          <subPosition ID="7be6e352-f2be-42a7-8be8-d0cb0b02b7e8">
+            <positionID>10015997</positionID>
+            <title>Regis Assistant</title>
+            <incumbent>AL-HADI, Abdullah Saleh</incumbent>
+            <type>UNHCR</type>
+            <grade>G4</grade>
+            <epmJobCode>YEMG4</epmJobCode>
+            <hrJobCode>000452</hrJobCode>
+            <fastTrack>N</fastTrack>
+            <timedCost>15224.72</timedCost>
+          </subPosition>
+          <subPosition ID="867235dc-4c52-4875-a33f-128685d29350">
+            <positionID>10016003</positionID>
+            <title>Prot Associate</title>
+            <incumbent>AL-SAYYAD, Hana</incumbent>
+            <type>UNHCR</type>
+            <grade>G6</grade>
+            <epmJobCode>YEMG6</epmJobCode>
+            <hrJobCode>000408</hrJobCode>
+            <fastTrack>N</fastTrack>
+            <timedCost>44943.07</timedCost>
+          </subPosition>
+        </subPosition>
+        <timedCost>176919.52</timedCost>
+      </headPosition>
+      <adminBudgets/>
+      <supplementPositions/>
+      <adjustments/>
+    </subOffice>
+    <subOffice ID="a9d61c15-c3f5-4e2f-a14d-15ec9023000d">
+      <name>Saada - 32161</name>
+      <headPosition ID="ffb23213-33df-4bac-9106-444aef8bc3c3">
+        <positionID>10015664</positionID>
+        <title>Head of Field Office (P2)</title>
+        <incumbent>WARDAK, Mohammad Tahir</incumbent>
+        <type>UNHCR</type>
+        <grade>P2</grade>
+        <epmJobCode>YEMP2</epmJobCode>
+        <hrJobCode>001340</hrJobCode>
+        <fastTrack>N</fastTrack>
+        <subPosition ID="f9bf7422-9e49-4c50-9e8c-5f86e657e137">
+          <positionID>10017837</positionID>
+          <title>Asst Field Officer</title>
+          <incumbent>ALWAN, Muaamar Mahmood Abdulqader</incumbent>
+          <grade>NA</grade>
+          <epmJobCode>YEMNA</epmJobCode>
+          <hrJobCode>000104</hrJobCode>
+          <fastTrack>N</fastTrack>
+          <timedCost>70578.78</timedCost>
+          <subPosition ID="c421de32-4c93-4233-9647-7720a5db3aa4">
+            <positionID>10013696</positionID>
+            <title>Prot Assistant</title>
+            <incumbent>SHAEM, Faten Abdullah Salah</incumbent>
+            <type>UNHCR</type>
+            <grade>G4</grade>
+            <epmJobCode>YEMG4</epmJobCode>
+            <hrJobCode>000410</hrJobCode>
+            <fastTrack>N</fastTrack>
+            <timedCost>30701.78</timedCost>
+            <subPosition ID="319ac280-e69a-4d2f-b9bf-0b173b8c4372">
+              <positionID>AW_60251</positionID>
+              <title>NUNV - Protection Assistant</title>
+              <grade>99</grade>
+              <hrJobCode>AW0001</hrJobCode>
+              <fastTrack>N</fastTrack>
+              <timedCost>0</timedCost>
+            </subPosition>
+          </subPosition>
+        </subPosition>
+        <timedCost>145079.72</timedCost>
+      </headPosition>
+      <adminBudgets/>
+      <supplementPositions/>
+      <adjustments/>
+    </subOffice>
+    <headPosition ID="2839f3c2-cec7-4679-bb6c-f8a4863faf77">
+      <positionID>10008186</positionID>
+      <title>Representative D1</title>
+      <incumbent>GEDDO, Bruno</incumbent>
+      <type>UNHCR</type>
+      <grade>D1</grade>
+      <epmJobCode>YEMD1</epmJobCode>
+      <hrJobCode>000462</hrJobCode>
+      <fastTrack>N</fastTrack>
+      <subPosition ID="424ad455-6332-448f-b54d-47092ea4e4cc">
+        <positionID>10012561</positionID>
+        <title>Dep Representative P5</title>
+        <incumbent>SHIMIZU, Yasuko</incumbent>
+        <type>UNHCR</type>
+        <grade>P5</grade>
+        <epmJobCode>YEMP5</epmJobCode>
+        <hrJobCode>000172</hrJobCode>
+        <fastTrack>N</fastTrack>
+        <timedCost>243351.39</timedCost>
+        <subPosition ID="9c8580c6-48d9-473c-8514-fbf1f250941c">
+          <positionID>10008196</positionID>
+          <title>Comm/PI Associate</title>
+          <incumbent>AL-NAJJAR, Jamal Abdu Mohammed</incumbent>
+          <type>UNHCR</type>
+          <grade>G6</grade>
+          <epmJobCode>YEMG6</epmJobCode>
+          <hrJobCode>000382</hrJobCode>
+          <fastTrack>N</fastTrack>
+          <timedCost>44943.07</timedCost>
+        </subPosition>
+        <subPosition ID="d2ddd63c-dab9-4384-aa05-48b822ac6157">
+          <positionID>10013697</positionID>
+          <title>Snr Prog Officer</title>
+          <incumbent>MONTEVECCHI, Roberta</incumbent>
+          <grade>P4</grade>
+          <epmJobCode>YEMP4</epmJobCode>
+          <hrJobCode>000653</hrJobCode>
+          <fastTrack>N</fastTrack>
+          <timedCost>210125.1</timedCost>
+          <subPosition ID="8fb7a58d-be41-493e-b08a-d3a233671164">
+            <positionID>AW_3428</positionID>
+            <title>Assc Reporting Officer</title>
+            <grade>99</grade>
+            <hrJobCode>AW0001</hrJobCode>
+            <fastTrack>N</fastTrack>
+            <timedCost>0</timedCost>
+          </subPosition>
+          <subPosition ID="f365a2f9-5c88-4aad-bc36-860dc043baf1">
+            <positionID>AW_3475</positionID>
+            <title>Assc Prog Officer</title>
+            <grade>99</grade>
+            <hrJobCode>AW0001</hrJobCode>
+            <fastTrack>N</fastTrack>
+            <timedCost>0</timedCost>
+            <subPosition ID="a3629f9a-dcfd-44ee-81a8-611bab859685">
+              <positionID>AW_70935</positionID>
+              <title>Health Consultant</title>
+              <grade>99</grade>
+              <hrJobCode>AW0001</hrJobCode>
+              <fastTrack>N</fastTrack>
+              <timedCost>0</timedCost>
+            </subPosition>
+          </subPosition>
+          <subPosition ID="6277d76c-f5b5-4dc6-906f-7349a96b7f99">
+            <positionID>10015983</positionID>
+            <title>Prog Officer</title>
+            <incumbent>FURUMOTO, Hidehiko</incumbent>
+            <type>UNHCR</type>
+            <grade>P3</grade>
+            <epmJobCode>YEMP3</epmJobCode>
+            <hrJobCode>000401</hrJobCode>
+            <fastTrack>N</fastTrack>
+            <timedCost>176919.52</timedCost>
+            <subPosition ID="206c04cc-2a01-4bf7-88ae-fb9336db697c">
+              <positionID>AW_3426</positionID>
+              <title>Assc Prog Officer</title>
+              <grade>99</grade>
+              <hrJobCode>AW0001</hrJobCode>
+              <fastTrack>N</fastTrack>
+              <timedCost>0</timedCost>
+            </subPosition>
+            <subPosition ID="3b32f158-b4a3-4b6c-9b39-3d4c7da631b9">
+              <positionID>AW_3427</positionID>
+              <title>Assc Prog Officer</title>
+              <grade>99</grade>
+              <hrJobCode>AW0001</hrJobCode>
+              <fastTrack>N</fastTrack>
+              <timedCost>0</timedCost>
+            </subPosition>
+            <subPosition ID="458f642f-edf8-4bb4-a067-10d1b74db78b">
+              <positionID>AW_3429</positionID>
+              <title>Finance Associate (Proj.Ctrl)</title>
+              <grade>99</grade>
+              <hrJobCode>AW0001</hrJobCode>
+              <fastTrack>N</fastTrack>
+              <timedCost>0</timedCost>
+            </subPosition>
+            <subPosition ID="bb20209d-fa47-48c6-871b-6aab48e833e8">
+              <positionID>AW_3430</positionID>
+              <title>Programme Associate</title>
+              <grade>99</grade>
+              <hrJobCode>AW0001</hrJobCode>
+              <fastTrack>N</fastTrack>
+              <timedCost>0</timedCost>
+            </subPosition>
+            <subPosition ID="1990a5bd-a652-4d29-acbb-d931973e53e9">
+              <positionID>10013694</positionID>
+              <title>Field Associate (E)</title>
+              <incumbent>HARMAL, Faiz Derhim Ali H</incumbent>
+              <grade>G6</grade>
+              <epmJobCode>YEMG6</epmJobCode>
+              <hrJobCode>001119</hrJobCode>
+              <fastTrack>N</fastTrack>
+              <timedCost>44943.07</timedCost>
+            </subPosition>
+            <subPosition ID="2a38039d-7bd9-4ea2-bf4a-87678a4560d8">
+              <positionID>10008202</positionID>
+              <title>Programme Associate</title>
+              <incumbent>AL-NAJAR, Suzan Nouradin Ahmad</incumbent>
+              <type>UNHCR</type>
+              <grade>G6</grade>
+              <epmJobCode>YEMG6</epmJobCode>
+              <hrJobCode>000396</hrJobCode>
+              <fastTrack>N</fastTrack>
+              <timedCost>44943.07</timedCost>
+            </subPosition>
+            <subPosition ID="6a2b245a-ef71-4f2c-b93b-97a78b817206">
+              <positionID>10014384</positionID>
+              <title>Programme Associate</title>
+              <incumbent>ESSA, Fatima Ahmed Mohammed</incumbent>
+              <type>UNHCR</type>
+              <grade>G6</grade>
+              <epmJobCode>YEMG6</epmJobCode>
+              <hrJobCode>000396</hrJobCode>
+              <fastTrack>N</fastTrack>
+              <timedCost>44943.07</timedCost>
+            </subPosition>
+            <subPosition ID="c3521fb0-4439-45a9-88d5-555d2d17ff0a">
+              <positionID>10015987</positionID>
+              <title>Programme Associate</title>
+              <incumbent>AL-HAMMADI, Hanan Abdulla Abdul Hameed</incumbent>
+              <type>UNHCR</type>
+              <grade>G6</grade>
+              <epmJobCode>YEMG6</epmJobCode>
+              <hrJobCode>000396</hrJobCode>
+              <fastTrack>N</fastTrack>
+              <timedCost>44943.07</timedCost>
+            </subPosition>
+          </subPosition>
+        </subPosition>
+      </subPosition>
+      <subPosition ID="8e83aabe-4f0d-4dfc-86dd-ca56905bbf73">
+        <positionID>10018916</positionID>
+        <title>Admin/Finance Officer</title>
+        <incumbent>BUTUROVIC, Ermin</incumbent>
+        <grade>P3</grade>
+        <epmJobCode>YEMP3</epmJobCode>
+        <hrJobCode>000018</hrJobCode>
+        <fastTrack>N</fastTrack>
+        <timedCost>176919.52</timedCost>
+        <subPosition ID="aa2582a5-ace9-425e-ac47-9924ffea3e3e">
+          <positionID>AW_3423</positionID>
+          <title>Assc IT Officer</title>
+          <grade>99</grade>
+          <hrJobCode>AW0001</hrJobCode>
+          <fastTrack>N</fastTrack>
+          <timedCost>0</timedCost>
+          <subPosition ID="2d9d6a59-a024-4ba4-800d-52eb342abf07">
+            <positionID>AW_60261</positionID>
+            <title>NUNV - ICT Specialist (Associate)</title>
+            <grade>99</grade>
+            <hrJobCode>AW0001</hrJobCode>
+            <fastTrack>N</fastTrack>
+            <timedCost>0</timedCost>
+          </subPosition>
+        </subPosition>
+        <subPosition ID="a54fd47a-0676-4417-8baa-feb2bf08f480">
+          <positionID>10017840</positionID>
+          <title>Assc Admin/Finance Officer</title>
+          <incumbent>AL-QUBATI, Jamila Abdu Anam</incumbent>
+          <grade>NB</grade>
+          <epmJobCode>YEMNB</epmJobCode>
+          <hrJobCode>000029</hrJobCode>
+          <fastTrack>N</fastTrack>
+          <timedCost>88077.75</timedCost>
+          <subPosition ID="5e5b3b66-e628-4192-b5e9-fb2f99915c17">
+            <positionID>AW_3421</positionID>
+            <title>Receptionist</title>
+            <grade>99</grade>
+            <hrJobCode>AW0001</hrJobCode>
+            <fastTrack>N</fastTrack>
+            <timedCost>0</timedCost>
+          </subPosition>
+          <subPosition ID="cbe1dbba-cac9-442d-94dd-9bae18793469">
+            <positionID>10008194</positionID>
+            <title>Admin/Finance Associate</title>
+            <incumbent>AL-DOBAE, Zakia Ali Abdul</incumbent>
+            <type>UNHCR</type>
+            <grade>G6</grade>
+            <epmJobCode>YEMG6</epmJobCode>
+            <hrJobCode>000015</hrJobCode>
+            <fastTrack>N</fastTrack>
+            <timedCost>44943.07</timedCost>
+          </subPosition>
+          <subPosition ID="6039a869-cee1-4ef0-8f8b-c7bd2c2b8850">
+            <positionID>10015989</positionID>
+            <title>Snr Finance Assistant</title>
+            <incumbent>AL-AQRABI, Muna Faisal Ali</incumbent>
+            <type>UNHCR</type>
+            <grade>G5</grade>
+            <epmJobCode>YEMG5</epmJobCode>
+            <hrJobCode>000566</hrJobCode>
+            <fastTrack>N</fastTrack>
+            <timedCost>37153.48</timedCost>
+          </subPosition>
+        </subPosition>
+        <subPosition ID="080cd93a-f1e4-4d4f-99c2-8ad41258d398">
+          <positionID>10015671</positionID>
+          <title>ICT Associate</title>
+          <incumbent>HARMAL, Abdullah Ali Ali</incumbent>
+          <grade>G6</grade>
+          <epmJobCode>YEMG6</epmJobCode>
+          <hrJobCode>001476</hrJobCode>
+          <fastTrack>N</fastTrack>
+          <timedCost>44943.07</timedCost>
+        </subPosition>
+        <subPosition ID="09a0caf7-7a27-4173-aee7-8b858ee888b4">
+          <positionID>10008192</positionID>
+          <title>Snr HR Assistant</title>
+          <incumbent>AL-MAHDI, Abdul-Malik Mohammed</incumbent>
+          <type>UNHCR</type>
+          <grade>G5</grade>
+          <epmJobCode>YEMG5</epmJobCode>
+          <hrJobCode>000582</hrJobCode>
+          <fastTrack>N</fastTrack>
+          <timedCost>37153.48</timedCost>
+        </subPosition>
+        <subPosition ID="86b1cea4-ab79-4607-bb94-6dbd88956f74">
+          <positionID>10015995</positionID>
+          <title>Snr Admin/Finance Assistant</title>
+          <incumbent>MADAGHESH, Ebrahim Ahmed Yahya</incumbent>
+          <type>UNHCR</type>
+          <grade>G5</grade>
+          <epmJobCode>YEMG5</epmJobCode>
+          <hrJobCode>000495</hrJobCode>
+          <fastTrack>N</fastTrack>
+          <timedCost>37153.48</timedCost>
+        </subPosition>
+        <subPosition ID="afd24409-1de6-4670-b624-6366461c2971">
+          <positionID>10015986</positionID>
+          <title>Snr Admin Assistant</title>
+          <incumbent>AL-NAGGAR, Ala Mohammed</incumbent>
+          <type>UNHCR</type>
+          <grade>G5</grade>
+          <epmJobCode>YEMG5</epmJobCode>
+          <hrJobCode>001161</hrJobCode>
+          <fastTrack>N</fastTrack>
+          <timedCost>37153.48</timedCost>
+          <subPosition ID="4b6d768d-763c-478d-b3a2-f0bd3fe6d307">
+            <positionID>10008187</positionID>
+            <title>Snr/Driver</title>
+            <incumbent>AL-DIABANI, Kaid Ahmed Saif</incumbent>
+            <type>UNHCR</type>
+            <grade>G3</grade>
+            <epmJobCode>YEMG3</epmJobCode>
+            <hrJobCode>000534</hrJobCode>
+            <fastTrack>N</fastTrack>
+            <timedCost>25795.86</timedCost>
+            <subPosition ID="9e60ce8b-503c-4974-a9a2-94718fc542bf">
+              <positionID>10008189</positionID>
+              <title>Driver</title>
+              <incumbent>AL-SABAHI, Gamal Abdullah</incumbent>
+              <type>UNHCR</type>
+              <grade>G2</grade>
+              <epmJobCode>YEMG2</epmJobCode>
+              <hrJobCode>000197</hrJobCode>
+              <fastTrack>N</fastTrack>
+              <timedCost>21670.79</timedCost>
+            </subPosition>
+            <subPosition ID="0866d3ba-8141-4e3a-a7c4-317c332473d2">
+              <positionID>10012497</positionID>
+              <title>Driver</title>
+              <incumbent>AL-SHAIBANI, Mohammed</incumbent>
+              <type>UNHCR</type>
+              <grade>G2</grade>
+              <epmJobCode>YEMG2</epmJobCode>
+              <hrJobCode>000197</hrJobCode>
+              <fastTrack>N</fastTrack>
+              <timedCost>21670.79</timedCost>
+            </subPosition>
+            <subPosition ID="1172092d-8e5a-4d20-854e-fed288843fc4">
+              <positionID>10016000</positionID>
+              <title>Driver</title>
+              <incumbent>SALIM, Abdul Rahman Mukrid Saeed</incumbent>
+              <type>UNHCR</type>
+              <grade>G2</grade>
+              <epmJobCode>YEMG2</epmJobCode>
+              <hrJobCode>000197</hrJobCode>
+              <fastTrack>N</fastTrack>
+              <timedCost>21670.79</timedCost>
+            </subPosition>
+            <subPosition ID="f998818b-d58a-460e-8ad7-bdaae9d0f4b8">
+              <positionID>AW_3420</positionID>
+              <title>Driver</title>
+              <grade>99</grade>
+              <hrJobCode>AW0001</hrJobCode>
+              <fastTrack>N</fastTrack>
+              <timedCost>0</timedCost>
+            </subPosition>
+            <subPosition ID="72400f3e-e0c8-423a-b6b7-13a960695428">
+              <positionID>10016631</positionID>
+              <title>Driver</title>
+              <incumbent>AL-SAYAGHI, Saddam Mohammed</incumbent>
+              <type>UNHCR</type>
+              <grade>G2</grade>
+              <epmJobCode>YEMG2</epmJobCode>
+              <hrJobCode>000197</hrJobCode>
+              <fastTrack>N</fastTrack>
+              <timedCost>21670.79</timedCost>
+            </subPosition>
+            <subPosition ID="dae3bc39-f473-86c9-e040-a8c06d3470b8">
+              <positionID>10015990</positionID>
+              <title>Driver</title>
+              <incumbent>HAMZAH, Fadhl Mohammed</incumbent>
+              <type>UNHCR</type>
+              <grade>G2</grade>
+              <epmJobCode>YEMG2</epmJobCode>
+              <hrJobCode>000197</hrJobCode>
+              <fastTrack>N</fastTrack>
+              <timedCost>10924.45</timedCost>
+            </subPosition>
+            <subPosition ID="dae3bc39-f483-86c9-e040-a8c06d3470b8">
+              <positionID>10015999</positionID>
+              <title>Driver</title>
+              <incumbent>AL-HAGRAH, Amer Ali</incumbent>
+              <type>UNHCR</type>
+              <grade>G2</grade>
+              <epmJobCode>YEMG2</epmJobCode>
+              <hrJobCode>000197</hrJobCode>
+              <fastTrack>N</fastTrack>
+              <timedCost>10924.45</timedCost>
+            </subPosition>
+          </subPosition>
+        </subPosition>
+      </subPosition>
+      <subPosition ID="e6c90dc8-58a7-4deb-adbb-08f0974e9f7c">
+        <positionID>AW_60253</positionID>
+        <title>IUNV - Assoc. Public Info. Officer</title>
+        <grade>99</grade>
+        <hrJobCode>AW0001</hrJobCode>
+        <fastTrack>N</fastTrack>
+        <timedCost>0</timedCost>
+      </subPosition>
+      <subPosition ID="f98c2803-2887-48e8-82ac-f298ced072db">
+        <positionID>10008203</positionID>
+        <title>Principal Secretary</title>
+        <incumbent>AL-KUBI, Najat Yahya Mosleh</incumbent>
+        <type>UNHCR</type>
+        <grade>G6</grade>
+        <epmJobCode>YEMG6</epmJobCode>
+        <hrJobCode>000391</hrJobCode>
+        <fastTrack>N</fastTrack>
+        <timedCost>44943.07</timedCost>
+      </subPosition>
+      <subPosition ID="6922fdf9-89b9-4c9e-b9d2-e120f9654f2c">
+        <positionID>10015831</positionID>
+        <title>Field Safety Adviser</title>
+        <incumbent>ALMADANI, Ala</incumbent>
+        <type>UNHCR</type>
+        <grade>P3</grade>
+        <epmJobCode>YEMP3</epmJobCode>
+        <hrJobCode>000236</hrJobCode>
+        <fastTrack>N</fastTrack>
+        <timedCost>176919.52</timedCost>
+        <subPosition ID="679cdc24-b7e9-4b36-bda7-79b335a04cc9">
+          <positionID>10015668</positionID>
+          <title>Field Safety Associate</title>
+          <incumbent>GAHLAN, Mohammed Saeed Abduh</incumbent>
+          <type>UNHCR</type>
+          <grade>G6</grade>
+          <epmJobCode>YEMG6</epmJobCode>
+          <hrJobCode>000237</hrJobCode>
+          <fastTrack>N</fastTrack>
+          <timedCost>44943.07</timedCost>
+          <subPosition ID="653e1e58-342c-4811-b557-6185a017f6bc">
+            <positionID>10008193</positionID>
+            <title>Guard</title>
+            <incumbent>AL-DAFARY, Khaled Ahmed Mohamed</incumbent>
+            <type>UNHCR</type>
+            <grade>G1</grade>
+            <epmJobCode>YEMG1</epmJobCode>
+            <hrJobCode>000264</hrJobCode>
+            <fastTrack>N</fastTrack>
+            <timedCost>18214.17</timedCost>
+          </subPosition>
+          <subPosition ID="d1654b94-6c34-4baa-a474-9b6b94cce473">
+            <positionID>10008191</positionID>
+            <title>Guard</title>
+            <incumbent>AL-GOWAIZY, Dawood N. Kayed</incumbent>
+            <type>UNHCR</type>
+            <grade>G1</grade>
+            <epmJobCode>YEMG1</epmJobCode>
+            <hrJobCode>000264</hrJobCode>
+            <fastTrack>N</fastTrack>
+            <timedCost>18214.17</timedCost>
+          </subPosition>
+        </subPosition>
+      </subPosition>
+      <subPosition ID="61ed46f0-4e4a-41ca-8a23-f9018185ae26">
+        <positionID>10008190</positionID>
+        <title>Asst Representative (Prot)</title>
+        <incumbent>BUI, Quang L</incumbent>
+        <type>UNHCR</type>
+        <grade>P5</grade>
+        <epmJobCode>YEMP5</epmJobCode>
+        <hrJobCode>000123</hrJobCode>
+        <fastTrack>N</fastTrack>
+        <timedCost>243351.39</timedCost>
+        <subPosition ID="d7033f3d-f785-4c3d-ac54-df8c2053b564">
+          <positionID>10008231</positionID>
+          <title>Comty Srvs Officer</title>
+          <incumbent>HANSON, Patrick</incumbent>
+          <grade>P3</grade>
+          <epmJobCode>YEMP3</epmJobCode>
+          <hrJobCode>000162</hrJobCode>
+          <fastTrack>N</fastTrack>
+          <timedCost>28597.95</timedCost>
+          <subPosition ID="4b0b8fee-b18b-47a1-b9f3-793dfcf97e03">
+            <positionID>AW_70517</positionID>
+            <title>IUNV - Assoc Community Services Officer, P2</title>
+            <type>UNV</type>
+            <fastTrack>N</fastTrack>
+            <timedCost>0</timedCost>
+            <subPosition ID="97e477af-0097-497f-b0f3-9e31318fbb0f">
+              <positionID>AW_3586</positionID>
+              <title>Comty Srvs Assistant</title>
+              <grade>99</grade>
+              <hrJobCode>AW0001</hrJobCode>
+              <fastTrack>N</fastTrack>
+              <timedCost>0</timedCost>
+            </subPosition>
+            <subPosition ID="f7be54df-a3e5-4cea-88fa-394b79520057">
+              <positionID>AW_3587</positionID>
+              <title>Comty Srvs Assistant</title>
+              <grade>99</grade>
+              <hrJobCode>AW0001</hrJobCode>
+              <fastTrack>N</fastTrack>
+              <timedCost>0</timedCost>
+            </subPosition>
+            <subPosition ID="fa86e8f2-2875-4bea-8035-2c834f6714d3">
+              <positionID>AW_3588</positionID>
+              <title>Comty Srvs Associate</title>
+              <grade>99</grade>
+              <hrJobCode>AW0001</hrJobCode>
+              <fastTrack>N</fastTrack>
+              <timedCost>0</timedCost>
+            </subPosition>
+            <subPosition ID="f2c6684d-783d-4275-9767-39a3c7a94668">
+              <positionID>AW_70513</positionID>
+              <title>NUNV - Community Services Assistant, G6</title>
+              <type>UNV</type>
+              <fastTrack>N</fastTrack>
+              <timedCost>0</timedCost>
+            </subPosition>
+          </subPosition>
+        </subPosition>
+        <subPosition ID="c09160e0-3bcc-4790-82f5-fa60df0afd30">
+          <positionID>10014271</positionID>
+          <title>Regis Officer</title>
+          <incumbent>MANN, Parveen Kumar</incumbent>
+          <grade>P3</grade>
+          <epmJobCode>YEMP3</epmJobCode>
+          <hrJobCode>000453</hrJobCode>
+          <fastTrack>N</fastTrack>
+          <timedCost>176919.52</timedCost>
+          <subPosition ID="800e5576-a331-49a9-933d-9dffdd357e75">
+            <positionID>AW_3583</positionID>
+            <title>Regis Associate</title>
+            <grade>99</grade>
+            <hrJobCode>AW0001</hrJobCode>
+            <fastTrack>N</fastTrack>
+            <timedCost>0</timedCost>
+          </subPosition>
+          <subPosition ID="6ee2719e-ae23-4397-bf1d-1496fab9fed0">
+            <positionID>10015992</positionID>
+            <title>Assc Ops Data Mgt Off</title>
+            <incumbent>FOTSING SOUOP, Dominique</incumbent>
+            <type>UNHCR</type>
+            <grade>P2</grade>
+            <epmJobCode>YEMP2</epmJobCode>
+            <hrJobCode>000039</hrJobCode>
+            <fastTrack>N</fastTrack>
+            <timedCost>145079.72</timedCost>
+            <subPosition ID="1881e152-a2d3-4c2c-bb9b-bcebefddff23">
+              <positionID>AW_3582</positionID>
+              <title>Regis Assistant</title>
+              <grade>99</grade>
+              <hrJobCode>AW0001</hrJobCode>
+              <fastTrack>N</fastTrack>
+              <timedCost>0</timedCost>
+            </subPosition>
+            <subPosition ID="feef7504-faef-4c48-afd8-ec47f63af2cb">
+              <positionID>AW_3584</positionID>
+              <title>Regis Assistant</title>
+              <grade>99</grade>
+              <hrJobCode>AW0001</hrJobCode>
+              <fastTrack>N</fastTrack>
+              <timedCost>0</timedCost>
+            </subPosition>
+            <subPosition ID="5cf50477-2fe5-49da-8316-9564a6d4020a">
+              <positionID>10015998</positionID>
+              <title>Regis Assistant</title>
+              <incumbent>AL-ABSI, Sanad Ali</incumbent>
+              <grade>G4</grade>
+              <epmJobCode>YEMG4</epmJobCode>
+              <hrJobCode>000452</hrJobCode>
+              <fastTrack>N</fastTrack>
+              <timedCost>30701.78</timedCost>
+            </subPosition>
+          </subPosition>
+        </subPosition>
+        <subPosition ID="ae598927-225d-4f90-9448-a9bb87ae2a15">
+          <positionID>10008188</positionID>
+          <title>Prot Officer</title>
+          <incumbent>MWANGI, Annabel</incumbent>
+          <type>UNHCR</type>
+          <grade>P3</grade>
+          <epmJobCode>YEMP3</epmJobCode>
+          <hrJobCode>000409</hrJobCode>
+          <fastTrack>N</fastTrack>
+          <timedCost>87732.69</timedCost>
+          <subPosition ID="f985126e-9688-4fb6-b2b7-e8e20fd16361">
+            <positionID>10014383</positionID>
+            <title>Asst Prot Officer</title>
+            <incumbent>AL-BEEDH, Amal Khalid</incumbent>
+            <type>UNHCR</type>
+            <grade>NA</grade>
+            <epmJobCode>YEMNA</epmJobCode>
+            <hrJobCode>N00115</hrJobCode>
+            <fastTrack>N</fastTrack>
+            <timedCost>70578.78</timedCost>
+          </subPosition>
+          <subPosition ID="6fa6a8e5-30a6-4c44-9c11-fa918beacdc8">
+            <positionID>AW_70512</positionID>
+            <title>IUNV - Assoc RSD Eligibility Officer, P2</title>
+            <type>UNV</type>
+            <fastTrack>N</fastTrack>
+            <timedCost>0</timedCost>
+          </subPosition>
+          <subPosition ID="d176dd7d-7183-4f34-97be-a2b5987cb466">
+            <positionID>10011233</positionID>
+            <title>Prot Assistant</title>
+            <incumbent>AL-HEGRI, Mohamed Omar</incumbent>
+            <type>UNHCR</type>
+            <grade>G4</grade>
+            <epmJobCode>YEMG4</epmJobCode>
+            <hrJobCode>000410</hrJobCode>
+            <fastTrack>N</fastTrack>
+            <timedCost>30701.78</timedCost>
+          </subPosition>
+          <subPosition ID="9dc35b9e-b0c2-450a-b5db-9c741a3b6a2a">
+            <positionID>10008204</positionID>
+            <title>Receptionist</title>
+            <incumbent>SALAH, Nabeel Saleh Abdu</incumbent>
+            <type>UNHCR</type>
+            <grade>G3</grade>
+            <epmJobCode>YEMG3</epmJobCode>
+            <hrJobCode>000418</hrJobCode>
+            <fastTrack>N</fastTrack>
+            <timedCost>25795.86</timedCost>
+          </subPosition>
+          <subPosition ID="eebb5014-9529-4173-9002-d5e04221c7e7">
+            <positionID>10011357</positionID>
+            <title>Prot Associate</title>
+            <incumbent>AL-HASHIMI, Nouf Tawfiq Hamood</incumbent>
+            <type>UNHCR</type>
+            <grade>G6</grade>
+            <epmJobCode>YEMG6</epmJobCode>
+            <hrJobCode>000408</hrJobCode>
+            <fastTrack>N</fastTrack>
+            <timedCost>44943.07</timedCost>
+          </subPosition>
+          <subPosition ID="f895a829-95c9-4fa2-a91e-27045b05a207">
+            <positionID>AW_70515</positionID>
+            <title>IUNV - Assoc RSD Eligibility Officer, P2</title>
+            <type>UNV</type>
+            <fastTrack>N</fastTrack>
+            <timedCost>0</timedCost>
+          </subPosition>
+          <subPosition ID="67775f71-eb21-4477-b56f-9f1a6b7c7ab2">
+            <positionID>10008199</positionID>
+            <title>Data Management Assistant</title>
+            <incumbent>AL-JARADY, Nasr Sultan</incumbent>
+            <type>UNHCR</type>
+            <grade>G4</grade>
+            <epmJobCode>YEMG4</epmJobCode>
+            <hrJobCode>000169</hrJobCode>
+            <fastTrack>N</fastTrack>
+            <timedCost>30701.78</timedCost>
+          </subPosition>
+          <subPosition ID="2e9292f7-6171-4c91-9172-74e22f002ebc">
+            <positionID>10015832</positionID>
+            <title>Assc Protection Officer</title>
+            <incumbent>AL-JABI, Gamal Mohammed</incumbent>
+            <type>UNHCR</type>
+            <grade>NB</grade>
+            <epmJobCode>YEMNB</epmJobCode>
+            <hrJobCode>000079</hrJobCode>
+            <fastTrack>N</fastTrack>
+            <timedCost>88077.75</timedCost>
+          </subPosition>
+        </subPosition>
+        <subPosition ID="665d05c7-3940-4c4e-b0e2-4664cb6a005b">
+          <positionID>AW_60275</positionID>
+          <title>Resettlement Officer, P3 - ICMC Secondee</title>
+          <grade>99</grade>
+          <hrJobCode>AW0001</hrJobCode>
+          <fastTrack>N</fastTrack>
+          <timedCost>0</timedCost>
+          <subPosition ID="563d9fe1-2153-4663-936b-519f4a282084">
+            <positionID>10013236</positionID>
+            <title>Resett Associate GL6</title>
+            <incumbent>DAEN, Najla Naji Yahya</incumbent>
+            <type>UNHCR</type>
+            <grade>G6</grade>
+            <epmJobCode>YEMG6</epmJobCode>
+            <hrJobCode>000469</hrJobCode>
+            <fastTrack>N</fastTrack>
+            <timedCost>44943.07</timedCost>
+          </subPosition>
+          <subPosition ID="0e13b0ac-0ac1-4e1b-ac76-db8d07c39119">
+            <positionID>AW_60274</positionID>
+            <title>NUNV - Resettlement Specialist, G6</title>
+            <grade>99</grade>
+            <hrJobCode>AW0001</hrJobCode>
+            <fastTrack>N</fastTrack>
+            <timedCost>0</timedCost>
+          </subPosition>
+          <subPosition ID="f478e3cf-b3d2-4817-a54e-666bd9ce520e">
+            <positionID>10008197</positionID>
+            <title>Snr Dur Sol Assistant</title>
+            <incumbent>BARI, Asefa Maatook Abdul</incumbent>
+            <type>UNHCR</type>
+            <grade>G5</grade>
+            <epmJobCode>YEMG5</epmJobCode>
+            <hrJobCode>000536</hrJobCode>
+            <fastTrack>N</fastTrack>
+            <timedCost>37153.48</timedCost>
+          </subPosition>
+        </subPosition>
+        <subPosition ID="c9ecb78e-4d6a-4cf9-b8f7-728e033e8e8d">
+          <positionID>10015988</positionID>
+          <title>Snr Prot Officer</title>
+          <incumbent>MUSA, Hagir</incumbent>
+          <type>UNHCR</type>
+          <grade>P4</grade>
+          <epmJobCode>YEMP4</epmJobCode>
+          <hrJobCode>000661</hrJobCode>
+          <fastTrack>N</fastTrack>
+          <timedCost>210125.1</timedCost>
+          <subPosition ID="ad4ca464-3149-4972-b487-315e98f7c778">
+            <positionID>AW_60272</positionID>
+            <title>NUNV - Protection Specialist, G6</title>
+            <grade>99</grade>
+            <hrJobCode>AW0001</hrJobCode>
+            <fastTrack>N</fastTrack>
+            <timedCost>0</timedCost>
+          </subPosition>
+          <subPosition ID="5d085e1f-c430-4ab7-9ab8-94d8435946ff">
+            <positionID>10008201</positionID>
+            <title>Comty Srvs Associate</title>
+            <incumbent>MASSUD, Ahmed Ali</incumbent>
+            <type>UNHCR</type>
+            <grade>G6</grade>
+            <epmJobCode>YEMG6</epmJobCode>
+            <hrJobCode>000160</hrJobCode>
+            <fastTrack>N</fastTrack>
+            <timedCost>44943.07</timedCost>
+          </subPosition>
+          <subPosition ID="fc58208d-facc-45d8-b0fa-92d35f9f972f">
+            <positionID>AW_60273</positionID>
+            <title>NUNV - Field Specialist / CCCM, G6</title>
+            <grade>99</grade>
+            <hrJobCode>AW0001</hrJobCode>
+            <fastTrack>N</fastTrack>
+            <timedCost>0</timedCost>
+          </subPosition>
+          <subPosition ID="c6ceda43-6a5e-4ab5-afeb-43dcc69298c4">
+            <positionID>10017388</positionID>
+            <title>Cluster Coordinator (PRT)</title>
+            <incumbent>TAKLU-NAGGA, Berhane</incumbent>
+            <type>UNHCR</type>
+            <grade>P4</grade>
+            <epmJobCode>YEMP4</epmJobCode>
+            <hrJobCode>001686</hrJobCode>
+            <fastTrack>N</fastTrack>
+            <timedCost>210125.1</timedCost>
+            <subPosition ID="7940420e-7321-43a7-afad-5cfc90282216">
+              <positionID>AW_3585</positionID>
+              <title>Assc Protection Officer</title>
+              <grade>99</grade>
+              <hrJobCode>AW0001</hrJobCode>
+              <fastTrack>N</fastTrack>
+              <timedCost>0</timedCost>
+            </subPosition>
+          </subPosition>
+          <subPosition ID="de30a191-ac7f-435c-e040-a8c06d34175a">
+            <positionID>10013692</positionID>
+            <title>Head of Field Office P3</title>
+            <incumbent>YACOUT, Gamal Mohamed Nour</incumbent>
+            <type>UNHCR</type>
+            <grade>P3</grade>
+            <epmJobCode>YEMP3</epmJobCode>
+            <hrJobCode>000270</hrJobCode>
+            <fastTrack>N</fastTrack>
+            <timedCost>89186.82</timedCost>
+            <subPosition ID="dae3bc39-f477-86c9-e040-a8c06d3470b8">
+              <positionID>10015993</positionID>
+              <title>Prot Associate</title>
+              <incumbent>GAHLAN, Kaseem Kaseem Saleh</incumbent>
+              <type>UNHCR</type>
+              <grade>G6</grade>
+              <epmJobCode>YEMG6</epmJobCode>
+              <hrJobCode>000408</hrJobCode>
+              <fastTrack>N</fastTrack>
+              <timedCost>22656.23</timedCost>
+            </subPosition>
+            <subPosition ID="dae3bc39-f47c-86c9-e040-a8c06d3470b8">
+              <positionID>10015996</positionID>
+              <title>Snr Comty Services Assistant</title>
+              <incumbent>AL-SABRI, Arwa Ali Mohamed</incumbent>
+              <type>UNHCR</type>
+              <grade>G5</grade>
+              <epmJobCode>YEMG5</epmJobCode>
+              <hrJobCode>000521</hrJobCode>
+              <fastTrack>N</fastTrack>
+              <timedCost>18729.42</timedCost>
+            </subPosition>
+            <subPosition ID="dae3bc39-f47f-86c9-e040-a8c06d3470b8">
+              <positionID>10015997</positionID>
+              <title>Regis Assistant</title>
+              <incumbent>AL-HADI, Abdullah Saleh</incumbent>
+              <type>UNHCR</type>
+              <grade>G4</grade>
+              <epmJobCode>YEMG4</epmJobCode>
+              <hrJobCode>000452</hrJobCode>
+              <fastTrack>N</fastTrack>
+              <timedCost>15477.06</timedCost>
+            </subPosition>
+          </subPosition>
+        </subPosition>
+        <subPosition ID="d9ca1787-1f3d-548d-e040-a8c06d3415a6">
+          <positionID>10017387</positionID>
+          <title>Resett Officer</title>
+          <incumbent>MARKOVIC, Olivera</incumbent>
+          <type>UNHCR</type>
+          <grade>P3</grade>
+          <epmJobCode>YEMP3</epmJobCode>
+          <hrJobCode>000473</hrJobCode>
+          <fastTrack>N</fastTrack>
+          <timedCost>133295.53</timedCost>
+        </subPosition>
+        <subPosition ID="dae3bc39-f990-86c9-e040-a8c06d3470b8">
+          <positionID>10018072</positionID>
+          <title>Prot Officer</title>
+          <incumbent>MOYA, Vanessa</incumbent>
+          <type>UNHCR</type>
+          <grade>P3</grade>
+          <epmJobCode>YEMP3</epmJobCode>
+          <hrJobCode>000409</hrJobCode>
+          <fastTrack>N</fastTrack>
+          <timedCost>89186.82</timedCost>
+        </subPosition>
+      </subPosition>
+      <subPosition ID="6cf9a1c8-9283-4ee6-a9eb-b93f46c8489f">
+        <positionID>10015984</positionID>
+        <title>Supply Officer</title>
+        <incumbent>GEBRE-MARIAM, Yohannes Hailu</incumbent>
+        <type>UNHCR</type>
+        <grade>P3</grade>
+        <epmJobCode>YEMP3</epmJobCode>
+        <hrJobCode>000774</hrJobCode>
+        <fastTrack>N</fastTrack>
+        <timedCost>176919.52</timedCost>
+        <subPosition ID="12214c6c-3787-464d-8e69-190c96db64d2">
+          <positionID>AW_60255</positionID>
+          <title>NUNV - Asset Mgmt. Specialist</title>
+          <grade>99</grade>
+          <hrJobCode>AW0001</hrJobCode>
+          <fastTrack>N</fastTrack>
+          <timedCost>0</timedCost>
+        </subPosition>
+        <subPosition ID="c4711bf6-408e-43a2-a058-896de1bdb543">
+          <positionID>10013698</positionID>
+          <title>Snr Supply Assistant</title>
+          <incumbent>AHMED, Khalid Abdul-Salam</incumbent>
+          <type>UNHCR</type>
+          <grade>G5</grade>
+          <epmJobCode>YEMG5</epmJobCode>
+          <hrJobCode>000727</hrJobCode>
+          <fastTrack>N</fastTrack>
+          <timedCost>37153.48</timedCost>
+        </subPosition>
+        <subPosition ID="a945ed66-6dd2-4121-96bc-73395af1e4f8">
+          <positionID>10015985</positionID>
+          <title>Supply Associate</title>
+          <incumbent>ZABARAH, Ali Abdulkareem</incumbent>
+          <type>UNHCR</type>
+          <grade>G6</grade>
+          <epmJobCode>YEMG6</epmJobCode>
+          <hrJobCode>000769</hrJobCode>
+          <fastTrack>N</fastTrack>
+          <timedCost>44943.07</timedCost>
+        </subPosition>
+      </subPosition>
+      <subPosition ID="e5191016-e321-4893-9401-09ec0ec92888">
+        <positionID>AW_3889</positionID>
+        <title>Assc Reporting Officer</title>
+        <grade>99</grade>
+        <hrJobCode>AW0001</hrJobCode>
+        <fastTrack>N</fastTrack>
+        <timedCost>0</timedCost>
+      </subPosition>
+      <timedCost>279029.35</timedCost>
+    </headPosition>
+    <adminBudgets>
+      <AdminBudgetLine ID="29dadbb5-f060-4467-a74c-f48889f494dc">
+        <chapterType>03X</chapterType>
+        <chapterName>Temporary Assistance</chapterName>
+        <chapterMsrp>620300</chapterMsrp>
+        <wolAdmin>1208</wolAdmin>
+        <wolSecurity>0</wolSecurity>
+        <aolAdmin>0</aolAdmin>
+        <aolSecurity>0</aolSecurity>
+      </AdminBudgetLine>
+      <AdminBudgetLine ID="29dadbb5-f060-4467-a74c-f48889f494dc">
+        <chapterType>04X</chapterType>
+        <chapterName>Consultants Costs</chapterName>
+        <chapterMsrp>615000</chapterMsrp>
+        <wolAdmin>0</wolAdmin>
+        <wolSecurity>0</wolSecurity>
+        <aolAdmin>0</aolAdmin>
+        <aolSecurity>0</aolSecurity>
+      </AdminBudgetLine>
+      <AdminBudgetLine ID="29dadbb5-f060-4467-a74c-f48889f494dc">
+        <chapterType>05X</chapterType>
+        <chapterName>Overtime</chapterName>
+        <chapterMsrp>620500</chapterMsrp>
+        <wolAdmin>9143</wolAdmin>
+        <wolSecurity>0</wolSecurity>
+        <aolAdmin>0</aolAdmin>
+        <aolSecurity>0</aolSecurity>
+      </AdminBudgetLine>
+      <AdminBudgetLine ID="29dadbb5-f060-4467-a74c-f48889f494dc">
+        <chapterType>2XX</chapterType>
+        <chapterName>Travel on Official Business</chapterName>
+        <chapterMsrp>622000</chapterMsrp>
+        <wolAdmin>115000</wolAdmin>
+        <wolSecurity>0</wolSecurity>
+        <aolAdmin>0</aolAdmin>
+        <aolSecurity>0</aolSecurity>
+      </AdminBudgetLine>
+      <AdminBudgetLine ID="29dadbb5-f060-4467-a74c-f48889f494dc">
+        <chapterType>31X</chapterType>
+        <chapterName>Training Services</chapterName>
+        <chapterMsrp>623100</chapterMsrp>
+        <wolAdmin>2500</wolAdmin>
+        <wolSecurity>0</wolSecurity>
+        <aolAdmin>0</aolAdmin>
+        <aolSecurity>0</aolSecurity>
+      </AdminBudgetLine>
+      <AdminBudgetLine ID="29dadbb5-f060-4467-a74c-f48889f494dc">
+        <chapterType>3XX</chapterType>
+        <chapterName>Contractual Services</chapterName>
+        <chapterMsrp>623000</chapterMsrp>
+        <wolAdmin>3000</wolAdmin>
+        <wolSecurity>0</wolSecurity>
+        <aolAdmin>0</aolAdmin>
+        <aolSecurity>0</aolSecurity>
+      </AdminBudgetLine>
+      <AdminBudgetLine ID="29dadbb5-f060-4467-a74c-f48889f494dc">
+        <chapterType>41X</chapterType>
+        <chapterName>Rental and Maintenance of Premises</chapterName>
+        <chapterMsrp>624100</chapterMsrp>
+        <wolAdmin>358304.04</wolAdmin>
+        <wolSecurity>245191</wolSecurity>
+        <aolAdmin>0</aolAdmin>
+        <aolSecurity>0</aolSecurity>
+      </AdminBudgetLine>
+      <AdminBudgetLine ID="29dadbb5-f060-4467-a74c-f48889f494dc">
+        <chapterType>42X</chapterType>
+        <chapterName>Utilities</chapterName>
+        <chapterMsrp>624200</chapterMsrp>
+        <wolAdmin>30005</wolAdmin>
+        <wolSecurity>0</wolSecurity>
+        <aolAdmin>0</aolAdmin>
+        <aolSecurity>0</aolSecurity>
+      </AdminBudgetLine>
+      <AdminBudgetLine ID="29dadbb5-f060-4467-a74c-f48889f494dc">
+        <chapterType>43X</chapterType>
+        <chapterName>Rental of Equipment and Vehicles</chapterName>
+        <chapterMsrp>624300</chapterMsrp>
+        <wolAdmin>2000</wolAdmin>
+        <wolSecurity>0</wolSecurity>
+        <aolAdmin>0</aolAdmin>
+        <aolSecurity>0</aolSecurity>
+      </AdminBudgetLine>
+      <AdminBudgetLine ID="29dadbb5-f060-4467-a74c-f48889f494dc">
+        <chapterType>44X</chapterType>
+        <chapterName>Communications</chapterName>
+        <chapterMsrp>624400</chapterMsrp>
+        <wolAdmin>134106</wolAdmin>
+        <wolSecurity>0</wolSecurity>
+        <aolAdmin>0</aolAdmin>
+        <aolSecurity>0</aolSecurity>
+      </AdminBudgetLine>
+      <AdminBudgetLine ID="29dadbb5-f060-4467-a74c-f48889f494dc">
+        <chapterType>45X</chapterType>
+        <chapterName>Hospitality</chapterName>
+        <chapterMsrp>624500</chapterMsrp>
+        <wolAdmin>2500</wolAdmin>
+        <wolSecurity>0</wolSecurity>
+        <aolAdmin>0</aolAdmin>
+        <aolSecurity>0</aolSecurity>
+      </AdminBudgetLine>
+      <AdminBudgetLine ID="29dadbb5-f060-4467-a74c-f48889f494dc">
+        <chapterType>46X</chapterType>
+        <chapterName>Maintenance of Furniture, Equip &amp; Vehicles</chapterName>
+        <chapterMsrp>624600</chapterMsrp>
+        <wolAdmin>18150</wolAdmin>
+        <wolSecurity>0</wolSecurity>
+        <aolAdmin>0</aolAdmin>
+        <aolSecurity>0</aolSecurity>
+      </AdminBudgetLine>
+      <AdminBudgetLine ID="29dadbb5-f060-4467-a74c-f48889f494dc">
+        <chapterType>49X</chapterType>
+        <chapterName>Miscellaneous Services</chapterName>
+        <chapterMsrp>624900</chapterMsrp>
+        <wolAdmin>15360</wolAdmin>
+        <wolSecurity>0</wolSecurity>
+        <aolAdmin>0</aolAdmin>
+        <aolSecurity>0</aolSecurity>
+      </AdminBudgetLine>
+      <AdminBudgetLine ID="29dadbb5-f060-4467-a74c-f48889f494dc">
+        <chapterType>4XX</chapterType>
+        <chapterName>General Operating Expenses</chapterName>
+        <chapterMsrp>624000</chapterMsrp>
+        <wolAdmin>2200</wolAdmin>
+        <wolSecurity>0</wolSecurity>
+        <aolAdmin>22513</aolAdmin>
+        <aolSecurity>0</aolSecurity>
+      </AdminBudgetLine>
+      <AdminBudgetLine ID="29dadbb5-f060-4467-a74c-f48889f494dc">
+        <chapterType>4XX</chapterType>
+        <chapterName>Staff/Guest Accommodations</chapterName>
+        <chapterMsrp>676100</chapterMsrp>
+        <wolAdmin>4000</wolAdmin>
+        <wolSecurity>0</wolSecurity>
+        <aolAdmin>0</aolAdmin>
+        <aolSecurity>0</aolSecurity>
+      </AdminBudgetLine>
+      <AdminBudgetLine ID="29dadbb5-f060-4467-a74c-f48889f494dc">
+        <chapterType>517</chapterType>
+        <chapterName>Petrol, diesel and other lubricants</chapterName>
+        <chapterMsrp>606000</chapterMsrp>
+        <wolAdmin>48483</wolAdmin>
+        <wolSecurity>0</wolSecurity>
+        <aolAdmin>0</aolAdmin>
+        <aolSecurity>0</aolSecurity>
+      </AdminBudgetLine>
+      <AdminBudgetLine ID="29dadbb5-f060-4467-a74c-f48889f494dc">
+        <chapterType>5XX</chapterType>
+        <chapterName>Materials and Office Supplies</chapterName>
+        <chapterMsrp>601000</chapterMsrp>
+        <wolAdmin>27800</wolAdmin>
+        <wolSecurity>16250</wolSecurity>
+        <aolAdmin>0</aolAdmin>
+        <aolSecurity>0</aolSecurity>
+      </AdminBudgetLine>
+      <AdminBudgetLine ID="29dadbb5-f060-4467-a74c-f48889f494dc">
+        <chapterType>6XX</chapterType>
+        <chapterName>Non-expendable Property</chapterName>
+        <chapterMsrp>605000</chapterMsrp>
+        <wolAdmin>398300</wolAdmin>
+        <wolSecurity>5700</wolSecurity>
+        <aolAdmin>0</aolAdmin>
+        <aolSecurity>0</aolSecurity>
+      </AdminBudgetLine>
+      <AdminBudgetLine ID="29dadbb5-f060-4467-a74c-f48889f494dc">
+        <chapterType>7XX</chapterType>
+        <chapterName>Improvements to Premises</chapterName>
+        <chapterMsrp>627000</chapterMsrp>
+        <wolAdmin>3000</wolAdmin>
+        <wolSecurity>7000</wolSecurity>
+        <aolAdmin>0</aolAdmin>
+        <aolSecurity>0</aolSecurity>
+      </AdminBudgetLine>
+      <AdminBudgetLine ID="29dadbb5-f060-4467-a74c-f48889f494dc">
+        <chapterType>8XX</chapterType>
+        <chapterName>Seminars - Other group activities</chapterName>
+        <chapterMsrp>628000</chapterMsrp>
+        <wolAdmin>2000</wolAdmin>
+        <wolSecurity>0</wolSecurity>
+        <aolAdmin>0</aolAdmin>
+        <aolSecurity>0</aolSecurity>
+      </AdminBudgetLine>
+      <AdminBudgetLine ID="29dadbb5-f060-4467-a74c-f48889f494dc">
+        <chapterType>9XX</chapterType>
+        <chapterName>Joint UN Activities</chapterName>
+        <chapterMsrp>629000</chapterMsrp>
+        <wolAdmin>50000</wolAdmin>
+        <wolSecurity>120000</wolSecurity>
+        <aolAdmin>0</aolAdmin>
+        <aolSecurity>0</aolSecurity>
+      </AdminBudgetLine>
+    </adminBudgets>
+    <supplementPositions>
+      <SupplementPostion ID="7705726e-f040-4527-9b82-87d236451a98">
+        <function>Protection</function>
+        <epmJobCode>YEMG6</epmJobCode>
+        <unitCost>44943.07</unitCost>
+        <category>PG</category>
+        <personYears>1</personYears>
+        <comment>PROTECTION ASSOCIATE</comment>
+        <total>44943.07</total>
+      </SupplementPostion>
+      <SupplementPostion ID="a5345a16-01d8-4613-82c7-c203a996288e">
+        <function>Programme</function>
+        <epmJobCode>YEMNA</epmJobCode>
+        <unitCost>70578.78</unitCost>
+        <category>PG</category>
+        <personYears>1</personYears>
+        <comment>ASSISTANT PROGRAMME OFFICER, NOA</comment>
+        <total>70578.78</total>
+      </SupplementPostion>
+      <SupplementPostion ID="5b214ddf-c0e4-47ff-9411-d2379e91253f">
+        <function>Supply</function>
+        <epmJobCode>YEMG5</epmJobCode>
+        <unitCost>37153.48</unitCost>
+        <category>PG</category>
+        <personYears>1</personYears>
+        <comment>SNR. ASSET MGMT. ASSISTANT</comment>
+        <total>37153.48</total>
+      </SupplementPostion>
+    </supplementPositions>
+    <adjustments/>
+  </office>
+</Plan>

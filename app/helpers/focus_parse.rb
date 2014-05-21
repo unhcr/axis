@@ -86,6 +86,7 @@ module FocusParse
 
     xml_ppgs = xml_plan.search(PPG)
 
+    # Parse PPGs
     xml_ppgs.each do |xml_ppg|
 
       (ppg = Ppg.find_or_initialize_by_id(xml_ppg.attribute('POPGRPID').value).tap do |p|
@@ -102,6 +103,7 @@ module FocusParse
 
       xml_goals = xml_ppg.search(GOAL)
 
+      # Parse Goals
       xml_goals.each do |xml_goal|
         xml_rights_groups = xml_goal.search(RIGHTS_GROUP)
 
@@ -117,6 +119,7 @@ module FocusParse
         operation.goals << goal unless operation.goals.include? goal
         plan.goals << goal unless plan.goals.include? goal
 
+        # Parse Rights Groups
         xml_rights_groups.each do |xml_rights_group|
           xml_problem_objectives = xml_rights_group.search(PROBLEM_OBJECTIVE)
 
@@ -130,6 +133,7 @@ module FocusParse
           operation.rights_groups << rights_group unless operation.rights_groups.include? rights_group
           plan.rights_groups << rights_group unless plan.rights_groups.include? rights_group
 
+          # Parse Problem Objectives
           xml_problem_objectives.each do |xml_problem_objective|
             xml_outputs = xml_problem_objective.search(OUTPUT)
 
@@ -156,6 +160,7 @@ module FocusParse
               goal.problem_objectives << problem_objective
             end
 
+            # Parse Outputs
             xml_outputs.each do |xml_output|
               # Must be performance indicators if part of output
               xml_performance_indicators = xml_output.search(INDICATOR)
@@ -354,6 +359,66 @@ module FocusParse
       end
     end
 
+    xml_office = xml_plan.search('./office')[0]
+
+    recursive_office_parse(xml_office, nil, operation, plan)
+
+  end
+
+  def recursive_office_parse(xml_office, parent_office, operation, plan)
+
+    (office = Office.find_or_initialize_by_id(:id => xml_office.attribute('ID').value).tap do |o|
+
+      # Fill in properties
+      o.id = xml_office.attribute('ID').value
+      o.name = xml_office.search('./name').text
+      o.operation = operation
+      o.plan = plan
+      o.head_office = parent_office
+
+    end).save
+    office.found
+
+    xml_head_position = xml_office.search('./headPosition')
+
+    recursive_position_parse(xml_head_position, nil, operation, plan, office) if xml_head_position
+    xml_sub_offices = xml_office.search('./subOffice')
+
+    xml_sub_offices.each do |xml_sub_office|
+
+      recursive_office_parse(xml_sub_office, office, operation, plan)
+    end
+  end
+
+  def recursive_position_parse(xml_position, parent_position, operation, plan, office)
+
+    (position = Position.find_or_initialize_by_id(:id => xml_position.attribute('ID').value).tap do |p|
+
+      # Fill in properties
+      p.id = xml_position.attribute('ID').value
+      p.title = xml_position.search('./title').text
+      p.grade = xml_position.search('./grade').text
+      p.contract_type = xml_position.search('./contractType').text
+      p.incumbent = xml_position.search('./incumbent').text
+      p.position_reference = xml_position.search('./positionID').text
+      p.office = office
+
+      fast_track = xml_position.search('./fastTrack').text == 'Y'
+      p.fast_track = fast_track
+
+      p.operation = operation
+      p.plan = plan
+
+      p.head_position = parent_position
+
+    end).save
+    position.found
+
+    xml_sub_positions = xml_position.search('./subPosition')
+
+    xml_sub_positions.each do |xml_sub_position|
+      recursive_position_parse(xml_sub_position, position, operation, plan, office)
+    end
   end
 
   def budget_hash(list, scenario, budget_type)
