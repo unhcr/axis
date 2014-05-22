@@ -93,6 +93,7 @@ module FocusFetch
 
 
     end
+    monitor.mark_deleted if monitor.reset?
 
     return ret
 

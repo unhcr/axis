@@ -42,26 +42,9 @@ class FetchMonitorTest < ActiveSupport::TestCase
 
     m.reset ids
 
-    plans.each do |plan|
+    Plan.all.each do |plan|
       assert !plan.is_deleted
     end
-  end
-
-  test 'reset - mark plan as deleted if plan is not found in headers' do
-    plans = [plans(:one), plans(:two)]
-    plans.map &:found
-    ids = plans.map &:id
-
-    m = fetch_monitors(:one)
-    m.reset ids
-    plans.each do |plan|
-      assert !plan.is_deleted
-    end
-
-    m.reset Array(ids[0])
-
-    plans[1].reload
-    assert plans[1].is_deleted, 'Should mark as deleted'
   end
 
   test "reset - should mark as deleted" do
