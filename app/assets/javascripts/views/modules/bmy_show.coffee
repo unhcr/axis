@@ -30,6 +30,12 @@ class Visio.Views.BmyShowView extends Visio.Views.AccordionShowView
       @$el.html @template( parameter: @model, figureId: @figure.figureId() )
       @$el.find('.bmy-figure').html @figure.el
       @$el.find('.header-buttons').append @filterBy.render().el
+
+    if @model.selectedBudgetData(Visio.Constants.ANY_YEAR).length == 0
+      @$el.addClass 'disabled'
+      @shrink()
+    else
+      @$el.removeClass 'disabled'
     @
 
 
