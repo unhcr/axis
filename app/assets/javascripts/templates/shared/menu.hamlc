@@ -10,10 +10,14 @@
 .row
   .medium-item.ui-medium-header
     &nbsp;
+
 .row
   .medium-item.ui-medium-header.light.col-md-8.col-centered
-    %a{:href => "/archive"} ARCHIVE
-.row.divider-stack-orange
-.row
-  .medium-item.ui-medium-header.light.col-md-8.col-centered
-    %a{:href => "/quicklinks"} QUICKLINKS
+    %a{ :href => '/cms/strategies?is_personal=true' } PERSONAL STRATEGIES (+ Create)
+
+- _.each context.personalStrategies, (strategy) ->
+  .row.divider-stack-orange
+  .row
+    .medium-item.ui-medium-header.light.col-md-8.col-centered
+      %a{:href => "/overview/#{strategy.id}"}
+        = strategy.name.toUpperCase()

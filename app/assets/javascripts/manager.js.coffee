@@ -37,6 +37,7 @@ class Visio.Models.Manager extends Backbone.Model
     'budgets': new Visio.Collections.Budget()
     'expenditures': new Visio.Collections.Expenditure()
     'strategies': new Visio.Collections.Strategy()
+    'personal_strategies': new Visio.Collections.Strategy()
     'strategy_objectives': new Visio.Collections.StrategyObjective()
     'date': new Date(2013, 1)
     'use_local_db': true
@@ -102,14 +103,27 @@ class Visio.Models.Manager extends Backbone.Model
     @set { date: new Date(_year, 1) }, options || {}
 
   strategy: () ->
-    return unless @get('strategies') && @get('strategy_id')
-    @get('strategies').get(@get('strategy_id'))
+    return unless (@get('strategies') or @get('personal_strategies')) && @get('strategy_id')
+    strategy = @get('strategies').get(@get('strategy_id'))
 
-  strategies: (strategy_ids) ->
-    return @get('strategies') unless strategy_ids?
+    # Look for strategy in personal strategies if it's not global
+    unless strategy
+      strategy = @get('personal_strategies').get(@get('strategy_id'))
+
+    strategy
+
+  strategies: (strategyIds) ->
+    return @get('strategies') unless strategyIds?
 
     return new Visio.Collections.Strategy(@get('strategies').filter((strategy) ->
-      _.include(strategy_ids.map((i) -> +i), strategy.id)
+      _.include(strategyIds.map((i) -> +i), strategy.id)
+    ))
+
+  personalStrategies: (strategyIds) ->
+    return @get('personal_strategies') unless strategyIds?
+
+    return new Visio.Collections.Strategy(@get('personal_strategies').filter((strategy) ->
+      _.include(strategyIds.map((i) -> +i), strategy.id)
     ))
 
   select: (type, ids) ->

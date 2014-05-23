@@ -1,7 +1,11 @@
 require 'test_helper'
 
 class IndicatorDataControllerTest < ActionController::TestCase
+  include Devise::TestHelpers
+
   def setup
+    @user = users(:one)
+    sign_in @user
 
     @s = strategies(:one)
 

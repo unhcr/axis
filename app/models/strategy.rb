@@ -1,5 +1,11 @@
 class Strategy < ActiveRecord::Base
-  attr_accessible :name, :description
+
+  DASHBOARD_TYPES = {
+    :overview => 'overview',
+    :operation => 'operation',
+  }
+
+  attr_accessible :name, :description, :dashboard_type
 
   has_many :strategy_objectives,
     :after_remove => :remove_strategy_objective_parameters,
@@ -29,6 +35,10 @@ class Strategy < ActiveRecord::Base
 
   has_many :indicators_strategies, :class_name     => 'IndicatorsStrategies'
   has_many :indicators, :uniq => true, :before_add => :belongs_to_strategy_objective, :through => :indicators_strategies
+
+  belongs_to :user
+
+  scope :global_strategies, where(:user_id => nil)
 
 
   def add_strategy_objective_parameters(strategy_objective)
@@ -123,7 +133,7 @@ class Strategy < ActiveRecord::Base
   def to_jbuilder(options = {})
     options[:include] ||= {}
     Jbuilder.new do |json|
-      json.extract! self, :name, :id, :description
+      json.extract! self, :name, :id, :description, :user_id, :dashboard_type
 
       if options[:include][:ids]
         json.operation_ids self.operation_ids.inject({}) { |h, id| h[id] = true; h }

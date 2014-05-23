@@ -1,14 +1,18 @@
 .container
   %h1.bottom-flush
-    %a{ :href => '#/' } CMS
+    %a{ :href => '#/', :data => { :visibility => @is_personal ? 'PERSONAL' : 'GLOBAL' } } CMS
   %h4.top-flush
-    Build or Edit a Strategy.
+    - if @is_personal
+      = "Build or Edit #{current_user.login}'s Strategies"
+    - else
+      Build or Edit a Strategy.
   .cms-content
 
 :javascript
   $(document).ready(function() {
 
-    Visio.manager = new Visio.Models.Manager({
+    Visio.manager = new Visio.Models.StrategyCMSManager({
+      is_personal: #{@is_personal},
       strategies: new Visio.Collections.Strategy(#{@strategies.to_json(:include => {
         :strategy_objectives => true,
         :ppgs => true,

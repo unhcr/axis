@@ -1,11 +1,18 @@
 class StrategiesController < ApplicationController
   def create
+    render_403 and return if not params[:is_personal] and not current_user.admin
+
     s = Strategy.create(
       :name => params[:name],
       :description => params[:description])
 
 
+
+    s.user = current_user if params[:is_personal]
+
     s.update_nested params
+    s.save
+
     render :json => { :strategy => s.as_json({ :include => {
       :ppgs => true,
       :operations => true,

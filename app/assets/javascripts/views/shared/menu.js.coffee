@@ -12,6 +12,7 @@ class Visio.Views.MenuView extends Backbone.View
   render: () ->
     @$el.html @template({
       strategies: Visio.manager.strategies().toJSON()
+      personalStrategies: Visio.manager.personalStrategies().toJSON()
     })
     @$el.css('top', $('header section').height())
     @
