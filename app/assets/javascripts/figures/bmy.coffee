@@ -133,31 +133,7 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
     voronoi.enter().append('path')
     voronoi.attr('class', (d, i) -> 'voronoi')
       .attr('d', @polygon)
-      .on('mouseenter', (d) =>
-        pointData = _.chain(filtered).flatten().where({ year: d.point.year }).value()
-        points = @g.selectAll('.point').data pointData
-        points.enter().append 'circle'
-        points
-          .attr('r', 5)
-          .attr('class', (d) -> ['point', Visio.Utils.stringToCssClass(d[d.groupBy])].join(' '))
-        points.transition().duration(Visio.Durations.VERY_FAST).ease('ease-in')
-          .attr('cx', (d) => @x(d.year))
-          .attr('cy', (d) => @y(d.amount))
-        points.exit().remove()
-
-
-        if @tooltip?
-          @tooltip.year = d.point.year
-          @tooltip.collection = new Backbone.Collection(pointData)
-          @tooltip.render(true)
-        else
-          @tooltip = new Visio.Views.BmyTooltip
-            figure: @
-            year: d.point.year
-            collection: new Backbone.Collection(pointData)
-          @tooltip.render()
-
-      )
+      .on('mouseenter', (d) => @onMouseenterVoronoi(d, filtered) )
 
     if @isExport
       voronoi.on('click', (d, i) =>
@@ -246,3 +222,29 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
     line = @g.select(".budget-line-#{d[d.groupBy]}")
     isActive = line.classed 'active'
     line.classed 'active', not isActive
+
+  onMouseenterVoronoi: (d, filtered) =>
+    pointData = _.chain(filtered).flatten().where({ year: d.point.year }).value()
+    points = @g.selectAll('.point').data pointData
+    points.enter().append 'circle'
+    points
+      .attr('r', 5)
+      .attr('class', (d) -> ['point', Visio.Utils.stringToCssClass(d[d.groupBy])].join(' '))
+    points.transition().duration(Visio.Durations.VERY_FAST).ease('ease-in')
+      .attr('cx', (d) => @x(d.year))
+      .attr('cy', (d) => @y(d.amount))
+    points.exit().remove()
+
+
+    if @tooltip?
+      @tooltip.year = d.point.year
+      @tooltip.collection = new Backbone.Collection(pointData)
+      @tooltip.render(true)
+    else
+      @tooltip = new Visio.Views.BmyTooltip
+        figure: @
+        year: d.point.year
+        collection: new Backbone.Collection(pointData)
+      @tooltip.render()
+
+
