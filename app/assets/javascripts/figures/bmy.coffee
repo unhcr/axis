@@ -100,7 +100,7 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
 
     @g.append('g')
       .attr('class', 'y axis')
-      .attr('transform', 'tran#448slate(0,0)')
+      .attr('transform', 'translate(0,0)')
       .append("text")
 
     @g.append('g')
