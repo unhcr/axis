@@ -87,6 +87,8 @@ Visio.Utils.humanMetric = (metric) ->
     return 'Target'
   else if metric == Visio.Algorithms.GOAL_TYPES.standard
     return 'Standard'
+  else if metric == Visio.Algorithms.GOAL_TYPES.compTarget
+    return 'Comprehensive Target'
   else if metric == Visio.Algorithms.ALGO_RESULTS.success
     return 'Acceptable'
   else if metric == Visio.Algorithms.ALGO_RESULTS.ok
@@ -123,9 +125,13 @@ Visio.Utils.generateOverviewUrl = ->
    Visio.manager.get('reported_type')].join '/'
 
 Visio.Utils.parameterByPlural = (plural) ->
-
   for parameter, hash of Visio.Parameters
     return hash if hash.plural == plural
+  null
+
+Visio.Utils.parameterBySingular = (singular) ->
+  for parameter, hash of Visio.Parameters
+    return hash if hash.singular == singular
   null
 
 Visio.Utils.inlineCssStyles = ($ele) ->
