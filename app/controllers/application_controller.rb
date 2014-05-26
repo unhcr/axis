@@ -4,18 +4,13 @@ class ApplicationController < ActionController::Base
   end
   protect_from_forgery
 
+  before_filter :common, :only => [:index, :operation, :overview]
+
   @@map = File.read("#{Rails.root}/public/world_50m_topo.json")
   @@mapMD5 = Digest::MD5.hexdigest(@@map)
 
   def index
-    redirect_to :splash and return unless user_signed_in?
     @mapMD5 = @@mapMD5
-    options = {
-      :include => {
-        :ids => true
-      }
-    }
-    @strategies = Strategy.all.as_json(options)
     render :layout => 'index'
   end
 
@@ -28,25 +23,11 @@ class ApplicationController < ActionController::Base
   end
 
   def operation
-    redirect_to :splash and return unless user_signed_in?
-    @options = {
-      :include => {
-        :ids => true
-      }
-    }
-
     @operation ||= Operation.find params[:operation_id]
     render :layout => 'index'
   end
 
   def overview
-    redirect_to :splash and return unless user_signed_in?
-    @options = {
-      :include => {
-        :ids => true
-      }
-    }
-    @strategies ||= Strategy.all.as_json(@options)
     @strategy ||= Strategy.find(params[:strategy_id])
     render :layout => 'index'
   end
@@ -90,6 +71,29 @@ class ApplicationController < ActionController::Base
   def reset_local_db
     User.reset_local_db(User.all)
     render :json => { :success => true }
+  end
+
+  def render_403
+     respond_to do |format|
+      format.html do
+        render :file => "#{Rails.root}/public/403.html", :status => 403, :layout => false
+      end
+      format.json do
+        render :json =>
+          { :error => true, :message => "Error 403, you don't have permissions for this operation." }
+      end
+     end
+  end
+
+  def common
+    redirect_to :splash and return unless user_signed_in?
+    @options = {
+      :include => {
+        :ids => true
+      }
+    }
+    @strategies ||= Strategy.global_strategies.as_json(@options)
+    @personal_strategies ||= Strategy.where(:user_id => current_user.id).as_json(@options)
   end
 
   private
