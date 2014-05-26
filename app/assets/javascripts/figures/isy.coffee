@@ -9,6 +9,10 @@ class Visio.Figures.Isy extends Visio.Figures.Base
   initialize: (config) ->
     config.query or= ''
 
+    humanGoalTypes = _.object _.values(Visio.Algorithms.GOAL_TYPES),
+                              _.values(Visio.Algorithms.GOAL_TYPES).map((goalType) ->
+                                Visio.Utils.humanMetric(goalType))
+
     @filters = new Visio.Collections.FigureFilter([
       {
         id: 'is_performance'
@@ -28,6 +32,7 @@ class Visio.Figures.Isy extends Visio.Figures.Base
         values: _.object(_.values(Visio.Algorithms.GOAL_TYPES), _.values(Visio.Algorithms.GOAL_TYPES).map(
           (achievement_type) ->
             Visio.manager.get('achievement_type') == achievement_type))
+        human: humanGoalTypes
         callback: (name, attr) =>
           @goalTypeFn(name).render()
           $.publish "hover.#{@cid}.figure", @selectedDatum || 0
