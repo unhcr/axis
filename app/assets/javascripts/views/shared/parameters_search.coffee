@@ -1,6 +1,6 @@
 class Visio.Views.ParameterSearch extends Backbone.View
 
-  className: 'parameter-search'
+  className: 'parameter-search full-width'
 
   template: HAML['shared/parameter_search']
 
@@ -25,18 +25,24 @@ class Visio.Views.ParameterSearch extends Backbone.View
     id = $target.attr 'data-id'
     @add(id)
 
+  clear: =>
+    @$el.find('.results').html ''
+
 
   onSearch: (e) ->
     $target = $(e.currentTarget)
 
-    @throttledSearch($target.val()) if $target.val().length
+    if $target.val().length
+      @throttledSearch($target.val())
+    else
+      @clear()
 
   search: (query) =>
     @collection.search(query).done (resp) =>
       @$el.find('.results').html _.map(resp, (elasticModel) =>
         HAML['shared/search_item']({ model: new @collection.model(elasticModel) }))
 
-      @$el.find('.results').html '' unless resp.length
+      @clear() unless resp.length
 
   filterIds: (parameterType, id) =>
     filterIds = {}
