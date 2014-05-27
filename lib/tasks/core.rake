@@ -17,22 +17,24 @@ end
 namespace :build do
 
   task :msrp => :environment do
+    include Build
+
     n = ENV['n']
     n = n.to_i unless n.nil?
 
     p 'Fetching MSRP data'
 
-    include MsrpFetch
-    start = Time.now
+    build = Build::MsrpBuild.new({ :limit => n })
 
-    fetch n
+    deltaTime = build.run
 
-    p "Finished fetching MSRP data in: #{Time.now - start}"
+    p "Finished fetching MSRP data in: #{deltaTime}"
 
 
   end
 
   task :focus => :environment do
+    include FocusFetch
 
     n = ENV['n']
     n_days = ENV['days'].present? ? ENV['days'].to_i.days : nil
@@ -41,7 +43,6 @@ namespace :build do
 
     p 'Fetching FOCUS data'
 
-    include FocusFetch
     start = Time.now
 
     ret = nil

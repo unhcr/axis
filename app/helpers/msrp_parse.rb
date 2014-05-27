@@ -8,10 +8,25 @@ module MsrpParse
   PROJECT = 'PROJECT'
   STAFF = 'STAFF'
 
+  def self.fields
+    {
+      :plan_id => 'planid',
+      :year => 'planningyear',
+      :goal_id => 'rfgoalid',
+      :problem_objective_id => 'rfproblemobjectiveid',
+      :output_id => 'rfoutputid',
+      :ppg_id => 'populationgroupid',
+      :budget_type => 'budget_type',
+      :scenario => 'budgetcomponent',
+      :operation_id => 'operationid',
+      :amount => 'amount'
+    }
+
+  end
+
   def parse(csv_filename)
 
-    fields = MsrpFetch::FIELDS
-    fields[:amount] = 'amount'
+    fields = MsrpParse.fields
 
     CSV.foreach(csv_filename, :headers => true) do |row|
 
