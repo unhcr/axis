@@ -33,6 +33,23 @@ namespace :build do
 
   end
 
+  task :elements => :environment do
+
+    include Build
+
+    n = ENV['n']
+    n = n.to_i unless n.nil?
+
+    p 'Fetching Element data'
+
+    build = Build::ElementsBuild.new({ :limit => n })
+
+    deltaTime = build.run
+
+    p "Finished fetching Elements data in: #{deltaTime}"
+
+  end
+
   task :focus => :environment do
     include FocusFetch
 

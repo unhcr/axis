@@ -8,8 +8,6 @@ class Operation < ActiveRecord::Base
 
   attr_accessible :id, :name, :years
 
-  serialize :years, Array
-
   has_many :plans
   has_many :indicator_data
   has_many :budgets
@@ -41,6 +39,10 @@ class Operation < ActiveRecord::Base
     includes([:plan_ids])
   end
 
+  def years
+    @years ||= self.plans.all.map(&:year).uniq
+  end
+
   def to_indexed_json
     Jbuilder.encode do |json|
       json.extract! self, :name, :id
@@ -51,7 +53,8 @@ class Operation < ActiveRecord::Base
     options ||= {}
     options[:include] ||= {}
     Jbuilder.new do |json|
-      json.extract! self, :name, :id, :years
+      json.extract! self, :name, :id
+      json.years self.years
 
       if options[:include][:ids]
         json.indicator_ids self.indicator_ids.inject({}) { |h, id| h[id] = true; h }

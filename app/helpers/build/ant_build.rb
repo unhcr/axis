@@ -27,7 +27,7 @@ module Build
 
       @ant_path = config[:ant_path] || ANT_TEMPLATE_FILEPATH
 
-      dir_path = "#{@ant_path}/#{MsrpBuild::BUILD_NAME}"
+      dir_path = "#{@ant_path}/#{@config[:build_name]}"
       Dir.mkdir(dir_path) unless Dir.exists? dir_path
     end
 
