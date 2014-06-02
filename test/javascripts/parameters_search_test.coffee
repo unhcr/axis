@@ -8,13 +8,28 @@ module 'Parameter Search',
       models = [{ id: 1 }, { id: 2 }]
       Visio.manager.get(hash.plural).reset(models)
 
+    models = [{ id: 1, name: 'ben' }, { id: 2, name: 'benarne' }]
+    @server = sinon.fakeServer.create()
+    @server.respondWith 'GET', /search.*/,
+      [200, {'Content-Type': 'application/json'}, JSON.stringify(models)]
+
   teardown: ->
     @view.close()
+    @server.restore()
 
 test 'render', ->
   @view.render()
 
-  ok @view.$el.find('input').length, 1, 'Should have one search box'
+  strictEqual @view.$el.find('input').length, 1, 'Should have one search box'
+
+test 'search', ->
+
+  @view.render()
+  @view.search 'ben'
+  @server.respond()
+
+  strictEqual @view.$el.find('.search-item').length, 2
+  ok @view.$el.find('.search-item:first').attr('data-id')
 
 test 'filterIds', ->
 
