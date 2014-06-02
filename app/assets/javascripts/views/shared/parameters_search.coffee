@@ -40,7 +40,7 @@ class Visio.Views.ParameterSearch extends Backbone.View
   search: (query) =>
     @collection.search(query).done (resp) =>
       @$el.find('.results').html _.map(resp, (elasticModel) =>
-        HAML['shared/search_item']({ model: new @collection.model(elasticModel) }))
+        HAML['shared/parameter_search_item']({ model: new @collection.model(elasticModel) }))
 
       @clear() unless resp.length
 
