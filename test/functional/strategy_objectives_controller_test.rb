@@ -1,6 +1,7 @@
 require 'test_helper'
 
 class StrategyObjectivesControllerTest < ActionController::TestCase
+  include Devise::TestHelpers
 
   def setup
     StrategyObjective.index_name('test_' + StrategyObjective.model_name.plural)
@@ -10,6 +11,8 @@ class StrategyObjectivesControllerTest < ActionController::TestCase
 
     StrategyObjective.index.import [strategy_objectives(:one), strategy_objectives(:two)]
     StrategyObjective.index.refresh
+    @user = users(:one)
+    sign_in @user
   end
 
   test 'Should get index' do

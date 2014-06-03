@@ -216,6 +216,19 @@ body.layout-cms {
 
   a:hover {
     color: $black;
+    text-decoration: none;
+  }
+
+  h1 a:after {
+    content: attr(data-visibility);
+    background-color: $success;
+    border-radius: 20px;
+    font-size: 18px;
+    padding: 5px 15px;
+    margin: 5px 15px;
+    text-decoration: none;
+    position: relative;
+    top: -6px;
   }
 }
 
@@ -326,9 +339,14 @@ body.index {
 }
 
 .parameter-search {
-  background-color: $dark-gray;
+  background-color: transparent;
   width: 220px;
   color: $white;
+  padding: 0 1em;
+
+  .results {
+    background-color: $primary;
+  }
 }
 
 .parameter-search, .parameter-search:focus {

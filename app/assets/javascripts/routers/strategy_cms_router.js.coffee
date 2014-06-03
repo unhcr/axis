@@ -27,7 +27,8 @@ class Visio.Routers.StrategyCMSRouter extends Backbone.Router
   new: ->
     @editView = new Visio.Views.StrategyCMSEditView
       collection: @strategies
-      model: new Visio.Models.Strategy()
+      model: new Visio.Models.Strategy
+        is_personal: Visio.manager.get 'is_personal'
     @$content.html @editView.render().el
 
   edit: (id) ->

@@ -5,9 +5,10 @@ class User < ActiveRecord::Base
   devise :ldap_authenticatable, :trackable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :login, :password, :password_confirmation, :firstname, :lastname, :reset_local_db
+  attr_accessible :login, :password, :password_confirmation, :firstname, :lastname, :reset_local_db, :admin
 
   has_many :export_modules
+  has_many :strategies
 
   def to_jbuilder(options = {})
     Jbuilder.new do |json|

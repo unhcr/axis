@@ -47,6 +47,7 @@
       dashboard: new Visio.Models.Strategy(#{@strategy.to_json(@options).html_safe}),
       strategy_id: #{@strategy.id},
       strategies: new Visio.Collections.Strategy(#{@strategies.to_json.html_safe}),
+      personal_strategies: new Visio.Collections.Strategy(#{@personal_strategies.to_json.html_safe}),
       ready: function() {
         Visio.router = new Visio.Routers.OverviewRouter();
         Backbone.history.start();

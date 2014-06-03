@@ -140,7 +140,7 @@ class Visio.Figures.Absy extends Visio.Figures.Base
     pointContainers.attr('class', (d, i) ->
           classList = ['point-container', "id-#{d.refId()}"]
 
-          if !_.isEmpty(self.query) and d.toString().toLowerCase().indexOf(self.query.toLowerCase()) != -1
+          if self.isQueried d
             classList.push 'queried'
 
           if self.isPdf and self.isSelected(d.id)
@@ -163,9 +163,10 @@ class Visio.Figures.Absy extends Visio.Figures.Base
             .transition()
             .duration(Visio.Durations.FAST)
             .attr('r', (d) =>
-              if self.isPdf and self.isSelected(d.id)
-                radius += 4
-              radius + self.shadowWidth
+              value = radius + self.shadowWidth
+              if (self.isPdf and self.isSelected(d.id)) or self.isQueried(d)
+                value += 4
+              value
             )
             .attr('cy', (d) =>
               return self.y(achievement))
@@ -297,3 +298,6 @@ class Visio.Figures.Absy extends Visio.Figures.Base
 
   isSelected: (id) =>
     _.include @selected, "#{id}"
+
+  isQueried: (d) =>
+    !_.isEmpty(@query) and d.toString().toLowerCase().indexOf(@query.toLowerCase()) != -1

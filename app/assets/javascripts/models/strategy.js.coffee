@@ -2,9 +2,6 @@ class Visio.Models.Strategy extends Visio.Models.Syncable
 
   urlRoot: '/strategies'
 
-  constructor: ->
-    super
-
   schema: [
     {
       name: 'name',
@@ -53,6 +50,7 @@ class Visio.Models.Strategy extends Visio.Models.Syncable
     'problem_objective_ids': {}
     'strategy_objective_ids': {}
     'isStrategy': true
+    'is_personal': false
 
   include: (singular, id) ->
     @get("#{singular}_ids")[id]?

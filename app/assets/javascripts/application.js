@@ -33,6 +33,8 @@
 //= require ./views/sliders/slider
 //= require ./figures/base
 //= require ./figures/bar
+//= require ./figures/bmy
+//= require ./views/tooltips/bmy
 //= require_tree ./views
 //= require_tree ./figures
 //= require_tree ./routers
@@ -41,3 +43,4 @@
 //= require_tree ./collections
 //= require_tree ./vendor
 //= require manager
+//= require_tree ./managers

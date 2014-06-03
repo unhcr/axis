@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project basedir="." name="AXIS" >
-  <target name="<%= @config[:name] %>">
+  <target name="<%= @config[:build_name] %>">
     <sql
       driver="oracle.jdbc.OracleDriver"
       url="<%= @config[:db_url] %>"
@@ -15,11 +15,7 @@
       </classpath>
       <![CDATA[
       SELECT * FROM
-          ( SELECT <%= @config[:fields].join(',') %>, sum(expenses_usd) as amount
-          FROM FOCUS_BI.BI_EXPENSES b1 inner join FOCUS_BI.BI_OBJECTIVE b2
-          ON b1.objectiveid = b2.objectiveid
-          WHERE plan_type = 'P-8'
-          GROUP BY <%= @config[:group_by].join(',') %>)
+          ( <%= @config[:sql_query] %>)
         <% unless @config[:limit].nil? %>
         WHERE rownum <= <%= @config[:limit] %>
         <% end %>

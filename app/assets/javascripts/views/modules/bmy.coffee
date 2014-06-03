@@ -46,4 +46,15 @@ class Visio.Views.BmyView extends Visio.Views.AccordionIndexView
     @figure.render()
 
   sort: (parameterA, parameterB) ->
-    0
+    dataA = parameterA.selectedBudgetData(Visio.Constants.ANY_YEAR)
+    dataB = parameterB.selectedBudgetData(Visio.Constants.ANY_YEAR)
+
+    if dataA.length > 0 and dataB.length > 0
+      if parameterA.toString() < parameterB.toString()
+        -1
+      else if parameterA.toString() > parameterB.toString()
+        1
+      else
+        0
+    else
+      dataB.length - dataA.length

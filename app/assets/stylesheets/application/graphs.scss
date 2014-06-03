@@ -21,13 +21,12 @@ line {
 
 .svg-bmy-figure {
   .budget-line {
-    stroke: black;
+    stroke: $light-gray;
     fill: none;
-    stroke-width: 4px;
-
+    stroke-width: 2px;
   }
   .budget-line.active {
-    stroke: red;
+    stroke: $black;
   }
   .ADMIN {
     stroke: $admin;
@@ -65,6 +64,7 @@ line {
   }
   .point {
     fill: white;
+    stroke: $black;
     stroke-width: 2px;
   }
   .axis line {
@@ -112,11 +112,6 @@ line {
 
   .point.external {
     fill: lighten($pink, 20%);
-  }
-
-  .point-container.queried {
-    fill: black;
-    opacity: 1;
   }
 
   .y.axis line {
@@ -270,7 +265,7 @@ line {
 }
 
 .svg-isy-figure {
-  .y.axis .tick:last-child line {
+  .y.axis g.tick:nth-last-of-type(1) line {
     stroke: $lighter-gray;
   }
   .myr-bar {

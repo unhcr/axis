@@ -62,7 +62,7 @@ module FocusFetch
       begin
         plan_zip = open("#{server_url("#{PLAN_PREFIX}#{id}#{PLAN_SUFFIX}")}", opts)
       rescue Exception => e
-        Rails.logger.error "Failed fetching #{id} -- e.message"
+        p "Failed fetching #{id} -- #{e.message}"
         monitor.set_state(id, FetchMonitor::MONITOR_STATES[:error])
         next
       end
@@ -79,6 +79,7 @@ module FocusFetch
           end
         end
       rescue Exception => e
+        p "Failed zipping #{id} -- #{e.message}"
         monitor.set_state(id, FetchMonitor::MONITOR_STATES[:error])
         next
       end

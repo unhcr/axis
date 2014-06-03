@@ -9,6 +9,10 @@ class Visio.Figures.Isy extends Visio.Figures.Base
   initialize: (config) ->
     config.query or= ''
 
+    humanGoalTypes = _.object _.values(Visio.Algorithms.GOAL_TYPES),
+                              _.values(Visio.Algorithms.GOAL_TYPES).map((goalType) ->
+                                Visio.Utils.humanMetric(goalType))
+
     @filters = new Visio.Collections.FigureFilter([
       {
         id: 'is_performance'
@@ -28,6 +32,7 @@ class Visio.Figures.Isy extends Visio.Figures.Base
         values: _.object(_.values(Visio.Algorithms.GOAL_TYPES), _.values(Visio.Algorithms.GOAL_TYPES).map(
           (achievement_type) ->
             Visio.manager.get('achievement_type') == achievement_type))
+        human: humanGoalTypes
         callback: (name, attr) =>
           @goalTypeFn(name).render()
           $.publish "hover.#{@cid}.figure", @selectedDatum || 0
@@ -66,16 +71,18 @@ class Visio.Figures.Isy extends Visio.Figures.Base
       .tickFormat(Visio.Formats.PERCENT)
       .tickSize(-@adjustedWidth)
 
+    @goalType = config.goalType || Visio.Algorithms.GOAL_TYPES.target
+
     @g.append('g')
       .attr('class', 'y axis')
       .attr('transform', 'translate(0,0)')
       .append("text")
         .attr("y", -10)
-        .attr("x", 40)
+        .attr("x", @adjustedWidth)
         .attr("dy", "-.21em")
-        .text('Standard')
+        .attr('text-anchor', 'end')
+        .text(Visio.Utils.humanMetric(@goalType))
 
-    @goalType = config.goalType || Visio.Algorithms.GOAL_TYPES.target
 
     $.subscribe "hover.#{@cid}.figure", @hover
     $.subscribe "mouseout.#{@cid}.figure", @mouseout
@@ -255,6 +262,8 @@ class Visio.Figures.Isy extends Visio.Figures.Base
       .transition()
       .duration(Visio.Durations.FAST)
       .call(@yAxis)
+        .select('text')
+        .text(Visio.Utils.humanMetric(@goalType))
     @
 
   circleLabel: (d, svgEl, letter) ->

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140521115929) do
+ActiveRecord::Schema.define(:version => 20140523094926) do
 
   create_table "budgets", :force => true do |t|
     t.string   "budget_type"
@@ -598,9 +598,11 @@ ActiveRecord::Schema.define(:version => 20140521115929) do
 
   create_table "strategies", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
     t.text     "description"
+    t.integer  "user_id"
+    t.string   "dashboard_type", :default => "global"
   end
 
   create_table "strategy_objectives", :force => true do |t|
@@ -627,6 +629,7 @@ ActiveRecord::Schema.define(:version => 20140521115929) do
     t.string   "lastname"
     t.boolean  "reset_local_db",         :default => false
     t.string   "login",                  :default => "",    :null => false
+    t.boolean  "admin",                  :default => false
   end
 
   add_index "users", ["login"], :name => "index_users_on_login"

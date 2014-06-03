@@ -20,6 +20,6 @@
 /config/capistrano_credentials.rb
 
 coverage
-/script/msrp/generated_*
-/script/msrp/build.xml
+/script/builds/expenses/generated_*
+/script/builds/expenses/build.xml
 /public/reports/pdf/*.pdf

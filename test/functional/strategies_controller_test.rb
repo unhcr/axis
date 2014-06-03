@@ -1,6 +1,16 @@
 require 'test_helper'
 
 class StrategiesControllerTest < ActionController::TestCase
+  include Devise::TestHelpers
+
+  def setup
+    @user = users(:one)
+    @user.admin = true
+    @user.save
+
+    sign_in @user
+  end
+
   test "create" do
     Plan.all.map { |p| p.operation = Operation.first; p.save }
     post :create, {
@@ -35,6 +45,33 @@ class StrategiesControllerTest < ActionController::TestCase
     assert_equal ProblemObjective.all.count, s.problem_objectives.count
     assert_equal Indicator.all.count, s.indicators.count
     assert_equal Plan.all.count, s.plans.count
+    assert @user.strategies.empty?
+
+  end
+
+  test 'create - global strategies, not admin' do
+    @user.admin = false
+    @user.save
+
+    post :create, {
+      :name => 'ben',
+      :description => 'rudolph',
+    }
+
+    assert_response :forbidden
+  end
+
+  test 'create - personal strategy' do
+    @user.admin = false
+    @user.save
+
+    post :create, {
+      :name => 'ben',
+      :description => 'rudolph',
+      :is_personal => true
+    }
+
+    assert_response :success
   end
 
   test "update" do

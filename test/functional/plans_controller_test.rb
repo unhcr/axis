@@ -1,6 +1,12 @@
 require 'test_helper'
 
 class PlansControllerTest < ActionController::TestCase
+  include Devise::TestHelpers
+
+  def setup
+    @user = users(:one)
+    sign_in @user
+  end
 
   test 'plans synced should get passed in year' do
 

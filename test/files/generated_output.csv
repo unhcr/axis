@@ -1,4 +1,4 @@
-b1.planid,b1.planningyear,b1.rfgoalid,b2.rfproblemobjectiveid,b1.rfoutputid,b1.populationgroupid,b1.budget_type,b1.budgetcomponent,b1.operationid,amount
+planid,planningyear,rfgoalid,rfproblemobjectiveid,rfoutputid,populationgroupid,budget_type,budgetcomponent,operationid,amount
 018c642b-1243-4d5a-a8cb-059a6763b84a,2012,EM,3734448b-e618-4003-a939-66fb3495949e,1be7a53f-d327-4a78-9df2-382b134151bd,LTEL,UNHCR_ADMIN,BC-1,7TG,25566.58
 018c642b-1243-4d5a-a8cb-059a6763b84a,2012,EM,3734448b-e618-4003-a939-66fb3495949e,1be7a53f-d327-4a78-9df2-382b134151bd,LTEL,UNHCR_STAFF,BC-1,7TG,44545.76
 018c642b-1243-4d5a-a8cb-059a6763b84a,2012,EM,3734448b-e618-4003-a939-66fb3495949e,544c6c1a-c9be-4b34-8ce2-ed91a8cc81d6,LTEL,UNHCR_ADMIN,BC-1,7TG,25566.63
