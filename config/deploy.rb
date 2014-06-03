@@ -18,9 +18,8 @@ set :application, "visio"
 
 
 # Deploy from your local Git repo by cloning and uploading a tarball
-set :scm, :none
-set :repository, "."
-set :local_repository, "."
+set :scm, :git
+set :repository, "https://github.com/unhcr/visio.git"
 require './config/capistrano_credentials.rb'
 set :deploy_via, :copy
 set :branch, "master"
@@ -33,6 +32,11 @@ set :sudo_user, "resque_worker"
 
 set :ssh_options, { :forward_agent => true }
 default_run_options[:pty] = true
+default_run_options[:env] = {
+    'http_proxy' => 'http://proxy.unhcr.local:8080',
+    'https_proxy' => 'https://proxy.unhcr.local:8080',
+    'HTTPS_PROXY_REQUEST_FULLURI' => 'false',
+}
 
 server = '10.9.43.173'
 if rails_env == 'production'
