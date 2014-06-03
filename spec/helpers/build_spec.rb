@@ -17,7 +17,7 @@ describe Build do
     end
 
     after(:all) do
-      FileUtils.rm_rf("#{@ant_path}/#{builder::BUILD_NAME}/.", :secure => true)
+      FileUtils.rm "#{@ant_path}/#{builder::BUILD_NAME}/build.xml"
     end
 
     it "should generate a build file with limit" do
