@@ -1,0 +1,58 @@
+.navigation-activation.margin-left
+  .navigation-activation-icon
+
+.inner-content.container.full-width
+  %aside.toolbar.gone
+  #strategy-snapshot
+
+  #module.zero-padding
+
+:javascript
+  $(document).ready(function() {
+    var $navigationIcon = $('.navigation-activation-icon');
+    var $toolbar = $('.toolbar')
+    var headerHeight = $('header').height();
+    var bottomOffset = 300
+
+    $('.navigation-activation').on('mouseenter', function(e) {
+      if (!Visio.manager.get('setup')) return;
+      $('.page').addClass('shift');
+      $(e.currentTarget).addClass('zero-width');
+    })
+
+    $('#navigation').on('mouseleave', function(e) {
+      $('.page').removeClass('shift');
+      $('.navigation-activation').removeClass('zero-width');
+    })
+
+    $(document).scroll(function(e) {
+      var scrollTop = $(document).scrollTop()
+      $navigationIcon.css('top', scrollTop + 140);
+      if (scrollTop > headerHeight) {
+        if (!$toolbar.hasClass('fixed-top'))
+          $toolbar.addClass('fixed-top');
+      } else {
+        $toolbar.removeClass('fixed-top');
+      }
+
+      if (scrollTop + $(window).height() + bottomOffset > $(document).height()) {
+        $.publish('scroll.bottom')
+      }
+
+    })
+
+
+    Visio.manager = new Visio.Models.Manager({
+      dashboard: new Visio.Models.Operation(#{@operation.to_json(@options).html_safe}),
+      aggregation_type: Visio.Parameters.PPGS.plural,
+      operations: new Visio.Collections.Operation([#{@operation.to_json(@options).html_safe}]),
+      ready: function() {
+        Visio.router = new Visio.Routers.OperationRouter()
+
+        Backbone.history.start();
+      }
+    });
+
+
+
+  });

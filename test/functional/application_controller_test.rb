@@ -37,6 +37,18 @@ class ApplicationControllerTest < ActionController::TestCase
 
   end
 
+  test 'operation page' do
+
+    get :operation, { :operation_id => Operation.first.id }
+
+    assert_response :success
+
+    assert_template :operation
+    assert_template layout: 'layouts/index'
+    assert_not_nil assigns(:operation)
+    assert_not_nil assigns(:options)
+  end
+
   test 'global search 0 results on blank input' do
 
     get :global_search

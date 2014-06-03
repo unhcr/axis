@@ -1,8 +1,11 @@
 class Visio.Models.Parameter extends Visio.Models.Syncable
 
+  # @param: type - This is hash of the type of data we want (Budget, Expenditure, IndicatorDatum)
+  # @param: idHash - This is a hash of ids that the data should include
   # @param: year - Allows for any specified year or false which will use all years. If undefined, will fall
+  # @param: filters - Any sort of FigureFilter that should be applied to data
   # back to current year
-  data: (type, idHash, year, filters) ->
+  data: (type, idHash, year, filters, opts = {}) ->
     year = Visio.manager.year() unless year?
 
 
@@ -12,9 +15,19 @@ class Visio.Models.Parameter extends Visio.Models.Syncable
        @name == Visio.Parameters.INDICATORS
       return new Visio.Collections[type.className]()
 
+    # First pass at filtering
     if @name == Visio.Parameters.STRATEGY_OBJECTIVES
-      data = Visio.manager.get(type.plural).filter((d) => _.include d.get("#{@name.singular}_ids"), @id)
+      # If it's not included in any of the SOs, throw it out
+      data = Visio.manager.get(type.plural).filter (d) =>
+        ids = d.get "#{@name.singular}_ids"
+
+        _.include(ids, @id) or
+          (_.isEmpty(ids) and
+           opts.includeExternalStrategyData and
+           @id == Visio.Constants.ANY_STRATEGY_OBJECTIVE and
+           idHash[@name.plural][@id])
     else
+      # data must have the instance's id
       condition = {}
       condition["#{@name.singular}_id"] = @id
       data = Visio.manager.get(type.plural).where(condition)
@@ -24,6 +37,7 @@ class Visio.Models.Parameter extends Visio.Models.Syncable
     data = _.filter data, (d) =>
       return _.every _.values(Visio.Parameters), (hash) =>
 
+        # This check is because it has already been filtered above
         return true if @name.plural == hash.plural
 
         # Must be current year if we are specifying year
@@ -39,13 +53,18 @@ class Visio.Models.Parameter extends Visio.Models.Syncable
         # One of strategy objective ids must be selected
         if hash == Visio.Parameters.STRATEGY_OBJECTIVES
           ids = d.get("#{hash.singular}_ids")
+
+          if _.isEmpty(ids) and opts.includeExternalStrategyData and idHash[hash.plural][Visio.Constants.ANY_STRATEGY_OBJECTIVE]
+
+            return true
+
           return _.any ids, (id) -> idHash[hash.plural][id]
 
 
         id = d.get("#{hash.singular}_id")
 
         # If output_id is missing that's ok
-        return true if not id? and hash = Visio.Parameters.OUTPUTS
+        return true if not id? and hash == Visio.Parameters.OUTPUTS
 
 
         idHash[hash.plural][id]
@@ -62,16 +81,21 @@ class Visio.Models.Parameter extends Visio.Models.Syncable
     @selectedData(Visio.Syncables.EXPENDITURES, year, filters)
 
   selectedData: (type, year, filters = null) ->
-    @data type, Visio.manager.get('selected'), year, filters
+    opts =
+      includeExternalStrategyData: Visio.manager.includeExternalStrategyData()
+
+    @data type, Visio.manager.get('selected'), year, filters, opts
 
   strategyData: (type, strategy, year, filters = null) ->
     strategy or= Visio.manager.strategy()
     idHash = {}
+    opts =
+      includeExternalStrategyData: Visio.manager.includeExternalStrategyData()
 
     _.each _.values(Visio.Parameters), (hash) ->
       idHash[hash.plural] = strategy.get("#{hash.singular}_ids")
 
-    @data type, idHash, year, filters
+    @data type, idHash, year, filters, opts
 
 
   strategyIndicatorData: (strategy, year, filters = null) ->
@@ -133,6 +157,11 @@ class Visio.Models.Parameter extends Visio.Models.Syncable
 
   search: (query) ->
     $.get("#{@url}/search", { query: query })
+
+
+  include: (singular, id) ->
+
+    id == @id or @get("#{singular}_ids")?[id]?
 
   selectedAmount: (year, filters = null) ->
     # Either Budget or Expenditure

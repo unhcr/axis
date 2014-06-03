@@ -240,10 +240,10 @@ body.splash {
 
 header {
   background-color: inherit;
-  height: $header-height;
 
   section {
     background-color: inherit;
+    margin-bottom: 12px;
   }
 }
 
@@ -1298,6 +1298,7 @@ a {
 .toolbar {
   background-color: $off-white;
   padding: 12px 3px;
+  padding-top: 0px;
   z-index: 300;
   height: $toolbar-height;
   @include row-gutter;
@@ -1335,6 +1336,7 @@ a {
   @include transition-property(all);
   @include transition-duration($fast-transition);
   @include transition-timing-function(ease-in-out);
+  border-bottom: 1px solid rgb(240, 240, 240);
 }
 
 .accordion-show-container:hover {
@@ -1573,16 +1575,31 @@ a {
   -o-transition:height $fast-transition;
   transition:height $fast-transition;
   overflow: hidden;
+  opacity: .95;
 }
 
-.search-item {
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 25px;
+.results {
+  .results-container {
+    padding-top: 12px;
 
-  em {
-    font-style: normal;
-    color: $bright-yellow;
+  }
+  .search-item {
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-left: 25px;
+    display: block;
+    color: white;
+
+    em {
+      font-style: normal;
+      color: $bright-yellow;
+    }
+    cursor: pointer;
+  }
+
+  .search-item:hover {
+    background-color: $primary-light;
+    text-decoration: none;
   }
 }
 
@@ -1622,7 +1639,6 @@ a {
 
 .export-module {
 
-  top: $header-height;
   @include text-theme-one;
 
   .overlay-header {
@@ -1779,6 +1795,15 @@ a {
   @include header-button
 }
 
+.query-by {
+  padding-top: 0px;
+  input {
+    padding: 0px;
+    width: 100%;
+    height: 100%;
+    padding-left: 10px;
+  }
+}
 
 .filter-by, .visio-dropdown-container {
   padding-top: 0px;

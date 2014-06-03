@@ -47,6 +47,11 @@ window.Visio =
       className: 'Absy'
       human: 'Achievement vs Budget'
       name: 'absy'
+    # Achievement Budget Single Year
+    BSY:
+      className: 'Bsy'
+      human: 'Budget Single Year'
+      name: 'bsy'
     # Budget Multiple Year
     BMY:
       className: 'Bmy'
@@ -96,6 +101,7 @@ window.Visio =
     LONG_NUMBER: d3.format(',f')
   Constants:
     ANY_YEAR: 'ANY_YEAR'
+    ANY_STRATEGY_OBJECTIVE: 'ANY_STRATEGY_OBJECTIVE'
     DB_NAME: 'visio'
     SEPARATOR: '___'
     ALPHABET: 'abcdefghijklmnopqrstuvwxyz'
@@ -120,7 +126,7 @@ window.Visio =
       singular: 'goal'
       plural: 'goals'
       className: 'Goal'
-      human: 'Goals'
+      human: 'Goal'
     INDICATORS:
       singular: 'indicator'
       plural: 'indicators'

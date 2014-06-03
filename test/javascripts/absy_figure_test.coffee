@@ -10,7 +10,7 @@ module 'ABSY Figure',
       width: 100
       height: 100
       )
-    @d = new Visio.Models.Output({ id: 1 })
+    @d = new Visio.Models.Output({ id: 1, name: 'abc' })
     sinon.stub @d, 'selectedBudget', -> 10
     sinon.stub @d, 'selectedExpenditureRate', -> .5
     sinon.stub @d, 'selectedAchievement', -> { result: 10 }
@@ -88,3 +88,19 @@ test 'el', ->
   $(@figure.el).html ''
 
   strictEqual @figure.el.innerHTML, '', 'Figure should be empty'
+
+test 'query', ->
+  collection = new Visio.Collections.Output([@d])
+
+  @figure.query = 'a'
+  @figure.collectionFn collection
+  @figure.render()
+  strictEqual @figure.$el.find('.queried').length, 1, 'Should be queried'
+
+  @figure.query = ''
+  @figure.render()
+  strictEqual @figure.$el.find('.queried').length, 0, 'Should not be queried'
+
+  @figure.query = 'e'
+  @figure.render()
+  strictEqual @figure.$el.find('.queried').length, 0, 'Should not be queried'

@@ -12,9 +12,10 @@ gem 'pony'
 gem 'whenever', :require => false
 gem "devise_ldap_authenticatable"
 gem 'counter_culture', '~> 0.1.18'
-gem "capistrano-resque", "~> 0.1.0", require: false
+gem "capistrano-resque", "~> 0.1.0", :require => false
 gem 'axlsx'
 gem 'zip-zip'
+gem 'ruby-ntlm'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -30,6 +31,7 @@ gem 'mysql2'
 gem 'tire'
 gem 'will_paginate', '~> 3.0'
 gem 'normalize-rails'
+gem 'exception_notification'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -47,6 +49,7 @@ group :assets do
 end
 
 group :development, :test do
+  gem 'sprinkle'
   gem 'quiet_assets'
   gem 'capistrano', '~> 2.15.5'
   gem 'capistrano-rbenv', '~> 1.0.5'

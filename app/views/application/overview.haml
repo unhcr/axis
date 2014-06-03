@@ -12,6 +12,7 @@
     var $navigationIcon = $('.navigation-activation-icon');
     var $toolbar = $('.toolbar')
     var headerHeight = $('header').height();
+    var bottomOffset = 300
 
     $('.navigation-activation').on('mouseenter', function(e) {
       if (!Visio.manager.get('setup')) return;
@@ -34,11 +35,16 @@
         $toolbar.removeClass('fixed-top');
       }
 
+      if (scrollTop + $(window).height() + bottomOffset > $(document).height()) {
+        $.publish('scroll.bottom')
+      }
+
 
 
     })
 
     Visio.manager = new Visio.Models.Manager({
+      dashboard: new Visio.Models.Strategy(#{@strategy.to_json(@options).html_safe}),
       strategy_id: #{@strategy.id},
       strategies: new Visio.Collections.Strategy(#{@strategies.to_json.html_safe}),
       ready: function() {

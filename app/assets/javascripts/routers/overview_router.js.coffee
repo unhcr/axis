@@ -67,18 +67,14 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
            Visio.manager.get('expenditures').fetchSynced({ strategy_id: Visio.manager.get('strategy_id') })
            Visio.manager.get('budgets').fetchSynced({ strategy_id: Visio.manager.get('strategy_id') })
            Visio.manager.get('indicator_data').fetchSynced({ strategy_id: Visio.manager.get('strategy_id') })
-    ).done(() =>
+    ).done( =>
       # Initialize selected to be strategy
       Visio.manager.resetSelectedDefaults()
 
-      @navigation = new Visio.Views.NavigationView({
-        el: $('#navigation')
-      })
+      @navigation = new Visio.Views.NavigationView el: $('#navigation')
       @navigation.render()
 
-      @strategySnapshotView = new Visio.Views.StrategySnapshotView
-        el: $('#strategy-snapshot')
-
+      @strategySnapshotView = new Visio.Views.StrategySnapshotView el: $('#strategy-snapshot')
       @strategySnapshotView.render()
 
       $('#navigation').removeClass('gone')

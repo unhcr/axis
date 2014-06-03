@@ -52,10 +52,10 @@ class Visio.Models.Strategy extends Visio.Models.Syncable
     'indicator_ids': {}
     'problem_objective_ids': {}
     'strategy_objective_ids': {}
+    'isStrategy': true
 
-  include: (type, id) ->
-
-    @get("#{type}_ids")[id]?
+  include: (singular, id) ->
+    @get("#{singular}_ids")[id]?
 
   initialize: (options) ->
     options or= {}

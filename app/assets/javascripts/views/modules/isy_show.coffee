@@ -14,7 +14,7 @@ class Visio.Views.IsyShowView extends Visio.Views.AccordionShowView
   initialize: (options) ->
     @config =
       margin:
-        top: 10
+        top: 35
         bottom: 18
         left: 40
         right: 30
@@ -23,6 +23,7 @@ class Visio.Views.IsyShowView extends Visio.Views.AccordionShowView
 
     @isyFigure = new Visio.Figures.Isy @config
     @filterBy = new Visio.Views.FilterBy({ figure: @isyFigure, })
+    @queryBy = new Visio.Views.QueryBy figure: @isyFigure, placeholder: 'Search for an indicator'
     @sortBy = new Visio.Views.Dropdown
       title: 'Sort By'
       data: [
@@ -54,6 +55,7 @@ class Visio.Views.IsyShowView extends Visio.Views.AccordionShowView
       @$el.find('.indicator-bar-graph').html @isyFigure.el
       @$el.find('.header-buttons').append @filterBy.render().el
       @$el.find('.header-buttons').append @sortBy.render().el
+      @$el.find('.header-buttons').append @queryBy.render().el
 
       @$el.find('.slider').slider
         animate: true

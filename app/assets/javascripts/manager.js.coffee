@@ -52,12 +52,26 @@ class Visio.Models.Manager extends Backbone.Model
     'achievement_type': Visio.Algorithms.GOAL_TYPES.target
     'amount_type': Visio.Syncables.BUDGETS
     'reported_type': Visio.Algorithms.REPORTED_VALUES.yer
+    'dashboard': null
 
   resetSelectedDefaults: () ->
     _.each _.values(Visio.Parameters), (hash) ->
       Visio.manager.get('selected')[hash.plural] = {}
       _.extend Visio.manager.get('selected')[hash.plural],
-        Visio.manager.strategy().get("#{hash.singular}_ids")
+        Visio.manager.get('dashboard').get("#{hash.singular}_ids")
+
+      # include dashboard's own id
+      if Visio.manager.get('dashboard').name == hash
+        Visio.manager.select hash.plural, Visio.manager.get('dashboard').id
+
+    # include all strategy objectives if we are not looking at a strategy dashboard
+    unless Visio.manager.get('dashboard').get('isStrategy')
+      Visio.manager.select Visio.Parameters.STRATEGY_OBJECTIVES.plural,
+        Visio.manager.get(Visio.Parameters.STRATEGY_OBJECTIVES.plural).pluck('id')
+
+    if Visio.manager.includeExternalStrategyData()
+      Visio.manager.select Visio.Parameters.STRATEGY_OBJECTIVES.plural,
+        Visio.Constants.ANY_STRATEGY_OBJECTIVE
 
   resetBudgetDefaults: () ->
     _.each Visio.Scenarios, (scenario) =>
@@ -70,6 +84,18 @@ class Visio.Models.Manager extends Backbone.Model
     @resetBudgetDefaults()
     @resetSelectedDefaults()
     Visio.manager.trigger('change:selected')
+
+  includeExternalStrategyData: (include) =>
+    unless include?
+      return Visio.manager.get('strategy_objectives').get(Visio.Constants.ANY_STRATEGY_OBJECTIVE)?
+
+
+    if include
+      Visio.manager.get('strategy_objectives').add
+        id: Visio.Constants.ANY_STRATEGY_OBJECTIVE
+        name: 'External Data'
+    else
+      Visio.manager.get('strategy_objectives').remove Visio.Constants.ANY_STRATEGY_OBJECTIVE
 
   year: (_year, options) ->
     return @get('date').getFullYear() if arguments.length == 0

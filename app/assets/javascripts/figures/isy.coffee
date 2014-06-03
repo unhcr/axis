@@ -7,6 +7,7 @@ class Visio.Figures.Isy extends Visio.Figures.Base
   attrAccessible: ['x', 'y', 'width', 'height', 'collection', 'margin', 'goalType', 'isPerformance']
 
   initialize: (config) ->
+    config.query or= ''
 
     @filters = new Visio.Collections.FigureFilter([
       {
@@ -16,7 +17,7 @@ class Visio.Figures.Isy extends Visio.Figures.Base
         human: { true: 'performance', false: 'impact' }
         callback: (name, attr) =>
           @selectedDatum = null
-          @isPerformanceFn(name == 'true').render()
+          @isPerformanceFn(name == 'true')
           @x.domain [0, @maxIndicators]
           $.publish "drawFigures.#{@cid}.figure"
           $.publish "hover.#{@cid}.figure", 0
@@ -68,6 +69,11 @@ class Visio.Figures.Isy extends Visio.Figures.Base
     @g.append('g')
       .attr('class', 'y axis')
       .attr('transform', 'translate(0,0)')
+      .append("text")
+        .attr("y", -10)
+        .attr("x", 40)
+        .attr("dy", "-.21em")
+        .text('Standard')
 
     @goalType = config.goalType || Visio.Algorithms.GOAL_TYPES.target
 
@@ -293,7 +299,11 @@ class Visio.Figures.Isy extends Visio.Figures.Base
     delta = start - end
     -scale delta
 
-  filtered: (collection) => _.chain(collection.models).filter(@filterFn).sort(@sortFn).value()
+  queryByFn: (d) =>
+    _.isEmpty(@query) or d.indicator().toString().toLowerCase().indexOf(@query.toLowerCase()) != -1
+
+  filtered: (collection) =>
+    _.chain(collection.models).filter(@filterFn).filter(@queryByFn).sort(@sortFn).value()
 
   findBoxByIndex: (idx) =>
     boxes = @g.selectAll('.box')
@@ -347,10 +357,12 @@ class Visio.Figures.Isy extends Visio.Figures.Base
     if idx >= @maxIndicators and scroll
       difference = idx - @maxIndicators
       @x.domain [0 + difference, @maxIndicators + difference]
-      @render()
-    else if @x.domain()[0] >= 0 and scroll
+      @g.selectAll('g.box').attr('transform', (d, i) => 'translate(' + @x(i) + ', 0)')
+        .style('opacity', (d, i) -> if self.x(i) < 0 then 0 else 1)
+    else if @x.domain()[0] > 0 and scroll
       @x.domain [0, @maxIndicators]
-      @render()
+      @g.selectAll('g.box').attr('transform', (d, i) => 'translate(' + @x(i) + ', 0)')
+        .style('opacity', (d, i) -> if self.x(i) < 0 then 0 else 1)
 
     @g.selectAll('.circle').data([])
       .exit().transition().duration(Visio.Durations.VERY_FAST).attr('r', 0).remove()
@@ -427,8 +439,9 @@ class Visio.Figures.Isy extends Visio.Figures.Base
 
     positions = []
     positionsHash = {}
+    nValues = values.length
 
-    _.each values, (value) =>
+    _.each values, (value, idx) =>
 
       last = positions[positions.length - 1]
 

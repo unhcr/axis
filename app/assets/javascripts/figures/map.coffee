@@ -42,7 +42,7 @@ class Visio.Figures.Map extends Visio.Figures.Base
 
     expanded = null
 
-    zoomStep = .4
+    @zoomStep = .4
 
     @zoom = d3.behavior.zoom()
       .scaleExtent([.5, 2.2])
@@ -156,9 +156,9 @@ class Visio.Figures.Map extends Visio.Figures.Base
     @model.getMap()
 
   zoomIn: =>
-    scale = zoom.scale()
+    scale = @zoom.scale()
     scale = if scale + @zoomStep > @zoom.scaleExtent()[1] then @zoom.scaleExtent()[1] else scale + @zoomStep
-    @zoom.scale(scale)
+    @zoom.scale scale
     @zoomed()
 
   zoomOut: =>

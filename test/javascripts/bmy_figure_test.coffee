@@ -4,7 +4,7 @@ module 'BMY Figure',
     Visio.user = new Visio.Models.User()
     Visio.manager = new Visio.Models.Manager()
     @figure = new Visio.Figures.Bmy(
-      showTotal: false
+      showTotal: true
       margin:
         left: 0
         right: 0
@@ -24,7 +24,7 @@ test 'filtered', ->
 
   memo = @figure.filtered @budgets
 
-  strictEqual memo.length, 3, 'Should have two lines'
+  strictEqual memo.length, 3, 'Should have three lines'
   ok _.find memo, ((array) -> array[array.groupBy] == Visio.Budgets.ADMIN), 'One line should have ADMIN type'
   ok _.find memo, ((array) -> array[array.groupBy] == Visio.Budgets.PROJECT), 'One line should have PROJECT type'
   ok _.find memo, ((array) -> array[array.groupBy] == 'total'), 'One line should have total type'
@@ -34,6 +34,16 @@ test 'filtered', ->
   strictEqual _.where(lineData, { year: 2012 }).length, 1, 'One should be from 2012'
   strictEqual _.where(lineData, { year: 2013 }).length, 1, 'One should be from 2013'
 
+test 'filtered - no total', ->
+  @figure.filters.get('scenario').filter Visio.Scenarios.AOL, true, { silent: true }
+  @figure.filters.get('scenario').filter Visio.Scenarios.OL, true, { silent: true }
+  @figure.filters.get('show_total').filter 'Show Total', false, { silent: true }
+
+  memo = @figure.filtered @budgets
+
+  strictEqual memo.length, 2, 'Should have two lines'
+  ok _.find memo, ((array) -> array[array.groupBy] == Visio.Budgets.ADMIN), 'One line should have ADMIN type'
+  ok _.find memo, ((array) -> array[array.groupBy] == Visio.Budgets.PROJECT), 'One line should have PROJECT type'
 
 test 'render', ->
   @figure.filters.get('scenario').filter(Visio.Scenarios.AOL, true)

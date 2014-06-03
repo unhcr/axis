@@ -27,14 +27,26 @@ class ApplicationController < ActionController::Base
     render :layout => 'application' and return
   end
 
-  def overview
+  def operation
     redirect_to :splash and return unless user_signed_in?
-    options = {
+    @options = {
       :include => {
         :ids => true
       }
     }
-    @strategies ||= Strategy.all.as_json(options)
+
+    @operation ||= Operation.find params[:operation_id]
+    render :layout => 'index'
+  end
+
+  def overview
+    redirect_to :splash and return unless user_signed_in?
+    @options = {
+      :include => {
+        :ids => true
+      }
+    }
+    @strategies ||= Strategy.all.as_json(@options)
     @strategy ||= Strategy.find(params[:strategy_id])
     render :layout => 'index'
   end

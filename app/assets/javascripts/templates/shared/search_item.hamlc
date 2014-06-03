@@ -1,4 +1,4 @@
-.search-item{ :data => { :id => context.model.id } }
+%a.search-item{ :href => "/operation/#{context.model.id}" }
   - if context.model.highlight()
     != context.model.highlight()
   - else

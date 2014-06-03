@@ -21,7 +21,15 @@ module EmailPhantomJob
               :from => 'axis@unhcr.org',
               :subject => name,
               :body => Quoth.get,
-              :attachments => { filename => File.read(fullpath) })
+              :attachments => { filename => File.read(fullpath) },
+              :via => :smtp,
+              :via_options => {
+                :address => 'smtphub.unhcr.local',
+                :port => 25,
+                :user_name => 'hqaxis',
+                :password => ENV['EMAIL_PASSWORD'],
+                :authentication => :ntlm,
+                :openssl_verify_mode => 'none',
+              })
   end
 end
-

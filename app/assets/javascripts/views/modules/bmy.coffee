@@ -23,7 +23,7 @@ class Visio.Views.BmyView extends Visio.Views.AccordionIndexView
       width: 800
       height: 450
 
-    @figure = new Visio.Figures.Bmy @config
+    @figure = new Visio.Figures.BmySummary @config
 
   render: (isRerender) ->
     super isRerender
@@ -42,6 +42,7 @@ class Visio.Views.BmyView extends Visio.Views.AccordionIndexView
       data = data.concat model.selectedBudgetData(Visio.Constants.ANY_YEAR).models
 
     @figure.collectionFn new Visio.Collections.Budget(data)
+    @figure.groupBy = "#{Visio.Utils.parameterByPlural(Visio.manager.get('aggregation_type')).singular}_id"
     @figure.render()
 
   sort: (parameterA, parameterB) ->

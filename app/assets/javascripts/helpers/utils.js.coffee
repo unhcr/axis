@@ -127,3 +127,11 @@ Visio.Utils.parameterByPlural = (plural) ->
   for parameter, hash of Visio.Parameters
     return hash if hash.plural == plural
   null
+
+Visio.Utils.inlineCssStyles = ($ele) ->
+  $ele.css css($ele)
+
+Visio.Utils.recursiveInlineCssStyles = ($ele) ->
+  Visio.Utils.inlineCssStyles $ele
+  $ele.children().each (idx, ele) ->
+    Visio.Utils.recursiveInlineCssStyles $(ele) unless _.isEmpty($(ele).children())

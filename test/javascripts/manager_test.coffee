@@ -73,6 +73,7 @@ test 'strategies', ->
 
 test 'selected', () ->
   selected = Visio.manager.get('selected')
+  strategy = new Visio.Models.Strategy
   Visio.manager.get('strategies').reset([{ id: 3, strategy_objective_ids: {1:true} }])
   Visio.manager.set('strategy_id', 3)
 
@@ -132,6 +133,7 @@ test 'resetSelectedDefaults', () ->
 
   Visio.manager.get('strategies').reset([strategy])
   Visio.manager.set('strategy_id', Visio.manager.get('strategies').at(0).id)
+  Visio.manager.set 'dashboard', Visio.manager.strategy()
 
   _.each _.values(Visio.Parameters), (hash) ->
     Visio.manager.get(hash.plural).reset([
@@ -147,7 +149,30 @@ test 'resetSelectedDefaults', () ->
   Visio.manager.resetSelectedDefaults()
 
   _.each _.values(Visio.Parameters), (hash) ->
-    strictEqual(_.keys(Visio.manager.get('selected')[hash.plural]).length, 2)
+    strictEqual Visio.manager.selected(hash.plural).length, 2
+
+test 'resetSelectedDefaults - operation dashboard', ->
+  operation = new Visio.Models.Operation
+    id: 'lawd'
+    ppg_ids:
+      abc: true
+      def: true
+
+  Visio.manager.set 'dashboard', operation
+  Visio.manager.get('strategy_objectives').reset [{ id: '123' }]
+  Visio.manager.get('ppgs').reset [{ id: 'abc' }, { id: 'def' }]
+  Visio.manager.get('operations').reset [operation]
+  Visio.manager.includeExternalStrategyData true
+
+  Visio.manager.resetSelectedDefaults()
+
+  strictEqual Visio.manager.selected('ppgs').length, 2
+
+  strictEqual Visio.manager.selected('strategy_objectives').length, 2
+  ok Visio.manager.get('strategy_objectives').get(Visio.Constants.ANY_STRATEGY_OBJECTIVE)
+  ok Visio.manager.get('strategy_objectives').get('123')
+
+  strictEqual Visio.manager.selected('operations').length, 1
 
 test 'selectedStrategyPlanIds', ->
   strategies = [
@@ -180,6 +205,18 @@ test 'selectedStrategyPlanIds', ->
   _.each ids, (id) ->
     ok _.include _.intersection(_.keys(strategies[0].plan_ids),
                                 _.keys(strategies[1].plan_ids)), id
+
+test 'includeExternalStrategyData', ->
+
+  Visio.manager.includeExternalStrategyData true
+
+  ok Visio.manager.get('strategy_objectives').get Visio.Constants.ANY_STRATEGY_OBJECTIVE
+  ok Visio.manager.includeExternalStrategyData()
+
+  Visio.manager.includeExternalStrategyData false
+  ok !Visio.manager.get('strategy_objectives').get Visio.Constants.ANY_STRATEGY_OBJECTIVE
+  ok !Visio.manager.includeExternalStrategyData()
+
 
 test 'validation', ->
 

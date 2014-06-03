@@ -17,9 +17,14 @@ class Visio.Routers.GlobalRouter extends Backbone.Router
 
       @exportView = new Visio.Views.ExportModule( model: model )
       $('body').append(@exportView.render().el)
+
   search: () =>
     $(document).scrollTop(0)
-    @searchView.show()
+    if @searchView.isOpen()
+      @searchView.hide()
+    else
+      @searchView.show()
+    Visio.router.navigate '/'
 
   menu: () =>
     $(document).scrollTop(0)

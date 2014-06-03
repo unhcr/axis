@@ -9,7 +9,7 @@ class Visio.Views.SearchView extends Backbone.View
     @throttledSearch = _.throttle @search, 300
 
   events:
-    'blur input': 'onBlurSearch'
+    #  'blur input': 'onBlurSearch'
     'keyup input': 'onKeyupSearch'
     'transitionend': 'onTransitionEnd'
     'MSTransitionEnd': 'onTransitionEnd'
@@ -19,18 +19,21 @@ class Visio.Views.SearchView extends Backbone.View
   render: () ->
     @$el.html @template()
 
-  show: () ->
+  isOpen: ->
+    not @$el.hasClass('zero-max-height')
+
+  show: ->
     @$el.removeClass('zero-max-height')
     @$el.find('input').focus()
 
-  hide: () ->
+  hide: ->
     @$el.addClass('zero-max-height')
     @$el.find('input').val('')
     @$el.find('.results').addClass 'gone zero-height'
 
-  onBlurSearch: () =>
-    Visio.router.navigate '/'
-    @hide()
+  #onBlurSearch: =>
+  #  Visio.router.navigate '/'
+  #  @hide()
 
   search: (query) =>
     searchTypes = [Visio.Parameters.INDICATORS, Visio.Parameters.OPERATIONS]

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140416085105) do
+ActiveRecord::Schema.define(:version => 20140521115929) do
 
   create_table "budgets", :force => true do |t|
     t.string   "budget_type"
@@ -237,12 +237,19 @@ ActiveRecord::Schema.define(:version => 20140416085105) do
     t.string  "indicator_id",          :null => false
   end
 
-  create_table "instances", :id => false, :force => true do |t|
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-    t.string   "id",         :null => false
-    t.string   "output_id"
+  create_table "offices", :id => false, :force => true do |t|
+    t.string   "id",               :null => false
+    t.string   "name"
+    t.string   "parent_office_id"
+    t.boolean  "head"
+    t.datetime "found_at"
+    t.string   "operation_id"
+    t.string   "plan_id"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
   end
+
+  add_index "offices", ["id"], :name => "index_offices_on_id", :unique => true
 
   create_table "operations", :id => false, :force => true do |t|
     t.string   "id",                            :null => false
@@ -357,6 +364,26 @@ ActiveRecord::Schema.define(:version => 20140416085105) do
     t.integer "strategy_id", :null => false
     t.string  "plan_id",     :null => false
   end
+
+  create_table "positions", :id => false, :force => true do |t|
+    t.string   "id",                 :null => false
+    t.string   "position_reference"
+    t.string   "contract_type"
+    t.string   "incumbent"
+    t.string   "title"
+    t.string   "grade"
+    t.boolean  "head"
+    t.boolean  "fast_track"
+    t.string   "parent_position_id"
+    t.string   "operation_id"
+    t.string   "plan_id"
+    t.datetime "found_at"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+    t.string   "office_id"
+  end
+
+  add_index "positions", ["id"], :name => "index_positions_on_id", :unique => true
 
   create_table "ppgs", :id => false, :force => true do |t|
     t.string   "id",                                    :null => false

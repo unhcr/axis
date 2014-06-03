@@ -4,6 +4,7 @@ class FocusParseTest < ActiveSupport::TestCase
 
   TESTFILE_PATH = "#{Rails.root}/test/files/"
   TESTFILE_NAME = "PlanTest.xml"
+  STAFFFILE_NAME = "PlanStaff.xml"
   SIMPLEFILE_NAME = "SimplePlanTest.xml"
   PRESENT_BUDGET_NAME = "PresentBudgetPlanTest.xml"
   DELETED_TESTFILE_NAME = "DeletedPlanTest.xml"
@@ -22,7 +23,6 @@ class FocusParseTest < ActiveSupport::TestCase
     :problem_objectives => 22,
     :indicators => 120,
     :outputs => 53,
-    :output_instances => 53,
     :operations => 139,
     :indicator_data => 120,
     :budgets => 232
@@ -36,7 +36,6 @@ class FocusParseTest < ActiveSupport::TestCase
     RightsGroup.destroy_all
     ProblemObjective.destroy_all
     Output.destroy_all
-    Instance.destroy_all
     Indicator.destroy_all
     IndicatorDatum.destroy_all
     Operation.destroy_all
@@ -119,7 +118,6 @@ class FocusParseTest < ActiveSupport::TestCase
     assert_equal COUNTS[:outputs], Output.count, "Output count"
     assert_equal COUNTS[:operations], Operation.count, "Operation count"
     assert_equal COUNTS[:budgets], Budget.count, "Budget count"
-    assert_equal COUNTS[:output_instances], Instance.count
 
     [Goal, RightsGroup, ProblemObjective, Indicator].each do |resource|
       models = resource.synced_models(timestamp)
@@ -231,14 +229,10 @@ class FocusParseTest < ActiveSupport::TestCase
     assert_equal COUNTS[:outputs], Output.count, "Output count"
     assert_equal COUNTS[:outputs], operation.outputs.count, "Operation's outputs count"
     assert_equal COUNTS[:outputs], plan.outputs.count, "Plan's outputs count"
-    assert_equal COUNTS[:output_instances], Instance.count
-    assert Instance.first.id.is_a? String
-    assert Instance.first.id.length > 0
 
     Output.all.each do |output|
       assert output.indicators.length >= 0
       assert output.indicators.length <= Indicator.count
-      assert_equal output.instances.length, 1
     end
 
     assert_equal COUNTS[:indicators], Indicator.count, "Indicator count"
@@ -355,6 +349,61 @@ class FocusParseTest < ActiveSupport::TestCase
       assert o.name
       assert o.id
     end
+  end
+
+  test "Parse offices and staffing structures" do
+    file = File.read(TESTFILE_PATH + TESTHEADER_NAME)
+    parse_header(file, PLAN_TYPES)
+
+    file = File.read(TESTFILE_PATH + STAFFFILE_NAME)
+    parse_plan(file)
+
+
+    assert_equal 1, Office.where(:parent_office_id => nil).count
+    assert_equal 6, Office.where('parent_office_id is not NULL').count
+
+    Office.all.each do |o|
+      assert o.operation
+      assert o.plan
+      assert o.positions.count > 0
+    end
+
+    assert_equal 7, Position.where('parent_position_id is NULL').count
+    assert_equal 184, Position.where('parent_position_id is not NULL').count
+
+    Position.all.each do |o|
+      assert o.operation
+      assert o.plan
+      assert o.office
+    end
+
+  end
+
+  test "Parse offices and staffing duplicates" do
+    file = File.read(TESTFILE_PATH + TESTHEADER_NAME)
+    parse_header(file, PLAN_TYPES)
+
+    file = File.read(TESTFILE_PATH + STAFFFILE_NAME)
+    parse_plan(file)
+    parse_plan(file)
+
+
+    assert_equal 1, Office.where(:parent_office_id => nil).count
+    assert_equal 6, Office.where('parent_office_id is not NULL').count
+
+    Office.all.each do |o|
+      assert o.operation
+      assert o.plan
+    end
+
+    assert_equal 7, Position.where('parent_position_id is NULL').count
+    assert_equal 184, Position.where('parent_position_id is not NULL').count
+
+    Position.all.each do |o|
+      assert o.operation
+      assert o.plan
+    end
+
   end
 end
 

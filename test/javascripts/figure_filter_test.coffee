@@ -100,6 +100,10 @@ test 'Callback on filter', ->
   strictEqual callback.callCount, 1, 'Callback should be called once'
   ok callback.calledWith('ADMIN', false), 'Callback should be called with params'
 
+  filter.filter 'ADMIN', true, { silent: true }
+  strictEqual callback.callCount, 1, 'Callback should be called once'
+  ok filter.filter 'ADMIN'
+
 test 'active', ->
 
   year = @filters.get('year').active()
