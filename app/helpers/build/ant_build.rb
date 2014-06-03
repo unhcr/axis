@@ -16,6 +16,8 @@ module Build
     # Ouput of build file
     ANT_BUILD_NAME = 'build.xml'
 
+    include Parsers
+
     def initialize(config)
       @config = config
       @config[:location] = JAR_LOCATION
@@ -78,9 +80,6 @@ module Build
       return output_filepath
     end
 
-    # Parses the CSV file
-    def parse; end
-
     # Runs all pieces of the build
     def run
       start = Time.now
@@ -92,7 +91,7 @@ module Build
 
       log "[2/3] Parsing"
 
-      parse(filename)
+      @config[:parser].parse(filename)
       log "[3/3] Complete"
 
       Time.now - start

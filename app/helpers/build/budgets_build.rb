@@ -1,14 +1,16 @@
 module Build
-  class MsrpBuild < AntBuild
-    BUILD_NAME = 'expenses'
+  class BudgetsBuild < AntBuild
+    BUILD_NAME = 'budgets'
 
+    include Parsers
 
     def initialize(config)
       super config.merge({
         :build_name => BUILD_NAME,
-        :parser => Parsers::MsrpParser.new
+        :parser => Parsers::BudgetParser.new
       })
     end
 
   end
 end
+

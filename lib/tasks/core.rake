@@ -12,69 +12,36 @@ task :clear => :environment do
   Indicator.delete_all
   IndicatorDatum.delete_all
   Budget.delete_all
+  Expenditure.delete_all
 end
 
 namespace :build do
 
-  task :msrp => :environment do
-    include Build
+  builds = {
+    :msrp => 'Build::MsrpBuild',
+    :budgets => 'Build::BudgetsBuild',
+    :elements => 'Build::ElementsBuild',
+    :indicator_data_impact => 'Build::IndicatorDataImpactBuild',
+    :indicator_data_perf => 'Build::IndicatorDataPerfBuild'
+  }
 
-    n = ENV['n']
-    n = n.to_i unless n.nil?
+  builds.each do |build_name, builder_string|
+    task build_name => :environment do
+      builder = builder_string.constantize
 
-    p 'Fetching MSRP data'
+      n = ENV['n']
+      n = n.to_i unless n.nil?
 
-    build = Build::MsrpBuild.new({ :limit => n })
+      p "Fetching #{build_name} data"
 
-    deltaTime = build.run
+      build = builder.new({ :limit => n })
 
-    p "Finished fetching MSRP data in: #{deltaTime}"
+      deltaTime = build.run
 
-
-  end
-
-  task :elements => :environment do
-
-    include Build
-
-    n = ENV['n']
-    n = n.to_i unless n.nil?
-
-    p 'Fetching Element data'
-
-    build = Build::ElementsBuild.new({ :limit => n })
-
-    deltaTime = build.run
-
-    p "Finished fetching Elements data in: #{deltaTime}"
-
-  end
-
-  task :focus => :environment do
-    include FocusFetch
-
-    n = ENV['n']
-    n_days = ENV['days'].present? ? ENV['days'].to_i.days : nil
-
-    n = n.nil? ? 1.0/0.0 : n.to_i
-
-    p 'Fetching FOCUS data'
-
-    start = Time.now
-
-    ret = nil
-    if n_days
-      ret = fetch n, n_days
-    else
-      ret = fetch n
+      p "Finished fetching #{build_name} data in: #{deltaTime}"
     end
-
-    p "Finished fetching FOCUS data in: #{Time.now - start}"
-    p '-----------------'
-    p "Files Read: #{ret[:files_read]}"
-    p "Files Total: #{ret[:files_total]}"
-
   end
+
 
   task :countries => :environment do
     file = open("#{Rails.root}/data/countries.json")
@@ -121,6 +88,20 @@ namespace :build do
 
     Plan.all.map &:touch
   end
+end
+
+task :build => :environment do
+  starttime = Time.now
+  fm = FetchMonitor.first
+  Rake::Task['build:elements']
+  Rake::Task['build:countries']
+  Rake::Task['build:budgets']
+  Rake::Task['build:msrp']
+  Rake::Task['build:indicator_data_impact']
+  Rake::Task['build:indicator_data_perf']
+
+  fm.starttime = starttime
+  fm.mark_deleted
 end
 
 namespace :utils do
