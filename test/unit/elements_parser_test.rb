@@ -8,14 +8,14 @@ class ElementsParserTest < ActiveSupport::TestCase
     :goals => 1,
     :rights_groups => 2,
     :problem_objectives => 3,
-    :indicators => 49,
+    :indicators => 50,
     :outputs => 4,
     :operations => 1,
   }
 
   include Parsers
   def setup
-    @parser = ElementsParser.new
+    @parser = Parsers::ElementsParser.new
     # Destory any fixtures or previous data
     Plan.destroy_all
     Ppg.destroy_all
@@ -36,14 +36,14 @@ class ElementsParserTest < ActiveSupport::TestCase
   end
 
   test 'Resource to csvfield attrs - indicators' do
-    attrs = @parser.resource_to_csvfield_attrs Indicator, ElementsParse::PERF_INDICATORS
+    attrs = @parser.resource_to_csvfield_attrs Indicator, Parsers::ElementsParser::PERF_INDICATORS
 
     assert attrs
     assert attrs[:id]
     assert attrs[:name]
     assert_equal attrs[:name], 'PERFINDICATOR_NAME'
 
-    attrs = @parser.resource_to_csvfield_attrs Indicator, ElementsParse::IMPACT_INDICATORS
+    attrs = @parser.resource_to_csvfield_attrs Indicator, Parsers::ElementsParser::IMPACT_INDICATORS
 
     assert attrs
     assert attrs[:id]
@@ -98,7 +98,7 @@ class ElementsParserTest < ActiveSupport::TestCase
 
     assert_equal Indicator.count, COUNTS[:indicators]
     assert_equal Indicator.where(:is_performance => true).count, 33
-    assert_equal Indicator.where(:is_performance => false).count, 16
+    assert_equal Indicator.where(:is_performance => false).count, 17
 
     assert_equal Output.count, COUNTS[:outputs]
   end
@@ -149,7 +149,7 @@ class ElementsParserTest < ActiveSupport::TestCase
 
     assert_equal Indicator.count, COUNTS[:indicators]
     assert_equal Indicator.where(:is_performance => true).count, 33
-    assert_equal Indicator.where(:is_performance => false).count, 16
+    assert_equal Indicator.where(:is_performance => false).count, 17
 
     assert_equal Output.count, COUNTS[:outputs]
 

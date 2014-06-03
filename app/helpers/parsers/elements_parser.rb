@@ -8,33 +8,33 @@ module Parsers
     def self.csvfields
       @csvfields ||= {
         :operations => {
-          :id => 'OPERATION_ID',
+          :id => 'OPERATIONID',
           :name => 'OPERATION_NAME'
         },
         :plans => {
-          :id => 'PLAN_ID',
+          :id => 'PLANID',
           :name => 'PLAN_NAME',
           :year => 'PLANNINGYEAR'
         },
         :ppgs => {
-          :id => 'PPG_ID',
-          :name => 'PPG_NAME'
+          :id => 'PPGID',
+          :name => 'PPG'
         },
         :goals => {
-          :id => 'RFGOAL_ID',
+          :id => 'RFGOALID',
           :name => 'GOAL_NAME'
         },
         :rights_groups => {
-          :id => 'RFRIGHTS_GROUP_ID',
+          :id => 'RFRIGHTSGROUPID',
           :name => 'RIGHTS_GROUP_NAME'
         },
         :problem_objectives => {
-          :id => 'RFPROBLEM_OBJECTIVE_ID',
-          :problem_name => 'PROBLEM_NAME',
-          :objective_name => 'OBJECTIVE_NAME'
+          :id => 'RFPROBLEMOBJECTIVEID',
+          :problem_name => 'PROBLEMNAME',
+          :objective_name => 'OBJECTIVENAME'
         },
         :outputs => {
-          :id => 'RFOUTPUT_ID',
+          :id => 'RFOUTPUTID',
           :name => 'OUTPUT_NAME'
         },
         :perf_indicators => {
