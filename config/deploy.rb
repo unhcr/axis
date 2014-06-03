@@ -2,6 +2,7 @@ require 'bundler/capistrano'
 require "capistrano-rbenv"
 require "whenever/capistrano"
 require "capistrano-resque"
+require 'capistrano/ext/multistage'
 load 'config/deploy/recipes/redis'
 
 #set :whenever_command, 'bundle exec whenever'
@@ -12,6 +13,7 @@ set :rbenv_ruby_version, "2.0.0-p353"
 set :rbenv_repository, "https://github.com/sstephenson/rbenv.git"
 set :bundle_flags, "--deployment --quiet --binstubs"
 set :keep_releases, 3
+set :default_stage, 'staging'
 
 set :application, "visio"
 
@@ -37,16 +39,6 @@ default_run_options[:env] = {
     'https_proxy' => 'https://proxy.unhcr.local:8080',
     'HTTPS_PROXY_REQUEST_FULLURI' => 'false',
 }
-
-server = '10.9.43.173'
-if rails_env == 'production'
-  server = '10.9.43.153'
-end
-
-role :web, server
-role :app, server                          # This may be the same as your `Web` server
-role :db,  server, :primary => true # This is where Rails migrations will run
-role :resque_worker, server
 
 set :workers, { "shrimp" => 5, "pdf_email" => 5 }
 
