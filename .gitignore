@@ -20,6 +20,10 @@
 /config/capistrano_credentials.rb
 
 coverage
+/script/builds/expenses
+/script/builds/budgets
+/script/builds/elements
+
 /public/reports/pdf/*.pdf
 **/generated_output.csv
 **/build.xml
