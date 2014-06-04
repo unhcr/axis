@@ -15,7 +15,6 @@ module Parsers
         :standard => 'IMP_STANDARD',
         :threshold_green => 'IMP_GREEN',
         :threshold_red => 'IMP_RED',
-        :reversal => 'IMP_ISREVERSAL',
         :is_performance => lambda { |row| false },
       }.merge(fields)
     end
