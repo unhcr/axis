@@ -25,5 +25,3 @@ coverage
 /script/builds/elements
 
 /public/reports/pdf/*.pdf
-**/generated_output.csv
-**/build.xml
