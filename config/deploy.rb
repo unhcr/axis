@@ -56,6 +56,9 @@ namespace :deploy do
   task :restart, :roles => :app, :except => { :no_release => true } do
    run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
   end
+  task :config, :except => { :no_release => true }, :role => :app do
+    run "cp -f ~/application.yml #{release_path}/config/application.yml"
+  end
 end
 
 task :query_interactive do
@@ -72,6 +75,8 @@ namespace :db do
   end
 end
 
+
+after "deploy:update_code", "deploy:config"
 after "deploy:finalize_update", "db:config"
 after "deploy", "deploy:migrate"
 after "deploy", "whenever:clear_crontab"
