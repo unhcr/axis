@@ -9,12 +9,13 @@ module Parsers
       @csvfields ||= {
         :operations => {
           :id => 'OPERATIONID',
-          :name => 'OPERATION_NAME'
+          :name => 'OPERATION'
         },
         :plans => {
           :id => 'PLANID',
           :name => 'PLAN_NAME',
-          :year => 'PLANNINGYEAR'
+          :year => 'PLANNINGYEAR',
+          :operation_name => 'OPERATION'
         },
         :ppgs => {
           :id => 'PPGID',

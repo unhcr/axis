@@ -61,6 +61,7 @@ class ElementsParserTest < ActiveSupport::TestCase
     assert_equal Operation.first.id, '7V5'
     assert_equal Operation.first.years.first, 2013
     assert_equal Operation.first.plans.count, COUNTS[:plans]
+    assert Operation.first.name
     assert Operation.first.found_at > start_time
 
 
@@ -68,6 +69,7 @@ class ElementsParserTest < ActiveSupport::TestCase
     assert_equal Plan.first.id, '86744160-4e90-4c21-a617-87ee9dc4af40'
     assert_equal Plan.first.year, 2013
     assert Plan.first.operation
+    assert Plan.first.operation_name
 
     assert_equal Ppg.count, COUNTS[:ppgs]
     assert_equal Ppg.first.id, 'MAGL'
