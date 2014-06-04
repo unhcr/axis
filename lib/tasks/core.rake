@@ -93,12 +93,12 @@ end
 task :build => :environment do
   starttime = Time.now
   fm = FetchMonitor.first
-  Rake::Task['build:elements']
-  Rake::Task['build:countries']
-  Rake::Task['build:budgets']
-  Rake::Task['build:msrp']
-  Rake::Task['build:indicator_data_impact']
-  Rake::Task['build:indicator_data_perf']
+  Rake::Task['build:elements'].invoke
+  Rake::Task['build:countries'].invoke
+  Rake::Task['build:budgets'].invoke
+  Rake::Task['build:msrp'].invoke
+  Rake::Task['build:indicator_data_impact'].invoke
+  Rake::Task['build:indicator_data_perf'].invoke
 
   fm.starttime = starttime
   fm.mark_deleted
