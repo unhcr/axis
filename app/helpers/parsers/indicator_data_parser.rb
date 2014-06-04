@@ -30,6 +30,10 @@ module Parsers
 
     end
 
+    def indicator_value_parse(row, field)
+      row[field] == NULL ? nil : row[field]
+    end
+
     def parse(csv_filename)
 
       csvfields = self.class.csvfields

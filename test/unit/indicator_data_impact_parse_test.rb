@@ -31,15 +31,16 @@ class IndicatorDataImpactParseTest < ActiveSupport::TestCase
       assert b.priority, 'Should have a priority'
       assert !b.missing_budget.nil?, 'Missing budget'
       assert !b.excluded.nil?, 'Excluded'
-      assert b.myr, 'MYR'
-      assert b.yer, 'YER'
-      assert b.imp_target, 'impact target'
-      assert b.comp_target, 'COMP target'
+      assert b.myr.nil?, "MYR: #{b.myr}"
+      assert b.yer.nil?, 'YER'
       assert b.standard, 'Standard'
       assert b.threshold_green, 'Threshold green'
       assert b.threshold_red, 'Threshold red'
       assert b.indicator_type, 'Indicator Type'
     end
+
+    assert_equal IndicatorDatum.where(:baseline => nil).count, 1
+    assert_equal IndicatorDatum.where(:imp_target => nil).count, 5
   end
 
   test "parse small update" do
