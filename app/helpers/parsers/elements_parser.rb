@@ -89,7 +89,7 @@ module Parsers
 
       resources = [Operation, Plan, Ppg, Goal, RightsGroup, ProblemObjective, Output, Indicator]
 
-      CSV.foreach(csv_filename, :col_sep => COL_SEP, :headers => true) do |row|
+      csv_foreach(csv_filename) do |row|
         next if row.empty?
         # Just parse all the parameters in the row
         resources.each do |r|

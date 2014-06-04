@@ -30,7 +30,7 @@ module Parsers
 
       fields = MsrpParser.fields
 
-      CSV.foreach(csv_filename, :headers => true, :col_sep => COL_SEP) do |row|
+      csv_foreach(csv_filename) do |row|
         next if row.empty?
 
         attrs = {
