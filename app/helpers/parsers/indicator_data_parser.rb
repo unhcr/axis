@@ -20,6 +20,7 @@ module Parsers
         :problem_objective_id => 'RFPROBLEMOBJECTIVEID',
         :priority => 'PRIORITY',
         :indicator_type => 'INDICATOR_TYPE',
+        :reversal => lambda { |row| row['REVERSAL'].to_i == 1 },
         :missing_budget => lambda do |row|
             priority = row['PRIORITY']
             priority == PRIORITIES[:not]
