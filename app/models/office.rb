@@ -2,7 +2,7 @@ class Office < ActiveRecord::Base
   self.primary_key = :id
   include SyncableModel
 
-  attr_accessible :name
+  attr_accessible :name, :status, :id, :plan_id, :office_id
 
   has_many :sub_offices, class_name: 'Office',
     foreign_key: 'parent_office_id'

@@ -4,32 +4,45 @@ class MsrpParseTest < ActiveSupport::TestCase
 
   TESTFILE_PATH = "#{Rails.root}/test/files/"
 
-  include MsrpParse
-  include Build
+  include Parsers
   def setup
     Expenditure.delete_all
+    @parser = Parsers::MsrpParser.new
+    @path = "#{TESTFILE_PATH}#{Build::MsrpBuild::BUILD_NAME}/#{Build::MsrpBuild::OUTPUT_FILENAME}"
 
+    @sum = 2290138
   end
 
   test "parse small file basic" do
 
-    parse("#{TESTFILE_PATH}#{Build::MsrpBuild::OUTPUT_FILENAME}")
+    @parser.parse @path
 
-    assert_equal 10, Expenditure.count, 'Should be 10 expenditure'
-    assert_equal 270355, Expenditure.sum(:amount)
+    assert_equal 50, Expenditure.count, 'Should be 50 expenditure'
+    assert_equal @sum, Expenditure.sum(:amount)
+    Expenditure.all.each do |b|
+      assert b.plan_id, 'Must have plan'
+      assert b.operation_id, 'Must have operation'
+      assert b.ppg_id, 'Must have ppg'
+      assert b.goal_id, 'Must have goal'
+      assert b.problem_objective_id, 'Must have problem objective id'
+      assert b.output_id, 'Must have output id'
+      assert b.year, 'Must have year'
+      assert b.scenario, 'Must have scenario'
+      assert b.budget_type, 'Must have budget type'
+    end
   end
 
   test "parse small update" do
-    parse("#{TESTFILE_PATH}#{Build::MsrpBuild::OUTPUT_FILENAME}")
-    assert_equal 270355, Expenditure.sum(:amount)
+    @parser.parse @path
+    assert_equal @sum, Expenditure.sum(:amount)
 
     found = Time.now
 
-    parse("#{TESTFILE_PATH}#{Build::MsrpBuild::OUTPUT_FILENAME}")
-    assert_equal 10, Expenditure.count, 'Should be 10 expenditure'
+    @parser.parse @path
+    assert_equal 50, Expenditure.count, 'Should be 50 expenditure'
     assert_equal 0, Expenditure.where('found_at < ?', found).length, 'All should have been found the second time'
     assert_equal 0, Expenditure.where('updated_at > ?', found).length, 'None should have been updated the second time'
-    assert_equal 270355, Expenditure.sum(:amount)
+    assert_equal @sum, Expenditure.sum(:amount)
   end
 
 end

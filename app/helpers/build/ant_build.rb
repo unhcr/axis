@@ -16,6 +16,8 @@ module Build
     # Ouput of build file
     ANT_BUILD_NAME = 'build.xml'
 
+    include Parsers
+
     def initialize(config)
       @config = config
       @config[:location] = JAR_LOCATION
@@ -27,7 +29,7 @@ module Build
 
       @ant_path = config[:ant_path] || ANT_TEMPLATE_FILEPATH
 
-      dir_path = "#{@ant_path}/#{MsrpBuild::BUILD_NAME}"
+      dir_path = "#{@ant_path}/#{@config[:build_name]}"
       Dir.mkdir(dir_path) unless Dir.exists? dir_path
     end
 
@@ -70,16 +72,14 @@ module Build
 
       Dir.chdir "#{self.build_path}"
 
-      cmd = "ant #{@config[:build_name]}"
+      # Need 1.9.4 version in order have file encoding
+      cmd = "#{ENV['ant']} #{@config[:build_name]}"
 
       log "Running '#{cmd}' in #{self.build_path}"
       output = system(cmd)
 
       return output_filepath
     end
-
-    # Parses the CSV file
-    def parse; end
 
     # Runs all pieces of the build
     def run
@@ -92,7 +92,7 @@ module Build
 
       log "[2/3] Parsing"
 
-      parse(filename)
+      @config[:parser].parse(filename)
       log "[3/3] Complete"
 
       Time.now - start

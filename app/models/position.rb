@@ -1,8 +1,7 @@
 class Position < ActiveRecord::Base
   self.primary_key = :id
   include SyncableModel
-  attr_accessible :contract_type, :fast_track, :grade, :incumbent, :position_reference, :title,
-    :head
+  attr_accessible :contract_type, :grade, :incumbent, :title, :existing
 
   scope :head_positions, where(parent_position_id: nil)
   has_many :sub_positions, class_name: 'Position',

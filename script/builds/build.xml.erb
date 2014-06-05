@@ -7,8 +7,11 @@
       userid="FOCUS_READER"
       password="<%= ENV['DB_PASSWORD'] %>"
       print="true"
-      showheaders="false"
+      showheaders="true"
       showtrailers="false"
+      csvColumnSeparator="###"
+      csvQuoteCharacter="&quot;"
+      outputencoding="utf-8"
       output="<%= @config[:output] %>">
       <classpath>
         <pathelement location="<%= @config[:location] %>"/>

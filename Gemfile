@@ -49,7 +49,6 @@ group :assets do
 end
 
 group :development, :test do
-  gem 'sprinkle'
   gem 'quiet_assets'
   gem 'capistrano', '~> 2.15.5'
   gem 'capistrano-rbenv', '~> 1.0.5'
@@ -62,6 +61,11 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.0.0.beta'
   gem 'pry-rails'
   gem 'pry'
+  gem 'pry-stack_explorer'
+end
+
+group :development do
+  gem 'sprinkle'
 end
 
 gem 'jquery-rails'
