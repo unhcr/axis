@@ -24,6 +24,7 @@ namespace :build do
     :budgets => 'Build::BudgetsBuild',
     :elements => 'Build::ElementsBuild',
     :positions => 'Build::PositionsBuild',
+    :offices => 'Build::OfficesBuild',
     :indicator_data_impact => 'Build::IndicatorDataImpactBuild',
     :indicator_data_perf => 'Build::IndicatorDataPerfBuild'
   }
