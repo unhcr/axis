@@ -9,7 +9,7 @@ module Parsers
     def csv_foreach(csv_filename, &block)
       begin
         CSV.foreach(csv_filename, :headers => true, :col_sep => COL_SEP) do |row|
-          block(row)
+          block.call(row)
         end
       rescue Exception => e
         p "Unable to parse for #{csv_filename}"
