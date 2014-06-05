@@ -6,6 +6,7 @@ describe Build do
   builders = [Build::MsrpBuild,
               Build::ElementsBuild,
               Build::BudgetsBuild,
+              Build::PositionsBuild,
               Build::IndicatorDataPerfBuild,
               Build::IndicatorDataImpactBuild]
   builders.each do |builder|

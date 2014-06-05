@@ -21,6 +21,7 @@ namespace :build do
     :msrp => 'Build::MsrpBuild',
     :budgets => 'Build::BudgetsBuild',
     :elements => 'Build::ElementsBuild',
+    :positions => 'Build::PositionsBuild',
     :indicator_data_impact => 'Build::IndicatorDataImpactBuild',
     :indicator_data_perf => 'Build::IndicatorDataPerfBuild'
   }
