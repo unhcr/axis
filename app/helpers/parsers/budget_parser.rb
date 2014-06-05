@@ -9,7 +9,7 @@ module Parsers
     STAFF = 'STAFF'
 
     def self.csvfields
-      @fields ||= {
+      @csvfields ||= {
         :plan_id => 'PLANID',
         :year => 'PLANNINGYEAR',
         :goal_id => 'RFGOALID',
