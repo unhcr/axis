@@ -13,6 +13,8 @@ task :clear => :environment do
   IndicatorDatum.delete_all
   Budget.delete_all
   Expenditure.delete_all
+  Position.delete_all
+  Office.delete_all
 end
 
 namespace :build do
