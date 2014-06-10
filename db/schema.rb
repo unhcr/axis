@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140605121419) do
+ActiveRecord::Schema.define(:version => 20140610121815) do
 
   create_table "budgets", :force => true do |t|
     t.string   "budget_type"
@@ -35,6 +35,7 @@ ActiveRecord::Schema.define(:version => 20140605121419) do
   add_index "budgets", ["goal_id"], :name => "index_budgets_on_goal_id"
   add_index "budgets", ["is_deleted"], :name => "index_budgets_on_is_deleted"
   add_index "budgets", ["output_id"], :name => "index_budgets_on_output_id"
+  add_index "budgets", ["plan_id", "ppg_id", "goal_id", "problem_objective_id", "output_id", "scenario", "year", "budget_type"], :name => "by_uniqueness", :unique => true, :length => {"plan_id"=>60, "ppg_id"=>10, "goal_id"=>2, "problem_objective_id"=>60, "output_id"=>60, "scenario"=>10, "year"=>nil, "budget_type"=>3}
   add_index "budgets", ["plan_id", "ppg_id", "goal_id"], :name => "index_budgets_on_plan_id_and_ppg_id_and_goal_id"
   add_index "budgets", ["problem_objective_id"], :name => "index_budgets_on_problem_objective_id"
 
@@ -87,6 +88,7 @@ ActiveRecord::Schema.define(:version => 20140605121419) do
   add_index "expenditures", ["goal_id"], :name => "index_expenditures_on_goal_id"
   add_index "expenditures", ["is_deleted"], :name => "index_expenditures_on_is_deleted"
   add_index "expenditures", ["output_id"], :name => "index_expenditures_on_output_id"
+  add_index "expenditures", ["plan_id", "ppg_id", "goal_id", "problem_objective_id", "output_id", "scenario", "year", "budget_type"], :name => "by_uniqueness", :unique => true, :length => {"plan_id"=>60, "ppg_id"=>10, "goal_id"=>2, "problem_objective_id"=>60, "output_id"=>60, "scenario"=>10, "year"=>nil, "budget_type"=>3}
   add_index "expenditures", ["problem_objective_id"], :name => "index_expenditures_on_problem_objective_id"
   add_index "expenditures", ["updated_at"], :name => "index_expenditures_on_updated_at"
 
@@ -118,6 +120,8 @@ ActiveRecord::Schema.define(:version => 20140605121419) do
     t.boolean  "is_deleted", :default => false
     t.datetime "found_at"
   end
+
+  add_index "goals", ["id"], :name => "index_goals_on_id", :unique => true
 
   create_table "goals_operations", :id => false, :force => true do |t|
     t.string "goal_id",      :null => false
@@ -190,6 +194,7 @@ ActiveRecord::Schema.define(:version => 20140605121419) do
 
   add_index "indicator_data", ["created_at"], :name => "index_indicator_data_on_created_at"
   add_index "indicator_data", ["goal_id"], :name => "index_indicator_data_on_goal_id"
+  add_index "indicator_data", ["id"], :name => "index_indicator_data_on_id", :unique => true
   add_index "indicator_data", ["indicator_id"], :name => "index_indicator_data_on_indicator_id"
   add_index "indicator_data", ["is_deleted"], :name => "index_indicator_data_on_is_deleted"
   add_index "indicator_data", ["is_performance"], :name => "index_indicator_data_on_is_performance"
@@ -207,6 +212,8 @@ ActiveRecord::Schema.define(:version => 20140605121419) do
     t.boolean  "is_deleted",     :default => false
     t.datetime "found_at"
   end
+
+  add_index "indicators", ["id"], :name => "index_indicators_on_id", :unique => true
 
   create_table "indicators_operations", :id => false, :force => true do |t|
     t.string "operation_id", :null => false
@@ -266,6 +273,8 @@ ActiveRecord::Schema.define(:version => 20140605121419) do
     t.integer  "country_id"
   end
 
+  add_index "operations", ["id"], :name => "index_operations_on_id", :unique => true
+
   create_table "operations_outputs", :id => false, :force => true do |t|
     t.string "operation_id", :null => false
     t.string "output_id",    :null => false
@@ -304,6 +313,8 @@ ActiveRecord::Schema.define(:version => 20140605121419) do
     t.boolean  "is_deleted", :default => false
     t.datetime "found_at"
   end
+
+  add_index "outputs", ["id"], :name => "index_outputs_on_id", :unique => true
 
   create_table "outputs_plans", :force => true do |t|
     t.string "plan_id",   :null => false
@@ -344,6 +355,8 @@ ActiveRecord::Schema.define(:version => 20140605121419) do
     t.integer  "custom_problem_objectives_count", :default => 0,     :null => false
     t.integer  "custom_goals_count",              :default => 0,     :null => false
   end
+
+  add_index "plans", ["id"], :name => "index_plans_on_id", :unique => true
 
   create_table "plans_ppgs", :force => true do |t|
     t.string "plan_id", :null => false
@@ -402,6 +415,8 @@ ActiveRecord::Schema.define(:version => 20140605121419) do
     t.datetime "found_at"
   end
 
+  add_index "ppgs", ["id"], :name => "index_ppgs_on_id", :unique => true
+
   create_table "ppgs_strategies", :id => false, :force => true do |t|
     t.integer "strategy_id", :null => false
     t.string  "ppg_id",      :null => false
@@ -422,6 +437,8 @@ ActiveRecord::Schema.define(:version => 20140605121419) do
     t.boolean  "is_deleted",     :default => false
     t.datetime "found_at"
   end
+
+  add_index "problem_objectives", ["id"], :name => "index_problem_objectives_on_id", :unique => true
 
   create_table "problem_objectives_rights_groups", :id => false, :force => true do |t|
     t.string "problem_objective_id", :null => false
@@ -578,6 +595,8 @@ ActiveRecord::Schema.define(:version => 20140605121419) do
     t.boolean  "is_deleted", :default => false
     t.datetime "found_at"
   end
+
+  add_index "rights_groups", ["id"], :name => "index_rights_groups_on_id", :unique => true
 
   create_table "rights_groups_strategies", :id => false, :force => true do |t|
     t.integer "strategy_id",     :null => false

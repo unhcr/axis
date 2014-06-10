@@ -54,6 +54,7 @@ class ElementsParserTest < ActiveSupport::TestCase
   test 'parse' do
 
     start_time = Time.now
+    sleep 1
 
     @parser.parse "#{Rails.root}/test/files/elements/generated_output.csv"
 

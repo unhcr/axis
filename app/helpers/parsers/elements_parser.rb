@@ -15,7 +15,8 @@ module Parsers
           :id => 'PLANID',
           :name => 'PLAN_NAME',
           :year => 'PLANNINGYEAR',
-          :operation_name => 'OPERATION'
+          :operation_name => 'OPERATION',
+          :operation_id => 'OPERATIONID'
         },
         :ppgs => {
           :id => 'PPGID',
@@ -88,7 +89,39 @@ module Parsers
     def parse(csv_filename)
 
       resources = [Operation, Plan, Ppg, Goal, RightsGroup, ProblemObjective, Output, Indicator]
+      @elements = {
+        Operation => [],
+        Plan => [],
+        Ppg => [],
+        Goal => [],
+        RightsGroup => [],
+        ProblemObjective => [],
+        Output => [],
+        Indicator => []
+      }
+      @relations = {
+        GoalsOperations => [],
+        GoalsPlans => [],
+        GoalsPpgs => [],
+        GoalsProblemObjectives => [],
+        GoalsRightsGroups => [],
+        IndicatorsOperations => [],
+        IndicatorsOutputs => [],
+        IndicatorsPlans => [],
+        IndicatorsProblemObjectives => [],
+        OperationsOutputs => [],
+        OperationsPpgs => [],
+        OperationsProblemObjectives => [],
+        OperationsRightsGroups => [],
+        OutputsPlans => [],
+        OutputsProblemObjectives => [],
+        PlansPpgs => [],
+        PlansProblemObjectives => [],
+        PlansRightsGroups => [],
+        ProblemObjectivesRightsGroups => [],
+      }
 
+      p 'Reading CSV'
       csv_foreach(csv_filename) do |row|
         next if row.empty?
         # Just parse all the parameters in the row
@@ -98,7 +131,7 @@ module Parsers
 
           next if skip?(resource_id)
 
-          parse_element r, row, attrs
+          @elements[r] << csv_parse_element(attrs, row)
         end
 
         # Establish many-to-many relations
@@ -110,44 +143,56 @@ module Parsers
 
           next if skip?(resource_id)
 
-          element = resource.find resource_id
-
           resources.each do |relation|
-            table_name = relation.table_name
+            table_name = [relation.table_name, resource.table_name].sort.join('_')
+            reflection = resource.reflect_on_association(table_name.to_sym)
+            next unless reflection
+            association = reflection.name.to_s.camelize.constantize
 
-            if element.respond_to? table_name
-              attrs = resource_to_csvfield_attrs relation, is_performance_indicator?(relation, row)
-              id = row[attrs[:id]]
-              next if skip?(id)
+            if @relations.has_key? association
+              classes = [resource, relation].sort { |c1, c2| c1.to_s <=> c2.to_s }
+              values = []
+              classes.each do |clazz|
+                attrs = resource_to_csvfield_attrs clazz, is_performance_indicator?(clazz, row)
+                values << row[attrs[:id]]
 
-              relationElement = relation.find id
-              unless element.send(table_name).include? relationElement
-                element.send(table_name) << relationElement
               end
+              @relations[association] << values
             end
 
-
           end
+
         end
+
       end
 
-    end
+      p 'Importing Elements'
 
-    def parse_element(resource, row, attrs)
-      id = row[attrs[:id]]
-      (element = resource.find_or_initialize_by_id(:id => id).tap do |e|
-        attrs.each do |rails_attr, csvfield_attr|
-          # If it's a lambda, call it
-          if csvfield_attr.respond_to? :call
-            e[rails_attr] = instance_exec row, &csvfield_attr
-          else
-            e[rails_attr] = row[csvfield_attr]
-          end
+      # import elements
+      @elements.each do |resource, values|
+        attrs = nil
+        if resource == Indicator
+          attrs = ElementsParser.csvfields["perf_#{resource.table_name}".to_sym]
+        else
+          attrs = ElementsParser.csvfields[resource.table_name.to_sym]
         end
+        columns = attrs.keys
+        columns << :found_at
 
-      end).save
-      element.found
-      element
+        to_update = columns.dup
+        to_update.delete :id
+
+        resource.import columns, values, :on_duplicate_key_update => to_update
+      end
+
+      p 'Importing Relations'
+      # import relations
+      @relations.each do |relation, values|
+        columns = relation.attribute_names.sort
+        columns.delete 'id'
+        relation.import columns, values, :on_duplicate_key_update => columns
+      end
+
     end
 
   end
