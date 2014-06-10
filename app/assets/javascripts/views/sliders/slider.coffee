@@ -30,6 +30,9 @@ class Visio.Views.SliderView extends Backbone.View
 
     @
 
+  isGrid: ->
+    @$el.find('.slider').hasClass 'grid'
+
   drawFigures: ->
     console.warn 'drawFigures not implemented for this slider'
 

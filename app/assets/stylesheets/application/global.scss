@@ -1941,6 +1941,38 @@ a {
     font-size: 12px;
   }
 
+  .show-more {
+    text-align: center;
+    height: 38px;
+    font-size: 16px;
+    border: 1px solid $light-gray;
+    background-color: $off-white;
+    padding-top: 6px;
+    font-weight: lighter;
+    display: none;
+    cursor: pointer;
+    @include transition-property(background-color);
+    @include transition-duration($very-fast-transition);
+    @include transition-timing-function(ease-in);
+  }
+
+  .show-more:hover {
+    background-color: darken($off-white, 5%);
+  }
+
+  .show-more.disabled {
+    cursor: auto;
+    opacity: .5;
+  }
+  .show-more.disabled:hover {
+    background-color: $off-white;
+  }
+
+  .grid + .show-more {
+    display: block;
+
+  }
+
   .controls {
     position: absolute;
     display: block;
@@ -2280,3 +2312,4 @@ a {
     padding-bottom: 20px;
   }
 }
+

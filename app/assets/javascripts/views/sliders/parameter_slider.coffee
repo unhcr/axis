@@ -7,8 +7,7 @@ class Visio.Views.ParameterSliderView extends Visio.Views.SliderView
   events:
     'click .next': 'onNext'
     'click .previous': 'onPrevious'
-    'mouseenter .parameter-slide': 'onMouseenter'
-    'mouseout': 'onMouseout'
+    'click .show-more': 'onShowMore'
 
   initialize: (options) ->
     @filters = options.filters
@@ -41,17 +40,19 @@ class Visio.Views.ParameterSliderView extends Visio.Views.SliderView
     toMove * multiplier
 
   onNext: (e) =>
-    @move(@toMove(true)) unless @$el.find('.slider').hasClass 'grid'
+    @move(@toMove(true)) unless @isGrid()
 
   onPrevious: (e) =>
-    @move(@toMove(false)) unless @$el.find('.slider').hasClass 'grid'
+    @move(@toMove(false)) unless @isGrid()
 
-  onMouseenter: (e) =>
-     #@$el.find('.parameter-slide').css('opacity', .5)
-     #$(e.currentTarget).css('opacity', 1)
+  onShowMore: (e) =>
+    $target = $ e.currentTarget
+    return if not @isGrid() or $target.hasClass('disabled')
 
-  onMouseout: (e) =>
-     #console.log 'out'
-     #@$el.find('.parameter-slide').css('opacity', 1)
-     #
+    @addPage @page
+    @page += 1
+
+    if (@collection.length / @perPage) <= @page
+      $target.addClass 'disabled'
+
 
