@@ -32,9 +32,5 @@ module Parsers
 
     end
 
-    def indicator_value_parse(row, field)
-      row[field] == NULL ? nil : row[field]
-    end
-
   end
 end

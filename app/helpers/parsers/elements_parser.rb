@@ -20,7 +20,8 @@ module Parsers
         },
         :ppgs => {
           :id => 'PPGID',
-          :name => 'PPG'
+          :name => 'PPG',
+          :operation_name => 'OPERATION'
         },
         :goals => {
           :id => 'RFGOALID',
