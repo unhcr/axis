@@ -5,7 +5,7 @@ module Parsers
     def self.csvfields
       fields = super
       @csvfields = {
-        :indicator_id => 'IMPACTINDICATOR_RFID',
+        :indicator_id => 'IMPINDICATOR_RFID',
         :id => 'IMPINDICATOR_ID',
         :yer => 'IMP_YEAR_END_VALUE',
         :myr => 'IMP_MID_YEAR_VALUE',
