@@ -31,9 +31,9 @@ class IndicatorDatum < ActiveRecord::Base
 
   def self.loaded
     includes({ :goal => :strategy_objectives,
-               :problem_objective => [:strategy_objectives, :outputs],
+               :problem_objective => :strategy_objectives,
                :indicator => :strategy_objectives,
-               :output => :strategy_objectives})
+               :output => :strategy_objectives })
   end
 
   def self.synced_models(ids = {}, synced_date = nil, limit = nil, where = {})

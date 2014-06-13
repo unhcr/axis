@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140610121815) do
+ActiveRecord::Schema.define(:version => 20140611154147) do
 
   create_table "budgets", :force => true do |t|
     t.string   "budget_type"
@@ -195,6 +195,7 @@ ActiveRecord::Schema.define(:version => 20140610121815) do
   add_index "indicator_data", ["created_at"], :name => "index_indicator_data_on_created_at"
   add_index "indicator_data", ["goal_id"], :name => "index_indicator_data_on_goal_id"
   add_index "indicator_data", ["id"], :name => "index_indicator_data_on_id", :unique => true
+  add_index "indicator_data", ["indicator_id", "plan_id", "ppg_id", "goal_id", "problem_objective_id", "operation_id"], :name => "by_uniqueness", :length => {"indicator_id"=>60, "plan_id"=>60, "ppg_id"=>10, "goal_id"=>2, "problem_objective_id"=>60, "operation_id"=>10}
   add_index "indicator_data", ["indicator_id"], :name => "index_indicator_data_on_indicator_id"
   add_index "indicator_data", ["is_deleted"], :name => "index_indicator_data_on_is_deleted"
   add_index "indicator_data", ["is_performance"], :name => "index_indicator_data_on_is_performance"
