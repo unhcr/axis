@@ -270,7 +270,7 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
     if @breakdownBy == 'budget_type'
       _.values Visio.Budgets
     else if @breakdownBy == 'pillar'
-      _.values Visio.Pillars
+      _.keys Visio.Pillars
 
   mouseout: (e, i) =>
     @g.selectAll('.bar-container').classed 'hover', false

@@ -43,7 +43,8 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
       {
         id: 'pillar'
         filterType: 'checkbox'
-        values: _.object(_.values(Visio.Pillars), _.values(Visio.Pillars).map(-> true))
+        values: _.object(_.keys(Visio.Pillars), _.keys(Visio.Pillars).map(-> true))
+        human: Visio.Pillars
       },
       {
         id: 'scenario'

@@ -18,6 +18,7 @@ module Parsers
         :problem_objective_id => 'RFPROBLEMOBJECTIVEID',
         :output_id => 'RFOUTPUTID',
         :ppg_id => 'PPGID',
+        :pillar => 'POPGROUPTYPEID',
         :budget_type => lambda do |row|
           raw_budget_type = row['BUDGETTYPE']
 
