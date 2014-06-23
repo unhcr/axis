@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140611154147) do
+ActiveRecord::Schema.define(:version => 20140623102110) do
 
   create_table "budgets", :force => true do |t|
     t.string   "budget_type"
@@ -247,6 +247,27 @@ ActiveRecord::Schema.define(:version => 20140611154147) do
     t.integer "strategy_objective_id", :null => false
     t.string  "indicator_id",          :null => false
   end
+
+  create_table "narratives", :id => false, :force => true do |t|
+    t.string   "id",                   :null => false
+    t.datetime "found_at"
+    t.string   "operation_id"
+    t.string   "plan_id"
+    t.string   "goal_id"
+    t.string   "ppg_id"
+    t.string   "problem_objective_id"
+    t.string   "output_id"
+    t.string   "elt_id"
+    t.text     "usertxt"
+    t.string   "createusr"
+    t.string   "report_type"
+    t.string   "plan_el_type"
+    t.integer  "year"
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
+  end
+
+  add_index "narratives", ["id"], :name => "index_narratives_on_id", :unique => true
 
   create_table "offices", :id => false, :force => true do |t|
     t.string   "id",               :null => false

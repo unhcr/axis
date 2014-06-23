@@ -26,7 +26,9 @@ namespace :build do
     :positions => 'Build::PositionsBuild',
     :offices => 'Build::OfficesBuild',
     :indicator_data_impact => 'Build::IndicatorDataImpactBuild',
-    :indicator_data_perf => 'Build::IndicatorDataPerfBuild'
+    :indicator_data_perf => 'Build::IndicatorDataPerfBuild',
+    :narratives => 'Build::NarrativesBuild',
+
   }
 
   builds.each do |build_name, builder_string|
