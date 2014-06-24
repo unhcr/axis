@@ -1,26 +1,28 @@
 package :nginx, :provides => :webserver do
   description 'Nginx web server.'
   REE_PATH = "/usr/local" unless defined?(REE_PATH)
-  requires :passenger, :ruby, :add_rbenv_bundler, :gcc_cplusplus, :log_dir
+  requires :passenger, :ruby, :add_rbenv_bundler,  :log_dir
 
   template_search_path('config/stack/templates')
 
-  defaults :server_name => '10.9.43.173',
+  defaults :server_name => '10.9.43.240',
     :rails_env => 'staging'
 
 
-  transfer 'config/stack/server_files/nginx', '/etc/init.d/nginx', :sudo => true
-  runner 'sudo chmod +x /etc/init.d/nginx'
+  File.write("config/stack/server_files/nginx", render('nginx'))
+  File.write("config/stack/server_files/visio", render('visio'))
+  File.write("config/stack/server_files/nginx.conf", render('nginx.conf'))
 
-  runner 'sudo mkdir /usr/local/nginx/sites-enabled/'
-  file '/usr/local/nginx/sites-enabled/visio',
-    :contents => render('visio'),
-    :sudo => true
+  runner 'sudo mkdir -p /usr/local/nginx/sites-enabled/'
 
 
-  file '/usr/local/nginx/conf/nginx.conf',
-    :contents => render('nginx.conf'),
-    :sudo => true
+  transfer 'config/stack/server_files/nginx', '/home/deploy/nginx'
+  transfer 'config/stack/server_files/visio', '/home/deploy/visio'
+  transfer 'config/stack/server_files/nginx.conf', '/home/deploy/nginx.conf'
+
+  runner 'sudo mv /home/deploy/nginx /etc/init.d/nginx'
+  runner 'sudo mv /home/deploy/visio /usr/local/nginx/sites-enabled/visio'
+  runner 'sudo mv /home/deploy/nginx.conf /usr/local/nginx/conf/nginx.conf'
 
   verify do
     has_executable "/usr/local/nginx/sbin/nginx"
@@ -31,7 +33,7 @@ package :nginx, :provides => :webserver do
 end
 
 package :passenger do
-  requires :passenger_release
+  requires :passenger_release, :rbenv, :rubygems, :ruby, :set_default_ruby, :gcc_cplusplus, :nginx_passenger
 
   description 'Phusion Passenger (mod_rails)'
   version '4.0.35'
@@ -48,13 +50,14 @@ package :passenger do
 
   verify do
     has_gem "passenger", version
+    has_directory '/usr/local/nginx'
   end
 
 end
 
 package :passenger_release do
   requires :rpm_nginx
-  yum 'http://passenger.stealthymonkeys.com/rhel/6/passenger-release.noarch.rpm'
+  runner 'sudo yum -y install http://passenger.stealthymonkeys.com/rhel/6/passenger-release.noarch.rpm'
   verify do
     has_rpm 'passenger-release'
   end
@@ -63,7 +66,7 @@ end
 
 package :rpm_nginx do
   requires :build_essential, :bashrc
-  runner 'rpm --httpproxy proxy.unhcr.local --httpport 8080 --import http://passenger.stealthymonkeys.com/RPM-GPG-KEY-stealthymonkeys.asc'
+  runner 'sudo rpm --httpproxy proxy.unhcr.local --httpport 8080 --import http://passenger.stealthymonkeys.com/RPM-GPG-KEY-stealthymonkeys.asc'
 
   # Need to come up with verifier for this
   #verify do
@@ -87,4 +90,16 @@ package :log_dir do
   verify do
     has_directory '/var/log/nginx'
   end
+end
+
+package :nginx_passenger do
+
+  runner 'sudo yum -y install nginx-passenger'
+
+  verify do
+
+    has_yum 'nginx-passenger'
+
+  end
+
 end
