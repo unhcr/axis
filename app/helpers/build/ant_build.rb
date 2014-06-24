@@ -1,6 +1,6 @@
 module Build
   class AntBuild
-    DB_URL = "jdbc:oracle:thin:@ironwood.svc.unicc.org:1521:GFPRD"
+    DB_URL = "jdbc:oracle:thin:@dn01.msrp.hcrnet.ch:1521:GFPRD"
     JAR_LOCATION = "#{Rails.root}/vendor/jars/ojdbc6.jar"
     OUTPUT_FILENAME = "generated_output.csv"
 
