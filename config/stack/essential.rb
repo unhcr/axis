@@ -137,3 +137,20 @@ package :git_proxy do
   end
 end
 
+package :yums do
+
+  description 'Important yums for deploy'
+
+  yums = ['sqlite3-devel', 'readline-devel']
+
+  yums.each do |yum|
+    runner "sudo yum -y install #{yum}"
+  end
+
+  verify do
+    yum.each do |yum|
+      has_yum yum
+    end
+  end
+end
+
