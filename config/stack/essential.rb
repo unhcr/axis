@@ -21,7 +21,6 @@ package :bashrc do
   push_text "export https_proxy=#{HTTPS_PROXY}", '/home/deploy/.bashrc'
   push_text "export http_proxy=#{HTTP_PROXY}", '/home/deploy/.bashrc'
   push_text "export PATH=#{PATH}", '/home/deploy/.bashrc'
-  push_text 'eval "$(rbenv init - )"', '/home/deploy/.bashrc'
   runner "chown 'deploy' /home/deploy/.bashrc"
 
   verify do
@@ -30,7 +29,6 @@ package :bashrc do
     file_contains '/home/deploy/.bashrc', "https_proxy=#{HTTPS_PROXY}"
     file_contains '/home/deploy/.bashrc', "http_proxy=#{HTTP_PROXY}"
     file_contains '/home/deploy/.bashrc', "PATH=#{PATH}"
-    file_contains '/home/deploy/.bashrc', 'rbenv init'
   end
 end
 
