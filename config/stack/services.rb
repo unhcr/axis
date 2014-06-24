@@ -57,8 +57,8 @@ package :redis do
       sudo cp src/redis-cli /usr/local/bin/ &&
       sudo cp src/redis-server /usr/local/bin/ &&
       sudo cp redis.conf /etc/ &&
-      sudo sed -i \'s/daemonize no/daemonize yes/\' /etc/redis.conf &&
-      sudo sed -i \'s/^pidfile \/var\/run\/redis.pid/pidfile \/tmp\/redis.pid/\' /etc/redis.conf '
+      sudo sed -i "s/daemonize no/daemonize yes/" /etc/redis.conf &&
+      sudo sed -i "s/^pidfile \/var\/run\/redis.pid/pidfile \/tmp\/redis.pid/" /etc/redis.conf '
     prefix    '/usr/local'
     archives  '/home/deploy'
     builds    '/home/deploy'

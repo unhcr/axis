@@ -23,5 +23,45 @@ module Parsers
         exit 1
       end
     end
+
+    def parse(csv_filename)
+
+      csvfields = self.class.csvfields
+
+      columns = csvfields.keys
+      columns << :found_at
+      values = []
+
+      csv_foreach(csv_filename) do |row|
+        next if row.empty?
+
+        element = csv_parse_element csvfields, row
+
+        values << element
+      end
+
+      to_update = columns.dup
+      to_update.delete :id
+
+      self.class::MODEL.import columns, values, :on_duplicate_key_update => to_update
+    end
+
+    def csv_parse_element(csvfields, row)
+      element = []
+
+      csvfields.each do |rails_attr, csvfield_attr|
+        # If it's a lambda, call it
+        if csvfield_attr.respond_to? :call
+          element << instance_exec(row, &csvfield_attr)
+        else
+          element << row[csvfield_attr]
+        end
+      end
+
+      # Add found_at parameter
+      element << Time.now
+
+      element
+    end
   end
 end

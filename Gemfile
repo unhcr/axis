@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'rails', '3.2.13'
+gem 'activerecord-import'
 gem 'nokogiri'
 gem 'equivalent-xml'
 gem 'rubyzip'

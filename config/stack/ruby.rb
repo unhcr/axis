@@ -25,12 +25,13 @@ end
 
 package :ruby do
   requires :ruby_build
+  version = '2.0.0-p353'
 
-  runner 'export http_proxy=http://proxy.unhcr.local:8080; rbenv install 2.0.0-p353', :sudo => false
+  runner "export http_proxy=http://proxy.unhcr.local:8080; rbenv install #{version}", :sudo => false
   runner 'rbenv rehash'
 
   verify do
-    has_executable 'ruby'
+    has_directory "/home/deploy/.rbenv/versions/#{version}"
   end
 end
 
@@ -50,5 +51,13 @@ package :add_rbenv_bundler do
 
   verify do
     @commands << "/home/deploy/.rbenv/versions/2.0.0-p353/bin/gem list | grep bundler"
+  end
+end
+
+package :rubygems do
+  runner "sudo yum -y install rubygems"
+
+  verify do
+    has_executable 'gem'
   end
 end

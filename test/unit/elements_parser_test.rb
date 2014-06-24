@@ -3,14 +3,14 @@ require 'test_helper'
 class ElementsParserTest < ActiveSupport::TestCase
 
   COUNTS = {
-    :plans => 1,
-    :ppgs => 1,
-    :goals => 1,
-    :rights_groups => 2,
-    :problem_objectives => 3,
-    :indicators => 50,
-    :outputs => 4,
-    :operations => 1,
+    :plans => 2,
+    :ppgs => 3,
+    :goals => 4,
+    :rights_groups => 8,
+    :problem_objectives => 15,
+    :indicators => 37,
+    :outputs => 21,
+    :operations => 2,
   }
 
   include Parsers
@@ -54,55 +54,11 @@ class ElementsParserTest < ActiveSupport::TestCase
   test 'parse' do
 
     start_time = Time.now
+    sleep 1
 
     @parser.parse "#{Rails.root}/test/files/elements/generated_output.csv"
-
-    assert_equal Operation.count, COUNTS[:operations]
-    assert_equal Operation.first.id, '7V5'
-    assert_equal Operation.first.years.first, 2013
-    assert_equal Operation.first.plans.count, COUNTS[:plans]
-    assert Operation.first.name
     assert Operation.first.found_at > start_time
-
-
-    assert_equal Plan.count, COUNTS[:plans]
-    assert_equal Plan.first.id, '86744160-4e90-4c21-a617-87ee9dc4af40'
-    assert_equal Plan.first.year, 2013
-    assert Plan.first.operation
-    assert Plan.first.operation_name
-
-    assert_equal Ppg.count, COUNTS[:ppgs]
-    assert_equal Ppg.first.id, 'MAGL'
-    assert_equal Ppg.first.name.strip, 'All populations of concern in Africa'
-
-    assert_equal Goal.count, COUNTS[:goals]
-    assert_equal Goal.first.id, 'ES'
-    assert_equal Goal.first.name.strip, 'Advocacy for protection and solutions'
-    assert Goal.first.plans.length > 0
-    assert Goal.first.ppgs.length > 0
-    assert Goal.first.rights_groups.length > 0
-    assert Goal.first.operations.length > 0
-    assert Goal.first.problem_objectives.length > 0
-
-    assert_equal RightsGroup.count, COUNTS[:rights_groups]
-    RightsGroup.all.each do |rg|
-      assert rg.id
-      assert rg.name
-    end
-
-    assert_equal ProblemObjective.count, COUNTS[:problem_objectives]
-    assert_equal ProblemObjective.count, COUNTS[:problem_objectives]
-    ProblemObjective.all.each do |po|
-      assert po.id
-      assert po.problem_name
-      assert po.objective_name
-    end
-
-    assert_equal Indicator.count, COUNTS[:indicators]
-    assert_equal Indicator.where(:is_performance => true).count, 33
-    assert_equal Indicator.where(:is_performance => false).count, 17
-
-    assert_equal Output.count, COUNTS[:outputs]
+    db_assertions
   end
 
   test 'update' do
@@ -111,24 +67,31 @@ class ElementsParserTest < ActiveSupport::TestCase
     @parser.parse "#{Rails.root}/test/files/elements/generated_output.csv"
     @parser.parse "#{Rails.root}/test/files/elements/generated_output.csv"
 
+    db_assertions
+
+  end
+
+  def db_assertions
     assert_equal Operation.count, COUNTS[:operations]
-    assert_equal Operation.first.id, '7V5'
-    assert_equal Operation.first.years.first, 2013
-    assert_equal Operation.first.plans.count, COUNTS[:plans]
+    assert Operation.exists? '7V5'
+    assert_equal Operation.find('7V5').plans.count, 1
+    assert_equal Operation.find('7V5').years.first, 2012
+    assert Operation.first.name
 
 
     assert_equal Plan.count, COUNTS[:plans]
-    assert_equal Plan.first.id, '86744160-4e90-4c21-a617-87ee9dc4af40'
-    assert_equal Plan.first.year, 2013
+    assert Plan.exists? '09aa7afb-fe66-47a5-89fc-6d0da4b8b041'
+    assert_equal Plan.find('09aa7afb-fe66-47a5-89fc-6d0da4b8b041').year, 2013
     assert Plan.first.operation
+    assert Plan.first.operation_name
 
     assert_equal Ppg.count, COUNTS[:ppgs]
-    assert_equal Ppg.first.id, 'MAGL'
-    assert_equal Ppg.first.name.strip, 'All populations of concern in Africa'
+    assert Ppg.exists? 'MAGL'
+    assert Ppg.first.name
 
     assert_equal Goal.count, COUNTS[:goals]
-    assert_equal Goal.first.id, 'ES'
-    assert_equal Goal.first.name.strip, 'Advocacy for protection and solutions'
+    assert Goal.exists? 'ES'
+    assert Goal.first.name
     assert Goal.first.plans.length > 0
     assert Goal.first.ppgs.length > 0
     assert Goal.first.rights_groups.length > 0
@@ -150,8 +113,8 @@ class ElementsParserTest < ActiveSupport::TestCase
     end
 
     assert_equal Indicator.count, COUNTS[:indicators]
-    assert_equal Indicator.where(:is_performance => true).count, 33
-    assert_equal Indicator.where(:is_performance => false).count, 17
+    assert_equal Indicator.where(:is_performance => true).count, 22
+    assert_equal Indicator.where(:is_performance => false).count, 15
 
     assert_equal Output.count, COUNTS[:outputs]
 

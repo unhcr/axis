@@ -1,5 +1,5 @@
 class CreateOffices < ActiveRecord::Migration
-  def change
+  def up
     create_table :offices, :id => false do |t|
       t.string :id, :null => false
       t.string :name

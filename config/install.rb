@@ -16,14 +16,14 @@ policy :passenger_stack, :roles => :staging do
   requires :scm                     # Git
   requires :services                # Elasticsearch, redis, etc.
   requires :js_runtime
-  requires :zsh
+  requires :ohmyzsh
 end
 
 deployment do
   # mechanism for deployment
   delivery :ssh do
     user 'deploy'
-    role :staging, '10.9.43.173'
+    role :staging, '10.9.43.240'
   end
   #delivery :capistrano do
   #  recipes 'config/deploy'

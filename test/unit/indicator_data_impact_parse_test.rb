@@ -25,6 +25,7 @@ class IndicatorDataImpactParseTest < ActiveSupport::TestCase
       assert b.ppg_id, 'Must have ppg'
       assert b.goal_id, 'Must have goal'
       assert b.problem_objective_id, 'Must have problem objective id'
+      assert b.indicator_id, 'Must have indicator id'
       assert b.year, 'Must have year'
       assert (!b.is_performance.nil? && !b.is_performance), 'Is not performance indicator'
       assert !b.reversal.nil?, 'Should have reversal'

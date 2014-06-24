@@ -31,7 +31,7 @@ class IndicatorTest < ActiveSupport::TestCase
     assert_equal 1, models[:updated].count
     assert_equal 1, models[:deleted].count
 
-    assert_equal i[0].name, models[:new][0].name
+    assert models[:new].include? i[0]
     assert_equal i[1].name, models[:updated][0].name
     assert_equal i[2].name, models[:deleted][0].name
   end

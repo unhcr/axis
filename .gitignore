@@ -26,6 +26,7 @@ coverage
 /script/builds/positions
 /script/builds/offices
 /script/builds/indicator_data_impact
-/script/builds/indicator_data_perf
+/script/builds/indicator_data_impact
+/script/builds/narratives
 
 /public/reports/pdf/*.pdf

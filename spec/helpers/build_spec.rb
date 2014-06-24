@@ -8,6 +8,7 @@ describe Build do
               Build::BudgetsBuild,
               Build::PositionsBuild,
               Build::OfficesBuild,
+              Build::NarrativesBuild,
               Build::IndicatorDataPerfBuild,
               Build::IndicatorDataImpactBuild]
   builders.each do |builder|

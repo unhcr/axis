@@ -1,4 +1,4 @@
-server = '10.9.43.173'
+server = '10.9.43.240'
 
 role :web, server
 role :app, server                          # This may be the same as your `Web` server
