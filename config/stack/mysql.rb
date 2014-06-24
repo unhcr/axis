@@ -29,7 +29,7 @@ package :database_yml do
   template_search_path('config/stack/templates')
 
   defaults :rails_env => 'staging',
-    :password => ''
+    :password => { :staging => '', :production => '' }
 
   file '/home/deploy/database.yml',
     :contents => render('database.yml')

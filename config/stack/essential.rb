@@ -148,7 +148,7 @@ package :yums do
   end
 
   verify do
-    yum.each do |yum|
+    yums.each do |yum|
       has_yum yum
     end
   end
