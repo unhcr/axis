@@ -17,7 +17,6 @@ class NarrativesParseTest < ActiveSupport::TestCase
 
     @parser.parse @path
 
-    require 'pry'; binding.pry
     assert_equal 50, Narrative.count, 'Should be 50 narratives'
 
     Narrative.all.each do |b|
