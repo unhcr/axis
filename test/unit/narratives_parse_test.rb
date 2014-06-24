@@ -22,13 +22,11 @@ class NarrativesParseTest < ActiveSupport::TestCase
     Narrative.all.each do |b|
       assert b.plan_id, 'Must have plan'
       assert b.operation_id, 'Must have operation'
-      assert b.ppg_id, 'Must have ppg'
-      assert b.goal_id, 'Must have goal'
-      assert b.problem_objective_id, 'Must have problem objective id'
-      assert b.output_id, 'Must have output id'
       assert b.year, 'Must have year'
-      assert b.scenario, 'Must have scenario'
-      assert b.budget_type, 'Must have budget type'
+      assert b.report_type
+      assert b.createusr
+      assert b.plan_el_type
+      assert b.elt_id
     end
   end
 
