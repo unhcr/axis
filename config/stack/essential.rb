@@ -21,7 +21,6 @@ package :bashrc do
   push_text "export https_proxy=#{HTTPS_PROXY}", '/home/deploy/.bashrc'
   push_text "export http_proxy=#{HTTP_PROXY}", '/home/deploy/.bashrc'
   push_text "export PATH=#{PATH}", '/home/deploy/.bashrc'
-  push_text 'eval "$(rbenv init - )"', '/home/deploy/.bashrc'
   runner "chown 'deploy' /home/deploy/.bashrc"
 
   verify do
@@ -30,7 +29,6 @@ package :bashrc do
     file_contains '/home/deploy/.bashrc', "https_proxy=#{HTTPS_PROXY}"
     file_contains '/home/deploy/.bashrc', "http_proxy=#{HTTP_PROXY}"
     file_contains '/home/deploy/.bashrc', "PATH=#{PATH}"
-    file_contains '/home/deploy/.bashrc', 'rbenv init'
   end
 end
 
@@ -136,6 +134,23 @@ package :git_proxy do
   verify do
     has_git_property 'http.proxy', HTTP_PROXY
     has_git_property 'https.proxy', HTTPS_PROXY
+  end
+end
+
+package :yums do
+
+  description 'Important yums for deploy'
+
+  yums = ['sqlite3-devel', 'readline-devel']
+
+  yums.each do |yum|
+    runner "sudo yum -y install #{yum}"
+  end
+
+  verify do
+    yums.each do |yum|
+      has_yum yum
+    end
   end
 end
 
