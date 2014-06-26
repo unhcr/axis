@@ -2,7 +2,7 @@ module Build
   class AntBuild
     JAR_LOCATION = "#{Rails.root}/vendor/jars/ojdbc6.jar"
     OUTPUT_FILENAME = "generated_output.csv"
-
+    DB_URL = "jdbc:oracle:thin:@#{ENV['DB']}:1521:GFPRD"
     # Directory for sql queries
     SQL_PATH = "#{Rails.root}/data/queries"
 
@@ -20,7 +20,7 @@ module Build
     def initialize(config)
       @config = config
       @config[:location] = JAR_LOCATION
-      @config[:db_url] = "jdbc:oracle:thin:@#{ENV['DB']}:1521:GFPRD"
+      @config[:db_url] = DB_URL
       @config[:output] = OUTPUT_FILENAME
       @config[:build_name] = config[:build_name]
       @config[:sql_query] = self.sql_query
