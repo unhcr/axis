@@ -4,7 +4,7 @@
     <sql
       driver="oracle.jdbc.OracleDriver"
       url="<%= @config[:db_url] %>"
-      userid="FOCUS_READER"
+      userid="<%= ENV['DB_USER'] %>"
       password="<%= ENV['DB_PASSWORD'] %>"
       print="true"
       showheaders="true"
