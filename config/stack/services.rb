@@ -8,7 +8,7 @@ Sprinkle::Verify.register(ServiceVerifier)
 
 package :services do
   description 'Provides services for the app'
-  requires :elasticsearch, :phantomjs, :redis, :whenever
+  requires :elasticsearch, :phantomjs, :redis, :whenever, :ant
 
 end
 
@@ -33,6 +33,22 @@ package :whenever do
     has_gem 'whenever'
     has_executable 'whenever'
   end
+end
+
+package :ant do
+  description 'Ant'
+
+  version = '1.9.4'
+  runner "wget -cq http://www.us.apache.org/dist/ant/binaries/apache-ant-#{version}-bin.tar.gz"
+  runner "sudo tar xvfvz apache-ant-#{version}-bin.tar.gz -C /opt"
+  runner "sudo ln -s /opt/apache-ant-#{version} /opt/ant"
+  runner "sudo sh -c 'echo ANT_HOME=/opt/ant >> /etc/environment'"
+  runner "sudo ln -s /opt/ant/bin/ant /usr/bin/ant"
+
+  verify do
+    has_executable 'ant'
+  end
+
 end
 
 package :phantomjs do

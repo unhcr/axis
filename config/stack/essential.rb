@@ -141,7 +141,7 @@ package :yums do
 
   description 'Important yums for deploy'
 
-  yums = ['sqlite3-devel', 'readline-devel']
+  yums = ['sqlite3-devel', 'readline-devel', 'java-1.7.0-openjdk-devel']
 
   yums.each do |yum|
     runner "sudo yum -y install #{yum}"

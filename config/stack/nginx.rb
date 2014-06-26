@@ -50,7 +50,7 @@ package :passenger do
 
   verify do
     has_gem "passenger", version
-    has_directory '/usr/local/nginx'
+    has_directory '/usr/local/bin/nginx'
   end
 
 end
