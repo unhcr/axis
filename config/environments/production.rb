@@ -13,9 +13,14 @@ Visio::Application.configure do
   # Disable Rails's static asset server (Apache or nginx will already do this)
   config.serve_static_assets = false
 
+  class NoCompression
+    def compress(string)
+      string
+    end
+  end
   # Compress JavaScripts and CSS
   config.assets.compress = true
-  config.assets.js_compressor = Sprockets::LazyCompressor.new { Uglifier.new(:mangle => false) }
+  config.assets.js_compressor = NoCompression.new
 
   # Don't fallback to assets pipeline if a precompiled asset is missed
   config.assets.compile = false
