@@ -16,6 +16,11 @@ Visio::Application.routes.draw do
 
   # Resources
   syncable_resources :operations
+  # hack, should be a more semantic way to do this
+  get '/operations/:id/offices' => 'operations#offices'
+  get '/operations/:id/head_offices' => 'operations#head_offices'
+
+
   syncable_resources :plans
   syncable_resources :ppgs
   syncable_resources :goals
@@ -26,6 +31,7 @@ Visio::Application.routes.draw do
   syncable_resources :indicator_data
   syncable_resources :budgets
   syncable_resources :expenditures
+  syncable_resources :offices
   resources :export_modules do
     member do
       get 'pdf'

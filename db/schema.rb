@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140623102110) do
+ActiveRecord::Schema.define(:version => 20140702143824) do
 
   create_table "budgets", :force => true do |t|
     t.string   "budget_type"
@@ -280,6 +280,7 @@ ActiveRecord::Schema.define(:version => 20140623102110) do
     t.datetime "created_at",       :null => false
     t.datetime "updated_at",       :null => false
     t.string   "status"
+    t.integer  "year"
   end
 
   add_index "offices", ["id"], :name => "index_offices_on_id", :unique => true
