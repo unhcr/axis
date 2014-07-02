@@ -15,6 +15,7 @@ task :clear => :environment do
   Expenditure.delete_all
   Position.delete_all
   Office.delete_all
+  Narrative.delete_all
 end
 
 namespace :build do
@@ -103,6 +104,7 @@ task :build => :environment do
   Rake::Task['build:countries'].invoke
   Rake::Task['build:budgets'].invoke
   Rake::Task['build:msrp'].invoke
+  Rake::Task['build:narratives'].invoke
   Rake::Task['build:indicator_data_impact'].invoke
   Rake::Task['build:indicator_data_perf'].invoke
 
