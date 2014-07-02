@@ -255,6 +255,36 @@ test 'close - no save nested, save parent', ->
   strictEqual json.operations.length, 2
   strictEqual json.strategy_objectives.length, 2
 
+test 'close - open modal, no save, open modal', ->
+  @model.id = 'something'
+  @model.set 'operations', new Visio.Collections.Operation [{ id: 1 }, { id: 2}]
+  @model.set 'strategy_objectives', new Visio.Collections.StrategyObjective [{ id: 1 }, { id: 2}]
+
+  @form.initSchema()
+  @form.render()
+
+  so = new Visio.Models.StrategyObjective()
+  @form.nestedItem so
+  nested = @form.nestedForms['strategy_objectives'][so.cid]
+  field = nested.fields.findWhere { name: 'goals' }
+  field.selected 1, true
+  @form.render()
+
+  strictEqual $('body').find('.modal').length, 1
+  nested.close()
+  strictEqual $('body').find('.modal').length, 0
+
+  so = new Visio.Models.StrategyObjective()
+  @form.nestedItem so
+  nested = @form.nestedForms['strategy_objectives'][so.cid]
+  field = nested.fields.findWhere { name: 'goals' }
+  field.selected 1, true
+
+  @form.render()
+  strictEqual $('body').find('.modal').length, 1
+  nested.close()
+  strictEqual $('body').find('.modal').length, 0
+
 
 test 'close - save nested, save parent', ->
   @model.id = 'something'

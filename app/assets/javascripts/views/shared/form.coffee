@@ -248,6 +248,8 @@ class Visio.Views.Form extends Backbone.View
 
     if @parent? and save
       @parent.model.get(@model.name.plural).add @model
+
+    if @parent?
       delete @parent.nestedForms[@model.name.plural][@model.id || @model.cid]
 
     json = @commit save
