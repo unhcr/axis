@@ -42,7 +42,7 @@ class Visio.Figures.Absy extends Visio.Figures.Base
       {
         id: 'is_performance'
         filterType: 'radio'
-        values: { true: true, false: false }
+        values: { true: false, false: true }
         human: { true: 'performance', false: 'impact' }
       },
       {
