@@ -63,6 +63,8 @@ class Visio.Views.IsyShowView extends Visio.Views.AccordionShowView
         stop: @onStop
         min: 0
 
+    human = Visio.Utils.parameterByPlural(Visio.manager.get('aggregation_type')).human
+    @queryBy.$el.find('input').attr 'placeholder', "Search for a #{human}"
 
     category = if situationAnalysis.total == 0 then 'white' else situationAnalysis.category
 

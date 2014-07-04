@@ -143,6 +143,10 @@ p.small {
   color: $white;
 }
 
+.tooltip-container {
+  min-height: 100px;
+}
+
 .collapsable-content {
   overflow: hidden;
 }
