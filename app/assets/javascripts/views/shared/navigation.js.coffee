@@ -23,7 +23,10 @@ class Visio.Views.NavigationView extends Backbone.View
       # Skip if it is operation dashboard then don't include the operation in the navigation
       return if Visio.manager.get('dashboard').name == hash
 
+
       data = Visio.manager.get(hash.plural)
+      data = _.sortBy(data.models, (d) ->
+        if Visio.manager.get('dashboard').include(hash.singular, d.id) then 0 else 1)
 
       parameters.push
         data: data

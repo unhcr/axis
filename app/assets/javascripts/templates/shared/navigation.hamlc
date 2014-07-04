@@ -10,7 +10,7 @@
                                :data => { :type => p.hash.plural } }
 
           %a.deselect{ :data => { :type => p.hash.plural }} Deselect All
-          - p.data.each (d) ->
+          - _.each p.data, (d) ->
             .visio-checkbox.visio-checkbox-yellow.ui-line-item-theme
               %input{
                 :value => p.hash.plural + Visio.Constants.SEPARATOR + d.id,
