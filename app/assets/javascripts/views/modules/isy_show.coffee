@@ -44,6 +44,7 @@ class Visio.Views.IsyShowView extends Visio.Views.AccordionShowView
 
       @$el.find('.slider').slider 'value', value
       @$el.find('.slider .ui-slider-handle').attr 'data-value', value + 1
+
     $.subscribe "drawFigures.#{@isyFigure.cid}.figure", @drawFigures
 
   render: (isRerender) ->
