@@ -44,6 +44,7 @@ class Visio.Views.IsyShowView extends Visio.Views.AccordionShowView
 
       @$el.find('.slider').slider 'value', value
       @$el.find('.slider .ui-slider-handle').attr 'data-value', value + 1
+
     $.subscribe "drawFigures.#{@isyFigure.cid}.figure", @drawFigures
 
   render: (isRerender) ->
@@ -63,6 +64,8 @@ class Visio.Views.IsyShowView extends Visio.Views.AccordionShowView
         stop: @onStop
         min: 0
 
+    human = Visio.Utils.parameterByPlural(Visio.manager.get('aggregation_type')).human
+    @queryBy.$el.find('input').attr 'placeholder', "Search for a #{human}"
 
     category = if situationAnalysis.total == 0 then 'white' else situationAnalysis.category
 

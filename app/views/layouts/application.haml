@@ -8,5 +8,11 @@
   %body{ :class => "#{controller.action_name} layout-#{controller.send(:_layout).virtual_path.name}" }
 
     :javascript
+
+      $(document).ajaxError(function(event, jqxhr, settings, exception) {
+          new Visio.Views.Error({
+            title: "Error getting page " + settings.url
+          });
+      });
       window.Visio.user = new Visio.Models.User(#{current_user.to_json.html_safe})
     = yield

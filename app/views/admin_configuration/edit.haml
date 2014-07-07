@@ -1,0 +1,32 @@
+.admin-configuration
+  %h1
+    Admin Panel
+  = form_for @configuration, { :url => { :action => :update } } do |f|
+
+    .row
+      .col-md-4
+        = f.label :startyear, 'Start year'
+        = f.select :startyear, 2012..2018, value: @configuration.startyear
+      .col-md-4
+        = f.label :endyear, 'End year'
+        = f.select :endyear, 2012..2018, value: @configuration.endyear
+    .row
+      .col-md-8
+        = f.label :default_reported_type, 'Default reported type'
+        = f.select :default_reported_type, options_for_select([['myr', 'myr'], ['yer', 'yer']])
+    .row
+      .col-md-8
+        = f.label :default_aggregation_type, 'Default aggregation type'
+        = f.select :default_aggregation_type, options_for_select([['operations', 'operations'],
+          ['ppgs', 'ppgs'], ['goals', 'goals'], ['problem_objectives', 'problem_objectives'], ['outputs', 'outputs']], @configuration.default_aggregation_type)
+    .row
+      .col-md-8
+        = f.label :default_date, 'Default year for computation'
+        = f.select :default_date, 2012..2018
+    .row
+      .col-md-8
+        = f.label :default_use_local_storage, 'Use local storage'
+        = f.check_box :default_use_local_storage
+    .row
+      .col-md-8
+        = f.submit 'Save'

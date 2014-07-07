@@ -12,6 +12,7 @@ class Operation < ActiveRecord::Base
   has_many :indicator_data
   has_many :budgets
   has_many :expenditures
+  has_many :offices
 
   has_many :indicators_operations, :class_name => 'IndicatorsOperations'
   has_many :indicators, :uniq => true, :through => :indicators_operations

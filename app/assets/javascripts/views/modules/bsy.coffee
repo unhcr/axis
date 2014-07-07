@@ -37,6 +37,8 @@ class Visio.Views.BsyView extends Backbone.View
         min: 0
 
 
+    human = Visio.Utils.parameterByPlural(Visio.manager.get('aggregation_type')).human
+    @queryBy.$el.find('input').attr 'placeholder', "Search for a #{human}"
 
     @drawFigures()
     @

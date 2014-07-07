@@ -24,8 +24,9 @@ class Budget < ActiveRecord::Base
         :problem_objective_id, :year, :operation_id, :pillar
 
       strategy_objective_ids = self.goal.strategy_objective_ids &
-        self.problem_objective.strategy_objective_ids &
-        self.output.strategy_objective_ids
+        self.problem_objective.strategy_objective_ids
+
+      strategy_objective_ids &= self.output.strategy_objective_ids if self.output
 
       json.strategy_objective_ids strategy_objective_ids
     end

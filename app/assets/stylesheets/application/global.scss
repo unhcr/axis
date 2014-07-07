@@ -143,6 +143,10 @@ p.small {
   color: $white;
 }
 
+.tooltip-container {
+  min-height: 100px;
+}
+
 .collapsable-content {
   overflow: hidden;
 }
@@ -1177,6 +1181,7 @@ a {
 .ui-accordion-content {
   max-height: 0px;
   overflow: auto;
+  overflow-x: hidden;
 
   -moz-transition:max-height $medium-transition;
   -webkit-transition:max-height $medium-transition;
@@ -2313,3 +2318,14 @@ a {
   }
 }
 
+
+.admin-configuration {
+  padding: 50px;
+  input {
+    border: 1px solid $dark-gray;
+  }
+
+  a {
+    color: $black;
+  }
+}

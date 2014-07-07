@@ -9,7 +9,8 @@ module Parsers
         :name => 'OFFICENAME',
         :parent_office_id => 'PARENTOFFICEID',
         :plan_id => 'OPERATIONPLAN_ID',
-        :operation_id => 'OPERATIONID'
+        :operation_id => 'OPERATIONID',
+        :year => 'PLANNINGYEAR'
       }
     end
 

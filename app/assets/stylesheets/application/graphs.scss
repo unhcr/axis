@@ -40,16 +40,16 @@ line {
   .PARTNER {
     stroke: $partner;
   }
-  .PILLAR-1 {
+  .PILLAR-1, .LYPK {
     stroke: $pillar1;
   }
-  .PILLAR-2 {
+  .PILLAR-2, .LYPM {
     stroke: $pillar2;
   }
-  .PILLAR-3 {
+  .PILLAR-3, .LYPN {
     stroke: $pillar3;
   }
-  .PILLAR-4 {
+  .PILLAR-4, .LYPJ {
     stroke: $pillar4;
   }
   .Above-Operating-Level {
@@ -250,16 +250,16 @@ line {
   .PARTNER-bar {
     fill: $partner;
   }
-  .PILLAR-1-bar {
+  .PILLAR-1-bar, .LYPK-bar {
     fill: $pillar1;
   }
-  .PILLAR-2-bar {
+  .PILLAR-2-bar, .LYPM-bar {
     fill: $pillar2;
   }
-  .PILLAR-3-bar {
+  .PILLAR-3-bar, .LYPN-bar {
     fill: $pillar3;
   }
-  .PILLAR-4-bar {
+  .PILLAR-4-bar, .LYPJ-bar {
     fill: $pillar4;
   }
 }

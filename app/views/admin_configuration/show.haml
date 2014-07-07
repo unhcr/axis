@@ -1,0 +1,12 @@
+.admin-configuration
+  %h1
+    Admin Panel
+  - @configuration.as_json.each do |key, value|
+    .row
+      .col-md-8
+        = "#{key}: #{value}"
+
+  .row
+    .col-md-8
+      %a{ :href => '/admin_configuration/edit' } Edit Configuration
+

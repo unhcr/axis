@@ -61,6 +61,27 @@ class BudgetsControllerTest < ActionController::TestCase
     assert_equal 0, r["deleted"].length
   end
 
+  test "should get one new budget data - no output" do
+    datum = Budget.new()
+    datum.operation = operations(:one)
+    datum.plan = plans(:one)
+    datum.ppg = ppgs(:one)
+    datum.goal = goals(:one)
+    datum.problem_objective = problem_objectives(:one)
+    datum.save
+
+    get :synced, { :strategy_id => @s.id }
+
+    assert_response :success
+
+    r = JSON.parse(response.body)
+
+    assert_equal 1, r["new"].length
+    assert_equal 0, r["updated"].length
+    assert_equal 0, r["deleted"].length
+
+  end
+
   test "should get one new budget data - filter_ids" do
     datum = Budget.new()
     datum.operation = operations(:one)

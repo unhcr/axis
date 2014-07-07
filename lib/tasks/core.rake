@@ -105,6 +105,8 @@ task :build => :environment do
   Rake::Task['build:budgets'].invoke
   Rake::Task['build:msrp'].invoke
   Rake::Task['build:narratives'].invoke
+  Rake::Task['build:offices'].invoke
+  Rake::Task['build:positions'].invoke
   Rake::Task['build:indicator_data_impact'].invoke
   Rake::Task['build:indicator_data_perf'].invoke
 

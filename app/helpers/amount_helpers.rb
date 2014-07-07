@@ -10,7 +10,7 @@ module AmountHelpers
     conditions << "ppg_id IN ('#{ids[:ppg_ids].join("','")}')" if ids[:ppg_ids]
     conditions << "goal_id IN ('#{ids[:goal_ids].join("','")}')" if ids[:goal_ids]
     conditions << "problem_objective_id IN ('#{ids[:problem_objective_ids].join("','")}')" if ids[:problem_objective_ids]
-    conditions << "output_id IN ('#{ids[:output_ids].join("','")}')" if ids[:output_ids]
+    conditions << "(output_id IN ('#{ids[:output_ids].join("','")}') OR output_id IS NULL)" if ids[:output_ids]
 
     query_string = conditions.join(' AND ')
 

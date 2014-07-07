@@ -17,6 +17,7 @@ class Visio.Views.AbsyView extends Backbone.View
         right: 80
 
     @figure = new Visio.Figures.Absy @config
+    @queryBy = new Visio.Views.QueryBy figure: @figure
 
   render: (isRerender) ->
 
@@ -24,8 +25,10 @@ class Visio.Views.AbsyView extends Backbone.View
       @$el.html @template( figureId: @figure.figureId() )
       @$el.find('#bubble').html @figure.el
       @$el.find('.header-buttons').append (new Visio.Views.FilterBy({ figure: @figure })).render().el
-      @$el.find('.header-buttons').append (new Visio.Views.QueryBy({ figure: @figure })).render().el
+      @$el.find('.header-buttons').append @queryBy.render().el
 
+    human = Visio.Utils.parameterByPlural(Visio.manager.get('aggregation_type')).human
+    @queryBy.$el.find('input').attr 'placeholder', "Search for a #{human}"
 
     @figure.collectionFn(Visio.manager.selected(Visio.manager.get('aggregation_type')))
     @figure.render()

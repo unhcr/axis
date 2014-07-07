@@ -177,8 +177,11 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
   queryByFn: (d) =>
     _.isEmpty(@query) or d.toString().toLowerCase().indexOf(@query.toLowerCase()) != -1
 
+  sortFn: (a, b) =>
+    b.selectedBudget() - a.selectedBudget()
+
   filtered: (collection) =>
-    _.chain(collection.models).filter(@queryByFn).value()
+    _.chain(collection.models).filter(@queryByFn).sort(@sortFn).value()
 
   findBoxByIndex: (idx) =>
     boxes = @g.selectAll('.box')
@@ -232,11 +235,17 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
     if idx >= @maxParameters and scroll
       difference = idx - @maxParameters
       @x.domain [0 + difference, @maxParameters + difference]
-      @g.selectAll('g.box').attr('transform', (d, i) => 'translate(' + @x(i) + ', 0)')
+      @g.selectAll('g.box')
+        .transition()
+        .duration(Visio.Durations.VERY_FAST)
+        .attr('transform', (d, i) => 'translate(' + @x(i) + ', 0)')
         .style('opacity', (d, i) -> if self.x(i) < 0 then 0 else 1)
     else if @x.domain()[0] > 0 and scroll
       @x.domain [0, @maxParameters]
-      @g.selectAll('g.box').attr('transform', (d, i) => 'translate(' + @x(i) + ', 0)')
+      @g.selectAll('g.box')
+        .transition()
+        .duration(Visio.Durations.VERY_FAST)
+        .attr('transform', (d, i) => 'translate(' + @x(i) + ', 0)')
         .style('opacity', (d, i) -> if self.x(i) < 0 then 0 else 1)
 
     @g.selectAll('.circle').data([])

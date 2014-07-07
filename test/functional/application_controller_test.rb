@@ -6,6 +6,8 @@ class ApplicationControllerTest < ActionController::TestCase
   def setup
     @user = users(:one)
 
+    AdminConfiguration.create
+
     sign_in @user
   end
 
@@ -36,6 +38,7 @@ class ApplicationControllerTest < ActionController::TestCase
     assert_not_nil assigns :personal_strategies
     assert_template :index
     assert_template layout: "layouts/index"
+    assert_not_nil assigns :configuration
 
   end
 
@@ -51,6 +54,7 @@ class ApplicationControllerTest < ActionController::TestCase
     assert_not_nil assigns(:options)
     assert_not_nil assigns :strategies
     assert_not_nil assigns :personal_strategies
+    assert_not_nil assigns :configuration
   end
 
   test 'overview page' do
@@ -64,6 +68,7 @@ class ApplicationControllerTest < ActionController::TestCase
     assert_not_nil assigns :options
     assert_not_nil assigns :strategies
     assert_not_nil assigns :personal_strategies
+    assert_not_nil assigns :configuration
 
   end
 

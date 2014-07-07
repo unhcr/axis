@@ -11,7 +11,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140623102110) do
+ActiveRecord::Schema.define(:version => 20140707110708) do
+
+  create_table "admin_configurations", :force => true do |t|
+    t.integer  "startyear",                 :default => 2012
+    t.integer  "endyear",                   :default => 2015
+    t.string   "default_reported_type",     :default => "yer"
+    t.string   "default_aggregation_type",  :default => "operations"
+    t.integer  "default_date",              :default => 2013
+    t.boolean  "default_use_local_storage", :default => true
+    t.datetime "created_at",                                          :null => false
+    t.datetime "updated_at",                                          :null => false
+  end
 
   create_table "budgets", :force => true do |t|
     t.string   "budget_type"
@@ -90,7 +101,6 @@ ActiveRecord::Schema.define(:version => 20140623102110) do
   add_index "expenditures", ["output_id"], :name => "index_expenditures_on_output_id"
   add_index "expenditures", ["plan_id", "ppg_id", "goal_id", "problem_objective_id", "output_id", "scenario", "year", "budget_type"], :name => "by_uniqueness", :unique => true, :length => {"plan_id"=>60, "ppg_id"=>10, "goal_id"=>2, "problem_objective_id"=>60, "output_id"=>60, "scenario"=>10, "year"=>nil, "budget_type"=>3}
   add_index "expenditures", ["problem_objective_id"], :name => "index_expenditures_on_problem_objective_id"
-  add_index "expenditures", ["updated_at"], :name => "index_expenditures_on_updated_at"
 
   create_table "export_modules", :force => true do |t|
     t.text     "state",                  :limit => 2147483647
@@ -280,6 +290,7 @@ ActiveRecord::Schema.define(:version => 20140623102110) do
     t.datetime "created_at",       :null => false
     t.datetime "updated_at",       :null => false
     t.string   "status"
+    t.integer  "year"
   end
 
   add_index "offices", ["id"], :name => "index_offices_on_id", :unique => true
