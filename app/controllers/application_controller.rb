@@ -62,7 +62,10 @@ class ApplicationController < ActionController::Base
       :resque => resque_up,
       :resque_workers => workers.length,
       :database_connected => ActiveRecord::Base.connected?,
-      :ldap => up?("#{ldap_config['host']}:#{ldap_config['port']}")
+      :ldap => up?(ldap_config['host'], ldap_config['port']),
+      :elasticsearch => up?('localhost', 9200),
+      :phantomjs => service?('phantomjs'),
+      :ant => service?('ant')
     }
 
     render :layout => 'application'
@@ -97,8 +100,13 @@ class ApplicationController < ActionController::Base
   end
 
   private
-    def up?(server)
-      cmd = `ping -c -q  2 #{server}`
+    def up?(server, port)
+      cmd = `nc -v -z -w 2 #{server} #{port}`
+      $?.exitstatus == 0
+    end
+
+    def service?(service)
+      cmd = `which #{service}`
       $?.exitstatus == 0
     end
 end
