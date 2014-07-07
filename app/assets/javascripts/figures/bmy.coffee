@@ -167,7 +167,7 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
   # Data structure:
   # [ [ { amount: xxx, groupby: <group>, year: 2012 }, { .. year: 2013 }, ... ] ... ]
   reduceFn: (memo, budget) =>
-    unless budget.get('year')
+    if not budget.get('year') or Visio.manager.get('yearList').indexOf(budget.get('year')) == -1
       console.warn 'No year for budget: ' + budget.id
       return memo
 

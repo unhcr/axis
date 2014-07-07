@@ -90,6 +90,7 @@ class ApplicationController < ActionController::Base
 
   def common
     redirect_to :splash and return unless user_signed_in?
+    @configuration = AdminConfiguration.first
     @options = {
       :include => {
         :ids => true

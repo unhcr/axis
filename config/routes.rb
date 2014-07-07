@@ -43,6 +43,7 @@ Visio::Application.routes.draw do
       get 'search'
     end
   end
+  resource :admin_configuration, :controller => :admin_configuration
   resources :strategies do
     member do
       get 'download'

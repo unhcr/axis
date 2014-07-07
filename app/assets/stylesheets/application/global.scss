@@ -2318,3 +2318,14 @@ a {
   }
 }
 
+
+.admin-configuration {
+  padding: 50px;
+  input {
+    border: 1px solid $dark-gray;
+  }
+
+  a {
+    color: $black;
+  }
+}

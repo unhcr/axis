@@ -1,6 +1,18 @@
 class Visio.Models.Manager extends Backbone.Model
 
   initialize: (options) ->
+    # fill in defaults if they exist
+
+    if Visio.configuration.startyear? and Visio.configuration.endyear?
+      @set 'yearList', [Visio.configuration.startyear..Visio.configuration.endyear]
+
+    @set 'date', new Date(Visio.configuration.default_date, 1) if Visio.configuration.default_date?
+
+    for key, value of Visio.configuration
+      if key.startsWith('default_') and key is not 'default_date'
+        k = key.replace 'default_', ''
+        @set k, value
+
     @set('db', new ydn.db.Storage(Visio.Constants.DB_NAME, Visio.Schema))
     options ||= {}
 
