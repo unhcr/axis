@@ -2,6 +2,7 @@ class Visio.Models.Manager extends Backbone.Model
 
   initialize: (options) ->
     # fill in defaults if they exist
+    Visio.configuration or= {}
 
     if Visio.configuration.startyear? and Visio.configuration.endyear?
       @set 'yearList', [Visio.configuration.startyear..Visio.configuration.endyear]
