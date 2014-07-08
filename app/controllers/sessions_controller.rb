@@ -1,6 +1,13 @@
 class SessionsController < Devise::SessionsController
 
   def create
+    if params[:user] && params[:user][:login] == ENV['GUEST_USER'] &&
+        User.where(:login => ENV['GUEST_USER']).first
+
+      sign_in :user, User.where(:login => ENV['GUEST_USER']).first
+      return render :json => { :success => true }
+    end
+
     resource = warden.authenticate!(:scope => resource_name, :recall => "#{controller_path}#failure")
     return sign_in_and_redirect(resource_name, resource)
   end
