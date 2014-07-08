@@ -7,6 +7,7 @@ class CmsController < ApplicationController
 
     render_403 and return if not @is_personal and not current_user.admin
 
+    @configuration = AdminConfiguration.first
     @strategies = Strategy.includes(:operations, :strategy_objectives, :ppgs)
 
     if @is_personal
