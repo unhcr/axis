@@ -11,6 +11,7 @@
   $(document).ready(function() {
     var $navigationIcon = $('.navigation-activation-icon');
     var $toolbar = $('.toolbar')
+    var $innerContent = $('.inner-content');
     var headerHeight = $('header').height();
     var bottomOffset = 300
 
@@ -29,10 +30,13 @@
       var scrollTop = $(document).scrollTop()
       $navigationIcon.css('top', scrollTop + 140);
       if (scrollTop > headerHeight) {
-        if (!$toolbar.hasClass('fixed-top'))
+        if (!$toolbar.hasClass('fixed-top')) {
           $toolbar.addClass('fixed-top');
+          $innerContent.css('margin-top', $toolbar.outerHeight() + 'px');
+        }
       } else {
         $toolbar.removeClass('fixed-top');
+        $innerContent.css('margin-top', 0);
       }
 
       if (scrollTop + $(window).height() + bottomOffset > $(document).height()) {
