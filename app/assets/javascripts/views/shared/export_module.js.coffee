@@ -37,7 +37,7 @@ class Visio.Views.ExportModule extends Backbone.View
     if @config.selectable or @config.previewable
       @figure.render()
     else
-      @figure.$el.html @figure.type.human
+      @figure.$el.html "<img src=\"/assets/previews/#{@figure.type.name}.png\" />"
     @$el.css 'height', $(document).height()
     @
 

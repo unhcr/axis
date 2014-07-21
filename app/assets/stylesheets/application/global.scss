@@ -1668,6 +1668,15 @@ a {
     text-align: center;
   }
 
+  .export-figure {
+    img {
+      width: 100%;
+      border: 1px solid $light-gray;
+      @include box-shadow;
+      margin-bottom: 25px;
+    }
+  }
+
   .export-selections {
     text-align: center
   }
