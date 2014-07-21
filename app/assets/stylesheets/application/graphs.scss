@@ -88,6 +88,10 @@ line {
     stroke-width: 2px;
   }
 
+  .point-container.queried .point, .point-container.queried .point-shadow {
+    fill: $yellow-green;
+  }
+
   .point-container .point-shadow {
     opacity: .4;
   }
