@@ -13,7 +13,7 @@
           %h4 Make Your Selections.
           .ui-small-header LABEL
           %div
-            = "Select up 10 [something] to export. Simply click the checkboxes."
+            = "Click to select data points"
           %figcaption
             - _.each context.selectableData, (d, i) ->
               .visio-checkbox.visio-checkbox-vertical
