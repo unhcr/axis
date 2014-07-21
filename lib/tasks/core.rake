@@ -114,6 +114,12 @@ task :build => :environment do
   fm.mark_deleted
 end
 
+task :warm_cache => :environment do
+  extend WarmCache
+
+  WarmCache.warm
+end
+
 namespace :utils do
   task :strategy_to_yaml => :environment do
 
