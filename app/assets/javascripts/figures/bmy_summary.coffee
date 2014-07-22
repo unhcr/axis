@@ -9,9 +9,15 @@ class Visio.Figures.BmySummary extends Visio.Figures.Bmy
 
   onMouseenterVoronoi: (d) =>
     @g.selectAll(".budget-line").classed 'active', false
+    @g.selectAll(".budget-point").classed 'active', false
+
     line = @g.select(".budget-line-#{d.point[d.point.groupBy]}")
     line.classed 'active', true
     line.moveToFront()
+
+    point = @g.select(".budget-point-#{d.point[d.point.groupBy]}")
+    point.classed 'active', true
+    point.moveToFront()
 
     pointData = [d.point]
     points = @g.selectAll('.point').data pointData

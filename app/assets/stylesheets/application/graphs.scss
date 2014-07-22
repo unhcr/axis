@@ -28,6 +28,17 @@ line {
   .budget-line.active {
     stroke: $black;
   }
+
+  .budget-point {
+    stroke: $light-gray;
+    fill: $light-gray;
+  }
+
+  .budget-point.active {
+    stroke: $black;
+    fill: $black;
+  }
+
   .ADMIN {
     stroke: $admin;
   }
@@ -61,6 +72,39 @@ line {
   .total {
     stroke: $total;
     stroke-width: 6px;
+  }
+
+  .budget-point-total {
+    stroke: $black;
+    fill: $black;
+  }
+
+  .budget-point-ADMIN {
+    fill: $admin;
+  }
+  .budget-point-STAFF {
+    fill: $staff;
+  }
+  .budget-point-PROJECT {
+    fill: $project;
+  }
+  .budget-point-PARTNER {
+    fill: $partner;
+  }
+  .budget-point-PILLAR-1, .budget-point-LYPK {
+    fill: $pillar1;
+  }
+  .budget-point-PILLAR-2, .budget-point-LYPM {
+    fill: $pillar2;
+  }
+  .budget-point-PILLAR-3, .budget-point-LYPN {
+    fill: $pillar3;
+  }
+  .budget-point-Above-Operating-Level {
+    fill: $primary-soft;
+  }
+  .budget-point-Operating-Level {
+    fill: $primary-light;
   }
   .point {
     fill: white;
