@@ -1,5 +1,5 @@
 class AdminConfiguration < ActiveRecord::Base
-  attr_accessible :startyear, :endyear, :default_reported_type, :default_aggregation_type, :default_date, :default_use_local_storage
+  attr_accessible :startyear, :endyear, :default_reported_type, :default_aggregation_type, :default_date, :default_use_local_db
 
   validates :startyear, :inclusion => { :in => [2012, 2013, 2014, 2015, 2016, 2017, 2018] }
   validates :endyear, :inclusion => { :in => [2012, 2013, 2014, 2015, 2016, 2017, 2018] }
@@ -25,7 +25,7 @@ class AdminConfiguration < ActiveRecord::Base
   def to_jbuilder(options = {})
 
     Jbuilder.new do |json|
-      json.extract! self, :startyear, :endyear, :default_reported_type, :default_aggregation_type, :default_date, :default_use_local_storage
+      json.extract! self, :startyear, :endyear, :default_reported_type, :default_aggregation_type, :default_date, :default_use_local_db
     end
 
   end

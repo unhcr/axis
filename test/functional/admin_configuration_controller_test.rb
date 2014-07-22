@@ -30,14 +30,14 @@ class AdminConfigurationControllerTest < ActionController::TestCase
   test 'Should update admin config' do
     @user.admin = true
     @user.save
-    AdminConfiguration.create :default_use_local_storage => true
+    AdminConfiguration.create :default_use_local_db => true
 
-    post :update, { :admin_configuration => { :default_use_local_storage => false } }
+    post :update, { :admin_configuration => { :default_use_local_db => false } }
 
     assert_response :success
     assert_template :show
     assert_not_nil assigns :configuration
-    assert !AdminConfiguration.first.default_use_local_storage
+    assert !AdminConfiguration.first.default_use_local_db
   end
 
   test 'Should get show view' do

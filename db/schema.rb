@@ -11,17 +11,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140707110708) do
+ActiveRecord::Schema.define(:version => 20140722141158) do
 
   create_table "admin_configurations", :force => true do |t|
-    t.integer  "startyear",                 :default => 2012
-    t.integer  "endyear",                   :default => 2015
-    t.string   "default_reported_type",     :default => "yer"
-    t.string   "default_aggregation_type",  :default => "operations"
-    t.integer  "default_date",              :default => 2013
-    t.boolean  "default_use_local_storage", :default => true
-    t.datetime "created_at",                                          :null => false
-    t.datetime "updated_at",                                          :null => false
+    t.integer  "startyear",                :default => 2012
+    t.integer  "endyear",                  :default => 2015
+    t.string   "default_reported_type",    :default => "yer"
+    t.string   "default_aggregation_type", :default => "operations"
+    t.integer  "default_date",             :default => 2013
+    t.boolean  "default_use_local_db",     :default => true
+    t.datetime "created_at",                                         :null => false
+    t.datetime "updated_at",                                         :null => false
   end
 
   create_table "budgets", :force => true do |t|
