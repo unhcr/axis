@@ -112,6 +112,7 @@ task :build => :environment do
 
   fm.starttime = starttime
   fm.mark_deleted
+  fm.save
 end
 
 task :warm_cache => :environment do
