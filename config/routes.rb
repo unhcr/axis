@@ -10,6 +10,7 @@ Visio::Application.routes.draw do
   get '/global_search' => 'application#global_search'
   get '/healthz' => 'application#healthz'
   get '/reset_local_db' => 'application#reset_local_db'
+  get '/create_guest_user' => 'application#create_guest_user'
 
   # CMS
   get '/cms/strategies' => 'cms#strategies'
@@ -47,6 +48,9 @@ Visio::Application.routes.draw do
   resources :strategies do
     member do
       get 'download'
+    end
+    collection do
+      get 'normalize'
     end
   end
   resources :users

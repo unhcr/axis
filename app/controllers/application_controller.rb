@@ -22,6 +22,16 @@ class ApplicationController < ActionController::Base
     render :layout => 'application' and return
   end
 
+  def create_guest_user
+    render_403 and return unless current_user.admin
+
+    user = User.where(:login => ENV['GUEST_USER']).first
+
+    user = User.create(:login => ENV['GUEST_USER']) unless user
+
+    render :json => user.to_json
+  end
+
   def operation
     @operation ||= Operation.find params[:operation_id]
     render :layout => 'index'
