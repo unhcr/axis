@@ -112,6 +112,13 @@ task :build => :environment do
 
   fm.starttime = starttime
   fm.mark_deleted
+  fm.save
+end
+
+task :warm_cache => :environment do
+  extend WarmCache
+
+  WarmCache.warm
 end
 
 namespace :utils do

@@ -10,4 +10,29 @@ class Narrative < ActiveRecord::Base
   belongs_to :goal
   belongs_to :output
   belongs_to :problem_objective
+
+  ARG_PREFIX = 'pyarguments'
+  SUMMARY_PREFIX = 'summary'
+
+
+  def self.summarize(ids)
+
+    md5 = Digest::MD5.new
+    md5.update ids.to_json
+
+    token = "#{ARG_PREFIX}_#{md5.hexdigest}"
+
+    summary_token = "#{SUMMARY_PREFIX}_#{md5.hexdigest}"
+    summary = summary_token.get(summary_token)
+
+    return summary if summary
+
+    Rails.logger.info "[REDIS] Enqueuing summarize job with token: #{token}"
+
+    Redis.current.set token, ids.to_json
+
+    Resque.enqueue SummarizeJob, token
+
+    nil
+  end
 end

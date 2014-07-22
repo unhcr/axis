@@ -33,6 +33,16 @@ class StrategiesController < ApplicationController
       :strategy_objectives => true } }) }
   end
 
+  def normalize
+    render_403 and return unless current_user.admin
+
+    Strategy.all.each do |s|
+      s.normalize
+    end
+
+    render :json => { :success => true }
+  end
+
   def destroy
     s = Strategy.find(params[:id])
     s = s.destroy

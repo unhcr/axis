@@ -1,12 +1,65 @@
 .admin-configuration
   %h1
     Admin Panel
-  - @configuration.as_json.each do |key, value|
-    .row
-      .col-md-8
-        = "#{key}: #{value}"
 
   .row
     .col-md-8
-      %a{ :href => '/admin_configuration/edit' } Edit Configuration
+      .divider-stack
+  .row
+    .col-md-8
+      %h3
+        Default Configuration
+  - @configuration.as_json.each do |key, value|
+    .row
+      .col-md-8
+        %b
+          = key
+        %span
+          = ": #{value}"
+
+  .row
+    .col-md-8
+      %button
+        %a{ :href => '/admin_configuration/edit' } Edit Configuration
+
+  .row
+    .col-md-8
+      .divider-stack
+
+  .row
+    .col-md-8
+      %h3
+        Triggers
+
+  .row
+    .col-md-8
+      %button
+        %a{ :href => '/reset_local_db' } Reset Local Data Cache
+
+  .row
+    .col-md-8
+      %button
+        %a{ :href => '/strategies/normalize' } Normalize Strategies
+
+  .row
+    .col-md-8
+      %button
+        %a{ :href => '/create_guest_user' } Create Guest User
+
+  .row
+    .col-md-8
+      .divider-stack
+
+  .row
+    .col-md-8
+      %h3
+        Status
+
+  .row
+    .col-md-8
+      %button
+        %a{ :href => '/healthz' } Health Status
+  .row
+    .col-md-8
+      .divider-stack
 

@@ -9,7 +9,7 @@ Visio::Application.configure do
       :email => {
         :email_prefix => "[AXIS Development] ",
         :sender_address => %{axis@unhcr.org},
-        :exception_recipients => %w{rudolph@unhcr.org}
+        :exception_recipients => []
       }
 
   # Log error messages when you accidentally call methods on nil.
@@ -40,4 +40,6 @@ Visio::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
+
+  Rails.logger = Logger.new(STDOUT)
 end
