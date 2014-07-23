@@ -45,6 +45,13 @@
 
     })
 
+    var ready = function() {
+      Visio.router = new Visio.Routers.OperationRouter()
+
+      Backbone.history.start();
+    }
+
+
 
     Visio.manager = new Visio.Models.Manager({
       dashboard: new Visio.Models.Operation(#{@operation.to_json(@options).html_safe}),
@@ -52,13 +59,10 @@
       operations: new Visio.Collections.Operation([#{@operation.to_json(@options).html_safe}]),
       strategies: new Visio.Collections.Strategy(#{@strategies.to_json.html_safe}),
       personal_strategies: new Visio.Collections.Strategy(#{@personal_strategies.to_json.html_safe}),
-      ready: function() {
-        Visio.router = new Visio.Routers.OperationRouter()
-
-        Backbone.history.start();
-      }
+      ready: ready
     });
 
-
+    if (!Visio.manager.get('use_local_db'))
+      ready()
 
   });
