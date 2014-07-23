@@ -41,7 +41,7 @@ class Operation < ActiveRecord::Base
   end
 
   def years
-    @years ||= self.plans.all.map(&:year).uniq
+    @years ||= self.plans.pluck(:year).uniq
   end
 
   def to_indexed_json
