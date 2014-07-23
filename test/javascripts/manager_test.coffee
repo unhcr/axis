@@ -217,7 +217,39 @@ test 'includeExternalStrategyData', ->
   ok !Visio.manager.get('strategy_objectives').get Visio.Constants.ANY_STRATEGY_OBJECTIVE
   ok !Visio.manager.includeExternalStrategyData()
 
+test 'configuration', ->
 
+  Visio.configuration =
+    default_date: 2013
+    default_use_local_db: false
+    startyear: 2013
+    endyear: 2015
+
+  m = new Visio.Models.Manager()
+
+
+  ok !m.get('default_use_local_db')
+  strictEqual m.get('yearList')[0], 2013
+  strictEqual m.get('yearList')[1], 2014
+  strictEqual m.get('yearList')[2], 2015
+
+  strictEqual m.get('date').getFullYear(), 2013
+
+  Visio.configuration = {}
+
+#test 'call ready with no local storage', ->
+#
+#  cb = sinon.spy()
+#
+#  Visio.configuration =
+#    default_use_local_db: false
+#
+#  m = new Visio.Models.Manager(ready: cb)
+#
+#  ok cb.calledOnce, 'callback should be called'
+#
+#  Visio.configuration = {}
+#
 test 'validation', ->
 
   throws(

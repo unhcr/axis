@@ -10,23 +10,25 @@ class Visio.Models.Manager extends Backbone.Model
     @set 'date', new Date(Visio.configuration.default_date, 1) if Visio.configuration.default_date?
 
     for key, value of Visio.configuration
-      if key.startsWith('default_') and key is not 'default_date'
+      if key.startsWith('default_') and key != 'default_date'
         k = key.replace 'default_', ''
         @set k, value
 
-    @set('db', new ydn.db.Storage(Visio.Constants.DB_NAME, Visio.Schema))
+    if @get('use_local_db')
+      @set('db', new ydn.db.Storage(Visio.Constants.DB_NAME, Visio.Schema))
+
     options ||= {}
 
     @state options.state if options.state?
 
-    @get('db').addEventListener 'ready', (e) =>
+    @get('db')?.addEventListener 'ready', (e) =>
       if Visio.user && Visio.user.get('reset_local_db')
         @get('db').clear(Visio.Schema.stores.map((store) -> store.name))
         Visio.user.save({ reset_local_db: false })
 
       options.ready() if options.ready
 
-    @get('db').addEventListener 'fail', (e) =>
+    @get('db')?.addEventListener 'fail', (e) =>
       alert 'Your data will not be saved because offline storage is not actived. Try using a modern browser like Google Chrome'
 
       console.error e.name
@@ -179,13 +181,16 @@ class Visio.Models.Manager extends Backbone.Model
     planIds = _.intersection.apply(null, planIds)
 
   getSyncDate: (id) ->
+    return $.Deferred().resolve().promise() unless @get 'use_local_db'
+
     db = @get('db')
     db.get(Visio.Stores.SYNC, id)
 
   setSyncDate: (id) ->
+    return $.Deferred().resolve().promise() unless @get 'use_local_db'
     d = new Date()
-    db = @get('db')
 
+    db = @get('db')
     db.put(Visio.Stores.SYNC, { synced_timestamp: +d }, id)
 
   validate: (attrs, options) ->
