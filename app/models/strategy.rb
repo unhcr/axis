@@ -38,6 +38,9 @@ class Strategy < ActiveRecord::Base
 
   belongs_to :user
 
+  has_many :users_strategies, :uniq => true, :class_name => 'UserStrategy'
+  has_many :shared_users, :class_name => 'Users', :through => :users_strategies
+
   scope :global_strategies, where(:user_id => nil)
 
 
