@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140723132233) do
+ActiveRecord::Schema.define(:version => 20140723145338) do
 
   create_table "admin_configurations", :force => true do |t|
     t.integer  "startyear",                :default => 2012
@@ -138,11 +138,17 @@ ActiveRecord::Schema.define(:version => 20140723132233) do
     t.string "operation_id", :null => false
   end
 
+  add_index "goals_operations", ["goal_id", "operation_id"], :name => "goals_operations_uniq", :unique => true
+  add_index "goals_operations", ["goal_id"], :name => "index_goals_operations_on_goal_id"
+  add_index "goals_operations", ["operation_id"], :name => "index_goals_operations_on_operation_id"
+
   create_table "goals_plans", :force => true do |t|
     t.string "goal_id", :null => false
     t.string "plan_id", :null => false
   end
 
+  add_index "goals_plans", ["goal_id", "plan_id", "id"], :name => "goals_plans_uniq", :unique => true
+  add_index "goals_plans", ["goal_id", "plan_id", "id"], :name => "index_goals_plans_on_goal_id_and_plan_id_and_id", :unique => true
   add_index "goals_plans", ["plan_id", "goal_id"], :name => "index_goals_plans_on_plan_id_and_goal_id", :unique => true
 
   create_table "goals_ppgs", :id => false, :force => true do |t|
@@ -150,15 +156,22 @@ ActiveRecord::Schema.define(:version => 20140723132233) do
     t.string "ppg_id",  :null => false
   end
 
+  add_index "goals_ppgs", ["goal_id", "ppg_id"], :name => "goals_ppgs_uniq", :unique => true
+  add_index "goals_ppgs", ["goal_id", "ppg_id"], :name => "index_goals_ppgs_on_goal_id_and_ppg_id", :unique => true
+
   create_table "goals_problem_objectives", :id => false, :force => true do |t|
     t.string "goal_id",              :null => false
     t.string "problem_objective_id", :null => false
   end
 
+  add_index "goals_problem_objectives", ["goal_id", "problem_objective_id"], :name => "goals_problem_objectives_uniq", :unique => true
+
   create_table "goals_rights_groups", :id => false, :force => true do |t|
     t.string "goal_id",         :null => false
     t.string "rights_group_id", :null => false
   end
+
+  add_index "goals_rights_groups", ["goal_id", "rights_group_id"], :name => "goals_rights_groups_uniq", :unique => true
 
   create_table "goals_strategies", :id => false, :force => true do |t|
     t.integer "strategy_id", :null => false
@@ -231,22 +244,31 @@ ActiveRecord::Schema.define(:version => 20140723132233) do
     t.string "indicator_id", :null => false
   end
 
+  add_index "indicators_operations", ["indicator_id"], :name => "index_indicators_operations_on_indicator_id"
+  add_index "indicators_operations", ["operation_id", "indicator_id"], :name => "indicators_operations_uniq", :unique => true
+  add_index "indicators_operations", ["operation_id"], :name => "index_indicators_operations_on_operation_id"
+
   create_table "indicators_outputs", :id => false, :force => true do |t|
     t.string "output_id",    :null => false
     t.string "indicator_id", :null => false
   end
+
+  add_index "indicators_outputs", ["output_id", "indicator_id"], :name => "indicators_outputs_uniq", :unique => true
 
   create_table "indicators_plans", :force => true do |t|
     t.string "plan_id",      :null => false
     t.string "indicator_id", :null => false
   end
 
+  add_index "indicators_plans", ["plan_id", "indicator_id", "id"], :name => "indicators_plans_uniq", :unique => true
   add_index "indicators_plans", ["plan_id", "indicator_id"], :name => "index_indicators_plans_on_plan_id_and_indicator_id", :unique => true
 
   create_table "indicators_problem_objectives", :id => false, :force => true do |t|
     t.string "problem_objective_id", :null => false
     t.string "indicator_id",         :null => false
   end
+
+  add_index "indicators_problem_objectives", ["problem_objective_id", "indicator_id"], :name => "indicators_problem_objectives_uniq", :unique => true
 
   create_table "indicators_strategies", :id => false, :force => true do |t|
     t.integer "strategy_id",  :null => false
@@ -315,20 +337,34 @@ ActiveRecord::Schema.define(:version => 20140723132233) do
     t.string "output_id",    :null => false
   end
 
+  add_index "operations_outputs", ["operation_id", "output_id"], :name => "operations_outputs_uniq", :unique => true
+  add_index "operations_outputs", ["operation_id"], :name => "index_operations_outputs_on_operation_id"
+  add_index "operations_outputs", ["output_id"], :name => "index_operations_outputs_on_output_id"
+
   create_table "operations_ppgs", :id => false, :force => true do |t|
     t.string "operation_id", :null => false
     t.string "ppg_id",       :null => false
   end
+
+  add_index "operations_ppgs", ["operation_id", "ppg_id"], :name => "operations_ppgs_uniq", :unique => true
+  add_index "operations_ppgs", ["operation_id"], :name => "index_operations_ppgs_on_operation_id"
+  add_index "operations_ppgs", ["ppg_id"], :name => "index_operations_ppgs_on_ppg_id"
 
   create_table "operations_problem_objectives", :id => false, :force => true do |t|
     t.string "problem_objective_id", :null => false
     t.string "operation_id",         :null => false
   end
 
+  add_index "operations_problem_objectives", ["operation_id"], :name => "index_operations_problem_objectives_on_operation_id"
+  add_index "operations_problem_objectives", ["problem_objective_id", "operation_id"], :name => "operations_problem_objectives_uniq", :unique => true
+  add_index "operations_problem_objectives", ["problem_objective_id"], :name => "index_operations_problem_objectives_on_problem_objective_id"
+
   create_table "operations_rights_groups", :id => false, :force => true do |t|
     t.string "operation_id",    :null => false
     t.string "rights_group_id", :null => false
   end
+
+  add_index "operations_rights_groups", ["operation_id", "rights_group_id"], :name => "operations_rights_groups_uniq", :unique => true
 
   create_table "operations_strategies", :id => false, :force => true do |t|
     t.integer "strategy_id",  :null => false
@@ -358,12 +394,15 @@ ActiveRecord::Schema.define(:version => 20140723132233) do
     t.string "output_id", :null => false
   end
 
+  add_index "outputs_plans", ["plan_id", "output_id", "id"], :name => "outputs_plans_uniq", :unique => true
   add_index "outputs_plans", ["plan_id", "output_id"], :name => "index_outputs_plans_on_plan_id_and_output_id", :unique => true
 
   create_table "outputs_problem_objectives", :id => false, :force => true do |t|
     t.string "problem_objective_id", :null => false
     t.string "output_id",            :null => false
   end
+
+  add_index "outputs_problem_objectives", ["problem_objective_id", "output_id"], :name => "outputs_problem_objectives_uniq", :unique => true
 
   create_table "outputs_strategies", :id => false, :force => true do |t|
     t.integer "strategy_id", :null => false
@@ -403,6 +442,7 @@ ActiveRecord::Schema.define(:version => 20140723132233) do
     t.string "ppg_id",  :null => false
   end
 
+  add_index "plans_ppgs", ["plan_id", "ppg_id", "id"], :name => "plans_ppgs_uniq", :unique => true
   add_index "plans_ppgs", ["plan_id", "ppg_id"], :name => "index_plans_ppgs_on_plan_id_and_ppg_id", :unique => true
 
   create_table "plans_problem_objectives", :force => true do |t|
@@ -411,11 +451,14 @@ ActiveRecord::Schema.define(:version => 20140723132233) do
   end
 
   add_index "plans_problem_objectives", ["plan_id", "problem_objective_id"], :name => "plans_objectives_index", :unique => true
+  add_index "plans_problem_objectives", ["problem_objective_id", "plan_id", "id"], :name => "plans_problem_objectives_uniq", :unique => true
 
   create_table "plans_rights_groups", :id => false, :force => true do |t|
     t.string "plan_id",         :null => false
     t.string "rights_group_id", :null => false
   end
+
+  add_index "plans_rights_groups", ["plan_id", "rights_group_id"], :name => "plans_rights_groups_uniq", :unique => true
 
   create_table "plans_strategies", :id => false, :force => true do |t|
     t.integer "strategy_id", :null => false
@@ -488,6 +531,8 @@ ActiveRecord::Schema.define(:version => 20140723132233) do
     t.string "problem_objective_id", :null => false
     t.string "rights_group_id",      :null => false
   end
+
+  add_index "problem_objectives_rights_groups", ["problem_objective_id", "rights_group_id"], :name => "problem_objectives_rights_groups_uniq", :unique => true
 
   create_table "problem_objectives_strategies", :id => false, :force => true do |t|
     t.integer "strategy_id",          :null => false
