@@ -1,0 +1,3 @@
+.user-search-container
+  %input{ :type => 'text', :class => 'user-search', :placeholder => 'Search for a user' }
+  .user-search-results

@@ -59,6 +59,7 @@ class Visio.Models.Manager extends Backbone.Model
     'expenditures': new Visio.Collections.Expenditure()
     'strategies': new Visio.Collections.Strategy()
     'personal_strategies': new Visio.Collections.Strategy()
+    'shared_strategies': new Visio.Collections.Strategy()
     'strategy_objectives': new Visio.Collections.StrategyObjective()
     'date': new Date(2013, 1)
     'use_local_db': true
@@ -131,6 +132,10 @@ class Visio.Models.Manager extends Backbone.Model
     unless strategy
       strategy = @get('personal_strategies').get(@get('strategy_id'))
 
+    # Look for strategy in shared strategies if it's not global
+    unless strategy
+      strategy = @get('shared_strategies').get(@get('strategy_id'))
+
     strategy
 
   strategies: (strategyIds) ->
@@ -144,6 +149,13 @@ class Visio.Models.Manager extends Backbone.Model
     return @get('personal_strategies') unless strategyIds?
 
     return new Visio.Collections.Strategy(@get('personal_strategies').filter((strategy) ->
+      _.include(strategyIds.map((i) -> +i), strategy.id)
+    ))
+
+  sharedStrategies: (strategyIds) ->
+    return @get('shared_strategies') unless strategyIds?
+
+    return new Visio.Collections.Strategy(@get('shared_strategies').filter((strategy) ->
       _.include(strategyIds.map((i) -> +i), strategy.id)
     ))
 

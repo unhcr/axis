@@ -16,6 +16,7 @@ class User < ActiveRecord::Base
   def to_jbuilder(options = {})
     Jbuilder.new do |json|
       json.extract! self, :firstname, :lastname, :id, :reset_local_db, :login
+
     end
   end
 
@@ -23,14 +24,14 @@ class User < ActiveRecord::Base
     to_jbuilder(options).attributes!
   end
 
-  def share_strategy(other_user, strategy_id)
+  def share_strategy(other_users, strategy_id)
 
     s = self.strategies.find(strategy_id)
 
-    return false if not s or not other_user or other_user.shared_strategies.include? s
+    return false if not s or not other_users
 
-    other_user.shared_strategies << s
 
+    s.shared_users = other_users
     true
   end
 

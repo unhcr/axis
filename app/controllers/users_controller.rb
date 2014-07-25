@@ -9,4 +9,21 @@ class UsersController < ApplicationController
     render :json => {:success => success}.merge(params[:user])
   end
 
+  def share
+    render :json => {:success => false} and return unless user_signed_in?
+    ids = params[:users].map { |u| u[:id] }
+
+    success = current_user.share_strategy(User.find(ids), params[:strategy_id])
+
+    render :json => { :success => success }
+  end
+
+  def search
+    query = params[:query]
+
+    users = User.where("login LIKE ?", "#{query}%").limit(10)
+
+    render :json => users
+  end
+
 end

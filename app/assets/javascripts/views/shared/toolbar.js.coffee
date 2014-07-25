@@ -5,6 +5,9 @@ class Visio.Views.ToolbarView extends Backbone.View
   initialize: (options) ->
     @render()
 
+  events:
+    'click .share-strategy': 'onShareStrategy'
+
   onChange: (selected) ->
     attribute = selected.value.split(Visio.Constants.SEPARATOR)[0]
     value = selected.value.split(Visio.Constants.SEPARATOR)[1]
@@ -21,3 +24,10 @@ class Visio.Views.ToolbarView extends Backbone.View
 
     @$el.removeClass('gone')
     @
+
+  onShareStrategy: ->
+    $('body').append((new Visio.Views.ShareStrategy({
+      collection: Visio.manager.get('dashboard').get('shared_users')
+      strategy: Visio.manager.get('dashboard') })).render().el)
+
+

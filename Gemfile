@@ -17,7 +17,6 @@ gem "capistrano-resque", "~> 0.1.0", :require => false
 gem 'axlsx'
 gem 'zip-zip'
 gem 'ruby-ntlm'
-gem 'query_reviewer'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -51,6 +50,7 @@ group :assets do
 end
 
 group :development, :test do
+  # gem 'query_reviewer'
   gem 'quiet_assets'
   gem 'capistrano', '~> 2.15.5'
   gem 'capistrano-rbenv', '~> 1.0.5'

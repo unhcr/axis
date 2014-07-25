@@ -57,6 +57,7 @@ class Visio.Models.Strategy extends Visio.Models.Syncable
 
   initialize: (options) ->
     options or= {}
+    @set('shared_users', new Visio.Collections.User((options.shared_users || [])))
     @set('operations', new Visio.Collections.Operation((options.operations || [])))
     @set('ppgs', new Visio.Collections.Ppg((options.ppgs || [])))
     @set('strategy_objectives', new Visio.Collections.StrategyObjective((options.strategy_objectives || [])))

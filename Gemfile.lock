@@ -180,7 +180,6 @@ GEM
     pry-stack_explorer (0.4.9.1)
       binding_of_caller (>= 0.7)
       pry (>= 0.9.11)
-    query_reviewer (0.2.2)
     quiet_assets (1.0.2)
       railties (>= 3.1, < 5.0)
     qunit-rails (0.0.4)
@@ -351,7 +350,6 @@ DEPENDENCIES
   pry
   pry-rails
   pry-stack_explorer
-  query_reviewer
   quiet_assets
   qunit-rails (= 0.0.4)
   quoth

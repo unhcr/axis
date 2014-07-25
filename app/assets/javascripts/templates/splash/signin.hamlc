@@ -31,7 +31,7 @@
           .col-md-5.center-text.login-container
             %input.password.pull-left.full-width{:name => "password", :placeholder => "Password", :type => "password"}
           .col-md-2.center-text.login-container
-            %input.signin.ui-active.full-width.btn.pull-left{:type => "submit", :value => "GO"}
+            %input.signin.ui-active.full-width.pull-left{:type => "submit", :value => "GO"}
   .row
     .col-md-8.col-centered
       .col-md-4.center-text.logo-circle

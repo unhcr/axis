@@ -9,9 +9,9 @@ Visio.Mixins.Modal =
     $(document).scrollTop 0
 
     previousClose = @close
-    @close = (save) ->
+    @close = ->
       $overlay.remove()
-      previousClose(save)
+      previousClose.apply @, arguments
     @close.bind @
 
     $overlay.on 'click', (e) =>
