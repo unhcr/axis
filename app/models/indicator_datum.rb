@@ -109,7 +109,7 @@ class IndicatorDatum < ActiveRecord::Base
   end
 
   def situation_analysis(reported_value = REPORTED_VALUES[:myr])
-    if not self[reported_value] || !self.threshold_green || !self.threshold_red
+    if self[reported_value].nil? || self.threshold_green.nil? || self.threshold_red.nil?
       return ALGO_RESULTS[:missing]
     end
 
