@@ -65,6 +65,21 @@ class UsersControllerTest < ActionController::TestCase
     assert_equal user2.shared_strategies.length, 1
   end
 
+  test "share strategies no users" do
+    user = users(:one)
+    s = strategies(:one)
+    s.user = user
+    user.save
+    s.save
+    sign_in user
+
+    post :share, { :id => user.id, :strategy_id => s.id, :users => nil }
+
+    assert_response :success
+    r = JSON.parse(response.body)
+    assert r['success']
+  end
+
   test 'search' do
     user2 = users(:two)
     user = users(:one)

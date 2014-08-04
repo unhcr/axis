@@ -11,7 +11,10 @@ class UsersController < ApplicationController
 
   def share
     render :json => {:success => false} and return unless user_signed_in?
-    ids = params[:users].map { |u| u[:id] }
+
+    ids = []
+    ids = params[:users].map { |u| u[:id] } unless params[:users].nil?
+
 
     success = current_user.share_strategy(User.find(ids), params[:strategy_id])
 
