@@ -35,6 +35,7 @@ class ApplicationControllerTest < ActionController::TestCase
     assert_response :success
     assert_not_nil assigns :mapMD5
     assert_not_nil assigns :strategies
+    assert_not_nil assigns :shared_strategies
     assert_not_nil assigns :personal_strategies
     assert_template :index
     assert_template layout: "layouts/index"
@@ -54,6 +55,7 @@ class ApplicationControllerTest < ActionController::TestCase
     assert_not_nil assigns(:options)
     assert_not_nil assigns :strategies
     assert_not_nil assigns :personal_strategies
+    assert_not_nil assigns :shared_strategies
     assert_not_nil assigns :configuration
   end
 
@@ -68,6 +70,7 @@ class ApplicationControllerTest < ActionController::TestCase
     assert_not_nil assigns :options
     assert_not_nil assigns :strategies
     assert_not_nil assigns :personal_strategies
+    assert_not_nil assigns :shared_strategies
     assert_not_nil assigns :configuration
 
   end

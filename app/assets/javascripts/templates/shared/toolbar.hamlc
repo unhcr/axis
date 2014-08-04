@@ -1,7 +1,8 @@
 .row
   .col-md-12.col-centered.ui-primary-light.zero-padding
     .col-md-1.ui-purple.right-text
-      %a.share-strategy Share strategy
+      - if Visio.manager.isDashboardPersonal()
+        %a.share-strategy Share strategy
     .col-md-2.ui-purple
       %select.dropdown
         -_.each Visio.AggregationTypes, (hash) ->

@@ -120,6 +120,9 @@ class Visio.Models.Manager extends Backbone.Model
     else
       Visio.manager.get('strategy_objectives').remove Visio.Constants.ANY_STRATEGY_OBJECTIVE
 
+  isDashboardPersonal: ->
+    Visio.manager.get('personal_strategies').get(Visio.manager.get('dashboard').id)?
+
   year: (_year, options) ->
     return @get('date').getFullYear() if arguments.length == 0
     @set { date: new Date(_year, 1) }, options || {}

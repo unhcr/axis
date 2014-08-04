@@ -69,8 +69,7 @@ class Visio.Views.ShareStrategy extends Backbone.View
       $target.removeClass 'disabled'
 
   share: ->
-    $.ajax(
-      {
+    $.ajax({
         type: 'POST'
         url: "/users/#{Visio.user.id}/share/#{Visio.manager.get('dashboard').id}",
         data: JSON.stringify({ users: @collection.toJSON() }),
