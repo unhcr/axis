@@ -27,6 +27,56 @@ class IndicatorDatumTest < ActiveSupport::TestCase
 
   end
 
+  test "should report missing if no threshold in situation analysis" do
+
+    datum = IndicatorDatum.new()
+    datum.threshold_green = nil
+    datum.threshold_red = nil
+    datum.myr = nil
+    datum.save
+
+    res = datum.situation_analysis
+
+    assert_equal res, IndicatorDatum::ALGO_RESULTS[:missing]
+
+    datum.threshold_green = 2
+    datum.threshold_red = nil
+    datum.myr = 10
+    datum.save
+
+    res = datum.situation_analysis
+
+    assert_equal res, IndicatorDatum::ALGO_RESULTS[:missing]
+
+    datum.threshold_green = nil
+    datum.threshold_red = 2
+    datum.myr = 10
+    datum.save
+
+    res = datum.situation_analysis
+
+    assert_equal res, IndicatorDatum::ALGO_RESULTS[:missing]
+
+    datum.threshold_green = 10
+    datum.threshold_red = 2
+    datum.myr = nil
+    datum.save
+
+    res = datum.situation_analysis
+
+    assert_equal res, IndicatorDatum::ALGO_RESULTS[:missing]
+
+    datum.threshold_green = 10
+    datum.threshold_red = 2
+    datum.myr = 4
+    datum.save
+
+    res = datum.situation_analysis
+
+    assert res != IndicatorDatum::ALGO_RESULTS[:missing]
+
+  end
+
   test "should correctly calculate strategy objectives ids" do
 
     datum = IndicatorDatum.new()
