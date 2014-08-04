@@ -23,6 +23,7 @@ class Visio.Views.UserSearch extends Backbone.View
     $results = @$el.find('.user-search-results')
 
     if not query? or query.length == 0
+      $results.unbind()
       $results.html ''
       return
 
@@ -40,11 +41,17 @@ class Visio.Views.UserSearch extends Backbone.View
 
     user = @users.get id
 
+    $results = @$el.find('.user-search-results')
 
-    @$el.find('.user-search-results').html ''
+    $results.unbind()
+    $results.html ''
     @$el.find('input').val ''
 
     $.publish 'select.user', [user]
+
+  close: ->
+    @unbind()
+    @remove()
 
 
 

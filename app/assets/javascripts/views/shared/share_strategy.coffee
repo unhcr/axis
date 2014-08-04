@@ -17,6 +17,7 @@ class Visio.Views.ShareStrategy extends Backbone.View
   initialize: (options) ->
     @strategy = options.strategy
     @initModal()
+    console.log @collection
 
     $.subscribe 'select.user', @onUserSelect
 
@@ -92,5 +93,6 @@ class Visio.Views.ShareStrategy extends Backbone.View
 
 
   close: ->
+    $.unsubscribe 'select.user'
     @unbind()
     @remove()
