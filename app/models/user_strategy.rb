@@ -1,6 +1,6 @@
 class UserStrategy < ActiveRecord::Base
 
-  set_table_name 'users_strategies'
+  self.table_name = 'users_strategies'
   attr_accessible :user_id, :strategy_id, :permission
 
   belongs_to :shared_strategy, :class_name => 'Strategy', :foreign_key => 'strategy_id'
