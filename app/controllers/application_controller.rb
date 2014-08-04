@@ -106,8 +106,9 @@ class ApplicationController < ActionController::Base
         :ids => true
       }
     }
-    @strategies ||= Strategy.global_strategies.as_json(@options)
-    @personal_strategies ||= Strategy.where(:user_id => current_user.id).as_json(@options)
+
+    @strategies ||= Strategy.global_strategies.as_json
+    @personal_strategies ||= Strategy.where(:user_id => current_user.id).as_json
   end
 
   private

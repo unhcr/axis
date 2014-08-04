@@ -14,6 +14,12 @@ class Visio.Models.Manager extends Backbone.Model
         k = key.replace 'default_', ''
         @set k, value
 
+    isSafari = navigator.userAgent.indexOf('Safari') != -1 and
+               navigator.userAgent.indexOf('Chrome') == -1
+
+    # Disable local db for safari since it's way too slow
+    @set('use_local_db', false) if isSafari
+
     if @get('use_local_db')
       @set('db', new ydn.db.Storage(Visio.Constants.DB_NAME, Visio.Schema))
 

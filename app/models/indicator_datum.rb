@@ -59,19 +59,19 @@ class IndicatorDatum < ActiveRecord::Base
     query_string = conditions.join(' AND ')
 
 
-    indicator_data = IndicatorDatum.loaded
+    indicator_data = IndicatorDatum.loaded.where(query_string)
 
     if synced_date
-      synced_data[:new] = indicator_data.where("#{query_string} AND
+      synced_data[:new] = indicator_data.where("
         created_at >= :synced_date AND
         is_deleted = false", { :synced_date => synced_date })
           .where(where).limit(limit)
-      synced_data[:updated] = indicator_data.where("#{query_string} AND
+      synced_data[:updated] = indicator_data.where("
         created_at < :synced_date AND
         updated_at >= :synced_date AND
         is_deleted = false", { :synced_date => synced_date })
           .where(where).limit(limit)
-      synced_data[:deleted] = indicator_data.where("#{query_string} AND
+      synced_data[:deleted] = indicator_data.where("
         updated_at >= :synced_date AND
         is_deleted = true", { :synced_date => synced_date })
           .where(where).limit(limit)
@@ -109,7 +109,9 @@ class IndicatorDatum < ActiveRecord::Base
   end
 
   def situation_analysis(reported_value = REPORTED_VALUES[:myr])
-    return ALGO_RESULTS[:missing] unless self[reported_value]
+    if self[reported_value].nil? || self.threshold_green.nil? || self.threshold_red.nil?
+      return ALGO_RESULTS[:missing]
+    end
 
     if self[reported_value] >= self.threshold_green
       return ALGO_RESULTS[:success]
