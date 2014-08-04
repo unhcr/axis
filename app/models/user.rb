@@ -30,8 +30,13 @@ class User < ActiveRecord::Base
 
     return false if not s or not other_users
 
+    # Notify new shared users by email if a strategy has been shared
+    new_users = other_users - s.shared_users
+
+    UserMailer.share_email(s, self, new_users).deliver
 
     s.shared_users = other_users
+
     true
   end
 

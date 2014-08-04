@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h4>Congrats! <%= @user.login %> just shared the strategy '<%= @strategy.name %>' with you!</h4>
+    <p>
+    <%= @user.login %> has worked hard to build a strategy and has decided to share it with you. <%= @user.login %> describes the strategy as: "<%= @strategy.description %>"
+    </p>
+    <p>
+    Check out '<%= @strategy.name %>' strategy at: <a href="<%= @url %>"><%= @url %></a>
+    </p>
+
+    --- <br />
+    <small><%= Quoth.get %></small>
+  </body>
+</html>
