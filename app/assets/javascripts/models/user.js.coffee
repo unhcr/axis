@@ -8,3 +8,6 @@ class Visio.Models.User extends Backbone.Model
 
   defaults:
     'reset_local_db': false
+
+  toString: ->
+    @get 'login'

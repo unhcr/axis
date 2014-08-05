@@ -1,0 +1,2 @@
+.user-search-result{ :data => { :id => "#{context.user.id}" } }
+  = context.user.login + '@unhcr.org'

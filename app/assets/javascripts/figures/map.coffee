@@ -73,22 +73,24 @@ class Visio.Figures.Map extends Visio.Figures.Base
       .attr('d', @path)
       .on('click', (d) ->
         d3.select(self.el).selectAll('.country.active').classed 'active', false
-        el = d3.select @
-        iso3 = d.properties.adm0_a3
-        if self.expanded && self.views[iso3] && self.expanded.model.id == self.views[iso3].model.id
-          if self.expanded.isShrunk()
-            self.expanded.expand()
-            el.classed 'active', true
-          else
-            self.expanded.shrink()
-            el.classed 'active', false
-        else
-          self.expanded.shrink() if self.expanded
-          self.expanded = self.views[d.properties.adm0_a3]
-          return unless self.expanded
+        window.location.href = "/operation/#{d.properties.adm0_a3}"
 
-          self.expanded.expand()
-          el.classed 'active', true
+        #el = d3.select @
+        #iso3 = d.properties.adm0_a3
+        #if self.expanded && self.views[iso3] && self.expanded.model.id == self.views[iso3].model.id
+        #  if self.expanded.isShrunk()
+        #    self.expanded.expand()
+        #    el.classed 'active', true
+        #  else
+        #    self.expanded.shrink()
+        #    el.classed 'active', false
+        #else
+        #  self.expanded.shrink() if self.expanded
+        #  self.expanded = self.views[d.properties.adm0_a3]
+        #  return unless self.expanded
+
+        #  self.expanded.expand()
+        #  el.classed 'active', true
       )
 
     centers = @g.selectAll('.center')

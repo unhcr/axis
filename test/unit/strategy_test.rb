@@ -245,6 +245,15 @@ class StrategyTest < ActiveSupport::TestCase
 
   end
 
+  test "include shared_users" do
+    @s.shared_users << users(:one)
+
+    json = @s.as_json({ :include => { :shared_users => true } })
+
+    assert_equal json['shared_users'].length, 1
+
+  end
+
   test "to workbook" do
     @operations[0].ppgs << @ppgs[0]
     pkg = @s.to_workbook

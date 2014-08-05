@@ -1,0 +1,29 @@
+.close-container
+  .close
+%form
+  .row
+    .col-md-12
+      %h2
+        = "Share your \"#{@strategy.toString()}\" strategy"
+
+  .row
+    .col-md-12
+      .usersearch
+
+  .row
+    .col-md-12
+      %h4
+        Sharing with:
+      .shared-users
+
+  .row
+    .col-md-6
+      .btn.share
+        Share
+
+    .col-md-6
+      .btn.cancel
+        Cancel
+
+
+

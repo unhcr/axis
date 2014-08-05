@@ -1,0 +1,3 @@
+.user-pill{ :class => "user#{Visio.Constants.SEPARATOR}#{context.user.id}", :data => { :id => context.user.id } }
+  = context.user.toString() + '@unhcr.org'
+  .close.close-small

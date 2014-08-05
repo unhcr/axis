@@ -53,7 +53,14 @@ Visio::Application.routes.draw do
       get 'normalize'
     end
   end
-  resources :users
+  resources :users do
+    member do
+      post 'share/:strategy_id' => 'users#share'
+    end
+    collection do
+      get 'search'
+    end
+  end
 
   root :to => 'application#index'
 end

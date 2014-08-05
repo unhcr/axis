@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140723145338) do
+ActiveRecord::Schema.define(:version => 20140724115318) do
 
   create_table "admin_configurations", :force => true do |t|
     t.integer  "startyear",                :default => 2012
@@ -748,5 +748,13 @@ ActiveRecord::Schema.define(:version => 20140723145338) do
   end
 
   add_index "users", ["login"], :name => "index_users_on_login"
+
+  create_table "users_strategies", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "strategy_id"
+    t.integer  "permission",  :default => 0
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
+  end
 
 end

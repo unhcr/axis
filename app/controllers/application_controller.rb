@@ -103,12 +103,14 @@ class ApplicationController < ActionController::Base
     @configuration = AdminConfiguration.first
     @options = {
       :include => {
-        :ids => true
+        :ids => true,
+        :shared_users => true
       }
     }
 
     @strategies ||= Strategy.global_strategies.as_json
-    @personal_strategies ||= Strategy.where(:user_id => current_user.id).as_json
+    @personal_strategies ||= current_user.strategies.as_json
+    @shared_strategies ||= current_user.shared_strategies.as_json
   end
 
   private

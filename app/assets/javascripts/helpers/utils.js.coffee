@@ -52,7 +52,7 @@ Visio.Utils.flash = ($ele, msg) ->
 
   $ele.addClass('flash')
 
-  $ele.attr('placeholder', msg)
+  $ele.attr('placeholder', msg) if msg?
 
 Visio.Utils.parseTransform = (string) ->
   result =

@@ -38,6 +38,9 @@ class Strategy < ActiveRecord::Base
 
   belongs_to :user
 
+  has_many :users_strategies, :uniq => true, :class_name => 'UserStrategy'
+  has_many :shared_users, :class_name => 'User', :through => :users_strategies
+
   scope :global_strategies, where(:user_id => nil)
 
 
@@ -151,6 +154,10 @@ class Strategy < ActiveRecord::Base
 
       if options[:include][:strategy_objectives]
         json.strategy_objectives self.strategy_objectives
+      end
+
+      if options[:include][:shared_users]
+        json.shared_users self.shared_users
       end
       json.operations self.operations if options[:include][:operations]
       json.ppgs self.ppgs if options[:include][:ppgs]

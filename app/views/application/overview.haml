@@ -58,6 +58,7 @@
       strategy_id: #{@strategy.id},
       strategies: new Visio.Collections.Strategy(#{@strategies.to_json.html_safe}),
       personal_strategies: new Visio.Collections.Strategy(#{@personal_strategies.to_json.html_safe}),
+      shared_strategies: new Visio.Collections.Strategy(#{@shared_strategies.to_json.html_safe}),
       ready: ready
     });
 
