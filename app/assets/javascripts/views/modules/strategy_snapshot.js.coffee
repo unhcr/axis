@@ -30,9 +30,6 @@ class Visio.Views.StrategySnapshotView extends Visio.Views.Dashboard
     @collection or= Visio.manager.selected Visio.manager.get('aggregation_type')
     @parameter = @collection
 
-    unless @isPdf
-      @actionSlider = new Visio.Views.ActionSliderView
-        collection: Visio.manager.selected Visio.Parameters.STRATEGY_OBJECTIVES.plural
     @parameterSlider = new Visio.Views.ParameterSliderView
       filters: @filters
       collection: @collection
@@ -60,17 +57,12 @@ class Visio.Views.StrategySnapshotView extends Visio.Views.Dashboard
     unless isRerender
       @$el.find('.header-buttons').append (new Visio.Views.FilterBy({ figure: @ })).render().el
       @$el.find('.target-parameters').html @parameterSlider?.render().el
-      @$el.find('.actions').html @actionSlider?.render().el
       @$el.find('.bar-axis').html @axis?.render().el
       @parameterSlider?.delegateEvents()
-      @actionSlider?.delegateEvents()
       @parameterSlider?.position = 0
-      @actionSlider?.position = 0
 
     if @parameterSlider?
       @parameterSlider.drawFigures()
-    if @actionSlider?
-      @actionSlider.drawFigures()
 
     @
 
