@@ -8,9 +8,9 @@
             %input{ :value => "#{filter.id}#{Visio.Constants.SEPARATOR}#{filterName}",
                     :checked => filterValue,
                     :type => filter.get('filterType'),
-                    :id => "#{context.figure.figureId()}_#{filterName}",
+                    :id => "#{context.figure.figureId()}_#{filterName}_#{filter.id}",
                     :name => "#{context.figure.figureId()}_#{filter.id}" }
-            %label{ :for => "#{context.figure.figureId()}_#{filterName}" }
+            %label{ :for => "#{context.figure.figureId()}_#{filterName}_#{filter.id}" }
               = filter.get('human')?[filterName] or filterName
       .divider-primary
   %a.reset-filters
