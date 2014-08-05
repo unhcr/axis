@@ -1,6 +1,7 @@
 class Visio.Routers.GlobalRouter extends Backbone.Router
 
   initialize: (options) ->
+    @headerView = new Visio.Views.Header({ el: $('header') })
     @menuView = new Visio.Views.MenuView()
     $('body').append @menuView.el
 

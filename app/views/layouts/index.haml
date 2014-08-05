@@ -8,31 +8,9 @@
     = csrf_meta_tags
 %body.ui-invert-theme{ :class => "#{controller.action_name} layout-#{controller.send(:_layout).virtual_path.name}" }
   #navigation.gone
-  .page
-    %header.container.full-width
-      %section.row
-        .col-md-11.col-centered.center-text.zero-padding
-          .col-md-4.extra-padding
-            .small-item.pull-left
-              Ça va,
-              %span.highlight
-                = current_user.login
-            .account-menu.pull-left
-              .small-item.pull-right
-                = link_to "Sign out", destroy_user_session_path, :method => :delete
-          .col-md-4.center-text
-            %a.ui-medium-header.logo.zero-padding{ :href => '/' }
-              <span class="light">UNHCR</span><span class="bold">AXIS</span>
-          .col-md-4.extra-padding
-            .col-md-2.pull-right.zero-padding
-              %a.search-icon.pull-right{ :href => '#search' }
-            .col-md-2.pull-right.zero-padding
-              .menu-btn.pull-right.highlight
-                %a.menu-icon.menu-right{ :href => '#menu' }
-                  .menu-row
-                  .menu-row
-                  .menu-row
-      #global-search.zero-max-height.row
+  .page.container-fluid
+    %header
+
     :javascript
       window.Visio.user = new Visio.Models.User(#{current_user.to_json.html_safe})
       window.Visio.env = "#{Rails.env}"

@@ -1,0 +1,24 @@
+%section.row
+  .col-md-11.col-centered.center-text.zero-padding
+    .col-md-4.extra-padding
+      .small-item.pull-left
+        Ça va,
+        %span.highlight
+          = Visio.user.get('login')
+      .account-menu.pull-left
+        .small-item.pull-right
+          %a{ :href => "/users/sign_out", :data => { :method => "delete" }, :rel => "nofollow" } Sign out
+    .col-md-4.center-text
+      %a.ui-medium-header.logo.zero-padding{ :href => '/' }
+        <span class="light">UNHCR</span><span class="bold">AXIS</span>
+    .col-md-4.extra-padding
+      .col-md-2.pull-right.zero-padding
+        %a.search-icon.pull-right{ :href => '#search' }
+      .col-md-2.pull-right.zero-padding
+        .menu-btn.pull-right.highlight
+          %a.menu-icon.menu-right{ :href => '#menu' }
+            .menu-row
+            .menu-row
+            .menu-row
+#global-search.zero-max-height.row
+
