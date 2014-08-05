@@ -1272,7 +1272,7 @@ a {
 }
 
 .search-icon {
-  background-color: $primary-light;
+  background-color: $orange;
   height: $search-icon;
   width: $search-icon;
   border-radius: $search-icon;
@@ -1289,8 +1289,11 @@ a {
   display: block;
   cursor: pointer;
   position: relative;
+  width: $menu-width;
+  height: 100%;
+  background-color: $orange;
   .menu-row {
-    background-color: $primary-light;
+    background-color: $white;
     width: 3em;
     height: 3px;
     width: $menu-row;
@@ -1311,7 +1314,6 @@ a {
 }
 .menu-icon:before {
   position: absolute;
-  content: 'MENU';
   left: 1.5 * $menu-row;
   top: -2px;
 }
