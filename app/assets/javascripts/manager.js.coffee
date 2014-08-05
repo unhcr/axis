@@ -46,6 +46,9 @@ class Visio.Models.Manager extends Backbone.Model
     @on 'change:year', =>
       @year(@get('year'))
 
+    # This way we can access the manager object in the ready function
+    window.setTimeout options.ready, 1 if options.ready? and not @get('use_local_db')
+
   defaults:
     'operations': new Visio.Collections.Operation()
     'plans': new Visio.Collections.Plan()

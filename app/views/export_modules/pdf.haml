@@ -1,16 +1,19 @@
 :javascript
   $(document).ready(function() {
 
+    var ready = function() {
+      var config = #{@export_module.to_json};
+      Visio.router = new Visio.Routers.PdfRouter({ config: config });
+      Backbone.history.start();
+    };
+
+
     Visio.manager = new Visio.Models.Manager({
       use_local_db: false,
       state: #{@export_module.state.to_json},
-      ready: function() {
-        var config = #{@export_module.to_json};
-        Visio.router = new Visio.Routers.PdfRouter({ config: config });
-        Backbone.history.start();
-
-      }
+      ready: ready
     })
+
     window.PhantomJSPrinting = {
       header: {
         height: "2.5cm",
