@@ -1,11 +1,6 @@
 %header
   .row
     .country-icon.col-md-10
-      - if context.parameter.get('country')?
-        %img{
-          :width => "60",
-          :height => "60",
-          :src => "/assets/countries/#{context.parameter.get('country').iso2.toLowerCase()}/128.png" }
       .parameter-name
         = context.parameter.toString()
     .col-md-2
