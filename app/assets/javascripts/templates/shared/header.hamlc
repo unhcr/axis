@@ -1,22 +1,20 @@
 %section.row
-  .col-md-4
-    .menu-btn.pull-left.highlight
-      %a.menu-icon.menu-right{ :href => '#menu' }
-        .menu-row
-        .menu-row
-        .menu-row
+  .col-md-4.menu-btn.header-item.pull-left
+    %a.menu-icon{ :href => '#menu' }
 
-  .col-md-4.center-text
-    %span 2014
-    %span YER
-    %span DASHBOARDS
-    %span AGGREGATE
+  .col-md-4.center-text.header-item
+    .header-vertical-middle
+      %h6.dashboard-item 2014
+      %h6.dashboard-item YER
+      %h6.dashboard-item DASHBOARDS
+      %h6.dashboard-item AGGREGATE
 
 
-  .col-md-4
-    .col-md-2.col-md-offset-6
-      %a{ :href => "/users/sign_out", :data => { :method => "delete" }, :rel => "nofollow" } Sign out
-    .col-md-2.pull-right.zero-padding
-      %a.search-icon.pull-right{ :href => '#search' }
+  .col-md-4.header-item
+    .header-vertical-middle.pull-right
+      %h6.dashboard-item
+        %a{ :href => "/users/sign_out", :data => { :method => "delete" }, :rel => "nofollow" }
+          = Visio.user.get('login')
+      %a.dashboard-item.search-icon{ :href => '#search' }
 #global-search.zero-max-height.row
 

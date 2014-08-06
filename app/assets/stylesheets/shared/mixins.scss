@@ -51,6 +51,11 @@
     padding-right: 14px;
   }
 
+  b {
+    font-weight: bold;
+    color: $primary;
+  }
+
   label {
     color: $primary-light;
   }
@@ -105,6 +110,13 @@
     font-size: 26px;
     color: $primary;
     margin: 0
+  }
+
+  h6 {
+    color: $primary;
+    font-size: 14px;
+    font-weight: bold;
+    display: inline-block;
   }
 }
 

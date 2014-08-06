@@ -73,9 +73,8 @@ p.small {
 }
 
 .inner-content {
-  @include text-theme-two;
-  border-left: $page-margin solid $off-white;
-  border-right: $page-margin solid $off-white;
+  margin-left: $page-margin;
+  margin-right: $page-margin;
 
   .row {
     max-width: $row-inner-width;
@@ -236,10 +235,15 @@ body.layout-cms {
   }
 }
 
+body.layout-application .page > header {
+  border-bottom: 1px solid $primary-light;
+  background-color: $off-white;
+  border-bottom: $light-gray 1px solid;
+  @include box-shadow;
+}
+
 body.layout-application {
-  header {
-    border-bottom: 1px solid $primary-light;
-  }
+  @include text-theme-two;
 
   header section {
     .logo {
@@ -260,7 +264,6 @@ header {
 
   section {
     background-color: inherit;
-    margin-bottom: 12px;
   }
 }
 
@@ -1272,6 +1275,8 @@ a {
 }
 
 .search-icon {
+  display: inline-block;
+  vertical-align: middle;
   background-color: $orange;
   height: $search-icon;
   width: $search-icon;
@@ -1285,41 +1290,28 @@ a {
   background-position: center;
 }
 
+.header-item {
+  height: $header-height;
+}
+
+.header-vertical-middle {
+  top: 50%;
+  position: relative;
+  @include translateY(-50%);
+}
+
 .menu-icon {
   display: block;
   cursor: pointer;
+  background-image: url(/assets/AXIS-MENU_BUTTON.png);
   position: relative;
   width: $menu-width;
-  height: 100%;
+  height: $menu-height;
   background-color: $orange;
-  .menu-row {
-    background-color: $white;
-    width: 3em;
-    height: 3px;
-    width: $menu-row;
-    margin: 3px auto;
-       -webkit-border-top-right-radius: 6px;
-    -webkit-border-bottom-right-radius: 6px;
-           -moz-border-radius-topright: 6px;
-        -moz-border-radius-bottomright: 6px;
-               border-top-right-radius: 6px;
-            border-bottom-right-radius: 6px;
-        -webkit-border-top-left-radius: 6px;
-     -webkit-border-bottom-left-radius: 6px;
-            -moz-border-radius-topleft: 6px;
-         -moz-border-radius-bottomleft: 6px;
-                border-top-left-radius: 6px;
-             border-bottom-left-radius: 6px;
-  }
-}
-.menu-icon:before {
-  position: absolute;
-  left: 1.5 * $menu-row;
-  top: -2px;
 }
 
-.menu-icon.menu-right:before {
-  left: -54px;
+.menu-icon:hover {
+  background-image: url(/assets/AXIS-MENU_BUTTON-HOVER.png);
 }
 
 .extra-padding {
@@ -1340,6 +1332,16 @@ a {
    -moz-box-shadow:    inset 0px 10px 10px -10px $light-gray;
    -webkit-box-shadow:    inset 0px 10px 10px -10px $light-gray;
    box-shadow:    inset 0px 10px 10px -10px $light-gray;
+}
+
+.dashboard-item {
+  margin-left: 23px;
+  margin-right: 23px;
+  cursor: pointer;
+}
+
+.dashboard-item:hover {
+  color: $orange;
 }
 
 .toolbar {
@@ -1669,8 +1671,8 @@ a {
 .page-overlay {
   overflow: auto;
   z-index: 2000;
-  border-left: $page-margin solid $off-white;
-  border-right: $page-margin solid $off-white;
+  margin-left: $page-margin;
+  margin-right: $page-margin;
 
   position: absolute;
   background-color: white;
