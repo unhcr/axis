@@ -105,6 +105,18 @@
 
 }
 
+@mixin label {
+  color: $primary;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+@mixin orange-highlight {
+  color: $orange;
+  font-size: 14px;
+  font-weight: normal;
+}
+
 @mixin text-theme-two {
   h2 {
     font-size: 26px;
@@ -113,11 +125,18 @@
   }
 
   h6 {
-    color: $primary;
-    font-size: 14px;
-    font-weight: bold;
+    @include label;
     display: inline-block;
+    margin-top: 5px;
+    margin-bottom: 5px;
   }
+}
+
+
+@mixin vertical-middle {
+  top: 50%;
+  position: relative;
+  @include translateY(-50%);
 }
 
 @mixin header-button {
