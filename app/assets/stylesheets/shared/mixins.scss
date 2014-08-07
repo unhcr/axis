@@ -124,6 +124,11 @@
     margin: 0
   }
 
+  h3 {
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+
   h6 {
     @include label;
     display: inline-block;
@@ -140,16 +145,16 @@
 }
 
 @mixin header-button {
-  margin: 5px 0 ;
   margin-bottom: 0;
   width: $header-button-width;
   height: $header-button-height;
-  border: 1px $off-white solid;
-  border-right: none;
+  line-height: $header-button-height;
+  border-left: 1px $white solid;
+  background-color: $lighter-gray;
   display: inline-block;
-  padding-top: 6px;
   float: right;
-  text-align: center;
+  text-align: left;
+  color: $primary-soft;
 }
 
 @mixin hover-shadow {

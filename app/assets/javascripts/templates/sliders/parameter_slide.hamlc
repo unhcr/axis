@@ -20,18 +20,16 @@
           = context.labelPrefix + ' '
         = c.human
 
-.row
-  .col-xs-12
-    .row.tabs
-      - _.each context.barFigureData, (d) ->
-        .ui-tab-radio.col-md-4.horizontal-flush
-          %input{ :id => "#{d.title}-#{context.parameter.id}",
-            :name => context.parameter.id,
-            :checked => context.selectedBarFigure == d.figure,
-            :value => d.figure.name,
-            :type => 'radio' }
-          %label{ :for => "#{d.title}-#{context.parameter.id}" }
-            = d.short
+.row.tabs
+  - _.each context.barFigureData, (d) ->
+    .ui-tab-radio.col-md-4.horizontal-flush
+      %input{ :id => "#{d.title}-#{context.parameter.id}",
+        :name => context.parameter.id,
+        :checked => context.selectedBarFigure == d.figure,
+        :value => d.figure.name,
+        :type => 'radio' }
+      %label{ :for => "#{d.title}-#{context.parameter.id}" }
+        = d.short
 - _.each context.barFigureData, (d) ->
   .row
     .col-xs-12{ :class => ["#{d.figure.name}-figure-#{context.cid}",

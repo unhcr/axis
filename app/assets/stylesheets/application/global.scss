@@ -68,18 +68,18 @@ p.small {
   max-width: 960px;
 }
 
+.contain {
+  max-width: $row-inner-width;
+  margin: 0 auto;
+}
+
 .content {
   position: relative;
+  margin-left: $page-margin;
+  margin-right: $page-margin;
 }
 
 .inner-content {
-  margin-left: $page-margin;
-  margin-right: $page-margin;
-
-  .row {
-    max-width: $row-inner-width;
-    margin: 0 auto;
-  }
 }
 
 .ui-big-number {
@@ -198,7 +198,7 @@ body, html {
   font-family: 'Lato', sans-serif;
   padding: 0;
   margin: 0;
-  font-size: 12px;
+  font-size: 14px;
 }
 
 body.splash {
@@ -437,6 +437,10 @@ body.index {
   border-bottom: 1px solid $light-gray;
 }
 
+.divider-black {
+  border-bottom: 1px solid $black;
+}
+
 .divider-thick {
   border-width: 2px;
 }
@@ -672,6 +676,7 @@ button, input {
   display: block;
   cursor: pointer;
   position: relative;
+  line-height: initial;
 }
 
 .visio-radio label:before {
@@ -741,6 +746,7 @@ button, input {
 .visio-checkbox label {
   display: block;
   cursor: pointer;
+  line-height: initial;
 }
 
 .visio-checkbox label:before {
@@ -1495,7 +1501,6 @@ a {
   }
 
   section {
-    padding-top: 10px;
     padding-bottom: 40px;
   }
 
@@ -1529,19 +1534,6 @@ a {
   }
 
   padding-bottom: 40px;
-
-  h3 {
-    color: $primary-soft;
-    font-weight: bold;
-    margin: 0;
-  }
-
-  h3:before {
-    content: ' ';
-    border-bottom: $primary-soft 6px solid;
-    width: 25px;
-    display: inline-block;
-  }
 
   h1 {
     margin: 0;
@@ -1930,17 +1922,17 @@ a {
 .filter-by, .visio-dropdown-container {
   padding-top: 0px;
 
-  .filter-toggle:before, .visio-dropdown-toggle:before {
-    content: 'ↆ';
+  .filter-toggle:after, .visio-dropdown-toggle:after {
+    content: '+';
     background: transparent;
     display: inline-block;
-    margin-right: 10px;
+    float: right;
   }
 
   .filter-toggle, .visio-dropdown-toggle {
-    text-align: center;
     height: 100%;
-    padding-top: 6px;
+    padding-left: 18px;
+    padding-right: 18px;
   }
 
   position: relative;
@@ -1966,7 +1958,8 @@ a {
 
   .filters.styled, .visio-dropdown.styled {
     padding: 15px 10px;
-    @include hover-shadow;
+    border: 1px solid $lighter-gray;
+    border-top: none;
   }
 
   .filters.open, .visio-dropdown.open {
@@ -2328,9 +2321,8 @@ a {
   border-right: none;
   width: $export-label-length;
   left: -$export-label-length - 1;
-  top: -1px;
+  top: 0px;
   text-align: center;
-  color: black;
 }
 
 .map-export {
