@@ -37,6 +37,8 @@
 //= require ./views/tooltips/bmy
 //= require_tree ./views
 //= require_tree ./figures
+//= require ./routers/global_router
+//= require ./routers/dashboard_router
 //= require_tree ./routers
 //= require_tree ./helpers
 //= require_tree ./models
