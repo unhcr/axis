@@ -1,0 +1,4 @@
+.menu-value{ :class => ( 'selected' if context.option.currentValue() == context.value.name),
+             :data => { :key => context.option.key, :value => context.value.name } }
+  = context.value.human
+
