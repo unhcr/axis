@@ -1,10 +1,10 @@
-class Visio.Views.StrategySnapshotView extends Visio.Views.Dashboard
+class Visio.Views.SnapshotView extends Visio.Views.Dashboard
 
   @include Visio.Mixins.Exportable
 
   template: HAML['modules/strategy_snapshot']
 
-  initialize: (options) ->
+  initialize: (options = {}) ->
     @isPdf = options.isPdf
     @barConfig.orientation = 'bottom'
     @barConfig.width = 82
@@ -37,7 +37,7 @@ class Visio.Views.StrategySnapshotView extends Visio.Views.Dashboard
 
   title: 'Overview'
 
-  type: Visio.ViewTypes.OVERVIEW
+  type: Visio.FigureTypes.OVERVIEW
 
   viewLocation: 'Views'
 
