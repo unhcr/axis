@@ -119,7 +119,7 @@ Visio.Utils.stringToCssClass = (string) ->
   string.replace(/\ /g, '-')
 
 Visio.Utils.generateOverviewUrl = ->
-  [Visio.router.moduleView.id,
+  [Visio.manager.get('module_type'),
    Visio.manager.year(),
    Visio.manager.get('aggregation_type'),
    Visio.manager.get('reported_type')].join '/'

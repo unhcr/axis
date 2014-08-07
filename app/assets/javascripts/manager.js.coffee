@@ -72,12 +72,13 @@ class Visio.Models.Manager extends Backbone.Model
     'yearList': [2012, 2013, 2014, 2015]
     'selected': {}
     'selected_strategies': {}
-    'aggregation_type': Visio.Parameters.OPERATIONS.plural
+    'aggregation_type': Visio.Parameters.OPERATIONS.name
     'scenario_type': {}
     'budget_type': {}
     'achievement_type': Visio.Algorithms.GOAL_TYPES.target
     'amount_type': Visio.Syncables.BUDGETS
     'reported_type': Visio.Algorithms.REPORTED_VALUES.yer
+    'module_type': Visio.FigureTypes.OVERVIEW.name
     'dashboard': null
 
   resetSelectedDefaults: () ->
