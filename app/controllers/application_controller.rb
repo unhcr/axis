@@ -34,12 +34,12 @@ class ApplicationController < ActionController::Base
 
   def operation
     @operation ||= Operation.find params[:operation_id]
-    render :layout => 'index'
+    render :layout => 'dashboard'
   end
 
   def overview
     @strategy ||= Strategy.find(params[:strategy_id])
-    render :layout => 'index'
+    render :layout => 'dashboard'
   end
 
   def global_search

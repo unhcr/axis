@@ -1,0 +1,36 @@
+!!!
+%html
+  %head
+    %title Axis
+    %meta{ :charset => "utf-8" }
+    = stylesheet_link_tag    "application", :media => "all"
+    = javascript_include_tag "application"
+    = csrf_meta_tags
+%body.ui-invert-theme{ :class => "#{controller.action_name} layout-#{controller.send(:_layout).virtual_path.name}" }
+  #navigation.gone
+  .page.container-fluid
+    %header
+
+    :javascript
+      window.Visio.user = new Visio.Models.User(#{current_user.to_json.html_safe})
+      window.Visio.env = "#{Rails.env}"
+      window.Visio.configuration = #{@configuration.to_json.html_safe}
+    .content
+      .row
+        .col-md-12
+          %h1.bottom-flush
+            = (@strategy || @operation).name
+      .row
+        .col-md-12
+          %p.top-flush
+            = @strategy.description if @strategy.present?
+      = yield
+
+  %svg
+    %defs
+      %pattern{ :id => 'stripes', :patternUnits => 'userSpaceOnUse', :width => 8, :height => 8 }
+        %path{ :d => 'M-1,-1 l9,9 M-1,7 l9,9 M7,-1 l9,9', :stroke => 'rgb(133, 135, 134)', 'stroke-width' => 2 }
+
+      %pattern{ :id => 'stripes-alert', :patternUnits => 'userSpaceOnUse', :width => 8, :height => 8 }
+        %path{ :d => 'M-1,-1 l9,9 M-1,7 l9,9 M7,-1 l9,9', :stroke => '#fc9bd6', 'stroke-width' => 2 }
+

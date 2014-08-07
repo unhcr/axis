@@ -7,7 +7,6 @@
     = javascript_include_tag "application"
     = csrf_meta_tags
 %body.ui-invert-theme{ :class => "#{controller.action_name} layout-#{controller.send(:_layout).virtual_path.name}" }
-  #navigation.gone
   .page.container-fluid
     %header
 
@@ -17,11 +16,3 @@
       window.Visio.configuration = #{@configuration.to_json.html_safe}
     .content
       = yield
-
-  %svg
-    %defs
-      %pattern{ :id => 'stripes', :patternUnits => 'userSpaceOnUse', :width => 8, :height => 8 }
-        %path{ :d => 'M-1,-1 l9,9 M-1,7 l9,9 M7,-1 l9,9', :stroke => 'rgb(133, 135, 134)', 'stroke-width' => 2 }
-
-      %pattern{ :id => 'stripes-alert', :patternUnits => 'userSpaceOnUse', :width => 8, :height => 8 }
-        %path{ :d => 'M-1,-1 l9,9 M-1,7 l9,9 M7,-1 l9,9', :stroke => '#fc9bd6', 'stroke-width' => 2 }

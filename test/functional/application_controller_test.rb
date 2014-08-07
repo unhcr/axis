@@ -50,7 +50,7 @@ class ApplicationControllerTest < ActionController::TestCase
     assert_response :success
 
     assert_template :operation
-    assert_template layout: 'layouts/index'
+    assert_template layout: 'layouts/dashboard'
     assert_not_nil assigns(:operation)
     assert_not_nil assigns(:options)
     assert_not_nil assigns :strategies
@@ -65,7 +65,7 @@ class ApplicationControllerTest < ActionController::TestCase
     assert_response :success
 
     assert_template :overview
-    assert_template layout: 'layouts/index'
+    assert_template layout: 'layouts/dashboard'
     assert_not_nil assigns :strategy
     assert_not_nil assigns :options
     assert_not_nil assigns :strategies
