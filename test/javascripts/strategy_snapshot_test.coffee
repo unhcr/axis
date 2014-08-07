@@ -29,7 +29,7 @@ module 'Strategy Snapshot',
       ])
 
     Visio.manager.set 'operations', @o
-    @view = new Visio.Views.StrategySnapshotView
+    @view = new Visio.Views.SnapshotView
       collection: @o
 
     @o.each (op) ->
@@ -64,22 +64,3 @@ test 'render', ->
 
   strictEqual @view.$el.find('.bar-figure').length, count * 3
   strictEqual @view.$el.find('.keyFigure').length, count * 2
-
-test 'sliders', ->
-  @view.render()
-
-  strictEqual @view.parameterSlider.position, 0
-  sinon.spy @view.parameterSlider, 'move'
-  @view.$el.find('.target-parameters .next').trigger 'click'
-  ok @view.parameterSlider.move.calledOnce
-  strictEqual @view.$el.find('.slide').length, 4
-
-  @view.$el.find('.target-parameters .next').trigger 'click'
-  ok @view.parameterSlider.move.calledTwice
-  strictEqual @view.$el.find('.slide').length, 4
-
-  @view.render()
-
-  @view.$el.find('.target-parameters .next').trigger 'click'
-  strictEqual @view.$el.find('.slide').length, 4
-  ok @view.parameterSlider.move.calledThrice

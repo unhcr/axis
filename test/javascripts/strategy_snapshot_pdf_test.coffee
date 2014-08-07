@@ -24,7 +24,7 @@ module 'PDF - Strategy Snapshot',
         collection: @o.toJSON()
         collectionName: 'Operation'
         viewLocation: 'Views'
-        type: Visio.ViewTypes.OVERVIEW
+        type: Visio.FigureTypes.OVERVIEW
       figure: @view
 
     @o.each (op) ->
