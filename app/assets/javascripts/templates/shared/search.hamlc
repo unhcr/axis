@@ -1,4 +1,4 @@
-.container.full-width
+.full-width
   .row
     .col-centered.col-md-8.search-container
       %input.full-width{:type => "text"}

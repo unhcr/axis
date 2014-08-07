@@ -2,6 +2,8 @@ class Visio.Views.Header extends Backbone.View
 
   template: HAML['shared/header']
 
+  templateBreadcrumb: HAML['shared/header_breadcrumb']
+
   templateMenuValue: HAML['shared/menu_value']
 
   events:
@@ -21,7 +23,7 @@ class Visio.Views.Header extends Backbone.View
                  Visio.FigureTypes.BMY, Visio.FigureTypes.ABSY, Visio.FigureTypes.OVERVIEW]
         key: 'module_type'
         currentValue: -> Visio.manager.get('module_type')
-        currentHuman: -> Visio.manager.get('module_type').human
+        currentHuman: -> Visio.Utils.figureTypeByName(Visio.manager.get('module_type')).human
 
       reported_type:
         human: 'REPORT TYPE'
@@ -51,6 +53,16 @@ class Visio.Views.Header extends Backbone.View
 
   render: ->
     @$el.html @template { menuOptions: @menuOptions }
+    @$el.removeClass 'breadcrumb'
+    @
+
+  renderBreadcrumb: ->
+    @$el.html @templateBreadcrumb { menuOptions: @menuOptions }
+    @$el.addClass 'breadcrumb'
+    @
+
+  isBreadcrumb: ->
+    @$el.hasClass 'breadcrumb'
 
   openOptionMenu: =>
     $optionMenu = @$el.find '.option-menu'

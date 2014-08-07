@@ -129,6 +129,14 @@
     margin-bottom: 5px;
   }
 
+  h5 {
+    display: inline-block;
+    margin-top: 0px;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 0px;
+  }
+
   h6 {
     @include label;
     display: inline-block;

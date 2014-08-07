@@ -1,14 +1,18 @@
 %section.row
   .col-md-3.menu-btn.header-item.pull-left
     %a.menu-icon{ :href => '#menu' }
+    .logo
+
 
   .col-md-6.center-text.header-item.menu-options
-    - _.each _.values(context.menuOptions), (menuOption) ->
+    - _.each _.values(context.menuOptions), (menuOption, i, list) ->
       .dashboard-item{ :data => { :option => menuOption.key } }
         %span.dashboard-label
           = menuOption.human
 
-
+      - if i < list.length - 1
+        %span
+          = '|'
 
   .col-md-3.header-item
     .pull-right

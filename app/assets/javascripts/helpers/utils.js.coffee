@@ -118,6 +118,7 @@ Visio.Utils.stringToCssClass = (string) ->
   return string unless string
   string.replace(/\ /g, '-')
 
+
 Visio.Utils.generateOverviewUrl = ->
   [Visio.manager.get('module_type'),
    Visio.manager.year(),
@@ -127,6 +128,11 @@ Visio.Utils.generateOverviewUrl = ->
 Visio.Utils.parameterByPlural = (plural) ->
   for parameter, hash of Visio.Parameters
     return hash if hash.plural == plural
+  null
+
+Visio.Utils.figureTypeByName = (name) ->
+  for figureType, hash of Visio.FigureTypes
+    return hash if hash.name == name
   null
 
 Visio.Utils.parameterByName = (name) ->

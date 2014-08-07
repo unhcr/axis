@@ -3,6 +3,10 @@ class Visio.Routers.DashboardRouter extends Visio.Routers.GlobalRouter
   initialize: (options) ->
     super
 
+    Visio.skrollr = skrollr.init()
+
+    @documentView = new Visio.Views.Document()
+
     Visio.manager.on 'change:date', () =>
       @navigation.render()
       @moduleView.render true

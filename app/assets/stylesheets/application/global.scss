@@ -177,11 +177,6 @@ p.small {
     color: $primary-light;
   }
 
-  a.logo {
-    color: $primary;
-    display: block;
-    text-decoration: none;
-  }
 }
 
 .ui-purple-theme {
@@ -240,17 +235,18 @@ body.layout-application .page > header {
   background-color: $off-white;
   border-bottom: $light-gray 1px solid;
   @include box-shadow;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
 }
 
 body.layout-application {
   @include text-theme-two;
 
-  header section {
-    .logo {
-      margin-top: -10px;
-      margin-bottom: 10px;
-    }
-  }
+  margin-top: $header-height;
+
 }
 
 body.splash {
@@ -519,21 +515,24 @@ h5 {
 }
 
 
-.logo:before {
-  background-image: url(/assets/logo.png);
-  background-size: 1.5em;
-  content: "";
-  height: 1.5em;
+.logo {
+  background-image: url(/assets/AXIS-LOGO-ORANGE.png);
+  background-size: $header-height;
+  height: $header-height;
   display: inline-block;
-  width: 2em;
   background-repeat: no-repeat;
-  position: relative;
-  top: .4em;
-  left: .4em;
+
+  height: $header-height;
+  background-repeat: no-repeat;
+  width: 178px;
+  background-size: auto 46px;
+  background-position-y: center;
+  margin-left: 12px;
 }
 
-.logo-white:before {
-  background-image: url(/assets/logo_white.png);
+.logo-short {
+  background-image: url(/assets/AXIS-LOGO-ORANGE-SMALL.png);
+  width: 76px;
 }
 
 .underline {
@@ -581,6 +580,10 @@ input:focus {
 
 .zero-padding {
   padding: 0 !important;
+}
+
+.pad-right {
+  padding-right: 20px;
 }
 
 .full-width {
@@ -1299,14 +1302,24 @@ a {
 
 .header-item {
   height: $header-height;
+
+  h5 {
+    line-height: $header-height;
+    vertical-align: top;
+  }
 }
 
 .header-vertical-middle {
   @include vertical-middle
 }
 
+.menu-btn {
+  display: inline-block;
+  vertical-align: top;
+}
+
 .menu-icon {
-  display: block;
+  display: inline-block;
   cursor: pointer;
   background-image: url(/assets/AXIS-MENU_BUTTON.png);
   position: relative;
@@ -1357,13 +1370,7 @@ a {
 }
 
 .menu-options {
-  .dashboard-item {
-    border-left: 1px solid $light-gray;
-  }
 
-  .dashboard-item:first {
-    border-left: none;
-  }
 }
 
 
