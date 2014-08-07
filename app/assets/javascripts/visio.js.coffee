@@ -42,6 +42,10 @@ window.Visio =
       className: 'Circle'
       human: 'Circle'
       name: 'circle'
+    OVERVIEW:
+      className: 'SnapshotView'
+      human: 'Overview'
+      name: 'snapshot'
     # Achievement Budget Single Year
     ABSY:
       className: 'Absy'
@@ -66,11 +70,6 @@ window.Visio =
       className: 'Axis'
       human: ''
       name: 'axis'
-  ViewTypes:
-    OVERVIEW:
-      className: 'StrategySnapshotView'
-      human: 'Strategy Overview'
-      name: 'strategy_snapshot'
   Scenarios:
     OL: 'Operating Level'
     AOL: 'Above Operating Level'
@@ -116,42 +115,50 @@ window.Visio =
     OPERATIONS:
       singular: 'operation'
       plural: 'operations'
+      name: 'operations'
       className: 'Operation'
       human: 'Operation'
     PPGS:
       singular: 'ppg'
       plural: 'ppgs'
+      name: 'ppgs'
       className: 'Ppg'
       human: 'PPG'
     GOALS:
       singular: 'goal'
       plural: 'goals'
+      name: 'goals'
       className: 'Goal'
       human: 'Goal'
     INDICATORS:
       singular: 'indicator'
       plural: 'indicators'
+      name: 'indicators'
       className: 'Indicator'
       human: 'Indicator'
     OUTPUTS:
       singular: 'output'
       plural: 'outputs'
+      name: 'outputs'
       className: 'Output'
       human: 'Output'
     PROBLEM_OBJECTIVES:
       singular: 'problem_objective'
       plural: 'problem_objectives'
+      name: 'problem_objectives'
       className: 'ProblemObjective'
       human: 'Objective'
     STRATEGY_OBJECTIVES:
       singular: 'strategy_objective'
       plural: 'strategy_objectives'
+      name: 'strategy_objectives'
       className: 'StrategyObjective'
       human: 'Strategy Objective'
   SkippedParameters:
     RIGHTS_GROUPS:
       singular: 'rights_group'
       plural: 'rights_groups'
+      name: 'rights_groups'
       className: 'RightsGroup'
       human: 'Rights Groups'
 

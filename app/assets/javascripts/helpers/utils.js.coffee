@@ -129,6 +129,11 @@ Visio.Utils.parameterByPlural = (plural) ->
     return hash if hash.plural == plural
   null
 
+Visio.Utils.parameterByName = (name) ->
+  for parameter, hash of Visio.Parameters
+    return hash if hash.name == name
+  null
+
 Visio.Utils.parameterBySingular = (singular) ->
   for parameter, hash of Visio.Parameters
     return hash if hash.singular == singular
