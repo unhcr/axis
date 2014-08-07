@@ -234,7 +234,7 @@ body.layout-application .page > header {
   border-bottom: 1px solid $primary-light;
   background-color: $off-white;
   border-bottom: $light-gray 1px solid;
-  @include box-shadow;
+  @include box-shadow-bottom;
   position: fixed;
   top: 0;
   left: 0;
@@ -1734,8 +1734,6 @@ a {
 .page-overlay {
   overflow: auto;
   z-index: 2000;
-  margin-left: $page-margin;
-  margin-right: $page-margin;
 
   position: absolute;
   background-color: white;
@@ -1761,7 +1759,7 @@ a {
     img {
       width: 100%;
       border: 1px solid $light-gray;
-      @include box-shadow;
+      @include box-shadow-bottom;
       margin-bottom: 25px;
     }
   }
@@ -2010,9 +2008,16 @@ a {
     border-right: 1px solid $light-gray;
     vertical-align: top;
     width: $parameter-slide-width;
-    padding: 0 15px;
+    height: $parameter-slide-height;
+    padding: 0 30px;
     padding-bottom: 25px;
     white-space: normal;
+
+    .figures {
+      height: 108px;
+      padding: 20px;
+      box-sizing: border-box;
+    }
 
     header {
       padding-top: 20px;
@@ -2020,12 +2025,27 @@ a {
       padding-left: 15px;
       border-bottom: $dark-gray solid 1px;
       background-color: transparent;
-      height: 150px;
+      height: 164px;
     }
+
+    .ui-tab-radio {
+      background-color: inherit;
+    }
+
+    .ui-tab-radio  label {
+      @include transition-property(background-color, box-shadow);
+      @include transition-duration($fast-transition);
+      @include transition-timing-function(ease-in);
+    }
+
   }
 
   .parameter-slide:hover {
     background-color: $off-white;
+    .ui-tab-radio input[type="radio"]:checked + label {
+      background-color: $off-white;
+      @include box-shadow-top;
+    }
   }
 
   .parameter-name {
@@ -2286,7 +2306,7 @@ a {
   border: 1px solid $primary-light;
   padding: 20px;
   left: 50%;
-  @include box-shadow;
+  @include box-shadow-bottom;
 }
 
 .white-overlay {

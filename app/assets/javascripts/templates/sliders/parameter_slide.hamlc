@@ -1,19 +1,20 @@
-%header
+%header.row
   .row
-    .country-icon.col-md-10
-      .parameter-name
-        = context.parameter.toString()
-    .col-md-2
+    .col-md-2.col-md-offset-10
       .pin.pin-medium.pull-right{ :class => "pin-#{context.category}" }
         .pin-tip
         .pin-body
+  .row
+    .col-md-10
+      .parameter-name
+        = context.parameter.toString()
 
-.row
+.row.figures
   - list = ['budget', 'spent']
   - _.each list, (keyFigure) ->
     - c = _.findWhere context.keyFigures, { fn: keyFigure }
     .col-md-4{ :class => "keyFigure #{c.fn}-#{context.cid}" }
-      .ui-small-number.number
+      .ui-small-number.number.bold
         0
       %div
         %span.label-prefix

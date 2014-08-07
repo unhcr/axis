@@ -28,7 +28,7 @@ class Visio.Views.SnapshotView extends Visio.Views.Dashboard
     super options
 
     @collection or= Visio.manager.selected Visio.manager.get('aggregation_type')
-    @parameter = @collection
+    @parameter = null
 
     @parameterSlider = new Visio.Views.ParameterSliderView
       filters: @filters
@@ -49,12 +49,15 @@ class Visio.Views.SnapshotView extends Visio.Views.Dashboard
 
   render: (isRerender) ->
     @collection = Visio.manager.selected Visio.manager.get('aggregation_type') unless @isPdf
+
+    parameterTypeChanged = !@parameter? or (@parameter.name != @collection.name)
+
     @parameter = @collection
     @parameterSlider?.collection = @collection
 
-    super isRerender
+    super !parameterTypeChanged
 
-    unless isRerender
+    if parameterTypeChanged
       @$el.find('.header-buttons').append (new Visio.Views.FilterBy({ figure: @ })).render().el
       @$el.find('.target-parameters').html @parameterSlider?.render().el
       @$el.find('.bar-axis').html @axis?.render().el
