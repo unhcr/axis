@@ -6,8 +6,6 @@ class Visio.Views.Document extends Backbone.View
     $(document).on 'scroll', fn
 
   onScroll: (e) ->
-    console.log 'scrollin'
-
     scrollTop = $(window).scrollTop()
     offset = Visio.skrollr.relativeToAbsolute($('.inner-content')[0], 'top', 'top')
 
