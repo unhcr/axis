@@ -526,7 +526,7 @@ h5 {
   background-repeat: no-repeat;
   width: 178px;
   background-size: auto 46px;
-  background-position-y: center;
+  background-position: center;
   margin-left: 12px;
 }
 
@@ -2027,8 +2027,32 @@ a {
 
 .parameter-slider {
 
+  .slider::before {
+    content: ' ';
+    width: 100%;
+    display: block;
+    background-color: white;
+    height: 2px;
+    position: absolute;
+    z-index: 10
+  }
+
+  .slider::after {
+    content: ' ';
+    width: 2px;
+    display: block;
+    background-color: white;
+    height: 100%;
+    position: absolute;
+    left: -1px;
+    top: 0;
+
+  }
+
   .parameter-slide {
-    border-right: 1px solid $light-gray;
+    border-left: 1px solid $light-gray;
+    border-top: 1px solid $light-gray;
+
     vertical-align: top;
     width: $parameter-slide-width;
     height: $parameter-slide-height;
@@ -2085,19 +2109,19 @@ a {
     text-align: center;
     height: 38px;
     font-size: 16px;
-    border: 1px solid $light-gray;
-    background-color: $off-white;
-    padding-top: 6px;
-    font-weight: lighter;
+    background-color: white;
+    padding-top: 12px;
+    font-weight: bold;
     display: none;
+    color: $dark-gray;
     cursor: pointer;
-    @include transition-property(background-color);
+    @include transition-property(color);
     @include transition-duration($very-fast-transition);
     @include transition-timing-function(ease-in);
   }
 
   .show-more:hover {
-    background-color: darken($off-white, 5%);
+    color: $primary;
   }
 
   .show-more.disabled {
@@ -2105,7 +2129,7 @@ a {
     opacity: .5;
   }
   .show-more.disabled:hover {
-    background-color: $off-white;
+    color: $dark-gray;
   }
 
   .grid + .show-more {
