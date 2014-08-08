@@ -6,15 +6,21 @@ class Visio.Views.SnapshotView extends Visio.Views.Dashboard
 
   initialize: (options = {}) ->
     @isPdf = options.isPdf
-    @barConfig.orientation = 'bottom'
-    @barConfig.width = 82
-    @barConfig.height = 380
-    @barConfig.hasLabels = true
-    @barConfig.margin.bottom = 0
+    barConfig =
+      margin:
+        top: 2
+        bottom: 0
+        left: 2
+        right: 10
+      orientation: 'bottom'
+      width: 82
+      height: 380
+      hasLabels: true
+
     axisHeight = 380
     if options.isPdf
       @template = HAML['pdf/strategy_snapshot']
-      @barConfig.height = 340
+      barConfig.height = 340
       axisHeight = 340
 
     @axis = new Visio.Figures.Axis
@@ -25,6 +31,7 @@ class Visio.Views.SnapshotView extends Visio.Views.Dashboard
       width: 50
       height: axisHeight
 
+    options.barConfig = barConfig
     super options
 
     @collection or= Visio.manager.selected Visio.manager.get('aggregation_type')
