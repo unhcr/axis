@@ -5,6 +5,7 @@ class Visio.Views.Header extends Backbone.View
   templateBreadcrumb: HAML['shared/header_breadcrumb']
 
   templateMenuValue: HAML['shared/menu_value']
+  templateMenuLabel: HAML['shared/menu_label']
 
   events:
     'click .dashboard-item': 'onClickDashboardItem'
@@ -130,8 +131,15 @@ class Visio.Views.Header extends Backbone.View
     if opened
       @swipeOutMenuValues()
 
+    isBreadcrumb = @isBreadcrumb()
+
+    if isBreadcrumb
+      $optionMenu.find('.menu-title').remove()
+      $optionMenu.append @templateMenuLabel { title: option.human }
+
+
     _.each option.values, (value) =>
-      $optionMenu.append @templateMenuValue { value: value, option: option }
+      $optionMenu.append @templateMenuValue { value: value, option: option, isBreadcrumb: isBreadcrumb }
 
     if not opened
       @swipeInMenuValues()

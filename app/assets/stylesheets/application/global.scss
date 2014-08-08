@@ -1360,12 +1360,27 @@ a {
   display: inline-block;
   text-align: center;
 
+  a {
+    color: $primary;
+  }
+
   .dashboard-label {
     @include label;
+    color: $dark-gray;
+  }
+
+  .dashboard-label:hover {
+    color: $primary;
   }
 
   .dashboard-value {
     @include orange-highlight;
+  }
+}
+
+.dashboard-item.selected {
+  .dashboard-label {
+    color: $primary;
   }
 }
 
@@ -1628,7 +1643,7 @@ a {
     position: relative;
     padding-left: 30px;
     padding-right: 30px;
-    color: $primary;
+    color: $dark-gray;
     height: $option-menu-height;
     line-height: $option-menu-height;
     display: inline-block;
@@ -1643,6 +1658,14 @@ a {
   }
   .menu-value:hover {
     color: $orange;
+  }
+
+  .menu-title {
+    color: $primary;
+    padding-left: 90px;
+    padding-right: 30px;
+    height: $option-menu-height;
+    line-height: $option-menu-height;
   }
 }
 
