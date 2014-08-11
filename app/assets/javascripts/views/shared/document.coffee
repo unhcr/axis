@@ -7,7 +7,9 @@ class Visio.Views.Document extends Backbone.View
 
   onScroll: (e) ->
     scrollTop = $(window).scrollTop()
-    offset = Visio.skrollr.relativeToAbsolute($('.inner-content')[0], 'top', 'top')
+    if $('.inner-content').length
+      offset = Visio.skrollr.relativeToAbsolute($('.inner-content')[0], 'top', 'top')
+    bottomOffset = 300
 
     headerView = Visio.router.headerView
 
@@ -15,6 +17,9 @@ class Visio.Views.Document extends Backbone.View
       headerView.renderBreadcrumb()
     else if scrollTop <= offset and headerView.isBreadcrumb()
       headerView.render()
+
+    if scrollTop + $(window).height() + bottomOffset > $(document).height()
+      $.publish('scroll.bottom')
 
   close: ->
     @unbind()

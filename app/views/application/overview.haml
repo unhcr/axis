@@ -9,38 +9,6 @@
     var headerHeight = $('header').height();
     var bottomOffset = 300
 
-    $('.navigation-activation').on('mouseenter', function(e) {
-      if (!Visio.manager.get('setup')) return;
-      $('.page').addClass('shift');
-      $(e.currentTarget).addClass('zero-width');
-    })
-
-    $('#navigation').on('mouseleave', function(e) {
-      $('.page').removeClass('shift');
-      $('.navigation-activation').removeClass('zero-width');
-    })
-
-    //$(document).scroll(function(e) {
-    //  var scrollTop = $(document).scrollTop()
-    //  $navigationIcon.css('top', scrollTop + 140);
-    //  if (scrollTop > headerHeight) {
-    //    if (!$toolbar.hasClass('fixed-top')) {
-    //      $toolbar.addClass('fixed-top');
-    //      $innerContent.css('margin-top', $toolbar.outerHeight() + 'px');
-    //    }
-    //  } else {
-    //    $toolbar.removeClass('fixed-top');
-    //    $innerContent.css('margin-top', 0);
-    //  }
-
-    //  if (scrollTop + $(window).height() + bottomOffset > $(document).height()) {
-    //    $.publish('scroll.bottom')
-    //  }
-
-
-
-    //})
-
     var ready = function() {
       Visio.router = new Visio.Routers.OverviewRouter();
       Backbone.history.start();
