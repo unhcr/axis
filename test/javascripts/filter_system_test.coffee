@@ -52,3 +52,25 @@ test 'onChangeSelection', ->
   $input = @view.$el.find('#check_2_operations')
 
   ok not Visio.manager.strategy().include 'operation', 2
+
+test 'onDeselect', ->
+  @view.render()
+  $('body').append @view.el
+
+  strictEqual @view.$el.find('input:checked').length, 4
+
+  @view.$el.find('.deselect').trigger 'click'
+  strictEqual @view.$el.find('input:checked').length, 0
+
+test 'onReset', ->
+  @view.render()
+  $('body').append @view.el
+
+  strictEqual @view.$el.find('input:checked').length, 4
+
+  $input = @view.$el.find('#check_1_operations')
+  $input.trigger 'click'
+  strictEqual @view.$el.find('input:checked').length, 3
+
+  @view.$el.find('.reset').trigger 'click'
+  strictEqual @view.$el.find('input:checked').length, 4
