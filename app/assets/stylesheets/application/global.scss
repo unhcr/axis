@@ -347,7 +347,7 @@ body.index {
   background-color: transparent;
   width: 220px;
   color: $white;
-  padding: 0 1em;
+  margin-bottom: 18px;
 
   .results {
     background-color: $primary;
@@ -755,7 +755,7 @@ button, input {
 
 .visio-checkbox label:before {
   content: ' ';
-  border: 1px solid $white;
+  border: 1px solid $dark-gray;
   width: 12px;
   height: 12px;
   margin-top: 3px;
@@ -801,6 +801,14 @@ button, input {
 .visio-checkbox-orange input:checked + label:before {
   content: ' ';
   border: 3px solid $orange;
+}
+
+.visio-checkbox-orange input:checked + label {
+  color: $orange;
+}
+
+.visio-checkbox-orange label:hover {
+  color: $orange;
 }
 
 .visio-checkbox-vertical {
@@ -1229,11 +1237,19 @@ a {
 }
 
 .filter-system-container {
-  margin: 0 10px;
+  margin: 0 20px;
+
+  input {
+    @include input-white;
+  }
 
   .name {
     line-height: 58px;
     border-top: $primary 1px solid;
+  }
+
+  .name:hover {
+    color: $orange;
   }
 
   label {
@@ -1256,15 +1272,23 @@ a {
   overflow: auto;
   overflow-x: hidden;
 
-  -moz-transition:max-height $medium-transition;
-  -webkit-transition:max-height $medium-transition;
-  -o-transition:max-height $medium-transition;
-  transition:max-height $medium-transition;
+  -moz-transition:all $medium-transition;
+  -webkit-transition:all $medium-transition;
+  -o-transition:all $medium-transition;
+  transition:all $medium-transition;
 }
 
 .ui-accordion-content.opened {
-  max-height: $accordion-max-height;
   padding-bottom: 38px;
+  max-height: $accordion-max-height;
+}
+
+.ui-accordion-checkboxes {
+  overflow: auto;
+  max-height: 300px;
+  padding-top: 14px;
+  margin-top: 6px;
+  border-top: 1px dotted $dark-gray;
 }
 
 .ui-accordion-container .open {

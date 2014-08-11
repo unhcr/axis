@@ -101,6 +101,11 @@ class Visio.Views.FilterSystemView extends Backbone.View
     $('.page').toggleClass 'shift'
 
   open: (type) =>
+    $names = @$el.find '.name'
+    $names.removeClass 'ui-orange'
+
+    @$el.find(".name[data-type=\"#{type}\"]").addClass 'ui-orange'
+
     $opened = @$el.find('.ui-accordion-content.opened')
     if $opened.attr('data-type') == type
       $opened.toggleClass('opened')

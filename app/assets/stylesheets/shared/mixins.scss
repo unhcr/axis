@@ -41,14 +41,19 @@
 
 /* Used on white backgrounds */
 
+@mixin input-white {
+  border: $light-gray 1px solid;
+  width: 100%;
+  @include box-shadow($off-white 0px 0px 15px 0px inset);
+  color: $primary;
+  padding-left: 14px;
+  padding-right: 14px;
+
+}
+
 @mixin text-theme-one {
   input, textarea {
-    border: $light-gray 1px solid;
-    width: 100%;
-    @include box-shadow($off-white 0px 0px 15px 0px inset);
-    color: $primary;
-    padding-left: 14px;
-    padding-right: 14px;
+    @include input-white;
   }
 
   b {
