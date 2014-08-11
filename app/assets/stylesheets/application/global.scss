@@ -1239,6 +1239,10 @@ a {
 .filter-system-container {
   margin: 0 20px;
 
+  .header {
+    margin-bottom: 28px;
+  }
+
   input {
     @include input-white;
   }
