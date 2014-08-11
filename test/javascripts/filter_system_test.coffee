@@ -1,4 +1,4 @@
-module 'Navigation',
+module 'Filter System',
   setup: ->
     Visio.user = new Visio.Models.User()
     Visio.manager = new Visio.Models.Manager()
@@ -17,7 +17,7 @@ module 'Navigation',
       models = [{ id: 1 }, { id: 2 }]
       Visio.manager.get(hash.plural).reset(models)
 
-    @view = new Visio.Views.NavigationView()
+    @view = new Visio.Views.FilterSystemView()
 
   teardown: ->
     @view.close()
@@ -34,7 +34,7 @@ test 'onChangeSelection', ->
 
   strictEqual @view.searches.length, _.values(Visio.Parameters).length
   strictEqual @view.$el.find('input:checked').length, 4
-  strictEqual @view.$el.find('input[type="checkbox"]').length, _.values(Visio.Parameters).length * 2
+  strictEqual @view.$el.find('input[type="checkbox"]').length, 4
 
   $input = @view.$el.find('#check_1_operations')
   strictEqual $input.length, 1
@@ -52,13 +52,3 @@ test 'onChangeSelection', ->
   $input = @view.$el.find('#check_2_operations')
 
   ok not Visio.manager.strategy().include 'operation', 2
-
-  search = _.find @view.searches, (search) -> search.parameter().plural is 'operations'
-  sinon.stub search, 'add', sinon.spy()
-
-  $input.trigger 'click'
-  strictEqual @view.$el.find('input:checked').length, 5
-
-  ok search.add.calledOnce, 'add should be called once, but was ' + search.add.callCount
-  search.add.restore()
-

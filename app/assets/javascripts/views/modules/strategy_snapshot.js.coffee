@@ -68,10 +68,12 @@ class Visio.Views.SnapshotView extends Visio.Views.Dashboard
 
     super (!parameterTypeChanged or !collectionLengthChanged)
 
-    if parameterTypeChanged or collectionLengthChanged
+    if parameterTypeChanged
       @$el.find('.header-buttons').append (new Visio.Views.FilterBy({ figure: @ })).render().el
-      @$el.find('.target-parameters').html @parameterSlider?.render().el
       @$el.find('.bar-axis').html @axis?.render().el
+
+    if parameterTypeChanged or collectionLengthChanged
+      @$el.find('.target-parameters').html @parameterSlider?.render().el
       @parameterSlider?.delegateEvents()
       @parameterSlider?.position = 0
 
