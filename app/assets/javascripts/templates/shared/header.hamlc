@@ -1,6 +1,6 @@
 %section.row
   .col-md-3.menu-btn.header-item.pull-left
-    %a.menu-icon{ :href => '#menu' }
+    %a.menu-icon
     .logo
 
 

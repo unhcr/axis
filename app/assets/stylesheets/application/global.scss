@@ -766,8 +766,15 @@ button, input {
 .visio-checkbox-left label:before {
   content: ' ';
   float: left;
-  margin-right: 6px;
+  margin-right: 12px;
   margin-left: 0px;
+  position: relative;
+  left: -26px;
+}
+
+.visio-checkbox-left label {
+  margin-left: 26px;
+  text-indent: -26px;
 }
 
 .visio-checkbox input:checked + label:before {
@@ -789,6 +796,11 @@ button, input {
 .visio-checkbox-yellow input:checked + label:before {
   content: ' ';
   border: 3px solid $yellow;
+}
+
+.visio-checkbox-orange input:checked + label:before {
+  content: ' ';
+  border: 3px solid $orange;
 }
 
 .visio-checkbox-vertical {
@@ -1202,8 +1214,8 @@ a {
     background-color: $ok;
   }
 }
-#navigation {
-  width: $navigation-width;
+#filter-system {
+  width: $filter-system-width;
   overflow-x: hidden;
   height: 100%;
   position: fixed;
@@ -1211,7 +1223,31 @@ a {
   top: 0;
   left: 0;
   height: 100%;
-  background-color: $black;
+  background-color: white;
+
+}
+
+.filter-system-container {
+  margin: 0 10px;
+
+  .name {
+    line-height: 58px;
+    border-top: $primary 1px solid;
+  }
+
+  label {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    border-bottom: 1px dotted $dark-gray;
+  }
+
+  small {
+    cursor: pointer;
+  }
+
+  small:hover {
+    color: $orange;
+  }
 }
 
 .ui-accordion-content {
@@ -1227,6 +1263,7 @@ a {
 
 .ui-accordion-content.opened {
   max-height: $accordion-max-height;
+  padding-bottom: 38px;
 }
 
 .ui-accordion-container .open {
@@ -1478,10 +1515,10 @@ a {
 }
 
 .shift {
-  left: $navigation-width;
+  left: $filter-system-width;
 
   .fixed-top {
-    left: $navigation-width + 15px;
+    left: $filter-system-width + 15px;
   }
 }
 
@@ -1593,35 +1630,6 @@ a {
   -webkit-box-shadow: inset 0px 5px 23px -11px rgba(50, 50, 50, 0.75);
   -moz-box-shadow: inset 0px 5px 23px -11px rgba(50, 50, 50, 0.75);
   box-shadow: inset 0px 5px 23px -11px rgba(50, 50, 50, 0.75);
-}
-
-.navigation-activation-icon {
-  width: $page-margin;
-  height: $page-margin;
-  position: absolute;
-  top: 140px;
-  background-image: url(/assets/visio-side_menu_icon.png);
-  background-size: $page-margin;
-  -moz-transition:top $faster-transition ease-out;
-  -webkit-transition:top $faster-transition ease-out;
-  -o-transition:top $faster-transition ease-out;
-  transition:top $faster-transition ease-out;
-
-}
-
-.navigation-activation {
-  position: absolute;
-  height: 100%;
-  width: $page-margin;
-  top: 0;
-  left: 0;
-  z-index: 10;
-  background-color: $off-white;
-  overflow: hidden;
-  -moz-transition:width $very-fast-transition ease-out;
-  -webkit-transition:width $very-fast-transition ease-out;
-  -o-transition:width $very-fast-transition ease-out;
-  transition:width $very-fast-transition ease-out;
 }
 
 .transparent {
