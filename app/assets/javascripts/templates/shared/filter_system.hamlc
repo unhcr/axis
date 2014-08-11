@@ -13,16 +13,18 @@
                                :data => { :type => p.hash.plural } }
 
           %small.deselect{ :data => { :type => p.hash.plural }} Deselect All
-          %span |
+          %span
+            = "|"
           %small.reset{ :data => { :type => p.hash.plural }} Reset
-          - _.each p.data, (d) ->
-            .visio-checkbox.visio-checkbox-orange.visio-checkbox-left
-              %input{
-                :value => p.hash.plural + Visio.Constants.SEPARATOR + d.id,
-                :checked => if Visio.manager.get('selected')[p.hash.plural][d.id] then true else false,
-                :type => 'checkbox',
-                :id => "check_#{d.id}_#{p.hash.plural}" }
-              %label{ :for => "check_#{d.id}_#{p.hash.plural}" }
-                - unless context.dashboard.include(p.hash.singular, d.id)
-                  [NOT IN STRATEGY]
-                = d.toString()
+          .ui-accordion-checkboxes
+            - _.each p.data, (d) ->
+              .visio-checkbox.visio-checkbox-orange.visio-checkbox-left
+                %input{
+                  :value => p.hash.plural + Visio.Constants.SEPARATOR + d.id,
+                  :checked => if Visio.manager.get('selected')[p.hash.plural][d.id] then true else false,
+                  :type => 'checkbox',
+                  :id => "check_#{d.id}_#{p.hash.plural}" }
+                %label{ :for => "check_#{d.id}_#{p.hash.plural}" }
+                  - unless context.dashboard.include(p.hash.singular, d.id)
+                    [NOT IN STRATEGY]
+                  = d.toString()
