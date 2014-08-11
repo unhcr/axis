@@ -30,19 +30,18 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.DashboardRouter
            Visio.manager.get('budgets').fetchSynced({ strategy_id: Visio.manager.get('strategy_id') })
            Visio.manager.get('indicator_data').fetchSynced({ strategy_id: Visio.manager.get('strategy_id') })
     ).done( =>
-      # Initialize selected to be strategy
-      Visio.manager.resetSelectedDefaults()
 
-      @navigation = new Visio.Views.NavigationView el: $('#navigation')
-      @navigation.render()
+      try
+        # Initialize selected to be strategy
+        Visio.manager.resetSelectedDefaults()
 
+        Visio.manager.set('setup', true)
+      catch error
+        new Visio.Views.Error
+          title: 'Error rendering page'
+          description: error
 
-      $('#navigation').removeClass('gone')
-
-      $collapsable = $('.collapsable-content')
-      $collapsable.attr 'data-0', "max-height:#{$('.collapsable-content').height()}px"
-      $collapsable.attr "data-#{$('.collapsable-content').height()}", "max-height:0px"
-      Visio.manager.set('setup', true)
-      NProgress.done()
+      finally
+        NProgress.done()
     )
 
