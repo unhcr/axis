@@ -54,17 +54,21 @@ class Visio.Views.SnapshotView extends Visio.Views.Dashboard
     'click .grid-view': 'onGridView'
     'click .export': 'onExport'
 
-  render: (isRerender) ->
+  render:  ->
     @collection = Visio.manager.selected Visio.manager.get('aggregation_type') unless @isPdf
 
+    # If we've changed parameter type we need to rerender
     parameterTypeChanged = !@parameter? or (@parameter.name != @collection.name)
+
+    # If the length of the collection length has changed we need to rerender
+    collectionLengthChanged = !@parameter? or (@parameter.length != @collection.length)
 
     @parameter = @collection
     @parameterSlider?.collection = @collection
 
-    super !parameterTypeChanged
+    super (!parameterTypeChanged or !collectionLengthChanged)
 
-    if parameterTypeChanged
+    if parameterTypeChanged or collectionLengthChanged
       @$el.find('.header-buttons').append (new Visio.Views.FilterBy({ figure: @ })).render().el
       @$el.find('.target-parameters').html @parameterSlider?.render().el
       @$el.find('.bar-axis').html @axis?.render().el
