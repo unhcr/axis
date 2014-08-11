@@ -1,17 +1,22 @@
-.navigation-container
+.filter-system-container
   .header
+    .graph-logo
+    %h3 Customize Strategy
+
   .save-filters
   .ui-accordion-container
     - _.each context.parameters, (p) ->
       .ui-accordion
-        .name.open.ui-extra-small-header.ui-line-item-theme{ :data => { :type => "#{p.hash.plural}"} }
+        .name.open{ :data => { :type => "#{p.hash.plural}"} }
           = p.hash.human.toUpperCase()
         .ui-accordion-content{ :class => p.hash.plural,
                                :data => { :type => p.hash.plural } }
 
-          %a.deselect{ :data => { :type => p.hash.plural }} Deselect All
+          %small.deselect{ :data => { :type => p.hash.plural }} Deselect All
+          %span |
+          %small.reset{ :data => { :type => p.hash.plural }} Reset
           - _.each p.data, (d) ->
-            .visio-checkbox.visio-checkbox-yellow.ui-line-item-theme
+            .visio-checkbox.visio-checkbox-orange.visio-checkbox-left
               %input{
                 :value => p.hash.plural + Visio.Constants.SEPARATOR + d.id,
                 :checked => if Visio.manager.get('selected')[p.hash.plural][d.id] then true else false,

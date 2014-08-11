@@ -1,6 +1,6 @@
-class Visio.Views.NavigationView extends Backbone.View
+class Visio.Views.FilterSystemView extends Backbone.View
 
-  template: HAML['shared/navigation']
+  template: HAML['shared/filter_system']
 
   initialize: () ->
 
@@ -8,6 +8,7 @@ class Visio.Views.NavigationView extends Backbone.View
   events:
     'click .open': 'onClickOpen'
     'click .deselect': 'onDeselect'
+    'click .reset': 'onReset'
     'change .visio-checkbox input': 'onChangeSelection'
 
   render: () ->
@@ -73,7 +74,7 @@ class Visio.Views.NavigationView extends Backbone.View
 
   onClickOpen: (e) ->
     type = $(e.currentTarget).attr('data-type')
-    @open(type)
+    @open type
 
   onDeselect: (e) ->
     type = $(e.currentTarget).attr('data-type')
@@ -83,6 +84,21 @@ class Visio.Views.NavigationView extends Backbone.View
     Visio.manager.get('selected')[type] = {}
 
     Visio.manager.trigger 'change:selected', type
+
+  onReset: (e) ->
+    type = $(e.currentTarget).attr('data-type')
+    ids = Visio.manager.get('dashboard')[type]().map (m) -> m.id
+    @$el.find(".#{type} input").prop 'checked', false
+    _.each ids, (id) =>
+      @$el.find("#check_#{id}_#{type}").prop 'checked', true
+
+    # Revert to strategy selections
+    Visio.manager.get('selected')[type] = _.object(ids, _.map(ids, -> true))
+
+    Visio.manager.trigger 'change:selected', type
+
+  toggleState: (e) ->
+    $('.page').toggleClass 'shift'
 
   open: (type) =>
     $opened = @$el.find('.ui-accordion-content.opened')
