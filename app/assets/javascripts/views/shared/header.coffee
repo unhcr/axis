@@ -9,6 +9,7 @@ class Visio.Views.Header extends Backbone.View
 
   events:
     'click .dashboard-item': 'onClickDashboardItem'
+    'click .menu-icon': 'onClickMenuIcon'
     'transitionend .menu-value': 'onTransitionEnd'
     'MSTransitionEnd .menu-value': 'onTransitionEnd'
     'webkitTransitionEnd .menu-value': 'onTransitionEnd'
@@ -16,6 +17,13 @@ class Visio.Views.Header extends Backbone.View
     'click .menu-value': 'onChangeMenuValue'
 
   initialize: ->
+
+    # Render filter system once page is setup
+    Visio.manager.on 'change:setup', =>
+      if Visio.manager.get 'setup'
+        @filterSystem = new Visio.Views.FilterSystemView el: $('#filter-system')
+        @filterSystem.$el.removeClass 'gone'
+        @filterSystem.render()
 
     @menuOptions =
       module_type:
@@ -109,6 +117,11 @@ class Visio.Views.Header extends Backbone.View
     $menuValues.css 'left', '-2000px'
     @markOld()
 
+  onClickMenuIcon: (e) =>
+    $target = $(e.currentTarget)
+    @filterSystem.toggleState()
+    $('#navigation').removeClass('gone')
+
   onClickDashboardItem: (e) ->
     $target = $(e.currentTarget)
     $optionMenu = @$el.find '.option-menu'
@@ -152,3 +165,8 @@ class Visio.Views.Header extends Backbone.View
     $target.addClass 'selected'
 
     Visio.manager.set data.key, data.value
+
+  close: =>
+    @filterSystem?.close()
+    @unbind()
+    @remove()
