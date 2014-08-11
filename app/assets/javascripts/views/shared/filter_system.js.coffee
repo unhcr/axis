@@ -26,8 +26,8 @@ class Visio.Views.FilterSystemView extends Backbone.View
 
 
       data = Visio.manager.get(hash.plural)
-      data = _.sortBy(data.models, (d) ->
-        if Visio.manager.get('dashboard').include(hash.singular, d.id) then 0 else 1)
+      data = _.filter data.models, (d) ->
+        Visio.manager.get('dashboard').include(hash.singular, d.id)
 
       parameters.push
         data: data
