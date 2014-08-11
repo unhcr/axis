@@ -29,7 +29,7 @@ class Visio.Views.ParameterSlideView extends Visio.Views.Dashboard
       barConfig.height = 115
     else
       barConfig.width = 240
-      barConfig.height = 130
+      barConfig.height = 146
 
     options.barConfig = barConfig
     super options

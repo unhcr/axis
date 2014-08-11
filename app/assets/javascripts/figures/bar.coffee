@@ -19,7 +19,7 @@ class Visio.Figures.Bar extends Visio.Figures.Base
     # fixed is the scale that scales the bars equally apart
     @fixed = d3.scale.ordinal()
     @zeroPadding = if @hasZeroPad? then 3 else 0
-    @labelHeight = 26
+    @labelHeight = 30
     @barPadding = 8
 
     switch @orientation
