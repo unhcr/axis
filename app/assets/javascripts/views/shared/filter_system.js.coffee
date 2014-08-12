@@ -102,16 +102,17 @@ class Visio.Views.FilterSystemView extends Backbone.View
 
   open: (type) =>
     $names = @$el.find '.name'
-    $names.removeClass 'ui-orange'
 
-    @$el.find(".name[data-type=\"#{type}\"]").addClass 'ui-orange'
 
     $opened = @$el.find('.ui-accordion-content.opened')
     if $opened.attr('data-type') == type
       $opened.toggleClass('opened')
+      @$el.find(".name[data-type=\"#{type}\"]").toggleClass 'ui-orange'
     else
+      $names.removeClass 'ui-orange'
       $opened.removeClass('opened')
       @$el.find(".ui-accordion-content.#{type}").addClass('opened')
+      @$el.find(".name[data-type=\"#{type}\"]").addClass 'ui-orange'
 
   close: ->
     @unbind()

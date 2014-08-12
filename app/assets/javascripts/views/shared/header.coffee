@@ -126,9 +126,15 @@ class Visio.Views.Header extends Backbone.View
     $target = $(e.currentTarget)
     $optionMenu = @$el.find '.option-menu'
 
+    # Don't bother if the item clicked isn't a menu option
+    data = $target.data()
+    option = @menuOptions[data.option]
+    return unless option?
+
     opened = @isOpenOptionMenu()
 
     if $target.hasClass('selected') and opened
+      @$el.find('.dashboard-item').removeClass 'selected'
       @closeOptionMenu()
       return
     else
@@ -136,10 +142,6 @@ class Visio.Views.Header extends Backbone.View
       $target.addClass 'selected'
       @openOptionMenu()
 
-
-    data = $target.data()
-
-    option = @menuOptions[data.option]
 
     if opened
       @swipeOutMenuValues()
