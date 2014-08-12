@@ -1273,8 +1273,7 @@ a {
 
 .ui-accordion-content {
   max-height: 0px;
-  overflow: auto;
-  overflow-x: hidden;
+  overflow: hidden;
 
   -moz-transition:all $medium-transition;
   -webkit-transition:all $medium-transition;
@@ -1299,19 +1298,23 @@ a {
   cursor: pointer;
 }
 
-.ui-accordion-container .open:after {
-  width: 12px;
-  height: 12px;
-  margin-top: 3px;
+.ui-accordion-container .name:after {
+  width: 20px;
+  height: 20px;
+  margin-top: 18px;
   float: right;
-  background-image: url(/assets/logo_white.png);
-  background-size: 12px 12px;
+  background-image: url(/assets/AXIS-ACCORDION-CLOSED.png);
+  background-size: 20px;
   content: "";
   background-repeat: no-repeat;
 }
 
-.ui-accordion-container.opened .open:after {
-  background-image: url(/assets/logo.png);
+.ui-accordion-container .name.opened:after {
+  background-image: url(/assets/AXIS-ACCORDION-OPENED.png);
+}
+
+.ui-accordion-container .name.opened {
+  color: $orange;
 }
 
 /* meter */
