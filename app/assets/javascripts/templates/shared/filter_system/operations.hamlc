@@ -1,0 +1,6 @@
+.filter-system-container
+
+  %h3 Operations
+  - Visio.manager.get('operations').each (operation) ->
+    %a{ :href => "/operation/#{operation.id}" }
+      = operation.toString()

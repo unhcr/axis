@@ -1,20 +1,25 @@
-%section.row
-  .col-md-3.menu-btn.header-item.pull-left
+%section
+  .menu-btn.header-item.pull-left.col-left
+
     %a.menu-icon
+    .show-on-open
+      .dashboard-item.filter-option{ :data => { :system => Visio.Views.FilterSystemView.VIEWS.OPERATIONS } }
+        OPERATIONS
+      .dashboard-item.filter-option{ :data => { :system => Visio.Views.FilterSystemView.VIEWS.STRATEGIES } }
+        STRATEGIES
+      .dashboard-item.filter-option.selected{ :data =>
+          { :system => Visio.Views.FilterSystemView.VIEWS.FILTERS } }
+        FILTERS
     .logo
 
 
-  .col-md-6.center-text.header-item.menu-options
+  .center-text.header-item.menu-options.col-middle
     - _.each _.values(context.menuOptions), (menuOption, i, list) ->
       .dashboard-item{ :data => { :option => menuOption.key } }
         %span.dashboard-label
           = menuOption.human
 
-      - if i < list.length - 1
-        %span
-          = '|'
-
-  .col-md-3.header-item
+  .header-item.col-right
     .pull-right
       %h6.dashboard-item
         %a{ :href => "/users/sign_out", :data => { :method => "delete" }, :rel => "nofollow" }

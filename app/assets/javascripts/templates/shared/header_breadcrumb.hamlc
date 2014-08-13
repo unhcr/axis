@@ -2,20 +2,31 @@
   .col-md-12
     .menu-btn.header-item.pad-right
       %a.menu-icon
+      .show-on-open
+        .dashboard-item.filter-option{ :data => { :system => Visio.Views.FilterSystemView.VIEWS.OPERATIONS } }
+          OPERATIONS
+        .dashboard-item.filter-option{ :data => { :system => Visio.Views.FilterSystemView.VIEWS.STRATEGIES } }
+          STRATEGIES
+        .dashboard-item.filter-option.selected{ :data =>
+            { :system => Visio.Views.FilterSystemView.VIEWS.FILTERS } }
+          FILTERS
+
       .logo.logo-short
       %h5
         = Visio.manager.get('dashboard').toString()
 
-    %span
-      = '|'
-    - _.each _.values(context.menuOptions), (menuOption, i, list) ->
-      .dashboard-item{ :data => { :option => menuOption.key } }
-        %span.dashboard-label
-          = menuOption.currentHuman()
 
-      - if i < list.length - 1
-        %span
-          = '|'
+    .header-item
+      %span
+        = '|'
+      - _.each _.values(context.menuOptions), (menuOption, i, list) ->
+        .dashboard-item{ :data => { :option => menuOption.key } }
+          %span.dashboard-label
+            = menuOption.currentHuman()
+
+        - if i < list.length - 1
+          %span
+            = '|'
 
 
 .option-menu.zero-max-height.no-border

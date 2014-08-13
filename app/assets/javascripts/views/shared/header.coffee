@@ -10,6 +10,7 @@ class Visio.Views.Header extends Backbone.View
   events:
     'click .dashboard-item': 'onClickDashboardItem'
     'click .menu-icon': 'onClickMenuIcon'
+    'click .filter-option': 'onClickFilterOption'
     'transitionend .menu-value': 'onTransitionEnd'
     'MSTransitionEnd .menu-value': 'onTransitionEnd'
     'webkitTransitionEnd .menu-value': 'onTransitionEnd'
@@ -23,7 +24,7 @@ class Visio.Views.Header extends Backbone.View
       if Visio.manager.get 'setup'
         @filterSystem = new Visio.Views.FilterSystemView el: $('#filter-system')
         @filterSystem.$el.removeClass 'gone'
-        @filterSystem.render()
+        @filterSystem.render Visio.Views.FilterSystemView.VIEWS.FILTERS
 
     @menuOptions =
       module_type:
@@ -78,6 +79,9 @@ class Visio.Views.Header extends Backbone.View
     $optionMenu.removeClass 'zero-max-height'
     $optionMenu.removeClass 'no-border'
 
+    # Cause a redraw
+    $optionMenu[0].height = $optionMenu[0].height
+
   closeOptionMenu: =>
     $optionMenu = @$el.find '.option-menu'
     $optionMenu.addClass 'zero-max-height'
@@ -85,6 +89,9 @@ class Visio.Views.Header extends Backbone.View
     @markOld()
     @clearMenuValues()
     $optionMenu.html ''
+
+    # Cause a redraw
+    $optionMenu[0].height = $optionMenu[0].height
 
   isOpenOptionMenu: =>
     $optionMenu = @$el.find '.option-menu'
@@ -117,8 +124,19 @@ class Visio.Views.Header extends Backbone.View
     $menuValues.css 'left', '-2000px'
     @markOld()
 
+  onClickFilterOption: (e) =>
+    $target = $(e.currentTarget)
+    return if $target.hasClass 'selected'
+
+    @$el.find('.filter-option.selected').removeClass 'selected'
+    $target.addClass 'selected'
+
+    @filterSystem.render $target.data().system
+
   onClickMenuIcon: (e) =>
     $target = $(e.currentTarget)
+    $target.toggleClass 'menu-close'
+    @$el.toggleClass 'filter-open'
     @filterSystem.toggleState()
     $('#navigation').removeClass('gone')
 

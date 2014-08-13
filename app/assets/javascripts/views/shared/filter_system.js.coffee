@@ -1,9 +1,15 @@
 class Visio.Views.FilterSystemView extends Backbone.View
 
-  template: HAML['shared/filter_system']
+  templateFilters: HAML['shared/filter_system/filters']
+  templateOperations: HAML['shared/filter_system/operations']
+  templateStrategies: HAML['shared/filter_system/strategies']
+
+  @VIEWS:
+    FILTERS: 'renderFilters'
+    OPERATIONS: 'renderOperations'
+    STRATEGIES: 'renderStrategies'
 
   initialize: () ->
-
 
   events:
     'click .open': 'onClickOpen'
@@ -11,7 +17,16 @@ class Visio.Views.FilterSystemView extends Backbone.View
     'click .reset': 'onReset'
     'change .visio-checkbox input': 'onChangeSelection'
 
-  render: () ->
+  render: (type = 'FILTERS') ->
+    if _.values(Visio.Views.FilterSystemView.VIEWS).indexOf(type) == -1
+      throw new Error('Invalid filter system view')
+
+    @[type]()
+    @
+
+
+  renderFilters: ->
+    @$el.removeClass 'filter-system-orange'
     _.each @searches, (searchView) -> searchView.close() if @searches?
 
     @searches = _.map _.values(Visio.Parameters), (hash) ->
@@ -33,7 +48,7 @@ class Visio.Views.FilterSystemView extends Backbone.View
         data: data
         hash: hash
 
-    @$el.html @template(
+    @$el.html @templateFilters(
       dashboard: Visio.manager.get('dashboard')
       parameters: parameters)
 
@@ -42,6 +57,19 @@ class Visio.Views.FilterSystemView extends Backbone.View
       $target = @$el.find(".ui-accordion-content.#{plural}")
       $target.prepend view.render().el
 
+  renderOperations: ->
+    @$el.addClass 'filter-system-orange'
+
+    Visio.manager.get('operations').fetch().done =>
+      @$el.html @templateOperations()
+
+  renderStrategies: ->
+    @$el.addClass 'filter-system-orange'
+
+    @$el.html @templateStrategies
+      strategies: Visio.manager.strategies().toJSON()
+      personalStrategies: Visio.manager.personalStrategies().toJSON()
+      sharedStrategies: Visio.manager.sharedStrategies().toJSON()
 
   onChangeSelection: (e) ->
     $target = $(e.currentTarget)
@@ -97,7 +125,7 @@ class Visio.Views.FilterSystemView extends Backbone.View
 
     Visio.manager.trigger 'change:selected', type
 
-  toggleState: (e) ->
+  toggleState: (type) ->
     $('.page').toggleClass 'shift'
 
   open: (type) =>

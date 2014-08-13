@@ -9,7 +9,7 @@
 %body.ui-invert-theme{ :class => "#{controller.action_name} layout-#{controller.send(:_layout).virtual_path.name}" }
   #filter-system.gone
   .page.container-fluid
-    %header
+    %header#header
 
     :javascript
       window.Visio.user = new Visio.Models.User(#{current_user.to_json.html_safe})
