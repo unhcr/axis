@@ -1631,10 +1631,11 @@ a {
 }
 
 .page {
-  position: absolute;
+  position: relative;
   right: 0;
   left: 0;
   background-color: inherit;
+  height: 100%;
   -moz-transition:left $very-fast-transition ease-out;
   -webkit-transition:left $very-fast-transition ease-out;
   -o-transition:left $very-fast-transition ease-out;
