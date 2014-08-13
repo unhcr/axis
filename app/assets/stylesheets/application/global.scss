@@ -1319,8 +1319,8 @@ a {
 .filter-system-container {
   margin: 0 20px;
 
-  .divider-stack {
-    margin: 0 -20px;
+  .divider-stack-orange {
+    margin: 20px -20px;
   }
 
   .header {
@@ -1631,11 +1631,10 @@ a {
 }
 
 .page {
-  position: relative;
+  position: absolute;
   right: 0;
   left: 0;
   background-color: inherit;
-  height: 100%;
   -moz-transition:left $very-fast-transition ease-out;
   -webkit-transition:left $very-fast-transition ease-out;
   -o-transition:left $very-fast-transition ease-out;
