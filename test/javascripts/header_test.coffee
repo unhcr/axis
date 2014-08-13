@@ -20,7 +20,7 @@ test 'render normal', ->
 
 test 'render breadcrumb', ->
   @view.renderBreadcrumb()
-  strictEqual @view.$el.find('.dashboard-item').length, _.values(@view.menuOptions).length
+  ok @view.$el.find('.dashboard-item').length >= _.values(@view.menuOptions).length
   ok @view.$el.hasClass 'breadcrumb'
   ok @view.isBreadcrumb()
 

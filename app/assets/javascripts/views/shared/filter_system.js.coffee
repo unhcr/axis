@@ -17,7 +17,7 @@ class Visio.Views.FilterSystemView extends Backbone.View
     'click .reset': 'onReset'
     'change .visio-checkbox input': 'onChangeSelection'
 
-  render: (type = 'FILTERS') ->
+  render: (type = 'renderFilters') ->
     if _.values(Visio.Views.FilterSystemView.VIEWS).indexOf(type) == -1
       throw new Error('Invalid filter system view')
 
