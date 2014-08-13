@@ -128,6 +128,9 @@ class Visio.Views.FilterSystemView extends Backbone.View
   toggleState: (type) ->
     $('.page').toggleClass 'shift'
 
+  isOpen: =>
+    $('.page').hasClass 'shift'
+
   open: (type) =>
     $names = @$el.find '.name'
 

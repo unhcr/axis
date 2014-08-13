@@ -8,7 +8,7 @@ class Visio.Views.Header extends Backbone.View
   templateMenuLabel: HAML['shared/menu_label']
 
   events:
-    'click .dashboard-item': 'onClickDashboardItem'
+    'click .menu-option': 'onClickMenuOption'
     'click .menu-icon': 'onClickMenuIcon'
     'click .filter-option': 'onClickFilterOption'
     'transitionend .menu-value': 'onTransitionEnd'
@@ -62,13 +62,22 @@ class Visio.Views.Header extends Backbone.View
     @render()
 
   render: ->
-    @$el.html @template { menuOptions: @menuOptions }
+    @$el.html @template
+      menuOptions: @menuOptions
+
     @$el.removeClass 'breadcrumb'
+    open = if @filterSystem? then @filterSystem.isOpen() else false
+    d3.select(@el).classed 'filter-open', open
     @
 
   renderBreadcrumb: ->
-    @$el.html @templateBreadcrumb { menuOptions: @menuOptions }
+    @$el.html @templateBreadcrumb
+      menuOptions: @menuOptions
+
     @$el.addClass 'breadcrumb'
+    open = if @filterSystem? then @filterSystem.isOpen() else false
+    d3.select(@el).classed 'filter-open', open
+
     @
 
   isBreadcrumb: ->
@@ -78,9 +87,6 @@ class Visio.Views.Header extends Backbone.View
     $optionMenu = @$el.find '.option-menu'
     $optionMenu.removeClass 'zero-max-height'
     $optionMenu.removeClass 'no-border'
-
-    # Cause a redraw
-    $optionMenu[0].height = $optionMenu[0].height
 
   closeOptionMenu: =>
     $optionMenu = @$el.find '.option-menu'
@@ -134,13 +140,11 @@ class Visio.Views.Header extends Backbone.View
     @filterSystem.render $target.data().system
 
   onClickMenuIcon: (e) =>
-    $target = $(e.currentTarget)
-    $target.toggleClass 'menu-close'
     @$el.toggleClass 'filter-open'
     @filterSystem.toggleState()
     $('#navigation').removeClass('gone')
 
-  onClickDashboardItem: (e) ->
+  onClickMenuOption: (e) ->
     $target = $(e.currentTarget)
     $optionMenu = @$el.find '.option-menu'
 
@@ -152,11 +156,11 @@ class Visio.Views.Header extends Backbone.View
     opened = @isOpenOptionMenu()
 
     if $target.hasClass('selected') and opened
-      @$el.find('.dashboard-item').removeClass 'selected'
+      @$el.find('.menu-option').removeClass 'selected'
       @closeOptionMenu()
       return
     else
-      @$el.find('.dashboard-item').removeClass 'selected'
+      @$el.find('.menu-option').removeClass 'selected'
       $target.addClass 'selected'
       @openOptionMenu()
 

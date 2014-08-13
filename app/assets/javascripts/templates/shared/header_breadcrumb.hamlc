@@ -20,7 +20,7 @@
       %span
         = '|'
       - _.each _.values(context.menuOptions), (menuOption, i, list) ->
-        .dashboard-item{ :data => { :option => menuOption.key } }
+        .dashboard-item.menu-option{ :data => { :option => menuOption.key } }
           %span.dashboard-label
             = menuOption.currentHuman()
 

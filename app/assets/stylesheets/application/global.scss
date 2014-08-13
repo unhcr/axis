@@ -231,6 +231,7 @@ body.layout-cms {
 }
 
 #header {
+  -webkit-transform: translateZ(0);
   background-color: $off-white;
   border-bottom: $light-gray 1px solid;
   @include box-shadow-bottom;
@@ -1490,8 +1491,10 @@ a {
   background-image: url(/assets/AXIS-MENU_BUTTON-HOVER.png);
 }
 
-.menu-icon.menu-close {
-  background-image: url(/assets/AXIS-MENU_BUTTON-CLOSE.png);
+.filter-open {
+  .menu-icon {
+    background-image: url(/assets/AXIS-MENU_BUTTON-CLOSE.png);
+  }
 }
 
 .extra-padding {
@@ -1763,7 +1766,6 @@ a {
 }
 
 .option-menu {
-  overflow: hidden;
   -moz-transition:max-height $fast-transition;
   -webkit-transition:max-height $fast-transition;
   -o-transition:max-height $fast-transition;
