@@ -8,7 +8,6 @@ class Visio.Routers.OperationRouter extends Visio.Routers.DashboardRouter
     # Return empty promise if we've setup already
     return $.Deferred().resolve().promise() if Visio.manager.get('setup')
 
-    @toolbarView = new Visio.Views.ToolbarView({ el: $('.toolbar') })
     options =
       join_ids:
         operation_id: Visio.manager.get('dashboard').id
@@ -33,17 +32,9 @@ class Visio.Routers.OperationRouter extends Visio.Routers.DashboardRouter
       # Initialize selected to be strategy
       Visio.manager.resetSelectedDefaults()
 
-      @navigation = new Visio.Views.NavigationView el: $('#navigation')
-      @navigation.render()
-
-      $('#navigation').removeClass('gone')
-
       $collapsable = $('.collapsable-content')
       $collapsable.attr 'data-0', "max-height:#{$('.collapsable-content').height()}px"
       $collapsable.attr "data-#{$('.collapsable-content').height()}", "max-height:0px"
-      #skrollr.init(
-      #  forceHeight: false
-      #)
       Visio.manager.set('setup', true)
       NProgress.done()
     )
