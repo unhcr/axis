@@ -23,7 +23,6 @@ class Visio.Views.Header extends Backbone.View
     Visio.manager.on 'change:setup', =>
       if Visio.manager.get 'setup'
         @filterSystem = new Visio.Views.FilterSystemView el: $('#filter-system')
-        @filterSystem.$el.removeClass 'gone'
         @filterSystem.render Visio.Views.FilterSystemView.VIEWS.FILTERS
 
     @menuOptions =

@@ -8,7 +8,6 @@ class Visio.Routers.DashboardRouter extends Visio.Routers.GlobalRouter
     @documentView = new Visio.Views.Document()
 
     Visio.manager.on 'change:date', () =>
-      @navigation.render()
       @moduleView.render true
       Visio.router.navigate Visio.Utils.generateOverviewUrl(), { silent: true }
 
@@ -20,11 +19,6 @@ class Visio.Routers.DashboardRouter extends Visio.Routers.GlobalRouter
       Visio.router.navigate Visio.Utils.generateOverviewUrl(), { silent: true }
 
     Visio.manager.on 'change:selected', (parameterTypeChanged) =>
-      @moduleView.render true
-      Visio.router.navigate Visio.Utils.generateOverviewUrl(), { silent: true }
-
-    Visio.manager.on ['change:navigation'].join(' '), =>
-      @navigation.render()
       @moduleView.render true
       Visio.router.navigate Visio.Utils.generateOverviewUrl(), { silent: true }
 
