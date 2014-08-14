@@ -1,17 +1,7 @@
 %section
   .menu-btn.header-item.pull-left.col-left
 
-    %a.menu-icon
-    .show-on-open
-      .dashboard-item.filter-option{ :data => { :system => Visio.Views.FilterSystemView.VIEWS.OPERATIONS } }
-        OPERATIONS
-      .dashboard-item.filter-option{ :data => { :system => Visio.Views.FilterSystemView.VIEWS.STRATEGIES } }
-        STRATEGIES
-      .dashboard-item.filter-option.selected{ :data =>
-          { :system => Visio.Views.FilterSystemView.VIEWS.FILTERS } }
-        FILTERS
-    .logo
-
+    != window.HAML['shared/filter_system/filter_options']()
 
   .center-text.header-item.menu-options.col-middle
     - _.each _.values(context.menuOptions), (menuOption, i, list) ->

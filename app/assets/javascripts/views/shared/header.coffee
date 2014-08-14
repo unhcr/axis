@@ -19,11 +19,16 @@ class Visio.Views.Header extends Backbone.View
 
   initialize: ->
 
+    defaultFilterSystem = if Visio.manager.get('dashboard')?
+        Visio.Views.FilterSystemView.VIEWS.FILTERS
+      else
+        Visio.Views.FilterSystemView.VIEWS.OPERATIONS
+
     # Render filter system once page is setup
     Visio.manager.on 'change:setup', =>
       if Visio.manager.get 'setup'
         @filterSystem = new Visio.Views.FilterSystemView el: $('#filter-system')
-        @filterSystem.render Visio.Views.FilterSystemView.VIEWS.FILTERS
+        @filterSystem.render defaultFilterSystem
 
     @menuOptions =
       module_type:

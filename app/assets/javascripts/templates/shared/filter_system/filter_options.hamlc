@@ -1,0 +1,13 @@
+%a.menu-icon
+.show-on-open
+  .dashboard-item.filter-option{ :data => { :system => Visio.Views.FilterSystemView.VIEWS.OPERATIONS } }
+    OPERATIONS
+  .dashboard-item.filter-option{ :data => { :system => Visio.Views.FilterSystemView.VIEWS.STRATEGIES } }
+    STRATEGIES
+
+  - if Visio.manager.get('dashboard')
+    .dashboard-item.filter-option.selected{ :data =>
+        { :system => Visio.Views.FilterSystemView.VIEWS.FILTERS } }
+      FILTERS
+.logo
+

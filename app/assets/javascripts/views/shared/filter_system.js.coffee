@@ -10,6 +10,7 @@ class Visio.Views.FilterSystemView extends Backbone.View
     STRATEGIES: 'renderStrategies'
 
   initialize: () ->
+    @operations = new Visio.Collections.Operation()
 
   events:
     'click .open': 'onClickOpen'
@@ -26,6 +27,9 @@ class Visio.Views.FilterSystemView extends Backbone.View
 
 
   renderFilters: ->
+    unless Visio.manager.get('dashboard')?
+      throw new Error('No dashboard present, cannot render filters')
+
     @$el.removeClass 'filter-system-orange'
     _.each @searches, (searchView) -> searchView.close() if @searches?
 
@@ -60,8 +64,14 @@ class Visio.Views.FilterSystemView extends Backbone.View
   renderOperations: ->
     @$el.addClass 'filter-system-orange'
 
-    Visio.manager.get('operations').fetch().done =>
-      @$el.html @templateOperations()
+    if @operations.length > 0
+      @$el.html @templateOperations
+        operations: @operations
+    else
+      @operations.fetch().done =>
+        @$el.html @templateOperations
+          operations: @operations
+
 
   renderStrategies: ->
     @$el.addClass 'filter-system-orange'

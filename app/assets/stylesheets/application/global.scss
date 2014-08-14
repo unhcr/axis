@@ -278,7 +278,7 @@ body.layout-cms {
     overflow: hidden;
     display: inline-block;
     border-left: 1px solid white;
-    @include transition-property(width);
+    @include transition-property(all);
     @include transition-duration($very-fast-transition);
     @include transition-timing-function(ease-in);
 
@@ -305,6 +305,13 @@ body.layout-cms {
   }
 
 
+}
+
+#header.breadcrumb {
+  .logo {
+    background-image: url(/assets/AXIS-LOGO-ORANGE-SMALL.png);
+    width: 76px;
+  }
 }
 
 #header.filter-open {
