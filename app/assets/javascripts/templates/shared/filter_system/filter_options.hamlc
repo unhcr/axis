@@ -1,4 +1,7 @@
 %a.menu-icon
+  .menu-bar.top
+  .menu-bar.middle
+  .menu-bar.bottom
 .show-on-open
   .dashboard-item.filter-option{ :data => { :system => Visio.Views.FilterSystemView.VIEWS.OPERATIONS } }
     OPERATIONS

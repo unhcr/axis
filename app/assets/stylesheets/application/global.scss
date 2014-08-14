@@ -259,14 +259,19 @@ body.layout-cms {
     }
   }
 
-  .col-left, .col-right {
-    width: 20%;
-    min-width: $filter-system-width;
+  .col-left {
+    width: 25%;
+    min-width: 335px;
+  }
+
+  .col-right {
+    width: 10%;
+    float: right;
   }
 
   .col-middle {
-    width: 42%;
-    min-width: $header-min-width - (2 * $filter-system-width);
+    min-width: 670px;
+    width: 50%;
 
   }
 
@@ -1487,21 +1492,76 @@ a {
 .menu-icon {
   display: inline-block;
   cursor: pointer;
-  background-image: url(/assets/AXIS-MENU_BUTTON.png);
   position: relative;
   width: $menu-width;
   height: $menu-height;
   background-color: $orange;
+  @include transition-property(all);
+  @include transition-duration($very-fast-transition);
+  @include transition-timing-function(ease-in);
+
+  .menu-bar {
+    position: absolute;
+    left: 15px;
+    width: 40px;
+    background-color: white;
+    height: 7px;
+    @include transition-property(all);
+    @include transition-duration($very-fast-transition);
+    @include transition-timing-function(ease-in);
+    pointer-events: none;
+  }
+
+  .menu-bar.top {
+    top: 20px;
+  }
+  .menu-bar.middle {
+    top: 31px;
+  }
+  .menu-bar.bottom {
+    top: 42px;
+  }
 }
 
 .menu-icon:hover {
-  background-image: url(/assets/AXIS-MENU_BUTTON-HOVER.png);
+  background-color: darken($orange, 5%);
+  .menu-bar.top {
+    top: 18px;
+  }
+  .menu-bar.bottom {
+    top: 44px;
+  }
 }
 
 .filter-open {
-  .menu-icon {
-    background-image: url(/assets/AXIS-MENU_BUTTON-CLOSE.png);
+  .menu-bar {
+    left: 23px;
+    width: 39px;
   }
+  .menu-bar.top {
+    top: 23px;
+    @include rotate(45deg);
+    @include transform-origin(6px, -2px, 0);
+  }
+  .menu-bar.middle {
+    opacity: 0;
+  }
+  .menu-bar.bottom {
+    @include rotate(-45deg);
+    @include transform-origin(0px, 6px, 0);
+    top: 44px;
+    left: 22px;
+  }
+  .menu-icon:hover {
+    .menu-bar.top {
+      top: 23px;
+    }
+    .menu-bar.bottom {
+      top: 44px;
+      left: 22px;
+    }
+  }
+
 }
 
 .extra-padding {
