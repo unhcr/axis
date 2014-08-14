@@ -1328,8 +1328,15 @@ a {
 
 }
 
+.graph-logo {
+  background-image: url('/assets/AXIS-ICON.png');
+  background-size: 32px 33px;
+  width: 32px;
+  height: 33px;
+}
+
 .filter-system-container {
-  margin: 0 20px;
+  margin: 0 30px;
 
   .divider-stack-orange {
     margin: 20px -20px;
