@@ -3,7 +3,7 @@
     .menu-btn.header-item.pad-right
       != window.HAML['shared/filter_system/filter_options']()
       %h5
-        = Visio.manager.get('dashboard').toString()
+        = Visio.manager.dashboardName()
 
 
     .header-item

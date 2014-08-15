@@ -80,6 +80,7 @@ class Visio.Models.Manager extends Backbone.Model
     'reported_type': Visio.Algorithms.REPORTED_VALUES.yer
     'module_type': Visio.FigureTypes.OVERVIEW.name
     'dashboard': null
+    'indicator': null # Used for indicator dashboard
 
   resetSelectedDefaults: () ->
     _.each _.values(Visio.Parameters), (hash) ->
@@ -111,6 +112,12 @@ class Visio.Models.Manager extends Backbone.Model
     @resetBudgetDefaults()
     @resetSelectedDefaults()
     Visio.manager.trigger('change:selected')
+
+  dashboardName: ->
+    if @get('indicator')?
+      @get('indicator').toString()
+    else
+      @get('dashboard').toString()
 
   includeExternalStrategyData: (include) =>
     unless include?
