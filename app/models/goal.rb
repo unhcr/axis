@@ -10,6 +10,12 @@ class Goal < ActiveRecord::Base
   has_many :budgets
   has_many :expenditures
 
+  has_many :goals_indicators, :class_name => 'GoalsIndicators'
+  has_many :indicators, :uniq => true, :through => :goals_indicators
+
+  has_many :goals_outputs, :class_name => 'GoalsOutputs'
+  has_many :outputs, :uniq => true, :through => :goals_outputs
+
   has_many :goals_ppgs, :class_name => 'GoalsPpgs'
   has_many :ppgs, :uniq => true, :through => :goals_ppgs
 

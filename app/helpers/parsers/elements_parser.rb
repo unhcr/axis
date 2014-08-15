@@ -106,20 +106,25 @@ module Parsers
         GoalsPpgs => [],
         GoalsProblemObjectives => [],
         GoalsRightsGroups => [],
+        GoalsIndicators => [],
+        GoalsOutputs => [],
         IndicatorsOperations => [],
         IndicatorsOutputs => [],
         IndicatorsPlans => [],
         IndicatorsProblemObjectives => [],
+        IndicatorsPpgs => [],
         OperationsOutputs => [],
         OperationsPpgs => [],
         OperationsProblemObjectives => [],
         OperationsRightsGroups => [],
         OutputsPlans => [],
         OutputsProblemObjectives => [],
+        OutputsPpgs => [],
         PlansPpgs => [],
         PlansProblemObjectives => [],
         PlansRightsGroups => [],
         ProblemObjectivesRightsGroups => [],
+        PpgsProblemObjectives => []
       }
 
       p 'Reading CSV'
