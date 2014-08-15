@@ -2153,6 +2153,7 @@ a {
 .query-by {
   padding-top: 0px;
   input {
+    @include input-white;
     padding: 0px;
     width: 100%;
     height: 100%;
