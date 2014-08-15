@@ -41,7 +41,9 @@ class Visio.Views.FilterSystemView extends Backbone.View
     _.each _.values(Visio.Parameters), (hash) ->
 
       # Skip if it is operation dashboard then don't include the operation in the navigation
-      return if Visio.manager.get('dashboard').name == hash
+      return if Visio.manager.get('indicator') and Visio.Parameters.INDICATORS == hash
+
+      return if Visio.manager.get('dashboard').name == hash and not Visio.manager.get('indicator')?
 
 
       data = Visio.manager.get(hash.plural)
