@@ -1,0 +1,9 @@
+.filter-system-container
+  != window.HAML['shared/filter_system/filter_options']({ options: context.options })
+
+  %h3
+    = _.findWhere(context.options, { type: 'indicators' }).human
+  - context.indicators.each (indicator) ->
+    %a{ :href => "/indicator/#{indicator.id}" }
+      = indicator.toString()
+

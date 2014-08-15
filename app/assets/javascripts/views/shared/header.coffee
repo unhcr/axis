@@ -10,7 +10,6 @@ class Visio.Views.Header extends Backbone.View
   events:
     'click .menu-option': 'onClickMenuOption'
     'click .menu-icon': 'onClickMenuIcon'
-    'click .filter-option': 'onClickFilterOption'
     'transitionend .menu-value': 'onTransitionEnd'
     'MSTransitionEnd .menu-value': 'onTransitionEnd'
     'webkitTransitionEnd .menu-value': 'onTransitionEnd'
@@ -20,15 +19,15 @@ class Visio.Views.Header extends Backbone.View
   initialize: ->
 
     defaultFilterSystem = if Visio.manager.get('dashboard')?
-        Visio.Views.FilterSystemView.VIEWS.FILTERS
+        _.findWhere Visio.Views.FilterSystemView.OPTIONS, { type: 'filters' }
       else
-        Visio.Views.FilterSystemView.VIEWS.OPERATIONS
+        _.findWhere Visio.Views.FilterSystemView.OPTIONS, { type: 'operations' }
 
     # Render filter system once page is setup
     Visio.manager.on 'change:setup', =>
       if Visio.manager.get 'setup'
         @filterSystem = new Visio.Views.FilterSystemView el: $('#filter-system')
-        @filterSystem.render defaultFilterSystem
+        @filterSystem.render defaultFilterSystem.type
 
     @menuOptions =
       module_type:
@@ -133,15 +132,6 @@ class Visio.Views.Header extends Backbone.View
     $menuValues = @$el.find '.menu-value'
     $menuValues.css 'left', '-2000px'
     @markOld()
-
-  onClickFilterOption: (e) =>
-    $target = $(e.currentTarget)
-    return if $target.hasClass 'selected'
-
-    @$el.find('.filter-option.selected').removeClass 'selected'
-    $target.addClass 'selected'
-
-    @filterSystem.render $target.data().system
 
   onClickMenuIcon: (e) =>
     @$el.toggleClass 'filter-open'

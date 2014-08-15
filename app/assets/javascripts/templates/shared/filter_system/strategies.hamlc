@@ -1,4 +1,5 @@
 .filter-system-container
+  != window.HAML['shared/filter_system/filter_options']({ options: context.options })
 
   %h3 Priority Strategies
 

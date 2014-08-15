@@ -112,12 +112,6 @@ p.small {
     background-color: transparent;
   }
 
-  .menu-icon {
-    .menu-row {
-      background-color: $white;
-    }
-  }
-
   .highlight {
     color: $white;
   }
@@ -276,6 +270,7 @@ body.layout-cms {
   }
 
   .show-on-open {
+    height: $header-height;
     background-color: $orange;
     max-width: 0px;
     width: 342px;
@@ -332,6 +327,12 @@ body.layout-cms {
   .logo {
     display: none;
   }
+
+  .menu-icon:after {
+    background-image: url(/assets/AXIS-LOGO-WHITE.png);
+  }
+
+
 }
 
 body.layout-application {
@@ -1320,7 +1321,6 @@ a {
   height: 100%;
   position: fixed;
   margin-top: $header-height;
-  padding-top: 30px;
   top: 0;
   left: 0;
   height: 100%;
@@ -1337,6 +1337,24 @@ a {
 
 .filter-system-container {
   margin: 0 30px;
+
+  .filter-options {
+    height: $header-height;
+    border-bottom: $orange 1px solid;
+    color: $dark-gray;
+
+    .filter-option {
+      cursor: pointer;
+      line-height: $header-height
+    }
+
+    .filter-option:hover {
+      color: $orange;
+    }
+    .filter-option.selected {
+      color: $orange;
+    }
+  }
 
   .divider-stack-orange {
     margin: 20px -20px;
@@ -1390,6 +1408,15 @@ a {
     color: $yellow;
   }
 
+  .filter-options {
+    background-color: $orange;
+    border-bottom: white 1px solid;
+    color: white;
+
+    .filter-option:hover {
+      color: $yellow;
+    }
+  }
 }
 
 .ui-accordion-content {
@@ -1528,6 +1555,21 @@ a {
   .menu-bar.bottom {
     top: 42px;
   }
+}
+
+.menu-icon:after {
+  content: ' ';
+  display: inline-block;
+  background-image: url(/assets/AXIS-LOGO-ORANGE.png);
+  margin-left: 54px;
+  width: 300px;
+
+  height: $header-height;
+  display: inline-block;
+  background-repeat: no-repeat;
+
+  background-size: auto 58px;
+  background-position: center;
 }
 
 .menu-icon:hover {

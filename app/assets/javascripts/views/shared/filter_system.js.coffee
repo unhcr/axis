@@ -3,26 +3,48 @@ class Visio.Views.FilterSystemView extends Backbone.View
   templateFilters: HAML['shared/filter_system/filters']
   templateOperations: HAML['shared/filter_system/operations']
   templateStrategies: HAML['shared/filter_system/strategies']
+  templateIndicators: HAML['shared/filter_system/indicators']
 
-  @VIEWS:
-    FILTERS: 'renderFilters'
-    OPERATIONS: 'renderOperations'
-    STRATEGIES: 'renderStrategies'
+  @OPTIONS: [
+    {
+      type: 'filters'
+      fn: 'renderFilters'
+      human: 'Filter'
+    },
+    {
+      type: 'strategies'
+      fn: 'renderStrategies'
+      human: 'Strategy'
+    }
+    {
+      type: 'operations'
+      fn: 'renderOperations'
+      human: 'Operation'
+    },
+    {
+      type: 'indicators'
+      fn: 'renderIndicators'
+      human: 'Indicator'
+    }
+  ]
 
   initialize: () ->
     @operations = new Visio.Collections.Operation()
+    @indicators = new Visio.Collections.Indicator()
 
   events:
     'click .open': 'onClickOpen'
+    'click .filter-option': 'onClickFilterOption'
     'click .deselect': 'onDeselect'
     'click .reset': 'onReset'
     'change .visio-checkbox input': 'onChangeSelection'
 
-  render: (type = 'renderFilters') ->
-    if _.values(Visio.Views.FilterSystemView.VIEWS).indexOf(type) == -1
-      throw new Error('Invalid filter system view')
+  render: (type = 'filters') ->
+    option = _.findWhere Visio.Views.FilterSystemView.OPTIONS, { type: type }
 
-    @[type]()
+    throw new Error('Invalid filter system view') unless option
+
+    @[option.fn]()
     @
 
 
@@ -54,9 +76,10 @@ class Visio.Views.FilterSystemView extends Backbone.View
         data: data
         hash: hash
 
-    @$el.html @templateFilters(
+    @$el.html @templateFilters
       dashboard: Visio.manager.get('dashboard')
-      parameters: parameters)
+      parameters: parameters
+      options: Visio.Views.FilterSystemView.OPTIONS
 
     _.each @searches, (view) =>
       plural = view.collection.name.plural
@@ -69,11 +92,25 @@ class Visio.Views.FilterSystemView extends Backbone.View
     if @operations.length > 0
       @$el.html @templateOperations
         operations: @operations
+        options: Visio.Views.FilterSystemView.OPTIONS
     else
       @operations.fetch().done =>
         @$el.html @templateOperations
           operations: @operations
+          options: Visio.Views.FilterSystemView.OPTIONS
 
+  renderIndicators: ->
+    @$el.addClass 'filter-system-orange'
+
+    if @indicators.length > 0
+      @$el.html @templateIndicators
+        indicators: @indicators
+        options: Visio.Views.FilterSystemView.OPTIONS
+    else
+      @indicators.fetch().done =>
+        @$el.html @templateIndicators
+          indicators: @indicators
+          options: Visio.Views.FilterSystemView.OPTIONS
 
   renderStrategies: ->
     @$el.addClass 'filter-system-orange'
@@ -82,6 +119,7 @@ class Visio.Views.FilterSystemView extends Backbone.View
       strategies: Visio.manager.strategies().toJSON()
       personalStrategies: Visio.manager.personalStrategies().toJSON()
       sharedStrategies: Visio.manager.sharedStrategies().toJSON()
+      options: Visio.Views.FilterSystemView.OPTIONS
 
   onChangeSelection: (e) ->
     $target = $(e.currentTarget)
@@ -111,6 +149,14 @@ class Visio.Views.FilterSystemView extends Backbone.View
       search = _.find @searches, (s) -> s.parameter().plural is type
       search.add id
 
+  onClickFilterOption: (e) =>
+    $target = $(e.currentTarget)
+    return if $target.hasClass 'selected'
+
+    @$el.find('.filter-option.selected').removeClass 'selected'
+    $target.addClass 'selected'
+
+    @render $target.data().system
 
   onClickOpen: (e) ->
     type = $(e.currentTarget).attr('data-type')

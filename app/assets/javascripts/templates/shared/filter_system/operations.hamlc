@@ -1,6 +1,8 @@
 .filter-system-container
+  != window.HAML['shared/filter_system/filter_options']({ options: context.options })
 
-  %h3 Operations
+  %h3
+    = _.findWhere(context.options, { type: 'operations' }).human
   - context.operations.each (operation) ->
     %a{ :href => "/operation/#{operation.id}" }
       = operation.toString()
