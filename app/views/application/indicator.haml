@@ -1,0 +1,22 @@
+.inner-content
+  #module
+
+:javascript
+  $(document).ready(function() {
+    var ready = function() {
+      Visio.router = new Visio.Routers.IndicatorRouter();
+      Backbone.history.start();
+    }
+
+
+    Visio.manager = new Visio.Models.Manager({
+      dashboard: new Visio.Models['#{@dashboard.class.to_s}'](#{@dashboard.to_json(@options).html_safe}),
+      indicator: new Visio.Models.Indicator(#{@indicator.to_json(@options).html_safe}),
+      strategies: new Visio.Collections.Strategy(#{@strategies.to_json.html_safe}),
+      personal_strategies: new Visio.Collections.Strategy(#{@personal_strategies.to_json.html_safe}),
+      shared_strategies: new Visio.Collections.Strategy(#{@shared_strategies.to_json.html_safe}),
+      ready: ready
+    });
+
+  });
+

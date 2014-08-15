@@ -79,9 +79,7 @@ class IndicatorTest < ActiveSupport::TestCase
   test "include options" do
     options = {
       :include => {
-        :problem_objective_ids => true,
-        :operation_ids => true,
-        :output_ids => true,
+        :ids => true
       }
     }
 

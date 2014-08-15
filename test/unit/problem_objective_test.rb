@@ -8,6 +8,7 @@ class ProblemObjectiveTest < ActiveSupport::TestCase
     @po.outputs << outputs(:one)
     @po.indicators << indicators(:one)
     @po.goals << goals(:one)
+    @po.ppgs << ppgs(:one)
     @po.save
 
   end
@@ -82,10 +83,7 @@ class ProblemObjectiveTest < ActiveSupport::TestCase
   test "include options" do
     options = {
       :include => {
-        :output_ids => true,
-        :operation_ids => true,
-        :goal_ids => true,
-        :indicator_ids => true,
+        :ids => true,
       }
     }
 
@@ -95,10 +93,12 @@ class ProblemObjectiveTest < ActiveSupport::TestCase
     assert_nil json["goal_ids"]
     assert_nil json["operation_ids"]
     assert_nil json["indicator_ids"]
+    assert_nil json["ppg_ids"]
 
     json = @po.as_json(options)
 
     assert_equal json["output_ids"].length, 1
+    assert_equal json["ppg_ids"].length, 1
     assert_equal json["operation_ids"].length, 1
     assert_equal json["goal_ids"].length, 1
     assert_equal json["indicator_ids"].length, 1

@@ -43,7 +43,7 @@ class ProblemObjective < ActiveRecord::Base
         json.ppg_ids self.ppg_ids.inject({}) { |h, id| h[id] = true; h }
         json.operation_ids self.operation_ids.inject({}) { |h, id| h[id] = true; h }
         json.indicator_ids self.indicator_ids.inject({}) { |h, id| h[id] = true; h }
-        json.output_ids self.problem_objective_ids.inject({}) { |h, id| h[id] = true; h }
+        json.output_ids self.output_ids.inject({}) { |h, id| h[id] = true; h }
         json.goal_ids self.goal_ids.inject({}) { |h, id| h[id] = true; h }
       end
     end

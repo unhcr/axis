@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   end
   protect_from_forgery
 
-  before_filter :common, :only => [:index, :operation, :overview]
+  before_filter :common, :only => [:index, :operation, :overview, :indicator]
 
   @@map = File.read("#{Rails.root}/public/world_50m_topo.json")
   @@mapMD5 = Digest::MD5.hexdigest(@@map)
@@ -32,13 +32,19 @@ class ApplicationController < ActionController::Base
     render :json => user.to_json
   end
 
+  def indicator
+    @indicator = Indicator.find params[:indicator_id]
+    @dashboard = @indicator.outputs.first || @indicator.problem_objectives.first
+    render :layout => 'dashboard'
+  end
+
   def operation
-    @operation ||= Operation.find params[:operation_id]
+    @dashboard = Operation.find params[:operation_id]
     render :layout => 'dashboard'
   end
 
   def overview
-    @strategy ||= Strategy.find(params[:strategy_id])
+    @dashboard = Strategy.find(params[:strategy_id])
     render :layout => 'dashboard'
   end
 
