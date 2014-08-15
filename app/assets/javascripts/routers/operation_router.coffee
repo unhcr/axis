@@ -32,10 +32,7 @@ class Visio.Routers.OperationRouter extends Visio.Routers.DashboardRouter
       # Initialize selected to be strategy
       Visio.manager.resetSelectedDefaults()
 
-      $collapsable = $('.collapsable-content')
-      $collapsable.attr 'data-0', "max-height:#{$('.collapsable-content').height()}px"
-      $collapsable.attr "data-#{$('.collapsable-content').height()}", "max-height:0px"
-      Visio.manager.set('setup', true)
+      Visio.manager.set 'setup', true
       NProgress.done()
     )
 

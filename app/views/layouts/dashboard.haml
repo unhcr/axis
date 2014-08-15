@@ -18,11 +18,14 @@
       .row
         .col-md-12
           %h1.bottom-flush
-            = (@strategy || @operation).name
+            - if @indicator.present?
+              = @indicator.name
+            - else
+              = @dashboard.name
       .row
         .col-md-12
           %p.top-flush
-            = @strategy.description if @strategy.present?
+            = @dashboard.description if @dashboard.respond_to? 'description'
       .divider-black
       = yield
 

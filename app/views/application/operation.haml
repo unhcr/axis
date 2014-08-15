@@ -3,24 +3,16 @@
 
 :javascript
   $(document).ready(function() {
-    var $navigationIcon = $('.navigation-activation-icon');
-    var $toolbar = $('.toolbar')
-    var $innerContent = $('.inner-content');
-    var headerHeight = $('header').height();
-    var bottomOffset = 300
-
     var ready = function() {
       Visio.router = new Visio.Routers.OperationRouter()
 
       Backbone.history.start();
     }
 
-
-
     Visio.manager = new Visio.Models.Manager({
-      dashboard: new Visio.Models.Operation(#{@operation.to_json(@options).html_safe}),
+      dashboard: new Visio.Models.Operation(#{@dashboard.to_json(@options).html_safe}),
       aggregation_type: Visio.Parameters.PPGS.plural,
-      operations: new Visio.Collections.Operation([#{@operation.to_json(@options).html_safe}]),
+      operations: new Visio.Collections.Operation([#{@dashboard.to_json(@options).html_safe}]),
       strategies: new Visio.Collections.Strategy(#{@strategies.to_json.html_safe}),
       personal_strategies: new Visio.Collections.Strategy(#{@personal_strategies.to_json.html_safe}),
       shared_strategies: new Visio.Collections.Strategy(#{@shared_strategies.to_json.html_safe}),
