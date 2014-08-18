@@ -352,6 +352,17 @@ body.layout-cms {
 
 }
 
+#footer {
+  border-top: 2px solid $orange;
+  border-bottom: $black solid 50px;
+  height: $footer-height;
+  background-color: white;
+  padding-left: 80px;
+  padding-top: 50px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
 body.layout-application {
   @include text-theme-two;
 
