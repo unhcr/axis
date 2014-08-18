@@ -158,6 +158,15 @@ class Visio.Models.Parameter extends Visio.Models.Syncable
   search: (query) ->
     $.get("#{@url}/search", { query: query })
 
+  initialize: ->
+    # Initialize helper functions to get ids of a given type
+    _.each _.values(Visio.Parameters), (hash) =>
+
+      @[hash.plural] = () =>
+        ids = _.keys(@get("#{hash.singular}_ids"))
+        parameters = Visio.manager.get(hash.plural)
+        return new parameters.constructor(parameters.filter (model) =>
+          @get("#{hash.singular}_ids")[model.id])
 
   include: (singular, id) ->
 
@@ -169,3 +178,4 @@ class Visio.Models.Parameter extends Visio.Models.Syncable
 
   highlight: ->
     return @get('highlight').name[0] if @get('highlight')
+
