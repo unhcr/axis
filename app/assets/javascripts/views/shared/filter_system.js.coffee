@@ -97,9 +97,11 @@ class Visio.Views.FilterSystemView extends Backbone.View
       @$el.find('.system-list').html @templatePageList
         models: @[option.type]
     else
+      NProgress.start()
       @[option.type].fetch().done =>
         @$el.find('.system-list').html @templatePageList
           models: @[option.type]
+        NProgress.done()
 
   renderStrategies: ->
     @$el.addClass 'filter-system-orange'
