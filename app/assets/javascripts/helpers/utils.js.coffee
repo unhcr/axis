@@ -144,11 +144,3 @@ Visio.Utils.parameterBySingular = (singular) ->
   for parameter, hash of Visio.Parameters
     return hash if hash.singular == singular
   null
-
-Visio.Utils.inlineCssStyles = ($ele) ->
-  $ele.css css($ele)
-
-Visio.Utils.recursiveInlineCssStyles = ($ele) ->
-  Visio.Utils.inlineCssStyles $ele
-  $ele.children().each (idx, ele) ->
-    Visio.Utils.recursiveInlineCssStyles $(ele) unless _.isEmpty($(ele).children())

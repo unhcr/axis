@@ -119,22 +119,27 @@ class Visio.Views.ExportModule extends Backbone.View
 
   onClickPng: =>
     @buildModule()
+    @$el.find('svg').parent().inlinify()
+
     html = d3.select(@el).select('svg')
       .attr('version', 1.1)
       .attr("xmlns", "http://www.w3.org/2000/svg")
       .node()
 
-    $html = $ html
-
-    Visio.Utils.recursiveInlineCssStyles $html
-
-    imgsrc = 'data:image/svg+xml;base64,'+ btoa($html[0].parentNode.innerHTML)
+    imgsrc = 'data:image/svg+xml;base64,'+ btoa(html.parentNode.innerHTML)
     img = new Image()
     img.src = imgsrc
     img.onload = =>
+      canvas = document.createElement 'canvas'
+      canvas.width = img.width
+      canvas.height = img.height
+
+      context = canvas.getContext '2d'
+      context.drawImage img, 0, 0
+
       a = document.createElement 'a'
-      a.download = "#{@model.get('title') or 'sample'}.svg"
-      a.href = imgsrc
+      a.download = "#{@model.get('title') or 'graph'}.png"
+      a.href = canvas.toDataURL 'image/png'
       a.click()
 
   onClose: ->
