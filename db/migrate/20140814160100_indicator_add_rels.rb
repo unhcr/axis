@@ -15,6 +15,6 @@ class IndicatorAddRels < ActiveRecord::Migration
 
   def down
     drop_table "indicators_ppgs"
-    drop_table "indicators_goals"
+    drop_table "goals_indicators"
   end
 end
