@@ -6,7 +6,7 @@
         .menu-bar.middle
         .menu-bar.bottom
       .show-on-open
-      %h5
+      %h5.dashboard-name
         = Visio.manager.dashboardName()
 
 

@@ -1,32 +1,33 @@
 .filter-system-container
-  != window.HAML['shared/filter_system/filter_options']({ options: context.options })
+  != window.HAML['shared/filter_system/filter_options']({ options: context.options, selected: context.selected })
 
-  .header
-    .graph-logo
-    %h3 Customize Strategy
+  .system-container
+    .header
+      .graph-logo
+      %h3 Customize Strategy
 
-  .save-filters
-  .ui-accordion-container
-    - _.each context.parameters, (p) ->
-      .ui-accordion
-        .name.open{ :data => { :type => "#{p.hash.plural}"} }
-          = p.hash.human.toUpperCase()
-        .ui-accordion-content{ :class => p.hash.plural,
-                               :data => { :type => p.hash.plural } }
+    .save-filters
+    .ui-accordion-container
+      - _.each context.parameters, (p) ->
+        .ui-accordion
+          .name.open{ :data => { :type => "#{p.hash.plural}"} }
+            = p.hash.human.toUpperCase()
+          .ui-accordion-content{ :class => p.hash.plural,
+                                 :data => { :type => p.hash.plural } }
 
-          %small.deselect{ :data => { :type => p.hash.plural }} Deselect All
-          %span
-            = "|"
-          %small.reset{ :data => { :type => p.hash.plural }} Reset
-          .ui-accordion-checkboxes
-            - _.each p.data, (d) ->
-              .visio-checkbox.visio-checkbox-orange.visio-checkbox-left
-                %input{
-                  :value => p.hash.plural + Visio.Constants.SEPARATOR + d.id,
-                  :checked => if Visio.manager.get('selected')[p.hash.plural][d.id] then true else false,
-                  :type => 'checkbox',
-                  :id => "check_#{d.id}_#{p.hash.plural}" }
-                %label{ :for => "check_#{d.id}_#{p.hash.plural}" }
-                  - unless context.dashboard.include(p.hash.singular, d.id)
-                    [NOT IN STRATEGY]
-                  = d.toString()
+            %small.deselect{ :data => { :type => p.hash.plural }} Deselect All
+            %span
+              = "|"
+            %small.reset{ :data => { :type => p.hash.plural }} Reset
+            .ui-accordion-checkboxes
+              - _.each p.data, (d) ->
+                .visio-checkbox.visio-checkbox-orange.visio-checkbox-left
+                  %input{
+                    :value => p.hash.plural + Visio.Constants.SEPARATOR + d.id,
+                    :checked => if Visio.manager.get('selected')[p.hash.plural][d.id] then true else false,
+                    :type => 'checkbox',
+                    :id => "check_#{d.id}_#{p.hash.plural}" }
+                  %label{ :for => "check_#{d.id}_#{p.hash.plural}" }
+                    - unless context.dashboard.include(p.hash.singular, d.id)
+                      [NOT IN STRATEGY]
+                    = d.toString()

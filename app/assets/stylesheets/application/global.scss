@@ -277,7 +277,6 @@ body.layout-cms {
     margin-left: -3px;
     overflow: hidden;
     display: inline-block;
-    border-left: 1px solid white;
     @include transition-property(all);
     @include transition-duration($very-fast-transition);
     @include transition-timing-function(ease-in);
@@ -308,20 +307,37 @@ body.layout-cms {
 }
 
 #header.breadcrumb {
-  .logo {
+  .menu-icon:after {
     background-image: url(/assets/AXIS-LOGO-ORANGE-SMALL.png);
-    width: 76px;
+    width: 90px;
+  }
+
+  .dashboard-name {
+    max-width: 300px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    margin-left: 125px;
+  }
+  .dashboard-name:hover {
+    max-width: initial;
+  }
+}
+
+#header.breadcrumb.filter-open {
+  .dashboard-name {
+    margin-left: 20px;
   }
 }
 
 #header.filter-open {
-
-  .show-on-open {
-    max-width: 342px;
+  .menu-icon {
+    margin-right: 0;
   }
 
-  .menu-btn {
-    max-width: 620px
+  .show-on-open {
+    border-left: 1px solid white;
+    margin-right: 20px;
+    max-width: initial;
   }
 
   .logo {
@@ -330,6 +346,7 @@ body.layout-cms {
 
   .menu-icon:after {
     background-image: url(/assets/AXIS-LOGO-WHITE.png);
+    width: 300px;
   }
 
 
@@ -1336,12 +1353,24 @@ a {
 }
 
 .filter-system-container {
-  margin: 0 30px;
+  margin: 0 $filter-system-margin;
+  .system-container {
+    margin-top: $header-height + 30;
+  }
 
   .filter-options {
+    margin-left: -$filter-system-margin;
+    margin-right: -$filter-system-margin;
+    margin-bottom: 28px;
     height: $header-height;
     border-bottom: $orange 1px solid;
     color: $dark-gray;
+    text-align: center;
+
+    position: fixed;
+    width: $filter-system-width;
+    top: $header-height + 1;
+    background-color: white;
 
     .filter-option {
       cursor: pointer;
@@ -1357,7 +1386,9 @@ a {
   }
 
   .divider-stack-orange {
-    margin: 20px -20px;
+    margin: 20px;
+    margin-left: -$filter-system-margin;
+    margin-right: -$filter-system-margin;
   }
 
   .header {
@@ -1398,7 +1429,8 @@ a {
   border-top: 1px solid white;
 
   a {
-    line-height: 22px;
+    line-height: 13px;
+    padding: 5px 0;
     display: block;
     color: $white;
   }
@@ -1414,6 +1446,9 @@ a {
     color: white;
 
     .filter-option:hover {
+      color: $yellow;
+    }
+    .filter-option.selected {
       color: $yellow;
     }
   }
@@ -1561,7 +1596,7 @@ a {
   content: ' ';
   display: inline-block;
   background-image: url(/assets/AXIS-LOGO-ORANGE.png);
-  margin-left: 54px;
+  margin-left: 95px;
   width: 300px;
 
   height: $header-height;
@@ -1569,7 +1604,7 @@ a {
   background-repeat: no-repeat;
 
   background-size: auto 58px;
-  background-position: center;
+  background-position: left center;
 }
 
 .menu-icon:hover {
