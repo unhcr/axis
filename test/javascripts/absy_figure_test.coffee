@@ -79,6 +79,25 @@ test 'select', ->
   $.publish("select.#{@figure.figureId()}.figure", [@d, 0])
   strictEqual d3.select(@figure.el).selectAll('.active').size(), 1, 'Should have one active point'
 
+test 'default filters', ->
+
+  Visio.manager.set 'indicator', new Visio.Models.Indicator({ is_performance: true })
+
+  figure = new Visio.Figures.Absy()
+  filterValue = figure.filters.get 'is_performance'
+
+  ok filterValue.get('hidden')
+  strictEqual filterValue.active(), 'true'
+
+  Visio.manager.set 'indicator', new Visio.Models.Indicator({ is_performance: false })
+
+  figure = new Visio.Figures.Absy()
+  filterValue = figure.filters.get 'is_performance'
+
+  ok filterValue.get('hidden')
+  strictEqual filterValue.active(), 'false'
+
+
 test 'el', ->
   @figure.collectionFn new Visio.Collections.Output([@d])
   @figure.render()
