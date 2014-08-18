@@ -237,6 +237,13 @@ test 'configuration', ->
 
   Visio.configuration = {}
 
+test 'dashboardName', ->
+  Visio.manager.set 'dashboard', new Visio.Models.Operation({ name: 'rudolph' })
+  strictEqual Visio.manager.dashboardName(), 'rudolph'
+
+  Visio.manager.set 'indicator', new Visio.Models.Indicator({ name: 'ben' })
+  strictEqual Visio.manager.dashboardName(), 'ben'
+
 #test 'call ready with no local storage', ->
 #
 #  cb = sinon.spy()

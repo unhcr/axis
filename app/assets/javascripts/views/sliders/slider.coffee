@@ -1,6 +1,6 @@
 class Visio.Views.SliderView extends Backbone.View
 
-  className: 'slider-container row'
+  className: 'slider-container'
 
   slideDelay: 20
 

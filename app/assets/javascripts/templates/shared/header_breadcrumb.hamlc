@@ -1,0 +1,26 @@
+%section.row
+  .col-md-12
+    .menu-btn.header-item.pad-right
+      %a.menu-icon.menu-icon-with-logo
+        .menu-bar.top
+        .menu-bar.middle
+        .menu-bar.bottom
+      .show-on-open
+      %h5.dashboard-name
+        = Visio.manager.dashboardName()
+
+
+    .header-item
+      %span
+        = '|'
+      - _.each _.values(context.menuOptions), (menuOption, i, list) ->
+        .dashboard-item.menu-option{ :data => { :option => menuOption.key } }
+          %span.dashboard-label
+            = menuOption.currentHuman()
+
+        - if i < list.length - 1
+          %span
+            = '|'
+
+
+.option-menu.zero-max-height.no-border

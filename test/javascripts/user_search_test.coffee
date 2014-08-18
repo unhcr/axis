@@ -7,9 +7,7 @@ module 'User Search',
     @server = sinon.fakeServer.create()
 
     models = [{ login: 'abc', id: 2 }, { login: 'adef', id: 1 }]
-    @server.respondWith 'GET', /.*/,  (req) ->
-
-      [200, {'Content-Type': 'application/json'}, JSON.stringify(models)]
+    @server.respondWith 'GET', /.*/,  [200, {'Content-Type': 'application/json'}, JSON.stringify(models)]
 
   teardown: () ->
     @server.restore()

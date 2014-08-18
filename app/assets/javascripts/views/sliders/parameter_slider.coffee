@@ -5,8 +5,6 @@ class Visio.Views.ParameterSliderView extends Visio.Views.SliderView
     className: 'Parameter'
 
   events:
-    'click .next': 'onNext'
-    'click .previous': 'onPrevious'
     'click .show-more': 'onShowMore'
 
   initialize: (options) ->
@@ -38,12 +36,6 @@ class Visio.Views.ParameterSliderView extends Visio.Views.SliderView
     # How many we can show on the page
     toMove = Math.floor sliderWidth / slideWidth
     toMove * multiplier
-
-  onNext: (e) =>
-    @move(@toMove(true)) unless @isGrid()
-
-  onPrevious: (e) =>
-    @move(@toMove(false)) unless @isGrid()
 
   onShowMore: (e) =>
     $target = $ e.currentTarget

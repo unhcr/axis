@@ -1,0 +1,4 @@
+- _.each context.models, (model) ->
+  %a{ :href => "/#{model.name.singular}/#{model.id}" }
+    = model.toString()
+

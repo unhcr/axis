@@ -12,13 +12,22 @@ class Visio.Figures.Isy extends Visio.Figures.Base
     humanGoalTypes = _.object _.values(Visio.Algorithms.GOAL_TYPES),
                               _.values(Visio.Algorithms.GOAL_TYPES).map((goalType) ->
                                 Visio.Utils.humanMetric(goalType))
+    performanceValues =
+      true: false
+      false: true
+    # For indicator dashboard just set the proper indicator type
+    if Visio.manager.get('indicator')?
+      performanceValues =
+        true: Visio.manager.get('indicator').get('is_performance')
+        false: !Visio.manager.get('indicator').get('is_performance')
 
     @filters = new Visio.Collections.FigureFilter([
       {
         id: 'is_performance'
         filterType: 'radio'
-        values: { true: true, false: false }
+        values: performanceValues
         human: { true: 'performance', false: 'impact' }
+        hidden: Visio.manager.get('indicator')?
         callback: (name, attr) =>
           @selectedDatum = null
           @isPerformanceFn(name == 'true')

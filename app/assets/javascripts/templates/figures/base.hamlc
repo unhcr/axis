@@ -5,4 +5,4 @@
         = context.figure.type.human
     .col-md-6.right-text.header-buttons
       .export.header-button
-%figure
+%figure.contain

@@ -50,8 +50,8 @@ class ApplicationControllerTest < ActionController::TestCase
     assert_response :success
 
     assert_template :operation
-    assert_template layout: 'layouts/index'
-    assert_not_nil assigns(:operation)
+    assert_template layout: 'layouts/dashboard'
+    assert_not_nil assigns(:dashboard)
     assert_not_nil assigns(:options)
     assert_not_nil assigns :strategies
     assert_not_nil assigns :personal_strategies
@@ -65,9 +65,28 @@ class ApplicationControllerTest < ActionController::TestCase
     assert_response :success
 
     assert_template :overview
-    assert_template layout: 'layouts/index'
-    assert_not_nil assigns :strategy
+    assert_template layout: 'layouts/dashboard'
+    assert_not_nil assigns :dashboard
     assert_not_nil assigns :options
+    assert_not_nil assigns :strategies
+    assert_not_nil assigns :personal_strategies
+    assert_not_nil assigns :shared_strategies
+    assert_not_nil assigns :configuration
+
+  end
+
+  test 'indicator page' do
+    i = Indicator.first
+    i.outputs << Output.first
+    get :indicator, { :indicator_id => i.id }
+
+    assert_response :success
+
+    assert_template :indicator
+    assert_template layout: 'layouts/dashboard'
+    assert_not_nil assigns :dashboard
+    assert_not_nil assigns :options
+    assert_not_nil assigns :indicator
     assert_not_nil assigns :strategies
     assert_not_nil assigns :personal_strategies
     assert_not_nil assigns :shared_strategies

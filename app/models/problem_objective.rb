@@ -31,16 +31,21 @@ class ProblemObjective < ActiveRecord::Base
   has_many :goals_problem_objectives, :class_name => 'GoalsProblemObjectives'
   has_many :goals, :uniq => true, :through => :goals_problem_objectives
 
+  has_many :ppgs_problem_objectives, :class_name => 'PpgsProblemObjectives'
+  has_many :ppgs, :uniq => true, :through => :ppgs_problem_objectives
 
   def to_jbuilder(options = {})
     options ||= {}
     options[:include] ||= {}
     Jbuilder.new do |json|
       json.extract! self, :objective_name, :problem_name, :id
-      json.operation_ids self.operation_ids if options[:include][:operation_ids].present?
-      json.goal_ids self.goal_ids if options[:include][:goal_ids].present?
-      json.output_ids self.output_ids if options[:include][:output_ids].present?
-      json.indicator_ids self.indicator_ids if options[:include][:indicator_ids].present?
+      if options[:include][:ids]
+        json.ppg_ids self.ppg_ids.inject({}) { |h, id| h[id] = true; h }
+        json.operation_ids self.operation_ids.inject({}) { |h, id| h[id] = true; h }
+        json.indicator_ids self.indicator_ids.inject({}) { |h, id| h[id] = true; h }
+        json.output_ids self.output_ids.inject({}) { |h, id| h[id] = true; h }
+        json.goal_ids self.goal_ids.inject({}) { |h, id| h[id] = true; h }
+      end
     end
   end
 

@@ -27,17 +27,9 @@ class Visio.Views.Dashboard extends Backbone.View
     }
   ]
 
-  barConfig:
-    width: 60
-    height: 40
-    orientation: 'left'
-    margin:
-      top: 2
-      bottom: 2
-      left: 2
-      right: 10
-
   initialize: (options) ->
+
+    @barConfig = options.barConfig
 
     if _.isArray options.filters
       @filters = new Visio.Collections.FigureFilter options.filters

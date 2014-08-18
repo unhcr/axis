@@ -118,8 +118,9 @@ Visio.Utils.stringToCssClass = (string) ->
   return string unless string
   string.replace(/\ /g, '-')
 
+
 Visio.Utils.generateOverviewUrl = ->
-  [Visio.router.moduleView.id,
+  [Visio.manager.get('module_type'),
    Visio.manager.year(),
    Visio.manager.get('aggregation_type'),
    Visio.manager.get('reported_type')].join '/'
@@ -129,15 +130,17 @@ Visio.Utils.parameterByPlural = (plural) ->
     return hash if hash.plural == plural
   null
 
+Visio.Utils.figureTypeByName = (name) ->
+  for figureType, hash of Visio.FigureTypes
+    return hash if hash.name == name
+  null
+
+Visio.Utils.parameterByName = (name) ->
+  for parameter, hash of Visio.Parameters
+    return hash if hash.name == name
+  null
+
 Visio.Utils.parameterBySingular = (singular) ->
   for parameter, hash of Visio.Parameters
     return hash if hash.singular == singular
   null
-
-Visio.Utils.inlineCssStyles = ($ele) ->
-  $ele.css css($ele)
-
-Visio.Utils.recursiveInlineCssStyles = ($ele) ->
-  Visio.Utils.inlineCssStyles $ele
-  $ele.children().each (idx, ele) ->
-    Visio.Utils.recursiveInlineCssStyles $(ele) unless _.isEmpty($(ele).children())

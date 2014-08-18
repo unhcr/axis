@@ -19,7 +19,8 @@ class Visio.Figures.Bar extends Visio.Figures.Base
     # fixed is the scale that scales the bars equally apart
     @fixed = d3.scale.ordinal()
     @zeroPadding = if @hasZeroPad? then 3 else 0
-    @labelHeight = 18
+    @labelHeight = 30
+    @barPadding = 8
 
     switch @orientation
       when 'left'
@@ -119,11 +120,9 @@ class Visio.Figures.Bar extends Visio.Figures.Base
               y = @fixed(i) - @labelHeight
               y += @labelHeight if @hasLabels
               y)
-            .attr('dy', '1em')
+            .attr('dy', '1.8em')
             .text((d) =>
-                Visio.Utils.humanMetric(d.key).toUpperCase() + ' ')
-              .append('tspan')
-              .text((d) => @formatter(d.value))
+                Visio.Utils.humanMetric(d.key))
         when 'bottom'
           @labels
             .attr('x', (d, i) => @fixed(i) + @barWidth / 2)

@@ -62,6 +62,7 @@ class Visio.Routers.IndexRouter extends Visio.Routers.GlobalRouter
         @map.collectionFn new Visio.Collections.Plan(Visio.manager.get('plans').filter (plan) ->
           plan.get('year') == Visio.manager.year())
         @map.render()
+        Visio.manager.set 'setup', true
         NProgress.done())
 
   list: (plan_id, type) ->

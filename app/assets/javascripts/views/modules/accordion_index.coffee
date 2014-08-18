@@ -31,6 +31,7 @@ class Visio.Views.AccordionIndexView extends Backbone.View
     @page += 1
 
   addPage: (parameters, page) =>
+    return unless parameters?
     start = page * @perPage
     end = (page + 1) * @perPage
 

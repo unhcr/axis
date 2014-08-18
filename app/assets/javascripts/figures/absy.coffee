@@ -4,13 +4,23 @@ class Visio.Figures.Absy extends Visio.Figures.Base
 
   type: Visio.FigureTypes.ABSY
 
-  initialize: (config) ->
+  initialize: (config = {}) ->
     @attrConfig.push 'algorithm'
     config.query or= ''
 
     values = {}
     values[Visio.Scenarios.AOL] = false
     values[Visio.Scenarios.OL] = true
+
+    performanceValues =
+      true: false
+      false: true
+    # For indicator dashboard just set the proper indicator type
+    if Visio.manager.get('indicator')?
+      performanceValues =
+        true: Visio.manager.get('indicator').get('is_performance')
+        false: !Visio.manager.get('indicator').get('is_performance')
+
     @filters = new Visio.Collections.FigureFilter([
       {
         id: 'algorithm'
@@ -42,8 +52,9 @@ class Visio.Figures.Absy extends Visio.Figures.Base
       {
         id: 'is_performance'
         filterType: 'radio'
-        values: { true: false, false: true }
+        values: performanceValues
         human: { true: 'performance', false: 'impact' }
+        hidden: Visio.manager.get('indicator')?
       },
       {
         id: 'achievement'
@@ -55,6 +66,7 @@ class Visio.Figures.Absy extends Visio.Figures.Base
           Visio.manager.set('achievement_type', name)
       }
     ])
+
 
     super config
 

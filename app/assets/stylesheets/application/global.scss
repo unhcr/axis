@@ -68,19 +68,18 @@ p.small {
   max-width: 960px;
 }
 
+.contain {
+  max-width: $row-inner-width;
+  margin: 0 auto;
+}
+
 .content {
   position: relative;
+  margin-left: $page-margin;
+  margin-right: $page-margin;
 }
 
 .inner-content {
-  @include text-theme-two;
-  border-left: $page-margin solid $off-white;
-  border-right: $page-margin solid $off-white;
-
-  .row {
-    max-width: $row-inner-width;
-    margin: 0 auto;
-  }
 }
 
 .ui-big-number {
@@ -88,7 +87,7 @@ p.small {
 }
 
 .ui-small-number {
-  font-size: 18px;
+  font-size: 20px;
 }
 
 .ui-huge-number {
@@ -111,12 +110,6 @@ p.small {
 
   .search-icon {
     background-color: transparent;
-  }
-
-  .menu-icon {
-    .menu-row {
-      background-color: $white;
-    }
   }
 
   .highlight {
@@ -178,11 +171,6 @@ p.small {
     color: $primary-light;
   }
 
-  a.logo {
-    color: $primary;
-    display: block;
-    text-decoration: none;
-  }
 }
 
 .ui-purple-theme {
@@ -199,7 +187,7 @@ body, html {
   font-family: 'Lato', sans-serif;
   padding: 0;
   margin: 0;
-  font-size: 12px;
+  font-size: 14px;
 }
 
 body.splash {
@@ -236,17 +224,155 @@ body.layout-cms {
   }
 }
 
-body.layout-application {
-  header {
-    border-bottom: 1px solid $primary-light;
+#header {
+  -webkit-transform: translateZ(0);
+  background-color: $off-white;
+  border-bottom: $light-gray 1px solid;
+  @include box-shadow-bottom;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  min-width: $header-min-width;
+  height: $header-height;
+  white-space: nowrap;
+
+  section {
+    position: relative;
   }
 
-  header section {
-    .logo {
-      margin-top: -10px;
-      margin-bottom: 10px;
+  .header-item {
+    height: $header-height;
+    display: inline-block;
+    vertical-align: top;
+
+    h5 {
+      line-height: $header-height;
+      vertical-align: top;
     }
   }
+
+  .col-left {
+    width: 25%;
+    min-width: 335px;
+  }
+
+  .col-right {
+    width: 10%;
+    float: right;
+  }
+
+  .col-middle {
+    min-width: 670px;
+    width: 50%;
+
+  }
+
+  .show-on-open {
+    height: $header-height;
+    background-color: $orange;
+    max-width: 0px;
+    width: 342px;
+    margin-left: -3px;
+    overflow: hidden;
+    display: inline-block;
+    @include transition-property(all);
+    @include transition-duration($very-fast-transition);
+    @include transition-timing-function(ease-in);
+
+    text-align: center;
+
+    .dashboard-item {
+      color: white;
+      padding: 0 15px;
+    }
+
+    .dashboard-item.selected {
+      color: $yellow;
+    }
+
+    .dashboard-item:hover {
+      color: $yellow;
+    }
+  }
+
+  .menu-btn {
+    display: inline-block;
+    vertical-align: top;
+    white-space: nowrap;
+  }
+
+
+}
+
+#header.breadcrumb {
+  .menu-icon:after {
+    background-image: url(/assets/AXIS-LOGO-ORANGE-SMALL.png);
+    width: 90px;
+  }
+
+  .dashboard-item {
+    color: white;
+    padding: 0 10px;
+  }
+
+  .dashboard-name {
+    max-width: 300px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    margin-left: 125px;
+  }
+  .dashboard-name:hover {
+    max-width: initial;
+  }
+}
+
+#header.breadcrumb.filter-open {
+  .dashboard-name {
+    margin-left: 20px;
+  }
+}
+
+#header.filter-open {
+  .menu-icon {
+    margin-right: 0;
+  }
+
+  .show-on-open {
+    border-left: 1px solid white;
+    margin-right: 20px;
+    max-width: initial;
+  }
+
+  .logo {
+    display: none;
+  }
+
+  .menu-icon:after {
+    background-image: url(/assets/AXIS-LOGO-WHITE.png);
+    width: 300px;
+  }
+
+
+}
+
+#footer {
+  border-top: 2px solid $orange;
+  border-bottom: $black solid 50px;
+  height: $footer-height;
+  background-color: white;
+  padding-left: 80px;
+  padding-top: 50px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+body.layout-application {
+  @include text-theme-two;
+
+  margin-top: $header-height;
+
 }
 
 body.splash {
@@ -260,7 +386,6 @@ header {
 
   section {
     background-color: inherit;
-    margin-bottom: 12px;
   }
 }
 
@@ -320,6 +445,7 @@ body.index {
   margin: .3em 1.5em;
 }
 
+
 .medium-item, {
   padding: .5em;
 
@@ -346,7 +472,7 @@ body.index {
   background-color: transparent;
   width: 220px;
   color: $white;
-  padding: 0 1em;
+  margin-bottom: 18px;
 
   .results {
     background-color: $primary;
@@ -433,6 +559,10 @@ body.index {
   border-bottom: 1px solid $light-gray;
 }
 
+.divider-black {
+  border-bottom: 1px solid $black;
+}
+
 .divider-thick {
   border-width: 2px;
 }
@@ -511,21 +641,24 @@ h5 {
 }
 
 
-.logo:before {
-  background-image: url(/assets/logo.png);
-  background-size: 1.5em;
-  content: "";
-  height: 1.5em;
+.logo {
+  background-image: url(/assets/AXIS-LOGO-ORANGE.png);
+  background-size: $header-height;
+  height: $header-height;
   display: inline-block;
-  width: 2em;
   background-repeat: no-repeat;
-  position: relative;
-  top: .4em;
-  left: .4em;
+
+  height: $header-height;
+  background-repeat: no-repeat;
+  width: 178px;
+  background-size: auto 46px;
+  background-position: center;
+  margin-left: 12px;
 }
 
-.logo-white:before {
-  background-image: url(/assets/logo_white.png);
+.logo-short {
+  background-image: url(/assets/AXIS-LOGO-ORANGE-SMALL.png);
+  width: 76px;
 }
 
 .underline {
@@ -573,6 +706,10 @@ input:focus {
 
 .zero-padding {
   padding: 0 !important;
+}
+
+.pad-right {
+  padding-right: 20px;
 }
 
 .full-width {
@@ -668,6 +805,7 @@ button, input {
   display: block;
   cursor: pointer;
   position: relative;
+  line-height: initial;
 }
 
 .visio-radio label:before {
@@ -737,11 +875,12 @@ button, input {
 .visio-checkbox label {
   display: block;
   cursor: pointer;
+  line-height: initial;
 }
 
 .visio-checkbox label:before {
   content: ' ';
-  border: 1px solid $white;
+  border: 1px solid $dark-gray;
   width: 12px;
   height: 12px;
   margin-top: 3px;
@@ -752,8 +891,15 @@ button, input {
 .visio-checkbox-left label:before {
   content: ' ';
   float: left;
-  margin-right: 6px;
+  margin-right: 12px;
   margin-left: 0px;
+  position: relative;
+  left: -26px;
+}
+
+.visio-checkbox-left label {
+  margin-left: 26px;
+  text-indent: -26px;
 }
 
 .visio-checkbox input:checked + label:before {
@@ -775,6 +921,19 @@ button, input {
 .visio-checkbox-yellow input:checked + label:before {
   content: ' ';
   border: 3px solid $yellow;
+}
+
+.visio-checkbox-orange input:checked + label:before {
+  content: ' ';
+  border: 3px solid $orange;
+}
+
+.visio-checkbox-orange input:checked + label {
+  color: $orange;
+}
+
+.visio-checkbox-orange label:hover {
+  color: $orange;
 }
 
 .visio-checkbox-vertical {
@@ -1188,50 +1347,177 @@ a {
     background-color: $ok;
   }
 }
-#navigation {
-  width: $navigation-width;
+#filter-system {
+  @include box-shadow-right;
+  width: $filter-system-width;
   overflow-x: hidden;
   height: 100%;
   position: fixed;
-  padding-top: 100px;
+  margin-top: $header-height;
   top: 0;
   left: 0;
   height: 100%;
-  background-color: $black;
+  background-color: white;
+
+}
+
+.graph-logo {
+  background-image: url('/assets/AXIS-ICON.png');
+  background-size: 32px 33px;
+  width: 32px;
+  height: 33px;
+}
+
+.filter-system-container {
+  margin: 0 $filter-system-margin;
+  .system-container {
+    margin-top: $header-height + 30;
+  }
+
+  .page-filter {
+    margin: 10px 0;
+  }
+
+  .filter-options {
+    margin-left: -$filter-system-margin;
+    margin-right: -$filter-system-margin;
+    margin-bottom: 28px;
+    height: $header-height;
+    border-bottom: $orange 1px solid;
+    color: $dark-gray;
+    text-align: center;
+
+    position: fixed;
+    width: $filter-system-width;
+    top: $header-height + 1;
+    background-color: white;
+
+    .filter-option {
+      cursor: pointer;
+      line-height: $header-height
+    }
+
+    .filter-option:hover {
+      color: $orange;
+    }
+    .filter-option.selected {
+      color: $orange;
+    }
+  }
+
+  .divider-stack-orange {
+    margin: 20px;
+    margin-left: -$filter-system-margin;
+    margin-right: -$filter-system-margin;
+  }
+
+  .header {
+    margin-bottom: 28px;
+  }
+
+  input {
+    @include input-white;
+  }
+
+  .name {
+    line-height: 58px;
+    border-top: $primary 1px solid;
+  }
+
+  .name:hover {
+    color: $orange;
+  }
+
+  label {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    border-bottom: 1px dotted $dark-gray;
+  }
+
+  small {
+    cursor: pointer;
+  }
+
+  small:hover {
+    color: $orange;
+  }
+}
+
+#filter-system.filter-system-orange {
+  background-color: $orange;
+  color: white;
+  border-top: 1px solid white;
+
+  a {
+    line-height: 13px;
+    padding: 5px 0;
+    display: block;
+    color: $white;
+  }
+
+  a:hover {
+    text-decoration: none;
+    color: $yellow;
+  }
+
+  .filter-options {
+    background-color: $orange;
+    border-bottom: white 1px solid;
+    color: white;
+
+    .filter-option:hover {
+      color: $yellow;
+    }
+    .filter-option.selected {
+      color: $yellow;
+    }
+  }
 }
 
 .ui-accordion-content {
   max-height: 0px;
-  overflow: auto;
-  overflow-x: hidden;
+  overflow: hidden;
 
-  -moz-transition:max-height $medium-transition;
-  -webkit-transition:max-height $medium-transition;
-  -o-transition:max-height $medium-transition;
-  transition:max-height $medium-transition;
+  -moz-transition:all $medium-transition;
+  -webkit-transition:all $medium-transition;
+  -o-transition:all $medium-transition;
+  transition:all $medium-transition;
 }
 
 .ui-accordion-content.opened {
+  padding-bottom: 38px;
   max-height: $accordion-max-height;
+}
+
+.ui-accordion-checkboxes {
+  overflow: auto;
+  max-height: 300px;
+  padding-top: 14px;
+  margin-top: 6px;
+  border-top: 1px dotted $dark-gray;
 }
 
 .ui-accordion-container .open {
   cursor: pointer;
 }
 
-.ui-accordion-container .open:after {
-  width: 12px;
-  height: 12px;
-  margin-top: 3px;
+.ui-accordion-container .name:after {
+  width: 20px;
+  height: 20px;
+  margin-top: 18px;
   float: right;
-  background-image: url(/assets/logo_white.png);
-  background-size: 12px 12px;
+  background-image: url(/assets/AXIS-ACCORDION-CLOSED.png);
+  background-size: 20px;
   content: "";
   background-repeat: no-repeat;
 }
 
-.ui-accordion-container.opened .open:after {
-  background-image: url(/assets/logo.png);
+.ui-accordion-container .name.opened:after {
+  background-image: url(/assets/AXIS-ACCORDION-OPENED.png);
+}
+
+.ui-accordion-container .name.opened {
+  color: $orange;
 }
 
 /* meter */
@@ -1272,7 +1558,9 @@ a {
 }
 
 .search-icon {
-  background-color: $primary-light;
+  display: inline-block;
+  vertical-align: middle;
+  background-color: $orange;
   height: $search-icon;
   width: $search-icon;
   border-radius: $search-icon;
@@ -1285,39 +1573,99 @@ a {
   background-position: center;
 }
 
-.menu-icon {
-  display: block;
-  cursor: pointer;
-  position: relative;
-  .menu-row {
-    background-color: $primary-light;
-    width: 3em;
-    height: 3px;
-    width: $menu-row;
-    margin: 3px auto;
-       -webkit-border-top-right-radius: 6px;
-    -webkit-border-bottom-right-radius: 6px;
-           -moz-border-radius-topright: 6px;
-        -moz-border-radius-bottomright: 6px;
-               border-top-right-radius: 6px;
-            border-bottom-right-radius: 6px;
-        -webkit-border-top-left-radius: 6px;
-     -webkit-border-bottom-left-radius: 6px;
-            -moz-border-radius-topleft: 6px;
-         -moz-border-radius-bottomleft: 6px;
-                border-top-left-radius: 6px;
-             border-bottom-left-radius: 6px;
-  }
-}
-.menu-icon:before {
-  position: absolute;
-  content: 'MENU';
-  left: 1.5 * $menu-row;
-  top: -2px;
+
+.header-vertical-middle {
+  @include vertical-middle
 }
 
-.menu-icon.menu-right:before {
-  left: -54px;
+.menu-icon {
+  display: inline-block;
+  cursor: pointer;
+  position: relative;
+  width: $menu-width;
+  height: $menu-height;
+  background-color: $orange;
+  @include transition-property(all);
+  @include transition-duration($very-fast-transition);
+  @include transition-timing-function(ease-in);
+
+  .menu-bar {
+    position: absolute;
+    left: 15px;
+    width: 40px;
+    background-color: white;
+    height: 7px;
+    @include transition-property(all);
+    @include transition-duration($very-fast-transition);
+    @include transition-timing-function(ease-in);
+    pointer-events: none;
+  }
+
+  .menu-bar.top {
+    top: 20px;
+  }
+  .menu-bar.middle {
+    top: 31px;
+  }
+  .menu-bar.bottom {
+    top: 42px;
+  }
+}
+
+.menu-icon:after {
+  content: ' ';
+  display: inline-block;
+  background-image: url(/assets/AXIS-LOGO-ORANGE.png);
+  margin-left: 95px;
+  width: 300px;
+
+  height: $header-height;
+  display: inline-block;
+  background-repeat: no-repeat;
+
+  background-size: auto 58px;
+  background-position: left center;
+}
+
+.menu-icon:hover {
+  background-color: darken($orange, 5%);
+  .menu-bar.top {
+    top: 18px;
+  }
+  .menu-bar.bottom {
+    top: 44px;
+  }
+}
+
+.filter-open {
+  .menu-bar {
+    left: 23px;
+    width: 39px;
+  }
+  .menu-bar.top {
+    top: 23px;
+    @include rotate(45deg);
+    @include transform-origin(6px, -2px, 0);
+  }
+  .menu-bar.middle {
+    opacity: 0;
+  }
+  .menu-bar.bottom {
+    @include rotate(-45deg);
+    @include transform-origin(0px, 6px, 0);
+    top: 44px;
+    left: 22px;
+  }
+  .menu-icon:hover {
+    .menu-bar.top {
+      top: 23px;
+    }
+    .menu-bar.bottom {
+      top: 44px;
+      left: 22px;
+    }
+  }
+
 }
 
 .extra-padding {
@@ -1338,6 +1686,52 @@ a {
    -moz-box-shadow:    inset 0px 10px 10px -10px $light-gray;
    -webkit-box-shadow:    inset 0px 10px 10px -10px $light-gray;
    box-shadow:    inset 0px 10px 10px -10px $light-gray;
+}
+
+.dashboard-item {
+  padding-left: 23px;
+  padding-right: 23px;
+  cursor: pointer;
+  line-height: $header-height;
+  display: inline-block;
+  text-align: center;
+
+  a {
+    color: $primary;
+  }
+
+  .dashboard-label {
+    @include label;
+    color: $dark-gray;
+  }
+
+  .dashboard-label:hover {
+    color: $primary;
+  }
+
+  .dashboard-value {
+    @include orange-highlight;
+  }
+}
+
+.dashboard-item.selected {
+  .dashboard-label {
+    color: $primary;
+  }
+}
+
+.menu-options {
+
+}
+
+
+
+.dashboard-item:hover {
+  color: $orange;
+}
+
+.dashboard-item.selected {
+  color: $orange;
 }
 
 .toolbar {
@@ -1419,10 +1813,12 @@ a {
 }
 
 .shift {
-  left: $navigation-width;
+  left: $filter-system-width;
+  margin-left: 5px;
+  right: 0;
 
   .fixed-top {
-    left: $navigation-width + 15px;
+    left: $filter-system-width + 15px;
   }
 }
 
@@ -1465,7 +1861,6 @@ a {
   }
 
   section {
-    padding-top: 10px;
     padding-bottom: 40px;
   }
 
@@ -1499,19 +1894,6 @@ a {
   }
 
   padding-bottom: 40px;
-
-  h3 {
-    color: $primary-soft;
-    font-weight: bold;
-    margin: 0;
-  }
-
-  h3:before {
-    content: ' ';
-    border-bottom: $primary-soft 6px solid;
-    width: 25px;
-    display: inline-block;
-  }
 
   h1 {
     margin: 0;
@@ -1550,37 +1932,56 @@ a {
   box-shadow: inset 0px 5px 23px -11px rgba(50, 50, 50, 0.75);
 }
 
-.navigation-activation-icon {
-  width: $page-margin;
-  height: $page-margin;
-  position: absolute;
-  top: 140px;
-  background-image: url(/assets/visio-side_menu_icon.png);
-  background-size: $page-margin;
-  -moz-transition:top $faster-transition ease-out;
-  -webkit-transition:top $faster-transition ease-out;
-  -o-transition:top $faster-transition ease-out;
-  transition:top $faster-transition ease-out;
-
-}
-
-.navigation-activation {
-  position: absolute;
-  height: 100%;
-  width: $page-margin;
-  top: 0;
-  left: 0;
-  z-index: 10;
-  background-color: $off-white;
-  overflow: hidden;
-  -moz-transition:width $very-fast-transition ease-out;
-  -webkit-transition:width $very-fast-transition ease-out;
-  -o-transition:width $very-fast-transition ease-out;
-  transition:width $very-fast-transition ease-out;
-}
-
 .transparent {
   opacity: 0 !important;
+}
+
+.option-menu {
+  -moz-transition:max-height $fast-transition;
+  -webkit-transition:max-height $fast-transition;
+  -o-transition:max-height $fast-transition;
+  transition:max-height $fast-transition;
+  max-height: $option-menu-height;
+  height: $option-menu-height;
+  border-top: 1px solid $light-gray;
+  border-bottom: 1px solid $light-gray;
+  text-align: center;
+  position: relative;
+  background-color: $off-white;
+
+  .menu-value {
+    position: relative;
+    padding-left: 30px;
+    padding-right: 30px;
+    color: $dark-gray;
+    height: $option-menu-height;
+    line-height: $option-menu-height;
+    display: inline-block;
+    @include transition-property(all);
+    @include transition-duration($very-fast-transition);
+    @include transition-timing-function(ease-in);
+    left: 2000px;
+    cursor: pointer;
+  }
+  .menu-value.selected {
+    color: $orange;
+  }
+  .menu-value:hover {
+    color: $orange;
+  }
+
+  .menu-title {
+    color: $primary;
+    padding-left: 90px;
+    padding-right: 30px;
+    height: $option-menu-height;
+    line-height: $option-menu-height;
+  }
+}
+
+.no-border {
+  border: none !important;
+
 }
 
 #global-search {
@@ -1590,7 +1991,6 @@ a {
   -o-transition:max-height $fast-transition;
   transition:max-height $fast-transition;
   max-height: 50px;
-
 }
 
 #global-search .container {
@@ -1667,8 +2067,6 @@ a {
 .page-overlay {
   overflow: auto;
   z-index: 2000;
-  border-left: $page-margin solid $off-white;
-  border-right: $page-margin solid $off-white;
 
   position: absolute;
   background-color: white;
@@ -1694,7 +2092,7 @@ a {
     img {
       width: 100%;
       border: 1px solid $light-gray;
-      @include box-shadow;
+      @include box-shadow-bottom;
       margin-bottom: 25px;
     }
   }
@@ -1852,6 +2250,7 @@ a {
 .query-by {
   padding-top: 0px;
   input {
+    @include input-white;
     padding: 0px;
     width: 100%;
     height: 100%;
@@ -1862,17 +2261,17 @@ a {
 .filter-by, .visio-dropdown-container {
   padding-top: 0px;
 
-  .filter-toggle:before, .visio-dropdown-toggle:before {
-    content: 'ↆ';
+  .filter-toggle:after, .visio-dropdown-toggle:after {
+    content: '+';
     background: transparent;
     display: inline-block;
-    margin-right: 10px;
+    float: right;
   }
 
   .filter-toggle, .visio-dropdown-toggle {
-    text-align: center;
     height: 100%;
-    padding-top: 6px;
+    padding-left: 18px;
+    padding-right: 18px;
   }
 
   position: relative;
@@ -1898,7 +2297,8 @@ a {
 
   .filters.styled, .visio-dropdown.styled {
     padding: 15px 10px;
-    @include hover-shadow;
+    border: 1px solid $lighter-gray;
+    border-top: none;
   }
 
   .filters.open, .visio-dropdown.open {
@@ -1914,8 +2314,6 @@ a {
   .slider {
     white-space: nowrap;
     overflow: hidden;
-    /* Needed to make inline-block elements sit flush */
-    font-size: 0px;
     .slide {
       float: none;
       position: relative;
@@ -1940,31 +2338,76 @@ a {
 
 .parameter-slider {
 
+  .slider::before {
+    content: ' ';
+    width: 100%;
+    display: block;
+    background-color: white;
+    height: 2px;
+    position: absolute;
+    z-index: 10
+  }
+
+  .slider::after {
+    content: ' ';
+    width: 2px;
+    display: block;
+    background-color: white;
+    height: 100%;
+    position: absolute;
+    left: -1px;
+    top: 0;
+
+  }
+
   .parameter-slide {
-    border: 1px solid $light-gray;
+    border-left: 1px solid $light-gray;
+    border-top: 1px solid $light-gray;
+
     vertical-align: top;
     width: $parameter-slide-width;
-    padding: 0 15px;
+    height: $parameter-slide-height;
+    padding: 0 30px;
     padding-bottom: 25px;
-    margin: 8px 2px;
     white-space: normal;
 
+    .figures {
+      height: 108px;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
     header {
-      @include row-gutter;
       padding-top: 20px;
       padding-right: 15px;
       padding-left: 15px;
       border-bottom: $dark-gray solid 1px;
-      background-color: $off-white;
-      height: 150px;;
+      background-color: transparent;
+      height: 164px;
     }
+
+    .ui-tab-radio {
+      background-color: inherit;
+    }
+
+    .ui-tab-radio  label {
+      @include transition-property(background-color, box-shadow);
+      @include transition-duration($fast-transition);
+      @include transition-timing-function(ease-in);
+    }
+
   }
 
   .parameter-slide:hover {
-    @include hover-shadow;
+    background-color: $off-white;
+    .ui-tab-radio input[type="radio"]:checked + label {
+      background-color: $off-white;
+      @include box-shadow-top;
+    }
   }
 
   .parameter-name {
+    text-transform: uppercase;
     padding-top: 2px;
     margin-top: 4px;
     color: $black;
@@ -1973,27 +2416,23 @@ a {
     @include small-header
   }
 
-  a, div {
-    font-size: 12px;
-  }
-
   .show-more {
     text-align: center;
     height: 38px;
     font-size: 16px;
-    border: 1px solid $light-gray;
-    background-color: $off-white;
-    padding-top: 6px;
-    font-weight: lighter;
+    background-color: white;
+    padding-top: 12px;
+    font-weight: bold;
     display: none;
+    color: $dark-gray;
     cursor: pointer;
-    @include transition-property(background-color);
+    @include transition-property(color);
     @include transition-duration($very-fast-transition);
     @include transition-timing-function(ease-in);
   }
 
   .show-more:hover {
-    background-color: darken($off-white, 5%);
+    color: $primary;
   }
 
   .show-more.disabled {
@@ -2001,7 +2440,7 @@ a {
     opacity: .5;
   }
   .show-more.disabled:hover {
-    background-color: $off-white;
+    color: $dark-gray;
   }
 
   .grid + .show-more {
@@ -2225,7 +2664,7 @@ a {
   border: 1px solid $primary-light;
   padding: 20px;
   left: 50%;
-  @include box-shadow;
+  @include box-shadow-bottom;
 }
 
 .white-overlay {
@@ -2267,9 +2706,8 @@ a {
   border-right: none;
   width: $export-label-length;
   left: -$export-label-length - 1;
-  top: -1px;
+  top: 0px;
   text-align: center;
-  color: black;
 }
 
 .map-export {

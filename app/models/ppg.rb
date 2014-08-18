@@ -10,6 +10,9 @@ class Ppg < ActiveRecord::Base
   has_many :goals_ppgs, :class_name => 'GoalsPpgs'
   has_many :goals, :uniq => true, :through => :goals_ppgs
 
+  has_many :indicators_ppgs, :class_name => 'IndicatorsPpgs'
+  has_many :indicators, :uniq => true, :through => :indicators_ppgs
+
   has_many :plans_ppgs, :class_name => 'PlansPpgs'
   has_many :plans, :uniq => true, :through => :plans_ppgs
 
@@ -18,6 +21,12 @@ class Ppg < ActiveRecord::Base
 
   has_many :ppgs_strategies, :class_name => 'PpgsStrategies'
   has_many :strategies, :uniq => true, :through => :ppgs_strategies
+
+  has_many :outputs_ppgs, :class_name => 'OutputsPpgs'
+  has_many :outputs, :uniq => true, :through => :outputs_ppgs
+
+  has_many :ppgs_problem_objectives, :class_name => 'PpgsProblemObjectives'
+  has_many :problem_objectives, :uniq => true, :through => :ppgs_problem_objectives
 
   has_many :indicator_data
   has_many :budgets

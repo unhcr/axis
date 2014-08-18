@@ -1,4 +1,4 @@
-class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
+class Visio.Routers.OverviewRouter extends Visio.Routers.DashboardRouter
 
   initialize: (options) ->
     super
@@ -7,50 +7,12 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
     selectedStrategies[Visio.manager.strategy().id] = true
 
     Visio.manager.set 'selected_strategies', selectedStrategies
-    Visio.manager.on 'change:date', () =>
-      @navigation.render()
-      @strategySnapshotView.render true
-      @moduleView.render true
-      Visio.router.navigate Visio.Utils.generateOverviewUrl(), { silent: true }
-
-    Visio.manager.on 'change:aggregation_type', =>
-      @strategySnapshotView.render()
-      @moduleView.render true
-      Visio.router.navigate Visio.Utils.generateOverviewUrl(), { silent: true }
-
-    Visio.manager.on 'change:selected', (parameterTypeChanged) =>
-      if parameterTypeChanged == Visio.manager.get('aggregation_type')
-        @strategySnapshotView.render()
-      else
-        @strategySnapshotView.render true
-      @moduleView.render true
-      Visio.router.navigate Visio.Utils.generateOverviewUrl(), { silent: true }
-
-    Visio.manager.on ['change:navigation'].join(' '), =>
-      @navigation.render()
-      @moduleView.render true
-      Visio.router.navigate Visio.Utils.generateOverviewUrl(), { silent: true }
-
-    Visio.manager.on 'change:reported_type', =>
-      @strategySnapshotView.render true
-      @moduleView.render true
-      Visio.router.navigate Visio.Utils.generateOverviewUrl(), { silent: true }
-
-    Visio.manager.on ['change:achievement_type',
-                      'change:scenario_type',
-                      'change:budget_type',
-                      'change:amount_type'].join(' '), =>
-      @moduleView.render true
-      Visio.router.navigate Visio.Utils.generateOverviewUrl(), { silent: true }
-
-    @module = $('#module')
 
 
   setup: () ->
     # Return empty promise if we've setup already
     return $.Deferred().resolve().promise() if Visio.manager.get('setup')
 
-    @toolbarView = new Visio.Views.ToolbarView({ el: $('.toolbar') })
     options =
       join_ids:
         strategy_id: Visio.manager.get('strategy_id')
@@ -68,55 +30,18 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.GlobalRouter
            Visio.manager.get('budgets').fetchSynced({ strategy_id: Visio.manager.get('strategy_id') })
            Visio.manager.get('indicator_data').fetchSynced({ strategy_id: Visio.manager.get('strategy_id') })
     ).done( =>
-      # Initialize selected to be strategy
-      Visio.manager.resetSelectedDefaults()
 
-      @navigation = new Visio.Views.NavigationView el: $('#navigation')
-      @navigation.render()
+      try
+        # Initialize selected to be strategy
+        Visio.manager.resetSelectedDefaults()
 
-      @strategySnapshotView = new Visio.Views.StrategySnapshotView el: $('#strategy-snapshot')
-      @strategySnapshotView.render()
+        Visio.manager.set('setup', true)
+      catch error
+        new Visio.Views.Error
+          title: 'Error rendering page'
+          description: error
 
-      $('#navigation').removeClass('gone')
-
-      $collapsable = $('.collapsable-content')
-      $collapsable.attr 'data-0', "max-height:#{$('.collapsable-content').height()}px"
-      $collapsable.attr "data-#{$('.collapsable-content').height()}", "max-height:0px"
-      #skrollr.init(
-      #  forceHeight: false
-      #)
-      Visio.manager.set('setup', true)
-      NProgress.done()
+      finally
+        NProgress.done()
     )
-
-
-  routes:
-    'menu' : 'menu'
-    'search': 'search'
-    ':figureType/:year/:aggregationType/:reportedType': 'figure'
-    ':figureType/:year/:aggregationType': 'figure'
-    ':figureType/:year': 'figure'
-    ':figureType': 'figure'
-    '*default': 'index'
-
-  figure: (figureType, year, aggregationType, reportedType) ->
-    Visio.manager.year year, { silent: true } if year?
-    Visio.manager.set { 'aggregation_type': aggregationType }, { silent: true } if aggregationType?
-    Visio.manager.set { 'reported_type': reportedType }, { silent: true } if reportedType?
-    @setup().done(() =>
-      viewClass = figureType[0].toUpperCase() + figureType.slice(1) + 'View'
-
-      @moduleView = new Visio.Views[viewClass]()
-
-      @module.html @moduleView.render().el
-
-      if $('header').height() < $(document).scrollTop()
-        $('.toolbar').addClass('fixed-top')
-      Visio.router.navigate Visio.Utils.generateOverviewUrl(), { silent: true }
-
-    ).fail (e) =>
-      console.log e
-
-  index: () =>
-    @figure 'absy'
 

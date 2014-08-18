@@ -1,0 +1,23 @@
+.filter-system-container
+  != window.HAML['shared/filter_system/filter_options']({ options: context.options, selected: context.selected })
+
+  .system-container
+    %h3 Priority Strategies
+
+    - _.each context.strategies, (strategy) ->
+      %a{:href => "/overview/#{strategy.id}"}
+        = strategy.name
+
+    .divider-stack-orange
+
+    %h3 My Strategies
+    - _.each context.personalStrategies, (strategy) ->
+      %a{:href => "/overview/#{strategy.id}"}
+        = strategy.name
+
+    .divider-stack-orange
+
+    %h3 Shared Strategies
+    - _.each context.sharedStrategies, (strategy) ->
+      %a{:href => "/overview/#{strategy.id}"}
+        = strategy.name

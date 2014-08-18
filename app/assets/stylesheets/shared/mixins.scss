@@ -41,14 +41,24 @@
 
 /* Used on white backgrounds */
 
+@mixin input-white {
+  border: $light-gray 1px solid;
+  width: 100%;
+  @include box-shadow($off-white 0px 0px 15px 0px inset);
+  color: $primary;
+  padding-left: 14px;
+  padding-right: 14px;
+
+}
+
 @mixin text-theme-one {
   input, textarea {
-    border: $light-gray 1px solid;
-    width: 100%;
-    @include box-shadow($off-white 0px 0px 15px 0px inset);
+    @include input-white;
+  }
+
+  b {
+    font-weight: bold;
     color: $primary;
-    padding-left: 14px;
-    padding-right: 14px;
   }
 
   label {
@@ -100,32 +110,79 @@
 
 }
 
+@mixin label {
+  color: $primary;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+@mixin orange-highlight {
+  color: $orange;
+  font-size: 14px;
+  font-weight: normal;
+}
+
 @mixin text-theme-two {
   h2 {
     font-size: 26px;
     color: $primary;
     margin: 0
   }
+
+  h3 {
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+
+  h5 {
+    display: inline-block;
+    margin-top: 0px;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 0px;
+  }
+
+  h6 {
+    @include label;
+    display: inline-block;
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+}
+
+
+@mixin vertical-middle {
+  top: 50%;
+  position: relative;
+  @include translateY(-50%);
 }
 
 @mixin header-button {
-  margin: 5px 0 ;
   margin-bottom: 0;
   width: $header-button-width;
   height: $header-button-height;
-  border: 1px $off-white solid;
-  border-right: none;
+  line-height: $header-button-height;
+  border-left: 1px $white solid;
+  background-color: $lighter-gray;
   display: inline-block;
-  padding-top: 6px;
   float: right;
-  text-align: center;
+  text-align: left;
+  color: $primary-soft;
 }
 
 @mixin hover-shadow {
   @include box-shadow(0px 5px 13px -3px $primary-soft)
 }
 
-@mixin box-shadow {
+@mixin box-shadow-top {
+  @include box-shadow(0px -4px 6px -3px rgba(0,0,0,0.25));
+}
+
+@mixin box-shadow-right {
+  @include box-shadow(4px 0px 6px -3px rgba(0,0,0,0.25));
+}
+
+@mixin box-shadow-bottom {
   @include box-shadow(0px 2px 4px rgba(0,0,0,0.25));
 }
 

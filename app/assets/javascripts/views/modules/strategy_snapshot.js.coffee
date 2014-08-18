@@ -1,20 +1,26 @@
-class Visio.Views.StrategySnapshotView extends Visio.Views.Dashboard
+class Visio.Views.SnapshotView extends Visio.Views.Dashboard
 
   @include Visio.Mixins.Exportable
 
   template: HAML['modules/strategy_snapshot']
 
-  initialize: (options) ->
+  initialize: (options = {}) ->
     @isPdf = options.isPdf
-    @barConfig.orientation = 'bottom'
-    @barConfig.width = 82
-    @barConfig.height = 380
-    @barConfig.hasLabels = true
-    @barConfig.margin.bottom = 0
+    barConfig =
+      margin:
+        top: 2
+        bottom: 0
+        left: 2
+        right: 10
+      orientation: 'bottom'
+      width: 82
+      height: 380
+      hasLabels: true
+
     axisHeight = 380
     if options.isPdf
       @template = HAML['pdf/strategy_snapshot']
-      @barConfig.height = 340
+      barConfig.height = 340
       axisHeight = 340
 
     @axis = new Visio.Figures.Axis
@@ -25,14 +31,12 @@ class Visio.Views.StrategySnapshotView extends Visio.Views.Dashboard
       width: 50
       height: axisHeight
 
+    options.barConfig = barConfig
     super options
 
     @collection or= Visio.manager.selected Visio.manager.get('aggregation_type')
-    @parameter = @collection
+    @parameter = null
 
-    unless @isPdf
-      @actionSlider = new Visio.Views.ActionSliderView
-        collection: Visio.manager.selected Visio.Parameters.STRATEGY_OBJECTIVES.plural
     @parameterSlider = new Visio.Views.ParameterSliderView
       filters: @filters
       collection: @collection
@@ -40,7 +44,7 @@ class Visio.Views.StrategySnapshotView extends Visio.Views.Dashboard
 
   title: 'Overview'
 
-  type: Visio.ViewTypes.OVERVIEW
+  type: Visio.FigureTypes.OVERVIEW
 
   viewLocation: 'Views'
 
@@ -50,27 +54,31 @@ class Visio.Views.StrategySnapshotView extends Visio.Views.Dashboard
     'click .grid-view': 'onGridView'
     'click .export': 'onExport'
 
-  render: (isRerender) ->
+  render:  ->
     @collection = Visio.manager.selected Visio.manager.get('aggregation_type') unless @isPdf
+
+    # If we've changed parameter type we need to rerender
+    parameterTypeChanged = !@parameter? or (@parameter.name != @collection.name)
+
+    # If the length of the collection length has changed we need to rerender
+    collectionLengthChanged = !@parameter? or (@parameter.length != @collection.length)
+
     @parameter = @collection
     @parameterSlider?.collection = @collection
 
-    super isRerender
+    super (!parameterTypeChanged or !collectionLengthChanged)
 
-    unless isRerender
+    if parameterTypeChanged
       @$el.find('.header-buttons').append (new Visio.Views.FilterBy({ figure: @ })).render().el
-      @$el.find('.target-parameters').html @parameterSlider?.render().el
-      @$el.find('.actions').html @actionSlider?.render().el
       @$el.find('.bar-axis').html @axis?.render().el
+
+    if parameterTypeChanged or collectionLengthChanged
+      @$el.find('.target-parameters').html @parameterSlider?.render().el
       @parameterSlider?.delegateEvents()
-      @actionSlider?.delegateEvents()
       @parameterSlider?.position = 0
-      @actionSlider?.position = 0
 
     if @parameterSlider?
       @parameterSlider.drawFigures()
-    if @actionSlider?
-      @actionSlider.drawFigures()
 
     @
 

@@ -1,0 +1,24 @@
+%section
+  .menu-btn.header-item.pull-left.col-left
+    %a.menu-icon.menu-icon-with-logo
+      .menu-bar.top
+      .menu-bar.middle
+      .menu-bar.bottom
+    .show-on-open
+
+  .center-text.header-item.menu-options.col-middle
+    - _.each _.values(context.menuOptions), (menuOption, i, list) ->
+      .dashboard-item.menu-option{ :data => { :option => menuOption.key } }
+        %span.dashboard-label
+          = menuOption.human
+
+  .header-item.col-right
+    .pull-right
+      %h6.dashboard-item
+        %a{ :href => "/users/sign_out", :data => { :method => "delete" }, :rel => "nofollow" }
+          = Visio.user.get('login')
+      %a.dashboard-item.search-icon{ :href => '#search' }
+
+.option-menu.zero-max-height.no-border
+#global-search.zero-max-height.row
+

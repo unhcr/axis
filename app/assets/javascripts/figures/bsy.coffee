@@ -10,6 +10,10 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
     # Stores the query of a certain operation. 'ken' will match the Kenya operation
     config.query or= ''
 
+    scenarioExpenditures = {}
+    scenarioExpenditures[Visio.Scenarios.AOL] = false
+    scenarioExpenditures[Visio.Scenarios.OL] = true
+
     @filters = new Visio.Collections.FigureFilter([
       {
         id: 'breakdown_by'
@@ -21,6 +25,20 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
           @breakdownBy = name
           @render()
       },
+      {
+        id: 'scenarios-budgets'
+        filterType: 'checkbox'
+        values: _.object(_.values(Visio.Scenarios), _.values(Visio.Scenarios).map(-> true))
+        callback: (name, attr) =>
+          @render()
+      },
+      {
+        id: 'scenarios-expenditures'
+        filterType: 'checkbox'
+        values: scenarioExpenditures
+        callback: (name, attr) =>
+          @render()
+      }
     ])
 
     super config
@@ -35,10 +53,8 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
 
     @barWidth = 10
     @barMargin = 8
-    @maxParameters = Math.floor @adjustedWidth / (2 * @barWidth + @barMargin)
 
     @x = d3.scale.linear()
-      .domain([0, @maxParameters])
       .range([0, @adjustedWidth])
 
     @y = d3.scale.linear()
@@ -73,7 +89,17 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
     if @y.domain()[1] == 1
       @y.domain [0, d3.max(filtered, (d) -> d.selectedBudget())]
 
+
     self = @
+
+    scenarios = self.filters.get('scenarios-budgets').active().map (scenario) ->
+        { scenario: scenario, type: Visio.Syncables.BUDGETS }
+
+    scenarios = scenarios.concat(self.filters.get('scenarios-expenditures').active().map (scenario) ->
+        { scenario: scenario, type: Visio.Syncables.EXPENDITURES })
+
+    @maxParameters = Math.floor @adjustedWidth / (scenarios.length * @barWidth + @barMargin)
+    @x.domain([0, @maxParameters])
 
     boxes = @g.selectAll('g.box').data filtered, (d) -> d.id
     boxes.enter().append('g')
@@ -85,9 +111,10 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
       .each((d, idx) ->
         box = d3.select @
 
+
         container = box.selectAll('.bar-container').data([d])
         container.enter().append('rect')
-        container.attr('width', self.barWidth * 2)
+        container.attr('width', self.barWidth * scenarios.length)
           .attr('height', self.adjustedHeight + self.barMargin)
           .attr('x', 0)
           .attr('y', -self.barMargin / 2)
@@ -98,8 +125,8 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
 
             return classList.join ' ')
           .style('stroke-dasharray', (d) ->
-            topDash = self.barWidth * 2
-            perimeter = (self.barWidth * 4) + ((self.height + self.barMargin) * 2)
+            topDash = self.barWidth * scenarios.length
+            perimeter = (self.barWidth * 2 * scenarios.length) + ((self.height + self.barMargin) * 2)
 
             [topDash, perimeter - topDash].join ' ' )
 
@@ -111,27 +138,28 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
 
         container.exit().remove()
 
-        scenarios = _.values Visio.Scenarios
-
         box.selectAll('.bar').remove()
         _.each scenarios, (scenario, i) ->
-          budgetData = d.selectedBudgetData().where
-            scenario: scenario
+          amountData = d.selectedData(scenario.type).where
+            scenario: scenario.scenario
+
           breakdownTypes = self.breakdownTypes()
           sum = 0
 
           _.each breakdownTypes, (breakdownType, j) ->
             # data for scenario and breakdownType
-            breakdownData = _.filter budgetData, (datum) ->
+            breakdownData = _.filter amountData, (datum) ->
               datum.get(self.breakdownBy) == breakdownType
 
-            amount = new Visio.Collections.Budget(breakdownData).amount()
+            amount = new Visio.Collections.AmountType(breakdownData).amount()
 
-            bars = box.selectAll(".#{Visio.Utils.stringToCssClass(scenario)}-bar.#{Visio.Utils.stringToCssClass(breakdownType)}-bar").data([breakdownType])
+            bars = box.selectAll(".#{Visio.Utils.stringToCssClass(scenario.scenario)}-bar.#{Visio.Utils.stringToCssClass(breakdownType)}-bar.#{scenario.type.singular}-bar").data([breakdownType])
             bars.enter().append('rect')
             bars.attr 'class', ->
-              classList = ["#{Visio.Utils.stringToCssClass(scenario)}-bar",
-                "#{Visio.Utils.stringToCssClass(breakdownType)}-bar", 'bar']
+              classList = ["#{Visio.Utils.stringToCssClass(scenario.scenario)}-bar",
+                "#{Visio.Utils.stringToCssClass(breakdownType)}-bar",
+                "#{scenario.type.singular}-bar",
+                'bar']
               classList.join ' '
 
             bars.transition()
@@ -255,8 +283,8 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
     @tooltip.render @hoverDatum
 
     budgetData = @hoverDatum.selectedBudgetData()
-    ol = new Visio.Collections.Budget(budgetData.where({ scenario: Visio.Scenarios.OL })).amount()
-    aol = new Visio.Collections.Budget(budgetData.where({ scenario: Visio.Scenarios.AOL })).amount()
+    ol = new Visio.Collections.AmountType(budgetData.where({ scenario: Visio.Scenarios.OL })).amount()
+    aol = new Visio.Collections.AmountType(budgetData.where({ scenario: Visio.Scenarios.AOL })).amount()
     circleData = [ol, aol]
 
     circles = box.selectAll('.circle').data(circleData)

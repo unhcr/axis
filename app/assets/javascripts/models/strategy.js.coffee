@@ -62,8 +62,9 @@ class Visio.Models.Strategy extends Visio.Models.Syncable
     @set('ppgs', new Visio.Collections.Ppg((options.ppgs || [])))
     @set('strategy_objectives', new Visio.Collections.StrategyObjective((options.strategy_objectives || [])))
 
-    # Initialize helper functions
+    # Initialize helper functions to get ids of a given type
     _.each _.values(Visio.Parameters), (hash) =>
+
       @[hash.plural] = () =>
         ids = _.keys(@get("#{hash.singular}_ids"))
         parameters = Visio.manager.get(hash.plural)

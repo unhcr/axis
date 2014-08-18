@@ -46,6 +46,9 @@ class Visio.Models.Manager extends Backbone.Model
     @on 'change:year', =>
       @year(@get('year'))
 
+    # This way we can access the manager object in the ready function
+    window.setTimeout options.ready, 1 if options.ready? and not @get('use_local_db')
+
   defaults:
     'operations': new Visio.Collections.Operation()
     'plans': new Visio.Collections.Plan()
@@ -69,13 +72,15 @@ class Visio.Models.Manager extends Backbone.Model
     'yearList': [2012, 2013, 2014, 2015]
     'selected': {}
     'selected_strategies': {}
-    'aggregation_type': Visio.Parameters.OPERATIONS.plural
+    'aggregation_type': Visio.Parameters.OPERATIONS.name
     'scenario_type': {}
     'budget_type': {}
     'achievement_type': Visio.Algorithms.GOAL_TYPES.target
     'amount_type': Visio.Syncables.BUDGETS
     'reported_type': Visio.Algorithms.REPORTED_VALUES.yer
+    'module_type': Visio.FigureTypes.OVERVIEW.name
     'dashboard': null
+    'indicator': null # Used for indicator dashboard
 
   resetSelectedDefaults: () ->
     _.each _.values(Visio.Parameters), (hash) ->
@@ -107,6 +112,12 @@ class Visio.Models.Manager extends Backbone.Model
     @resetBudgetDefaults()
     @resetSelectedDefaults()
     Visio.manager.trigger('change:selected')
+
+  dashboardName: ->
+    if @get('indicator')?
+      @get('indicator').toString()
+    else
+      @get('dashboard').toString()
 
   includeExternalStrategyData: (include) =>
     unless include?

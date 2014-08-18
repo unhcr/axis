@@ -22,6 +22,12 @@ class Output < ActiveRecord::Base
   has_many :outputs_plans, :class_name     => 'OutputsPlans'
   has_many :plans, :uniq => true, :through => :outputs_plans
 
+  has_many :goals_outputs, :class_name => 'GoalsOutputs'
+  has_many :goals, :uniq => true, :through => :goals_outputs
+
+  has_many :outputs_ppgs, :class_name => 'OutputsPpgs'
+  has_many :ppgs, :uniq => true, :through => :outputs_ppgs
+
   has_many :indicator_data
   has_many :budgets
 
@@ -30,11 +36,13 @@ class Output < ActiveRecord::Base
     options[:include] ||= {}
     Jbuilder.new do |json|
       json.extract! self, :name, :id
-      json.operation_ids self.operation_ids if options[:include][:operation_ids].present?
-      if options[:include][:problem_objective_ids].present?
-        json.problem_objective_ids self.problem_objective_ids
+      if options[:include][:ids]
+        json.ppg_ids self.ppg_ids.inject({}) { |h, id| h[id] = true; h }
+        json.operation_ids self.operation_ids.inject({}) { |h, id| h[id] = true; h }
+        json.indicator_ids self.indicator_ids.inject({}) { |h, id| h[id] = true; h }
+        json.problem_objective_ids self.problem_objective_ids.inject({}) { |h, id| h[id] = true; h }
+        json.goal_ids self.goal_ids.inject({}) { |h, id| h[id] = true; h }
       end
-      json.indicator_ids self.indicator_ids if options[:include][:indicator_ids].present?
     end
   end
 

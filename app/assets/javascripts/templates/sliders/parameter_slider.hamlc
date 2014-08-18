@@ -1,8 +1,4 @@
-- unless context.isPdf
-  .controls
-    %a.next ᐳ
-    %a.previous ᐸ
-.slider
+.slider.grid
 .show-more
-  Show More
+  SHOW MORE
 
