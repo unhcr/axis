@@ -38,6 +38,7 @@ class Visio.Views.FilterSystemView extends Backbone.View
     'click .deselect': 'onDeselect'
     'click .reset': 'onReset'
     'change .visio-checkbox input': 'onChangeSelection'
+    'keyup .page-filter': 'onFilterPages'
 
   render: (type = 'filters') ->
     option = _.findWhere Visio.Views.FilterSystemView.OPTIONS, { type: type }
@@ -95,12 +96,12 @@ class Visio.Views.FilterSystemView extends Backbone.View
 
     if @[option.type].length > 0
       @$el.find('.system-list').html @templatePageList
-        models: @[option.type]
+        models: @[option.type].models
     else
       NProgress.start()
       @[option.type].fetch().done =>
         @$el.find('.system-list').html @templatePageList
-          models: @[option.type]
+          models: @[option.type].models
         NProgress.done()
 
   renderStrategies: ->
@@ -178,6 +179,24 @@ class Visio.Views.FilterSystemView extends Backbone.View
 
   isOpen: =>
     !@$el.hasClass('gone')
+
+  onFilterPages: (e) =>
+    $target = $ e.currentTarget
+    type = $target.data().type
+    query = $target.val()
+    @filterPages query, type
+
+  filterPages: (query, type) =>
+
+    if query
+      @$el.find('.system-list').html @templatePageList
+        models: @[type].filter (model) ->
+          model.toString().toLowerCase().indexOf(query) != -1
+
+    else
+      @$el.find('.system-list').html @templatePageList
+        models: @[type].models
+
 
   open: (type) =>
     $names = @$el.find '.name'

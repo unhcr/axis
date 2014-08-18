@@ -4,4 +4,5 @@
   .system-container
     %h3
       = _.findWhere(context.options, { type: context.selected }).human
+    %input.page-filter.full-width{:type => "text", :data => { :type => context.selected } }
     .system-list

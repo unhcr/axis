@@ -312,6 +312,11 @@ body.layout-cms {
     width: 90px;
   }
 
+  .dashboard-item {
+    color: white;
+    padding: 0 10px;
+  }
+
   .dashboard-name {
     max-width: 300px;
     text-overflow: ellipsis;
@@ -1367,6 +1372,10 @@ a {
   margin: 0 $filter-system-margin;
   .system-container {
     margin-top: $header-height + 30;
+  }
+
+  .page-filter {
+    margin: 10px 0;
   }
 
   .filter-options {
