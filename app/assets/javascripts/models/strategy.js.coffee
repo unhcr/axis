@@ -1,5 +1,7 @@
 class Visio.Models.Strategy extends Visio.Models.Syncable
 
+  @include Visio.Mixins.Dashboardify
+
   urlRoot: '/strategies'
 
   schema: [
@@ -61,16 +63,4 @@ class Visio.Models.Strategy extends Visio.Models.Syncable
     @set('operations', new Visio.Collections.Operation((options.operations || [])))
     @set('ppgs', new Visio.Collections.Ppg((options.ppgs || [])))
     @set('strategy_objectives', new Visio.Collections.StrategyObjective((options.strategy_objectives || [])))
-
-    # Initialize helper functions to get ids of a given type
-    _.each _.values(Visio.Parameters), (hash) =>
-
-      @[hash.plural] = () =>
-        ids = _.keys(@get("#{hash.singular}_ids"))
-        parameters = Visio.manager.get(hash.plural)
-        return new parameters.constructor(parameters.filter (model) =>
-          @get("#{hash.singular}_ids")[model.id])
-
-
-
 

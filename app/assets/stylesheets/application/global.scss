@@ -1567,22 +1567,29 @@ a {
   transition:width $medium-transition;
 }
 
-.search-icon {
+.icon {
   display: inline-block;
   vertical-align: middle;
   background-color: $orange;
-  height: $search-icon;
-  width: $search-icon;
-  border-radius: $search-icon;
-  -webkit-border-radius: $search-icon;
-  -moz-border-radius: $search-icon;
+  height: $icon + 2;
+  width: $icon;
+  border-radius: $icon;
+  -webkit-border-radius: $icon;
+  -moz-border-radius: $icon;
   cursor: pointer;
-  background-image: url(/assets/icons/search.png);
-  background-size: $search-icon / 2;
+  background-size: $icon / 2;
   background-repeat: no-repeat;
   background-position: center;
+  margin-right: 30px;
 }
 
+.search-icon {
+  background-image: url(/assets/icons/search.png);
+}
+
+.share-icon {
+  background-image: url(/assets/icons/share.png);
+}
 
 .header-vertical-middle {
   @include vertical-middle

@@ -38,6 +38,7 @@ class Visio.Routers.DashboardRouter extends Visio.Routers.GlobalRouter
   routes:
     'menu' : 'menu'
     'search': 'search'
+    'share': 'share'
     ':figureType/:year/:aggregationType/:reportedType': 'figure'
     ':figureType/:year/:aggregationType': 'figure'
     ':figureType/:year': 'figure'
@@ -60,6 +61,17 @@ class Visio.Routers.DashboardRouter extends Visio.Routers.GlobalRouter
 
     ).fail (e) =>
       console.log e
+
+  share: ->
+    unless Visio.manager.get('setup')
+      Visio.router.navigate Visio.Utils.generateOverviewUrl(), { trigger: true }
+      return
+
+    return unless Visio.manager.get('dashboard').shareable()
+
+
+
+    $('body').append((new Visio.Views.ShareStrategy({ strategy: Visio.manager.get('dashboard') })).el)
 
   index: () =>
     @figure 'absy'

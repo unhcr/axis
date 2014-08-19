@@ -1,5 +1,7 @@
 class Visio.Models.Parameter extends Visio.Models.Syncable
 
+  @include Visio.Mixins.Dashboardify
+
   # @param: type - This is hash of the type of data we want (Budget, Expenditure, IndicatorDatum)
   # @param: idHash - This is a hash of ids that the data should include
   # @param: year - Allows for any specified year or false which will use all years. If undefined, will fall
@@ -158,18 +160,7 @@ class Visio.Models.Parameter extends Visio.Models.Syncable
   search: (query) ->
     $.get("#{@url}/search", { query: query })
 
-  initialize: ->
-    # Initialize helper functions to get ids of a given type
-    _.each _.values(Visio.Parameters), (hash) =>
-
-      @[hash.plural] = () =>
-        ids = _.keys(@get("#{hash.singular}_ids"))
-        parameters = Visio.manager.get(hash.plural)
-        return new parameters.constructor(parameters.filter (model) =>
-          @get("#{hash.singular}_ids")[model.id])
-
   include: (singular, id) ->
-
     id == @id or @get("#{singular}_ids")?[id]?
 
   selectedAmount: (year, filters = null) ->
