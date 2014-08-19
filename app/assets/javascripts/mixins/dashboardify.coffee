@@ -13,6 +13,8 @@ Visio.Mixins.Dashboardify =
     @parameters Visio.Parameters.PPGS
   operations: ->
     @parameters Visio.Parameters.OPERATIONS
+  strategy_objectives: ->
+    @parameters Visio.Parameters.STRATEGY_OBJECTIVES
 
   parameters: (hash) ->
     ids = _.keys(@get("#{hash.singular}_ids"))

@@ -18,7 +18,7 @@
         %a{ :href => "/users/sign_out", :data => { :method => "delete" }, :rel => "nofollow" }
           = Visio.user.get('login')
       %a.dashboard-item.icon.search-icon{ :href => '#search' }
-      - if Visio.manager.get('dashboard').shareable()
+      - if Visio.manager.get('dashboard')?.shareable()
         %a.dashboard-item.icon.share-icon{ :href => '#share' }
 
 .option-menu.zero-max-height.no-border
