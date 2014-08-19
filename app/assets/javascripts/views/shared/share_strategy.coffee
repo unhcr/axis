@@ -94,6 +94,6 @@ class Visio.Views.ShareStrategy extends Backbone.View
 
   close: ->
     $.unsubscribe 'select.user'
-    Visio.router.navigate Visio.Utils.generateOverviewUrl()
+    Visio.router?.navigate Visio.Utils.generateOverviewUrl()
     @unbind()
     @remove()
