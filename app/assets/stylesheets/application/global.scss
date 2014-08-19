@@ -363,9 +363,19 @@ body.layout-cms {
   height: $footer-height;
   background-color: white;
   padding-left: 80px;
-  padding-top: 50px;
+  padding-top: 30px;
   font-size: 14px;
   font-weight: bold;
+
+  span {
+    line-height: 37px;
+    padding-left: 8px;
+  }
+
+  .logo {
+    vertical-align: bottom;
+    background-position: center bottom;
+  }
 }
 
 body.layout-application {
