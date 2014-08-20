@@ -48,6 +48,10 @@
 
   .row
     .col-md-8
+      %button
+        .manage-admin Manage admin users
+  .row
+    .col-md-8
       .divider-stack
 
   .row
@@ -63,3 +67,9 @@
     .col-md-8
       .divider-stack
 
+:javascript
+  var adminUsers = new Visio.Collections.User(#{@configuration.admin_users.to_json.html_safe})
+
+  $('.manage-admin').on('click', function() {
+    $('body').append((new Visio.Views.AdminUsers({ collection: adminUsers })).$el)
+  });

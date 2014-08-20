@@ -13,6 +13,8 @@ class User < ActiveRecord::Base
   has_many :users_strategies, :uniq => true, :class_name => 'UserStrategy'
   has_many :shared_strategies, :class_name => 'Strategy', :through => :users_strategies
 
+  scope :admin_users, -> { where(admin: true) }
+
   def to_jbuilder(options = {})
     Jbuilder.new do |json|
       json.extract! self, :firstname, :lastname, :id, :reset_local_db, :login

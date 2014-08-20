@@ -1,0 +1,30 @@
+.close-container
+  .close
+%form
+  .row
+    .col-md-12
+      %h2
+        = "Manage admin users"
+
+  .row
+    .col-md-12
+      .usersearch
+
+  .row
+    .col-md-12
+      %h4
+        Admin Users:
+      .admin-users
+
+  .row
+    .col-md-6
+      .btn.submit
+        Ok
+
+    .col-md-6
+      .btn.cancel
+        Cancel
+
+
+
+

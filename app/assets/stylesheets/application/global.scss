@@ -2819,7 +2819,7 @@ a {
   }
 }
 
-.share-strategy-container {
+.share-strategy-container form, .admin-users-container  form{
   @include text-theme-one
 }
 
@@ -2880,7 +2880,7 @@ a {
   margin: 8px;
 }
 
-.shared-users {
+.shared-users, .admin-users {
   min-height: 100px;
   border: 1px solid $dark-gray;
 }
