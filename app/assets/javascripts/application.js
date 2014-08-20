@@ -43,6 +43,9 @@
 //= require_tree ./helpers
 //= require_tree ./models
 //= require_tree ./collections
+//= require ./vendor/rgbcolor
+//= require ./vendor/canvg
+//= require ./vendor/svgenie
 //= require_tree ./vendor
 //= require_tree ./lib
 //= require manager
