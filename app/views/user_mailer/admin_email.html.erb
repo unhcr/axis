@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h4>Congrats! <%= @user.login %> just made you an admin</h4>
+    <p>
+    When you're an admin you can do many more cool things. Here's a quick overview:
+
+      <ol>
+        <li>Create priority strategies with the <a href="<%= @url %>/cms/strategies">CMS.</a></li>
+        <li>Edit the <a href="<%= @url %>/admin_configuration">control panel.</a> This let's you do all sorts of fun things.</li>
+        <li>Rule the world.</li>
+      </ol>
+    </p>
+
+    --- <br />
+    <small><%= Quoth.get %></small>
+  </body>
+</html>
+

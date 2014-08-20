@@ -26,20 +26,17 @@ class User < ActiveRecord::Base
     to_jbuilder(options).attributes!
   end
 
-  def share_strategy(other_users, strategy_id)
+  # Returns newly shared users
+  def share_strategy(other_users, strategy)
 
-    s = self.strategies.find(strategy_id)
-
-    return false if not s or not other_users
+    return nil if not strategy or not other_users or not self.strategies.include? strategy
 
     # Notify new shared users by email if a strategy has been shared
-    new_users = other_users - s.shared_users
+    new_users = other_users - strategy.shared_users
 
-    UserMailer.share_email(s, self, new_users).deliver
+    strategy.shared_users = other_users
 
-    s.shared_users = other_users
-
-    true
+    new_users
   end
 
   def email
