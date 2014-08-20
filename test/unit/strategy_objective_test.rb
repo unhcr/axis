@@ -16,10 +16,7 @@ class StrategyObjectiveTest < ActiveSupport::TestCase
   test "include options" do
     options = {
       :include => {
-        :goal_ids => true,
-        :output_ids => true,
-        :indicator_ids => true,
-        :problem_objective_ids => true,
+        :ids => true,
       }
     }
 

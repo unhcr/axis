@@ -7,28 +7,21 @@ class Visio.Routers.DashboardRouter extends Visio.Routers.GlobalRouter
 
     @documentView = new Visio.Views.Document()
 
-    Visio.manager.on 'change:date', () =>
-      @moduleView.render true
-      Visio.router.navigate Visio.Utils.generateOverviewUrl(), { silent: true }
 
     Visio.manager.on 'change:module_type', =>
       Visio.router.navigate Visio.Utils.generateOverviewUrl(), { trigger: true }
 
-    Visio.manager.on 'change:aggregation_type', =>
+    Visio.manager.on 'change:filter_system', =>
+      @headerView.filterSystem.render()
       @moduleView.render true
-      Visio.router.navigate Visio.Utils.generateOverviewUrl(), { silent: true }
-
-    Visio.manager.on 'change:selected', (parameterTypeChanged) =>
-      @moduleView.render true
-      Visio.router.navigate Visio.Utils.generateOverviewUrl(), { silent: true }
-
-    Visio.manager.on 'change:reported_type', =>
-      @moduleView.render true
-      Visio.router.navigate Visio.Utils.generateOverviewUrl(), { silent: true }
 
     Visio.manager.on ['change:achievement_type',
                       'change:scenario_type',
                       'change:budget_type',
+                      'change:selected',
+                      'change:aggregation_type',
+                      'change:reported_type',
+                      'change:date',
                       'change:amount_type'].join(' '), =>
       @moduleView.render true
       Visio.router.navigate Visio.Utils.generateOverviewUrl(), { silent: true }
