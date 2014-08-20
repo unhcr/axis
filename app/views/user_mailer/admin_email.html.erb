@@ -2,21 +2,71 @@
 <html>
   <head>
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="/assets/shared/email.css" />
   </head>
-  <body>
-    <h4>Congrats! <%= @user.login %> just made you an admin</h4>
-    <p>
-    When you're an admin you can do many more cool things. Here's a quick overview:
+  <body bgcolor="#FFFFFF">
 
-      <ol>
-        <li>Create priority strategies with the <a href="<%= @url %>/cms/strategies">CMS.</a></li>
-        <li>Edit the <a href="<%= @url %>/admin_configuration">control panel.</a> This let's you do all sorts of fun things.</li>
-        <li>Rule the world.</li>
-      </ol>
-    </p>
+  <!-- HEADER -->
+  <table class="head-wrap" bgcolor="#999999">
+    <tr>
+      <td></td>
+      <td class="header container" >
 
-    --- <br />
-    <small><%= Quoth.get %></small>
+          <div class="content">
+          <table bgcolor="#999999">
+            <tr>
+              <td><img src="http://<%= @host %>/assets/AXIS-LOGO-WHITE-200x50.png" /></td>
+              <td align="right"><h6 class="collapse">AXIS</h6></td>
+            </tr>
+          </table>
+          </div>
+
+      </td>
+      <td></td>
+    </tr>
+  </table><!-- /HEADER -->
+
+
+  <!-- BODY -->
+  <table class="body-wrap">
+    <tr>
+      <td></td>
+      <td class="container" bgcolor="#FFFFFF">
+
+        <div class="content">
+        <table>
+          <tr>
+            <td>
+              <h3>Hi, <%= @user.login %></h3>
+              <p class="lead">Congrats! <%= @user.login %> just made you an admin.</p>
+              <p>
+                When you're an admin you can do many more cool things. Here's a quick overview:
+
+                <br />
+                <br />
+                  1. Create priority strategies with the <a href="<%= @url %>/cms/strategies">CMS.</a>
+                <br />
+                  2. Edit the <a href="<%= @url %>/admin_configuration">control panel.</a> This let's you do all sorts of fun things.
+                <br />
+                  3. Rule the world.
+              </p>
+              <p>
+              </p>
+              <!-- Callout Panel -->
+              <p class="callout">
+                <small><%= Quoth.get %></small>
+              </p><!-- /Callout Panel -->
+
+            </td>
+          </tr>
+        </table>
+        </div><!-- /content -->
+
+      </td>
+      <td></td>
+    </tr>
+  </table><!-- /BODY -->
+
   </body>
 </html>
-

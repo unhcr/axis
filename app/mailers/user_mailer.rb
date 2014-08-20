@@ -8,6 +8,7 @@ class UserMailer < ActionMailer::Base
     @user = user
     @shared_users = shared_users
     @url = "http://#{host}/overview/#{@strategy.id}"
+    @host = host
 
     mail(to: shared_users.map(&:email),
          subject: "#{user.login} has shared strategy '#{strategy.name}' with you")
@@ -19,6 +20,7 @@ class UserMailer < ActionMailer::Base
     @user = user
     @new_admin = new_admin
     @url = "http://#{host}"
+    @host = host
 
     mail(to: new_admin.map(&:email),
          subject: "#{user.login} has made you an admin!")

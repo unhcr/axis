@@ -2,17 +2,68 @@
 <html>
   <head>
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="/assets/shared/email.css" />
   </head>
-  <body>
-    <h4>Congrats! <%= @user.login %> just shared the strategy '<%= @strategy.name %>' with you!</h4>
-    <p>
-    <%= @user.login %> has worked hard to build a strategy and has decided to share it with you. <%= @user.login %> describes the strategy as: "<%= @strategy.description %>"
-    </p>
-    <p>
-    Check out '<%= @strategy.name %>' strategy at: <a href="<%= @url %>"><%= @url %></a>
-    </p>
 
-    --- <br />
-    <small><%= Quoth.get %></small>
+
+  <body bgcolor="#FFFFFF">
+
+  <!-- HEADER -->
+  <table class="head-wrap" bgcolor="#999999">
+    <tr>
+      <td></td>
+      <td class="header container" >
+
+          <div class="content">
+          <table bgcolor="#999999">
+            <tr>
+              <td><img src="http://<%= @host %>/assets/AXIS-LOGO-WHITE-200x50.png" /></td>
+              <td align="right"><h6 class="collapse">AXIS</h6></td>
+            </tr>
+          </table>
+          </div>
+
+      </td>
+      <td></td>
+    </tr>
+  </table><!-- /HEADER -->
+
+
+  <!-- BODY -->
+  <table class="body-wrap">
+    <tr>
+      <td></td>
+      <td class="container" bgcolor="#FFFFFF">
+
+        <div class="content">
+        <table>
+          <tr>
+            <td>
+              <h3>Hi, <%= @user.login %></h3>
+              <p class="lead">Congrats! <%= @user.login %> just shared the strategy '<%= @strategy.name %>' with you!</p>
+              <p>
+                <%= @user.login %> has worked hard to build a strategy and has decided to share it with you. <%= @user.login %> describes the strategy as: "<%= @strategy.description %>"
+
+              </p>
+              <p>
+              Check out '<%= @strategy.name %>' strategy at: <a href="<%= @url %>"><%= @url %></a>
+              </p>
+              <p>
+              </p>
+              <!-- Callout Panel -->
+              <p class="callout">
+                <small><%= Quoth.get %></small>
+              </p><!-- /Callout Panel -->
+
+            </td>
+          </tr>
+        </table>
+        </div><!-- /content -->
+
+      </td>
+      <td></td>
+    </tr>
+  </table><!-- /BODY -->
+
   </body>
-</html>
