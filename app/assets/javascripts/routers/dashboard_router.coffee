@@ -24,6 +24,7 @@ class Visio.Routers.DashboardRouter extends Visio.Routers.GlobalRouter
                       'change:date',
                       'change:amount_type'].join(' '), =>
       @moduleView.render true
+      $('.dashboard-meta').text Visio.manager.toString()
       Visio.router.navigate Visio.Utils.generateOverviewUrl(), { silent: true }
 
     @module = $('#module')

@@ -1772,13 +1772,6 @@ a {
   @include transition-timing-function(ease-in);
 }
 
-.module:before {
-  display: block;
-  content: ' ';
-  height: $toolbar-height;
-  visibility: hidden;
-}
-
 .data-container {
   max-height: 0px;
   overflow: hidden;

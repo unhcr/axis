@@ -1,8 +1,8 @@
 - if context.exportable and not context.isExport
   .row
     .col-md-6
-      %h2
-        = context.figure.type.human
+      %h3.dashboard-meta
+        = Visio.manager.toString()
     .col-md-6.right-text.header-buttons
       .export.header-button
-%figure.contain
+%figure

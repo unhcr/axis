@@ -154,12 +154,12 @@ line {
   }
 
   .point, .point-container {
-    fill: $pink;
+    fill: $purple;
     pointer-events: none;
   }
 
   .point.external {
-    fill: lighten($pink, 20%);
+    fill: lighten($purple, 20%);
   }
 
   .y.axis line {

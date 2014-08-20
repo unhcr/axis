@@ -1,5 +1,5 @@
 .info-container
   .row
-    .col-md-12.col-centered.zero-padding
-      %figure.summary-figure.contain
+    .col-md-12
+      %figure.summary-figure
 
