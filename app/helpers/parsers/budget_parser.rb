@@ -1,13 +1,5 @@
 module Parsers
-  class BudgetParser < Parser
-    AOL = 'Above Operating Level'
-    OL = 'Operating Level'
-
-    ADMIN = 'ADMIN'
-    PARTNER = 'PARTNER'
-    PROJECT = 'PROJECT'
-    STAFF = 'STAFF'
-
+  class BudgetParser < AmountParser
     MODEL = Budget
 
     def self.csvfields
