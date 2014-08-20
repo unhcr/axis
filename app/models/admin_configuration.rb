@@ -6,7 +6,6 @@ class AdminConfiguration < ActiveRecord::Base
   validates :default_reported_type, :inclusion => { :in => ['myr', 'yer'] }
   validates :default_aggregation_type, :inclusion => { :in => ['operations', 'ppgs', 'goals',
                                                    'outputs', 'problem_objectives'] }
-
   validate do |config|
     if (AdminConfiguration.count > 0 and config.new_record?) or
         (not config.new_record? and AdminConfiguration.count > 1)
@@ -20,6 +19,10 @@ class AdminConfiguration < ActiveRecord::Base
     if config.default_date < config.startyear or config.default_date > config.endyear
       errors.add(:base, "Date should be inbetween start and end year")
     end
+  end
+
+  def admin_users
+    User.admin_users
   end
 
   def to_jbuilder(options = {})

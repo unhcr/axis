@@ -13,7 +13,7 @@ class UserTest < ActiveSupport::TestCase
 
     assert s.user
 
-    u.share_strategy([other], s.id)
+    u.share_strategy([other], s)
 
     other.reload
     assert_equal other.shared_strategies.length, 1
@@ -31,12 +31,12 @@ class UserTest < ActiveSupport::TestCase
 
     assert s.user
 
-    u.share_strategy([other], s.id)
+    u.share_strategy([other], s)
 
     other.reload
     assert_equal other.shared_strategies.length, 1
 
-    u.share_strategy([], s.id)
+    u.share_strategy([], s)
     other.reload
     assert_equal other.shared_strategies.length, 0
 

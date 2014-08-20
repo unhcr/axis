@@ -5,8 +5,6 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" type="text/css" href="/assets/shared/email.css" />
   </head>
-
-
   <body bgcolor="#FFFFFF">
 
   <!-- HEADER -->
@@ -41,13 +39,17 @@
           <tr>
             <td>
               <h3>Hi, <%= @user.login %></h3>
-              <p class="lead">Congrats! <%= @user.login %> just shared the strategy '<%= @strategy.name %>' with you!</p>
+              <p class="lead">Congrats! <%= @user.login %> just made you an admin.</p>
               <p>
-                <%= @user.login %> has worked hard to build a strategy and has decided to share it with you. <%= @user.login %> describes the strategy as: "<%= @strategy.description %>"
+                When you're an admin you can do many more cool things. Here's a quick overview:
 
-              </p>
-              <p>
-              Check out '<%= @strategy.name %>' strategy at: <a href="<%= @url %>"><%= @url %></a>
+                <br />
+                <br />
+                  1. Create priority strategies with the <a href="<%= @url %>/cms/strategies">CMS.</a>
+                <br />
+                  2. Edit the <a href="<%= @url %>/admin_configuration">control panel.</a> This let's you do all sorts of fun things.
+                <br />
+                  3. Rule the world.
               </p>
               <p>
               </p>
@@ -67,3 +69,4 @@
   </table><!-- /BODY -->
 
   </body>
+</html>

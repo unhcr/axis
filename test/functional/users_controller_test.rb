@@ -4,6 +4,8 @@ class UsersControllerTest < ActionController::TestCase
   include Devise::TestHelpers
   test "should update user" do
     user = users(:one)
+    user.admin = true
+    user.save
     sign_in user
 
     assert !user.reset_local_db
@@ -78,6 +80,26 @@ class UsersControllerTest < ActionController::TestCase
     assert_response :success
     r = JSON.parse(response.body)
     assert r['success']
+  end
+
+  test 'update admin' do
+    user = users(:one)
+    user.admin = true
+    user.save
+
+    u2 = users(:two)
+
+    sign_in user
+
+    post :admin, { :users => [user.as_json, u2.as_json] }
+
+    assert_response :success
+    r = JSON.parse(response.body)
+    assert r['success']
+
+    assert u2.reload.admin
+    assert user.reload.admin
+
   end
 
   test 'search' do

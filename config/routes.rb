@@ -61,6 +61,7 @@ Visio::Application.routes.draw do
     end
     collection do
       get 'search'
+      post 'admin' => 'users#admin'
     end
   end
 

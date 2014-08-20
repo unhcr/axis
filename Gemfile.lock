@@ -38,6 +38,7 @@ GEM
     activesupport (3.2.13)
       i18n (= 0.6.1)
       multi_json (~> 1.0)
+    addressable (2.3.6)
     after_commit_action (0.1.3)
       activerecord (>= 3.0.0)
     ansi (1.4.3)
@@ -91,6 +92,8 @@ GEM
       compass (>= 0.12.2)
     counter_culture (0.1.19)
       after_commit_action (~> 0.1.3)
+    css_parser (1.3.5)
+      addressable
     debug_inspector (0.0.2)
     devise (3.2.2)
       bcrypt-ruby (~> 3.0)
@@ -171,6 +174,12 @@ GEM
     polyglot (0.3.3)
     pony (1.6.2)
       mail (>= 2.0)
+    premailer (1.8.2)
+      css_parser (>= 1.3.5)
+      htmlentities (>= 4.0.0)
+    premailer-rails (1.7.0)
+      actionmailer (>= 3, < 5)
+      premailer (~> 1.7, >= 1.7.9)
     pry (0.9.12.4)
       coderay (~> 1.0)
       method_source (~> 0.8)
@@ -347,6 +356,7 @@ DEPENDENCIES
   normalize-rails
   pdfkit
   pony
+  premailer-rails
   pry
   pry-rails
   pry-stack_explorer
