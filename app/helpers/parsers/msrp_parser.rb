@@ -1,14 +1,6 @@
 module Parsers
 
-  class MsrpParser < Parser
-    AOL = 'Above Operating Level'
-    OL = 'Operating Level'
-
-    ADMIN = 'ADMIN'
-    PARTNER = 'PARTNER'
-    PROJECT = 'PROJECT'
-    STAFF = 'STAFF'
-
+  class MsrpParser < AmountParser
     MODEL = Expenditure
 
     def self.csvfields

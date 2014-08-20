@@ -17,9 +17,9 @@ class Visio.Views.ShareStrategy extends Backbone.View
   initialize: (options) ->
     @strategy = options.strategy
     @initModal()
-    console.log @collection
 
     $.subscribe 'select.user', @onUserSelect
+    @render()
 
   render: ->
 
@@ -29,7 +29,7 @@ class Visio.Views.ShareStrategy extends Backbone.View
     @userSearch = new Visio.Views.UserSearch({ el: @$el.find('.usersearch') })
     @userSearch.render()
 
-    @collection.each (user) =>
+    @strategy.get('shared_users').each (user) =>
       @$el.find('.shared-users').append @pillTemplate({ user: user })
 
 
@@ -43,12 +43,12 @@ class Visio.Views.ShareStrategy extends Backbone.View
     $pill.remove()
     $pill.unbind()
 
-    user = @collection.get id
+    user = @strategy.get('shared_users').get id
 
-    @collection.remove user
+    @strategy.get('shared_users').remove user
 
   onUserSelect: (e, user) =>
-    if @collection.get(user.id)?
+    if @strategy.get('shared_users').get(user.id)?
       $pill = @$el.find ".user#{Visio.Constants.SEPARATOR}#{user.id}"
       Visio.Utils.flash $pill
       return
@@ -56,7 +56,7 @@ class Visio.Views.ShareStrategy extends Backbone.View
       (new Visio.Views.Error({ title: 'Cannot share with yourself!', description: 'You cannot share it with yourself' }))
       return
 
-    @collection.add user
+    @strategy.get('shared_users').add user
 
     @$el.find('.shared-users').append @pillTemplate({ user: user })
 
@@ -73,14 +73,14 @@ class Visio.Views.ShareStrategy extends Backbone.View
     $.ajax({
         type: 'POST'
         url: "/users/#{Visio.user.id}/share/#{Visio.manager.get('dashboard').id}",
-        data: JSON.stringify({ users: @collection.toJSON() }),
+        data: JSON.stringify({ users: @strategy.get('shared_users').toJSON() }),
         dataType: 'json',
         contentType: 'application/json'
       }).done((response) =>
         if response.success
           notification = new Visio.Views.Success
             title: 'Successfully shared!'
-            description: "You shared your strategy with #{@collection.length} people"
+            description: "You shared your strategy with #{@strategy.get('shared_users').length} people"
         else
           notification = new Visio.Views.Error
             title: 'Oops!'
@@ -94,5 +94,6 @@ class Visio.Views.ShareStrategy extends Backbone.View
 
   close: ->
     $.unsubscribe 'select.user'
+    Visio.router?.navigate Visio.Utils.generateOverviewUrl()
     @unbind()
     @remove()

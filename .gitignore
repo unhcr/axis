@@ -28,5 +28,9 @@ coverage
 /script/builds/indicator_data_impact
 /script/builds/indicator_data_impact
 /script/builds/narratives
+/script/builds/operations
+/script/builds/goals
+/script/builds/problem_objectives
+/script/builds/outputs
 
 /public/reports/pdf/*.pdf

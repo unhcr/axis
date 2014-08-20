@@ -30,9 +30,10 @@
       = yield
 
     %footer#footer
-      Visualize. Analyze. Monitor.
+      .logo
+      %span Visualize. Analyze. Monitor.
 
-  %svg
+  %svg.zero-height
     %defs
       %pattern{ :id => 'stripes', :patternUnits => 'userSpaceOnUse', :width => 8, :height => 8 }
         %path{ :d => 'M-1,-1 l9,9 M-1,7 l9,9 M7,-1 l9,9', :stroke => 'rgb(133, 135, 134)', 'stroke-width' => 2 }

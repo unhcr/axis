@@ -9,6 +9,10 @@ describe Build do
               Build::PositionsBuild,
               Build::OfficesBuild,
               Build::NarrativesBuild,
+              Build::OperationsBuild,
+              Build::GoalsBuild,
+              Build::OutputsBuild,
+              Build::ProblemObjectivesBuild,
               Build::IndicatorDataPerfBuild,
               Build::IndicatorDataImpactBuild]
   builders.each do |builder|

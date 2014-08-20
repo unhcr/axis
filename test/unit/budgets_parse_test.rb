@@ -32,6 +32,14 @@ class BudgetsParseTest < ActiveSupport::TestCase
       assert b.scenario, 'Must have scenario'
       assert b.budget_type, 'Must have budget type'
     end
+
+    b = Budget.first
+
+    assert_equal OperationsPpgs.where(:operation_id => b.operation_id, :ppg_id => b.ppg_id).count, 1
+    assert_equal GoalsPpgs.where(:goal_id => b.goal_id, :ppg_id => b.ppg_id).count, 1
+    assert_equal OutputsProblemObjectives.where(:output_id => b.output_id,
+                                                :problem_objective_id => b.problem_objective_id).count, 1
+    assert_equal GoalsOutputs.where(:goal_id => b.goal_id, :output_id => b.output_id).count, 1
   end
 
   test "parse small update" do
@@ -45,6 +53,14 @@ class BudgetsParseTest < ActiveSupport::TestCase
     assert_equal 0, Budget.where('found_at < ?', found).length, 'All should have been found the second time'
     assert_equal 0, Budget.where('updated_at > ?', found).length, 'None should have been updated the second time'
     assert_equal @sum, Budget.sum(:amount)
+
+    b = Budget.first
+
+    assert_equal OperationsPpgs.where(:operation_id => b.operation_id, :ppg_id => b.ppg_id).count, 1
+    assert_equal GoalsPpgs.where(:goal_id => b.goal_id, :ppg_id => b.ppg_id).count, 1
+    assert_equal OutputsProblemObjectives.where(:output_id => b.output_id,
+                                                :problem_objective_id => b.problem_objective_id).count, 1
+    assert_equal GoalsOutputs.where(:goal_id => b.goal_id, :output_id => b.output_id).count, 1
   end
 
 end

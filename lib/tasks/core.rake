@@ -29,6 +29,10 @@ namespace :build do
     :indicator_data_impact => 'Build::IndicatorDataImpactBuild',
     :indicator_data_perf => 'Build::IndicatorDataPerfBuild',
     :narratives => 'Build::NarrativesBuild',
+    :operations => 'Build::OperationsBuild',
+    :outputs => 'Build::OutputsBuild',
+    :problem_objectives => 'Build::ProblemObjectivesBuild',
+    :goals => 'Build::GoalsBuild',
 
   }
 
