@@ -2574,13 +2574,13 @@ a {
 .parameter-show {
   margin-top: 15px;;
   margin-bottom: 15px;;
+  height: 500px;
   header {
     @include section;
     background-color: $off-white;
     padding-top: 15px;
     padding-bottom: 15px;
     border-bottom: 1px solid $primary;
-    height: auto;
   }
 
   .idx {

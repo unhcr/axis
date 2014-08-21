@@ -8,7 +8,7 @@ class Visio.Views.ParameterShowView extends Backbone.View
 
   barConfig:
     width: 200
-    height: 110
+    height: 150
     orientation: 'left'
     hasLabels: true
     margin:
@@ -55,7 +55,7 @@ class Visio.Views.ParameterShowView extends Backbone.View
     @
 
   drawAchievements: =>
-    result = @model.strategyAchievement Visio.manager.year(), @filters
+    result = @model.selectedAchievement Visio.manager.year(), @filters
     @achievementFigure.modelFn new Backbone.Model result
     @achievementFigure.render()
 
