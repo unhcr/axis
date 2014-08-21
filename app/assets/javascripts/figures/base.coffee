@@ -32,7 +32,10 @@ class Visio.Figures.Base extends Backbone.View
 
     @template = HAML["figures/#{@type.name}"] if HAML["figures/#{@type.name}"]?
 
-    @template = HAML["pdf/figures/#{@type.name}"] if @isPdf
+    if @isPdf and HAML["pdf/figures/#{@type.name}"]
+      @template = HAML["pdf/figures/#{@type.name}"]
+    else if @isPdf
+      @template = HAML["pdf/figures/base"]
 
     opts =
       figure: @
