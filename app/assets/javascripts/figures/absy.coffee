@@ -134,6 +134,14 @@ class Visio.Figures.Absy extends Visio.Figures.Base
           else
             'Expenditure Rate (%)'
 
+    # Legend setup
+    if @isPdf
+      @legendView = new Visio.Legends.AbsyLegendPdf
+        figure: @
+        collection: new @collection.constructor(_.filter(filtered, (d) => self.isSelected(d.id)))
+    else
+      @legendView = new Visio.Legends.AbsyLegend()
+
   render: ->
     filtered = @filtered @collection
 
@@ -283,11 +291,7 @@ class Visio.Figures.Absy extends Visio.Figures.Base
       .call(@yAxis)
 
     # Generate legend view
-    if @isPdf
-      @legendView = new Visio.Figures.AbsyLegend
-        figure: @
-        collection: new @collection.constructor(_.filter(filtered, (d) => self.isSelected(d.id)))
-      @$el.find('.legend-container').html @legendView.render().el
+    @$el.find('.legend-container').html @legendView.render().el
 
 
     @

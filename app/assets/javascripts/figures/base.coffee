@@ -53,6 +53,8 @@ class Visio.Figures.Base extends Backbone.View
     @adjustedWidth = (config.width - @margin.left - @margin.right)
     @adjustedHeight = (config.height - @margin.top - @margin.bottom)
 
+    console.log $(@selection.node()).parent().width()
+
     @svg = @selection.append('svg')
       .attr('width', config.width)
       .attr('height', config.height)

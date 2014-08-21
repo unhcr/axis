@@ -8,8 +8,8 @@ class Visio.Views.AbsyView extends Backbone.View
 
   initialize: (options) ->
     @config =
-      width: 800
-      height: 420
+      width: $('#module').width() - Visio.Constants.LEGEND_WIDTH - 40
+      height: 600
       margin:
         top: 40
         bottom: 90

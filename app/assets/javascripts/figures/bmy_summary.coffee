@@ -1,6 +1,8 @@
 # Budget Summary
 class Visio.Figures.BmySummary extends Visio.Figures.Bmy
 
+  type: Visio.FigureTypes.BMY_SUMMARY
+
   initialize: ->
     super
     @filters.get('group_by').set 'hidden', true

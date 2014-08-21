@@ -34,9 +34,11 @@
 //= require ./figures/base
 //= require ./figures/bar
 //= require ./figures/bmy
+//= require ./legends/base
 //= require ./views/tooltips/bmy
 //= require_tree ./views
 //= require_tree ./figures
+//= require_tree ./legends
 //= require ./routers/global_router
 //= require ./routers/dashboard_router
 //= require_tree ./routers
