@@ -11,9 +11,9 @@ class Visio.Views.AbsyView extends Backbone.View
       width: $('#module').width() - Visio.Constants.LEGEND_WIDTH - 40
       height: 600
       margin:
-        top: 40
+        top: 90
         bottom: 90
-        left: 90
+        left: 100
         right: 80
 
     @figure = new Visio.Figures.Absy @config

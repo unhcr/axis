@@ -4,6 +4,8 @@ class Visio.Figures.Absy extends Visio.Figures.Base
 
   type: Visio.FigureTypes.ABSY
 
+  templateLabel: HAML['figures/label']
+
   initialize: (config = {}) ->
     @attrConfig.push 'algorithm'
     config.query or= ''
@@ -87,6 +89,7 @@ class Visio.Figures.Absy extends Visio.Figures.Base
       .scale(@x)
       .orient('bottom')
       .tickFormat(Visio.Formats.SI_SIMPLE)
+      .tickFormat((d) -> if d == 0 then null else Visio.Formats.SI_SIMPLE(d))
       .ticks(Math.floor(@adjustedWidth / 100))
       .innerTickSize(14)
       .tickPadding(22)
@@ -115,19 +118,19 @@ class Visio.Figures.Absy extends Visio.Figures.Base
       .attr('class', 'y axis')
       .attr('transform', 'translate(0,0)')
       .append("text")
-        .attr("transform", "rotate(-90)")
-        .attr("y", -40)
-        .attr("x", -@adjustedHeight / 2)
+        .attr("y", -60)
+        .attr('transform', 'translate(-58, 0)')
         .attr("dy", "-.21em")
         .style("text-anchor", "middle")
-        .text('Progress Towards Target (%)')
+        .html =>
+          @yAxisLabel()
 
     @g.append('g')
       .attr('class', 'x axis')
       .attr('transform', "translate(0,#{@adjustedHeight})")
       .append("text")
         .attr('y', 35)
-        .attr("x", -40)
+        .attr('transform', 'translate(-20, 0)')
         .attr("dy", "-.21em")
         .style("text-anchor", "end")
         .html =>
@@ -285,6 +288,10 @@ class Visio.Figures.Absy extends Visio.Figures.Base
       .duration(Visio.Durations.FAST)
       .call(@yAxis)
 
+    @g.select('.y.axis text')
+      .html =>
+        @yAxisLabel()
+
     # Generate legend view
     if @isPdf
       @legendView.collection = new @collection.constructor(_.filter(filtered, (d) => self.isSelected(d.id)))
@@ -321,6 +328,12 @@ class Visio.Figures.Absy extends Visio.Figures.Base
     else
       title = 'Expenditure Rate (%)'
 
-    return "
-      <tspan>#{title}</tspan>
-      <tspan dy=\"1.4em\">in US Dollars</tspan>"
+    return @templateLabel { title: title, subtitles: ['in US Dollars'] }
+
+  yAxisLabel: ->
+
+    achievement_type = Visio.Utils.humanMetric Visio.manager.get 'achievement_type'
+    return @templateLabel {
+        title: 'Achievement',
+        subtitles: ['% of Progress', "towards #{achievement_type}"]
+      }
