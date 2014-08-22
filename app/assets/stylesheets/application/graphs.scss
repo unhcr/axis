@@ -162,21 +162,12 @@ line {
     fill: lighten($purple, 20%);
   }
 
-  .y.axis line {
+  .x.axis line {
     stroke: $lighter-gray;
-    stroke-dasharray: 1;
   }
 
   .y.axis text, .x.axis > text {
     fill: $black;
-  }
-
-  .x.axis path {
-    stroke: none;
-  }
-
-  .x.axis line {
-    stroke: none;
   }
 
   .x.axis text {
