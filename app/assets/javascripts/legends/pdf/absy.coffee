@@ -1,10 +1,11 @@
-class Visio.Figures.AbsyLegend extends Backbone.View
+class Visio.Legends.AbsyLegendPdf extends Visio.Legends.Base
 
-  className: 'legend'
+  isPdf: true
 
-  template: HAML['pdf/figures/absy_legend']
+  type: Visio.FigureTypes.ABSY
 
   initialize: (options) ->
+    super
     @figure = options.figure
 
   render: ->

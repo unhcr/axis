@@ -32,7 +32,10 @@ class Visio.Figures.Base extends Backbone.View
 
     @template = HAML["figures/#{@type.name}"] if HAML["figures/#{@type.name}"]?
 
-    @template = HAML["pdf/figures/#{@type.name}"] if @isPdf
+    if @isPdf and HAML["pdf/figures/#{@type.name}"]
+      @template = HAML["pdf/figures/#{@type.name}"]
+    else if @isPdf
+      @template = HAML["pdf/figures/base"]
 
     opts =
       figure: @
@@ -49,6 +52,8 @@ class Visio.Figures.Base extends Backbone.View
     # Adjust for margins
     @adjustedWidth = (config.width - @margin.left - @margin.right)
     @adjustedHeight = (config.height - @margin.top - @margin.bottom)
+
+    console.log $(@selection.node()).parent().width()
 
     @svg = @selection.append('svg')
       .attr('width', config.width)

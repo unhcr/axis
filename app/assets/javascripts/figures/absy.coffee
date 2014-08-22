@@ -89,6 +89,8 @@ class Visio.Figures.Absy extends Visio.Figures.Base
       .tickFormat(Visio.Formats.SI_SIMPLE)
       .ticks(Math.floor(@adjustedWidth / 100))
       .innerTickSize(14)
+      .tickPadding(22)
+      .tickSize(-@adjustedHeight)
 
     @yAxis = d3.svg.axis()
       .scale(@y)
@@ -124,15 +126,20 @@ class Visio.Figures.Absy extends Visio.Figures.Base
       .attr('class', 'x axis')
       .attr('transform', "translate(0,#{@adjustedHeight})")
       .append("text")
-        .attr('y', 50)
-        .attr("x", @adjustedWidth / 2)
+        .attr('y', 35)
+        .attr("x", -40)
         .attr("dy", "-.21em")
-        .style("text-anchor", "middle")
-        .text =>
-          if @algorithm == 'selectedBudget'
-            'Budget (Dollars)'
-          else
-            'Expenditure Rate (%)'
+        .style("text-anchor", "end")
+        .html =>
+          @xAxisLabel()
+
+    # Legend setup
+    if @isPdf
+      @legendView = new Visio.Legends.AbsyLegendPdf
+        figure: @
+        collection: new @collection.constructor(_.filter(filtered, (d) => self.isSelected(d.id)))
+    else
+      @legendView = new Visio.Legends.AbsyLegend()
 
   render: ->
     filtered = @filtered @collection
@@ -271,11 +278,8 @@ class Visio.Figures.Absy extends Visio.Figures.Base
       .call(@xAxis)
 
     @g.select('.x.axis text')
-      .text =>
-        if @algorithm == 'selectedBudget'
-          'Budget (Dollars)'
-        else
-          'Expenditure Rate (%)'
+      .html =>
+        @xAxisLabel()
 
     @g.select('.y.axis')
       .transition()
@@ -283,11 +287,7 @@ class Visio.Figures.Absy extends Visio.Figures.Base
       .call(@yAxis)
 
     # Generate legend view
-    if @isPdf
-      @legendView = new Visio.Figures.AbsyLegend
-        figure: @
-        collection: new @collection.constructor(_.filter(filtered, (d) => self.isSelected(d.id)))
-      @$el.find('.legend-container').html @legendView.render().el
+    @$el.find('.legend-container').html @legendView.render().el
 
 
     @
@@ -313,3 +313,13 @@ class Visio.Figures.Absy extends Visio.Figures.Base
 
   isQueried: (d) =>
     !_.isEmpty(@query) and d.toString().toLowerCase().indexOf(@query.toLowerCase()) != -1
+
+  xAxisLabel: ->
+    if @algorithm == 'selectedBudget'
+      title = 'Budget'
+    else
+      title = 'Expenditure Rate (%)'
+
+    return "
+      <tspan>#{title}</tspan>
+      <tspan dy=\"1.4em\">in US Dollars</tspan>"

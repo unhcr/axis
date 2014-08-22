@@ -19,7 +19,7 @@ line {
   shape-rendering: crispEdges;
 }
 
-.svg-bmy-figure {
+.svg-bmy-figure, .svg-bmys-figure {
   .budget-line {
     stroke: $light-gray;
     fill: none;
@@ -154,29 +154,20 @@ line {
   }
 
   .point, .point-container {
-    fill: $pink;
+    fill: $purple;
     pointer-events: none;
   }
 
   .point.external {
-    fill: lighten($pink, 20%);
+    fill: lighten($purple, 20%);
   }
 
-  .y.axis line {
+  .x.axis line {
     stroke: $lighter-gray;
-    stroke-dasharray: 1;
   }
 
   .y.axis text, .x.axis > text {
     fill: $black;
-  }
-
-  .x.axis path {
-    stroke: none;
-  }
-
-  .x.axis line {
-    stroke: none;
   }
 
   .x.axis text {

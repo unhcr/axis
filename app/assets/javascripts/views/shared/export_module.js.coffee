@@ -126,21 +126,7 @@ class Visio.Views.ExportModule extends Backbone.View
       .attr("xmlns", "http://www.w3.org/2000/svg")
       .node()
 
-    imgsrc = 'data:image/svg+xml;base64,'+ btoa(html.parentNode.innerHTML)
-    img = new Image()
-    img.src = imgsrc
-    img.onload = =>
-      canvas = document.createElement 'canvas'
-      canvas.width = img.width
-      canvas.height = img.height
-
-      context = canvas.getContext '2d'
-      context.drawImage img, 0, 0
-
-      a = document.createElement 'a'
-      a.download = "#{@model.get('title') or 'graph'}.png"
-      a.href = canvas.toDataURL 'image/png'
-      a.click()
+    svgenie.save html, { name: 'graph.png' }
 
   onClose: ->
     @close()

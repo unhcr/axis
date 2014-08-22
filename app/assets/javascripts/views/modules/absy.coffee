@@ -8,8 +8,8 @@ class Visio.Views.AbsyView extends Backbone.View
 
   initialize: (options) ->
     @config =
-      width: 800
-      height: 420
+      width: $('#module').width() - Visio.Constants.LEGEND_WIDTH - 40
+      height: 600
       margin:
         top: 40
         bottom: 90
@@ -22,7 +22,7 @@ class Visio.Views.AbsyView extends Backbone.View
   render: (isRerender) ->
 
     if !isRerender
-      @$el.html @template( figureId: @figure.figureId() )
+      @$el.html @template()
       @$el.find('#bubble').html @figure.el
       @$el.find('.header-buttons').append (new Visio.Views.FilterBy({ figure: @figure })).render().el
       @$el.find('.header-buttons').append @queryBy.render().el

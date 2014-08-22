@@ -138,8 +138,7 @@ class PpgTest < ActiveSupport::TestCase
   test "include options" do
     options = {
       :include => {
-        :goal_ids => true,
-        :operation_ids => true,
+        :ids => true,
       }
     }
 

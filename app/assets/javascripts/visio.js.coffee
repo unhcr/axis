@@ -6,6 +6,7 @@ window.Visio =
   Routers: {}
   Utils: {}
   Figures: {}
+  Legends: {}
   FigureTypes:
     MAP:
       className: 'Map'
@@ -61,6 +62,11 @@ window.Visio =
       className: 'Bmy'
       human: 'Budget vs Time'
       name: 'bmy'
+    # Budget Multiple Year Summary
+    BMY_SUMMARY:
+      className: 'BmySummary'
+      human: 'Budget vs Time'
+      name: 'bmys'
     # Indicators Single Year
     ISY:
       className: 'Isy'
@@ -100,6 +106,7 @@ window.Visio =
     NUMBER: d3.format('d')
     LONG_NUMBER: d3.format(',f')
   Constants:
+    LEGEND_WIDTH: 300
     ANY_YEAR: 'ANY_YEAR'
     ANY_STRATEGY_OBJECTIVE: 'ANY_STRATEGY_OBJECTIVE'
     DB_NAME: 'visio'

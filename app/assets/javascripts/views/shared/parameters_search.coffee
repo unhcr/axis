@@ -80,9 +80,7 @@ class Visio.Views.ParameterSearch extends Backbone.View
     dependencyTypes = @dependencyTypes @collection.name
     dataTypes = @dataTypes @collection.name
 
-    fetchOptions = { include: {} }
-    _.each dependencyTypes, (dependencyType) ->
-      fetchOptions.include["#{dependencyType.singular}_ids"] = true
+    fetchOptions = { include: { ids: true } }
 
     return if @collection.get(id)? and @collection.get(id).get('loaded')
 
@@ -113,7 +111,7 @@ class Visio.Views.ParameterSearch extends Backbone.View
           # Select model and dependencies
           Visio.manager.select model.name.plural, id
           _.each dependencyTypes, (dependencyType) ->
-            Visio.manager.select dependencyType.plural, model.get("#{dependencyType.singular}_ids")
+            Visio.manager.select dependencyType.plural, _.keys(model.get("#{dependencyType.singular}_ids"))
 
           dataOptions =
             filter_ids: @filterIds @collection.name, id
@@ -122,7 +120,7 @@ class Visio.Views.ParameterSearch extends Backbone.View
               NProgress.done()
               # finally trigger redraw
               model.set 'loaded', true
-              Visio.manager.trigger 'change:navigation'
+              Visio.manager.trigger 'change:filter_system'
 
 
   close: ->

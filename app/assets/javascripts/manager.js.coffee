@@ -138,6 +138,12 @@ class Visio.Models.Manager extends Backbone.Model
     return @get('date').getFullYear() if arguments.length == 0
     @set { date: new Date(_year, 1) }, options || {}
 
+  toString: ->
+    "#{@year()} -
+      #{@get('reported_type').toUpperCase()} -
+      #{Visio.Utils.figureTypeByName(Visio.manager.get('module_type')).human} -
+      #{Visio.Utils.parameterByName(@get('aggregation_type')).human}"
+
   strategy: () ->
     return unless (@get('strategies') or @get('personal_strategies')) && @get('strategy_id')
     strategy = @get('strategies').get(@get('strategy_id'))
