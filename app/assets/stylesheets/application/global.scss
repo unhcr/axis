@@ -1840,6 +1840,11 @@ a {
   margin-left: 5px;
   right: 0;
 
+  /* Legends should disappear */
+  .legend-container {
+    display: none;
+  }
+
   .fixed-top {
     left: $filter-system-width + 15px;
   }
@@ -2714,19 +2719,6 @@ a {
   background-repeat: no-repeat;
   background-position: center;
   cursor: pointer;
-  margin-left: $export-label-length;
-}
-
-.export::before {
-  @include header-button;
-  margin: 0;
-  content: 'Save and Export me';
-  position: absolute;
-  border-right: none;
-  width: $export-label-length;
-  left: -$export-label-length - 1;
-  top: 0px;
-  text-align: center;
 }
 
 .map-export {

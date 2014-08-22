@@ -1,5 +1,5 @@
 %tspan{ :x => 0, :dy => '0em' }
   = context.title
 - _.each context.subtitles, (s, i) ->
-  %tspan{ :x => 0, :dy => (1.4) + 'em' }
+  %tspan{ :x => 0, :dy => (1.2) + 'em' }
     = s
