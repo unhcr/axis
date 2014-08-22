@@ -137,7 +137,6 @@ class Visio.Figures.Absy extends Visio.Figures.Base
     if @isPdf
       @legendView = new Visio.Legends.AbsyLegendPdf
         figure: @
-        collection: new @collection.constructor(_.filter(filtered, (d) => self.isSelected(d.id)))
     else
       @legendView = new Visio.Legends.AbsyLegend()
 
@@ -287,6 +286,8 @@ class Visio.Figures.Absy extends Visio.Figures.Base
       .call(@yAxis)
 
     # Generate legend view
+    if @isPdf
+      @legendView.collection = new @collection.constructor(_.filter(filtered, (d) => self.isSelected(d.id)))
     @$el.find('.legend-container').html @legendView.render().el
 
 
