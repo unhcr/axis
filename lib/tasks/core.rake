@@ -113,6 +113,10 @@ task :build => :environment do
   Rake::Task['build:positions'].invoke
   Rake::Task['build:indicator_data_impact'].invoke
   Rake::Task['build:indicator_data_perf'].invoke
+  Rake::Task['build:operations'].invoke
+  Rake::Task['build:outputs'].invoke
+  Rake::Task['build:problem_objectives'].invoke
+  Rake::Task['build:goals'].invoke
 
   fm.starttime = starttime
   fm.mark_deleted
