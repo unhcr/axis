@@ -1,8 +1,11 @@
 - if context.exportable and not context.isExport
-  .row
-    .col-md-6
+  .figure-bar
+    .pull-left
       %h3.dashboard-meta
         = Visio.manager.toString()
-    .col-md-6.right-text.header-buttons
+    .pull-right.header-buttons
       .export.header-button
-%figure
+.row
+  .col-md-12
+    .legend-container
+    %figure.figure

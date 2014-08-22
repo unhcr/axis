@@ -2,6 +2,8 @@ class Visio.Figures.Base extends Backbone.View
 
   template: HAML['figures/base']
 
+  templateLabel: HAML['figures/label']
+
   attrAccessible: ['x', 'y', 'width', 'height', 'collection', 'margin', 'model']
 
   attrConfig: ['margin', 'width', 'height']

@@ -95,21 +95,26 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
       .scale(@y)
       .orient('left')
       .ticks(5)
-      .tickFormat(Visio.Formats.MONEY)
-      .innerTickSize(14)
-      .tickPadding(20)
+      .tickFormat((d) -> if d == 0 then null else Visio.Formats.SI_SIMPLE(d))
+      .innerTickSize(0)
+      .tickPadding(22)
+      .tickSize(-@adjustedWidth)
 
     @g.append('g')
       .attr('class', 'y axis')
       .attr('transform', 'translate(0,0)')
       .append("text")
+        .attr("y", -60)
+        .attr('transform', 'translate(-20, 0)')
+        .attr("dy", "-.21em")
+        .style("text-anchor", "end")
+        .html =>
+          @yAxisLabel()
+
 
     @g.append('g')
       .attr('class', 'x axis')
       .attr('transform', "translate(0,#{@adjustedHeight})")
-      .append("text")
-
-
 
   render: ->
     filtered = @filtered @collection
@@ -172,7 +177,6 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
       .transition()
       .duration(Visio.Durations.FAST)
       .call(@yAxis)
-      .attr('transform', 'translate(-20,0)')
 
     @
 
@@ -260,5 +264,10 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
         year: d.point.year
         collection: new Backbone.Collection(pointData)
       @tooltip.render()
+
+  yAxisLabel: ->
+    return @templateLabel
+        title: 'Budget',
+        subtitles: ['in US Dollars']
 
 

@@ -8,6 +8,12 @@ class Visio.Figures.BmySummary extends Visio.Figures.Bmy
     @filters.get('group_by').set 'hidden', true
 
     @groupBy = "#{Visio.Utils.parameterByPlural(Visio.manager.get('aggregation_type')).singular}_id"
+    @legendView = new Visio.Legends.BmySummary()
+
+  render: ->
+    super
+    @$el.find('.legend-container').html @legendView.render().el
+
 
   onMouseenterVoronoi: (d) =>
     @g.selectAll(".budget-line").classed 'active', false

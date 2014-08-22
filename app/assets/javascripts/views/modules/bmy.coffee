@@ -16,12 +16,12 @@ class Visio.Views.BmyView extends Visio.Views.AccordionIndexView
 
     @config =
       margin:
-        top: 40
-        bottom: 80
-        left: 120
-        right: 40
-      width: 800
-      height: 450
+        top: 90
+        bottom: 90
+        left: 100
+        right: 80
+      width: $('#module').width() - Visio.Constants.LEGEND_WIDTH - 40
+      height: 600
 
     @figure = new Visio.Figures.BmySummary @config
 

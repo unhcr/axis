@@ -111,9 +111,23 @@ line {
     stroke: $black;
     stroke-width: 2px;
   }
-  .axis line {
-    stroke: black;
+  .y.axis line {
+    stroke: $lighter-gray;
   }
+
+  .axis text tspan:first-child {
+    font-size: 13px;
+    fill: $orange;
+  }
+
+  .axis text tspan {
+    font-size: 11px;
+  }
+
+  .y.axis text, .x.axis text {
+    fill: $black;
+  }
+
 }
 
 .axis path {

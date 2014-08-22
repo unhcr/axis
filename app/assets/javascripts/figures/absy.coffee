@@ -90,8 +90,8 @@ class Visio.Figures.Absy extends Visio.Figures.Base
       .orient('bottom')
       .tickFormat(Visio.Formats.SI_SIMPLE)
       .tickFormat((d) -> if d == 0 then null else Visio.Formats.SI_SIMPLE(d))
-      .ticks(Math.floor(@adjustedWidth / 100))
       .innerTickSize(14)
+      .ticks(6)
       .tickPadding(22)
       .tickSize(-@adjustedHeight)
 
@@ -138,10 +138,10 @@ class Visio.Figures.Absy extends Visio.Figures.Base
 
     # Legend setup
     if @isPdf
-      @legendView = new Visio.Legends.AbsyLegendPdf
+      @legendView = new Visio.Legends.AbsyPdf()
         figure: @
     else
-      @legendView = new Visio.Legends.AbsyLegend()
+      @legendView = new Visio.Legends.Absy()
 
   render: ->
     filtered = @filtered @collection
