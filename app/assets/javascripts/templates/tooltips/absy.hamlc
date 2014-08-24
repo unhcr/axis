@@ -1,0 +1,8 @@
+%div
+  %h6
+    = Visio.Utils.parameterByPlural(Visio.manager.get('aggregation_type')).human
+
+  .divider
+
+  .tooltip-parameter-name
+    = context.d.toString()

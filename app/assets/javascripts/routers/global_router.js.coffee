@@ -1,6 +1,19 @@
 class Visio.Routers.GlobalRouter extends Backbone.Router
 
   initialize: (options) ->
+    $.fn.tipsy.defaults =
+      delayIn: 0,      # delay before showing tooltip (ms)
+      delayOut: 0,     # delay before hiding tooltip (ms)
+      fade: false,     # fade tooltips in/out?
+      fallback: '',    # fallback text to use when no tooltip text
+      gravity: 's',    # gravity
+      html: true,     # is tooltip content HTML?
+      live: false,     # use live event support?
+      offset: 0,       # pixel offset of tooltip from element
+      opacity: 0.8,    # opacity of tooltip
+      title: 'title',  # attribute/callback containing tooltip text
+      trigger: 'manual' # how tooltip is triggered - hover | focus | manual
+
     @headerView = new Visio.Views.Header({ el: $('header') })
     @menuView = new Visio.Views.MenuView()
     $('body').append @menuView.el
