@@ -2829,6 +2829,10 @@ a {
 .btn:hover {
   background-color: $primary;
   color: $white;
+  a {
+    color: $white;
+    text-decoration: none;
+  }
 }
 
 .user-search-container {
