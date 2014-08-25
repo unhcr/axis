@@ -3,4 +3,4 @@
     %input{ :type => 'text', :class => 'full-width top-flush' }
 .row
   .col-md-12.top-flush
-    .results
+    .results.no-border
