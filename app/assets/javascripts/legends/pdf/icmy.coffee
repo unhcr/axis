@@ -1,4 +1,4 @@
-class Visio.Figures.IcmyLegend extends Backbone.View
+class Visio.Legends.IcmyPdf extends Backbone.View
 
   className: 'legend'
 
@@ -29,7 +29,7 @@ class Visio.Figures.IcmyLegend extends Backbone.View
 
   addOne: (year, idx) =>
 
-    view = new Visio.Views.IcmyLegendShowView
+    view = new Visio.Legends.IcmyPdfShow
       filters: @figure.filters
       year: year
       collection: @collection
@@ -38,3 +38,4 @@ class Visio.Figures.IcmyLegend extends Backbone.View
 
     $legendBody = @$el.find '.legend-body'
     $legendBody.append view.render().el
+

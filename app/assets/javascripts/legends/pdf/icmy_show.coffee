@@ -1,4 +1,4 @@
-class Visio.Views.IcmyLegendShowView extends Backbone.View
+class Visio.Legends.IcmyShowPdf extends Backbone.View
 
   tagName: 'article'
 
@@ -54,3 +54,4 @@ class Visio.Views.IcmyLegendShowView extends Backbone.View
     @$el.find('figure').html @figure.render().el
     @$el.find('.bar-axis').html @axis.render().el
     @
+
