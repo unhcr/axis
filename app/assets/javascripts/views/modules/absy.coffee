@@ -12,7 +12,7 @@ class Visio.Views.AbsyView extends Backbone.View
     unless $('.page').hasClass('shift')
       width -= (Visio.Constants.LEGEND_WIDTH + 40)
 
-    @config =
+    config =
       width: width
       height: 600
       margin:
@@ -21,7 +21,7 @@ class Visio.Views.AbsyView extends Backbone.View
         left: 100
         right: 80
 
-    @figure = new Visio.Figures.Absy @config
+    @figure = new Visio.Figures.Absy config
     @queryBy = new Visio.Views.QueryBy figure: @figure
 
   render: (isRerender) ->
