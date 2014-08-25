@@ -27,6 +27,7 @@ class Visio.Views.ParameterSearch extends Backbone.View
 
   clear: =>
     @$el.find('.results').html ''
+    @$el.find('.results').addClass 'no-border'
 
 
   onSearch: (e) ->
@@ -39,6 +40,7 @@ class Visio.Views.ParameterSearch extends Backbone.View
 
   search: (query) =>
     @collection.search(query).done (resp) =>
+      @$el.find('.results').removeClass 'no-border'
       @$el.find('.results').html _.map(resp, (elasticModel) =>
         HAML['shared/parameter_search_item']({ model: new @collection.model(elasticModel) }))
 

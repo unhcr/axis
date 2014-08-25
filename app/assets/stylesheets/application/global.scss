@@ -491,11 +491,17 @@ body.index {
 .parameter-search {
   background-color: transparent;
   width: 220px;
-  color: $white;
+  color: $black;
   margin-bottom: 18px;
 
+  input:focus {
+    border: 1px solid $orange;
+  }
+
   .results {
-    background-color: $primary;
+    background-color: $off-white;
+    border: 1px solid $light-gray;
+    border-top: none;
   }
 }
 
@@ -2101,17 +2107,17 @@ a {
     padding-bottom: 4px;
     padding-left: 25px;
     display: block;
-    color: white;
+    color: $black;
 
     em {
       font-style: normal;
-      color: $bright-yellow;
+      color: $orange;
     }
     cursor: pointer;
   }
 
   .search-item:hover {
-    background-color: $primary-light;
+    background-color: white;
     text-decoration: none;
   }
 }
