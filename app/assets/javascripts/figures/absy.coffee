@@ -263,7 +263,7 @@ class Visio.Figures.Absy extends Visio.Figures.Base
         ).on('mouseout', (d) =>
           pointContainer = @g.select(".point-container.id-#{d.point.refId()}")
           pointContainer.classed 'focus', false
-          #$(pointContainer.node()).tipsy('hide')
+          $(pointContainer.node()).tipsy('hide')
 
         ).on('click', (d, i) =>
           $.publish "select.#{@figureId()}", [d.point, i]

@@ -1,8 +1,8 @@
 %div
-  %h6
+  .header
     = Visio.Utils.parameterByPlural(Visio.manager.get('aggregation_type')).human
 
-  .divider
+  .divider.divider-dark-gray
 
-  .tooltip-parameter-name
+  .tipsy-parameter-name
     = context.d.toString()

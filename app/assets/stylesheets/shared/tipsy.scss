@@ -1,5 +1,5 @@
 .tipsy {
-  font-size: 11px;
+  font-size: 13px;
   position: absolute;
   padding: 5px;
   z-index: 100000;
@@ -8,6 +8,12 @@
 
   .tipsy-parameter-name {
     color: $purple;
+    font-size: 13px;
+    font-weight: bold;
+  }
+
+  .divider {
+    margin: 6px 50px;
   }
 
 }
