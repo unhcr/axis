@@ -97,6 +97,7 @@ class Visio.Figures.Isy extends Visio.Figures.Base
     $.subscribe "mouseout.#{@cid}.figure", @mouseout
 
     @sortAttribute = Visio.ProgressTypes.BASELINE_MYR
+    @isPerformanceFn @filters.get('is_performance').active() == 'true'
 
     $(@svg.node()).parent().on 'mouseleave', =>
       $.publish "hover.#{@cid}.figure", [@selectedDatum, true] if @selectedDatum
