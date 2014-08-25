@@ -1980,6 +1980,7 @@ a {
   position: relative;
   background-color: $off-white;
   overflow-y: hidden;
+  overflow-x: hidden;
 
   .menu-value {
     position: relative;
@@ -2167,15 +2168,24 @@ a {
   }
 
   .icmy-tooltip .category, .bmy-tooltip .group-type {
-    border: 1px solid $black;
-    margin: 5px 0;
+    border: 1px solid #ccc;
     background-color: white;
-    padding: 0 12px;
+    opacity: .95;
+    padding: 0 22px;
+    padding-bottom: 12px;
+    margin-bottom: 8px;
+    @include box-shadow-bottom;
   }
   .bmy-tooltip, .icmy-tooltip {
+    .tooltip-number {
+      font-size: 22px;
+      margin-top: -1px;
+      line-height: 24px;
+    }
     .title {
-      margin-top: 4px;
+      margin-top: 14px;
       padding-top: 8px;
+      font-size: 12px;
     }
 
     .ok {

@@ -7,5 +7,5 @@
         - else
           - plural = Visio.Utils.parameterBySingular(model.get('groupBy').replace('_id', '')).plural
           = Visio.manager.get(plural).get(model.get(model.get('groupBy'))).toString()
-      %div.ui-small-header
+      %div.tooltip-number
         = "$" + Visio.Formats.COMMA(model.get('amount'))
