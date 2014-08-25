@@ -14,17 +14,23 @@ class Visio.Views.IcmyView extends Visio.Views.AccordionIndexView
 
   initialize: (options) ->
     super options
+    width = $('#module').width()
 
-    @config =
-      width: 800
+    unless $('.page').hasClass('shift')
+      width -= (Visio.Constants.LEGEND_WIDTH + 40)
+
+
+    config =
+      width: width
       height: 420
+      summary: true
       margin:
-        top: 40
+        top: 90
         bottom: 90
-        left: 90
+        left: 120
         right: 80
 
-    @figure = new Visio.Figures.Icmy @config
+    @figure = new Visio.Figures.Icmy config
 
   render: (isRerender) ->
     super isRerender
