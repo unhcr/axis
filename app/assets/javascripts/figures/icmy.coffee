@@ -87,13 +87,20 @@ class Visio.Figures.Icmy extends Visio.Figures.Base
       .orient('left')
       .ticks(5)
       .innerTickSize(14)
-      .tickFormat(Visio.Formats.PERCENT)
+      .tickFormat((d) -> return d * 100)
       .tickPadding(20)
       .tickSize(-@adjustedWidth)
 
     @g.append('g')
       .attr('class', 'y axis')
       .attr('transform', 'translate(0,0)')
+      .append("text")
+        .attr("y", -60)
+        .attr('transform', 'translate(-58, 0)')
+        .attr("dy", "-.21em")
+        .style("text-anchor", "middle")
+        .html =>
+          @yAxisLabel()
 
     @g.append('g')
       .attr('class', 'x axis')
@@ -235,3 +242,12 @@ class Visio.Figures.Icmy extends Visio.Figures.Base
     label = @g.select(".label-#{d.id}")
     isActive = label.classed 'active'
     label.classed 'active', not isActive
+
+  yAxisLabel: =>
+    value = @filters.get('algorithm').active()
+
+    human = @filters.get('algorithm').get('human')[value]
+
+    return @templateLabel
+        title: human,
+        subtitles: ['% of Progress']
