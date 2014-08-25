@@ -2352,20 +2352,18 @@ a {
   }
 
   /* Special styles for these checkboxes... */
-  .filter-group {
-    label {
-      color: $black;
-    }
+  label {
+    color: $black;
+  }
 
-    label:hover {
-      color: $dark-gray;
-    }
-    input:checked + label {
-      color: $black;
-    }
-    input:checked + label:hover {
-      color: $dark-gray;
-    }
+  label:hover {
+    color: $dark-gray;
+  }
+  input:checked + label {
+    color: $black;
+  }
+  input:checked + label:hover {
+    color: $dark-gray;
   }
 
   .filter-toggle:after, .visio-dropdown-toggle:after {
