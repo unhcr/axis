@@ -189,6 +189,7 @@ class Visio.Views.FilterSystemView extends Backbone.View
     @filterPages query, type
 
   filterPages: (query, type) =>
+    query = query.toLowerCase().trim()
 
     if query
       @$el.find('.system-list').html @templatePageList

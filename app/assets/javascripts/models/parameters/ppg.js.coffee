@@ -5,9 +5,9 @@ class Visio.Models.Ppg extends Visio.Models.Parameter
   paramRoot: 'ppg'
 
   toString: () ->
-    return "[#{@get('operation_name')}] #{@get('name')}"
+    return "#{@get('operation_name').toUpperCase()}: #{@get('name')}"
 
   name: Visio.Parameters.PPGS
 
   highlight: ->
-    return "[#{@get('operation_name')}] #{@get('highlight').name[0]}" if @get('highlight')
+    return "#{@get('operation_name').toUpperCase()}: #{@get('highlight').name[0]}" if @get('highlight')

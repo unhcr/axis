@@ -368,10 +368,10 @@ body.layout-cms {
 }
 
 #footer {
+  background-color: $off-white;
   border-top: 2px solid $orange;
   border-bottom: $black solid 50px;
   height: $footer-height;
-  background-color: white;
   padding-left: 80px;
   padding-top: 30px;
   font-size: 14px;
@@ -539,7 +539,8 @@ body.index {
 }
 
 .divider-full {
-  margin: 0 -15px;
+  margin-left: -$page-margin;
+  margin-right: -$page-margin;
 }
 
 .divider-stack {
@@ -577,6 +578,10 @@ body.index {
 
 .divider-light-gray {
   border-bottom: 1px solid $light-gray;
+}
+
+.divider-dark-gray {
+  border-bottom: 1px solid $dark-gray;
 }
 
 .divider-black {
@@ -882,6 +887,29 @@ button, input {
 
 .visio-radio-circle label {
   display: inline-block;
+}
+
+.visio-radio-orange input:checked + label:before {
+  content: ' ';
+  border: 2px solid $orange;
+}
+
+.visio-radio-orange input + label:before {
+  content: ' ';
+  border: 2px solid $orange;
+}
+
+.visio-radio-orange input:checked + label:after {
+  content: ' ';
+  border: 3px solid $orange;
+}
+
+.visio-radio-orange input:checked + label {
+  color: $black;
+}
+
+.visio-radio-orange label:hover {
+  color: $black;
 }
 
 .visio-checkbox input {
@@ -1792,17 +1820,28 @@ a {
 }
 
 .accordion-show-container {
-  @include row-gutter;
-  padding-bottom: 8px;
   @include transition-property(all);
   @include transition-duration($fast-transition);
   @include transition-timing-function(ease-in-out);
-  border-bottom: 1px solid rgb(240, 240, 240);
+  @include page-gutter;
+  border-bottom: 1px solid rgb(240,240,240);
+
+  .js-parameter {
+    line-height: 64px;
+    cursor: pointer;
+    .pin {
+      vertical-align: middle;
+      margin-left: 5px;
+      margin-right: 20px;
+    }
+  }
+  .js-parameter:hover {
+    color: $orange;
+  }
 }
 
 .accordion-show-container:hover {
   background-color: $off-white;
-  cursor: pointer;
   @include hover-shadow;
 }
 
@@ -1838,6 +1877,11 @@ a {
   left: $filter-system-width;
   margin-left: 5px;
   right: 0;
+
+  /* Legends should disappear */
+  .legend-container {
+    display: none;
+  }
 
   .fixed-top {
     left: $filter-system-width + 15px;
@@ -1970,6 +2014,8 @@ a {
   text-align: center;
   position: relative;
   background-color: $off-white;
+  overflow-y: hidden;
+  overflow-x: hidden;
 
   .menu-value {
     position: relative;
@@ -2157,15 +2203,24 @@ a {
   }
 
   .icmy-tooltip .category, .bmy-tooltip .group-type {
-    border: 1px solid $black;
-    margin: 5px 0;
+    border: 1px solid #ccc;
     background-color: white;
-    padding: 0 12px;
+    opacity: .95;
+    padding: 0 22px;
+    padding-bottom: 12px;
+    margin-bottom: 8px;
+    @include box-shadow-bottom;
   }
   .bmy-tooltip, .icmy-tooltip {
+    .tooltip-number {
+      font-size: 22px;
+      margin-top: -1px;
+      line-height: 24px;
+    }
     .title {
-      margin-top: 4px;
+      margin-top: 14px;
       padding-top: 8px;
+      font-size: 12px;
     }
 
     .ok {
@@ -2262,7 +2317,7 @@ a {
 }
 
 .header-button:hover {
-  background-color: $off-white;
+  color: $orange;
 }
 
 .header-button {
@@ -2275,13 +2330,37 @@ a {
     @include input-white;
     padding: 0px;
     width: 100%;
-    height: 100%;
     padding-left: 10px;
+    border: none;
   }
 }
 
 .filter-by, .visio-dropdown-container {
   padding-top: 0px;
+
+  .reset-filters {
+    color: $black;
+    display: block;
+    text-align: center;
+    font-size: 13px
+  }
+
+  /* Special styles for these checkboxes... */
+  .filter-group {
+    label {
+      color: $black;
+    }
+
+    label:hover {
+      color: $dark-gray;
+    }
+    input:checked + label {
+      color: $black;
+    }
+    input:checked + label:hover {
+      color: $dark-gray;
+    }
+  }
 
   .filter-toggle:after, .visio-dropdown-toggle:after {
     content: '+';
@@ -2303,23 +2382,24 @@ a {
     width: $header-button-width;
     text-align: left;
     z-index: 101;
+    color: $black;
     @include transition-property(max-height);
     @include transition-duration($very-fast-transition);
     @include transition-timing-function(ease-in);
     position: absolute;
     max-height: 0px;
     overflow: hidden;
-    background-color: white;
+    background-color: $off-white;
     margin-top: 1px;
   }
 
   .filter-group {
-    padding: 10px 0;
+    padding: 10px 15px;
+    border-bottom: 1px dotted $light-gray;
   }
 
   .filters.styled, .visio-dropdown.styled {
-    padding: 15px 10px;
-    border: 1px solid $lighter-gray;
+    border: 1px solid $light-gray;
     border-top: none;
   }
 
@@ -2709,23 +2789,15 @@ a {
   background-size: 18px;
   width: 60px;
   position: relative;
-  border-right: 1px $off-white solid;
+  border-right: 1px $dark-gray solid;
   background-repeat: no-repeat;
   background-position: center;
   cursor: pointer;
-  margin-left: $export-label-length;
 }
 
-.export::before {
-  @include header-button;
-  margin: 0;
-  content: 'Save and Export me';
-  position: absolute;
-  border-right: none;
-  width: $export-label-length;
-  left: -$export-label-length - 1;
-  top: 0px;
-  text-align: center;
+.export:hover {
+  border-right: 1px $orange solid;
+  margin-right: 0;
 }
 
 .map-export {
@@ -2837,7 +2909,10 @@ a {
 .btn:hover {
   background-color: $primary;
   color: $white;
-
+  a {
+    color: $white;
+    text-decoration: none;
+  }
 }
 
 .user-search-container {
@@ -2884,4 +2959,8 @@ a {
 .shared-users, .admin-users {
   min-height: 100px;
   border: 1px solid $dark-gray;
+}
+
+.page-margin {
+  @include page-margin;
 }

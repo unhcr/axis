@@ -95,21 +95,26 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
       .scale(@y)
       .orient('left')
       .ticks(5)
-      .tickFormat(Visio.Formats.MONEY)
-      .innerTickSize(14)
-      .tickPadding(20)
+      .tickFormat((d) -> if d == 0 then null else Visio.Formats.SI_SIMPLE(d))
+      .innerTickSize(0)
+      .tickPadding(22)
+      .tickSize(-@adjustedWidth)
 
     @g.append('g')
       .attr('class', 'y axis')
       .attr('transform', 'translate(0,0)')
       .append("text")
+        .attr("y", -60)
+        .attr('transform', 'translate(-20, 0)')
+        .attr("dy", "-.21em")
+        .style("text-anchor", "end")
+        .html =>
+          @yAxisLabel()
+
 
     @g.append('g')
       .attr('class', 'x axis')
       .attr('transform', "translate(0,#{@adjustedHeight})")
-      .append("text")
-
-
 
   render: ->
     filtered = @filtered @collection
@@ -128,18 +133,22 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
 
     lines.exit().remove()
 
-    points = @g.selectAll('.budget-point').data(_.flatten(filtered), (d) -> "#{d[d.groupBy]}#{d.year}")
-    points.enter().append('circle')
-    points.attr('r', 3)
-      .attr('class', (d) ->
-        clazz = Visio.Utils.stringToCssClass(d[d.groupBy])
-        ['budget-point', clazz, "budget-point-#{clazz}"].join(' '))
-      .transition()
-      .duration(Visio.Durations.FAST)
-      .attr('cx', (d) => @x(d.year))
-      .attr('cy', (d) => @y(d.amount))
+    _.each filtered, (pointData) =>
+      if pointData.length > 1 or pointData.length == 0
+        return
 
-    points.exit().remove()
+      points = @g.selectAll(".budget-point-#{Visio.Utils.stringToCssClass(pointData.groupBy)}").data(pointData, (d) -> "#{d[d.groupBy]}#{d.year}")
+      points.enter().append('circle')
+      points.attr('r', 3)
+        .attr('class', (d) ->
+          clazz = Visio.Utils.stringToCssClass(d[d.groupBy])
+          ['budget-point', clazz, "budget-point-#{clazz}"].join(' '))
+        .transition()
+        .duration(Visio.Durations.FAST)
+        .attr('cx', (d) => @x(d.year))
+        .attr('cy', (d) => @y(d.amount))
+
+      points.exit().remove()
 
     # For selecting line segments
     #
@@ -172,7 +181,6 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
       .transition()
       .duration(Visio.Durations.FAST)
       .call(@yAxis)
-      .attr('transform', 'translate(-20,0)')
 
     @
 
@@ -260,5 +268,10 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
         year: d.point.year
         collection: new Backbone.Collection(pointData)
       @tooltip.render()
+
+  yAxisLabel: ->
+    return @templateLabel
+        title: 'Budget',
+        subtitles: ['in US Dollars']
 
 

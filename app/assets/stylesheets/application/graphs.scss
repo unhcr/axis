@@ -111,13 +111,27 @@ line {
     stroke: $black;
     stroke-width: 2px;
   }
-  .axis line {
-    stroke: black;
+  .y.axis line {
+    stroke: $lighter-gray;
   }
+
+
+  .y.axis text, .x.axis text {
+    fill: $black;
+  }
+
 }
 
 .axis path {
   fill: none;
+}
+.axis text tspan:first-child {
+  font-size: 13px;
+  fill: $orange;
+}
+
+.axis text tspan {
+  font-size: 11px;
 }
 
 .svg-absy-figure {
@@ -166,12 +180,24 @@ line {
     stroke: $lighter-gray;
   }
 
+  .axis text tspan:first-child {
+    font-size: 13px;
+    fill: $orange;
+  }
+  .axis text tspan {
+    font-size: 11px;
+  }
+
   .y.axis text, .x.axis > text {
     fill: $black;
   }
 
   .x.axis text {
     fill: $black;
+  }
+
+  .x.axis .tick:nth-of-type(1) {
+    display: none;
   }
 }
 
@@ -235,7 +261,6 @@ line {
 
   .y.axis line {
     stroke: $lighter-gray;
-    stroke-dasharray: 1;
   }
 
 }

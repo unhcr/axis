@@ -12,16 +12,21 @@ class Visio.Views.BmyShowView extends Visio.Views.AccordionShowView
     'oTransitionEnd': 'onTransitionEnd'
 
   initialize: (options) ->
-    @config =
+    width = $('#module').width()
+
+    if $('.page').hasClass('shift')
+      width -= (Visio.Constants.FILTERS_WIDTH + 40)
+
+    config =
       margin:
-        top: 10
+        top: 90
         bottom: 80
         left: 120
         right: 40
-      width: 650
+      width: width
       height: 450
 
-    @figure = new Visio.Figures.Bmy @config
+    @figure = new Visio.Figures.Bmy config
     @filterBy = new Visio.Views.FilterBy({ figure: @figure, })
 
   render: (isRerender) ->

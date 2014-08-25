@@ -4,6 +4,9 @@ class Visio.Figures.Absy extends Visio.Figures.Base
 
   type: Visio.FigureTypes.ABSY
 
+  templateLabel: HAML['figures/label']
+  templateTooltip: HAML['tooltips/absy']
+
   initialize: (config = {}) ->
     @attrConfig.push 'algorithm'
     config.query or= ''
@@ -87,8 +90,9 @@ class Visio.Figures.Absy extends Visio.Figures.Base
       .scale(@x)
       .orient('bottom')
       .tickFormat(Visio.Formats.SI_SIMPLE)
-      .ticks(Math.floor(@adjustedWidth / 100))
+      .tickFormat((d) -> if d == 0 then null else Visio.Formats.SI_SIMPLE(d))
       .innerTickSize(14)
+      .ticks(6)
       .tickPadding(22)
       .tickSize(-@adjustedHeight)
 
@@ -115,19 +119,19 @@ class Visio.Figures.Absy extends Visio.Figures.Base
       .attr('class', 'y axis')
       .attr('transform', 'translate(0,0)')
       .append("text")
-        .attr("transform", "rotate(-90)")
-        .attr("y", -40)
-        .attr("x", -@adjustedHeight / 2)
+        .attr("y", -60)
+        .attr('transform', 'translate(-58, 0)')
         .attr("dy", "-.21em")
         .style("text-anchor", "middle")
-        .text('Progress Towards Target (%)')
+        .html =>
+          @yAxisLabel()
 
     @g.append('g')
       .attr('class', 'x axis')
       .attr('transform', "translate(0,#{@adjustedHeight})")
       .append("text")
         .attr('y', 35)
-        .attr("x", -40)
+        .attr('transform', 'translate(-20, 0)')
         .attr("dy", "-.21em")
         .style("text-anchor", "end")
         .html =>
@@ -135,11 +139,10 @@ class Visio.Figures.Absy extends Visio.Figures.Base
 
     # Legend setup
     if @isPdf
-      @legendView = new Visio.Legends.AbsyLegendPdf
+      @legendView = new Visio.Legends.AbsyPdf
         figure: @
-        collection: new @collection.constructor(_.filter(filtered, (d) => self.isSelected(d.id)))
     else
-      @legendView = new Visio.Legends.AbsyLegend()
+      @legendView = new Visio.Legends.Absy()
 
   render: ->
     filtered = @filtered @collection
@@ -156,7 +159,9 @@ class Visio.Figures.Absy extends Visio.Figures.Base
 
     pointContainers = @g.selectAll('.point-container').data(filtered, (d) -> d.refId())
     pointContainers.enter().append('g')
-    pointContainers.attr('class', (d, i) ->
+    pointContainers
+        .attr('original-title', (d) => @templateTooltip({ d: d }))
+        .attr('class', (d) ->
           classList = ['point-container', "id-#{d.refId()}"]
 
           if self.isQueried d
@@ -249,21 +254,16 @@ class Visio.Figures.Absy extends Visio.Figures.Base
     path.attr("class", (d, i) -> "voronoi" )
         .attr("d", @polygon)
         .on('mouseenter', (d) =>
-          @entered = true
-          @info or= new Visio.Views.BubbleInfoView({
-            el: $('.info-container .bubble-info')
-            filters: @filters
-          })
           # Hack for when we move from one to voronoi to another to which fires enter, enter, out in Chrome
-          window.setTimeout(( -> @entered = false), 50)
-          @info.render(d.point, @algorithm)
-          @info.show()
           pointContainer = @g.select(".point-container.id-#{d.point.refId()}")
+          $(pointContainer.node()).tipsy('show')
+
           pointContainer.moveToFront()
           pointContainer.classed 'focus', true
         ).on('mouseout', (d) =>
-          @info.hide() if @info and not @entered
-          @g.select(".point-container.id-#{d.point.refId()}").classed 'focus', false
+          pointContainer = @g.select(".point-container.id-#{d.point.refId()}")
+          pointContainer.classed 'focus', false
+          $(pointContainer.node()).tipsy('hide')
 
         ).on('click', (d, i) =>
           $.publish "select.#{@figureId()}", [d.point, i]
@@ -286,9 +286,16 @@ class Visio.Figures.Absy extends Visio.Figures.Base
       .duration(Visio.Durations.FAST)
       .call(@yAxis)
 
+    @g.select('.y.axis text')
+      .html =>
+        @yAxisLabel()
+
     # Generate legend view
+    if @isPdf
+      @legendView.collection = new @collection.constructor(_.filter(filtered, (d) => self.isSelected(d.id)))
     @$el.find('.legend-container').html @legendView.render().el
 
+    @$el.find('.point-container').tipsy()
 
     @
 
@@ -320,6 +327,12 @@ class Visio.Figures.Absy extends Visio.Figures.Base
     else
       title = 'Expenditure Rate (%)'
 
-    return "
-      <tspan>#{title}</tspan>
-      <tspan dy=\"1.4em\">in US Dollars</tspan>"
+    return @templateLabel { title: title, subtitles: ['in US Dollars'] }
+
+  yAxisLabel: ->
+
+    achievement_type = Visio.Utils.humanMetric Visio.manager.get 'achievement_type'
+    return @templateLabel {
+        title: 'Achievement',
+        subtitles: ['% of Progress', "towards #{achievement_type}"]
+      }

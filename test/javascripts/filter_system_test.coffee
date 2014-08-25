@@ -14,7 +14,7 @@ module 'Filter System',
     Visio.manager.resetSelectedDefaults()
 
     _.each _.values(Visio.Parameters), (hash) ->
-      models = [{ id: 1 }, { id: 2 }]
+      models = [{ id: 1, name: 'Ben' }, { id: 2, 'Lisa' }]
       Visio.manager.get(hash.plural).reset(models)
 
     @view = new Visio.Views.FilterSystemView()
@@ -74,3 +74,18 @@ test 'onReset', ->
 
   @view.$el.find('.reset').trigger 'click'
   strictEqual @view.$el.find('input:checked').length, 4
+
+test 'filterPages', ->
+  @view.operations = new Visio.Collections.Operation [{ id: 1, name: 'Ben' }, { id: 2, name: 'lisa' }]
+  @view.render 'operations'
+
+  strictEqual @view.$el.find('.system-list a').length, 2
+
+  @view.filterPages 'b', 'operations'
+  strictEqual @view.$el.find('.system-list a').length, 1
+
+  @view.filterPages 'abc', 'operations'
+  strictEqual @view.$el.find('.system-list a').length, 0
+
+  @view.filterPages 'l', 'operations'
+  strictEqual @view.$el.find('.system-list a').length, 1

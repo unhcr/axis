@@ -1,4 +1,5 @@
-%h6 Budget vs. Achievement
+%h6
+  = context.type.human
 
 %p
   This dashboard depicts the allocated budget for Operations, PPGs, Goals, Outputs, Objectives, and Strategy Objectives against achievements.

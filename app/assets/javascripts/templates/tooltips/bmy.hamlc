@@ -3,7 +3,7 @@
     %section{ :class => "row #{Visio.Utils.stringToCssClass(model.get(model.get('groupBy')))} group-type" }
       %div.title
         = model.get(model.get('groupBy'))?.toUpperCase()
-      %div.ui-small-header
+      .tooltip-number
         = "$" + Visio.Formats.COMMA(model.get('amount'))
 
 

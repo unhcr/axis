@@ -1,0 +1,8 @@
+%div
+  .header
+    = Visio.Utils.parameterByPlural(Visio.manager.get('aggregation_type')).human
+
+  .divider.divider-dark-gray
+
+  .tipsy-parameter-name
+    = context.d.toString()

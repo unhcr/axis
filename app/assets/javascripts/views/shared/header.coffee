@@ -10,6 +10,7 @@ class Visio.Views.Header extends Backbone.View
   events:
     'click .menu-option': 'onClickMenuOption'
     'click .menu-icon': 'onClickMenuIcon'
+    'mouseleave': 'onMouseleave'
     'transitionend .menu-value': 'onTransitionEnd'
     'MSTransitionEnd .menu-value': 'onTransitionEnd'
     'webkitTransitionEnd .menu-value': 'onTransitionEnd'
@@ -137,6 +138,13 @@ class Visio.Views.Header extends Backbone.View
     @$el.toggleClass 'filter-open'
     @filterSystem.toggleState()
     $('#navigation').removeClass('gone')
+
+  onMouseleave: (e) =>
+
+    opened = @isOpenOptionMenu()
+    if opened
+      @$el.find('.menu-option').removeClass 'selected'
+      @closeOptionMenu()
 
   onClickMenuOption: (e) ->
     $target = $(e.currentTarget)

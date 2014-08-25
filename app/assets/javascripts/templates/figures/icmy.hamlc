@@ -1,0 +1,15 @@
+- if context.exportable and not context.isExport
+  .figure-bar
+    - if context.figure.summary
+      .pull-left
+        %h3.dashboard-meta
+          = Visio.manager.toString()
+    .pull-right.header-buttons
+      .export.header-button
+.row
+  .col-md-12{ :class => ('center-text' unless context.figure.summary) }
+    - if context.figure.summary
+      .legend-container
+    %figure.figure
+
+

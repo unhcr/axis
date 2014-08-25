@@ -9,6 +9,12 @@ String.prototype.hashCode = function(){
     return hash;
 };
 
+if (!String.prototype.trim) {
+  String.prototype.trim = function () {
+    return this.replace(/^\s+|\s+$/g, '');
+  };
+}
+
 if (typeof String.prototype.startsWith != 'function') {
   String.prototype.startsWith = function (str){
     return this.indexOf(str) == 0;

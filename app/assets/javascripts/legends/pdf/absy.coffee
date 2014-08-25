@@ -1,10 +1,10 @@
-class Visio.Legends.AbsyLegendPdf extends Visio.Legends.Base
+class Visio.Legends.AbsyPdf extends Visio.Legends.Base
 
   isPdf: true
 
   type: Visio.FigureTypes.ABSY
 
-  initialize: (options) ->
+  initialize: (options = {}) ->
     super
     @figure = options.figure
 

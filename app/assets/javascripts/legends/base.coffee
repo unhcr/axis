@@ -15,5 +15,5 @@ class Visio.Legends.Base extends Backbone.View
     throw new Error('No legend template defined') unless @template?
 
   render: ->
-    @$el.html @template()
+    @$el.html @template { type: @type }
     @

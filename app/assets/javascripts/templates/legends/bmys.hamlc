@@ -1,0 +1,9 @@
+%h6
+  = context.type.human
+
+%p
+  This dashboard depicts the allocated budget for Operations, PPGs, Goals, Outputs, Objectives, and Strategy Objectives against achievements.
+
+%small
+  %b Circles
+  are sized according to the number of indicators selected.

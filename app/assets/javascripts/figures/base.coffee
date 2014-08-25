@@ -2,6 +2,8 @@ class Visio.Figures.Base extends Backbone.View
 
   template: HAML['figures/base']
 
+  templateLabel: HAML['figures/label']
+
   attrAccessible: ['x', 'y', 'width', 'height', 'collection', 'margin', 'model']
 
   attrConfig: ['margin', 'width', 'height']
@@ -52,8 +54,6 @@ class Visio.Figures.Base extends Backbone.View
     # Adjust for margins
     @adjustedWidth = (config.width - @margin.left - @margin.right)
     @adjustedHeight = (config.height - @margin.top - @margin.bottom)
-
-    console.log $(@selection.node()).parent().width()
 
     @svg = @selection.append('svg')
       .attr('width', config.width)

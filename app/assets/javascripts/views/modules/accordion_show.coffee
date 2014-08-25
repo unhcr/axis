@@ -9,7 +9,7 @@ class Visio.Views.AccordionShowView extends Backbone.View
   shrink: =>
     @$el.removeClass 'open'
 
-  toolbarHeight: => $('.toolbar').height() + 20
+  toolbarHeight: => $('#header').height()
 
 
   onTransitionEnd: (e) ->
