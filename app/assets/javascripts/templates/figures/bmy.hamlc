@@ -1,0 +1,8 @@
+- if context.exportable and not context.isExport
+  .figure-bar
+    .pull-right.header-buttons
+      .export.header-button
+.row
+  .col-md-12.center-text
+    %figure.figure
+

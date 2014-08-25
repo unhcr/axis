@@ -1,7 +1,6 @@
-.row
-  .col-md-12
-    .row.js-parameter
-      .col-md-12.ui-medium-header
-        = context.parameter.toString()
-    .row.data-container
-      %figure.bmy-figure
+%div
+  .js-parameter.page-margin
+    .col-md-12.ui-medium-header
+      = context.parameter.toString()
+  .data-container.page-margin
+    %figure.bmy-figure

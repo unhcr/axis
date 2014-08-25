@@ -539,7 +539,8 @@ body.index {
 }
 
 .divider-full {
-  margin: 0 -15px;
+  margin-left: -$page-margin;
+  margin-right: -$page-margin;
 }
 
 .divider-stack {
@@ -1796,17 +1797,23 @@ a {
 }
 
 .accordion-show-container {
-  @include row-gutter;
-  padding-bottom: 8px;
   @include transition-property(all);
   @include transition-duration($fast-transition);
   @include transition-timing-function(ease-in-out);
-  border-bottom: 1px solid rgb(240, 240, 240);
+  @include page-gutter;
+  border-bottom: 1px solid rgb(240,240,240);
+
+  .js-parameter {
+    line-height: 58px;
+    cursor: pointer;
+  }
+  .js-parameter:hover {
+    color: $orange;
+  }
 }
 
 .accordion-show-container:hover {
   background-color: $off-white;
-  cursor: pointer;
   @include hover-shadow;
 }
 
@@ -2894,4 +2901,8 @@ a {
 .shared-users, .admin-users {
   min-height: 100px;
   border: 1px solid $dark-gray;
+}
+
+.page-margin {
+  @include page-margin;
 }
