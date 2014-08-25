@@ -2387,7 +2387,7 @@ a {
     text-align: left;
     z-index: 101;
     color: $black;
-    @include transition-property(max-height);
+    @include transition-property(all);
     @include transition-duration($very-fast-transition);
     @include transition-timing-function(ease-in);
     position: absolute;
@@ -2409,6 +2409,14 @@ a {
 
   .filters.open, .visio-dropdown.open {
     max-height: 400px;
+  }
+
+  .visio-dropdown {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  .visio-dropdown.open {
+    padding: 10px 15px;
   }
 }
 
