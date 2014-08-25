@@ -106,6 +106,7 @@ window.Visio =
     NUMBER: d3.format('d')
     LONG_NUMBER: d3.format(',f')
   Constants:
+    FILTERS_WIDTH: 412
     LEGEND_WIDTH: 300
     ANY_YEAR: 'ANY_YEAR'
     ANY_STRATEGY_OBJECTIVE: 'ANY_STRATEGY_OBJECTIVE'

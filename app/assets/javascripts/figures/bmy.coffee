@@ -134,7 +134,6 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
     lines.exit().remove()
 
     _.each filtered, (pointData) =>
-      console.log pointData
       if pointData.length > 1 or pointData.length == 0
         return
 

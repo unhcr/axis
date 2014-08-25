@@ -14,12 +14,12 @@ class Visio.Views.BmyShowView extends Visio.Views.AccordionShowView
   initialize: (options) ->
     width = $('#module').width()
 
-    unless $('.page').hasClass('shift')
-      width -= (Visio.Constants.LEGEND_WIDTH + 40)
+    if $('.page').hasClass('shift')
+      width -= (Visio.Constants.FILTERS_WIDTH + 40)
 
     config =
       margin:
-        top: 10
+        top: 90
         bottom: 80
         left: 120
         right: 40

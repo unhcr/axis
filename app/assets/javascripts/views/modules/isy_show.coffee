@@ -12,16 +12,21 @@ class Visio.Views.IsyShowView extends Visio.Views.AccordionShowView
     'oTransitionEnd': 'onTransitionEnd'
 
   initialize: (options) ->
-    @config =
+    width = $('#module').width()
+
+    if $('.page').hasClass('shift')
+      width -= (Visio.Constants.FILTERS_WIDTH + 40)
+
+    config =
       margin:
         top: 35
         bottom: 18
         left: 40
         right: 30
-      width: 800
+      width: width
       height: 260
 
-    @isyFigure = new Visio.Figures.Isy @config
+    @isyFigure = new Visio.Figures.Isy config
     @filterBy = new Visio.Views.FilterBy({ figure: @isyFigure, })
     @queryBy = new Visio.Views.QueryBy figure: @isyFigure, placeholder: 'Search for an indicator'
     @sortBy = new Visio.Views.Dropdown

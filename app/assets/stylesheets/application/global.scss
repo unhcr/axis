@@ -1804,8 +1804,13 @@ a {
   border-bottom: 1px solid rgb(240,240,240);
 
   .js-parameter {
-    line-height: 58px;
+    line-height: 64px;
     cursor: pointer;
+    .pin {
+      vertical-align: middle;
+      margin-left: 5px;
+      margin-right: 20px;
+    }
   }
   .js-parameter:hover {
     color: $orange;

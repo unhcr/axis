@@ -1,12 +1,10 @@
-.row
-  .col-md-12.col-centered
-    .row.js-parameter
-      .col-md-2
-        .pin.pin-medium
-          .pin-tip
-          .pin-body
-      .col-md-8.ui-medium-header
-        = context.parameter.toString()
-        .counts
-    .row.data-container
-      %figure.indicator-bar-graph
+%div
+  .js-parameter.page-margin
+    .pin.pin-medium.inline-block
+      .pin-tip
+      .pin-body
+    .ui-medium-header.inline-block
+      = context.parameter.toString()
+      .counts
+  .data-container.page-margin
+    %figure.indicator-bar-graph
