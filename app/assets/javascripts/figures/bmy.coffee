@@ -133,18 +133,23 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
 
     lines.exit().remove()
 
-    points = @g.selectAll('.budget-point').data(_.flatten(filtered), (d) -> "#{d[d.groupBy]}#{d.year}")
-    points.enter().append('circle')
-    points.attr('r', 3)
-      .attr('class', (d) ->
-        clazz = Visio.Utils.stringToCssClass(d[d.groupBy])
-        ['budget-point', clazz, "budget-point-#{clazz}"].join(' '))
-      .transition()
-      .duration(Visio.Durations.FAST)
-      .attr('cx', (d) => @x(d.year))
-      .attr('cy', (d) => @y(d.amount))
+    _.each filtered, (pointData) =>
+      console.log pointData
+      if pointData.length > 1 or pointData.length == 0
+        return
 
-    points.exit().remove()
+      points = @g.selectAll(".budget-point-#{Visio.Utils.stringToCssClass(pointData.groupBy)}").data(pointData, (d) -> "#{d[d.groupBy]}#{d.year}")
+      points.enter().append('circle')
+      points.attr('r', 3)
+        .attr('class', (d) ->
+          clazz = Visio.Utils.stringToCssClass(d[d.groupBy])
+          ['budget-point', clazz, "budget-point-#{clazz}"].join(' '))
+        .transition()
+        .duration(Visio.Durations.FAST)
+        .attr('cx', (d) => @x(d.year))
+        .attr('cy', (d) => @y(d.amount))
+
+      points.exit().remove()
 
     # For selecting line segments
     #
