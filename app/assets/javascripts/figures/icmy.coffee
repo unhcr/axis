@@ -107,6 +107,15 @@ class Visio.Figures.Icmy extends Visio.Figures.Base
       .attr('transform', "translate(0,#{@adjustedHeight})")
 
 
+    # Legend Setup
+    if @isPdf
+      @legendView = new Visio.Legends.IcmyPdf
+        figure: @
+        collection: @collection
+        selected: @selected
+    else
+      @legendView = new Visio.Legends.Icmy()
+
 
   render: ->
     filtered = @filtered @collection
@@ -166,13 +175,11 @@ class Visio.Figures.Icmy extends Visio.Figures.Base
       .duration(Visio.Durations.FAST)
       .call(@yAxis)
 
-    if @isPdf
-      @legendView = new Visio.Figures.IcmyLegend
-        figure: @
-        collection: @collection
-        selected: @selected
-      @$el.find('.legend-container').html @legendView.render().el
+    @g.select('.y.axis text')
+      .html =>
+        @yAxisLabel()
 
+    @$el.find('.legend-container').html @legendView.render().el
     @
 
   mapFn: (lineData, idx, memo) =>
@@ -190,9 +197,6 @@ class Visio.Figures.Icmy extends Visio.Figures.Base
       return if year + 1 > (new Date()).getFullYear()
 
       result = collection[@algorithm] year, @filters
-      console.log @filters.toJSON()
-
-
 
       # Keeps track of total in that year
       memo["amount#{year}"] = 0 unless memo["amount#{year}"]?
