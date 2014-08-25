@@ -164,12 +164,14 @@
   width: $header-button-width;
   height: $header-button-height;
   line-height: $header-button-height;
-  border-left: 1px $white solid;
-  background-color: $lighter-gray;
+  background-color: $off-white;
+  border: 1px $dark-gray solid;
+  border-right: none;
   display: inline-block;
   float: right;
   text-align: left;
-  color: $primary-soft;
+  color: $black;
+  margin-top: -1px;
 }
 
 @mixin hover-shadow {

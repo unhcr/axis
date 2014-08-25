@@ -4,7 +4,7 @@
     - unless filter.get('hidden')
       .filter-group
         - for filterName, filterValue of filter.get('values')
-          %div{ :class => ["visio-#{filter.get('filterType')}", "visio-#{filter.get('filterType')}-left"].join(' ') }
+          %div{ :class => ["visio-#{filter.get('filterType')}", "visio-#{filter.get('filterType')}-orange", "visio-#{filter.get('filterType')}-left"].join(' ') }
             %input{ :value => "#{filter.id}#{Visio.Constants.SEPARATOR}#{filterName}",
                     :checked => filterValue,
                     :type => filter.get('filterType'),
@@ -12,6 +12,5 @@
                     :name => "#{context.figure.figureId()}_#{filter.id}" }
             %label{ :for => "#{context.figure.figureId()}_#{filterName}_#{filter.id}" }
               = filter.get('human')?[filterName] or filterName
-      .divider-primary
   %a.reset-filters
-    Reset Filters
+    Reset

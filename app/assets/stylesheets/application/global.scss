@@ -889,6 +889,29 @@ button, input {
   display: inline-block;
 }
 
+.visio-radio-orange input:checked + label:before {
+  content: ' ';
+  border: 2px solid $orange;
+}
+
+.visio-radio-orange input + label:before {
+  content: ' ';
+  border: 2px solid $orange;
+}
+
+.visio-radio-orange input:checked + label:after {
+  content: ' ';
+  border: 3px solid $orange;
+}
+
+.visio-radio-orange input:checked + label {
+  color: $black;
+}
+
+.visio-radio-orange label:hover {
+  color: $black;
+}
+
 .visio-checkbox input {
   display: none;
 }
@@ -2294,7 +2317,7 @@ a {
 }
 
 .header-button:hover {
-  background-color: $off-white;
+  color: $orange;
 }
 
 .header-button {
@@ -2307,13 +2330,37 @@ a {
     @include input-white;
     padding: 0px;
     width: 100%;
-    height: 100%;
     padding-left: 10px;
+    border: none;
   }
 }
 
 .filter-by, .visio-dropdown-container {
   padding-top: 0px;
+
+  .reset-filters {
+    color: $black;
+    display: block;
+    text-align: center;
+    font-size: 13px
+  }
+
+  /* Special styles for these checkboxes... */
+  .filter-group {
+    label {
+      color: $black;
+    }
+
+    label:hover {
+      color: $dark-gray;
+    }
+    input:checked + label {
+      color: $black;
+    }
+    input:checked + label:hover {
+      color: $dark-gray;
+    }
+  }
 
   .filter-toggle:after, .visio-dropdown-toggle:after {
     content: '+';
@@ -2335,23 +2382,24 @@ a {
     width: $header-button-width;
     text-align: left;
     z-index: 101;
+    color: $black;
     @include transition-property(max-height);
     @include transition-duration($very-fast-transition);
     @include transition-timing-function(ease-in);
     position: absolute;
     max-height: 0px;
     overflow: hidden;
-    background-color: white;
+    background-color: $off-white;
     margin-top: 1px;
   }
 
   .filter-group {
-    padding: 10px 0;
+    padding: 10px 15px;
+    border-bottom: 1px dotted $light-gray;
   }
 
   .filters.styled, .visio-dropdown.styled {
-    padding: 15px 10px;
-    border: 1px solid $lighter-gray;
+    border: 1px solid $light-gray;
     border-top: none;
   }
 
@@ -2741,10 +2789,15 @@ a {
   background-size: 18px;
   width: 60px;
   position: relative;
-  border-right: 1px $off-white solid;
+  border-right: 1px $dark-gray solid;
   background-repeat: no-repeat;
   background-position: center;
   cursor: pointer;
+}
+
+.export:hover {
+  border-right: 1px $orange solid;
+  margin-right: 0;
 }
 
 .map-export {
