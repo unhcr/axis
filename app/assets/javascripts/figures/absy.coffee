@@ -38,7 +38,7 @@ class Visio.Figures.Absy extends Visio.Figures.Base
           if @algorithm == 'selectedBudget'
             @xAxis.tickFormat Visio.Formats.SI_SIMPLE
           else
-            @xAxis.tickFormat Visio.Formats.PERCENT
+            @xAxis.tickFormat Visio.Formats.PERCENT_NOSIGN
           @render()
 
       }

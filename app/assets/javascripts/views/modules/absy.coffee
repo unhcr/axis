@@ -18,7 +18,7 @@ class Visio.Views.AbsyView extends Backbone.View
       margin:
         top: 90
         bottom: 90
-        left: 100
+        left: 140
         right: 80
 
     @figure = new Visio.Figures.Absy config
