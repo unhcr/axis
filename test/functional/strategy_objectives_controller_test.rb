@@ -57,6 +57,16 @@ class StrategyObjectivesControllerTest < ActionController::TestCase
     assert_equal json.length, 1
     assert_equal json[0]['id'].to_i, StrategyObjective.where(:name => 'Boys').first.id
   end
+  test 'Search strategy objectives with quote' do
+
+    get :search, { :query => 'Boy"' }
+
+    assert_response :success
+    json = JSON.parse(response.body)
+
+    assert_equal json.length, 1
+    assert_equal json[0]['id'].to_i, StrategyObjective.where(:name => 'Boys').first.id
+  end
 
 end
 
