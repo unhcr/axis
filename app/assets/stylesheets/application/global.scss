@@ -1467,6 +1467,7 @@ a {
   .filter-options {
     margin-left: -$filter-system-margin;
     margin-right: -$filter-system-margin;
+    padding: 0 10px;
     margin-bottom: 28px;
     height: $header-height;
     border-bottom: $orange 1px solid;
@@ -2385,6 +2386,11 @@ a {
     font-size: 13px
   }
 
+  .reset-filters:hover {
+    text-decoration: none;
+    color: $orange;
+  }
+
   /* Special styles for these checkboxes... */
   label {
     color: $black;
@@ -2567,7 +2573,6 @@ a {
   }
 
   .parameter-name {
-    text-transform: uppercase;
     padding-top: 2px;
     margin-top: 4px;
     color: $black;
