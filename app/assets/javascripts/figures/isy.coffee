@@ -13,8 +13,8 @@ class Visio.Figures.Isy extends Visio.Figures.Base
                               _.values(Visio.Algorithms.GOAL_TYPES).map((goalType) ->
                                 Visio.Utils.humanMetric(goalType))
     performanceValues =
-      true: false
-      false: true
+      true: if config.isPerformance? then config.isPerformance else false
+      false: if config.isPerformance? then config.isPerformance else true
     # For indicator dashboard just set the proper indicator type
     if Visio.manager.get('indicator')?
       performanceValues =

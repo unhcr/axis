@@ -325,7 +325,7 @@ test 'toString', () ->
     if hash.plural == Visio.Syncables.PLANS.plural
       strictEqual p.toString(), 'lisa'
     else if hash.plural == Visio.Parameters.PPGS.plural
-      strictEqual p.toString(), '[lisa] ben'
+      strictEqual p.toString(), 'LISA: ben'
     else if hash.plural == Visio.Parameters.PROBLEM_OBJECTIVES.plural
       strictEqual p.toString(), 'george'
     else

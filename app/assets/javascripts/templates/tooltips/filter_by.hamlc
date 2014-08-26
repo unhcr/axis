@@ -1,5 +1,5 @@
 .filter-toggle Filter By
-.filters{ :class => ( "open styled" if context.open ) }
+.filters
   - context.figure.filters.each (filter) ->
     - unless filter.get('hidden')
       .filter-group

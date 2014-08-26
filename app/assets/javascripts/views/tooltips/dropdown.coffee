@@ -21,9 +21,14 @@ class Visio.Views.Dropdown extends Backbone.View
     open = if isRerender? then @isOpen() else false
     @$el.html @template
       data: @data
-      open: open
       title: @title
       cid: @cid
+
+    if open
+      @$el.addClass 'open styled'
+    else
+      @$el.removeClass 'open styled'
+
     @$el.find('.visio-dropdown').on 'mouseleave', @onToggleDropdown
     @
 

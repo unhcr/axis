@@ -1833,6 +1833,10 @@ a {
   border-bottom: 1px solid rgb(240,240,240);
 
   .js-parameter {
+    @include transition-property(all);
+    @include transition-duration($fast-transition);
+    @include transition-timing-function(ease-in-out);
+
     line-height: 64px;
     cursor: pointer;
     .pin {

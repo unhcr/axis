@@ -30,25 +30,26 @@ test 'render', ->
   ok not @filterBy.$el.hasClass 'open'
 
   @filterBy.$el.find('.filter-toggle').trigger 'click'
-  ok @filterBy.$el.find('.filters').hasClass 'open'
-  ok @filterBy.$el.find('.filters').hasClass 'styled'
+  ok @filterBy.$el.hasClass 'open'
+  ok @filterBy.$el.hasClass 'styled'
 
   ok @filterBy.transitioning, 'Should be transitioning'
   # Kill transition
   @filterBy.transitioning = false
 
   @filterBy.$el.find('.filter-toggle').trigger 'click'
-  ok not @filterBy.$el.find('.filters').hasClass 'open', 'Should now be open'
+  ok not @filterBy.$el.hasClass 'open', 'Should now be open'
 
 test 'render - rerender', ->
   @filterBy.render()
   @filterBy.$el.find('.filter-toggle').trigger 'click'
-  ok @filterBy.$el.find('.filters').hasClass 'open'
-  ok @filterBy.$el.find('.filters').hasClass 'styled'
+  ok @filterBy.$el.hasClass 'open'
+  ok @filterBy.$el.hasClass 'styled'
 
   @filterBy.render true
-  ok @filterBy.$el.find('.filters').hasClass 'open'
-  ok @filterBy.$el.find('.filters').hasClass 'styled'
+  ok @filterBy.$el.hasClass 'open'
+  ok @filterBy.$el.hasClass 'styled'
 
   @filterBy.render()
-  ok not @filterBy.$el.find('.filters').hasClass 'open'
+  ok not @filterBy.$el.hasClass 'open'
+  ok not @filterBy.$el.hasClass 'styled'

@@ -116,6 +116,7 @@ test 'render', ->
 
 test 'sort', ->
   @figure.sortAttribute = Visio.ProgressTypes.BASELINE_MYR
+  @figure.isPerformanceFn true
 
   sorted = @figure.filtered @data
   strictEqual sorted[0].id, 'lisa'
