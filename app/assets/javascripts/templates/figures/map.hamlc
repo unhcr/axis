@@ -1,4 +1,13 @@
 - if context.exportable and not context.isExport
-    .map-export.export.header-button
-%figure
+  .figure-bar
+    .pull-left
+      %h3.dashboard-meta
+        = Visio.manager.toString()
+    .pull-right.header-buttons
+      .export.header-button
+
+.row
+  .col-md-12
+
+    %figure.figure
 
