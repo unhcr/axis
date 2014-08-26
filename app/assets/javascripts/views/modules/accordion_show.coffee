@@ -12,7 +12,8 @@ class Visio.Views.AccordionShowView extends Backbone.View
   toolbarHeight: => $('#header').height()
 
 
-  onTransitionEnd: (e) ->
+  onParameterTransitionEnd: (e) ->
+    e.stopPropagation()
     if @isOpen() and e.originalEvent.propertyName == 'max-height'
       $.scrollTo @$el,
         duration: 100

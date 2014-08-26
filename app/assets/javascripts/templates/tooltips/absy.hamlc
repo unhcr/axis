@@ -6,3 +6,24 @@
 
   .tipsy-parameter-name
     = context.d.toString()
+
+  .row
+    .col-xs-6
+      = context.algorithm
+    .col-xs-6
+      = 'Achievement'
+
+  .row
+    .col-xs-6.tipsy-number
+      = context.xValue
+    .col-xs-6.tipsy-number
+      = context.achievement
+
+  .divider.divider-dark-gray
+
+  .row
+    .col-xs-12
+      = 'Number of Indicators'
+  .row
+    .col-xs-12.tipsy-number
+      = context.nIndicators

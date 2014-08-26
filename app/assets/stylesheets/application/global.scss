@@ -1833,6 +1833,10 @@ a {
   border-bottom: 1px solid rgb(240,240,240);
 
   .js-parameter {
+    @include transition-property(all);
+    @include transition-duration($fast-transition);
+    @include transition-timing-function(ease-in-out);
+
     line-height: 64px;
     cursor: pointer;
     .pin {
@@ -2219,9 +2223,7 @@ a {
   }
   .bmy-tooltip, .icmy-tooltip {
     .tooltip-number {
-      font-size: 22px;
-      margin-top: -1px;
-      line-height: 24px;
+      @include tooltip-number;
     }
     .title {
       margin-top: 14px;
@@ -2367,30 +2369,37 @@ a {
   }
 
   .filter-toggle:after, .visio-dropdown-toggle:after {
-    content: '+';
-    background: transparent;
+    content: '';
+    background-image: url(/assets/AXIS-ACCORDION-CLOSED-NOBORDER.png);
+    background-size: 20px;
+    background-repeat: no-repeat;
     display: inline-block;
     float: right;
+    height: 100%;
+    background-position: center;
+    width: 20px;
+
   }
 
   .filter-toggle, .visio-dropdown-toggle {
     height: 100%;
     padding-left: 18px;
-    padding-right: 18px;
+    padding-right: 12px;
   }
 
   position: relative;
   cursor: pointer;
 
   .filters, .visio-dropdown {
-    width: $header-button-width;
+    width: $header-button-width + 1;
     text-align: left;
     z-index: 101;
     color: $black;
-    @include transition-property(max-height);
+    @include transition-property(all);
     @include transition-duration($very-fast-transition);
     @include transition-timing-function(ease-in);
     position: absolute;
+    left: -1px;
     max-height: 0px;
     overflow: hidden;
     background-color: $off-white;
@@ -2402,13 +2411,30 @@ a {
     border-bottom: 1px dotted $light-gray;
   }
 
-  .filters.styled, .visio-dropdown.styled {
+  .visio-dropdown {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+}
+
+.filter-by.styled, .visio-dropdown-container.styled {
+  .filters, .visio-dropdown {
     border: 1px solid $light-gray;
     border-top: none;
   }
+}
 
-  .filters.open, .visio-dropdown.open {
+.filter-by.open, .visio-dropdown-container.open {
+  .filter-toggle:after {
+    background-image: url(/assets/AXIS-ACCORDION-OPENED-NOBORDER.png);
+  }
+
+  .filters, .visio-dropdown {
     max-height: 400px;
+  }
+
+  .visio-dropdown {
+    padding: 10px 15px;
   }
 }
 
@@ -2800,8 +2826,6 @@ a {
 }
 
 .export:hover {
-  border-right: 1px $orange solid;
-  margin-right: 0;
 }
 
 .map-export {

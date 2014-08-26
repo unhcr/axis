@@ -20,7 +20,11 @@ class Visio.Views.FilterBy extends Backbone.View
 
   render: (isRerender) ->
     open = if isRerender? then @isOpen() else false
-    @$el.html @template({ figure: @figure, open: open })
+    @$el.html @template({ figure: @figure })
+    if open
+      @$el.addClass 'open styled'
+    else
+      @$el.removeClass 'open styled'
 
     @$el.find('.filters').on 'mouseleave', @onToggleFilters
     @
@@ -37,19 +41,21 @@ class Visio.Views.FilterBy extends Backbone.View
     @figure.render true
 
   isOpen: =>
-    @$el.find('.filters').hasClass 'open'
+    @$el.hasClass 'open'
 
   onTransitionEnd: (e) =>
+    e.stopPropagation()
     @transitioning = false
     if not @isOpen() and e.originalEvent.propertyName == 'max-height'
-      @$el.find('.filters').removeClass 'styled'
+      @$el.removeClass 'styled'
 
   onToggleFilters: (e) =>
     return if @transitioning
     @transitioning = true
-    @$el.find('.filters').toggleClass('open')
+    $(e.currentTarget).toggleClass('open')
+    @$el.toggleClass('open')
     if @isOpen()
-      @$el.find('.filters').toggleClass('styled')
+      @$el.toggleClass('styled')
 
   onResetFilters: (e) =>
     @figure.filters.resetFilters()

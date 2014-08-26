@@ -1,3 +1,4 @@
+.divider.divider-dark-gray
 - if context.exportable and not context.isExport
   .row
     .col-md-12.right-text.header-buttons

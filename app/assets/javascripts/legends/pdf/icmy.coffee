@@ -29,7 +29,7 @@ class Visio.Legends.IcmyPdf extends Backbone.View
 
   addOne: (year, idx) =>
 
-    view = new Visio.Legends.IcmyPdfShow
+    view = new Visio.Legends.IcmyShowPdf
       filters: @figure.filters
       year: year
       collection: @collection

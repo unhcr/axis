@@ -21,16 +21,21 @@ class Visio.Views.Dropdown extends Backbone.View
     open = if isRerender? then @isOpen() else false
     @$el.html @template
       data: @data
-      open: open
       title: @title
       cid: @cid
+
+    if open
+      @$el.addClass 'open styled'
+    else
+      @$el.removeClass 'open styled'
+
     @$el.find('.visio-dropdown').on 'mouseleave', @onToggleDropdown
     @
 
   onTransitionEnd: (e) =>
     @transitioning = false
     if not @isOpen() and e.originalEvent.propertyName == 'max-height'
-      @$el.find('.visio-dropdown').removeClass 'styled'
+      @$el.removeClass 'styled'
 
   onChange: (e) ->
     e.stopPropagation()
@@ -41,12 +46,12 @@ class Visio.Views.Dropdown extends Backbone.View
     @callback $target.val(), $target.data() if @callback?
 
   isOpen: =>
-    @$el.find('.visio-dropdown').hasClass 'open'
+    @$el.hasClass 'open'
 
   onToggleDropdown: (e) =>
     return if @transitioning
     @transitioning = true
-    @$el.find('.visio-dropdown').toggleClass('open')
+    @$el.toggleClass('open')
     if @isOpen()
-      @$el.find('.visio-dropdown').toggleClass('styled')
+      @$el.toggleClass('styled')
 

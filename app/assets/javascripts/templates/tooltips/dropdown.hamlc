@@ -5,9 +5,9 @@
     - d = _.findWhere(context.data, { checked: true }) or context.data[0]
     = d.label
 
-.visio-dropdown{ :class => ( "open styled" if context.open ) }
+.visio-dropdown
   - _.each context.data, (d) ->
-    %div{ :class => ["visio-radio", "visio-radio-left"].join(' ') }
+    %div{ :class => ["visio-radio", "visio-radio-left", "visio-radio-orange"].join(' ') }
       %input{ :value => d.value,
               :checked => if d.checked then true else false,
               :type => 'radio',

@@ -160,7 +160,6 @@ class Visio.Figures.Absy extends Visio.Figures.Base
     pointContainers = @g.selectAll('.point-container').data(filtered, (d) -> d.refId())
     pointContainers.enter().append('g')
     pointContainers
-        .attr('original-title', (d) => @templateTooltip({ d: d }))
         .attr('class', (d) ->
           classList = ['point-container', "id-#{d.refId()}"]
 
@@ -174,9 +173,18 @@ class Visio.Figures.Absy extends Visio.Figures.Base
         .each((d, i) ->
 
           pointContainer = d3.select @
-          radius = self.r d.selectedIndicatorData(Visio.manager.year(), self.filters).length
+          nIndicators = d.selectedIndicatorData(Visio.manager.year(), self.filters).length
+          radius = self.r nIndicators
           achievement = d.selectedAchievement(Visio.manager.year(), self.filters).result
           cxValue = d[self.algorithm](Visio.manager.year(), self.filters)
+
+          pointContainer.attr 'original-title', self.templateTooltip
+            d: d
+            xValue: if self.algorithm == 'selectedBudget' then Visio.Formats.MONEY(cxValue) else
+              Visio.Formats.PERCENT(cxValue)
+            achievement: Visio.Formats.PERCENT(achievement)
+            algorithm: self.algorithmToHuman(self.algorithm)
+            nIndicators: nIndicators
 
           pointShadows = pointContainer.selectAll('.point-shadow').data([d])
           pointShadows.enter().append('circle')
@@ -322,12 +330,14 @@ class Visio.Figures.Absy extends Visio.Figures.Base
     !_.isEmpty(@query) and d.toString().toLowerCase().indexOf(@query.toLowerCase()) != -1
 
   xAxisLabel: ->
+    title = @algorithmToHuman()
+    return @templateLabel { title: title, subtitles: ['in US Dollars'] }
+
+  algorithmToHuman: ->
     if @algorithm == 'selectedBudget'
       title = 'Budget'
     else
       title = 'Expenditure Rate (%)'
-
-    return @templateLabel { title: title, subtitles: ['in US Dollars'] }
 
   yAxisLabel: ->
 

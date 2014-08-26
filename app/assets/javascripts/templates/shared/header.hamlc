@@ -14,7 +14,7 @@
 
   .header-item.col-right
     .pull-right
-      .dashboard-item
+      .dashboard-item.user-account
         %a{ :href => "/users/sign_out", :data => { :method => "delete" }, :rel => "nofollow" }
           = Visio.user.get('login')
       %a.dashboard-item.icon.search-icon{ :href => '#search' }
