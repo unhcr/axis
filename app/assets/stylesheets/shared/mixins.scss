@@ -206,3 +206,9 @@
   margin-left: $page-margin;
   margin-right: $page-margin;
 }
+
+@mixin tooltip-number {
+  font-size: 22px;
+  margin-top: -1px;
+  line-height: 24px;
+}

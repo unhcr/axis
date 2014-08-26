@@ -2223,9 +2223,7 @@ a {
   }
   .bmy-tooltip, .icmy-tooltip {
     .tooltip-number {
-      font-size: 22px;
-      margin-top: -1px;
-      line-height: 24px;
+      @include tooltip-number;
     }
     .title {
       margin-top: 14px;

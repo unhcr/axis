@@ -14,10 +14,20 @@
     color: $purple;
     font-size: 13px;
     font-weight: bold;
+    padding-bottom: 6px;
+  }
+
+  .tipsy-number {
+    @include tooltip-number;
   }
 
   .divider {
     margin: 6px 50px;
+  }
+
+  .row {
+    margin-left: 0px;
+    margin-right: 0px;
   }
 
 }
