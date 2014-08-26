@@ -80,7 +80,7 @@ class Visio.Figures.Map extends Visio.Figures.Base
 
   dataAccessor: => @model
 
-  selectable: false
+  selectable: true
 
   setupFns: [ { name: 'getMap' } ]
 
