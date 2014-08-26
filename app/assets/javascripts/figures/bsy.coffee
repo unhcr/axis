@@ -86,8 +86,7 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
 
     # Check to see if domain was set already
     # Expensive computation so don't want to repeat if not necessary
-    if @y.domain()[1] == 1
-      @y.domain [0, d3.max(filtered, (d) -> d.selectedBudget())]
+    @y.domain [0, d3.max(filtered, (d) -> d.selectedBudget())]
 
 
     self = @
