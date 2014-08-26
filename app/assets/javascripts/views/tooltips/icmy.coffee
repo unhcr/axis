@@ -8,10 +8,10 @@ class Visio.Views.IcmyTooltip extends Visio.Views.D3Tooltip
 
   height: => @figure.heightFn()
 
-  top: => $(@figure.el).offset().top + 60
+  top: => @figure.$el.find('svg:first').offset().top + 20
 
   left: =>
-    base = $(@figure.el).offset().left + @figure.xFn()(@year) + @figure.marginFn().left
+    base = @figure.$el.find('svg:first').offset().left + @figure.xFn()(@year) + @figure.marginFn().left
     if (_.indexOf @figure.xFn().domain(), @year) < @figure.xFn().domain().length - 1
       return base + @offset
     else

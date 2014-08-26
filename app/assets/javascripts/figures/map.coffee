@@ -10,11 +10,11 @@ class Visio.Figures.Map extends Visio.Figures.Base
 
     super config
 
-    @scale = 500
+    @scale = 400
 
     @views = {}
 
-    @collection or= new Visio.Collections.Plan()
+    @collection or= new Visio.Collections.Operation()
     @zoomMax = 2.2
     @zoomMin = 0.5
 
@@ -33,12 +33,40 @@ class Visio.Figures.Map extends Visio.Figures.Base
     @path = d3.geo.path()
       .projection(@projection)
 
-    @g.append('rect')
-      .attr('x', 0)
-      .attr('y', 0)
-      .attr('width', @adjustedWidth)
-      .attr('height', @adjustedHeight)
-      .attr('class', 'background-rect')
+    start = d3.rgb('#fff')
+    end = d3.rgb('#000')
+    @i = d3.interpolate start, end
+
+    @scale = d3.scale.linear()
+      .range([0, 1])
+
+    @algorithm = 'selectedBudget'
+    @filters = new Visio.Collections.FigureFilter([
+      {
+        id: 'algorithm'
+        filterType: 'radio'
+        values: {
+          selectedBudget: true,
+          selectedExpenditureRate: false
+        }
+        human: { selectedExpenditureRate: 'Expenditure Rate', selectedBudget: 'Budget' }
+        callback: (name, attr) =>
+          @algorithm = name
+          if @algorithm == 'selectedBudget'
+            @xAxis.tickFormat Visio.Formats.SI_SIMPLE
+          else
+            @xAxis.tickFormat Visio.Formats.PERCENT_NOSIGN
+          @render()
+
+      }
+
+    ])
+    #@g.append('rect')
+    #  .attr('x', 0)
+    #  .attr('y', 0)
+    #  .attr('width', @adjustedWidth)
+    #  .attr('height', @adjustedHeight)
+    #  .attr('class', 'background-rect')
 
     expanded = null
 
@@ -52,7 +80,7 @@ class Visio.Figures.Map extends Visio.Figures.Base
 
   dataAccessor: => @model
 
-  selectable: false
+  selectable: true
 
   setupFns: [ { name: 'getMap' } ]
 
@@ -60,61 +88,56 @@ class Visio.Figures.Map extends Visio.Figures.Base
 
     self = @
 
+
     filtered = @filtered @collection
-    features = topojson.feature(@model.get('map'), @model.get('map').objects.world_50m).features
+    @scale.domain [0, d3.max(filtered, (d) => d[@algorithm]())]
+    @model.getMap().done (map) =>
+      features = topojson.feature(map, map.objects.world_50m).features
 
-    world = @g.selectAll('.country')
-      .data features
+      world = @g.selectAll('.country')
+        .data features
 
-    world.enter().append 'path'
+      world.enter().append 'path'
 
-    world.attr('class', (d) ->
-      ['country', d.properties.adm0_a3].join(' '))
-      .attr('d', @path)
-      .on('click', (d) ->
-        d3.select(self.el).selectAll('.country.active').classed 'active', false
-        window.location.href = "/operation/#{d.properties.adm0_a3}"
+      world.attr('class', (d) ->
 
-        #el = d3.select @
-        #iso3 = d.properties.adm0_a3
-        #if self.expanded && self.views[iso3] && self.expanded.model.id == self.views[iso3].model.id
-        #  if self.expanded.isShrunk()
-        #    self.expanded.expand()
-        #    el.classed 'active', true
-        #  else
-        #    self.expanded.shrink()
-        #    el.classed 'active', false
-        #else
-        #  self.expanded.shrink() if self.expanded
-        #  self.expanded = self.views[d.properties.adm0_a3]
-        #  return unless self.expanded
+        ['country', d.properties.adm0_a3].join(' ')
+        )
+        .attr('d', @path)
+        .style('fill', (d) ->
+          operation = _.find filtered, (o) -> o.get('country').iso3 == d.properties.adm0_a3
+          return unless operation
 
-        #  self.expanded.expand()
-        #  el.classed 'active', true
-      )
+          value = operation[self.algorithm]()
+          console.log(self.i self.scale(value))
+          self.i self.scale(value)
+        )
+        .on('click', (d) ->
+          d3.select(self.el).selectAll('.country.active').classed 'active', false
+        )
 
-    centers = @g.selectAll('.center')
-      .data(filtered, (d) -> d.id)
+    #centers = @g.selectAll('.center')
+    #  .data(filtered, (d) -> d.id)
 
-    centers.enter().append 'circle'
+    #centers.enter().append 'circle'
 
-    centers.attr('class', (d) ->
-      classList = ['center', d.get('country').iso3, 'transparent']
-      classList.join(' '))
-      .attr('cx', (d) =>
-        return @projection([d.get('country').latlng[1], d.get('country').latlng[0]])[0]
-      )
-      .attr('cy', (d) =>
-        return @projection([d.get('country').latlng[1], d.get('country').latlng[0]])[1]
-      )
-      .attr('r', 3)
-      .each((d) ->
-        unless self.views[d.get('country').iso3]
-          self.views[d.get('country').iso3] = new Visio.Views.MapTooltipView({
-            map: self, model: d, point: @ })
-      )
+    #centers.attr('class', (d) ->
+    #  classList = ['center', d.get('country').iso3, 'transparent']
+    #  classList.join(' '))
+    #  .attr('cx', (d) =>
+    #    return @projection([d.get('country').latlng[1], d.get('country').latlng[0]])[0]
+    #  )
+    #  .attr('cy', (d) =>
+    #    return @projection([d.get('country').latlng[1], d.get('country').latlng[0]])[1]
+    #  )
+    #  .attr('r', 3)
+    #  .each((d) ->
+    #    unless self.views[d.get('country').iso3]
+    #      self.views[d.get('country').iso3] = new Visio.Views.MapTooltipView({
+    #        map: self, model: d, point: @ })
+    #  )
 
-    @filterTooltips()
+    #@filterTooltips()
 
     @
 
@@ -170,37 +193,10 @@ class Visio.Figures.Map extends Visio.Figures.Base
     @zoomed()
 
 
-  filterTooltips: () =>
-    filtered = @filtered @collection
-    filteredCollection = new Visio.Collections.Plan filtered
-    for key, value of @views
-      id = value.model.id
-      if filteredCollection.get(id)?
-        value.show()
-        value.render(false)
-      else
-        value.hide()
-
   pan: (dx, dy) =>
     translate = @zoom.translate()
     @zoom.translate [translate[0] + dx, translate[1] + dy]
     @zoomed()
 
-  clearTooltips: =>
-    for key, value of @views
-      value.close()
-    @views = {}
-
   filtered: (collection) =>
-    selectedStrategies = _.chain(Visio.manager.get('selected_strategies'))
-      .keys().map((id) -> +id).value()
-
-    collection.filter (plan) ->
-      plan.get('year') == Visio.manager.year() and
-      plan.get('country') and
-      (_.isEmpty(selectedStrategies) or
-      _.every(selectedStrategies, (id) -> _.include(plan.get('strategy_ids'), id)))
-
-  refreshTooltips: ->
-    for key, value of @views
-      value.render(true)
+    collection.filter (o) -> o.get('country')?
