@@ -1330,6 +1330,38 @@ a {
 
 }
 
+.pin.pin-medium-small {
+  width: $pin-medium-small;
+  height: 2 * $pin-medium-small;
+
+  .pin-tip {
+    border-top: ($pin-medium-small / 2) solid transparent;
+    border-bottom: ($pin-medium-small / 2) solid transparent;
+    border-left: ($pin-medium-small / 2) solid $fail-dark;
+  }
+  .pin-body {
+    width: $pin-medium-small;
+    height: 1.5 * $pin-medium-small;
+  }
+
+}
+
+.pin.pin-small {
+  width: $pin-small;
+  height: 2 * $pin-small;
+
+  .pin-tip {
+    border-top: ($pin-small / 2) solid transparent;
+    border-bottom: ($pin-small / 2) solid transparent;
+    border-left: ($pin-small / 2) solid $fail-dark;
+  }
+  .pin-body {
+    width: $pin-small;
+    height: 1.5 * $pin-small;
+  }
+
+}
+
 .pin.pin-large {
   width: $pin-large;
   height: 2 * $pin-large;

@@ -1,6 +1,6 @@
 %div
   .js-parameter.page-margin
-    .pin.pin-medium.inline-block
+    .pin.pin-medium-small.inline-block
       .pin-tip
       .pin-body
     .ui-medium-header.inline-block
