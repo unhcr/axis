@@ -20,8 +20,9 @@
     var randomBehaviour;
     var gravity;
     var zone;
-    var rootIndex = 1;
-    var srcs = ['/assets/logo.png', '/assets/AXIS-LOGO-ORANGE.png'];
+    var rootIndex = 0;
+    var texts = ['Jorge', 'Ben', 'Arne'];
+    var zones = []
     var images = [];
     var loadCount = 0;
 
@@ -35,9 +36,15 @@
 
       var rect = new Proton.Rectangle((canvas.width - canvas.width) / 2, (canvas.height - canvas.height) / 2, canvas.width, canvas.height);
 
-      context.font = "100px serif"
+      context.font = "300px serif"
       context.fillStyle = "#FF0000";
-      context.fillText ("Jorge", 100, 80);
+
+      _.each(texts, function(text) {
+        context.fillText(text, 100, 280);
+        var imagedata = context.getImageData(rect.x, rect.y, rect.width, rect.height);
+        zones.push(new Proton.ImageZone(imagedata, rect.x, rect.y + 50))
+        context.clearRect(0, 0, canvas.width, canvas.height);
+      })
 
       createProton(rect);
       tick();
@@ -52,17 +59,11 @@
       //addInitialize
       emitter.addInitialize(new Proton.Position(new Proton.PointZone(0, 0)));
 
-      // How sluggish does the point move
-      emitter.addInitialize(new Proton.Mass(1));
-
       // How large is the point
       emitter.addInitialize(new Proton.Radius(1));
 
-      var imagedata = context.getImageData(rect.x, rect.y, rect.width, rect.height);
 
-      zone = new Proton.ImageZone(imagedata, rect.x, rect.y + 50)
-
-      emitter.addInitialize(new Proton.P(zone));
+      emitter.addInitialize(new Proton.P(zones[rootIndex]));
 
       randomBehaviour = new Proton.RandomDrift(0, 0, .05);
       gravity = new Proton.GravityWell({
@@ -70,14 +71,15 @@
         y : canvas.height / 2
       }, 0, 0);
 
-      emitter.addBehaviour(customScaleBehaviour());
-      emitter.addBehaviour(gravity);
-      emitter.addBehaviour(customToZoneBehaviour(zone, zone))
-      emitter.addBehaviour(randomBehaviour);
-
-      // Choose colors of dots
+      emitter.addBehaviour(customToZoneBehaviour(zones))
       emitter.addBehaviour(new Proton.Color(['#ffffff', '#000000']));
-      emitter.addBehaviour(new Proton.CrossZone(new Proton.RectZone(0, 0, canvas.width, canvas.height), 'bound'));
+      //emitter.addBehaviour(customScaleBehaviour());
+      //emitter.addBehaviour(gravity);
+      randomBehaviour.reset(30, 30, 0.001);
+      emitter.addBehaviour(randomBehaviour);
+      // Choose colors of dots
+      //emitter.addBehaviour(new Proton.CrossZone(new Proton.RectZone(0, 0, canvas.width, canvas.height), 'bound'));
+
       emitter.emit('once');
       //add emitter
       proton.addEmitter(emitter);
@@ -90,19 +92,20 @@
       //Proton.Debug.drawEmitter(proton, canvas, emitter);
 
       index = 0;
-      window.addEventListener('mousedown', function(e) {
+      canvas.addEventListener('click', function(e) {
         console.log('mousedown')
-        index++;
-        if (index % 3 == 1) {
-          randomBehaviour.reset(2, 0, .2);
-          gravity.reset(1.5);
-        } else if (index % 3 == 2) {
-          randomBehaviour.reset(50, 50, .1);
-          gravity.reset(0);
-        } else {
-          randomBehaviour.reset(2, 2, .2);
-          gravity.reset(0);
-        }
+        rootIndex ++;
+        //randomBehaviour.reset(30, 30, 0.001);
+        //if (index % 3 == 1) {
+        //  randomBehaviour.reset(2, 0, .2);
+        //  gravity.reset(1.5);
+        //} else if (index % 3 == 2) {
+        //  randomBehaviour.reset(50, 50, .1);
+        //  gravity.reset(0);
+        //} else {
+        //  randomBehaviour.reset(2, 2, .2);
+        //  gravity.reset(0);
+        //}
       });
     }
 
@@ -126,19 +129,21 @@
     function getColor(posArr) {
       var arr = [];
       for (var i = 0; i < posArr.length; i++) {
-        arr.push(zone.getColor(posArr[i].x, posArr[i].y));
+        arr.push(zones[rootIndex].getColor(posArr[i].x, posArr[i].y));
       }
       return arr;
     }
 
 
-    function customToZoneBehaviour(zone1, zone2) {
+    function customToZoneBehaviour(zones) {
       return {
         initialize : function(particle) {
           particle.R = Math.random() * 10;
           particle.Angle = Math.random() * Math.PI * 2;
           particle.speed = Math.random() * (-2) + 1;
-          particle.zones = [zone1.getPosition().clone(), zone2.getPosition().clone()];
+          particle.zones = _.map(zones, function(z) { return z.getPosition().clone(); })
+
+          //[zone1.getPosition().clone(), zone2.getPosition().clone()];
           particle.colors = getColor(particle.zones);
         },
 
@@ -147,8 +152,8 @@
             particle.v.clear();
             particle.Angle += particle.speed;
             var index = (rootIndex % 4 + 1) / 2 - 1;
-            var x = particle.zones[index].x + particle.R * Math.cos(particle.Angle);
-            var y = particle.zones[index].y + particle.R * Math.sin(particle.Angle);
+            var x = particle.zones[rootIndex % particle.zones.length].x + particle.R * Math.cos(particle.Angle);
+            var y = particle.zones[rootIndex % particle.zones.length].y + particle.R * Math.sin(particle.Angle);
             particle.p.x += (x - particle.p.x) * 0.05;
             particle.p.y += (y - particle.p.y) * 0.05;
             particle.transform.rgb.r = particle.colors[index].r;
