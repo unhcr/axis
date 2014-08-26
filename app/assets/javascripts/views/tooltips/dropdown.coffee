@@ -33,6 +33,7 @@ class Visio.Views.Dropdown extends Backbone.View
     @
 
   onTransitionEnd: (e) =>
+    e.stopPropagation()
     @transitioning = false
     if not @isOpen() and e.originalEvent.propertyName == 'max-height'
       @$el.removeClass 'styled'
