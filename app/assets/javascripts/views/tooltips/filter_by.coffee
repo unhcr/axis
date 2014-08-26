@@ -44,6 +44,7 @@ class Visio.Views.FilterBy extends Backbone.View
     @$el.hasClass 'open'
 
   onTransitionEnd: (e) =>
+    e.stopPropagation()
     @transitioning = false
     if not @isOpen() and e.originalEvent.propertyName == 'max-height'
       @$el.removeClass 'styled'

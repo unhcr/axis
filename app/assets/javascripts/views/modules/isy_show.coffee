@@ -6,10 +6,10 @@ class Visio.Views.IsyShowView extends Visio.Views.AccordionShowView
 
   events:
     'click .js-parameter': 'onClickParameter'
-    'transitionend': 'onTransitionEnd'
-    'MSTransitionEnd': 'onTransitionEnd'
-    'webkitTransitionEnd': 'onTransitionEnd'
-    'oTransitionEnd': 'onTransitionEnd'
+    'transitionend': 'onParameterTransitionEnd'
+    'MSTransitionEnd': 'onParameterTransitionEnd'
+    'webkitTransitionEnd': 'onParameterTransitionEnd'
+    'oTransitionEnd': 'onParameterTransitionEnd'
 
   initialize: (options) ->
     width = $('#module').width()
