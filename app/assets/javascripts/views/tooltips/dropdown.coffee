@@ -30,7 +30,7 @@ class Visio.Views.Dropdown extends Backbone.View
   onTransitionEnd: (e) =>
     @transitioning = false
     if not @isOpen() and e.originalEvent.propertyName == 'max-height'
-      @$el.find('.visio-dropdown').removeClass 'styled'
+      @$el.removeClass 'styled'
 
   onChange: (e) ->
     e.stopPropagation()
@@ -41,12 +41,12 @@ class Visio.Views.Dropdown extends Backbone.View
     @callback $target.val(), $target.data() if @callback?
 
   isOpen: =>
-    @$el.find('.visio-dropdown').hasClass 'open'
+    @$el.hasClass 'open'
 
   onToggleDropdown: (e) =>
     return if @transitioning
     @transitioning = true
-    @$el.find('.visio-dropdown').toggleClass('open')
+    @$el.toggleClass('open')
     if @isOpen()
-      @$el.find('.visio-dropdown').toggleClass('styled')
+      @$el.toggleClass('styled')
 

@@ -2367,23 +2367,29 @@ a {
   }
 
   .filter-toggle:after, .visio-dropdown-toggle:after {
-    content: '+';
-    background: transparent;
+    content: '';
+    background-image: url(/assets/AXIS-ACCORDION-CLOSED-NOBORDER.png);
+    background-size: 20px;
+    background-repeat: no-repeat;
     display: inline-block;
     float: right;
+    height: 100%;
+    background-position: center;
+    width: 20px;
+
   }
 
   .filter-toggle, .visio-dropdown-toggle {
     height: 100%;
     padding-left: 18px;
-    padding-right: 18px;
+    padding-right: 12px;
   }
 
   position: relative;
   cursor: pointer;
 
   .filters, .visio-dropdown {
-    width: $header-button-width;
+    width: $header-button-width + 1;
     text-align: left;
     z-index: 101;
     color: $black;
@@ -2391,6 +2397,7 @@ a {
     @include transition-duration($very-fast-transition);
     @include transition-timing-function(ease-in);
     position: absolute;
+    left: -1px;
     max-height: 0px;
     overflow: hidden;
     background-color: $off-white;
@@ -2402,20 +2409,29 @@ a {
     border-bottom: 1px dotted $light-gray;
   }
 
-  .filters.styled, .visio-dropdown.styled {
-    border: 1px solid $light-gray;
-    border-top: none;
-  }
-
-  .filters.open, .visio-dropdown.open {
-    max-height: 400px;
-  }
-
   .visio-dropdown {
     padding-left: 15px;
     padding-right: 15px;
   }
-  .visio-dropdown.open {
+}
+
+.filter-by.styled, .visio-dropdown-container.styled {
+  .filters, .visio-dropdown {
+    border: 1px solid $light-gray;
+    border-top: none;
+  }
+}
+
+.filter-by.open, .visio-dropdown-container.open {
+  .filter-toggle:after {
+    background-image: url(/assets/AXIS-ACCORDION-OPENED-NOBORDER.png);
+  }
+
+  .filters, .visio-dropdown {
+    max-height: 400px;
+  }
+
+  .visio-dropdown {
     padding: 10px 15px;
   }
 }
