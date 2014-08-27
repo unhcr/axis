@@ -39,7 +39,8 @@ asyncTest 'getMap - no local storage', ->
   ).done( =>
     @map.getMap()
   ).done( =>
-    ok $.get.calledTwice, 'Should have been called twice at this point'
+    ok $.get.calledOnce, 'Should have been called once at this point'
+    # Use the map that has already been set in model
     ok @map.get('map')?, 'Should have map'
     strictEqual @map.get('map').object, 'my map object'
     $.get.restore()
