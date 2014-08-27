@@ -21,7 +21,7 @@
     var gravity;
     var zone;
     var rootIndex = 0;
-    var texts = ['Jorge', 'Ben', 'Arne'];
+    var texts = ['12', '12,400,321', '2'];
     var zones = []
     var images = [];
     var loadCount = 0;
@@ -36,7 +36,7 @@
 
       var rect = new Proton.Rectangle((canvas.width - canvas.width) / 2, (canvas.height - canvas.height) / 2, canvas.width, canvas.height);
 
-      context.font = "300px serif"
+      context.font = "150px helvetica"
       context.fillStyle = "#FF0000";
 
       _.each(texts, function(text) {
@@ -72,7 +72,7 @@
       }, 0, 0);
 
       emitter.addBehaviour(customToZoneBehaviour(zones))
-      emitter.addBehaviour(new Proton.Color(['#ffffff', '#000000']));
+      emitter.addBehaviour(new Proton.Color(['#000000']));
       //emitter.addBehaviour(customScaleBehaviour());
       //emitter.addBehaviour(gravity);
       randomBehaviour.reset(30, 30, 0.001);
