@@ -36,6 +36,8 @@
 //= require ./views/shared/notifications/notification
 //= require_tree ./views/cms
 //= require_tree ./views/shared
+//= require ./routers/global_router
+//= require ./routers/dashboard_router
 //= require_tree ./routers
 //= require_tree ./helpers
 //= require_tree ./vendor
