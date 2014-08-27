@@ -9,6 +9,8 @@ class StrategyObjective < ActiveRecord::Base
     [Goal, ProblemObjective, Output, Indicator]
   end
 
+  scope :global_strategy_objectives, joins(:strategy).where('strategies.user_id is NULL')
+
   default_scope :include => [parameters.map { |p| p.table_name.to_sym }]
 
   self.parameters.each do |p|
