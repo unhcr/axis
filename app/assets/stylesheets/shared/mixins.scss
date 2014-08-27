@@ -113,6 +113,23 @@
   }
 
 }
+@mixin text-theme-splash {
+  h2 {
+    font-size: 24px;
+    margin-top: 6px;
+    margin-bottom: 6px;
+    line-height: 1.1em;
+  }
+  h3 {
+    font-size: 18px;
+  }
+
+  h6 {
+    font-size: 15px;
+    color: $dark-gray;
+    font-weight: bold;
+  }
+}
 
 @mixin label {
   color: $primary;

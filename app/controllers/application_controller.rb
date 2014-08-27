@@ -19,7 +19,29 @@ class ApplicationController < ActionController::Base
   end
 
   def splash
-    render :layout => 'application' and return
+    @stats = [
+      {
+        :name => 'Number of Global Strategies',
+        :value => Strategy.global_strategies.count
+      },
+      {
+        :name => 'Number of UNHCR Operations',
+        :value => Operation.count
+      },
+      {
+        :name => 'Number of GSP Indicators',
+        :value => Indicator.where(:is_gsp => true).count
+      },
+      {
+        :name => 'Number of Axis users',
+        :value => User.count
+      },
+      {
+        :name => 'Number of smiles?',
+        :value => 'Priceless'
+      }
+    ]
+    render :layout => 'index' and return
   end
 
   def create_guest_user

@@ -1,7 +1,9 @@
 class Visio.Routers.SplashRouter extends Backbone.Router
 
-  initialize: () ->
-    console.log 'starting'
+  initialize: (options) ->
+    @proton = new Visio.Views.ProtonView
+      stats: options.stats
+      el: $('.data-vis-container')
 
   routes: () ->
     'signin': 'signin'
@@ -14,6 +16,7 @@ class Visio.Routers.SplashRouter extends Backbone.Router
     #$('body').addClass 'ui-primary-theme'
     #$('body').removeClass 'ui-primary-medium-theme'
     @signinView = new Visio.Views.SigninView({ el: el }) unless @signinView
+    @proton.render()
 
     # Need to slide out if signup container exists
     if @signupView

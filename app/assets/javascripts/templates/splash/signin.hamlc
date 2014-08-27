@@ -1,54 +1,14 @@
-%header.clearfix
-  .account-menu
-    <!-- %a.pull-right.menu-item{:href => "#signup"} Create an account -->
-    %span.pull-right.menu-item New to VISIO?
-.container
-  .row
-    .col-md-12.center-text.ui-large-header.logo.logo-white
-      %span.light UNHCR
-      %span.bold AXIS
-  .row
-    .col-md-12.center-text
-      .bold Good Afternoon!
-  .row
-    .col-md-12.center-text
-      .light.center-text Let's Get Started
-  .row
-    .col-md-8.col-centered
-      - if Visio.user? and Visio.user.isLoggedIn()
-        %h5.center-text
-          = "Thank you for using AXIS, #{Visio.user.get('login')}, please find the homepage"
-          %a{ :href => '/' }
-            %i here
-      - else
-        %form
-          .col-md-5.center-text.login-container
-            %input.login.pull-left.full-width{
-              :name => "login",
-              :autofocus => "autofocus",
-              :placeholder => "Enter your ldap username",
-              :type => "text"}
-          .col-md-5.center-text.login-container
-            %input.password.pull-left.full-width{:name => "password", :placeholder => "Password", :type => "password"}
-          .col-md-2.center-text.login-container
-            %input.signin.ui-active.full-width.pull-left{:type => "submit", :value => "GO"}
-  .row
-    .col-md-8.col-centered
-      .col-md-4.center-text.logo-circle
-        %img{:alt => "Visualize", :src => "/assets/visio-visualize.png"}
-        %h2 Seeing is Believing
-        %span
-          Map and make meaningful and &nbsp;with&nbsp;your&nbsp;data"
-          %span.ui-thirdary effective&nbsp;connections
-      .col-md-4.center-text.logo-circle
-        %img{:alt => "Analyze", :src => "/assets/visio-analyze.png"}
-        %h2 Simple and Intuitive
-        %span
-          %span.ui-thirdary Focus and refine
-          your data
-      .col-md-4.center-text.logo-circle
-        %img{:alt => "Present", :src => "/assets/visio-present.png"}
-        %h2 Designed for You
-        %span
-          %span.ui-thirdary> Customize
-          , Save, Export and Share&nbsp;your&nbsp;reports
+%header
+  .logo
+  %span Visualize. Analyze. Monitor.
+
+.divider.divider-light-gray.divider-full
+.welcome-container
+  %h2.ui-orange
+    Welcome.
+  %h2.ui-black
+    Axis makes big data feel small by focusing on the points that make the biggest difference.
+
+.login-container
+  %h6
+    Let's get started.
