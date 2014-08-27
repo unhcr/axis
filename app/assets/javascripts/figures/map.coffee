@@ -49,17 +49,25 @@ class Visio.Figures.Map extends Visio.Figures.Base
       ])
       .range(['#c6302a', 'rgb(242, 211, 25)', 'rgb(70, 190, 30)', 'rgb(133, 135, 134)'])
 
+    values =
+      selectedBudget: true,
+      selectedExpenditureRate: false
+      selectedSituationAnalysis: false
+      selectedPerformanceAchievement: false
+      selectedImpactAchievement: false
+
+    # Delete values that aren't of use for indicator page
+    if Visio.manager.get('indicator')?.get('is_performance')
+      delete values['selectedImpactAchievement']
+      delete values['selectedSituationAnalysis']
+    else if Visio.manager.get('indicator') and not Visio.manager.get('indicator').get('is_performance')
+      delete values['selectedPerformanceAchievement']
+
     @filters = new Visio.Collections.FigureFilter([
       {
         id: 'algorithm'
         filterType: 'radio'
-        values: {
-          selectedBudget: true,
-          selectedExpenditureRate: false
-          selectedSituationAnalysis: false
-          selectedPerformanceAchievement: false
-          selectedImpactAchievement: false
-        }
+        values: values
         human: {
           selectedExpenditureRate: 'Expenditure Rate',
           selectedBudget: 'Budget'
