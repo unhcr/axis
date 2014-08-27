@@ -14,6 +14,7 @@
       window.Visio.user = new Visio.Models.User(#{current_user.to_json.html_safe})
       window.Visio.env = "#{Rails.env}"
       window.Visio.configuration = #{@configuration.to_json.html_safe}
+      window.Visio.mapMD5 = "#{@mapMD5}"
     .content
       .row
         .col-md-12

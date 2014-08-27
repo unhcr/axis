@@ -10,14 +10,14 @@ class Visio.Models.Map extends Backbone.Model
 
     db = Visio.manager.get 'db'
 
-    $.when(db.get(Visio.Stores.MAP, @get('mapMD5'))).then((record) =>
+    $.when(db.get(Visio.Stores.MAP, Visio.mapMD5)).then((record) =>
       if !record
         return $.get('/map')
       else
         return record
     ).done((record) =>
       @set 'map', record
-      db.put(Visio.Stores.MAP, record, @get('mapMD5'))
+      db.put(Visio.Stores.MAP, record, Visio.mapMD5)
       record
     )
 

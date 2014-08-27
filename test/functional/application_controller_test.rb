@@ -57,6 +57,7 @@ class ApplicationControllerTest < ActionController::TestCase
     assert_not_nil assigns :personal_strategies
     assert_not_nil assigns :shared_strategies
     assert_not_nil assigns :configuration
+    assert_not_nil assigns :mapMD5
   end
 
   test 'overview page' do
@@ -72,6 +73,7 @@ class ApplicationControllerTest < ActionController::TestCase
     assert_not_nil assigns :personal_strategies
     assert_not_nil assigns :shared_strategies
     assert_not_nil assigns :configuration
+    assert_not_nil assigns :mapMD5
 
   end
 
@@ -91,6 +93,7 @@ class ApplicationControllerTest < ActionController::TestCase
     assert_not_nil assigns :personal_strategies
     assert_not_nil assigns :shared_strategies
     assert_not_nil assigns :configuration
+    assert_not_nil assigns :mapMD5
 
   end
 
