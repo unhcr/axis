@@ -105,8 +105,15 @@ class Visio.Views.IsyShowView extends Visio.Views.AccordionShowView
     unless @isyFigure.tooltip.hasRendered()
       $.publish "hover.#{@isyFigure.cid}.figure", 0
 
-    @$el.find('.slider').slider 'option', 'max', max - 1
-    @$el.find('.slider').attr('data-max', max)
+    $slider = @$el.find('.slider')
+    $slider.slider 'option', 'max', max - 1
+    $slider.attr 'data-max', max
+
+    # No reason to show slider if there is nothing to slide
+    if max < 2
+      $slider.addClass 'gone'
+    else
+      $slider.removeClass 'gone'
 
   removeInstances: =>
     $.unsubscribe "drawFigures.#{@isyFigure.cid}.figure"

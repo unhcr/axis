@@ -6,15 +6,15 @@ class Visio.Figures.Map extends Visio.Figures.Base
 
   className: 'map-container'
 
+  templateTooltip: HAML['tooltips/map']
+
   initialize: (config) ->
 
     super config
 
-    @scale = 500
+    @scale = 400
 
-    @views = {}
-
-    @collection or= new Visio.Collections.Plan()
+    @collection or= new Visio.Collections.Operation()
     @zoomMax = 2.2
     @zoomMin = 0.5
 
@@ -33,14 +33,53 @@ class Visio.Figures.Map extends Visio.Figures.Base
     @path = d3.geo.path()
       .projection(@projection)
 
-    @g.append('rect')
-      .attr('x', 0)
-      .attr('y', 0)
-      .attr('width', @adjustedWidth)
-      .attr('height', @adjustedHeight)
-      .attr('class', 'background-rect')
+    start = d3.rgb('#fff')
+    end = d3.rgb('rgb(253, 52, 156)')
+    @i = d3.interpolate start, end
 
-    expanded = null
+    @scale = d3.scale.linear()
+      .range([0, 1])
+
+    @category = d3.scale.ordinal()
+      .domain([
+        Visio.Algorithms.ALGO_RESULTS.fail,
+        Visio.Algorithms.ALGO_RESULTS.ok,
+        Visio.Algorithms.ALGO_RESULTS.success,
+        Visio.Algorithms.STATUS.missing
+      ])
+      .range(['#c6302a', 'rgb(242, 211, 25)', 'rgb(70, 190, 30)', 'rgb(133, 135, 134)'])
+
+    values =
+      selectedBudget: true,
+      selectedExpenditureRate: false
+      selectedSituationAnalysis: false
+      selectedPerformanceAchievement: false
+      selectedImpactAchievement: false
+
+    # Delete values that aren't of use for indicator page
+    if Visio.manager.get('indicator')?.get('is_performance')
+      delete values['selectedImpactAchievement']
+      delete values['selectedSituationAnalysis']
+    else if Visio.manager.get('indicator') and not Visio.manager.get('indicator').get('is_performance')
+      delete values['selectedPerformanceAchievement']
+
+    @filters = new Visio.Collections.FigureFilter([
+      {
+        id: 'algorithm'
+        filterType: 'radio'
+        values: values
+        human: {
+          selectedExpenditureRate: 'Expenditure Rate',
+          selectedBudget: 'Budget'
+          selectedSituationAnalysis: 'Impact Criticality'
+          selectedPerformanceAchievement: 'Performance Achievement'
+          selectedImpactAchievement: 'Impact Achievement'
+        }
+        callback: (name, attr) =>
+          @render()
+      }
+
+    ])
 
     @zoomStep = .4
 
@@ -52,7 +91,7 @@ class Visio.Figures.Map extends Visio.Figures.Base
 
   dataAccessor: => @model
 
-  selectable: false
+  selectable: true
 
   setupFns: [ { name: 'getMap' } ]
 
@@ -60,38 +99,48 @@ class Visio.Figures.Map extends Visio.Figures.Base
 
     self = @
 
+    algorithm = @filters.get('algorithm').active()
+
     filtered = @filtered @collection
-    features = topojson.feature(@model.get('map'), @model.get('map').objects.world_50m).features
+    @scale.domain @algorithmDomain(filtered) unless algorithm == 'selectedSituationAnalysis'
 
-    world = @g.selectAll('.country')
-      .data features
+    @model.getMap().done (map) =>
+      features = topojson.feature(map, map.objects.world_50m).features
 
-    world.enter().append 'path'
+      world = @g.selectAll('.country')
+        .data features
 
-    world.attr('class', (d) ->
-      ['country', d.properties.adm0_a3].join(' '))
-      .attr('d', @path)
-      .on('click', (d) ->
-        d3.select(self.el).selectAll('.country.active').classed 'active', false
-        window.location.href = "/operation/#{d.properties.adm0_a3}"
+      world.enter().append 'path'
 
-        #el = d3.select @
-        #iso3 = d.properties.adm0_a3
-        #if self.expanded && self.views[iso3] && self.expanded.model.id == self.views[iso3].model.id
-        #  if self.expanded.isShrunk()
-        #    self.expanded.expand()
-        #    el.classed 'active', true
-        #  else
-        #    self.expanded.shrink()
-        #    el.classed 'active', false
-        #else
-        #  self.expanded.shrink() if self.expanded
-        #  self.expanded = self.views[d.properties.adm0_a3]
-        #  return unless self.expanded
+      world.attr('class', (d) ->
 
-        #  self.expanded.expand()
-        #  el.classed 'active', true
-      )
+        ['country', d.properties.adm0_a3].join(' ')
+        )
+        .attr('d', @path)
+        .on('mouseenter', (d) ->
+          operation = _.find filtered, (o) -> o.get('country').iso3 == d.properties.adm0_a3
+          return unless operation
+          self.$el.find(".center.#{operation.get('country').iso3}").tipsy('show'))
+        .on('mouseout', (d) ->
+          operation = _.find filtered, (o) -> o.get('country').iso3 == d.properties.adm0_a3
+          return unless operation
+          self.$el.find(".center.#{operation.get('country').iso3}").tipsy('hide'))
+
+      world
+        .transition()
+        .duration(Visio.Durations.FAST)
+        .style('fill', (d) ->
+          operation = _.find filtered, (o) -> o.get('country').iso3 == d.properties.adm0_a3
+          return unless operation
+
+          value = self.algorithmValue(operation)
+
+          switch algorithm
+            when 'selectedSituationAnalysis'
+              return self.category value
+            else
+              return self.i self.scale(value)
+        )
 
     centers = @g.selectAll('.center')
       .data(filtered, (d) -> d.id)
@@ -108,15 +157,49 @@ class Visio.Figures.Map extends Visio.Figures.Base
         return @projection([d.get('country').latlng[1], d.get('country').latlng[0]])[1]
       )
       .attr('r', 3)
-      .each((d) ->
-        unless self.views[d.get('country').iso3]
-          self.views[d.get('country').iso3] = new Visio.Views.MapTooltipView({
-            map: self, model: d, point: @ })
+      .attr('original-title', (d) =>
+        label = @filters.get('algorithm').get('human')[algorithm]
+        value = @algorithmValue(d)
+
+        formatted = switch algorithm
+          when 'selectedExpenditureRate', 'selectedPerformanceAchievement', 'selectedImpactAchievement'
+            Visio.Formats.PERCENT value
+          when 'selectedBudget'
+            Visio.Formats.MONEY value
+          when 'selectedSituationAnalysis'
+            Visio.Utils.humanMetric(value)
+
+        @templateTooltip
+          operation: d
+          label: label
+          value: formatted
       )
 
-    @filterTooltips()
-
+    @$el.find('.center').tipsy()
     @
+
+  algorithmValue: (operation) ->
+    algorithm = @filters.get('algorithm').active()
+    switch algorithm
+      when 'selectedSituationAnalysis'
+        value = operation[algorithm]()
+        value.category
+      when 'selectedImpactAchievement', 'selectedPerformanceAchievement'
+        value = operation[algorithm]()
+        value.result
+      else
+        value = operation[algorithm]()
+
+  algorithmDomain: (filtered) ->
+    algorithm = @filters.get('algorithm').active()
+    switch algorithm
+      when 'selectedSituationAnalysis'
+        # Have to use a different scale for this one anyways
+        console.log 'noop'
+      when 'selectedImpactAchievement', 'selectedPerformanceAchievement', 'selectedExpenditureRate'
+        [0, 1]
+      else
+        [0, d3.max(filtered, (d) => @algorithmValue(d))]
 
   zoomed: =>
     scale = if d3.event && d3.event.scale then d3.event.scale else @zoom.scale()
@@ -170,37 +253,10 @@ class Visio.Figures.Map extends Visio.Figures.Base
     @zoomed()
 
 
-  filterTooltips: () =>
-    filtered = @filtered @collection
-    filteredCollection = new Visio.Collections.Plan filtered
-    for key, value of @views
-      id = value.model.id
-      if filteredCollection.get(id)?
-        value.show()
-        value.render(false)
-      else
-        value.hide()
-
   pan: (dx, dy) =>
     translate = @zoom.translate()
     @zoom.translate [translate[0] + dx, translate[1] + dy]
     @zoomed()
 
-  clearTooltips: =>
-    for key, value of @views
-      value.close()
-    @views = {}
-
   filtered: (collection) =>
-    selectedStrategies = _.chain(Visio.manager.get('selected_strategies'))
-      .keys().map((id) -> +id).value()
-
-    collection.filter (plan) ->
-      plan.get('year') == Visio.manager.year() and
-      plan.get('country') and
-      (_.isEmpty(selectedStrategies) or
-      _.every(selectedStrategies, (id) -> _.include(plan.get('strategy_ids'), id)))
-
-  refreshTooltips: ->
-    for key, value of @views
-      value.render(true)
+    collection.filter (o) -> o.get('country')?

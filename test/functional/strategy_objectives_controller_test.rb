@@ -15,13 +15,32 @@ class StrategyObjectivesControllerTest < ActionController::TestCase
     sign_in @user
   end
 
-  test 'Should get index' do
+  test 'Should get index of global SOs' do
+    so = StrategyObjective.first
+
+    s = Strategy.first
+    s.strategy_objectives << so
+    s.user_id = nil
+    s.save
+    so.save
+
+    StrategyObjective.index.refresh
+
     get :index
 
     assert_response :success
 
     so = JSON.parse(response.body)
-    assert_equal so.length, 2
+    assert_equal so.length, 1
+  end
+
+  test 'Should not get SOs without a global strategy' do
+    get :index
+
+    assert_response :success
+
+    so = JSON.parse(response.body)
+    assert_equal so.length, 0
   end
 
   test 'Should get index with where parameter' do
@@ -50,6 +69,16 @@ class StrategyObjectivesControllerTest < ActionController::TestCase
   test 'Search strategy objectives' do
 
     get :search, { :query => 'Boy' }
+
+    assert_response :success
+    json = JSON.parse(response.body)
+
+    assert_equal json.length, 1
+    assert_equal json[0]['id'].to_i, StrategyObjective.where(:name => 'Boys').first.id
+  end
+  test 'Search strategy objectives with quote' do
+
+    get :search, { :query => 'Boy"' }
 
     assert_response :success
     json = JSON.parse(response.body)

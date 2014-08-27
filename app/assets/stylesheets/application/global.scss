@@ -60,6 +60,18 @@
   padding-bottom: 100px;
 }
 
+.map-container {
+  position: relative;
+  .figure-bar {
+    padding-bottom: 0;
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    background: rgba(255,255,255, .6);
+  }
+}
+
 .figure, .legend-container {
   display: inline-block;
   vertical-align: top;
@@ -1330,6 +1342,38 @@ a {
 
 }
 
+.pin.pin-medium-small {
+  width: $pin-medium-small;
+  height: 2 * $pin-medium-small;
+
+  .pin-tip {
+    border-top: ($pin-medium-small / 2) solid transparent;
+    border-bottom: ($pin-medium-small / 2) solid transparent;
+    border-left: ($pin-medium-small / 2) solid $fail-dark;
+  }
+  .pin-body {
+    width: $pin-medium-small;
+    height: 1.5 * $pin-medium-small;
+  }
+
+}
+
+.pin.pin-small {
+  width: $pin-small;
+  height: 2 * $pin-small;
+
+  .pin-tip {
+    border-top: ($pin-small / 2) solid transparent;
+    border-bottom: ($pin-small / 2) solid transparent;
+    border-left: ($pin-small / 2) solid $fail-dark;
+  }
+  .pin-body {
+    width: $pin-small;
+    height: 1.5 * $pin-small;
+  }
+
+}
+
 .pin.pin-large {
   width: $pin-large;
   height: 2 * $pin-large;
@@ -1435,6 +1479,7 @@ a {
   .filter-options {
     margin-left: -$filter-system-margin;
     margin-right: -$filter-system-margin;
+    padding: 0 10px;
     margin-bottom: 28px;
     height: $header-height;
     border-bottom: $orange 1px solid;
@@ -2336,6 +2381,7 @@ a {
   padding-top: 0px;
   input {
     @include input-white;
+    background-color: $off-white;
     padding: 0px;
     width: 100%;
     padding-left: 10px;
@@ -2351,6 +2397,11 @@ a {
     display: block;
     text-align: center;
     font-size: 13px
+  }
+
+  .reset-filters:hover {
+    text-decoration: none;
+    color: $orange;
   }
 
   /* Special styles for these checkboxes... */
@@ -2535,7 +2586,6 @@ a {
   }
 
   .parameter-name {
-    text-transform: uppercase;
     padding-top: 2px;
     margin-top: 4px;
     color: $black;

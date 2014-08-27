@@ -61,6 +61,22 @@ class Visio.Collections.Parameter extends Visio.Collections.Syncable
     data = @selectedIndicatorData year, filters
     data.outputAchievement()
 
+  selectedPerformanceAchievement: (year, filters = null) ->
+    filters or= new Visio.Collections.FigureFilter()
+    filters.add { id: 'is_performance', filterType: 'radio', values: { true: true, false: false } },
+        { merge: true }
+
+    console.log filters.toJSON()
+
+    @selectedAchievement year, filters
+
+  selectedImpactAchievement: (year, filters = null) ->
+    filters or= new Visio.Collections.FigureFilter()
+    filters.add { id: 'is_performance', filterType: 'radio', values: { true: false, false: true } },
+        { merge: true }
+
+    @selectedAchievement year, filters
+
   selectedAchievement: (year, filters = null) ->
     data = @selectedIndicatorData year, filters
     data.achievement()

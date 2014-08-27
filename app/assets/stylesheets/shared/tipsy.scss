@@ -17,6 +17,11 @@
     padding-bottom: 6px;
   }
 
+  .header {
+    padding-top: 8px;
+    margin-bottom: -3px;
+  }
+
   .tipsy-number {
     @include tooltip-number;
   }

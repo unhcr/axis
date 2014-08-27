@@ -1,8 +1,12 @@
 class Visio.Models.Map extends Backbone.Model
 
   getMap: ->
+    return $.Deferred().resolve(@get('map')).promise() if @get('map')
+
     unless Visio.manager?.get('use_local_db')
-      return $.get('/map').done (record) => @set('map', record)
+      return $.get('/map').done (record) =>
+        @set('map', record)
+        record
 
     db = Visio.manager.get 'db'
 
@@ -14,6 +18,7 @@ class Visio.Models.Map extends Backbone.Model
     ).done((record) =>
       @set 'map', record
       db.put(Visio.Stores.MAP, record, @get('mapMD5'))
+      record
     )
 
   toJSON: ->

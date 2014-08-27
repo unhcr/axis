@@ -38,7 +38,7 @@ class Visio.Figures.Absy extends Visio.Figures.Base
           if @algorithm == 'selectedBudget'
             @xAxis.tickFormat Visio.Formats.SI_SIMPLE
           else
-            @xAxis.tickFormat Visio.Formats.PERCENT
+            @xAxis.tickFormat Visio.Formats.PERCENT_NOSIGN
           @render()
 
       }
@@ -301,7 +301,8 @@ class Visio.Figures.Absy extends Visio.Figures.Base
     # Generate legend view
     if @isPdf
       @legendView.collection = new @collection.constructor(_.filter(filtered, (d) => self.isSelected(d.id)))
-    @$el.find('.legend-container').html @legendView.render().el
+
+    @$el.find('.legend-container').html @legendView.render().el unless @isExport
 
     @$el.find('.point-container').tipsy()
 

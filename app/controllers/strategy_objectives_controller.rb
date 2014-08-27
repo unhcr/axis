@@ -1,11 +1,18 @@
 class StrategyObjectivesController < ApplicationController
   def index
-    render :json => StrategyObjective.where(params[:where]).all
+    results = nil
+    if params[:where].present? and params[:where][:strategy_id].present?
+      results = StrategyObjective.where(params[:where])
+    else
+      results = StrategyObjective.global_strategy_objectives.where(params[:where])
+    end
+
+    render :json => results
   end
 
   def search
     query = ''
-    query = params[:query] + '*' unless params[:query].nil? || params[:query].empty?
+    query = sanitize_query(params[:query]) + '*' unless params[:query].nil? || params[:query].empty?
     render :json => StrategyObjective.search_models(query)
   end
 

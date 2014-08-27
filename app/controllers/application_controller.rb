@@ -51,7 +51,7 @@ class ApplicationController < ActionController::Base
   def global_search
     query = ''
     if params[:query] && !params[:query].empty?
-      query = "*#{params[:query].split('').join('*')}*"
+      query = "#{sanitize_query(params[:query])}*"
     end
 
     render :json => {
@@ -118,6 +118,11 @@ class ApplicationController < ActionController::Base
     @personal_strategies ||= current_user.strategies.as_json
     @shared_strategies ||= current_user.shared_strategies.as_json
   end
+
+  protected
+    def sanitize_query(query)
+      query.sub '"', ''
+    end
 
   private
     def up?(server, port)

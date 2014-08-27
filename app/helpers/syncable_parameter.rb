@@ -17,7 +17,7 @@ module SyncableParameter
 
   def search
     query = ''
-    query = params[:query] + '*' unless params[:query].nil? || params[:query].empty?
+    query = sanitize_query(params[:query]) + '*' unless params[:query].nil? || params[:query].empty?
     render :json => resource.search_models(query)
   end
 

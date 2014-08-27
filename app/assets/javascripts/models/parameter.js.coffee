@@ -137,6 +137,20 @@ class Visio.Models.Parameter extends Visio.Models.Syncable
     data = @selectedIndicatorData(year, filters)
     data.achievement()
 
+  selectedPerformanceAchievement: (year, filters = null) ->
+    filters or= new Visio.Collections.FigureFilter()
+    filters.add { id: 'is_performance', filterType: 'radio', values: { true: true, false: false } },
+        { merge: true }
+
+    @selectedAchievement year, filters
+
+  selectedImpactAchievement: (year, filters = null) ->
+    filters or= new Visio.Collections.FigureFilter()
+    filters.add { id: 'is_performance', filterType: 'radio', values: { true: false, false: true } },
+        { merge: true }
+
+    @selectedAchievement year, filters
+
   selectedBudget: (year, filters = null) ->
     data = @selectedBudgetData(year, filters)
     data.amount()
