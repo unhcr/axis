@@ -46,11 +46,11 @@ class Visio.Views.SigninView extends Backbone.View
     window.location.href = '/'
 
   onFocus: (e) ->
-    $('body').addClass('ui-primary-dark-theme')
-    $('body').removeClass('ui-primary-theme')
+    #$('body').addClass('ui-primary-dark-theme')
+    #$('body').removeClass('ui-primary-theme')
 
   onBlur: (e) ->
-    $('body').addClass('ui-primary-theme')
-    $('body').removeClass('ui-primary-dark-theme')
+    #$('body').addClass('ui-primary-theme')
+    #$('body').removeClass('ui-primary-dark-theme')
 
 
