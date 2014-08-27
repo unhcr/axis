@@ -1,7 +1,8 @@
 module 'Map Model',
   setup: ->
     Visio.manager = new Visio.Models.Manager()
-    @map = new Visio.Models.Map({ mapMD5: 'abc123' })
+    Visio.mapMD5 = 'abc123'
+    @map = new Visio.Models.Map()
 
   teardown: ->
     Visio.manager.get('db').clear()
