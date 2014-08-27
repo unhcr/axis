@@ -60,6 +60,18 @@
   padding-bottom: 100px;
 }
 
+.map-container {
+  position: relative;
+  .figure-bar {
+    padding-bottom: 0;
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    background: rgba(255,255,255, .6);
+  }
+}
+
 .figure, .legend-container {
   display: inline-block;
   vertical-align: top;

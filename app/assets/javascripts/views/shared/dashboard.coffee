@@ -152,12 +152,7 @@ class Visio.Views.Dashboard extends Backbone.View
     @$el.find(".#{Visio.FigureTypes.ICSY.name}-selected-count-#{@cid}").text result.total
 
   drawAchievements: =>
-    filters = new Visio.Collections.FigureFilter [{
-        id: 'is_performance'
-        filterType: 'radio'
-        values: { true: false, false: true }
-      }]
-    result = @parameter.selectedAchievement Visio.manager.year(), filters
+    result = @parameter.selectedImpactAchievement()
     @barFigures[Visio.FigureTypes.PASY.name].modelFn new Backbone.Model result
     @barFigures[Visio.FigureTypes.PASY.name].render()
 

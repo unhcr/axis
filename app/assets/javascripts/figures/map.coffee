@@ -34,13 +34,21 @@ class Visio.Figures.Map extends Visio.Figures.Base
       .projection(@projection)
 
     start = d3.rgb('#fff')
-    end = d3.rgb('#000')
+    end = d3.rgb('rgb(253, 52, 156)')
     @i = d3.interpolate start, end
 
     @scale = d3.scale.linear()
       .range([0, 1])
 
-    @algorithm = 'selectedBudget'
+    @category = d3.scale.ordinal()
+      .domain([
+        Visio.Algorithms.ALGO_RESULTS.fail,
+        Visio.Algorithms.ALGO_RESULTS.ok,
+        Visio.Algorithms.ALGO_RESULTS.success,
+        Visio.Algorithms.STATUS.missing
+      ])
+      .range(['#c6302a', 'rgb(242, 211, 25)', 'rgb(70, 190, 30)', 'rgb(133, 135, 134)'])
+
     @filters = new Visio.Collections.FigureFilter([
       {
         id: 'algorithm'
@@ -48,16 +56,19 @@ class Visio.Figures.Map extends Visio.Figures.Base
         values: {
           selectedBudget: true,
           selectedExpenditureRate: false
+          selectedSituationAnalysis: false
+          selectedPerformanceAchievement: false
+          selectedImpactAchievement: false
         }
-        human: { selectedExpenditureRate: 'Expenditure Rate', selectedBudget: 'Budget' }
+        human: {
+          selectedExpenditureRate: 'Expenditure Rate',
+          selectedBudget: 'Budget'
+          selectedSituationAnalysis: 'Impact Criticality'
+          selectedPerformanceAchievement: 'Performance Achievement'
+          selectedImpactAchievement: 'Impact Achievement'
+        }
         callback: (name, attr) =>
-          @algorithm = name
-          if @algorithm == 'selectedBudget'
-            @xAxis.tickFormat Visio.Formats.SI_SIMPLE
-          else
-            @xAxis.tickFormat Visio.Formats.PERCENT_NOSIGN
           @render()
-
       }
 
     ])
@@ -88,9 +99,12 @@ class Visio.Figures.Map extends Visio.Figures.Base
 
     self = @
 
+    algorithm = @filters.get('algorithm').active()
 
     filtered = @filtered @collection
-    @scale.domain [0, d3.max(filtered, (d) => d[@algorithm]())]
+    @scale.domain @algorithmDomain(filtered) unless algorithm == 'selectedSituationAnalysis'
+
+    console.log @scale.domain()
     @model.getMap().done (map) =>
       features = topojson.feature(map, map.objects.world_50m).features
 
@@ -104,16 +118,24 @@ class Visio.Figures.Map extends Visio.Figures.Base
         ['country', d.properties.adm0_a3].join(' ')
         )
         .attr('d', @path)
+        .on('click', (d) ->
+          d3.select(self.el).selectAll('.country.active').classed 'active', false
+        )
+
+      world
+        .transition()
+        .duration(Visio.Durations.FAST)
         .style('fill', (d) ->
           operation = _.find filtered, (o) -> o.get('country').iso3 == d.properties.adm0_a3
           return unless operation
 
-          value = operation[self.algorithm]()
-          console.log(self.i self.scale(value))
-          self.i self.scale(value)
-        )
-        .on('click', (d) ->
-          d3.select(self.el).selectAll('.country.active').classed 'active', false
+          value = self.algorithmValue(operation)
+
+          switch algorithm
+            when 'selectedSituationAnalysis'
+              return self.category value
+            else
+              return self.i self.scale(value)
         )
 
     #centers = @g.selectAll('.center')
@@ -140,6 +162,29 @@ class Visio.Figures.Map extends Visio.Figures.Base
     #@filterTooltips()
 
     @
+
+  algorithmValue: (operation) ->
+    algorithm = @filters.get('algorithm').active()
+    switch algorithm
+      when 'selectedSituationAnalysis'
+        value = operation[algorithm]()
+        value.category
+      when 'selectedImpactAchievement', 'selectedPerformanceAchievement'
+        value = operation[algorithm]()
+        value.result
+      else
+        value = operation[algorithm]()
+
+  algorithmDomain: (filtered) ->
+    algorithm = @filters.get('algorithm').active()
+    switch algorithm
+      when 'selectedSituationAnalysis'
+        # Have to use a different scale for this one anyways
+        console.log 'noop'
+      when 'selectedImpactAchievement', 'selectedPerformanceAchievement', 'selectedExpenditureRate'
+        [0, 1]
+      else
+        [0, d3.max(filtered, (d) => @algorithmValue(d))]
 
   zoomed: =>
     scale = if d3.event && d3.event.scale then d3.event.scale else @zoom.scale()
