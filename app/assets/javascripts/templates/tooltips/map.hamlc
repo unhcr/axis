@@ -1,0 +1,13 @@
+%div
+  .header
+    = context.operation.toString()
+
+  .divider.divider-dark-gray
+
+  .row
+    .col-xs-12
+      = context.label
+  .row
+    .col-xs-12.tipsy-number
+      = context.value
+

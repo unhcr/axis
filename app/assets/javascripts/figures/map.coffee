@@ -6,13 +6,13 @@ class Visio.Figures.Map extends Visio.Figures.Base
 
   className: 'map-container'
 
+  templateTooltip: HAML['tooltips/map']
+
   initialize: (config) ->
 
     super config
 
     @scale = 400
-
-    @views = {}
 
     @collection or= new Visio.Collections.Operation()
     @zoomMax = 2.2
@@ -80,14 +80,6 @@ class Visio.Figures.Map extends Visio.Figures.Base
       }
 
     ])
-    #@g.append('rect')
-    #  .attr('x', 0)
-    #  .attr('y', 0)
-    #  .attr('width', @adjustedWidth)
-    #  .attr('height', @adjustedHeight)
-    #  .attr('class', 'background-rect')
-
-    expanded = null
 
     @zoomStep = .4
 
@@ -112,7 +104,6 @@ class Visio.Figures.Map extends Visio.Figures.Base
     filtered = @filtered @collection
     @scale.domain @algorithmDomain(filtered) unless algorithm == 'selectedSituationAnalysis'
 
-    console.log @scale.domain()
     @model.getMap().done (map) =>
       features = topojson.feature(map, map.objects.world_50m).features
 
@@ -126,9 +117,14 @@ class Visio.Figures.Map extends Visio.Figures.Base
         ['country', d.properties.adm0_a3].join(' ')
         )
         .attr('d', @path)
-        .on('click', (d) ->
-          d3.select(self.el).selectAll('.country.active').classed 'active', false
-        )
+        .on('mouseenter', (d) ->
+          operation = _.find filtered, (o) -> o.get('country').iso3 == d.properties.adm0_a3
+          return unless operation
+          self.$el.find(".center.#{operation.get('country').iso3}").tipsy('show'))
+        .on('mouseout', (d) ->
+          operation = _.find filtered, (o) -> o.get('country').iso3 == d.properties.adm0_a3
+          return unless operation
+          self.$el.find(".center.#{operation.get('country').iso3}").tipsy('hide'))
 
       world
         .transition()
@@ -146,29 +142,40 @@ class Visio.Figures.Map extends Visio.Figures.Base
               return self.i self.scale(value)
         )
 
-    #centers = @g.selectAll('.center')
-    #  .data(filtered, (d) -> d.id)
+    centers = @g.selectAll('.center')
+      .data(filtered, (d) -> d.id)
 
-    #centers.enter().append 'circle'
+    centers.enter().append 'circle'
 
-    #centers.attr('class', (d) ->
-    #  classList = ['center', d.get('country').iso3, 'transparent']
-    #  classList.join(' '))
-    #  .attr('cx', (d) =>
-    #    return @projection([d.get('country').latlng[1], d.get('country').latlng[0]])[0]
-    #  )
-    #  .attr('cy', (d) =>
-    #    return @projection([d.get('country').latlng[1], d.get('country').latlng[0]])[1]
-    #  )
-    #  .attr('r', 3)
-    #  .each((d) ->
-    #    unless self.views[d.get('country').iso3]
-    #      self.views[d.get('country').iso3] = new Visio.Views.MapTooltipView({
-    #        map: self, model: d, point: @ })
-    #  )
+    centers.attr('class', (d) ->
+      classList = ['center', d.get('country').iso3, 'transparent']
+      classList.join(' '))
+      .attr('cx', (d) =>
+        return @projection([d.get('country').latlng[1], d.get('country').latlng[0]])[0]
+      )
+      .attr('cy', (d) =>
+        return @projection([d.get('country').latlng[1], d.get('country').latlng[0]])[1]
+      )
+      .attr('r', 3)
+      .attr('original-title', (d) =>
+        label = @filters.get('algorithm').get('human')[algorithm]
+        value = @algorithmValue(d)
 
-    #@filterTooltips()
+        formatted = switch algorithm
+          when 'selectedExpenditureRate', 'selectedPerformanceAchievement', 'selectedImpactAchievement'
+            Visio.Formats.PERCENT value
+          when 'selectedBudget'
+            Visio.Formats.MONEY value
+          when 'selectedSituationAnalysis'
+            Visio.Utils.humanMetric(value)
 
+        @templateTooltip
+          operation: d
+          label: label
+          value: formatted
+      )
+
+    @$el.find('.center').tipsy()
     @
 
   algorithmValue: (operation) ->
