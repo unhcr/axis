@@ -2381,6 +2381,7 @@ a {
   padding-top: 0px;
   input {
     @include input-white;
+    background-color: $off-white;
     padding: 0px;
     width: 100%;
     padding-left: 10px;
