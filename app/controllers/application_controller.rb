@@ -29,10 +29,6 @@ class ApplicationController < ActionController::Base
         :value => Operation.count
       },
       {
-        :name => 'Number of GSP Indicators',
-        :value => Indicator.where(:is_gsp => true).count
-      },
-      {
         :name => 'Number of Axis users',
         :value => User.count
       },

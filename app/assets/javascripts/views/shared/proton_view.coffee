@@ -5,8 +5,9 @@ class Visio.Views.ProtonView extends Backbone.View
   # Selectors
   dataVisLabelSe: '.data-vis-label'
 
-  intervalTime: 5500
-  explodeTime: 1200
+  intervalTime: 7500
+  explodeTime: 800
+  nParticles: 15000
 
   initialize: (options) ->
     @rootIndex = 0
@@ -29,7 +30,7 @@ class Visio.Views.ProtonView extends Backbone.View
     @intervalId = null
 
     # setRate
-    @emitter.rate = new Proton.Rate(new Proton.Span(15000), new Proton.Span(0.1))
+    @emitter.rate = new Proton.Rate(new Proton.Span(@nParticles), new Proton.Span(0.1))
 
     @emitter.addInitialize(new Proton.Position(new Proton.PointZone(0, 0)))
     @emitter.addInitialize(new Proton.Radius(1))
@@ -48,7 +49,7 @@ class Visio.Views.ProtonView extends Backbone.View
     }, 0, 0)
 
     @emitter.addBehaviour(@customToZoneBehaviour(@zones))
-    @emitter.addBehaviour(new Proton.Color(['#000000']))
+    @emitter.addBehaviour(new Proton.Color(['#3a3a3a', '#000000']))
     @emitter.addBehaviour(@attractionBehaviour)
 
     @randomBehaviour.reset(30, 30, 0.001)
@@ -91,7 +92,7 @@ class Visio.Views.ProtonView extends Backbone.View
     @rect = new Proton.Rectangle 0, 0, @canvas[0].width, @canvas[0].height
 
     @context.font = "150px helvetica"
-    @context.fillStyle = "#FF0000"
+    @context.fillStyle = "rgb(229, 86, 28)"
 
     _.each @stats, (stat) =>
       @context.fillText stat.value, 60, 225
