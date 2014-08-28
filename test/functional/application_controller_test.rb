@@ -25,7 +25,7 @@ class ApplicationControllerTest < ActionController::TestCase
 
     assert_response :success
     assert_template :splash
-    assert_template layout: "layouts/application"
+    assert_template layout: "layouts/splash"
   end
 
   test 'A signed in user should be redirected to navigation page' do
