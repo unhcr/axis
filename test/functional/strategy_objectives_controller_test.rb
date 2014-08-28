@@ -26,7 +26,7 @@ class StrategyObjectivesControllerTest < ActionController::TestCase
 
     StrategyObjective.index.refresh
 
-    get :index
+    get :index, { :global_only => true }
 
     assert_response :success
 
@@ -35,7 +35,7 @@ class StrategyObjectivesControllerTest < ActionController::TestCase
   end
 
   test 'Should not get SOs without a global strategy' do
-    get :index
+    get :index, { :global_only => true }
 
     assert_response :success
 

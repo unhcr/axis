@@ -31,7 +31,7 @@ class Visio.Routers.IndicatorRouter extends Visio.Routers.DashboardRouter
     $.when(Visio.manager.get('ppgs').fetchSynced(options),
            Visio.manager.get('goals').fetchSynced(options),
            Visio.manager.get('outputs').fetchSynced(options),
-           Visio.manager.get('strategy_objectives').fetch()
+           Visio.manager.get('strategy_objectives').fetch({ data: { global_only: true } })
            Visio.manager.get('problem_objectives').fetchSynced(options),
            Visio.manager.get('operations').fetchSynced(options),
            Visio.manager.get('expenditures').fetchSynced(dataOptionsExpBudget),
