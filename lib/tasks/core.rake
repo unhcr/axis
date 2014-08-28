@@ -123,6 +123,15 @@ task :build => :environment do
   fm.save
 end
 
+task :reindex => :environment do
+  indexes = [Operation, Ppg, Goal, Output, StrategyObjective, ProblemObjective, Indicator]
+
+  indexes.each do |i|
+    i.index.delete
+    i.index.import i.all
+  end
+end
+
 task :warm_cache => :environment do
   extend WarmCache
 
