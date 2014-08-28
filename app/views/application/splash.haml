@@ -1,11 +1,14 @@
-
-.signin.session-container
-.signup.session-container
+.data-vis-container
+.signin
 
 :javascript
   $(document).ready(function() {
 
-    Visio.router = new Visio.Routers.SplashRouter();
+
+    Visio.router = new Visio.Routers.SplashRouter({
+      stats: #{@stats.to_json.html_safe}
+    });
     Backbone.history.start();
+
 
   });

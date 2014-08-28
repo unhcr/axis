@@ -400,17 +400,82 @@ body.layout-cms {
   }
 }
 
+.signin header {
+  span {
+    line-height: 37px;
+    padding-left: 8px;
+  }
+  .logo {
+    vertical-align: bottom;
+    background-position: center bottom;
+  }
+}
+
 body.layout-application {
   @include text-theme-two;
 
   margin-top: $header-height;
-
 }
 
 body.splash {
+  @include text-theme-splash;
   header {
-    border-bottom: none;
+    height: $sp-header-height;
   }
+
+  .content {
+    min-width: 900px;
+  }
+
+  input {
+    @include input-white;
+    width: 430px;
+    height: $sp-input-height;
+    padding-left: 48px;
+    display: inline-block;
+  }
+
+  #login {
+    margin-right: 20px;
+  }
+
+  #password {
+    border-right: none;
+  }
+
+  button {
+    margin-left: -3px;
+    height: $sp-input-height;
+    width: $sp-input-height;
+    background-color: white;
+    border: $light-gray 1px solid;
+    display: inline-block;
+    outline: none;
+  }
+  button:hover {
+    background-color: $primary;
+    color: $white;
+  }
+
+}
+.welcome-container {
+  max-width: 600px;
+  margin-top: 285px
+}
+.data-vis-container {
+  position: relative;
+}
+#data-vis {
+  position: absolute;
+  top: 0;
+  left: -$page-margin;
+  z-index: -1;
+}
+.data-vis-label {
+  position: absolute;
+  top: 290px;
+  font-size: 18px;
+  color: $black;
 }
 
 header {
@@ -686,7 +751,6 @@ h5 {
 
 .logo {
   background-image: url(/assets/AXIS-LOGO-ORANGE.png);
-  background-size: $header-height;
   height: $header-height;
   display: inline-block;
   background-repeat: no-repeat;
