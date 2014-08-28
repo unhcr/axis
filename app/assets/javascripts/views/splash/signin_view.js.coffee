@@ -18,8 +18,8 @@ class Visio.Views.SigninView extends Backbone.View
     e.preventDefault()
     e.stopPropagation()
 
-    $login = @$el.find('.login')
-    $password = @$el.find('.password')
+    $login = @$el.find('#login')
+    $password = @$el.find('#password')
 
     login = $login.val()
     password = $password.val()

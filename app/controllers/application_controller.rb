@@ -41,7 +41,7 @@ class ApplicationController < ActionController::Base
         :value => 'Priceless'
       }
     ]
-    render :layout => 'index' and return
+    render :layout => 'splash'
   end
 
   def create_guest_user

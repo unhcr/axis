@@ -2,6 +2,12 @@ class Visio.Views.ProtonView extends Backbone.View
 
   template: HAML['shared/proton']
 
+  # Selectors
+  dataVisLabelSe: '.data-vis-label'
+
+  intervalTime: 5500
+  explodeTime: 1200
+
   initialize: (options) ->
     @rootIndex = 0
     @mouseObj
@@ -62,12 +68,14 @@ class Visio.Views.ProtonView extends Backbone.View
       @contain = true
       @rootIndex += 1
       @setLabel()
+      @$el.find(@dataVisLabelSe).fadeIn(@explodeTime + 20)
 
-    window.setTimeout fn, 1200
+    window.setTimeout fn, @explodeTime
+    @$el.find(@dataVisLabelSe).fadeOut(@explodeTime + 20)
 
   setLabel: =>
     stat = @stats[@rootIndex % @stats.length]
-    @$el.find('.data-vis-label').text stat.name
+    @$el.find(@dataVisLabelSe).text stat.name
 
   render: ->
     @$el.html @template
@@ -95,7 +103,7 @@ class Visio.Views.ProtonView extends Backbone.View
     @tick()
 
     window.clearInterval @intervalId
-    window.setInterval @next, 7500
+    window.setInterval @next, @intervalTime
     @
 
 
