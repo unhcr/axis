@@ -52,7 +52,12 @@ class ApplicationController < ActionController::Base
 
   def indicator
     @indicator = Indicator.find params[:indicator_id]
-    @dashboard = @indicator.outputs.first || @indicator.problem_objectives.first
+    @dashboard = nil
+    if @indicator.is_performance
+      @dashboard = @indicator.outputs.first
+    else
+      @dashboard = @indicator.problem_objectives.first
+    end
     render :layout => 'dashboard'
   end
 

@@ -1,11 +1,8 @@
 class StrategyObjectivesController < ApplicationController
   def index
-    results = nil
-    if params[:where].present? and params[:where][:strategy_id].present?
-      results = StrategyObjective.where(params[:where])
-    else
-      results = StrategyObjective.global_strategy_objectives.where(params[:where])
-    end
+    results = StrategyObjective
+    results = results.global_strategy_objectives if params[:global_only].present?
+    results = results.where(params[:where])
 
     render :json => results
   end
