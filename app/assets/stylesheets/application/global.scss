@@ -2640,12 +2640,6 @@ a {
       background-color: inherit;
     }
 
-    .ui-tab-radio  label {
-      @include transition-property(background-color, box-shadow);
-      @include transition-duration($fast-transition);
-      @include transition-timing-function(ease-in);
-    }
-
   }
 
   .parameter-slide:hover {

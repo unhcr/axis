@@ -15,7 +15,7 @@ window.Visio =
     # Indicator Criticality Multiple Year
     ICMY:
       className: 'Icmy'
-      human: 'Impact Criticality over time'
+      human: 'Impact Criticality vs Time'
       name: 'icmy'
     # Indicator Criticality Single Year
     ICSY:
@@ -23,6 +23,12 @@ window.Visio =
       human: 'Impact Criticality single year'
       name: 'icsy'
       description: 'Achievement of Standard'
+    # Performance Achievement Single Year
+    IASY:
+      className: 'Pasy'
+      human: 'Impact Achievement single year'
+      name: 'iasy'
+      description: 'Achievement of Target'
     # Performance Achievement Single Year
     PASY:
       className: 'Pasy'
