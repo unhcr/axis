@@ -7,8 +7,6 @@
     = javascript_include_tag "application"
     = csrf_meta_tags
 %body.ui-invert-theme{ :class => "#{controller.action_name} layout-index" }
-  #filter-system.gone
-  %header#header
   .page.container-fluid
 
     :javascript
@@ -16,4 +14,8 @@
       window.Visio.env = "#{Rails.env}"
       window.Visio.configuration = #{@configuration.to_json.html_safe}
     .content
+      %header.minimal
+        .logo
+        %span Visualize. Analyze. Monitor
+      .divider.divider-full.divider-dark-gray.zero-padding
       = yield

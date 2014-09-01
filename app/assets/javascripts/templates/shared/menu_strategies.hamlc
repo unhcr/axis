@@ -1,0 +1,20 @@
+%h3 Priority Strategies
+
+- _.each context.strategies, (strategy) ->
+  %a{:href => "/overview/#{strategy.id}"}
+    = strategy.name
+
+.divider.divider-light-gray
+
+%h3 My Strategies
+- _.each context.personalStrategies, (strategy) ->
+  %a{:href => "/overview/#{strategy.id}"}
+    = strategy.name
+
+.divider.divider-light-gray
+
+%h3 Shared Strategies
+- _.each context.sharedStrategies, (strategy) ->
+  %a{:href => "/overview/#{strategy.id}"}
+    = strategy.name
+

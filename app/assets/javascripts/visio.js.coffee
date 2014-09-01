@@ -122,6 +122,9 @@ window.Visio =
     CMS:
       TEXTAREA_MAXLEN: 900
 
+  Texts:
+    STRATEGY_DESC: 'Global or Regional Strategies are defined by focal points in HQ or RO. The visualizations in the dashboads'
+
   Stores:
     MAP: 'map'
     SYNC: 'sync_date'

@@ -158,7 +158,6 @@ class Visio.Views.Dashboard extends Backbone.View
 
   drawPerformanceAchievements: =>
     result = @parameter.selectedPerformanceAchievement()
-    console.log result
     @barFigures[Visio.FigureTypes.PASY.name].modelFn new Backbone.Model result
     @barFigures[Visio.FigureTypes.PASY.name].render()
 

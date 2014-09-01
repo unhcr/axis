@@ -40,6 +40,9 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
         id: 'scenarios-budgets'
         filterType: 'checkbox'
         values: _.object(_.values(Visio.Scenarios), _.values(Visio.Scenarios).map(-> true))
+        human:
+          'Above Operating Level': 'Budget AOL'
+          'Operating Level': 'Budget OL'
         callback: (name, attr) =>
           @render()
       },
@@ -47,6 +50,9 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
         id: 'scenarios-expenditures'
         filterType: 'checkbox'
         values: scenarioExpenditures
+        human:
+          'Above Operating Level': 'Expenditure AOL'
+          'Operating Level': 'Expenditure OL'
         callback: (name, attr) =>
           @render()
       }

@@ -15,8 +15,6 @@ class Visio.Routers.GlobalRouter extends Backbone.Router
       trigger: 'manual' # how tooltip is triggered - hover | focus | manual
 
     @headerView = new Visio.Views.Header({ el: $('header') })
-    @menuView = new Visio.Views.MenuView()
-    $('body').append @menuView.el
 
     @searchView = new Visio.Views.SearchView({
       el: $('#global-search')

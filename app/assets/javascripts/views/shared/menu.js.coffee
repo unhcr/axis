@@ -1,31 +1,58 @@
 class Visio.Views.MenuView extends Backbone.View
 
   template: HAML['shared/menu']
+  templateStrategies: HAML['shared/menu_strategies']
+  templatePages: HAML['shared/menu_pages']
+  templatePageList: HAML['shared/filter_system/page_list']
 
-  className: 'container full-width menu gone overlay'
-
-  hiddenClass: 'gone'
+  tabs: [
+    { type: 'strategies', human: 'Strategies', fn: 'renderStrategies' },
+    { type: 'operations', human: 'Operations', fn: 'renderPages' },
+    { type: 'indicators', human: 'Indicators', fn: 'renderPages' },
+  ]
 
   initialize: (options) ->
+    @tab = @tabs[0]
+    @operations = new Visio.Collections.Operation()
+    @indicators = new Visio.Collections.Indicator()
     @render()
 
   render: () ->
-    @$el.html @template({
+    @$el.html @template
+      tabs: @tabs
+      tab: @tab
+
+    @[@tab.fn]()
+
+    @
+
+  events:
+    'click .menu-tab': 'onClickMenuTab'
+
+  renderStrategies: ->
+    @$el.find('.menu-content').html @templateStrategies
       strategies: Visio.manager.strategies().toJSON()
       personalStrategies: Visio.manager.personalStrategies().toJSON()
       sharedStrategies: Visio.manager.sharedStrategies().toJSON()
-    })
-    @$el.css('top', $('header section').height())
-    @
 
-  show: () ->
-    @$el.removeClass(@hiddenClass)
-    $('body').removeClass('ui-invert-theme').addClass('ui-orange-theme')
+  renderPages: ->
 
-  hide: () ->
-    @$el.addClass(@hiddenClass)
-    $('body').removeClass('ui-orange-theme').addClass('ui-invert-theme')
+    if @[@tab.type].length > 0
+      @$el.find('.menu-content').html @templatePageList
+        models: @[@tab.type].models
+    else
+      NProgress.start()
+      @[@tab.type].fetch().done =>
+        @$el.find('.menu-content').html @templatePageList
+          models: @[@tab.type].models
+        NProgress.done()
 
-  isHidden: () ->
-    @$el.hasClass(@hiddenClass)
+  onClickMenuTab: (e) =>
+    type = $(e.currentTarget).data().tab
 
+    tab = _.find @tabs, (t) -> t.type == type
+
+    @tab = tab
+    @$el.find('.menu-tab').removeClass 'selected'
+    $(e.currentTarget).addClass 'selected'
+    @[tab.fn]()
