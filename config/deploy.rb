@@ -12,7 +12,7 @@ load 'deploy/assets'
 set :rbenv_ruby_version, "2.0.0-p353"
 set :rbenv_repository, "https://github.com/sstephenson/rbenv.git"
 set :bundle_flags, "--deployment --quiet --binstubs"
-set :keep_releases, 10
+set :keep_releases, 5
 set :default_stage, 'staging'
 
 set :application, "visio"
@@ -78,6 +78,7 @@ end
 
 after "deploy:update_code", "deploy:config"
 after "deploy:finalize_update", "db:config"
+after "deploy:restart", "deploy:cleanup"
 after "deploy", "deploy:migrate"
 after "deploy", "whenever:clear_crontab"
 after "deploy", "resque:restart"
