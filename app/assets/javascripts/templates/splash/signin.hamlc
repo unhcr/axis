@@ -15,10 +15,12 @@
       %h6
         Let's get started.
 
-      %label.sr-only{ :for => "login" }
-      %input#login{ :type => 'text', :name => 'login', :placeholder => 'Your UNHCR email address' }
-      %label.sr-only{ :for => "password" }
-      %input#password{ :type => 'password', :name => 'password', :placeholder => 'Password' }
+      .input-group
+        %label.sr-only{ :for => "login" }
+        %input#login{ :type => 'text', :name => 'login', :placeholder => 'Your UNHCR email address' }
+      .input-group.input-key
+        %label.sr-only{ :for => "password" }
+        %input#password{ :type => 'password', :name => 'password', :placeholder => 'Password' }
 
       %button.signin{ :type => 'submit' } GO.
   - else

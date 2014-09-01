@@ -435,6 +435,34 @@ body.splash {
     display: inline-block;
   }
 
+  .input-group {
+    display: inline-block;
+    position: relative;
+  }
+
+  .input-group:before {
+    content: '@';
+    display: block;
+    position: absolute;
+    width: 48px;
+    height: $sp-input-height;
+    line-height: $sp-input-height;
+    text-align: center;
+    top: 0;
+    font-size: 20px;
+    bottom: 0;
+    opacity: .65;
+    color: $black;
+  }
+
+  .input-key:before {
+    content: '';
+    background-image: url("/assets/icons/key.png");
+    background-position: center;
+    background-size: 20px;
+    background-repeat: no-repeat;
+  }
+
   #login {
     margin-right: 20px;
   }
@@ -444,7 +472,7 @@ body.splash {
   }
 
   button {
-    margin-left: -3px;
+    margin-left: -2px;
     height: $sp-input-height;
     width: $sp-input-height;
     background-color: white;
@@ -3044,6 +3072,7 @@ a {
 .login-container {
   padding-left: 2px;
   padding-right: 2px;
+
 }
 
 .strategies {
