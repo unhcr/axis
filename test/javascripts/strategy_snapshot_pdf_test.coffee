@@ -53,7 +53,6 @@ test 'render', ->
   ok view.parameterSlider.isPdf
 
   strictEqual view.$el.find('.bar-figure').length, 3
-  strictEqual view.$el.find('.svg-pasy-figure').length, count
-  strictEqual view.$el.find('.svg-oasy-figure').length, count
-  strictEqual view.$el.find('.svg-icsy-figure').length, count
+  strictEqual view.$el.find('.svg-pasy-figure').length, 2*count, 'Should have correct count of PASY'
+  strictEqual view.$el.find('.svg-icsy-figure').length, count, 'Should have correct count of ICSY'
 
