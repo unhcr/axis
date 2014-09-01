@@ -11,7 +11,9 @@
           .menu-tab{ :data => { :tab => "#{tab.type}" }, :class => 'selected' if tab.type == context.tab.type }
             = tab.human
     .col-md-9
-      .menu-content
+      .menu-content-container
+        %h3.menu-title
+        .menu-content
 
 
 

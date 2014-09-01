@@ -2,7 +2,6 @@ class Visio.Views.MenuView extends Backbone.View
 
   template: HAML['shared/menu']
   templateStrategies: HAML['shared/menu_strategies']
-  templatePages: HAML['shared/menu_pages']
   templatePageList: HAML['shared/filter_system/page_list']
 
   tabs: [
@@ -30,12 +29,15 @@ class Visio.Views.MenuView extends Backbone.View
     'click .menu-tab': 'onClickMenuTab'
 
   renderStrategies: ->
+    @$el.find('.menu-title').text ''
     @$el.find('.menu-content').html @templateStrategies
       strategies: Visio.manager.strategies().toJSON()
       personalStrategies: Visio.manager.personalStrategies().toJSON()
       sharedStrategies: Visio.manager.sharedStrategies().toJSON()
 
   renderPages: ->
+
+    @$el.find('.menu-title').text @tab.human
 
     if @[@tab.type].length > 0
       @$el.find('.menu-content').html @templatePageList

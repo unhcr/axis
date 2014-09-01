@@ -490,7 +490,7 @@ body.index {
   header {
     height: $sp-header-height;
   }
-  .menu-container {
+  .menu {
     a {
       display: block;
       color: $dark-gray;
@@ -502,9 +502,17 @@ body.index {
     }
   }
 
-  .menu-tabs, .menu-content {
+  .menu-tabs , .menu-content-container {
     border-top: 2px solid $black;
     padding-top: 28px;
+  }
+
+  .menu-content-container {
+    padding-top: 8px;
+
+    .divider {
+      margin-top: 22px
+    }
   }
 
   .menu-tab {
