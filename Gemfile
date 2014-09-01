@@ -52,6 +52,7 @@ end
 
 group :development, :test do
   # gem 'query_reviewer'
+  gem 'oink'
   gem 'quiet_assets'
   gem 'capistrano', '~> 2.15.5'
   gem 'capistrano-rbenv', '~> 1.0.5'
