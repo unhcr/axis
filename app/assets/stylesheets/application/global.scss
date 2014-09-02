@@ -395,12 +395,14 @@ body.layout-cms {
     padding-left: 8px;
     padding-right: 8px;
     color: white;
+    font-weight: 300;
   }
   .account-option a {
     color: white;
   }
 
   .account-option.login {
+    font-weight: normal;
     cursor: default;
   }
 }
