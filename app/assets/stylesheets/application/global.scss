@@ -377,6 +377,7 @@ body.layout-cms {
 
 .settings {
   display: inline-block;
+  cursor: default;
 
   .account-options {
     @include transition-property(all);
@@ -386,7 +387,6 @@ body.layout-cms {
     max-width: 0px;
     overflow: hidden;
     line-height: 1em;
-    cursor: default;
     padding-left: 14px;
   }
   .account-option {
@@ -399,6 +399,10 @@ body.layout-cms {
   }
   .account-option a {
     color: white;
+  }
+  .account-option a:hover {
+    color: $orange;
+    text-decoration: none;
   }
 
   .account-option.login {
