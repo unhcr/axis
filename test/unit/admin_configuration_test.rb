@@ -2,6 +2,7 @@ require 'test_helper'
 
 class AdminConfigurationTest < ActiveSupport::TestCase
   def setup
+    AdminConfiguration.delete_all
   end
 
   test "Should only be able to create 1 admin configuration" do
