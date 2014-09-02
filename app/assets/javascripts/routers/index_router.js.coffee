@@ -1,8 +1,11 @@
-class Visio.Routers.IndexRouter extends Visio.Routers.GlobalRouter
+class Visio.Routers.IndexRouter extends Backbone.Router
 
   initialize: (options) ->
     super
     height = $(window).height() - $('header').height()
+
+    @menuView = new Visio.Views.MenuView
+      el: $('.menu-container')
 
     @setup()
 
@@ -15,22 +18,4 @@ class Visio.Routers.IndexRouter extends Visio.Routers.GlobalRouter
     console.log 'index'
 
   setup: =>
-
-    options =
-      where:
-        year: Visio.manager.year()
-      options:
-        include:
-          counts: true
-          situation_analysis: true
-    #NProgress.start()
-    #@map.getMap().done( =>
-    #  @filterView = new Visio.Views.MapFilterView()
-    #  @map.render()
-
-    #  Visio.manager.get('plans').fetchSynced(options).done =>
-    #    @map.collectionFn new Visio.Collections.Plan(Visio.manager.get('plans').filter (plan) ->
-    #      plan.get('year') == Visio.manager.year())
-    #    @map.render()
     Visio.manager.set 'setup', true
-    #    NProgress.done())

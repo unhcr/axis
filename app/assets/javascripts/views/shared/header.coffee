@@ -69,6 +69,11 @@ class Visio.Views.Header extends Backbone.View
     @$el.html @template
       menuOptions: @menuOptions
 
+    @settings?.close()
+    @settings = new Visio.Views.Settings
+      model: Visio.user
+    @$el.find('.user-account').html @settings.render().el
+
     @$el.removeClass 'breadcrumb'
     open = if @filterSystem? then @filterSystem.isOpen() else false
     d3.select(@el).classed 'filter-open', open

@@ -1,0 +1,15 @@
+.account-options
+  .account-option.login
+    = @model.get 'login'
+
+  - if @model.isAdmin()
+    .account-option
+      %a{ :href => '/cms/strategies' } CMS
+    .account-option
+      %a{ :href => '/admin_configuration' } Config
+
+  .account-option
+    %a{ :href => '/users/sign_out', :data => { :method => 'delete' }, :rel => 'nofollow' } Sign Out
+
+.icon.gear-icon
+

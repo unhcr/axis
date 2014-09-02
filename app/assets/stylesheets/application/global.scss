@@ -68,7 +68,7 @@
     left: 0;
     right: 0;
     z-index: 10;
-    background: rgba(255,255,255, .6);
+    background: rgba(255,255,255, .75);
   }
 }
 
@@ -186,10 +186,6 @@ p.small {
   color: $primary;
 
   .highlight {
-    color: $primary-light;
-  }
-
-  a {
     color: $primary-light;
   }
 
@@ -379,6 +375,49 @@ body.layout-cms {
 
 }
 
+.settings {
+  display: inline-block;
+
+  .account-options {
+    @include transition-property(all);
+    @include transition-duration($very-fast-transition);
+    @include transition-timing-function(ease-in);
+    display: inline-block;
+    max-width: 0px;
+    overflow: hidden;
+    line-height: 1em;
+    cursor: default;
+    padding-left: 14px;
+  }
+  .account-option {
+    display: inline-block;
+    cursor: pointer;
+    padding-left: 8px;
+    padding-right: 8px;
+    color: white;
+    font-weight: 300;
+  }
+  .account-option a {
+    color: white;
+  }
+
+  .account-option.login {
+    font-weight: normal;
+    cursor: default;
+  }
+}
+
+.settings.open {
+  background-color: $dark-gray;
+  .gear-icon {
+    background-image: url(/assets/icons/gear_white.png);
+  }
+  .account-options {
+    max-width: 300px;
+  }
+
+}
+
 #footer {
   background-color: $off-white;
   border-top: 2px solid $orange;
@@ -400,7 +439,7 @@ body.layout-cms {
   }
 }
 
-.signin header {
+header.minimal {
   span {
     line-height: 37px;
     padding-left: 8px;
@@ -435,6 +474,34 @@ body.splash {
     display: inline-block;
   }
 
+  .input-group {
+    display: inline-block;
+    position: relative;
+  }
+
+  .input-group:before {
+    content: '@';
+    display: block;
+    position: absolute;
+    width: 48px;
+    height: $sp-input-height;
+    line-height: $sp-input-height;
+    text-align: center;
+    top: 0;
+    font-size: 20px;
+    bottom: 0;
+    opacity: .65;
+    color: $black;
+  }
+
+  .input-key:before {
+    content: '';
+    background-image: url("/assets/icons/key.png");
+    background-position: center;
+    background-size: 20px;
+    background-repeat: no-repeat;
+  }
+
   #login {
     margin-right: 20px;
   }
@@ -444,7 +511,7 @@ body.splash {
   }
 
   button {
-    margin-left: -3px;
+    margin-left: -2px;
     height: $sp-input-height;
     width: $sp-input-height;
     background-color: white;
@@ -487,7 +554,47 @@ header {
 }
 
 body.index {
-  overflow: hidden;
+  header {
+    height: $sp-header-height;
+  }
+  .menu {
+    a {
+      display: block;
+      color: $dark-gray;
+      font-size: 16px;
+    }
+    a:hover {
+      text-decoration: none;
+      color: $orange;
+    }
+  }
+
+  .menu-tabs , .menu-content-container {
+    border-top: 2px solid $black;
+    padding-top: 28px;
+  }
+
+  .menu-content-container {
+    padding-top: 8px;
+
+    .divider {
+      margin-top: 22px
+    }
+  }
+
+  .menu-tab {
+    margin-bottom: 20px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  .menu-tab:hover, .menu-tab.selected {
+    color: $orange;
+  }
+
+  .menu-desc {
+    height: 180px;
+  }
+
 }
 
 .session-container {
@@ -591,6 +698,9 @@ body.index {
 
 .inline-block {
   display: inline-block;
+}
+.block {
+  display: block;
 }
 
 .tabs {
@@ -761,6 +871,8 @@ h5 {
   background-size: auto 46px;
   background-position: center;
   margin-left: 12px;
+
+  position: relative;
 }
 
 .logo-short {
@@ -1515,6 +1627,7 @@ a {
   overflow-x: hidden;
   height: 100%;
   position: fixed;
+  z-index: 12;
   margin-top: $header-height;
   top: 0;
   left: 0;
@@ -1722,26 +1835,33 @@ a {
 
 .icon {
   display: inline-block;
-  vertical-align: middle;
-  background-color: $orange;
-  height: $icon + 2;
+  vertical-align: top;
+  height: $header-height;
   width: $icon;
-  border-radius: $icon;
-  -webkit-border-radius: $icon;
-  -moz-border-radius: $icon;
   cursor: pointer;
   background-size: $icon / 2;
   background-repeat: no-repeat;
   background-position: center;
-  margin-right: 30px;
 }
 
 .search-icon {
   background-image: url(/assets/icons/search.png);
 }
+.search-icon:hover {
+  background-image: url(/assets/icons/search_hover.png);
+}
 
 .share-icon {
   background-image: url(/assets/icons/share.png);
+}
+.share-icon:hover {
+  background-image: url(/assets/icons/share_hover.png);
+}
+.gear-icon {
+  background-image: url(/assets/icons/gear.png);
+}
+.gear-icon:hover {
+  background-image: url(/assets/icons/gear_hover.png);
 }
 
 .header-vertical-middle {
@@ -1890,6 +2010,11 @@ a {
   .dashboard-label {
     color: $primary;
   }
+}
+
+.dashboard-item.user-account {
+  padding-right: 0;
+  padding-left: 0;
 }
 
 .menu-options {
@@ -2107,14 +2232,6 @@ a {
 
 .bubble-info {
   height: 160px;
-}
-
-.menu {
-  background-color: $orange;
-  height: 100%;
-  -webkit-box-shadow: inset 0px 5px 23px -11px rgba(50, 50, 50, 0.75);
-  -moz-box-shadow: inset 0px 5px 23px -11px rgba(50, 50, 50, 0.75);
-  box-shadow: inset 0px 5px 23px -11px rgba(50, 50, 50, 0.75);
 }
 
 .transparent {
@@ -2637,12 +2754,6 @@ a {
       background-color: inherit;
     }
 
-    .ui-tab-radio  label {
-      @include transition-property(background-color, box-shadow);
-      @include transition-duration($fast-transition);
-      @include transition-timing-function(ease-in);
-    }
-
   }
 
   .parameter-slide:hover {
@@ -3013,6 +3124,7 @@ a {
 .login-container {
   padding-left: 2px;
   padding-right: 2px;
+
 }
 
 .strategies {

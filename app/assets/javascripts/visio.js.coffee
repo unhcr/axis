@@ -15,7 +15,7 @@ window.Visio =
     # Indicator Criticality Multiple Year
     ICMY:
       className: 'Icmy'
-      human: 'Impact Criticality over time'
+      human: 'Impact Criticality vs Time'
       name: 'icmy'
     # Indicator Criticality Single Year
     ICSY:
@@ -23,6 +23,12 @@ window.Visio =
       human: 'Impact Criticality single year'
       name: 'icsy'
       description: 'Achievement of Standard'
+    # Performance Achievement Single Year
+    IASY:
+      className: 'Pasy'
+      human: 'Impact Achievement single year'
+      name: 'iasy'
+      description: 'Achievement of Target'
     # Performance Achievement Single Year
     PASY:
       className: 'Pasy'
@@ -115,6 +121,9 @@ window.Visio =
     ALPHABET: 'abcdefghijklmnopqrstuvwxyz'
     CMS:
       TEXTAREA_MAXLEN: 900
+
+  Texts:
+    STRATEGY_DESC: 'Global or Regional Strategies are defined by focal points in HQ or RO. The visualizations in the dashboads'
 
   Stores:
     MAP: 'map'

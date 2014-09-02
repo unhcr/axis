@@ -115,6 +115,7 @@ class Visio.Figures.Bar extends Visio.Figures.Base
       switch @orientation
         when 'left'
           @labels
+            .transition().duration(Visio.Durations.FAST)
             .attr('x', (d) => )
             .attr('y', (d, i) =>
               y = @fixed(i) - @labelHeight
@@ -125,6 +126,7 @@ class Visio.Figures.Bar extends Visio.Figures.Base
                 Visio.Utils.humanMetric(d.key))
         when 'bottom'
           @labels
+            .transition().duration(Visio.Durations.FAST)
             .attr('x', (d, i) => @fixed(i) + @barWidth / 2)
             .attr('y', (d) => @variable(d.value))
             .attr('dy', '-.3em')

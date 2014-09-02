@@ -3,7 +3,7 @@
     %section{ :class => "row #{model.get('category')} category" }
       %div.title
         = Visio.Utils.humanMetric model.get('category')
-      %div.ui-small-header
+      .tooltip-number
         = "#{Visio.Formats.PERCENT(model.get('amount'))} - #{model.get('numerator')} / #{model.get('denominator')}"
 
 

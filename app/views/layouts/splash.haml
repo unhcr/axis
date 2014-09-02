@@ -9,6 +9,7 @@
 %body.ui-invert-theme{ :class => "#{controller.action_name} layout-splash" }
   .container-fluid
 
+
     :javascript
       window.Visio.user = new Visio.Models.User(#{current_user.to_json.html_safe})
       window.Visio.env = "#{Rails.env}"

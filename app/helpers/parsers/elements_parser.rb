@@ -20,6 +20,7 @@ module Parsers
         },
         :ppgs => {
           :id => 'PPGID',
+          :msrp_code => 'PPG_CODE',
           :name => 'PPG',
           :operation_name => 'OPERATION'
         },

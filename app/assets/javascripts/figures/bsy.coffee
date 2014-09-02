@@ -26,9 +26,23 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
           @render()
       },
       {
+        id: 'budget_type'
+        filterType: 'checkbox'
+        values: _.object(_.values(Visio.Budgets), _.values(Visio.Budgets).map(-> true))
+      },
+      {
+        id: 'pillar'
+        filterType: 'checkbox'
+        values: _.object(_.keys(Visio.Pillars), _.keys(Visio.Pillars).map(-> true))
+        human: Visio.Pillars
+      },
+      {
         id: 'scenarios-budgets'
         filterType: 'checkbox'
         values: _.object(_.values(Visio.Scenarios), _.values(Visio.Scenarios).map(-> true))
+        human:
+          'Above Operating Level': 'Budget AOL'
+          'Operating Level': 'Budget OL'
         callback: (name, attr) =>
           @render()
       },
@@ -36,6 +50,9 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
         id: 'scenarios-expenditures'
         filterType: 'checkbox'
         values: scenarioExpenditures
+        human:
+          'Above Operating Level': 'Expenditure AOL'
+          'Operating Level': 'Expenditure OL'
         callback: (name, attr) =>
           @render()
       }
@@ -86,7 +103,7 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
 
     # Check to see if domain was set already
     # Expensive computation so don't want to repeat if not necessary
-    @y.domain [0, d3.max(filtered, (d) -> d.selectedBudget())]
+    @y.domain [0, d3.max(filtered, (d) -> d.selectedBudget(Visio.manager.year(), @filters))]
 
 
     self = @
@@ -139,7 +156,7 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
 
         box.selectAll('.bar').remove()
         _.each scenarios, (scenario, i) ->
-          amountData = d.selectedData(scenario.type).where
+          amountData = d.selectedData(scenario.type, Visio.manager.year(), self.filters).where
             scenario: scenario.scenario
 
           breakdownTypes = self.breakdownTypes()

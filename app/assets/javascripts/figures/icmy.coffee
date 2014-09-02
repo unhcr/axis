@@ -8,8 +8,8 @@ class Visio.Figures.Icmy extends Visio.Figures.Base
   initialize: (config) ->
     values = {}
     values['selectedSituationAnalysis'] = true
-    values['selectedAchievement'] = false
-    values['selectedOutputAchievement'] = false
+    values['selectedImpactAchievement'] = false
+    values['selectedPerformanceAchievement'] = false
     @filters = new Visio.Collections.FigureFilter([
       {
         id: 'algorithm'
@@ -17,8 +17,8 @@ class Visio.Figures.Icmy extends Visio.Figures.Base
         values: values
         human: {
           'selectedSituationAnalysis': 'Impact Criticality',
-          'selectedAchievement': 'Impact Achievement'
-          'selectedOutputAchievement': 'Output Achievement' }
+          'selectedImpactAchievement': 'Impact Achievement'
+          'selectedPerformanceAchievement': 'Performance Achievement' }
         callback: (name, attr) =>
           @algorithm = name
           @isPerformance = @algorithm == 'selectedOutputAchievement'
@@ -40,9 +40,7 @@ class Visio.Figures.Icmy extends Visio.Figures.Base
     opts = {}
     if config.isPdf
       opts.keys = switch config.algorithm
-        when 'selectedOutputAchievement'
-          Visio.Algorithms.THRESHOLDS
-        when 'selectedAchievement'
+        when 'selectedPerformanceAchievement', 'selectedImpactAchievement'
           Visio.Algorithms.THRESHOLDS
         when 'selectedSituationAnalysis'
           Visio.Algorithms.CRITICALITIES

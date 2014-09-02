@@ -17,7 +17,7 @@ class User < ActiveRecord::Base
 
   def to_jbuilder(options = {})
     Jbuilder.new do |json|
-      json.extract! self, :firstname, :lastname, :id, :reset_local_db, :login
+      json.extract! self, :firstname, :lastname, :id, :reset_local_db, :login, :admin
 
     end
   end

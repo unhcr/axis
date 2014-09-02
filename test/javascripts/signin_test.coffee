@@ -14,12 +14,12 @@ module 'Sign In',
     Visio.Views.SigninView.prototype.routeToHomepage.restore()
 
 test 'render', ->
-  strictEqual @view.$el.find('.login').length, 1
-  strictEqual @view.$el.find('.password').length, 1
+  strictEqual @view.$el.find('#login').length, 1
+  strictEqual @view.$el.find('#password').length, 1
 
 test 'signin w/o @unhcr.org', ->
-  @view.$el.find('.login').val 'ben'
-  @view.$el.find('.password').val 'rudolph'
+  @view.$el.find('#login').val 'ben'
+  @view.$el.find('#password').val 'rudolph'
 
   @view.$el.find('.signin').trigger 'click'
 
@@ -29,8 +29,8 @@ test 'signin w/o @unhcr.org', ->
 
 
 test 'signin w/ @unhcr.org', ->
-  @view.$el.find('.login').val 'ben@unhcr.org'
-  @view.$el.find('.password').val 'rudolph'
+  @view.$el.find('#login').val 'ben@unhcr.org'
+  @view.$el.find('#password').val 'rudolph'
 
   @view.$el.find('.signin').trigger 'click'
 
@@ -44,5 +44,5 @@ test 'already signed in', ->
 
   view = new Visio.Views.SigninView()
 
-  strictEqual view.$el.find('.login').length, 0
-  strictEqual view.$el.find('.password').length, 0
+  strictEqual view.$el.find('#login').length, 0
+  strictEqual view.$el.find('#password').length, 0

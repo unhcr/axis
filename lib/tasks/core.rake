@@ -33,6 +33,7 @@ namespace :build do
     :outputs => 'Build::OutputsBuild',
     :problem_objectives => 'Build::ProblemObjectivesBuild',
     :goals => 'Build::GoalsBuild',
+    :populations => 'Build::PopulationsBuild',
 
   }
 
@@ -117,10 +118,20 @@ task :build => :environment do
   Rake::Task['build:outputs'].invoke
   Rake::Task['build:problem_objectives'].invoke
   Rake::Task['build:goals'].invoke
+  Rake::Task['build:populations'].invoke
 
   fm.starttime = starttime
   fm.mark_deleted
   fm.save
+end
+
+task :reindex => :environment do
+  indexes = [Operation, Ppg, Goal, Output, StrategyObjective, ProblemObjective, Indicator]
+
+  indexes.each do |i|
+    i.index.delete
+    i.index.import i.all
+  end
 end
 
 task :warm_cache => :environment do

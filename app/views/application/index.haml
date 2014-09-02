@@ -1,13 +1,10 @@
-.map-container
-  #map
+.menu-container
 
 :javascript
   $(document).ready(function() {
 
     var ready = function() {
-      Visio.router = new Visio.Routers.IndexRouter({
-        mapMD5: '#{@mapMD5}',
-      });
+      Visio.router = new Visio.Routers.IndexRouter();
       Backbone.history.start();
     }
 

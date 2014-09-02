@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140815081757) do
+ActiveRecord::Schema.define(:version => 20140901151919) do
 
   create_table "admin_configurations", :force => true do |t|
     t.integer  "startyear",                :default => 2012
@@ -495,6 +495,19 @@ ActiveRecord::Schema.define(:version => 20140815081757) do
 
   add_index "plans_strategies", ["strategy_id"], :name => "index_plans_strategies_on_strategy_id"
 
+  create_table "populations", :id => false, :force => true do |t|
+    t.string   "ppg_code"
+    t.string   "ppg_id"
+    t.string   "operation_id"
+    t.integer  "year"
+    t.integer  "value"
+    t.datetime "found_at"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  add_index "populations", ["year", "operation_id", "ppg_id"], :name => "populations_uniqueness", :unique => true
+
   create_table "positions", :id => false, :force => true do |t|
     t.string   "id",                                   :null => false
     t.string   "position_reference"
@@ -526,6 +539,7 @@ ActiveRecord::Schema.define(:version => 20140815081757) do
     t.string   "population_type_id"
     t.string   "operation_name"
     t.datetime "found_at"
+    t.string   "msrp_code"
   end
 
   add_index "ppgs", ["id"], :name => "index_ppgs_on_id", :unique => true
@@ -580,138 +594,6 @@ ActiveRecord::Schema.define(:version => 20140815081757) do
     t.integer "strategy_objective_id", :null => false
     t.string  "problem_objective_id",  :null => false
   end
-
-  create_table "refinery_images", :force => true do |t|
-    t.string   "image_mime_type"
-    t.string   "image_name"
-    t.integer  "image_size"
-    t.integer  "image_width"
-    t.integer  "image_height"
-    t.string   "image_uid"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
-  end
-
-  create_table "refinery_page_part_translations", :force => true do |t|
-    t.integer  "refinery_page_part_id"
-    t.string   "locale",                :null => false
-    t.datetime "created_at",            :null => false
-    t.datetime "updated_at",            :null => false
-    t.text     "body"
-  end
-
-  add_index "refinery_page_part_translations", ["locale"], :name => "index_refinery_page_part_translations_on_locale"
-  add_index "refinery_page_part_translations", ["refinery_page_part_id"], :name => "index_refinery_page_part_translations_on_refinery_page_part_id"
-
-  create_table "refinery_page_parts", :force => true do |t|
-    t.integer  "refinery_page_id"
-    t.string   "title"
-    t.text     "body"
-    t.integer  "position"
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
-  end
-
-  add_index "refinery_page_parts", ["id"], :name => "index_refinery_page_parts_on_id"
-  add_index "refinery_page_parts", ["refinery_page_id"], :name => "index_refinery_page_parts_on_refinery_page_id"
-
-  create_table "refinery_page_translations", :force => true do |t|
-    t.integer  "refinery_page_id"
-    t.string   "locale",           :null => false
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
-    t.string   "title"
-    t.string   "custom_slug"
-    t.string   "menu_title"
-    t.string   "slug"
-  end
-
-  add_index "refinery_page_translations", ["locale"], :name => "index_refinery_page_translations_on_locale"
-  add_index "refinery_page_translations", ["refinery_page_id"], :name => "index_refinery_page_translations_on_refinery_page_id"
-
-  create_table "refinery_pages", :force => true do |t|
-    t.integer  "parent_id"
-    t.string   "path"
-    t.string   "slug"
-    t.boolean  "show_in_menu",        :default => true
-    t.string   "link_url"
-    t.string   "menu_match"
-    t.boolean  "deletable",           :default => true
-    t.boolean  "draft",               :default => false
-    t.boolean  "skip_to_first_child", :default => false
-    t.integer  "lft"
-    t.integer  "rgt"
-    t.integer  "depth"
-    t.string   "view_template"
-    t.string   "layout_template"
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
-  end
-
-  add_index "refinery_pages", ["depth"], :name => "index_refinery_pages_on_depth"
-  add_index "refinery_pages", ["id"], :name => "index_refinery_pages_on_id"
-  add_index "refinery_pages", ["lft"], :name => "index_refinery_pages_on_lft"
-  add_index "refinery_pages", ["parent_id"], :name => "index_refinery_pages_on_parent_id"
-  add_index "refinery_pages", ["rgt"], :name => "index_refinery_pages_on_rgt"
-
-  create_table "refinery_resources", :force => true do |t|
-    t.string   "file_mime_type"
-    t.string   "file_name"
-    t.integer  "file_size"
-    t.string   "file_uid"
-    t.string   "file_ext"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
-  end
-
-  create_table "refinery_roles", :force => true do |t|
-    t.string "title"
-  end
-
-  create_table "refinery_roles_users", :id => false, :force => true do |t|
-    t.integer "user_id"
-    t.integer "role_id"
-  end
-
-  add_index "refinery_roles_users", ["role_id", "user_id"], :name => "index_refinery_roles_users_on_role_id_and_user_id"
-  add_index "refinery_roles_users", ["user_id", "role_id"], :name => "index_refinery_roles_users_on_user_id_and_role_id"
-
-  create_table "refinery_strategies", :force => true do |t|
-    t.string   "name"
-    t.text     "description"
-    t.integer  "position"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
-  end
-
-  create_table "refinery_user_plugins", :force => true do |t|
-    t.integer "user_id"
-    t.string  "name"
-    t.integer "position"
-  end
-
-  add_index "refinery_user_plugins", ["name"], :name => "index_refinery_user_plugins_on_name"
-  add_index "refinery_user_plugins", ["user_id", "name"], :name => "index_refinery_user_plugins_on_user_id_and_name", :unique => true
-
-  create_table "refinery_users", :force => true do |t|
-    t.string   "username",               :null => false
-    t.string   "email",                  :null => false
-    t.string   "encrypted_password",     :null => false
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip"
-    t.string   "last_sign_in_ip"
-    t.integer  "sign_in_count"
-    t.datetime "remember_created_at"
-    t.string   "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "created_at",             :null => false
-    t.datetime "updated_at",             :null => false
-    t.string   "slug"
-  end
-
-  add_index "refinery_users", ["id"], :name => "index_refinery_users_on_id"
-  add_index "refinery_users", ["slug"], :name => "index_refinery_users_on_slug"
 
   create_table "rights_groups", :id => false, :force => true do |t|
     t.string   "id",                            :null => false

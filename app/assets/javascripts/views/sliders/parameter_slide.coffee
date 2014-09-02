@@ -4,7 +4,7 @@ class Visio.Views.ParameterSlideView extends Visio.Views.Dashboard
 
   template: HAML['sliders/parameter_slide']
 
-  selectedBarFigure: Visio.FigureTypes.OASY
+  selectedBarFigure: Visio.FigureTypes.PASY
 
   events:
     'change .ui-tab-radio input': 'onTabChange'
