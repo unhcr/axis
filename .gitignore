@@ -32,5 +32,6 @@ coverage
 /script/builds/goals
 /script/builds/problem_objectives
 /script/builds/outputs
+/script/builds/populations
 
 /public/reports/pdf/*.pdf

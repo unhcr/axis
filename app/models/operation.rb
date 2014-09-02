@@ -32,9 +32,13 @@ class Operation < ActiveRecord::Base
   has_many :operations_ppgs, :class_name => 'OperationsPpgs'
   has_many :ppgs, :uniq => true, :through => :operations_ppgs
 
+  has_many :populations, :conditions => proc { ['populations.year >= ? AND populations.year <= ?',
+                                      AdminConfiguration.first.startyear,
+                                      AdminConfiguration.first.endyear] }
+
   belongs_to :country
 
-  default_scope { includes([:country]) }
+  default_scope { includes([:country, :populations]) }
 
   def loaded
     includes([:plan_ids])
@@ -66,6 +70,7 @@ class Operation < ActiveRecord::Base
         json.problem_objective_ids self.problem_objective_ids.inject({}) { |h, id| h[id] = true; h }
       end
       json.country self.country
+      json.populations self.populations
     end
   end
 

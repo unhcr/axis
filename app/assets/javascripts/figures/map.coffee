@@ -55,6 +55,7 @@ class Visio.Figures.Map extends Visio.Figures.Base
       selectedSituationAnalysis: false
       selectedPerformanceAchievement: false
       selectedImpactAchievement: false
+      selectedPopulation: false
 
     # Delete values that aren't of use for indicator page
     if Visio.manager.get('indicator')?.get('is_performance')
@@ -74,6 +75,7 @@ class Visio.Figures.Map extends Visio.Figures.Base
           selectedSituationAnalysis: 'Impact Criticality'
           selectedPerformanceAchievement: 'Performance Achievement'
           selectedImpactAchievement: 'Impact Achievement'
+          selectedPopulation: 'Populations'
         }
         callback: (name, attr) =>
           @render()
@@ -168,6 +170,8 @@ class Visio.Figures.Map extends Visio.Figures.Base
             Visio.Formats.MONEY value
           when 'selectedSituationAnalysis'
             Visio.Utils.humanMetric(value)
+          when 'selectedPopulation'
+            Visio.Formats.COMMA value
 
         @templateTooltip
           operation: d

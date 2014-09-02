@@ -3,7 +3,7 @@ class Ppg < ActiveRecord::Base
   include SyncableParameterModel
   include Tire::Model::Search
   include Tire::Model::Callbacks
-  attr_accessible :name, :population_type, :population_type_id, :operation_name
+  attr_accessible :name, :population_type, :population_type_id, :operation_name, :msrp_code
 
   self.primary_key = :id
 
@@ -30,6 +30,9 @@ class Ppg < ActiveRecord::Base
 
   has_many :indicator_data
   has_many :budgets
+  has_many :populations, :conditions => proc { ['populations.year >= ? AND populations.year <= ?',
+                                      AdminConfiguration.first.startyear,
+                                      AdminConfiguration.first.endyear] }, :foreign_key => :ppg_id
 
   def to_jbuilder(options = {})
     options ||= {}
