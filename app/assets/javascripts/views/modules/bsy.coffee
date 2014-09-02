@@ -19,6 +19,16 @@ class Visio.Views.BsyView extends Backbone.View
     @figure = new Visio.Figures.Bsy @config
     @filterBy = new Visio.Views.FilterBy figure: @figure
     @queryBy = new Visio.Views.QueryBy figure: @figure
+    @sortBy = new Visio.Views.Dropdown
+      title: 'Sort By'
+      data: [
+          { label: 'Total Budget', value: 'total', checked: true },
+          { label: 'OL Budget', value: Visio.Scenarios.OL },
+          { label: 'AOL Budget', value: Visio.Scenarios.AOL },
+        ]
+      callback: (value, data) =>
+        @figure.sortAttribute = value
+        @figure.render()
 
   render: (isRerender) ->
 
@@ -28,6 +38,7 @@ class Visio.Views.BsyView extends Backbone.View
 
       @$el.find('figure').html @figure.el
       @$el.find('.header-buttons').append @filterBy.render().el
+      @$el.find('.header-buttons').append @sortBy.render().el
       @$el.find('.header-buttons').append @queryBy.render().el
 
       @$el.find('.slider').slider
