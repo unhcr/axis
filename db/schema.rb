@@ -46,7 +46,7 @@ ActiveRecord::Schema.define(:version => 20140901151919) do
   add_index "budgets", ["goal_id"], :name => "index_budgets_on_goal_id"
   add_index "budgets", ["is_deleted"], :name => "index_budgets_on_is_deleted"
   add_index "budgets", ["output_id"], :name => "index_budgets_on_output_id"
-  add_index "budgets", ["plan_id", "ppg_id", "goal_id", "problem_objective_id", "output_id", "scenario", "year", "budget_type"], :name => "by_uniqueness", :unique => true, :length => {"plan_id"=>60, "ppg_id"=>10, "goal_id"=>2, "problem_objective_id"=>60, "output_id"=>60, "scenario"=>10, "year"=>nil, "budget_type"=>3}
+  add_index "budgets", ["plan_id", "ppg_id", "goal_id", "problem_objective_id", "output_id", "scenario", "year", "budget_type"], :name => "by_uniqueness_bud", :unique => true
   add_index "budgets", ["plan_id", "ppg_id", "goal_id"], :name => "index_budgets_on_plan_id_and_ppg_id_and_goal_id"
   add_index "budgets", ["problem_objective_id"], :name => "index_budgets_on_problem_objective_id"
 
@@ -61,22 +61,6 @@ ActiveRecord::Schema.define(:version => 20140901151919) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
-
-  create_table "delayed_jobs", :force => true do |t|
-    t.integer  "priority",   :default => 0, :null => false
-    t.integer  "attempts",   :default => 0, :null => false
-    t.text     "handler",                   :null => false
-    t.text     "last_error"
-    t.datetime "run_at"
-    t.datetime "locked_at"
-    t.datetime "failed_at"
-    t.string   "locked_by"
-    t.string   "queue"
-    t.datetime "created_at",                :null => false
-    t.datetime "updated_at",                :null => false
-  end
-
-  add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
 
   create_table "expenditures", :force => true do |t|
     t.string   "budget_type"
@@ -99,18 +83,18 @@ ActiveRecord::Schema.define(:version => 20140901151919) do
   add_index "expenditures", ["goal_id"], :name => "index_expenditures_on_goal_id"
   add_index "expenditures", ["is_deleted"], :name => "index_expenditures_on_is_deleted"
   add_index "expenditures", ["output_id"], :name => "index_expenditures_on_output_id"
-  add_index "expenditures", ["plan_id", "ppg_id", "goal_id", "problem_objective_id", "output_id", "scenario", "year", "budget_type"], :name => "by_uniqueness", :unique => true, :length => {"plan_id"=>60, "ppg_id"=>10, "goal_id"=>2, "problem_objective_id"=>60, "output_id"=>60, "scenario"=>10, "year"=>nil, "budget_type"=>3}
+  add_index "expenditures", ["plan_id", "ppg_id", "goal_id", "problem_objective_id", "output_id", "scenario", "year", "budget_type"], :name => "by_uniqueness_exp", :unique => true
   add_index "expenditures", ["problem_objective_id"], :name => "index_expenditures_on_problem_objective_id"
 
   create_table "export_modules", :force => true do |t|
-    t.text     "state",                  :limit => 2147483647
+    t.text     "state"
     t.string   "title"
     t.text     "description"
-    t.boolean  "include_parameter_list",                       :default => false
-    t.boolean  "include_explaination",                         :default => false
-    t.text     "figure_config",          :limit => 2147483647
-    t.datetime "created_at",                                                      :null => false
-    t.datetime "updated_at",                                                      :null => false
+    t.boolean  "include_parameter_list", :default => false
+    t.boolean  "include_explaination",   :default => false
+    t.text     "figure_config"
+    t.datetime "created_at",                                :null => false
+    t.datetime "updated_at",                                :null => false
     t.integer  "user_id"
     t.text     "figure_type"
   end
@@ -162,7 +146,6 @@ ActiveRecord::Schema.define(:version => 20140901151919) do
   end
 
   add_index "goals_plans", ["goal_id", "plan_id", "id"], :name => "goals_plans_uniq", :unique => true
-  add_index "goals_plans", ["goal_id", "plan_id", "id"], :name => "index_goals_plans_on_goal_id_and_plan_id_and_id", :unique => true
   add_index "goals_plans", ["plan_id", "goal_id"], :name => "index_goals_plans_on_plan_id_and_goal_id", :unique => true
 
   create_table "goals_ppgs", :id => false, :force => true do |t|
@@ -171,7 +154,6 @@ ActiveRecord::Schema.define(:version => 20140901151919) do
   end
 
   add_index "goals_ppgs", ["goal_id", "ppg_id"], :name => "goals_ppgs_uniq", :unique => true
-  add_index "goals_ppgs", ["goal_id", "ppg_id"], :name => "index_goals_ppgs_on_goal_id_and_ppg_id", :unique => true
 
   create_table "goals_problem_objectives", :id => false, :force => true do |t|
     t.string "goal_id",              :null => false
@@ -232,7 +214,7 @@ ActiveRecord::Schema.define(:version => 20140901151919) do
   add_index "indicator_data", ["created_at"], :name => "index_indicator_data_on_created_at"
   add_index "indicator_data", ["goal_id"], :name => "index_indicator_data_on_goal_id"
   add_index "indicator_data", ["id"], :name => "index_indicator_data_on_id", :unique => true
-  add_index "indicator_data", ["indicator_id", "plan_id", "ppg_id", "goal_id", "problem_objective_id", "operation_id"], :name => "by_uniqueness", :length => {"indicator_id"=>60, "plan_id"=>60, "ppg_id"=>10, "goal_id"=>2, "problem_objective_id"=>60, "operation_id"=>10}
+  add_index "indicator_data", ["indicator_id", "plan_id", "ppg_id", "goal_id", "problem_objective_id", "operation_id"], :name => "by_uniqueness"
   add_index "indicator_data", ["indicator_id"], :name => "index_indicator_data_on_indicator_id"
   add_index "indicator_data", ["is_deleted"], :name => "index_indicator_data_on_is_deleted"
   add_index "indicator_data", ["is_performance"], :name => "index_indicator_data_on_is_performance"
@@ -616,25 +598,13 @@ ActiveRecord::Schema.define(:version => 20140901151919) do
     t.string  "rights_group_id",       :null => false
   end
 
-  create_table "seo_meta", :force => true do |t|
-    t.integer  "seo_meta_id"
-    t.string   "seo_meta_type"
-    t.string   "browser_title"
-    t.text     "meta_description"
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
-  end
-
-  add_index "seo_meta", ["id"], :name => "index_seo_meta_on_id"
-  add_index "seo_meta", ["seo_meta_id", "seo_meta_type"], :name => "id_type_index_on_seo_meta"
-
   create_table "strategies", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at",                           :null => false
-    t.datetime "updated_at",                           :null => false
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
     t.text     "description"
     t.integer  "user_id"
-    t.string   "dashboard_type", :default => "global"
+    t.string   "dashboard_type"
   end
 
   create_table "strategy_objectives", :force => true do |t|
