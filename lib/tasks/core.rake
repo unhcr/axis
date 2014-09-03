@@ -23,7 +23,7 @@ namespace :build do
   builds = {
     :msrp => 'Build::MsrpBuild',
     :budgets => 'Build::BudgetsBuild',
-    :elements => 'Build::ElementsBuild',
+    :relations => 'Build::RelationsBuild',
     :positions => 'Build::PositionsBuild',
     :offices => 'Build::OfficesBuild',
     :indicator_data_impact => 'Build::IndicatorDataImpactBuild',
@@ -34,6 +34,9 @@ namespace :build do
     :problem_objectives => 'Build::ProblemObjectivesBuild',
     :goals => 'Build::GoalsBuild',
     :populations => 'Build::PopulationsBuild',
+    :ppgs => 'Build::PpgsBuild',
+    :indicator_impact => 'Build::IndicatorImpactBuild',
+    :indicator_perf => 'Build::IndicatorPerfBuild',
 
   }
 
@@ -105,7 +108,7 @@ end
 task :build => :environment do
   starttime = Time.now
   fm = FetchMonitor.first
-  Rake::Task['build:elements'].invoke
+  Rake::Task['build:relations'].invoke
   Rake::Task['build:countries'].invoke
   Rake::Task['build:budgets'].invoke
   Rake::Task['build:msrp'].invoke
@@ -119,6 +122,9 @@ task :build => :environment do
   Rake::Task['build:problem_objectives'].invoke
   Rake::Task['build:goals'].invoke
   Rake::Task['build:populations'].invoke
+  Rake::Task['build:ppgs'].invoke
+  Rake::Task['build:indicator_impact'].invoke
+  Rake::Task['build:indicator_perf'].invoke
 
   fm.starttime = starttime
   fm.mark_deleted
