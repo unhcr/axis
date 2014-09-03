@@ -6,7 +6,7 @@ class AmountTest < ActiveSupport::TestCase
     @amounts = [Budget, Expenditure]
   end
 
-  test "synced_models" do
+  test "models" do
     @amounts.each do |resource|
       datum = resource.new()
       datum.operation = operations(:one)
@@ -21,39 +21,9 @@ class AmountTest < ActiveSupport::TestCase
       datum.operation = operations(:one)
       datum.save
 
-      models = resource.synced_models({ :operation_ids => [operations(:one).id] })
+      models = resource.models({ :operation_ids => [operations(:one).id] })
 
-      assert_equal 2, models[:new].length, "Should have 2 new #{resource}"
-      assert_equal 0, models[:updated].length, "Should have 2 new #{resource}"
-      assert_equal 0, models[:deleted].length, "Should have 2 new #{resource}"
-
-      models = resource.synced_models({
-        :operation_ids => [operations(:one).id],
-        :plan_ids => [plans(:one).id],
-        :ppg_ids => [ppgs(:one).id],
-        :goal_ids => [goals(:one).id],
-        :problem_objective_ids => [problem_objectives(:one).id],
-        :output_ids => [outputs(:one).id]
-      })
-
-      assert_equal 1, models[:new].length, "Should have 1 new #{resource}"
-      assert_equal 0, models[:updated].length, "Should have 2 new #{resource}"
-      assert_equal 0, models[:deleted].length, "Should have 2 new #{resource}"
-
-      # Irrevalent ids should be ignored
-      models = resource.synced_models({
-        :operation_ids => [operations(:one).id],
-        :plan_ids => [plans(:one).id],
-        :ppg_ids => [ppgs(:one).id],
-        :goal_ids => [goals(:one).id],
-        :problem_objective_ids => [problem_objectives(:one).id],
-        :output_ids => [outputs(:one).id],
-        :babaganoush_ids => [1],
-      })
-
-      assert_equal 1, models[:new].length, "Should have 1 new #{resource}"
-      assert_equal 0, models[:updated].length, "Should have 2 new #{resource}"
-      assert_equal 0, models[:deleted].length, "Should have 2 new #{resource}"
+      assert_equal 2, models.length, "Should have 2 new #{resource}"
     end
 
   end

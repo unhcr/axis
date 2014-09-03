@@ -16,7 +16,7 @@ module SyncableModel
     # To be overloaded for eager joining
     def loaded; self; end
 
-    def models(join_ids, page = nil, where = {})
+    def models(join_ids = nil, page = nil, where = {})
       models = self.where(where)
       models = models.page(page) unless page.nil?
       models = join_habtm(models, join_ids) if join_ids

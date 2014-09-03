@@ -1,6 +1,7 @@
 require 'test_helper'
 
 class ExpendituresControllerTest < ActionController::TestCase
+  include Devise::TestHelpers
   def setup
     @s = strategies(:one)
 
@@ -26,18 +27,20 @@ class ExpendituresControllerTest < ActionController::TestCase
     @s.rights_groups << @rights_groups
 
     @s.strategy_objectives << @so
+    @user = users(:one)
+    @user.save
+
+    sign_in @user
   end
 
   test "should get no expenditure data" do
-    get :synced
+    get :index
 
     assert_response :success
 
     r = JSON.parse(response.body)
 
-    assert_equal 0, r["new"].length
-    assert_equal 0, r["updated"].length
-    assert_equal 0, r["deleted"].length
+    assert_equal 0, r.length
   end
 
   test "should get one new expenditure data" do
@@ -50,15 +53,13 @@ class ExpendituresControllerTest < ActionController::TestCase
     datum.output = outputs(:one)
     datum.save
 
-    get :synced, { :strategy_id => @s.id }
+    get :index, { :strategy_id => @s.id }
 
     assert_response :success
 
     r = JSON.parse(response.body)
 
-    assert_equal 1, r["new"].length
-    assert_equal 0, r["updated"].length
-    assert_equal 0, r["deleted"].length
+    assert_equal 1, r.length
   end
 
   test "should get one new expenditure datum - filter_ids" do
@@ -71,7 +72,7 @@ class ExpendituresControllerTest < ActionController::TestCase
     datum.output = outputs(:one)
     datum.save
 
-    post :synced, { :filter_ids => {
+    post :index, { :filter_ids => {
         :operation_ids => [datum.operation_id],
         :ppg_ids => [datum.ppg_id],
         :goal_ids => [datum.goal_id],
@@ -83,9 +84,7 @@ class ExpendituresControllerTest < ActionController::TestCase
 
     r = JSON.parse(response.body)
 
-    assert_equal 1, r["new"].length
-    assert_equal 0, r["updated"].length
-    assert_equal 0, r["deleted"].length
+    assert_equal 1, r.length
   end
 end
 

@@ -1,7 +1,7 @@
 module CountryHelper
 
   def match_model_to_country(model, name)
-    country = Country.where("un_names LIKE ?", '%' + name + '%')
+    country = Country.where("un_names ILIKE ?", '%' + name + '%')
     if country.length == 1
       country = country.first
     elsif country.length > 1

@@ -71,6 +71,24 @@ class StrategyTest < ActiveSupport::TestCase
 
   end
 
+  test "should get optmized indicator data for strategy" do
+
+    datum = IndicatorDatum.new()
+    datum.id = 'abc'
+    datum.operation = operations(:one)
+    datum.plan = plans(:one)
+    datum.ppg = ppgs(:one)
+    datum.goal = goals(:one)
+    datum.rights_group = rights_groups(:one)
+    datum.problem_objective = problem_objectives(:one)
+    datum.output = outputs(:one)
+    datum.indicator = indicators(:one)
+    datum.save
+
+    data = @s.data_optimized(IndicatorDatum)
+    assert_equal 1, JSON.parse(data.values[0][0]).length
+  end
+
   test "should get indicator data for strategy" do
 
     datum = IndicatorDatum.new()
@@ -85,10 +103,8 @@ class StrategyTest < ActiveSupport::TestCase
     datum.indicator = indicators(:one)
     datum.save
 
-    data = @s.synced(IndicatorDatum)
-    assert_equal 1, data[:new].length
-    assert_equal 0, data[:updated].length
-    assert_equal 0, data[:deleted].length
+    data = @s.data(IndicatorDatum)
+    assert_equal 1, data.length
   end
 
   test "should not get indicator data for the strategy" do
@@ -103,10 +119,8 @@ class StrategyTest < ActiveSupport::TestCase
     datum.indicator = indicators(:one)
     datum.save
 
-    data = @s.synced(IndicatorDatum)
-    assert_equal 0, data[:new].length
-    assert_equal 0, data[:updated].length
-    assert_equal 0, data[:deleted].length
+    data = @s.data(IndicatorDatum)
+    assert_equal 0, data.length
   end
 
   test "should allow to not have an output" do
@@ -121,52 +135,8 @@ class StrategyTest < ActiveSupport::TestCase
     datum.indicator = indicators(:one)
     datum.save
 
-    data = @s.synced(IndicatorDatum)
-    assert_equal 1, data[:new].length
-    assert_equal 0, data[:updated].length
-    assert_equal 0, data[:deleted].length
-  end
-
-  test "should get updated data for strategy" do
-
-    datum = IndicatorDatum.new()
-    datum.id = 'abc'
-    datum.operation = operations(:one)
-    datum.plan = plans(:one)
-    datum.ppg = ppgs(:one)
-    datum.goal = goals(:one)
-    datum.rights_group = rights_groups(:one)
-    datum.problem_objective = problem_objectives(:one)
-    datum.output = outputs(:one)
-    datum.indicator = indicators(:one)
-    datum.created_at = Time.now - 1.week
-    datum.save
-
-    data = @s.synced(IndicatorDatum, Time.now - 3.days)
-    assert_equal 1, data[:updated].length
-    assert_equal 0, data[:new].length
-    assert_equal 0, data[:deleted].length
-  end
-
-  test "should get deleted data for strategy" do
-    datum = IndicatorDatum.new()
-    datum.id = 'abc'
-    datum.operation = operations(:one)
-    datum.plan = plans(:one)
-    datum.ppg = ppgs(:one)
-    datum.goal = goals(:one)
-    datum.rights_group = rights_groups(:one)
-    datum.problem_objective = problem_objectives(:one)
-    datum.output = outputs(:one)
-    datum.indicator = indicators(:one)
-    datum.created_at = Time.now - 1.week
-    datum.is_deleted = true
-    datum.save
-
-    data = @s.synced(IndicatorDatum, Time.now - 3.days)
-    assert_equal 0, data[:updated].length
-    assert_equal 0, data[:new].length
-    assert_equal 1, data[:deleted].length
+    data = @s.data(IndicatorDatum)
+    assert_equal 1, data.length
   end
 
   test "strategy objective should add params to strategy" do
@@ -186,17 +156,11 @@ class StrategyTest < ActiveSupport::TestCase
     assert Time.now > goal2.budgets[0].updated_at
     assert Time.now > goal2.expenditures[0].updated_at
 
-    start = Time.now
     sleep 2
 
     @so.goals << goal2
     assert_equal 2, @s.reload.goals.length
     goal2.reload
-
-    assert start < goal2.updated_at, 'Should update goal'
-    assert start < goal2.indicator_data[0].updated_at, 'Should update Indicator data'
-    assert start < goal2.budgets[0].updated_at, 'Should update Budget data'
-    assert start < goal2.expenditures[0].updated_at, 'Should update Expenditure data'
 
     @so2 = strategy_objectives(:two)
     @so2.goals << goals(:three)
