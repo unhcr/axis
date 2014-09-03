@@ -30,8 +30,6 @@ GEM
       activesupport (= 3.2.13)
       arel (~> 3.0.2)
       tzinfo (~> 0.3.29)
-    activerecord-import (0.5.0)
-      activerecord (>= 3.0)
     activeresource (3.2.13)
       activemodel (= 3.2.13)
       activesupport (= 3.2.13)
@@ -94,6 +92,7 @@ GEM
       after_commit_action (~> 0.1.3)
     css_parser (1.3.5)
       addressable
+    database_cleaner (1.3.0)
     debug_inspector (0.0.2)
     devise (3.2.2)
       bcrypt-ruby (~> 3.0)
@@ -105,7 +104,6 @@ GEM
       devise (>= 3.0)
       net-ldap (>= 0.3.1, < 0.6.0)
     diff-lcs (1.2.5)
-    docile (1.1.1)
     eco (1.0.0)
       coffee-script
       eco-source
@@ -157,7 +155,6 @@ GEM
     mini_portile (0.5.2)
     mono_logger (1.1.0)
     multi_json (1.9.0)
-    mysql2 (0.3.14)
     net-ldap (0.3.1)
     net-scp (1.1.2)
       net-ssh (>= 2.6.5)
@@ -175,6 +172,7 @@ GEM
     open4 (1.3.3)
     orm_adapter (0.5.0)
     pdfkit (0.5.4)
+    pg (0.17.1)
     polyglot (0.3.3)
     pony (1.6.2)
       mail (>= 2.0)
@@ -274,11 +272,6 @@ GEM
       multi_json (~> 1.0)
       rubyzip (~> 1.0)
       websocket (~> 1.0.4)
-    simplecov (0.8.2)
-      docile (~> 1.1.0)
-      multi_json
-      simplecov-html (~> 0.8.0)
-    simplecov-html (0.8.0)
     sinatra (1.4.4)
       rack (~> 1.4)
       rack-protection (~> 1.4)
@@ -319,6 +312,7 @@ GEM
     uglifier (2.4.0)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
+    upsert (2.0.3)
     vegas (0.1.11)
       rack (>= 1.0.0)
     warden (1.2.3)
@@ -335,7 +329,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  activerecord-import
   axlsx
   backbone-on-rails
   capistrano (~> 2.15.5)
@@ -344,6 +337,7 @@ DEPENDENCIES
   coffee-rails (~> 3.2.1)
   compass-rails
   counter_culture (~> 0.1.18)
+  database_cleaner
   devise
   devise_ldap_authenticatable
   equivalent-xml
@@ -355,11 +349,11 @@ DEPENDENCIES
   haml_coffee_assets
   jbuilder
   jquery-rails
-  mysql2
   nokogiri
   normalize-rails
   oink
   pdfkit
+  pg
   pony
   premailer-rails
   pry
@@ -377,13 +371,13 @@ DEPENDENCIES
   sass-rails (~> 3.2.3)
   selenium-webdriver (~> 2.41.0)
   shrimp!
-  simplecov
   single_test
   sprinkle
   sqlite3
   teaspoon
   tire
   uglifier (>= 1.0.3)
+  upsert
   whenever
   will_paginate (~> 3.0)
   zip-zip
