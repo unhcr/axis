@@ -85,6 +85,64 @@ class IndicatorDatum < ActiveRecord::Base
 
   end
 
+  def self.synced_models_optimized(ids = {})
+    conditions = []
+
+    conditions << "operation_id IN ('#{ids[:operation_ids].join("','")}')" if ids[:operation_ids]
+    conditions << "plan_id IN ('#{ids[:plan_ids].join("','")}')" if ids[:plan_ids]
+    conditions << "ppg_id IN ('#{ids[:ppg_ids].join("','")}')" if ids[:ppg_ids]
+    conditions << "goal_id IN ('#{ids[:goal_ids].join("','")}')" if ids[:goal_ids]
+    conditions << "indicator_id IN ('#{ids[:indicator_ids].join("','")}')" if ids[:indicator_ids]
+
+    if ids[:problem_objective_ids] && ids[:output_ids]
+      conditions << "(problem_objective_id IN ('#{ids[:problem_objective_ids].join("','")}') OR
+                     output_id IN ('#{ids[:output_ids].join("','")}'))"
+    elsif ids[:problem_objective_ids]
+      conditions << "problem_objective_id IN ('#{ids[:problem_objective_ids].join("','")}')"
+    elsif ids[:output_ids]
+      conditions << "output_id IN ('#{ids[:output_ids].join("','")}')"
+    end
+    query_string = conditions.join(' AND ')
+
+    # Need to include Strategy Objective ids
+    sql = "select array_to_json(array_agg(row_to_json(t)))
+      from (
+        select #{self.table_name}.*,
+          (
+            select array_to_json(array_agg(row_to_json(d)::json->'strategy_objective_id'))
+            from (
+
+              select strategy_objective_id
+              from goals_strategy_objectives
+              where goal_id = #{self.table_name}.goal_id
+
+              INTERSECT
+
+              select strategy_objective_id
+              from problem_objectives_strategy_objectives
+              where problem_objective_id = #{self.table_name}.problem_objective_id
+
+              INTERSECT
+
+              select strategy_objective_id
+              from outputs_strategy_objectives
+              where output_id = #{self.table_name}.output_id
+
+              INTERSECT
+
+              select strategy_objective_id
+              from indicators_strategy_objectives
+              where indicator_id = #{self.table_name}.indicator_id
+            ) as d
+        ) as strategy_objective_ids
+      from #{self.table_name}
+      ) t
+      where #{query_string}"
+
+    ActiveRecord::Base.connection.execute(sql)
+
+  end
+
   def to_jbuilder(options = {})
     Jbuilder.new do |json|
       json.extract! self, :baseline, :comp_target, :imp_target, :reversal, :standard, :stored_baseline, :threshold_green, :threshold_red, :yer, :myr, :is_performance, :year, :indicator_id, :output_id, :problem_objective_id, :goal_id, :ppg_id, :plan_id, :id, :operation_id
