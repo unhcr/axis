@@ -24,7 +24,11 @@
 coverage
 /script/builds/expenses
 /script/builds/budgets
+/script/builds/relations
 /script/builds/elements
+/script/builds/ppgs
+/script/builds/indicator_impact
+/script/builds/indicator_perf
 /script/builds/positions
 /script/builds/offices
 /script/builds/indicator_data_impact
