@@ -13,6 +13,7 @@ class Visio.Routers.OperationRouter extends Visio.Routers.DashboardRouter
         operation_id: Visio.manager.get('dashboard').id
 
     dataOptions =
+      optimize: true
       filter_ids:
         operation_ids: [Visio.manager.get('dashboard').id]
 

@@ -13,6 +13,7 @@ class Visio.Routers.IndicatorRouter extends Visio.Routers.DashboardRouter
         indicator_id: Visio.manager.get('indicator').id
 
     dataOptions =
+      optimize: true
       filter_ids:
         indicator_ids: [Visio.manager.get('indicator').id]
 

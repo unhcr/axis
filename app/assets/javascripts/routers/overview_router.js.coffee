@@ -14,6 +14,7 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.DashboardRouter
     return $.Deferred().resolve().promise() if Visio.manager.get('setup')
 
     options =
+      optimize: true
       join_ids:
         strategy_id: Visio.manager.get('strategy_id')
 
