@@ -74,6 +74,7 @@ class StrategyTest < ActiveSupport::TestCase
   test "should get indicator data for strategy" do
 
     datum = IndicatorDatum.new()
+    datum.id = 'abc'
     datum.operation = operations(:one)
     datum.plan = plans(:one)
     datum.ppg = ppgs(:one)
@@ -92,6 +93,7 @@ class StrategyTest < ActiveSupport::TestCase
 
   test "should not get indicator data for the strategy" do
     datum = IndicatorDatum.new()
+    datum.id = 'abc'
     datum.operation = operations(:one)
     datum.ppg = ppgs(:one)
     datum.goal = goals(:two)
@@ -109,6 +111,7 @@ class StrategyTest < ActiveSupport::TestCase
 
   test "should allow to not have an output" do
     datum = IndicatorDatum.new()
+    datum.id = 'abc'
     datum.operation = operations(:one)
     datum.plan = plans(:one)
     datum.ppg = ppgs(:one)
@@ -127,6 +130,7 @@ class StrategyTest < ActiveSupport::TestCase
   test "should get updated data for strategy" do
 
     datum = IndicatorDatum.new()
+    datum.id = 'abc'
     datum.operation = operations(:one)
     datum.plan = plans(:one)
     datum.ppg = ppgs(:one)
@@ -146,6 +150,7 @@ class StrategyTest < ActiveSupport::TestCase
 
   test "should get deleted data for strategy" do
     datum = IndicatorDatum.new()
+    datum.id = 'abc'
     datum.operation = operations(:one)
     datum.plan = plans(:one)
     datum.ppg = ppgs(:one)
