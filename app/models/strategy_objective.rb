@@ -19,18 +19,13 @@ class StrategyObjective < ActiveRecord::Base
 
     has_many through, :class_name => class_name
     has_many p.table_name.to_sym, :uniq => true, :through => through,
-      :after_add => [:add_to_strategy, :touch_data],
-      :after_remove => [:remove_from_strategy, :touch_data]
+      :after_add => [:add_to_strategy],
+      :after_remove => [:remove_from_strategy]
 
   end
 
   def add_to_strategy(assoc)
     self.strategy.send(assoc.class.table_name) << assoc if self.strategy
-  end
-
-  def touch_data(assoc)
-    assoc.touch :updated_at
-    assoc.touch_data self
   end
 
   def remove_from_strategy(assoc)
@@ -42,7 +37,6 @@ class StrategyObjective < ActiveRecord::Base
       end
       self.strategy.send(name).delete(assoc) unless included
     end
-    assoc.touch_data self
   end
 
   def self.search_models(query, options = {})
