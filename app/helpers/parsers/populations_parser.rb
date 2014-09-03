@@ -12,6 +12,10 @@ module Parsers
       }
     end
 
+    def self.selector
+      [:ppg_code, :ppg_id, :operation_id, :year]
+    end
+
   end
 end
 
