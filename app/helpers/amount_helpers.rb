@@ -1,7 +1,6 @@
 module AmountHelpers
-  def synced_models(ids = {}, synced_date = nil, limit = nil, where = {})
+  def models(ids = {}, limit = nil, where = {})
 
-    synced_amounts = {}
     conditions = []
 
     # TODO Check accuracy of using problem_objective and output with OR
@@ -16,30 +15,11 @@ module AmountHelpers
 
     amounts = self.loaded
 
-    if synced_date
-      synced_amounts[:new] = amounts.where("#{query_string} AND
-        created_at >= :synced_date AND
-        is_deleted = false", { :synced_date => synced_date })
-          .where(where).limit(limit)
-      synced_amounts[:updated] = amounts.where("#{query_string} AND
-        created_at < :synced_date AND
-        updated_at >= :synced_date AND
-        is_deleted = false", { :synced_date => synced_date })
-          .where(where).limit(limit)
-      synced_amounts[:deleted] = amounts.where("#{query_string} AND
-        updated_at >= :synced_date AND
-        is_deleted = true", { :synced_date => synced_date })
-          .where(where).limit(limit)
-    else
-      synced_amounts[:new] = amounts.where("#{query_string} AND is_deleted = false")
+    amounts.where("#{query_string} AND is_deleted = false")
         .where(where).limit(limit)
-      synced_amounts[:updated] = synced_amounts[:deleted] = self.limit(0)
-    end
-
-    return synced_amounts
   end
 
-  def synced_models_optimized(ids = {})
+  def models_optimized(ids = {})
     conditions = []
 
     # TODO Check accuracy of using problem_objective and output with OR

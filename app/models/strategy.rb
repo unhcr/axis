@@ -81,26 +81,18 @@ class Strategy < ActiveRecord::Base
     }
   end
 
-  def synced(resource = IndicatorDatum, synced_date = nil, limit = nil, where = {})
-    ids = parameter_ids
-    ids[:indicator_ids] = self.indicator_ids if resource == IndicatorDatum
-
-    resource.synced_models(ids, synced_date, limit, where)
-  end
-
-  def synced_optimized(resource = IndicatorDatum, synced_date = nil, limit = nil, where = {})
-    ids = parameter_ids
-    ids[:indicator_ids] = self.indicator_ids if resource == IndicatorDatum
-
-    resource.synced_models_optimized(ids)
-  end
-
   def data_optimized(resource = IndicatorDatum, limit = nil, where = {})
-    self.synced_optimized(resource, nil, limit, where)
+    ids = parameter_ids
+    ids[:indicator_ids] = self.indicator_ids if resource == IndicatorDatum
+
+    resource.models_optimized ids
   end
 
   def data(resource = IndicatorDatum, limit = nil, where = {})
-    self.synced(resource, nil, limit, where)[:new]
+    ids = parameter_ids
+    ids[:indicator_ids] = self.indicator_ids if resource == IndicatorDatum
+
+    resource.models(ids, limit, where)
   end
 
   def to_workbook

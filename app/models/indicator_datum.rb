@@ -36,9 +36,7 @@ class IndicatorDatum < ActiveRecord::Base
                :output => :strategy_objectives })
   end
 
-  def self.synced_models(ids = {}, synced_date = nil, limit = nil, where = {})
-
-    synced_data = {}
+  def self.models(ids = {}, limit = nil, where = {})
 
     conditions = []
 
@@ -61,31 +59,12 @@ class IndicatorDatum < ActiveRecord::Base
 
     indicator_data = IndicatorDatum.loaded.where(query_string)
 
-    if synced_date
-      synced_data[:new] = indicator_data.where("
-        created_at >= :synced_date AND
-        is_deleted = false", { :synced_date => synced_date })
-          .where(where).limit(limit)
-      synced_data[:updated] = indicator_data.where("
-        created_at < :synced_date AND
-        updated_at >= :synced_date AND
-        is_deleted = false", { :synced_date => synced_date })
-          .where(where).limit(limit)
-      synced_data[:deleted] = indicator_data.where("
-        updated_at >= :synced_date AND
-        is_deleted = true", { :synced_date => synced_date })
-          .where(where).limit(limit)
-    else
-      synced_data[:new] = indicator_data.where("#{query_string} AND is_deleted = false")
-        .where(where).limit(limit)
-      synced_data[:updated] = synced_data[:deleted] = IndicatorDatum.limit(0)
-    end
-
-    return synced_data
+    indicator_data.where("#{query_string} AND is_deleted = false")
+      .where(where).limit(limit)
 
   end
 
-  def self.synced_models_optimized(ids = {})
+  def self.models_optimized(ids = {})
     conditions = []
 
     conditions << "operation_id IN ('#{ids[:operation_ids].join("','")}')" if ids[:operation_ids]

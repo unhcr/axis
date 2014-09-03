@@ -95,7 +95,11 @@ class Visio.Views.ParameterSearch extends Backbone.View
 
     # First fetch all dependencies
 
-    dependencyOptions = { join_ids: {} }
+    dependencyOptions =
+      add: true
+      remove: false
+      data:
+        join_ids: {}
     dependencyOptions.join_ids["#{@collection.name.singular}_id"] = id
     dataOptions = {}
 
@@ -107,7 +111,7 @@ class Visio.Views.ParameterSearch extends Backbone.View
       NProgress.inc()
       # Fetch all parameter dependencies
       $.when.apply(@, dependencyTypes.map (dependencyType) ->
-        Visio.manager.get(dependencyType.plural).fetchSynced(dependencyOptions)).done =>
+        Visio.manager.get(dependencyType.plural).fetch(dependencyOptions)).done =>
           NProgress.inc()
 
           # Select model and dependencies
@@ -116,9 +120,12 @@ class Visio.Views.ParameterSearch extends Backbone.View
             Visio.manager.select dependencyType.plural, _.keys(model.get("#{dependencyType.singular}_ids"))
 
           dataOptions =
-            filter_ids: @filterIds @collection.name, id
+            add: true
+            remove: false
+            data:
+              filter_ids: @filterIds @collection.name, id
           $.when.apply(@, dataTypes.map (dataType) ->
-            Visio.manager.get(dataType.plural).fetchSynced(dataOptions, null, 'post')).done =>
+            Visio.manager.get(dataType.plural).fetch(dataOptions)).done =>
               NProgress.done()
               # finally trigger redraw
               model.set 'loaded', true

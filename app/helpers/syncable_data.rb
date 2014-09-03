@@ -1,18 +1,6 @@
 module SyncableData
   include SyncableHelpers
 
-  def synced
-    synced_date = params[:synced_timestamp] ? Time.at(params[:synced_timestamp].to_i) : nil
-    if params[:strategy_id]
-      strategy = Strategy.find(params[:strategy_id])
-      render :json => strategy.synced(resource, synced_date)
-    elsif params[:filter_ids]
-      render :json => resource.synced_models(params[:filter_ids], synced_date)
-    else
-      render :json => { :new => [], :updated => [], :deleted => [] }
-    end
-  end
-
   def index
     optimize = params[:optimize].present?
     if params[:strategy_id]
@@ -25,9 +13,9 @@ module SyncableData
       end
     elsif params[:filter_ids]
       if optimize
-        render :json => resource.synced_models_optimized(params[:filter_ids]).values[0][0]
+        render :json => resource.models_optimized(params[:filter_ids]).values[0][0]
       else
-        render :json => resource.synced_models(params[:filter_ids])[:new]
+        render :json => resource.models(params[:filter_ids])
       end
     else
       render :json => []
