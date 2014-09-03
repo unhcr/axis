@@ -8,6 +8,9 @@ module Parsers
         :name => 'NAME',
       }
     end
+    def self.selector
+      [:id]
+    end
 
   end
 end

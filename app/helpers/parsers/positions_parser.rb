@@ -15,5 +15,8 @@ module Parsers
         :operation_id => 'OPERATIONID'
       }
     end
+    def self.selector
+      [:id]
+    end
   end
 end
