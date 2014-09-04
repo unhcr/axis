@@ -71,9 +71,10 @@ class Visio.Views.FilterSystemView extends Backbone.View
 
       data = Visio.manager.get(hash.plural)
       data = _.filter data.models, (d) ->
-        # Either it's selected or it's part of the strategy
+        # Either it's selected or it's part of the strategy or it's been custom loaded
         Visio.manager.get('selected')[hash.plural][d.id] or
-          Visio.manager.get('dashboard').include(hash.singular, d.id)
+          Visio.manager.get('dashboard').include(hash.singular, d.id) or
+          d.get('loaded')
 
       parameters.push
         data: data

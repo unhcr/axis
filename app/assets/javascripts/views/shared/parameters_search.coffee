@@ -84,7 +84,13 @@ class Visio.Views.ParameterSearch extends Backbone.View
 
     fetchOptions = { include: { ids: true } }
 
-    return if @collection.get(id)? and @collection.get(id).get('loaded')
+    if @collection.get(id)? and
+        (@collection.get(id).get('loaded') or Visio.manager.get('selected')[@collection.name.name][id])
+      new Visio.Views.Info
+        title: "Already loaded that model"
+
+      @clear()
+      return
 
     model = new Visio.Models[@collection.name.className]({ id: id })
 
@@ -100,7 +106,7 @@ class Visio.Views.ParameterSearch extends Backbone.View
       remove: false
       data:
         join_ids: {}
-    dependencyOptions.join_ids["#{@collection.name.singular}_id"] = id
+    dependencyOptions.data.join_ids["#{@collection.name.singular}_id"] = id
     dataOptions = {}
 
 
@@ -114,14 +120,21 @@ class Visio.Views.ParameterSearch extends Backbone.View
         Visio.manager.get(dependencyType.plural).fetch(dependencyOptions)).done =>
           NProgress.inc()
 
+
           # Select model and dependencies
           Visio.manager.select model.name.plural, id
           _.each dependencyTypes, (dependencyType) ->
-            Visio.manager.select dependencyType.plural, _.keys(model.get("#{dependencyType.singular}_ids"))
+            dependencyIds = _.keys model.get("#{dependencyType.singular}_ids")
+
+            Visio.manager.select dependencyType.plural, dependencyIds
+
+            _.each dependencyIds, (dId) ->
+              Visio.manager.get(dependencyType.plural).get(dId).set 'loaded', true
 
           dataOptions =
             add: true
             remove: false
+            type: 'POST'
             data:
               filter_ids: @filterIds @collection.name, id
           $.when.apply(@, dataTypes.map (dataType) ->

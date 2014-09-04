@@ -3106,6 +3106,11 @@ a {
   color: $black;
 }
 
+.notification.info {
+  background-color: $primary-soft;
+  color: $white;
+}
+
 .snapshot-bar-figure-container {
   position: relative;
   height: $snapshot-bar-container-height;
