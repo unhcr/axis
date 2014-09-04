@@ -19,5 +19,8 @@ module Parsers
       }.merge(fields)
     end
 
+    def self.selector
+      [:id]
+    end
   end
 end

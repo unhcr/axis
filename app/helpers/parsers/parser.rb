@@ -2,6 +2,7 @@ module Parsers
   # Abstract class
   class Parser
     require "csv"
+    require 'upsert/active_record_upsert'
 
     NULL = "null"
     COL_SEP = '###'
@@ -28,40 +29,44 @@ module Parsers
 
       csvfields = self.class.csvfields
 
-      columns = csvfields.keys
-      columns << :found_at
-      values = []
+      model = self.class::MODEL
 
-      csv_foreach(csv_filename) do |row|
-        next if row.empty?
+      Upsert.batch(ActiveRecord::Base.connection, model.table_name.to_sym) do |upsert|
+        csv_foreach(csv_filename) do |row|
+          next if row.empty?
 
-        element = csv_parse_element csvfields, row
+          element = csv_parse_element csvfields, row
 
-        values << element
+          selector = element.dup
+          selector.keep_if { |k, v| self.class.selector.include? k }
+
+          setter = element.dup
+          setter.keep_if { |k, v| !self.class.selector.include?(k) }
+
+          upsert.row selector, setter
+        end
       end
-
-      to_update = columns.dup
-      to_update.delete :id
-
-      self.class::MODEL.import columns, values, :on_duplicate_key_update => to_update
     end
 
     def csv_parse_element(csvfields, row)
-      element = []
+      element = {}
 
       csvfields.each do |rails_attr, csvfield_attr|
         # If it's a lambda, call it
         if csvfield_attr.respond_to? :call
-          element << instance_exec(row, &csvfield_attr)
+          element[rails_attr] = instance_exec(row, &csvfield_attr)
         else
-          element << row[csvfield_attr]
+          element[rails_attr] = row[csvfield_attr]
         end
       end
 
-      # Add found_at parameter
-      element << Time.now
+      # Add *_at parameters
+      element[:found_at] = Time.now
+      element[:created_at] = Time.now
+      element[:updated_at] = Time.now
 
       element
     end
   end
+
 end

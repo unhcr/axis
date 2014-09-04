@@ -95,6 +95,8 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
     $.subscribe "hover.#{@cid}.figure", @hover
     $.subscribe "mouseout.#{@cid}.figure", @mouseout
 
+    @sortAttribute = 'total'
+
     $(@svg.node()).parent().on 'mouseleave', =>
       $.publish "hover.#{@cid}.figure", [@selectedDatum, true] if @selectedDatum
 
@@ -222,7 +224,21 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
     _.isEmpty(@query) or d.toString().toLowerCase().indexOf(@query.toLowerCase()) != -1
 
   sortFn: (a, b) =>
-    b.selectedBudget() - a.selectedBudget()
+    filters = new Visio.Collections.FigureFilter()
+
+    switch @sortAttribute
+      when Visio.Scenarios.OL, Visio.Scenarios.AOL
+        values = {}
+        values[Visio.Scenarios.AOL] = Visio.Scenarios.AOL == @sortAttribute
+        values[Visio.Scenarios.OL] = Visio.Scenarios.OL == @sortAttribute
+        filters.add
+            id: 'scenario',
+            filterType: 'checkbox'
+            values: values
+
+    filters.add @filters.toJSON()
+
+    b.selectedBudget(null, filters) - a.selectedBudget(null, filters)
 
   filtered: (collection) =>
     _.chain(collection.models).filter(@queryByFn).sort(@sortFn).value()

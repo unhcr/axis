@@ -1,11 +1,11 @@
 module Build
-  class ElementsBuild < AntBuild
-    BUILD_NAME = 'elements'
+  class RelationsBuild < AntBuild
+    BUILD_NAME = 'relations'
 
     def initialize(config)
       super config.merge({
         :build_name => BUILD_NAME,
-        :parser => Parsers::ElementsParser.new
+        :parser => Parsers::RelationsParser.new
       })
     end
 

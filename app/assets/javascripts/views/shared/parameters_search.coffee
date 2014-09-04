@@ -84,7 +84,13 @@ class Visio.Views.ParameterSearch extends Backbone.View
 
     fetchOptions = { include: { ids: true } }
 
-    return if @collection.get(id)? and @collection.get(id).get('loaded')
+    if @collection.get(id)? and
+        (@collection.get(id).get('loaded') or Visio.manager.get('selected')[@collection.name.name][id])
+      new Visio.Views.Info
+        title: "Already loaded that model"
+
+      @clear()
+      return
 
     model = new Visio.Models[@collection.name.className]({ id: id })
 
@@ -95,8 +101,12 @@ class Visio.Views.ParameterSearch extends Backbone.View
 
     # First fetch all dependencies
 
-    dependencyOptions = { join_ids: {} }
-    dependencyOptions.join_ids["#{@collection.name.singular}_id"] = id
+    dependencyOptions =
+      add: true
+      remove: false
+      data:
+        join_ids: {}
+    dependencyOptions.data.join_ids["#{@collection.name.singular}_id"] = id
     dataOptions = {}
 
 
@@ -107,18 +117,28 @@ class Visio.Views.ParameterSearch extends Backbone.View
       NProgress.inc()
       # Fetch all parameter dependencies
       $.when.apply(@, dependencyTypes.map (dependencyType) ->
-        Visio.manager.get(dependencyType.plural).fetchSynced(dependencyOptions)).done =>
+        Visio.manager.get(dependencyType.plural).fetch(dependencyOptions)).done =>
           NProgress.inc()
+
 
           # Select model and dependencies
           Visio.manager.select model.name.plural, id
           _.each dependencyTypes, (dependencyType) ->
-            Visio.manager.select dependencyType.plural, _.keys(model.get("#{dependencyType.singular}_ids"))
+            dependencyIds = _.keys model.get("#{dependencyType.singular}_ids")
+
+            Visio.manager.select dependencyType.plural, dependencyIds
+
+            _.each dependencyIds, (dId) ->
+              Visio.manager.get(dependencyType.plural).get(dId).set 'loaded', true
 
           dataOptions =
-            filter_ids: @filterIds @collection.name, id
+            add: true
+            remove: false
+            type: 'POST'
+            data:
+              filter_ids: @filterIds @collection.name, id
           $.when.apply(@, dataTypes.map (dataType) ->
-            Visio.manager.get(dataType.plural).fetchSynced(dataOptions, null, 'post')).done =>
+            Visio.manager.get(dataType.plural).fetch(dataOptions)).done =>
               NProgress.done()
               # finally trigger redraw
               model.set 'loaded', true

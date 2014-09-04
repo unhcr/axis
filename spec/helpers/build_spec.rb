@@ -4,7 +4,7 @@ describe Build do
 
   include Build
   builders = [Build::MsrpBuild,
-              Build::ElementsBuild,
+              Build::RelationsBuild,
               Build::BudgetsBuild,
               Build::PositionsBuild,
               Build::OfficesBuild,
@@ -14,6 +14,9 @@ describe Build do
               Build::OutputsBuild,
               Build::ProblemObjectivesBuild,
               Build::IndicatorDataPerfBuild,
+              Build::PpgsBuild,
+              Build::IndicatorImpactBuild,
+              Build::IndicatorPerfBuild,
               Build::IndicatorDataImpactBuild]
   builders.each do |builder|
 

@@ -1,7 +1,6 @@
 source 'https://rubygems.org'
 
 gem 'rails', '3.2.13'
-gem 'activerecord-import'
 gem 'nokogiri'
 gem 'equivalent-xml'
 gem 'rubyzip'
@@ -29,7 +28,8 @@ gem 'haml'
 gem 'haml-rails', '>= 0.3.4'
 gem "figaro"
 gem 'jbuilder'
-gem 'mysql2'
+gem 'pg'
+gem 'upsert'
 gem 'tire'
 gem 'will_paginate', '~> 3.0'
 gem 'normalize-rails'
@@ -53,12 +53,12 @@ end
 group :development, :test do
   # gem 'query_reviewer'
   gem 'oink'
+  gem 'database_cleaner'
   gem 'quiet_assets'
   gem 'capistrano', '~> 2.15.5'
   gem 'capistrano-rbenv', '~> 1.0.5'
   gem 'qunit-rails', '= 0.0.4'
   gem 'random-word'
-  gem 'simplecov', :require => false
   gem 'teaspoon'
   gem 'single_test'
   gem 'selenium-webdriver', '~> 2.41.0'

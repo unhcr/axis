@@ -30,6 +30,7 @@ class IndicatorDatumTest < ActiveSupport::TestCase
   test "should report missing if no threshold in situation analysis" do
 
     datum = IndicatorDatum.new()
+    datum.id = 'abc'
     datum.threshold_green = nil
     datum.threshold_red = nil
     datum.myr = nil
@@ -80,6 +81,7 @@ class IndicatorDatumTest < ActiveSupport::TestCase
   test "should correctly calculate strategy objectives ids" do
 
     datum = IndicatorDatum.new()
+    datum.id = 'abc'
     datum.plan = plans(:one)
     datum.ppg = ppgs(:one)
     datum.goal = goals(:one)

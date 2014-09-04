@@ -16,5 +16,9 @@ module Parsers
 
     end
 
+    def self.selector
+      [:id]
+    end
+
   end
 end

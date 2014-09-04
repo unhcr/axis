@@ -45,6 +45,7 @@ class IndicatorDataControllerTest < ActionController::TestCase
 
   test "index indicator data - strategy id" do
     datum = IndicatorDatum.new()
+    datum.id = 'abc'
     datum.operation = operations(:one)
     datum.plan = plans(:one)
     datum.ppg = ppgs(:one)
@@ -64,20 +65,9 @@ class IndicatorDataControllerTest < ActionController::TestCase
     assert_equal 1, r.length
   end
 
-  test "should get no indicator data" do
-    get :synced
-
-    assert_response :success
-
-    r = JSON.parse(response.body)
-
-    assert_equal 0, r["new"].length
-    assert_equal 0, r["updated"].length
-    assert_equal 0, r["deleted"].length
-  end
-
-  test "should get one new indicator data" do
+  test "index indicator data - strategy id - optimized" do
     datum = IndicatorDatum.new()
+    datum.id = 'abc'
     datum.operation = operations(:one)
     datum.plan = plans(:one)
     datum.ppg = ppgs(:one)
@@ -88,43 +78,13 @@ class IndicatorDataControllerTest < ActionController::TestCase
     datum.indicator = indicators(:one)
     datum.save
 
-    get :synced, { :strategy_id => @s.id }
+    get :index, { :strategy_id => @s.id, :optimize => true }
 
     assert_response :success
 
     r = JSON.parse(response.body)
 
-    assert_equal 1, r["new"].length
-    assert_equal 0, r["updated"].length
-    assert_equal 0, r["deleted"].length
+    assert_equal 1, r.length
   end
 
-  test "should get one new indicator datum - filter_ids" do
-    datum = IndicatorDatum.new()
-    datum.operation = operations(:one)
-    datum.plan = plans(:one)
-    datum.ppg = ppgs(:one)
-    datum.goal = goals(:one)
-    datum.problem_objective = problem_objectives(:one)
-    datum.output = outputs(:one)
-    datum.indicator = indicators(:one)
-    datum.save
-
-    post :synced, { :filter_ids => {
-        :operation_ids => [datum.operation_id],
-        :ppg_ids => [datum.ppg_id],
-        :goal_ids => [datum.goal_id],
-        :problem_objective_ids => [datum.problem_objective_id],
-        :output_ids => [datum.output_id],
-        :indicator_ids => [datum.indicator_id]
-      } }
-
-    assert_response :success
-
-    r = JSON.parse(response.body)
-
-    assert_equal 1, r["new"].length
-    assert_equal 0, r["updated"].length
-    assert_equal 0, r["deleted"].length
-  end
 end

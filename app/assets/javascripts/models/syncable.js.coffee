@@ -1,8 +1,5 @@
 class Visio.Models.Syncable extends Backbone.Model
 
-  store: () ->
-    @name.plural + '_store'
-
   keyPath: 'id'
 
   toJSON: () ->

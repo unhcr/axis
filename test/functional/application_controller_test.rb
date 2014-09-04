@@ -79,6 +79,8 @@ class ApplicationControllerTest < ActionController::TestCase
 
   test 'indicator page' do
     i = Indicator.first
+    i.is_performance = true
+    i.save
     i.outputs << Output.first
     get :indicator, { :indicator_id => i.id }
 

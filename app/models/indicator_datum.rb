@@ -36,9 +36,7 @@ class IndicatorDatum < ActiveRecord::Base
                :output => :strategy_objectives })
   end
 
-  def self.synced_models(ids = {}, synced_date = nil, limit = nil, where = {})
-
-    synced_data = {}
+  def self.models(ids = {}, limit = nil, where = {})
 
     conditions = []
 
@@ -61,27 +59,66 @@ class IndicatorDatum < ActiveRecord::Base
 
     indicator_data = IndicatorDatum.loaded.where(query_string)
 
-    if synced_date
-      synced_data[:new] = indicator_data.where("
-        created_at >= :synced_date AND
-        is_deleted = false", { :synced_date => synced_date })
-          .where(where).limit(limit)
-      synced_data[:updated] = indicator_data.where("
-        created_at < :synced_date AND
-        updated_at >= :synced_date AND
-        is_deleted = false", { :synced_date => synced_date })
-          .where(where).limit(limit)
-      synced_data[:deleted] = indicator_data.where("
-        updated_at >= :synced_date AND
-        is_deleted = true", { :synced_date => synced_date })
-          .where(where).limit(limit)
-    else
-      synced_data[:new] = indicator_data.where("#{query_string} AND is_deleted = false")
-        .where(where).limit(limit)
-      synced_data[:updated] = synced_data[:deleted] = IndicatorDatum.limit(0)
-    end
+    indicator_data.where("#{query_string} AND is_deleted = false")
+      .where(where).limit(limit)
 
-    return synced_data
+  end
+
+  def self.models_optimized(ids = {})
+    conditions = []
+
+    conditions << "operation_id IN ('#{ids[:operation_ids].join("','")}')" if ids[:operation_ids]
+    conditions << "plan_id IN ('#{ids[:plan_ids].join("','")}')" if ids[:plan_ids]
+    conditions << "ppg_id IN ('#{ids[:ppg_ids].join("','")}')" if ids[:ppg_ids]
+    conditions << "goal_id IN ('#{ids[:goal_ids].join("','")}')" if ids[:goal_ids]
+    conditions << "indicator_id IN ('#{ids[:indicator_ids].join("','")}')" if ids[:indicator_ids]
+
+    if ids[:problem_objective_ids] && ids[:output_ids]
+      conditions << "(problem_objective_id IN ('#{ids[:problem_objective_ids].join("','")}') OR
+                     output_id IN ('#{ids[:output_ids].join("','")}'))"
+    elsif ids[:problem_objective_ids]
+      conditions << "problem_objective_id IN ('#{ids[:problem_objective_ids].join("','")}')"
+    elsif ids[:output_ids]
+      conditions << "output_id IN ('#{ids[:output_ids].join("','")}')"
+    end
+    query_string = conditions.join(' AND ')
+
+    # Need to include Strategy Objective ids
+    sql = "select array_to_json(array_agg(row_to_json(t)))
+      from (
+        select #{self.table_name}.*,
+          (
+            select array_to_json(array_agg(row_to_json(d)::json->'strategy_objective_id'))
+            from (
+
+              select strategy_objective_id
+              from goals_strategy_objectives
+              where goal_id = #{self.table_name}.goal_id
+
+              INTERSECT
+
+              select strategy_objective_id
+              from problem_objectives_strategy_objectives
+              where problem_objective_id = #{self.table_name}.problem_objective_id
+
+              INTERSECT
+
+              select strategy_objective_id
+              from outputs_strategy_objectives
+              where output_id = #{self.table_name}.output_id
+
+              INTERSECT
+
+              select strategy_objective_id
+              from indicators_strategy_objectives
+              where indicator_id = #{self.table_name}.indicator_id
+            ) as d
+        ) as strategy_objective_ids
+      from #{self.table_name}
+      ) t
+      where #{query_string}"
+
+    ActiveRecord::Base.connection.execute(sql)
 
   end
 

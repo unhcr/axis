@@ -18,23 +18,23 @@ Visio::Application.routes.draw do
   get '/cms/strategies' => 'cms#strategies'
 
   # Resources
-  syncable_resources :operations
+  visio_resources :operations
   # hack, should be a more semantic way to do this
   get '/operations/:id/offices' => 'operations#offices'
   get '/operations/:id/head_offices' => 'operations#head_offices'
 
 
-  syncable_resources :plans
-  syncable_resources :ppgs
-  syncable_resources :goals
-  syncable_resources :rights_groups
-  syncable_resources :problem_objectives
-  syncable_resources :outputs
-  syncable_resources :indicators
-  syncable_resources :indicator_data
-  syncable_resources :budgets
-  syncable_resources :expenditures
-  syncable_resources :offices
+  visio_resources :plans
+  visio_resources :ppgs
+  visio_resources :goals
+  visio_resources :rights_groups
+  visio_resources :problem_objectives
+  visio_resources :outputs
+  visio_resources :indicators
+  visio_resources :indicator_data
+  visio_resources :budgets
+  visio_resources :expenditures
+  visio_resources :offices
   resources :export_modules do
     member do
       get 'pdf'

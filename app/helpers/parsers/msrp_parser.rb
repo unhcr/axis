@@ -38,5 +38,10 @@ module Parsers
 
     end
 
+    def self.selector
+      [:plan_id, :ppg_id, :operation_id, :goal_id, :problem_objective_id, :output_id,
+       :scenario, :year, :budget_type]
+    end
+
   end
 end

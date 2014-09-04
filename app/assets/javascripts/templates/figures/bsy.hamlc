@@ -1,9 +1,9 @@
 - if context.exportable and not context.isExport
   .row
-    .col-md-6
+    .col-md-4
       %h3.dashboard-meta
         = Visio.manager.toString()
-    .col-md-6.right-text.header-buttons
+    .col-md-8.right-text.header-buttons
       .export.header-button
   .row
     .col-md-12.tooltip-container.top-flush

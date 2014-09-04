@@ -16,36 +16,12 @@ module SyncableModel
     # To be overloaded for eager joining
     def loaded; self; end
 
-    def models(join_ids, page = nil, where = {})
+    def models(join_ids = nil, page = nil, where = {})
       models = self.where(where)
       models = models.page(page) unless page.nil?
       models = join_habtm(models, join_ids) if join_ids
 
       models
-    end
-
-    def synced_models(synced_date = nil, join_ids = {}, limit = nil, where = {})
-      synced_models = {}
-
-      loaded = self.loaded
-
-      if synced_date
-        synced_models[:new] = loaded.where('created_at >= ? and is_deleted = false', synced_date).where(where).limit(limit)
-
-        synced_models[:updated] = loaded.where('created_at < ? and updated_at >= ? and is_deleted = false', synced_date, synced_date).where(where).limit(limit)
-        synced_models[:deleted] = loaded.where('is_deleted = true and updated_at >= ?', synced_date).where(where).limit(limit)
-      else
-        synced_models[:new] = loaded.where(:is_deleted => false).where(where).limit(limit)
-        synced_models[:updated] = synced_models[:deleted] = self.limit(0)
-      end
-
-      if join_ids
-        synced_models.each do |key, query|
-          synced_models[key] = join_habtm(query, join_ids)
-        end
-      end
-
-      synced_models
     end
 
     def search_models(query, options = {})

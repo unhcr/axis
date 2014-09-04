@@ -1,6 +1,7 @@
 require 'test_helper'
 
 class BudgetsControllerTest < ActionController::TestCase
+  include Devise::TestHelpers
   def setup
     @s = strategies(:one)
 
@@ -26,18 +27,21 @@ class BudgetsControllerTest < ActionController::TestCase
     @s.rights_groups << @rights_groups
 
     @s.strategy_objectives << @so
+
+    @user = users(:one)
+    @user.save
+
+    sign_in @user
   end
 
   test "should get no budget data" do
-    get :synced
+    get :index
 
     assert_response :success
 
     r = JSON.parse(response.body)
 
-    assert_equal 0, r["new"].length
-    assert_equal 0, r["updated"].length
-    assert_equal 0, r["deleted"].length
+    assert_equal 0, r.length
   end
 
   test "should get one new budget data" do
@@ -50,15 +54,32 @@ class BudgetsControllerTest < ActionController::TestCase
     datum.output = outputs(:one)
     datum.save
 
-    get :synced, { :strategy_id => @s.id }
+    get :index, { :strategy_id => @s.id }
 
     assert_response :success
 
     r = JSON.parse(response.body)
 
-    assert_equal 1, r["new"].length
-    assert_equal 0, r["updated"].length
-    assert_equal 0, r["deleted"].length
+    assert_equal 1, r.length
+  end
+
+  test "should get one new budget data - optimize" do
+    datum = Budget.new()
+    datum.operation = operations(:one)
+    datum.plan = plans(:one)
+    datum.ppg = ppgs(:one)
+    datum.goal = goals(:one)
+    datum.problem_objective = problem_objectives(:one)
+    datum.output = outputs(:one)
+    datum.save
+
+    get :index, { :strategy_id => @s.id, :optimize => true }
+
+    assert_response :success
+
+    r = JSON.parse(response.body)
+
+    assert_equal 1, r.length
   end
 
   test "should get one new budget data - no output" do
@@ -70,16 +91,39 @@ class BudgetsControllerTest < ActionController::TestCase
     datum.problem_objective = problem_objectives(:one)
     datum.save
 
-    get :synced, { :strategy_id => @s.id }
+    get :index, { :strategy_id => @s.id }
 
     assert_response :success
 
     r = JSON.parse(response.body)
 
-    assert_equal 1, r["new"].length
-    assert_equal 0, r["updated"].length
-    assert_equal 0, r["deleted"].length
+    assert_equal 1, r.length
 
+  end
+
+  test "should get one new budget data - filter_ids - optimize" do
+    datum = Budget.new()
+    datum.operation = operations(:one)
+    datum.plan = plans(:one)
+    datum.ppg = ppgs(:one)
+    datum.goal = goals(:one)
+    datum.problem_objective = problem_objectives(:one)
+    datum.output = outputs(:one)
+    datum.save
+
+    post :index, { :filter_ids => {
+        :operation_ids => [datum.operation_id],
+        :ppg_ids => [datum.ppg_id],
+        :goal_ids => [datum.goal_id],
+        :problem_objective_ids => [datum.problem_objective_id],
+        :output_ids => [datum.output_id],
+      } }
+
+    assert_response :success
+
+    r = JSON.parse(response.body)
+
+    assert_equal 1, r.length
   end
 
   test "should get one new budget data - filter_ids" do
@@ -92,7 +136,7 @@ class BudgetsControllerTest < ActionController::TestCase
     datum.output = outputs(:one)
     datum.save
 
-    post :synced, { :filter_ids => {
+    post :index, { :optimize => true, :filter_ids => {
         :operation_ids => [datum.operation_id],
         :ppg_ids => [datum.ppg_id],
         :goal_ids => [datum.goal_id],
@@ -104,8 +148,7 @@ class BudgetsControllerTest < ActionController::TestCase
 
     r = JSON.parse(response.body)
 
-    assert_equal 1, r["new"].length
-    assert_equal 0, r["updated"].length
-    assert_equal 0, r["deleted"].length
+    assert_equal 1, r.length
   end
+
 end

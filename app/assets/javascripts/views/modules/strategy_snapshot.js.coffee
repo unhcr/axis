@@ -27,7 +27,7 @@ class Visio.Views.SnapshotView extends Visio.Views.Dashboard
       margin:
         top: 10
         bottom: 10
-        left: 40
+        left: 44
       width: 50
       height: axisHeight
 

@@ -1,6 +1,8 @@
 %span.notification-title
   = context.title
-%span :
-%span.notification-description
-  = context.description
+- if context.description?.length > 0
+  %span :
+  %span.notification-description
+    = context.description
+
 %span.notification-close X
