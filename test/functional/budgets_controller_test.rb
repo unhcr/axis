@@ -63,6 +63,25 @@ class BudgetsControllerTest < ActionController::TestCase
     assert_equal 1, r.length
   end
 
+  test "should get one new budget data - optimize" do
+    datum = Budget.new()
+    datum.operation = operations(:one)
+    datum.plan = plans(:one)
+    datum.ppg = ppgs(:one)
+    datum.goal = goals(:one)
+    datum.problem_objective = problem_objectives(:one)
+    datum.output = outputs(:one)
+    datum.save
+
+    get :index, { :strategy_id => @s.id, :optimize => true }
+
+    assert_response :success
+
+    r = JSON.parse(response.body)
+
+    assert_equal 1, r.length
+  end
+
   test "should get one new budget data - no output" do
     datum = Budget.new()
     datum.operation = operations(:one)
@@ -82,7 +101,7 @@ class BudgetsControllerTest < ActionController::TestCase
 
   end
 
-  test "should get one new budget data - filter_ids" do
+  test "should get one new budget data - filter_ids - optimize" do
     datum = Budget.new()
     datum.operation = operations(:one)
     datum.plan = plans(:one)
@@ -106,4 +125,30 @@ class BudgetsControllerTest < ActionController::TestCase
 
     assert_equal 1, r.length
   end
+
+  test "should get one new budget data - filter_ids" do
+    datum = Budget.new()
+    datum.operation = operations(:one)
+    datum.plan = plans(:one)
+    datum.ppg = ppgs(:one)
+    datum.goal = goals(:one)
+    datum.problem_objective = problem_objectives(:one)
+    datum.output = outputs(:one)
+    datum.save
+
+    post :index, { :optimize => true, :filter_ids => {
+        :operation_ids => [datum.operation_id],
+        :ppg_ids => [datum.ppg_id],
+        :goal_ids => [datum.goal_id],
+        :problem_objective_ids => [datum.problem_objective_id],
+        :output_ids => [datum.output_id],
+      } }
+
+    assert_response :success
+
+    r = JSON.parse(response.body)
+
+    assert_equal 1, r.length
+  end
+
 end
