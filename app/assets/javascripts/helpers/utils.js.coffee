@@ -144,3 +144,14 @@ Visio.Utils.parameterBySingular = (singular) ->
   for parameter, hash of Visio.Parameters
     return hash if hash.singular == singular
   null
+
+Visio.Utils.dashboardMeta = ->
+  $meta = $('.dashboard-meta')
+  $meta.each (i, ele) ->
+    $(ele).find(".aggregation_type").text Visio.Utils.parameterByName(Visio.manager.get('aggregation_type')).human
+
+    $(ele).find('.year').text Visio.manager.year()
+
+    $(ele).find('.module_type').text Visio.Utils.figureTypeByName(Visio.manager.get('module_type')).human
+
+    $(ele).find('.reported_type').text Visio.manager.get('reported_type').toUpperCase()

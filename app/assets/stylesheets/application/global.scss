@@ -562,6 +562,7 @@ body.index {
     height: $sp-header-height;
   }
   .menu {
+    max-width: 1200px;
     a {
       display: block;
       color: $dark-gray;

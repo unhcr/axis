@@ -2,7 +2,7 @@ language: ruby
 rvm:
   - 2.0.0
 env:
-  - DB=mysql
+  - DB=postgresql
 script:
   - RAILS_ENV=test bundle exec rake --trace db:migrate test
 #  - RAILS_ENV=test bundle exec teaspoon -q --coverage-reports=cobertura --format=tap --server-port 6374 --server-timeout 500
@@ -12,6 +12,6 @@ before_install:
   - "sh -e /etc/init.d/xvfb start"
   - "sleep 3"
 before_script:
-  - mysql -e 'create database projects_test'
+  - psql -e 'create database projects_test'
 services:
   - elasticsearch

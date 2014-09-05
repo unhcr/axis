@@ -113,12 +113,10 @@ class Visio.Views.Header extends Backbone.View
     not $optionMenu.hasClass 'zero-max-height'
 
   swipeInMenuValues: =>
-    console.log 'swipe in'
     $menuValues = @$el.find('.menu-value').not('.old')
     $menuValues.css 'left', 0
 
   clearMenuValues: =>
-    console.log 'clear out'
     $menuValues = @$el.find '.menu-value.old'
     $menuValues.unbind()
     $menuValues.remove()
@@ -130,11 +128,9 @@ class Visio.Views.Header extends Backbone.View
   onTransitionEnd: (e) =>
     if e.originalEvent.propertyName == 'left'
       @clearMenuValues()
-      console.log 'trans end'
       @swipeInMenuValues()
 
   swipeOutMenuValues: =>
-    console.log 'swiping out'
     $menuValues = @$el.find '.menu-value'
     $menuValues.css 'left', '-2000px'
     @markOld()

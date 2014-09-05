@@ -1,0 +1,5 @@
+- _.each ['aggregation_type', 'year', 'module_type', 'reported_type'], (type, i, list) ->
+  %span{ :class => type }
+
+  - if i != list.length - 1
+    %span = '-'

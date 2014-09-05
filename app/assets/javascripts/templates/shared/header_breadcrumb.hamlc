@@ -14,8 +14,8 @@
       %span
         = '|'
       - _.each _.values(context.menuOptions), (menuOption, i, list) ->
-        .dashboard-item.menu-option{ :data => { :option => menuOption.key } }
-          %span.dashboard-label
+        .dashboard-meta.dashboard-item.menu-option{ :data => { :option => menuOption.key } }
+          %span.dashboard-label{ :class => menuOption.key }
             = menuOption.currentHuman()
 
         - if i < list.length - 1

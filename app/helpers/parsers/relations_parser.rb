@@ -24,9 +24,9 @@ module Parsers
     # isn't a indicator, then parameter should be nil
     def resource_to_csvfield_attrs(resource, indicator_type = nil)
       if resource != Indicator
-        return ElementsParser.csvfields[resource.table_name.to_sym]
+        return RelationsParser.csvfields[resource.table_name.to_sym]
       else
-        return ElementsParser.csvfields["#{indicator_type}_#{resource.table_name}".to_sym]
+        return RelationsParser.csvfields["#{indicator_type}_#{resource.table_name}".to_sym]
       end
     end
 
@@ -66,7 +66,7 @@ module Parsers
         OutputsPpgs,
         PpgsProblemObjectives
       ]
-      csvfields = ElementsParser.csvfields
+      csvfields = RelationsParser.csvfields
 
       p 'Reading CSV'
       @relations.each do |association|
