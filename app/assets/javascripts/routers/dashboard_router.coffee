@@ -10,6 +10,7 @@ class Visio.Routers.DashboardRouter extends Visio.Routers.GlobalRouter
 
     Visio.manager.on 'change:module_type', =>
       Visio.router.navigate Visio.Utils.generateOverviewUrl(), { trigger: true }
+      Visio.Utils.dashboardMeta()
 
     Visio.manager.on 'change:filter_system', =>
       @headerView.filterSystem.render()
@@ -24,8 +25,8 @@ class Visio.Routers.DashboardRouter extends Visio.Routers.GlobalRouter
                       'change:date',
                       'change:amount_type'].join(' '), =>
       @moduleView.render true
-      $('.dashboard-meta').text Visio.manager.toString()
       Visio.router.navigate Visio.Utils.generateOverviewUrl(), { silent: true }
+      Visio.Utils.dashboardMeta()
 
     @module = $('#module')
 
@@ -52,6 +53,7 @@ class Visio.Routers.DashboardRouter extends Visio.Routers.GlobalRouter
       @module.html @moduleView.render().el
 
       Visio.router.navigate Visio.Utils.generateOverviewUrl(), { silent: true }
+      Visio.Utils.dashboardMeta()
 
     ).fail (e) =>
       console.log e

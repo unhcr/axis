@@ -2,7 +2,7 @@
   .row
     .col-md-4
       %h3.dashboard-meta
-        = Visio.manager.toString()
+        != window.HAML['shared/dashboard_meta']()
     .col-md-8.right-text.header-buttons
       .export.header-button
   .row

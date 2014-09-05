@@ -2,7 +2,7 @@
   %section.row
     .col-md-6
       %h3.dashboard-meta
-        = Visio.manager.toString()
+        != window.HAML['shared/dashboard_meta']()
     .col-md-6.right-text.header-buttons
       .export.header-button
   %section.row.bottom-flush.contain

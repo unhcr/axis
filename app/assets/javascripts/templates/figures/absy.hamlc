@@ -2,7 +2,7 @@
   .figure-bar
     .pull-left
       %h3.dashboard-meta
-        = Visio.manager.toString()
+        != window.HAML['shared/dashboard_meta']()
     .pull-right.header-buttons
       .export.header-button
 
