@@ -70,4 +70,4 @@ class Visio.Routers.DashboardRouter extends Visio.Routers.GlobalRouter
     $('body').append((new Visio.Views.ShareStrategy({ strategy: Visio.manager.get('dashboard') })).el)
 
   index: () =>
-    @figure Visio.FigureTypes.OVERVIEW.name
+    @figure Visio.manager.get('module_type')
