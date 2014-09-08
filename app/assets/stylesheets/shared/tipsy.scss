@@ -9,6 +9,7 @@
   z-index: 100000;
   pointer-events: none;
   width: 330px;
+  overflow: hidden;
 
   .tipsy-parameter-name {
     color: $purple;
@@ -31,8 +32,41 @@
   }
 
   .row {
-    margin-left: 0px;
-    margin-right: 0px;
+  }
+
+  /* For ISY tooltip */
+  .value-numbers {
+    text-align: left;
+    font-size: 12px;
+    border-left: 1px solid #ccc;
+    padding-top: 8px;
+  }
+  .value-number {
+    border-bottom: 1px dotted #ccc;
+  }
+  .value-labels {
+    text-align: right;
+    color: $orange;
+    font-size: 13px;
+    margin-top: 25px;
+  }
+  .value-heading {
+    font-weight: bold;
+    font-size: 10px;
+    padding-bottom: 6px;
+  }
+
+  .value-number, .value-label {
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+
+  .value-number.last {
+    border-bottom: none;
+  }
+
+  .absy-tipsy, .map-tipsy {
+    padding-bottom: 6px;
   }
 
 }
@@ -64,10 +98,13 @@
     /*max-width: 200px;*/
     max-height: 350px;
     overflow-y: auto;
-    padding: 5px 8px 4px 8px;
     border: 1px solid #ccc;
     opacity: 1;
     background: rgba(255,255,255, 0.95);
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 0px;
+    padding-bottom: 0px;
   }
 
   .tipsy-inner .tipsy-title {

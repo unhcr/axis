@@ -96,6 +96,12 @@ window.Visio =
     LYPN: 'Returnee'
     LYPJ: 'All populations of conern'
     LYPL: 'Stateless'
+  IndicatorTypes:
+    PERCENTAGE: 'PERCENTAGE'
+    YESNOPARTIAL: 'YESNOPARTIAL'
+    NCNUMBER: 'NCNUMBER'
+    AVERAGE: 'AVERAGE'
+    NUMBEROF: 'NUMBEROF'
   Durations:
     VERY_FAST: 100
     FAST: 500

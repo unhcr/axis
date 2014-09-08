@@ -4,7 +4,6 @@ class Visio.Figures.Absy extends Visio.Figures.Base
 
   type: Visio.FigureTypes.ABSY
 
-  templateLabel: HAML['figures/label']
   templateTooltip: HAML['tooltips/absy']
 
   initialize: (config = {}) ->
@@ -122,7 +121,7 @@ class Visio.Figures.Absy extends Visio.Figures.Base
         .attr("y", -60)
         .attr('transform', 'translate(-58, 0)')
         .attr("dy", "-.21em")
-        .style("text-anchor", "middle")
+        .style("text-anchor", "end")
         .html =>
           @yAxisLabel()
 

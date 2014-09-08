@@ -1,31 +1,32 @@
-%section.row.ui-orange
-  .col-md-6
-    = Visio.manager.year()
-  .col-md-6.right-text
-    - if (context.d.get('is_performance'))
-      PERFORMANCE
-    - else
-      IMPACT
-    INDICATOR
-%section.row
-  - _.each [Visio.Parameters.PPGS, Visio.Parameters.GOALS, Visio.Parameters.INDICATORS], (hash) ->
-    .col-md-3
-      .ui-primary
-        = hash.human.toUpperCase()
-      .ui-primary-light
-        = context.d[hash.singular]()?.toString()
-  .col-md-3.zebra
-    - _.each context.values, (value) ->
+.isy-tipsy
+  .row
+    .value-labels.col-md-4
+      - _.each context.values, (v) ->
+        .value-label
+          = v.human
+
+    .value-numbers.col-md-8
       .row
-        .col-md-6.ui-orange.zero-padding
-          = value.human
-        .col-md-6.ui-primary-light.zero-padding.right-text
-          - if context.d.get(value.value)? and context.d.indicator()?.get('name')[0] == '%'
-            = Visio.Formats.PERCENT context.d.get(value.value) / 100
-          - else if context.d.get(value.value)?
-            = Visio.Formats.COMMA context.d.get(value.value)
-          - else
-            N/A
-%section.row
-  .col-md-12
-    = "* ALL PERCENTAGES ARE TOWARDS THE TARGET"
+        .value-heading.col-md-6
+          ABSOLUTE
+        .value-heading.col-md-6
+          RELATIVE
+
+      - _.each context.values, (v, i, list) ->
+        .row
+          .value-number.value-absolute.col-md-6{ :class => 'last' if i == list.length - 1 }
+
+            - if context.d.isPercentage() and context.d.get(v.value)?
+              = Visio.Formats.PERCENT context.d.get(v.value) / 100
+            - else if context.d.get(v.value)?
+              = Visio.Formats.SI_SIMPLE context.d.get(v.value)
+            - else
+              = 'N/A'
+
+          .value-number.value-relative.col-md-6{ :class => 'last' if i == list.length - 1 }
+            - if context.d.get(v.value)? and context.d.get(Visio.manager.get('achievement_type'))?
+              = Visio.Formats.PERCENT context.d.get(v.value) / context.d.get(Visio.manager.get('achievement_type'))
+
+            - else
+              = 'N/A'
+

@@ -272,13 +272,9 @@ line {
 
 
   .bar-container.hover {
-    stroke: $dark-gray;
-    stroke-width: 8px;
   }
 
   .bar-container.selected {
-    stroke: $black;
-    stroke-width: 8px;
   }
   .box.faded {
     opacity: .6;
@@ -292,10 +288,6 @@ line {
     -webkit-transition:opacity $fast-transition;
     -o-transition:opacity $fast-transition;
     transition:opacity $fast-transition;
-    line {
-      stroke: $dark-gray;
-      pointer-events: none;
-    }
   }
   .ADMIN-bar {
     fill: $admin;
@@ -324,14 +316,11 @@ line {
 }
 
 .svg-isy-figure {
-  .y.axis g.tick:nth-last-of-type(1) line {
-    stroke: $lighter-gray;
-  }
   .myr-bar {
-    fill: orange;
+    fill: #862e8d;
   }
   .yer-bar {
-    fill: rgb(11, 217, 255);
+    fill: #f6a0f3;
   }
   .axis {
     line:last-child {
@@ -339,27 +328,22 @@ line {
     }
   }
   .bar {
-    stroke: white;
     pointer-events: none;
   }
   .bar-container {
-    fill: $off-white;
-    stroke: none;
+    fill: white;
+    stroke: $light-gray;
   }
 
 
   .bar-container.hover {
-    stroke: $dark-gray;
-    stroke-width: 8px;
   }
 
   .bar-container.selected {
-    stroke: $black;
-    stroke-width: 8px;
   }
 
   .bar-container.inconsistent {
-    fill: $alert-red;
+    fill: #d2f8fe;
   }
   .bar-footer.success {
     fill: $success;
@@ -385,15 +369,11 @@ line {
     -webkit-transition:opacity $fast-transition;
     -o-transition:opacity $fast-transition;
     transition:opacity $fast-transition;
-    line {
-      stroke: $dark-gray;
-      pointer-events: none;
-    }
   }
 
   .target {
-    fill: yellow;
-    stroke: $black;
+    fill: white;
+    stroke: $dark-gray;
     pointer-events: none;
 
     text {
@@ -403,8 +383,8 @@ line {
 
   .baseline {
     pointer-events: none;
-    fill: $primary;
-    stroke: $black;
+    fill: white;
+    stroke: $dark-gray;
 
     text {
       stroke: white;

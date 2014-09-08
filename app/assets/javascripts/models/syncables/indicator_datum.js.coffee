@@ -80,6 +80,9 @@ class Visio.Models.IndicatorDatum extends Visio.Models.Syncable
 
     result
 
+  isPercentage: ->
+    @get('indicator_type') == Visio.IndicatorTypes.PERCENTAGE
+
   situationAnalysis: (reported) ->
     result =
       status: null

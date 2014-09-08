@@ -12,19 +12,16 @@ class Visio.Views.IsyShowView extends Visio.Views.AccordionShowView
     'oTransitionEnd': 'onParameterTransitionEnd'
 
   initialize: (options) ->
-    width = $('#module').width()
-
-    if $('.page').hasClass('shift')
-      width -= (Visio.Constants.FILTERS_WIDTH + 40)
+    width = $('#module').width() - (Visio.Constants.FILTERS_WIDTH + 40)
 
     config =
       margin:
-        top: 35
+        top: 85
         bottom: 18
-        left: 40
+        left: 115
         right: 30
       width: width
-      height: 260
+      height: 325
 
     @isyFigure = new Visio.Figures.Isy config
     @filterBy = new Visio.Views.FilterBy({ figure: @isyFigure, })
@@ -100,10 +97,6 @@ class Visio.Views.IsyShowView extends Visio.Views.AccordionShowView
     max = @isyFigure.filtered(@isyFigure.collection).length
 
     @isyFigure.render()
-
-    # Make sure something is there
-    unless @isyFigure.tooltip.hasRendered()
-      $.publish "hover.#{@isyFigure.cid}.figure", 0
 
     $slider = @$el.find('.slider')
     $slider.slider 'option', 'max', max - 1
