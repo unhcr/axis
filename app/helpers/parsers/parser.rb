@@ -43,6 +43,7 @@ module Parsers
           setter = element.dup
           setter.keep_if { |k, v| !self.class.selector.include?(k) }
 
+          next if selector.has_key?(:id) && selector[:id].nil?
           upsert.row selector, setter
         end
       end
