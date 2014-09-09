@@ -160,14 +160,7 @@ class Visio.Figures.Isy extends Visio.Figures.Base
 
     boxes = @g.selectAll('g.box').data filtered, (d) -> d.id
     boxes.enter().append('g')
-    boxes.attr('class', (d, i) ->
-      classList = ['box', "box-#{d.id}"]
-      classList.push 'box-invisible'  if self.x(i) < self.x.range()[0] or self.x(i) > self.x.range()[1]
-      classList.push 'gone'  if self.x(i) < self.x.range()[0] or self.x(i) > self.x.range()[1]
-      classList.join(' ')
-      )
-      .style('opacity', (d, i) ->
-      )
+    boxes.attr('class', @boxClasslist)
       .transition()
       .duration(Visio.Durations.FAST)
       .attr('transform', (d, i) -> 'translate(' + self.x(i) + ', 0)')
@@ -200,7 +193,6 @@ class Visio.Figures.Isy extends Visio.Figures.Base
           .attr('y', -self.barMargin)
           .attr('class', (d) ->
             classList = ['bar-container']
-            classList.push 'inconsistent' unless d.consistent().isConsistent
             classList.push 'selected' if d.id == self.selectedDatum?.id
             classList.push 'hover' if d.id == self.hoverDatum?.id
 
@@ -468,14 +460,17 @@ class Visio.Figures.Isy extends Visio.Figures.Base
         @x.domain [0, @maxIndicators]
 
       @g.selectAll('g.box').attr('transform', (d, i) => 'translate(' + @x(i) + ', 0)')
-        .attr 'class', (d, i) ->
-          classList = ['box', "box-#{d.id}"]
-          classList.push 'box-invisible'  if self.x(i) < self.x.range()[0] or self.x(i) > self.x.range()[1]
-          classList.push 'gone'  if self.x(i) < self.x.range()[0] or self.x(i) > self.x.range()[1]
-          classList.join(' ')
-
+        .attr 'class', @boxClasslist
 
     @y.domain [0, +@hoverDatum.get(@goalType)]
+
+  boxClasslist: (d, i) =>
+    classList = ['box', "box-#{d.id}"]
+    classList.push 'box-invisible'  if @x(i) < @x.range()[0] or @x(i) > @x.range()[1]
+    classList.push 'gone'  if @x(i) < @x.range()[0] or @x(i) > @x.range()[1]
+    classList.push 'inconsistent' unless d.consistent().isConsistent
+    classList.join(' ')
+
 
   mouseout: (e, i) =>
     @g.selectAll('.bar-container').classed 'hover', false
