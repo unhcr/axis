@@ -1,4 +1,4 @@
 test:
   adapter: postgresql
-  database: travis_ci_test
+  database: projects_test
   username: postgres
