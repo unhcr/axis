@@ -103,7 +103,7 @@ class Visio.Views.IsyShowView extends Visio.Views.AccordionShowView
     $slider.attr 'data-max', max
 
     # No reason to show slider if there is nothing to slide
-    if max < 2
+    if max < @isyFigure.maxIndicators
       $slider.addClass 'gone'
     else
       $slider.removeClass 'gone'

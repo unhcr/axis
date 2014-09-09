@@ -316,9 +316,6 @@ line {
 }
 
 .svg-isy-figure {
-  .label {
-    font-size: 11px;
-  }
   .myr-bar {
     fill: #862e8d;
   }
@@ -328,6 +325,10 @@ line {
   .axis {
     line:last-child {
       stroke: black;
+    }
+
+    text {
+      font-size: 11px;
     }
   }
   .bar {
@@ -348,8 +349,8 @@ line {
   .bar-container.selected {
   }
 
-  .bar-container.inconsistent {
-    fill: #d2f8fe;
+  .box.inconsistent .bar-container{
+    fill: $baby-blue;
   }
   .bar-footer.success {
     fill: $success;
@@ -397,15 +398,19 @@ line {
     }
   }
 
+  .box.inconsistent:hover {
+    .hover-container {
+      fill: $baby-blue;
+      stroke: $dark-gray;
+    }
+  }
+
 
   .target {
     fill: white;
     stroke: $dark-gray;
     pointer-events: none;
 
-    text {
-      font-size: 11px;
-    }
   }
 
   .baseline {
@@ -413,10 +418,6 @@ line {
     fill: white;
     stroke: $dark-gray;
 
-    text {
-      stroke: white;
-      font-size: 11px;
-    }
   }
 
   .circle {
@@ -427,6 +428,7 @@ line {
   }
 
   .label {
+    font-size: 11px;
     pointer-events: none;
     -webkit-filter: drop-shadow( -5px -5px 5px #000 );
             filter: drop-shadow( -5px -5px 5px #000 ); /* Same syntax as box-shadow */
