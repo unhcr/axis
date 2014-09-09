@@ -197,6 +197,21 @@ class Visio.Figures.Isy extends Visio.Figures.Base
 
             return classList.join ' ')
 
+        hoverContainer = box.selectAll('.hover-container').data([d])
+        hoverContainer.enter().append('rect')
+        hoverContainer.attr('width', self.barWidth * 2)
+          .attr('height', self.adjustedHeight + self.barMargin + 2 * self.footerHeight)
+          .attr('x', 0)
+          .attr('y', -self.barMargin)
+          .attr('class', (d) ->
+            classList = ['hover-container']
+            classList.push 'selected' if d.id == self.selectedDatum?.id
+            classList.push 'hover' if d.id == self.hoverDatum?.id
+            classList.join ' ')
+
+        hoverContainer.exit().remove()
+
+
         container.on 'mouseenter', (d) ->
           $.publish "hover.#{self.cid}.figure", [i, false]
 

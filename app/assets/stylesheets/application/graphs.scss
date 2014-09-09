@@ -377,9 +377,23 @@ line {
     transition:opacity $fast-transition;
   }
 
-  .box:hover {
-    fill: $light-gray;
+  .hover-container {
+    fill: transparent;
   }
+
+  .box:hover {
+    .hover-container {
+      fill: $off-white;
+      stroke: $dark-gray;
+    }
+    .yer-bar {
+      fill: #f642ee;
+    }
+    .myr-bar {
+      fill: #a432aa;
+    }
+  }
+
 
   .target {
     fill: white;
