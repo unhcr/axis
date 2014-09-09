@@ -335,6 +335,9 @@ line {
     stroke: $light-gray;
   }
 
+  .isy-line {
+    stroke: $light-gray;
+  }
 
   .bar-container.hover {
   }
@@ -360,6 +363,9 @@ line {
   .box.faded {
     opacity: .6;
   }
+  .box.box-invisible {
+    opacity: 0;
+  }
   .box.active {
     stroke: black;
     stroke-width: 1px;
@@ -369,6 +375,10 @@ line {
     -webkit-transition:opacity $fast-transition;
     -o-transition:opacity $fast-transition;
     transition:opacity $fast-transition;
+  }
+
+  .box:hover {
+    fill: $light-gray;
   }
 
   .target {

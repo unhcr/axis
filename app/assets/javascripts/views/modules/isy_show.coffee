@@ -17,11 +17,11 @@ class Visio.Views.IsyShowView extends Visio.Views.AccordionShowView
     config =
       margin:
         top: 85
-        bottom: 18
+        bottom: 50
         left: 115
         right: 30
       width: width
-      height: 325
+      height: 405
 
     @isyFigure = new Visio.Figures.Isy config
     @filterBy = new Visio.Views.FilterBy({ figure: @isyFigure, })

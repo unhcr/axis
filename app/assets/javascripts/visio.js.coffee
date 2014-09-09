@@ -7,6 +7,7 @@ window.Visio =
   Utils: {}
   Figures: {}
   Legends: {}
+  Labels: {}
   FigureTypes:
     MAP:
       className: 'Map'

@@ -52,19 +52,29 @@ class Visio.Figures.Isy extends Visio.Figures.Base
 
     super config
 
+
     @isPerformance = if config.isPerformance? then config.isPerformance else true
 
+    @footerHeight = 22
     @tipHeight = 8
-    @barWidth = 9
+    @barWidth = 8
     @barMargin = 8
-    @maxIndicators = Math.floor @adjustedWidth / (2 * @barWidth + @barMargin)
+
+    # Label Variables
+    @labelContainerWidth = 335
+    @labelContainerPaddingLeft = 50
+
+
+    @graphWidth = @adjustedWidth - @labelContainerWidth - @labelContainerPaddingLeft
+    @maxIndicators = Math.floor (@graphWidth) / (2 * @barWidth + @barMargin)
 
     @x = d3.scale.linear()
       .domain([0, @maxIndicators])
-      .range([0, @adjustedWidth])
+      .range([0, @graphWidth])
 
     @y = d3.scale.linear()
       .range([@adjustedHeight, 0])
+      .clamp(true)
 
     @scale = d3.scale.linear()
       .range([0, @adjustedHeight])
@@ -101,6 +111,34 @@ class Visio.Figures.Isy extends Visio.Figures.Base
     @isPerformanceFn @filters.get('is_performance').active() == 'true'
 
     @legendView = new Visio.Legends.Isy()
+    @labelView = new Visio.Labels.Isy()
+
+    # Lines
+    #
+    # Bottom line of ISY graph
+    @g.append('line')
+      .attr('class', 'isy-line')
+      .attr('x1', 0)
+      .attr('x2', @adjustedWidth)
+      .attr('y1', @adjustedHeight + 2 * @footerHeight)
+      .attr('y2', @adjustedHeight + 2 * @footerHeight)
+
+    # Bottom line of criticality dots
+    @g.append('line')
+      .attr('class', 'isy-line')
+      .attr('x1', 0)
+      .attr('x2', @adjustedWidth)
+      .attr('y1', @adjustedHeight)
+      .attr('y2', @adjustedHeight)
+
+    # Divider line between ISY and labels
+    @g.append('line')
+      .attr('class', 'isy-line isy-label-line')
+      .attr('x1', @adjustedWidth - @labelContainerWidth)
+      .attr('x2', @adjustedWidth - @labelContainerWidth)
+      .attr('y1', @adjustedHeight)
+      .attr('y2', 0 - @barMargin)
+
 
 
     $(@svg.node()).parent().on 'mouseleave', =>
@@ -113,8 +151,14 @@ class Visio.Figures.Isy extends Visio.Figures.Base
 
     boxes = @g.selectAll('g.box').data filtered, (d) -> d.id
     boxes.enter().append('g')
-    boxes.attr('class', (d) -> ['box', "box-#{d.id}"].join(' '))
-      .style('opacity', (d, i) -> if self.x(i) < 0 then 0 else 1)
+    boxes.attr('class', (d, i) ->
+      classList = ['box', "box-#{d.id}"]
+      classList.push 'box-invisible'  if self.x(i) < self.x.range()[0] or self.x(i) > self.x.range()[1]
+      classList.push 'gone'  if self.x(i) < self.x.range()[0] or self.x(i) > self.x.range()[1]
+      classList.join(' ')
+      )
+      .style('opacity', (d, i) ->
+      )
       .transition()
       .duration(Visio.Durations.FAST)
       .attr('transform', (d, i) -> 'translate(' + self.x(i) + ', 0)')
@@ -165,7 +209,7 @@ class Visio.Figures.Isy extends Visio.Figures.Base
         footer.enter().append('circle')
         footer.attr('r', self.barWidth / 2)
           .attr('cx', self.barWidth)
-          .attr('cy', self.adjustedHeight + self.barMargin + 2)
+          .attr('cy', self.adjustedHeight + self.footerHeight)
           .attr('class', (d) ->
             classList = ['bar-footer']
             unless d.get('is_performance')
@@ -179,7 +223,6 @@ class Visio.Figures.Isy extends Visio.Figures.Base
 
           reversed = baseline > value
 
-          barHeight = Math.abs(baseline - value)
           bars = box.selectAll(".#{metric}-bar").data([d])
 
           bars.enter().append('polygon')
@@ -192,33 +235,29 @@ class Visio.Figures.Isy extends Visio.Figures.Base
             .duration(Visio.Durations.FAST)
             .attr('points', (d) ->
               points = []
+              X = 0
+              Y = 1
 
-              y = if reversed
-                self.y(value + barHeight)
-              else
-                self.y(baseline + barHeight)
-
-              height = self.y(0) - self.y(barHeight)
               # BaseLeft
-              points.push [idx * self.barWidth, y]
+              points.push [idx * self.barWidth, self.y(baseline)]
 
               # BaseRight
-              points.push [(idx + 1) * self.barWidth, y]
+              points.push [(idx + 1) * self.barWidth, self.y(baseline)]
 
               # VariableRight
-              points.push [(idx + 1) * self.barWidth, y + height]
+              points.push [(idx + 1) * self.barWidth, self.y(value)]
 
               # VariableLeft
-              points.push [idx * self.barWidth, y + height]
+              points.push [idx * self.barWidth, self.y(value)]
 
               if metric == Visio.Algorithms.REPORTED_VALUES.yer and reversed
-                points[2][1] -= self.tipHeight
+                points[2][Y] -= self.tipHeight
               else if metric == Visio.Algorithms.REPORTED_VALUES.yer and not reversed
-                points[0][1] -= self.tipHeight
+                points[3][Y] -= self.tipHeight
               else if metric == Visio.Algorithms.REPORTED_VALUES.myr and reversed
-                points[3][1] -= self.tipHeight
+                points[3][Y] -= self.tipHeight
               else if metric == Visio.Algorithms.REPORTED_VALUES.myr and not reversed
-                points[1][1] -= self.tipHeight
+                points[2][Y] -= self.tipHeight
 
               path = _.map(points, (point) -> point.join(',')).join(' ')
 
@@ -241,15 +280,30 @@ class Visio.Figures.Isy extends Visio.Figures.Base
 
         if d.get(Visio.Algorithms.REPORTED_VALUES.baseline)?
           baseline = box.selectAll('.baseline').data([d])
-          baseline.enter().append('rect')
+          baseline.enter().append('polygon')
           baseline.attr('class', 'baseline')
           baseline.transition()
             .duration(Visio.Durations.FAST)
-            .attr('y', (d) -> self.y(d.get(Visio.Algorithms.REPORTED_VALUES.baseline)) - self.barWidth / 2)
-            .attr('x', self.barWidth / 2)
-            .attr('width', self.barWidth)
-            .attr('height', self.barWidth)
-            #.attr('transform', "rotate(45)")
+            .attr('points', (d) ->
+              points = []
+
+              y = self.y(d.get(Visio.Algorithms.REPORTED_VALUES.baseline))
+
+              # Left
+              points.push [0, y]
+
+              # Bottom
+              points.push [self.barWidth, y + self.barWidth]
+
+              # Right
+              points.push [2 * self.barWidth, y]
+
+              # Top
+              points.push [self.barWidth, y - self.barWidth]
+
+              path = _.map(points, (point) -> point.join(',')).join(' ')
+
+            )
 
           baseline.exit().remove()
       )
@@ -267,7 +321,22 @@ class Visio.Figures.Isy extends Visio.Figures.Base
       barContainer.classed 'selected', true
       $.publish "select.#{@figureId()}", [d, i]
 
+    boxes.on 'mouseover', (d, i) =>
+      offset = @$el.find('.figure').position()
+      $labels = $ '#module .isy-labels'
+
+      $labels.css
+        left: offset.left + @graphWidth + @margin.left + 50
+        top: offset.top + 70
+      $labels.html @labelView.render(d).el
+
+
     boxes.exit().remove()
+
+
+    # Parameter Labels
+
+
     @g.select('.y.axis')
       .transition()
       .duration(Visio.Durations.FAST)
@@ -281,19 +350,6 @@ class Visio.Figures.Isy extends Visio.Figures.Base
     @$el.find('.box').tipsy
       trigger: 'hover'
     @
-
-  circleLabel: (d, svgEl, letter) ->
-    g = d3.select svgEl
-    circle = g.selectAll('circle').data([d])
-    circle.enter().append('circle')
-    circle.attr('cx', @barWidth)
-      .attr('r', 8)
-    text = g.selectAll('text').data([d])
-    text.enter().append('text')
-    text.attr('x', @barWidth)
-      .attr('text-anchor', 'middle')
-      .attr('dy', '.4em')
-      .text(letter)
 
   sortFn: (a, b) =>
 
@@ -390,33 +446,6 @@ class Visio.Figures.Isy extends Visio.Figures.Base
         .style('opacity', (d, i) -> if self.x(i) < 0 then 0 else 1)
 
     @y.domain [0, +@hoverDatum.get(@goalType)]
-
-  computeLabelPositions: (attributes, datum, length) =>
-    values = _.map attributes, (attr) =>
-      value = @y(+datum.get(attr))
-      return {
-        value: value
-        attr: attr
-      }
-
-    values.sort (a, b) -> a.value - b.value
-
-    positions = []
-    positionsHash = {}
-    nValues = values.length
-
-    _.each values, (value, idx) =>
-
-      last = positions[positions.length - 1]
-
-      if last?
-        delta = value.value - last.value
-        value.value += (length - delta) if delta < length
-
-      positions.push value
-      positionsHash[value.attr] = value.value
-
-    positionsHash
 
   mouseout: (e, i) =>
     @g.selectAll('.bar-container').classed 'hover', false

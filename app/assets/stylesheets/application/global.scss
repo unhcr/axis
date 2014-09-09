@@ -2425,6 +2425,27 @@ a {
 
 }
 
+.isy-labels {
+  max-width: 350px;
+  padding-left: 14px;
+  padding-right: 14px;
+}
+
+.isy-label {
+  padding-bottom: 10px
+}
+
+.isy-parameter {
+  font-weight: bold;
+}
+
+.isy-parameter-content {
+  font-size: 11px;
+}
+.isy-parameter-content[data-parameter="indicator"] {
+  color: $purple;
+}
+
 .d3-floating-tooltip {
   position: absolute;
   z-index: 100;
