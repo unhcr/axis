@@ -1,5 +1,5 @@
 module Parsers
-  class IndicatorPerfParser < Parser
+  class IndicatorPerfParser < IndicatorParser
     MODEL = Indicator
 
     def self.csvfields
@@ -10,8 +10,18 @@ module Parsers
       }
     end
 
+    def self.relationfields
+      @relationfields ||= {
+        :output_id => 'RFOUTPUT_ID'
+      }
+    end
+
     def self.selector
       [:id]
+    end
+
+    def self.relations
+      [IndicatorsOutputs]
     end
 
   end
