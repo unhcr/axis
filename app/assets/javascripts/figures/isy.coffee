@@ -139,6 +139,15 @@ class Visio.Figures.Isy extends Visio.Figures.Base
       .attr('y1', @adjustedHeight)
       .attr('y2', 0 - @barMargin)
 
+    # Labels
+    @g.append('text')
+      .attr('class', 'label')
+      .attr('x', @graphWidth + @labelContainerPaddingLeft)
+      .attr('text-anchor', 'start')
+      .attr('y', @adjustedHeight + @footerHeight)
+      .attr('dy', '.33em')
+      .text 'Impact Criticality'
+
 
 
     $(@svg.node()).parent().on 'mouseleave', =>
@@ -212,10 +221,10 @@ class Visio.Figures.Isy extends Visio.Figures.Base
         hoverContainer.exit().remove()
 
 
-        container.on 'mouseenter', (d) ->
+        hoverContainer.on 'mouseenter', (d) ->
           $.publish "hover.#{self.cid}.figure", [i, false]
 
-        container.on 'mouseout', (d) ->
+        hoverContainer.on 'mouseout', (d) ->
           $.publish "mouseout.#{self.cid}.figure", i
 
         container.exit().remove()
@@ -450,23 +459,26 @@ class Visio.Figures.Isy extends Visio.Figures.Base
     return unless @hoverDatum?
     box.select('.bar-container').classed 'hover', true
 
-    if idx >= @maxIndicators and scroll
-      difference = idx - @maxIndicators
-      @x.domain [0 + difference, @maxIndicators + difference]
+
+    if scroll
+      if idx >= @maxIndicators
+        difference = idx - @maxIndicators
+        @x.domain [0 + difference, @maxIndicators + difference]
+      else if @x.domain()[0] > 0
+        @x.domain [0, @maxIndicators]
+
       @g.selectAll('g.box').attr('transform', (d, i) => 'translate(' + @x(i) + ', 0)')
-        .style('opacity', (d, i) -> if self.x(i) < 0 then 0 else 1)
-    else if @x.domain()[0] > 0 and scroll
-      @x.domain [0, @maxIndicators]
-      @g.selectAll('g.box').attr('transform', (d, i) => 'translate(' + @x(i) + ', 0)')
-        .style('opacity', (d, i) -> if self.x(i) < 0 then 0 else 1)
+        .attr 'class', (d, i) ->
+          classList = ['box', "box-#{d.id}"]
+          classList.push 'box-invisible'  if self.x(i) < self.x.range()[0] or self.x(i) > self.x.range()[1]
+          classList.push 'gone'  if self.x(i) < self.x.range()[0] or self.x(i) > self.x.range()[1]
+          classList.join(' ')
+
 
     @y.domain [0, +@hoverDatum.get(@goalType)]
 
   mouseout: (e, i) =>
     @g.selectAll('.bar-container').classed 'hover', false
-    @g.selectAll('.circle').data([])
-      .exit().transition().duration(Visio.Durations.VERY_FAST).attr('r', 0).remove()
-    @g.selectAll('.label').remove()
 
   close: ->
     @unbind()
