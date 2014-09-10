@@ -1,6 +1,8 @@
 - _.each context.params, (p) ->
   .isy-label
     .isy-parameter
+      - if p.singular == 'indicator'
+        = if context.d[p.singular]()?.get('is_performance') then 'Performance ' else 'Impact '
       = p.human
     .isy-parameter-content{ :data => { :parameter => p.singular } }
       = context.d[p.singular]()?.toString() or 'N/A'

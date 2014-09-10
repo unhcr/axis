@@ -16,9 +16,6 @@
     .pull-right
       - if Visio.manager.get('dashboard')?.shareable()
         %a.dashboard-item.icon.share-icon{ :href => '#share' }
-      %a.dashboard-item.icon.search-icon{ :href => '#search' }
       .dashboard-item.user-account
 
 .option-menu.zero-max-height.no-border
-#global-search.zero-max-height.row
-

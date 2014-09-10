@@ -8,9 +8,10 @@
     = context.d.toString()
 
   - _.each context.values, (v) ->
-    .row
-      .col-xs-12
-        = v.scenario.scenario + ' ' + v.scenario.type.human
-    .row
-      .col-xs-12.tipsy-number
-        = Visio.Formats.LONG_MONEY v.sum
+    .bsy-value{ :data => { :type => "#{Visio.Utils.stringToCssClass(v.scenario.scenario)}-#{v.scenario.type.singular}"
+      .row
+        .col-xs-12
+          = v.scenario.scenario + ' ' + v.scenario.type.human
+      .row
+        .col-xs-12.tipsy-number
+          = Visio.Formats.MONEY v.sum

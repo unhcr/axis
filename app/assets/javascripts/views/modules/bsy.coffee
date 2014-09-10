@@ -23,13 +23,23 @@ class Visio.Views.BsyView extends Backbone.View
     @sortBy = new Visio.Views.Dropdown
       title: 'Sort By'
       data: [
-          { label: 'Total Budget', value: 'total', checked: true },
+          { label: 'Comprehensive Budget', value: 'total', checked: true },
           { label: 'OL Budget', value: Visio.Scenarios.OL },
           { label: 'AOL Budget', value: Visio.Scenarios.AOL },
         ]
       callback: (value, data) =>
         @figure.sortAttribute = value
         @figure.render()
+
+    $.subscribe "hover.#{@figure.cid}.figure", (e, idxOrDatum) =>
+      if _.isNumber idxOrDatum
+        value = idxOrDatum
+      else
+        value = @figure.findBoxByDatum(idxOrDatum).idx
+
+      @$el.find('.slider').slider 'value', value
+      @$el.find('.slider .ui-slider-handle').attr 'data-value', value + 1
+
 
   render: (isRerender) ->
 

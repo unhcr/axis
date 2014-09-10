@@ -2,6 +2,6 @@
   = context.type.human
 
 %p
-  This dashboard depicts the allocated budget for Operations, PPGs, Goals, Outputs, Objectives, and Strategy Objectives against achievements.
+  = Visio.Texts.ABSY_LEGEND
 
 %img{ :src => '/assets/legends/absy.jpg' }

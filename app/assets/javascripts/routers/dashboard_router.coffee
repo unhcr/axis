@@ -3,7 +3,8 @@ class Visio.Routers.DashboardRouter extends Visio.Routers.GlobalRouter
   initialize: (options) ->
     super
 
-    Visio.skrollr = skrollr.init()
+    Visio.skrollr = skrollr.init
+      forceHeight: false
 
     @documentView = new Visio.Views.Document()
 
@@ -32,7 +33,6 @@ class Visio.Routers.DashboardRouter extends Visio.Routers.GlobalRouter
 
   routes:
     'menu' : 'menu'
-    'search': 'search'
     'share': 'share'
     ':figureType/:year/:aggregationType/:reportedType': 'figure'
     ':figureType/:year/:aggregationType': 'figure'

@@ -185,10 +185,6 @@ p.small {
   background-color: white;
   color: $primary;
 
-  .highlight {
-    color: $primary-light;
-  }
-
 }
 
 .ui-purple-theme {
@@ -254,7 +250,6 @@ body.layout-cms {
   z-index: 100;
   min-width: $header-min-width;
   height: $header-height;
-  white-space: nowrap;
 
   section {
     position: relative;
@@ -279,6 +274,7 @@ body.layout-cms {
   .col-right {
     width: 10%;
     float: right;
+    white-space: nowrap;
   }
 
   .col-middle {
@@ -577,6 +573,7 @@ body.index {
   .menu-tabs , .menu-content-container {
     border-top: 2px solid $black;
     padding-top: 28px;
+
   }
 
   .menu-content-container {
@@ -585,7 +582,11 @@ body.index {
     .divider {
       margin-top: 22px
     }
+    input {
+      margin-bottom: 22px;
+    }
   }
+
 
   .menu-tab {
     margin-bottom: 20px;
@@ -914,13 +915,11 @@ h5 {
 }
 
 input {
-  border: none;
+  @include input-white;
 }
 
 input:focus {
-  border: none;
   outline: none;
-  box-shadow: none;
 
   -moz-transition:background-color $fast-transition;
   -webkit-transition:background-color $fast-transition;
@@ -2011,6 +2010,10 @@ a {
   }
 }
 
+.bsy-value.highlight {
+  color: $orange;
+}
+
 .dashboard-item.selected {
   .dashboard-label {
     color: $primary;
@@ -2260,8 +2263,8 @@ a {
 
   .menu-value {
     position: relative;
-    padding-left: 30px;
-    padding-right: 30px;
+    padding-left: 25px;
+    padding-right: 25px;
     color: $dark-gray;
     height: $option-menu-height;
     line-height: $option-menu-height;
@@ -2292,30 +2295,6 @@ a {
   border: none !important;
 
 }
-
-#global-search {
-  overflow: hidden;
-  -moz-transition:max-height $fast-transition;
-  -webkit-transition:max-height $fast-transition;
-  -o-transition:max-height $fast-transition;
-  transition:max-height $fast-transition;
-  max-height: 50px;
-}
-
-#global-search .container {
-  background-color: $bright-yellow;
-}
-
-#global-search .search-container {
-  padding: 6px 0;
-}
-
-#global-search input {
-  background-color: $bright-yellow;
-  font-size: 1.3em;
-  line-height: normal;
-}
-
 
 .target-country-count {
   position: absolute;

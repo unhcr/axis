@@ -27,8 +27,10 @@ class Visio.Views.MenuView extends Backbone.View
 
   events:
     'click .menu-tab': 'onClickMenuTab'
+    'keyup .page-filter': 'onFilterPages'
 
   renderStrategies: ->
+    @$el.find('.page-filter').addClass 'gone'
     @$el.find('.menu-title').text ''
     @$el.find('.menu-content').html @templateStrategies
       strategies: Visio.manager.strategies().toJSON()
@@ -38,6 +40,7 @@ class Visio.Views.MenuView extends Backbone.View
   renderPages: ->
 
     @$el.find('.menu-title').text @tab.human
+    @$el.find('.page-filter').removeClass 'gone'
 
     if @[@tab.type].length > 0
       @$el.find('.menu-content').html @templatePageList
@@ -59,3 +62,22 @@ class Visio.Views.MenuView extends Backbone.View
     @$el.find('.menu-tab').removeClass 'selected'
     $(e.currentTarget).addClass 'selected'
     @[tab.fn]()
+
+  onFilterPages: (e) =>
+    $target = $ e.currentTarget
+    type = @tab.type
+    query = $target.val()
+    @filterPages query, type
+
+  filterPages: (query, type) =>
+    query = query.toLowerCase().trim()
+
+    if query
+      @$el.find('.menu-content').html @templatePageList
+        models: @[type].filter (model) ->
+          model.toString().toLowerCase().indexOf(query) != -1
+
+    else
+      @$el.find('.menu-content').html @templatePageList
+        models: @[type].models
+

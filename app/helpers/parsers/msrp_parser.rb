@@ -11,6 +11,7 @@ module Parsers
         :problem_objective_id => 'RFPROBLEMOBJECTIVEID',
         :output_id => 'RFOUTPUTID',
         :ppg_id => 'POPULATIONGROUPID',
+        :pillar => 'POPGROUPTYPEID',
         :budget_type => lambda do |row|
           raw_budget_type = row['BUDGET_TYPE']
 
@@ -40,7 +41,7 @@ module Parsers
 
     def self.selector
       [:plan_id, :ppg_id, :operation_id, :goal_id, :problem_objective_id, :output_id,
-       :scenario, :year, :budget_type]
+       :scenario, :year, :budget_type, :pillar]
     end
 
   end
