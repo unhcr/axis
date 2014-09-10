@@ -131,6 +131,7 @@ window.Visio =
 
   Texts:
     STRATEGY_DESC: 'Global or Regional Strategies are defined by focal points in HQ or RO. The visualizations in the dashboads'
+    ABSY_LEGEND: 'This dashboard depicts the allocated budget for Operations, PPGs, Goals, Outputs, Objectives, and Strategy Objectives against achievements.'
 
   Stores:
     MAP: 'map'
