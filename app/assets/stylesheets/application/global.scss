@@ -2628,7 +2628,7 @@ a {
 
   .filter-toggle:after, .visio-dropdown-toggle:after {
     content: '';
-    background-image: url(/assets/AXIS-ACCORDION-CLOSED-NOBORDER.png);
+    background-image: url(/assets/AXIS-ACCORDION-CLOSED-NOBORDER-GRAY.png);
     background-size: 20px;
     background-repeat: no-repeat;
     display: inline-block;
@@ -2637,6 +2637,10 @@ a {
     background-position: center;
     width: 20px;
 
+  }
+
+  .filter-toggle:hover:after, .visio-dropdown-toggle:hover:after {
+    background-image: url(/assets/AXIS-ACCORDION-CLOSED-NOBORDER.png);
   }
 
   .filter-toggle, .visio-dropdown-toggle {
@@ -2683,7 +2687,7 @@ a {
 }
 
 .filter-by.open, .visio-dropdown-container.open {
-  .filter-toggle:after {
+  .filter-toggle:after, .visio-dropdown-toggle:after {
     background-image: url(/assets/AXIS-ACCORDION-OPENED-NOBORDER.png);
   }
 
