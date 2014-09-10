@@ -52,7 +52,7 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
         filterType: 'checkbox'
         values: scenarioExpenditures
         human:
-          'Operating Level': 'Expenditure OL'
+          'Operating Level': 'Expenditure'
         callback: (name, attr) =>
           @render()
       }
@@ -87,7 +87,7 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
       .orient('left')
       .ticks(3)
       .tickPadding(@tickPadding)
-      .tickFormat((d) -> if d == 0 then null else Visio.Formats.SI_SIMPLE(d))
+      .tickFormat((d) -> if d == 0 then 0 else Visio.Formats.SI_SIMPLE(d))
       .tickSize(-@adjustedWidth)
 
     @g.append('g')
@@ -167,12 +167,6 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
 
             [topDash, perimeter - topDash].join ' ' )
 
-        container.on 'mouseenter', (d) ->
-          $.publish "hover.#{self.cid}.figure", [idx, false]
-
-        container.on 'mouseout', (d) ->
-          $.publish "mouseout.#{self.cid}.figure", idx
-
         container.exit().remove()
 
         box.selectAll('.bar').remove()
@@ -238,11 +232,13 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
             d: d
       )
 
-    boxes.on 'mouseenter', (d) ->
+    boxes.on 'mouseenter', (d, idx) ->
+      $.publish "hover.#{self.cid}.figure", [idx, false]
       $(@).tipsy('show')
 
-    boxes.on 'mouseleave', (d) ->
+    boxes.on 'mouseleave', (d, idx) ->
       $(@).tipsy('hide')
+      $.publish "mouseout.#{self.cid}.figure", idx
 
     boxes.on 'click', (d, i) =>
       if @selectedDatum?.id == d.id
