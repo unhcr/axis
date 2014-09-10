@@ -185,10 +185,6 @@ p.small {
   background-color: white;
   color: $primary;
 
-  .highlight {
-    color: $primary-light;
-  }
-
 }
 
 .ui-purple-theme {
@@ -2012,6 +2008,10 @@ a {
   .dashboard-value {
     @include orange-highlight;
   }
+}
+
+.bsy-value.highlight {
+  color: $orange;
 }
 
 .dashboard-item.selected {

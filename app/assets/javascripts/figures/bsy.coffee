@@ -183,6 +183,15 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
           .attr('height', self.adjustedHeight)
           .attr('x', (d, i) -> i * self.barWidth)
           .attr('y', 0)
+
+        scenarioBars.on 'mouseenter', (d) ->
+          type = "#{Visio.Utils.stringToCssClass(d.scenario)}-#{d.type.singular}"
+          $(".bsy-value[data-type=\"#{type}\"]").addClass('highlight')
+
+        scenarioBars.on 'mouseout', (d) ->
+          type = "#{Visio.Utils.stringToCssClass(d.scenario)}-#{d.type.singular}"
+          $(".bsy-value[data-type=\"#{type}\"]").removeClass('highlight')
+
         scenarioBars.exit().remove()
 
         values = []
