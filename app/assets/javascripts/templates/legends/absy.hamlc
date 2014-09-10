@@ -2,6 +2,6 @@
   = context.type.human
 
 %p
-  = Visio.Text.ABSY_LEGEND
+  = Visio.Texts.ABSY_LEGEND
 
 %img{ :src => '/assets/legends/absy.jpg' }
