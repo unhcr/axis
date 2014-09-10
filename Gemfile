@@ -66,6 +66,7 @@ group :development, :test do
   gem 'pry-rails'
   gem 'pry'
   gem 'pry-stack_explorer'
+  gem 'coveralls', require: false
 end
 
 group :development do
