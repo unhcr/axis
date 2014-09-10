@@ -69,6 +69,7 @@ describe Parsers do
   it "should parse" do
     parsers.each do |parser|
       @parserClass = parser[:parser]
+      @parserClass::MODEL.delete_all
       @parser = @parserClass.new
       @required = parser[:required]
       @path = "#{TESTFILE_PATH}#{parser[:build]::BUILD_NAME}/#{parser[:build]::OUTPUT_FILENAME}"
