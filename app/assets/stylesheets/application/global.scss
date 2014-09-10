@@ -254,7 +254,6 @@ body.layout-cms {
   z-index: 100;
   min-width: $header-min-width;
   height: $header-height;
-  white-space: nowrap;
 
   section {
     position: relative;
@@ -279,6 +278,7 @@ body.layout-cms {
   .col-right {
     width: 10%;
     float: right;
+    white-space: nowrap;
   }
 
   .col-middle {
@@ -2260,8 +2260,8 @@ a {
 
   .menu-value {
     position: relative;
-    padding-left: 30px;
-    padding-right: 30px;
+    padding-left: 25px;
+    padding-right: 25px;
     color: $dark-gray;
     height: $option-menu-height;
     line-height: $option-menu-height;
