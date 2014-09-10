@@ -13,6 +13,7 @@
     .col-md-9
       .menu-content-container
         %h3.menu-title
+        %input.page-filter.full-width.gone{:type => "text"}
         .menu-content
 
 

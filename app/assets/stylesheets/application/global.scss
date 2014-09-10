@@ -577,6 +577,7 @@ body.index {
   .menu-tabs , .menu-content-container {
     border-top: 2px solid $black;
     padding-top: 28px;
+
   }
 
   .menu-content-container {
@@ -585,7 +586,11 @@ body.index {
     .divider {
       margin-top: 22px
     }
+    input {
+      margin-bottom: 22px;
+    }
   }
+
 
   .menu-tab {
     margin-bottom: 20px;
@@ -914,13 +919,11 @@ h5 {
 }
 
 input {
-  border: none;
+  @include input-white;
 }
 
 input:focus {
-  border: none;
   outline: none;
-  box-shadow: none;
 
   -moz-transition:background-color $fast-transition;
   -webkit-transition:background-color $fast-transition;
