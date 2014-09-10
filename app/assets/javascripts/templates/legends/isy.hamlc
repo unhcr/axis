@@ -4,4 +4,7 @@
 %p
   This dashboard depicts the allocated budget for Operations, PPGs, Goals, Outputs, Objectives, and Strategy Objectives against achievements.
 
-%img{ :src => '/assets/legends/absy.jpg' }
+%small
+  %b Circles
+  are sized according to the number of indicators selected.
+

@@ -112,7 +112,8 @@ test 'render', ->
   @figure.render()
 
   strictEqual @figure.$el.find('.box').length, 1
-  strictEqual @figure.$el.find('.box line').length, 1
+  strictEqual @figure.$el.find('.box .hover-container').length, 1
+  strictEqual @figure.$el.find('.box .bar-container').length, 1
 
 test 'sort', ->
   @figure.sortAttribute = Visio.ProgressTypes.BASELINE_MYR
@@ -176,26 +177,6 @@ test 'hover - idx', ->
 
   strictEqual @figure.hoverDatum.id, datum.id
   ok @figure.$el.find(".box-#{datum.id} .hover").length, 'Should have hover element'
-
-test 'computeLabelPositions', ->
-
-  datum = @data.get 'jeff'
-  @figure.y.domain [0, 100]
-  @figure.y.range [0, 100]
-  datum.set Visio.Algorithms.REPORTED_VALUES.myr, 21
-  datum.set Visio.Algorithms.REPORTED_VALUES.yer, 20
-  length = 20
-
-  attributes = [Visio.Algorithms.REPORTED_VALUES.myr, Visio.Algorithms.REPORTED_VALUES.yer]
-
-  hash = @figure.computeLabelPositions attributes, datum, length
-
-  strictEqual _.values(hash).length, 2
-
-  positions = _.values(hash).sort()
-
-  ok positions[1] > positions[0]
-  strictEqual positions[1] - positions[0], length
 
 test 'query', ->
 

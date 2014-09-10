@@ -108,6 +108,8 @@ end
 task :build => :environment do
   starttime = Time.now
   fm = FetchMonitor.first
+  fm = FetchMonitor.create if fm.nil?
+
   Rake::Task['build:relations'].invoke
   Rake::Task['build:countries'].invoke
   Rake::Task['build:budgets'].invoke

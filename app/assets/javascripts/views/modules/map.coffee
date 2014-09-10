@@ -14,7 +14,7 @@ class Visio.Views.MapView extends Backbone.View
 
     config =
       width: width
-      height: 600
+      height: 800
       model: new Visio.Models.Map()
     #  margin:
     #    top: 90

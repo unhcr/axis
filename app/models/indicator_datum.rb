@@ -116,7 +116,7 @@ class IndicatorDatum < ActiveRecord::Base
         ) as strategy_objective_ids
       from #{self.table_name}
       ) t
-      where #{query_string}"
+      where is_deleted = false AND #{query_string}"
 
     ActiveRecord::Base.connection.execute(sql)
 

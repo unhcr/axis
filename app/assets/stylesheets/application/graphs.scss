@@ -262,23 +262,49 @@ line {
 
 .svg-bsy-figure {
   .bar {
-    stroke: white;
+    stroke: none;
     pointer-events: none;
   }
   .bar-container {
-    fill: $off-white;
+    fill: white;
     stroke: none;
+  }
+
+  .scenario-bar {
+    fill: $scenario-bar;
+  }
+
+  .box:hover {
+    .scenario-bar.Operating-Level-bar.budget-bar {
+      fill: $scenario-bar-ol;
+    }
+    .scenario-bar.Above-Operating-Level-bar.budget-bar {
+      fill: $scenario-bar-aol;
+    }
+    .scenario-bar.Operating-Level-bar.expenditure-bar {
+      fill: $scenario-bar-exp;
+    }
+
+    .ADMIN-bar {
+      fill: #1da3f6;
+    }
+    .STAFF-bar {
+      fill: #e13ac1;
+    }
+    .PROJECT-bar {
+      fill: #c0f633;
+    }
+    .PARTNER-bar {
+      fill: #fd7b56;
+    }
+
   }
 
 
   .bar-container.hover {
-    stroke: $dark-gray;
-    stroke-width: 8px;
   }
 
   .bar-container.selected {
-    stroke: $black;
-    stroke-width: 8px;
   }
   .box.faded {
     opacity: .6;
@@ -292,10 +318,6 @@ line {
     -webkit-transition:opacity $fast-transition;
     -o-transition:opacity $fast-transition;
     transition:opacity $fast-transition;
-    line {
-      stroke: $dark-gray;
-      pointer-events: none;
-    }
   }
   .ADMIN-bar {
     fill: $admin;
@@ -321,45 +343,47 @@ line {
   .PILLAR-4-bar, .LYPJ-bar {
     fill: $pillar4;
   }
+  .bsy-line {
+    stroke: $light-gray;
+  }
 }
 
 .svg-isy-figure {
-  .y.axis g.tick:nth-last-of-type(1) line {
-    stroke: $lighter-gray;
-  }
   .myr-bar {
-    fill: orange;
+    fill: #862e8d;
   }
   .yer-bar {
-    fill: rgb(11, 217, 255);
+    fill: #f6a0f3;
   }
   .axis {
     line:last-child {
       stroke: black;
     }
+
+    text {
+      font-size: 11px;
+    }
   }
   .bar {
-    stroke: white;
     pointer-events: none;
   }
   .bar-container {
-    fill: $off-white;
-    stroke: none;
+    fill: white;
+    stroke: $light-gray;
   }
 
+  .isy-line {
+    stroke: $light-gray;
+  }
 
   .bar-container.hover {
-    stroke: $dark-gray;
-    stroke-width: 8px;
   }
 
   .bar-container.selected {
-    stroke: $black;
-    stroke-width: 8px;
   }
 
-  .bar-container.inconsistent {
-    fill: $alert-red;
+  .box.inconsistent .bar-container{
+    fill: $baby-blue;
   }
   .bar-footer.success {
     fill: $success;
@@ -376,6 +400,9 @@ line {
   .box.faded {
     opacity: .6;
   }
+  .box.box-invisible {
+    opacity: 0;
+  }
   .box.active {
     stroke: black;
     stroke-width: 1px;
@@ -385,31 +412,45 @@ line {
     -webkit-transition:opacity $fast-transition;
     -o-transition:opacity $fast-transition;
     transition:opacity $fast-transition;
-    line {
+  }
+
+  .hover-container {
+    fill: transparent;
+  }
+
+  .box:hover {
+    .hover-container {
+      fill: $off-white;
       stroke: $dark-gray;
-      pointer-events: none;
+    }
+    .yer-bar {
+      fill: #f642ee;
+    }
+    .myr-bar {
+      fill: #a432aa;
     }
   }
 
+  .box.inconsistent:hover {
+    .hover-container {
+      fill: $baby-blue;
+      stroke: $dark-gray;
+    }
+  }
+
+
   .target {
-    fill: yellow;
-    stroke: $black;
+    fill: white;
+    stroke: $dark-gray;
     pointer-events: none;
 
-    text {
-      font-size: 11px;
-    }
   }
 
   .baseline {
     pointer-events: none;
-    fill: $primary;
-    stroke: $black;
+    fill: white;
+    stroke: $dark-gray;
 
-    text {
-      stroke: white;
-      font-size: 11px;
-    }
   }
 
   .circle {
@@ -420,6 +461,7 @@ line {
   }
 
   .label {
+    font-size: 11px;
     pointer-events: none;
     -webkit-filter: drop-shadow( -5px -5px 5px #000 );
             filter: drop-shadow( -5px -5px 5px #000 ); /* Same syntax as box-shadow */

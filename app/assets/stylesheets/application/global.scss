@@ -2098,7 +2098,7 @@ a {
   background-color: white;
 
   .data-container {
-    max-height: 580px;
+    max-height: 700px;
   }
 
   .js-parameter:hover:before{
@@ -2425,6 +2425,27 @@ a {
 
 }
 
+.isy-labels {
+  max-width: 350px;
+  padding-left: 14px;
+  padding-right: 14px;
+}
+
+.isy-label {
+  padding-bottom: 10px
+}
+
+.isy-parameter {
+  font-weight: bold;
+}
+
+.isy-parameter-content {
+  font-size: 11px;
+}
+.isy-parameter-content[data-parameter="indicator"] {
+  color: $purple;
+}
+
 .d3-floating-tooltip {
   position: absolute;
   z-index: 100;
@@ -2607,7 +2628,7 @@ a {
 
   .filter-toggle:after, .visio-dropdown-toggle:after {
     content: '';
-    background-image: url(/assets/AXIS-ACCORDION-CLOSED-NOBORDER.png);
+    background-image: url(/assets/AXIS-ACCORDION-CLOSED-NOBORDER-GRAY.png);
     background-size: 20px;
     background-repeat: no-repeat;
     display: inline-block;
@@ -2616,6 +2637,10 @@ a {
     background-position: center;
     width: 20px;
 
+  }
+
+  .filter-toggle:hover:after, .visio-dropdown-toggle:hover:after {
+    background-image: url(/assets/AXIS-ACCORDION-CLOSED-NOBORDER.png);
   }
 
   .filter-toggle, .visio-dropdown-toggle {
@@ -2662,7 +2687,7 @@ a {
 }
 
 .filter-by.open, .visio-dropdown-container.open {
-  .filter-toggle:after {
+  .filter-toggle:after, .visio-dropdown-toggle:after {
     background-image: url(/assets/AXIS-ACCORDION-OPENED-NOBORDER.png);
   }
 

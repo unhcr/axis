@@ -1,4 +1,4 @@
-%div
+.absy-tipsy
   .header
     = Visio.Utils.parameterByPlural(Visio.manager.get('aggregation_type')).human
 

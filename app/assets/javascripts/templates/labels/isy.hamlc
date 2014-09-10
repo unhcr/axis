@@ -1,0 +1,6 @@
+- _.each context.params, (p) ->
+  .isy-label
+    .isy-parameter
+      = p.human
+    .isy-parameter-content{ :data => { :parameter => p.singular } }
+      = context.d[p.singular]()?.toString() or 'N/A'

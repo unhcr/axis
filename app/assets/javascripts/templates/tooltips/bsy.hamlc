@@ -1,5 +1,16 @@
-%section.row.ui-orange
-  .col-md-3
+.bsy-tipsy
+  .header
+    = Visio.Utils.parameterByPlural(Visio.manager.get('aggregation_type')).human
+
+  .divider.divider-dark-gray
+
+  .tipsy-parameter-name
     = context.d.toString()
-  .col-md-3
-    = context.d.selectedBudget()
+
+  - _.each context.values, (v) ->
+    .row
+      .col-xs-12
+        = v.scenario.scenario + ' ' + v.scenario.type.human
+    .row
+      .col-xs-12.tipsy-number
+        = Visio.Formats.LONG_MONEY v.sum

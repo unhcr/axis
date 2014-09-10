@@ -82,6 +82,27 @@ class BudgetsControllerTest < ActionController::TestCase
     assert_equal 1, r.length
   end
 
+  test "should get zero new budget data because deleted - optimize" do
+    datum = Budget.new()
+    datum.operation = operations(:one)
+    datum.plan = plans(:one)
+    datum.ppg = ppgs(:one)
+    datum.goal = goals(:one)
+    datum.problem_objective = problem_objectives(:one)
+    datum.output = outputs(:one)
+    datum.is_deleted = true
+    datum.save
+
+    get :index, { :strategy_id => @s.id, :optimize => true }
+
+    assert_response :success
+
+    r = JSON.parse(response.body)
+
+    assert_equal 0, r.length
+  end
+
+
   test "should get one new budget data - no output" do
     datum = Budget.new()
     datum.operation = operations(:one)

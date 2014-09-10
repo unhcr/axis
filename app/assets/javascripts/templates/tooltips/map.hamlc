@@ -1,4 +1,4 @@
-%div
+.map-tipsy
   .header
     = context.operation.toString()
 

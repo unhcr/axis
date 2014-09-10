@@ -40,10 +40,6 @@ class Operation < ActiveRecord::Base
 
   default_scope { includes([:country, :populations]) }
 
-  def loaded
-    includes([:plan_ids])
-  end
-
   def years
     @years ||= self.plans.pluck(:year).uniq
   end
@@ -59,7 +55,7 @@ class Operation < ActiveRecord::Base
     options[:include] ||= {}
     Jbuilder.new do |json|
       json.extract! self, :name, :id
-      json.years self.years
+      #json.years self.years
 
       if options[:include][:ids]
         json.indicator_ids self.indicator_ids.inject({}) { |h, id| h[id] = true; h }

@@ -6,12 +6,13 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
 
   type: Visio.FigureTypes.BSY
 
+  templateTooltip: HAML['tooltips/bsy']
+
   initialize: (config) ->
     # Stores the query of a certain operation. 'ken' will match the Kenya operation
     config.query or= ''
 
     scenarioExpenditures = {}
-    scenarioExpenditures[Visio.Scenarios.AOL] = false
     scenarioExpenditures[Visio.Scenarios.OL] = true
 
     @filters = new Visio.Collections.FigureFilter([
@@ -51,7 +52,6 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
         filterType: 'checkbox'
         values: scenarioExpenditures
         human:
-          'Above Operating Level': 'Expenditure AOL'
           'Operating Level': 'Expenditure OL'
         callback: (name, attr) =>
           @render()
@@ -63,13 +63,18 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
     # Determines the breakdown of the stack graph. Either budget type or pillar
     @breakdownBy = 'budget_type'
 
-    @tooltip = new Visio.Views.BsyTooltip
-      figure: @
+    @sortAttribute = 'total'
 
-    @$el.find('.tooltip-container').html @tooltip.el
-
+    # Width of a single .bar element
     @barWidth = 10
+
+    # Margin between .box elements
     @barMargin = 8
+
+    # Margin between .bar elements
+    @barInnerMargin = 1
+
+    @tickPadding = 20
 
     @x = d3.scale.linear()
       .range([0, @adjustedWidth])
@@ -80,22 +85,37 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
     @yAxis = d3.svg.axis()
       .scale(@y)
       .orient('left')
-      .ticks(5)
-      .tickFormat(Visio.Formats.LONG_MONEY)
+      .ticks(3)
+      .tickPadding(@tickPadding)
+      .tickFormat((d) -> if d == 0 then null else Visio.Formats.SI_SIMPLE(d))
       .tickSize(-@adjustedWidth)
 
     @g.append('g')
       .attr('class', 'y axis')
       .attr('transform', 'translate(0,0)')
       .append("text")
-        .attr("y", -10)
-        .attr("x", 40)
+        .attr("y", -25)
         .attr("dy", "-.21em")
+        .attr("transform", "translate(#{-@tickPadding}, 0)")
+        .attr('text-anchor', 'end')
+        .html =>
+          @yAxisLabel()
 
     $.subscribe "hover.#{@cid}.figure", @hover
     $.subscribe "mouseout.#{@cid}.figure", @mouseout
 
-    @sortAttribute = 'total'
+
+    @legendView = new Visio.Legends.Bsy()
+
+    # Lines
+    #
+    # Bottom line of BSY graph
+    @g.append('line')
+      .attr('class', 'bsy-line')
+      .attr('x1', 0)
+      .attr('x2', @width)
+      .attr('y1', @adjustedHeight)
+      .attr('y2', @adjustedHeight)
 
     $(@svg.node()).parent().on 'mouseleave', =>
       $.publish "hover.#{@cid}.figure", [@selectedDatum, true] if @selectedDatum
@@ -103,7 +123,6 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
   render: ->
     filtered = @filtered @collection
 
-    # Check to see if domain was set already
     # Expensive computation so don't want to repeat if not necessary
     @y.domain [0, d3.max(filtered, (d) -> d.selectedBudget(Visio.manager.year(), @filters))]
 
@@ -133,7 +152,7 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
         container = box.selectAll('.bar-container').data([d])
         container.enter().append('rect')
         container.attr('width', self.barWidth * scenarios.length)
-          .attr('height', self.adjustedHeight + self.barMargin)
+          .attr('height', self.adjustedHeight + self.barMargin / 2)
           .attr('x', 0)
           .attr('y', -self.barMargin / 2)
           .attr('class', (d) ->
@@ -157,6 +176,23 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
         container.exit().remove()
 
         box.selectAll('.bar').remove()
+
+
+        scenarioBars = box.selectAll('.scenario-bar').data(scenarios)
+        scenarioBars.enter().append('rect')
+        scenarioBars.attr('class', (d) ->
+            classList = ['scenario-bar']
+            classList.push Visio.Utils.stringToCssClass(d.scenario) + '-bar'
+            classList.push Visio.Utils.stringToCssClass(d.type.singular) + '-bar'
+            classList.join ' ')
+          .attr('width', self.barWidth - self.barInnerMargin)
+          .attr('height', self.adjustedHeight)
+          .attr('x', (d, i) -> i * self.barWidth)
+          .attr('y', 0)
+        scenarioBars.exit().remove()
+
+        values = []
+
         _.each scenarios, (scenario, i) ->
           amountData = d.selectedData(scenario.type, Visio.manager.year(), self.filters).where
             scenario: scenario.scenario
@@ -180,17 +216,33 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
                 'bar']
               classList.join ' '
 
+            height = self.adjustedHeight - self.y(amount) - self.barInnerMargin
+            height = 0 unless height > 0
+
             bars.transition()
               .duration(Visio.Durations.FAST)
               .attr('x', -> i * self.barWidth)
-              .attr('width', -> self.barWidth)
+              .attr('width', -> self.barWidth - self.barInnerMargin)
               .attr('y', -> self.y(amount + sum))
-              .attr('height', -> self.adjustedHeight - self.y(amount))
+              .attr('height', -> height)
 
             sum += amount
 
             bars.exit().remove()
+
+          values.push { scenario: scenario, sum: sum }
+
+        box.attr 'original-title', (d) ->
+          self.templateTooltip
+            values: values
+            d: d
       )
+
+    boxes.on 'mouseenter', (d) ->
+      $(@).tipsy('show')
+
+    boxes.on 'mouseleave', (d) ->
+      $(@).tipsy('hide')
 
     boxes.on 'click', (d, i) =>
       if @selectedDatum?.id == d.id
@@ -206,10 +258,18 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
       $.publish "select.#{@figureId()}", [d, i]
 
     boxes.exit().remove()
+
+    @$el.find('.box').tipsy()
+
+    @$el.find('.legend-container').html @legendView.render().el unless @isExport
+
     @g.select('.y.axis')
       .transition()
       .duration(Visio.Durations.FAST)
       .call(@yAxis)
+    @g.select('.y.axis text')
+      .html =>
+        @yAxisLabel()
     @
 
   transformSortFn: (a, b) =>
@@ -312,29 +372,6 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
       .exit().transition().duration(Visio.Durations.VERY_FAST).attr('r', 0).remove()
     @g.selectAll('.label').remove()
 
-    @tooltip.render @hoverDatum
-
-    budgetData = @hoverDatum.selectedBudgetData()
-    ol = new Visio.Collections.AmountType(budgetData.where({ scenario: Visio.Scenarios.OL })).amount()
-    aol = new Visio.Collections.AmountType(budgetData.where({ scenario: Visio.Scenarios.AOL })).amount()
-    circleData = [ol, aol]
-
-    circles = box.selectAll('.circle').data(circleData)
-    circles.enter().append('circle')
-    circles.attr('r', 0)
-      .attr('cx', @barWidth)
-      .attr('cy', (value) =>
-        @y(value))
-      .attr('class', 'circle')
-    circles.transition()
-      .duration(Visio.Durations.VERY_FAST)
-      .attr('r', @barWidth / 2)
-
-    labelData = circleData
-    labelHeight = 20
-
-    box.moveToFront()
-
   breakdownTypes: =>
     if @breakdownBy == 'budget_type'
       _.values Visio.Budgets
@@ -347,9 +384,15 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
       .exit().transition().duration(Visio.Durations.VERY_FAST).attr('r', 0).remove()
     @g.selectAll('.label').remove()
 
+  yAxisLabel: ->
+
+    achievement_type = Visio.Utils.humanMetric Visio.manager.get 'achievement_type'
+    return @templateLabel
+        title: 'Budget',
+        subtitles: ['in US Dollars']
+
   close: ->
     @unbind()
     $.unsubscribe "hover.#{@cid}.figure"
     $.unsubscribe "mouseout.#{@cid}.figure"
-    @tooltip?.close()
     @remove()

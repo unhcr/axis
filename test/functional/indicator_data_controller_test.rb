@@ -87,4 +87,26 @@ class IndicatorDataControllerTest < ActionController::TestCase
     assert_equal 1, r.length
   end
 
+  test "index indicator data - strategy id - optimized - deleted" do
+    datum = IndicatorDatum.new()
+    datum.id = 'abc'
+    datum.operation = operations(:one)
+    datum.plan = plans(:one)
+    datum.ppg = ppgs(:one)
+    datum.goal = goals(:one)
+    datum.rights_group = rights_groups(:one)
+    datum.problem_objective = problem_objectives(:one)
+    datum.output = outputs(:one)
+    datum.is_deleted = true
+    datum.indicator = indicators(:one)
+    datum.save
+
+    get :index, { :strategy_id => @s.id, :optimize => true }
+
+    assert_response :success
+
+    r = JSON.parse(response.body)
+
+    assert_equal 0, r.length
+  end
 end

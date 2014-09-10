@@ -1,5 +1,5 @@
 module Parsers
-  class IndicatorImpactParser < Parser
+  class IndicatorImpactParser < IndicatorParser
     MODEL = Indicator
 
     def self.csvfields
@@ -10,12 +10,20 @@ module Parsers
       }
     end
 
+    def self.relationfields
+      @relationfields ||= {
+        :problem_objective_id => 'RFPROBOBJ_ID'
+      }
+    end
+
     def self.selector
       [:id]
     end
 
+    def self.relations
+      [IndicatorsProblemObjectives]
+    end
   end
-
 end
 
 

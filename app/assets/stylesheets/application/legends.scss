@@ -1,8 +1,12 @@
-.legend-absy, .legend-bmys, .legend-icmy {
+.legend-bsy, .legend-absy, .legend-bmys, .legend-icmy, .legend-isy {
   min-height: 464px;
   color: $dark-gray;
   border-left: 1px solid $black;
   padding-left: 12px;
   margin-right: 12px;
   padding-top: 20px;
+
+  img {
+    width: 100%;
+  }
 }

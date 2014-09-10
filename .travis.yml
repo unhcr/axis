@@ -12,6 +12,10 @@ before_install:
   - "sh -e /etc/init.d/xvfb start"
   - "sleep 3"
 before_script:
-  - psql -e 'create database projects_test'
+  - cp config/database.yml.travis config/database.yml
+  - psql -c 'create database projects_test;' -U postgres
 services:
   - elasticsearch
+
+addons:
+  postgresql: '9.3'

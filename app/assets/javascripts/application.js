@@ -39,6 +39,7 @@
 //= require_tree ./views
 //= require_tree ./figures
 //= require_tree ./legends
+//= require_tree ./labels
 //= require ./routers/global_router
 //= require ./routers/dashboard_router
 //= require_tree ./routers

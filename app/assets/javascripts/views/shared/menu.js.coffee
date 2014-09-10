@@ -44,6 +44,7 @@ class Visio.Views.MenuView extends Backbone.View
         models: @[@tab.type].models
     else
       NProgress.start()
+      @$el.find('.menu-content').html ''
       @[@tab.type].fetch().done =>
         @$el.find('.menu-content').html @templatePageList
           models: @[@tab.type].models
