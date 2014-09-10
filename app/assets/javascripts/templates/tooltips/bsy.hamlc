@@ -13,4 +13,4 @@
         = v.scenario.scenario + ' ' + v.scenario.type.human
     .row
       .col-xs-12.tipsy-number
-        = Visio.Formats.LONG_MONEY v.sum
+        = Visio.Formats.MONEY v.sum
