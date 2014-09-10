@@ -262,12 +262,42 @@ line {
 
 .svg-bsy-figure {
   .bar {
-    stroke: white;
+    stroke: none;
     pointer-events: none;
   }
   .bar-container {
-    fill: $off-white;
+    fill: white;
     stroke: none;
+  }
+
+  .scenario-bar {
+    fill: $scenario-bar;
+  }
+
+  .box:hover {
+    .scenario-bar.Operating-Level-bar.budget-bar {
+      fill: $scenario-bar-ol;
+    }
+    .scenario-bar.Above-Operating-Level-bar.budget-bar {
+      fill: $scenario-bar-aol;
+    }
+    .scenario-bar.Operating-Level-bar.expenditure-bar {
+      fill: $scenario-bar-exp;
+    }
+
+    .ADMIN-bar {
+      fill: #1da3f6;
+    }
+    .STAFF-bar {
+      fill: #e13ac1;
+    }
+    .PROJECT-bar {
+      fill: #c0f633;
+    }
+    .PARTNER-bar {
+      fill: #fd7b56;
+    }
+
   }
 
 
@@ -312,6 +342,9 @@ line {
   }
   .PILLAR-4-bar, .LYPJ-bar {
     fill: $pillar4;
+  }
+  .bsy-line {
+    stroke: $light-gray;
   }
 }
 

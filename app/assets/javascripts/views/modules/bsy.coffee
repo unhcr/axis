@@ -7,13 +7,14 @@ class Visio.Views.BsyView extends Backbone.View
   id: 'bsy'
 
   initialize: (options) ->
+    width = $('#module').width() - (Visio.Constants.FILTERS_WIDTH + 40)
     @config =
-      width: 800
-      height: 360
+      width: width
+      height: 375
       margin:
-        top: 40
+        top: 85
         bottom: 30
-        left: 90
+        left: 115
         right: 80
 
     @figure = new Visio.Figures.Bsy @config
@@ -59,10 +60,6 @@ class Visio.Views.BsyView extends Backbone.View
     @figure.collectionFn parameters
     max = parameters.length
     @figure.render()
-
-    # Make sure something is there
-    unless @figure.tooltip.hasRendered()
-      $.publish "hover.#{@figure.cid}.figure", 0
 
     @$el.find('.slider').slider 'option', 'max', max - 1
     @$el.find('.slider').attr('data-max', max)

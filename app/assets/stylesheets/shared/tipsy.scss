@@ -25,6 +25,7 @@
 
   .tipsy-number {
     @include tooltip-number;
+    padding-bottom: 4px;
   }
 
   .divider {
@@ -93,10 +94,11 @@
 }
 
   .tipsy-inner {
+    overflow: hidden;
     text-align: center;
     color: black;
     /*max-width: 200px;*/
-    max-height: 350px;
+    max-height: 370px;
     overflow-y: auto;
     border: 1px solid #ccc;
     opacity: 1;
