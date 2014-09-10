@@ -74,6 +74,8 @@ class Visio.Figures.Absy extends Visio.Figures.Base
 
     @algorithm or= 'selectedBudget'
 
+    @tickPadding = 20
+
     @x = d3.scale.linear()
       .range([0, @adjustedWidth])
 
@@ -92,7 +94,7 @@ class Visio.Figures.Absy extends Visio.Figures.Base
       .tickFormat((d) -> if d == 0 then null else Visio.Formats.SI_SIMPLE(d))
       .innerTickSize(14)
       .ticks(6)
-      .tickPadding(22)
+      .tickPadding(@tickPadding)
       .tickSize(-@adjustedHeight)
 
     @yAxis = d3.svg.axis()
@@ -100,7 +102,7 @@ class Visio.Figures.Absy extends Visio.Figures.Base
       .orient('left')
       .ticks(5)
       .tickFormat((d) -> return d * 100)
-      .tickPadding(20)
+      .tickPadding(@tickPadding)
       .tickSize(-@adjustedWidth)
 
     @domain = null
@@ -119,7 +121,7 @@ class Visio.Figures.Absy extends Visio.Figures.Base
       .attr('transform', 'translate(0,0)')
       .append("text")
         .attr("y", -60)
-        .attr('transform', 'translate(-58, 0)')
+        .attr('transform', "translate(-#{@tickPadding}, 0)")
         .attr("dy", "-.21em")
         .style("text-anchor", "end")
         .html =>
@@ -130,7 +132,7 @@ class Visio.Figures.Absy extends Visio.Figures.Base
       .attr('transform', "translate(0,#{@adjustedHeight})")
       .append("text")
         .attr('y', 35)
-        .attr('transform', 'translate(-20, 0)')
+        .attr('transform', "translate(-#{@tickPadding}, 0)")
         .attr("dy", "-.21em")
         .style("text-anchor", "end")
         .html =>
