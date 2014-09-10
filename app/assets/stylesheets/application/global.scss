@@ -2293,30 +2293,6 @@ a {
 
 }
 
-#global-search {
-  overflow: hidden;
-  -moz-transition:max-height $fast-transition;
-  -webkit-transition:max-height $fast-transition;
-  -o-transition:max-height $fast-transition;
-  transition:max-height $fast-transition;
-  max-height: 50px;
-}
-
-#global-search .container {
-  background-color: $bright-yellow;
-}
-
-#global-search .search-container {
-  padding: 6px 0;
-}
-
-#global-search input {
-  background-color: $bright-yellow;
-  font-size: 1.3em;
-  line-height: normal;
-}
-
-
 .target-country-count {
   position: absolute;
   left: -110px;

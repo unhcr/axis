@@ -13,9 +13,3 @@ module 'Global Router',
   teardown: ->
     Visio.manager.get('db').clear()
     Visio.router.exportView?.close()
-
-test 'search', ->
-
-  Visio.router.search()
-
-  strictEqual $(document).scrollTop(), 0, 'ScrollTop should be 0 after navigating to search'

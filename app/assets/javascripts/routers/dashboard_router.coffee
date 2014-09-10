@@ -33,7 +33,6 @@ class Visio.Routers.DashboardRouter extends Visio.Routers.GlobalRouter
 
   routes:
     'menu' : 'menu'
-    'search': 'search'
     'share': 'share'
     ':figureType/:year/:aggregationType/:reportedType': 'figure'
     ':figureType/:year/:aggregationType': 'figure'

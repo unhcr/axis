@@ -71,18 +71,6 @@ class ApplicationController < ActionController::Base
     render :layout => 'dashboard'
   end
 
-  def global_search
-    query = ''
-    if params[:query] && !params[:query].empty?
-      query = "#{sanitize_query(params[:query])}*"
-    end
-
-    render :json => {
-      :indicators => Indicator.search_models(query),
-      :operations => Operation.search_models(query)
-    }
-  end
-
   def algorithms
     render :layout => 'application'
   end
