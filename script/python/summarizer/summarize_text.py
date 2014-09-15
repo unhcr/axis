@@ -100,5 +100,23 @@ class TestSummarizer:
 
     assert text.strip() == 'the quick brown fox.'
 
-  def test_summarize(self):
-    print 'summary'
+  def test_summarize_simple(self):
+    args = '{"output_ids": [], \
+      "ppg_ids": ["DEF", "LTFL", "LP61"], \
+      "problem_objective_ids": ["FGH"], \
+      "goal_ids": ["EFG"], \
+      "operation_ids": ["BEN", "7VC"], \
+      "report_type": "Mid Year Report",  \
+      "year": 2013 }'
+
+    s = Summarizer(env = 'test', args = args)
+
+    summary = s.summarize()
+
+    assert summary.strip() == 'the quick brown fox.'
+
+  def test_summarize_multipe(self):
+    print 'summarize multiple'
+
+  def test_summarize_large(self):
+    print 'summarize large'

@@ -35,7 +35,7 @@ class Summarizer:
       ]
 
   def __init__(self, db_path = 'config/database.yml', env = 'development', language = 'english',
-      args = '{}', sample = None):
+      args = '{}', max_chars = 500, max_sentences = 150, sample = None):
 
     self.env = env
     try:
@@ -48,6 +48,8 @@ class Summarizer:
     self.text = ''
     self.sample = sample
     self.args = json.loads(args)
+    self.max_chars = max_chars
+    self.max_sentences = max_sentences
 
     self.stopWords = dict()
     self.stopWords['english'] = set(stopwords.words('english'))
@@ -62,40 +64,39 @@ class Summarizer:
   def summarize(self):
 
     if not self.text:
-      self.text = query()
+      self.text = self.query()
 
     sent_list = nltk.tokenize.sent_tokenize(self.text)
 
     # deletes sentences that are only made of punctuations
-    sent_list = [sent for sent in sent_list if checkValidSent(sent)]
+    sent_list = [sent for sent in sent_list if self.checkValidSent(sent)]
 
     # makes a list of paragraphs - used to count the number of paragraphs
     pg = self.text.splitlines(0)
     pg = [par for par in pg if par != '']
 
-    baseline = len(self.text)
-
     # if there are too many sentences, this will pick 150 random sentences
-    if len(sent_list) > 150:
-      sent_list = random.sample(sent_list, 150)
-      baseline = sum([len(sent) for sent in sent_list])
+    if len(sent_list) > self.max_sentences:
+      sent_list = random.sample(sent_list, self.max_sentences)
 
     # makes graph to use for pagerank
-    text_graph = buildGraph(sent_list)
+    text_graph = self.buildGraph(sent_list)
 
     sent_scores = nx.pagerank(text_graph, weight = 'weight')
 
     sent_sorted = sorted(sent_scores, key = sent_scores.get, reverse = True)
     summary = ""
-    scount = 0
+    sent_count = 0
     # selects a number of the most salient sentences
     while sent_sorted:
-        sent = sent_sorted.pop(0)
-        scount += 1
-        if 4 * (len(sent) + len(summary)) >= baseline:
-            break
-        if scount > len(pg): break
-        summary += sent + ' '
+      sent = sent_sorted.pop(0)
+      sent_count += 1
+
+      # Break when the summary is more than
+      if len(sent) + len(summary) >= self.max_chars:
+          break
+
+      summary += sent + ' '
 
     return summary
 
@@ -106,14 +107,14 @@ class Summarizer:
   # where each node is a sentence and the weight of an edge
   # is the intersection score of its two endpoints.
 
-  def buildGraph(sentList):
+  def buildGraph(self, sentList):
     gr = nx.Graph()
     gr.add_nodes_from(sentList)
 
     for sent1 in sentList:
-        for sent2 in sentList:
-            if sent1 != sent2:
-                gr.add_edge(sent1, sent2, weight=inter_score(sent1, sent2))
+      for sent2 in sentList:
+        if sent1 != sent2:
+          gr.add_edge(sent1, sent2, weight=inter_score(sent1, sent2))
 
     return gr
 
@@ -123,7 +124,7 @@ class Summarizer:
   # It takes a tokenized text and returns the text with all
   # punctuations stripped.
 
-  def deletePunc(tokens):
+  def deletePunc(self, tokens):
       return [token for token in tokens if token not in string.punctuation]
 
   # Method: checkValidSent
@@ -132,9 +133,9 @@ class Summarizer:
   # It takes a sentence and determines if
   # the sentence has non-punctuation tokens
   # in it.
-  def checkValidSent(sent):
+  def checkValidSent(self, sent):
     tok = nltk.word_tokenize(sent)
-    tok = deletePunc(tok)
+    tok = self.deletePunc(tok)
     return tok != []
 
   # Method: query
