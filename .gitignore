@@ -20,6 +20,7 @@
 /config/application.yml
 /config/drive.yml
 /config/capistrano_credentials.rb
+*.pyc
 
 coverage
 /script/builds/expenses
