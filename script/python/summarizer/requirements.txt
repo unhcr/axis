@@ -1,0 +1,4 @@
+nltk==3.0.0
+networkx>=1.9
+psycopg2>=2.5.4
+pyyaml>=3.11
