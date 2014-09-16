@@ -23,7 +23,7 @@ class NarrativesController < ApplicationController
 
     render :json => {
       :success => true,
-      :complete => summary.present?,
+      :complete => !summary.nil?,
       :summary => summary
     }
   end

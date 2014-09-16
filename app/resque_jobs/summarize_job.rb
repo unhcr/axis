@@ -1,11 +1,16 @@
 module SummarizeJob
   @queue = :summarize
 
-  def self.perform(token)
-    summary = `summarize #{token}`
+  def self.perform(token, args)
+    db_config = "#{Rails.root}/config/database.yml"
 
-    summary_token = token.sub Narrative::ARG_PREFIX, Narrative::SUMMARY_PREFIX
+    cmd = "python #{Rails.root}/script/python/summarizer/summarize.py \
+        -a #{Shellwords.escape(args.to_json)} \
+        -e #{Rails.env} \
+        -d #{db_config}"
 
-    Redis.current.set summary_token, summary
+    summary = `#{cmd}`
+
+    Redis.current.set token, summary
   end
 end

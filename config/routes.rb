@@ -65,5 +65,13 @@ Visio::Application.routes.draw do
     end
   end
 
+  resources :narratives do
+    collection do
+      get 'summarize' => 'narratives#summarize'
+      post 'summarize' => 'narratives#summarize'
+      get 'status/:token' => 'narratives#status'
+    end
+  end
+
   root :to => 'application#index'
 end

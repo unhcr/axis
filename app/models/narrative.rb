@@ -11,28 +11,22 @@ class Narrative < ActiveRecord::Base
   belongs_to :output
   belongs_to :problem_objective
 
-  ARG_PREFIX = 'pyarguments'
   SUMMARY_PREFIX = 'summary'
 
 
-  def self.summarize(ids)
+  def self.summarize(ids, report_type = 'Mid Year Report', year = 2013)
+
+    args = ids.merge({ :report_type => report_type, :year => year })
 
     md5 = Digest::MD5.new
-    md5.update ids.to_json
+    md5.update args.to_json
 
-    token = "#{ARG_PREFIX}_#{md5.hexdigest}"
-
-    summary_token = "#{SUMMARY_PREFIX}_#{md5.hexdigest}"
-    summary = summary_token.get(summary_token)
-
-    return summary if summary
+    token = "#{SUMMARY_PREFIX}_#{md5.hexdigest}"
 
     Rails.logger.info "[REDIS] Enqueuing summarize job with token: #{token}"
 
-    Redis.current.set token, ids.to_json
+    Resque.enqueue SummarizeJob, token, args
 
-    Resque.enqueue SummarizeJob, token
-
-    nil
+    token
   end
 end
