@@ -196,6 +196,17 @@ class Visio.Models.Manager extends Backbone.Model
 
     return new parameters.constructor(parameters.filter((p) => @get('selected')[type][p.id]) )
 
+  formattedIds: ->
+    selected = Visio.manager.get('selected')
+
+    formatted = {}
+
+    for key, ids of selected
+      hash = Visio.Utils.parameterByPlural key
+      formatted["#{hash.singular}_ids"] = _.keys ids
+
+    formatted
+
   plan: (idOrISO) ->
     plan = @get('plans').get(idOrISO)
 
