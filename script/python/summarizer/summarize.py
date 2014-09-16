@@ -35,7 +35,7 @@ class Summarizer:
       ]
 
   def __init__(self, db_path = 'config/database.yml', env = 'development', language = 'english',
-      args = '{}', max_chars = 500, max_sentences = 150, sample = None):
+      args = '{}', max_chars = 500, max_sentences = 150):
 
     self.env = env
     try:
@@ -46,7 +46,6 @@ class Summarizer:
 
     self.language = language
     self.text = ''
-    self.sample = sample
     self.args = json.loads(args)
     self.max_chars = max_chars
     self.max_sentences = max_sentences
@@ -114,7 +113,7 @@ class Summarizer:
     for sent1 in sentList:
       for sent2 in sentList:
         if sent1 != sent2:
-          gr.add_edge(sent1, sent2, weight=inter_score(sent1, sent2))
+          gr.add_edge(sent1, sent2, weight=self.inter_score(sent1, sent2))
 
     return gr
 
@@ -163,7 +162,8 @@ class Summarizer:
 
     for usertxt in cursor:
       if usertxt[0] is not None:
-        partial = usertxt[0]
+        # Postgres encodes string in utf-8
+        partial = usertxt[0].decode('utf-8')
         partial = partial.replace('\\\\n', '\n')
         partial = partial.replace('\\n', '\n')
         language = self.detectLanguages(nltk.word_tokenize(partial))
@@ -187,7 +187,10 @@ class Summarizer:
         singular = id_name[:len(id_name) - 1]
         conditions.append("%s IN ('%s')" % (singular, ("','".join(self.args[id_name]))))
 
-    condition_str = "WHERE (report_type = '%s') AND (year = %s) AND %s" % (self.args['report_type'], self.args['year'], ' AND '.join(conditions))
+    condition_str = "WHERE (report_type = '%s') AND (year = %s)" % (self.args['report_type'], self.args['year'])
+
+    if conditions:
+      condition_str += " AND %s" % (' AND '.join(conditions))
 
     return condition_str
 
@@ -212,37 +215,35 @@ class Summarizer:
   # It takes two sentences and returns the intersection
   # score of the sentences.
 
-  def inter_score(sent1, sent2):
+  def inter_score(self, sent1, sent2):
     tok1 = nltk.word_tokenize(sent1)
     tok2 = nltk.word_tokenize(sent2)
-    tok1 = deletePunc(tok1)
-    tok2 = deletePunc(tok2)
+    tok1 = self.deletePunc(tok1)
+    tok2 = self.deletePunc(tok2)
     return float(2 * len([x for x in tok1 if x in tok2]))/(len(tok1) + len(tok2))
 
 if __name__ == "__main__":
 
-    parser = argparse.ArgumentParser(description = 'Summarizer!')
-    parser.add_argument('-s', '--sample', help= 'Use sample query', required = False)
-    parser.add_argument('-d', '--database', help= 'database yml file path', required = True)
-    parser.add_argument('-a', '--args', help= 'json ids for narrative summary')
-    parser.add_argument('-l', '--lang',
-        help= 'select langauge for summary (french or english)',
-        required = False,
-        argument_default = 'english')
-    parser.add_argument('-e', '--env',
-        help = 'database environment',
-        required = False,
-        argument_default='development')
+  parser = argparse.ArgumentParser(description = 'Summarizer!')
+  parser.add_argument('-d', '--database', help= 'database yml file path', required = True)
+  parser.add_argument('-a', '--args', help= 'json ids for narrative summary')
+  parser.add_argument('-l', '--language',
+      help= 'select langauge for summary (french or english)',
+      required = False,
+      default = 'english')
+  parser.add_argument('-e', '--env',
+      help = 'database environment',
+      required = False,
+      default='development')
 
-    args = parser.parse_args()
+  args = parser.parse_args()
 
-    summarizer = Summarizer(path = args.database,
-        env = args.env,
-        language = args.language,
-        args = args.args or json_str,
-        sample = args.sample)
+  summarizer = Summarizer(db_path = args.database,
+      env = args.env,
+      language = args.language,
+      args = args.args)
 
-    summary = summarizer.summarize()
+  summary = summarizer.summarize()
+  print summary
 
-    print "Summary: "
-    print summary
+  exit(0)
