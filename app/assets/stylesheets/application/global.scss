@@ -1028,7 +1028,7 @@ button, input {
   display: block;
   cursor: pointer;
   position: relative;
-  line-height: initial;
+  line-height: normal;
 }
 
 .visio-radio label:before {
@@ -1121,7 +1121,7 @@ button, input {
 .visio-checkbox label {
   display: block;
   cursor: pointer;
-  line-height: initial;
+  line-height: normal;
 }
 
 .visio-checkbox label:before {
