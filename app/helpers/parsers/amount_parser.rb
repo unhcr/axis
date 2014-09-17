@@ -54,6 +54,23 @@ module Parsers
         end
       end
 
+      @relations.each do |association|
+        p "Parsing #{association.to_s}"
+        Upsert.batch(ActiveRecord::Base.connection, association.table_name.to_sym) do |upsert|
+          csv_foreach(csv_filename) do |row|
+            next if row.empty?
+
+            attrs = association.attribute_names.map &:to_sym
+
+            relation = {}
+
+            attrs.each { |attr| relation[attr] = row[csvfields[attr]] }
+
+            upsert.row relation, {} if relation.values.all? { |v| v.present? }
+          end
+        end
+      end
+
     end
 
   end
