@@ -5,8 +5,93 @@
   padding-left: 12px;
   margin-right: 12px;
   padding-top: 20px;
+  font-size: 12px;
+
+  b {
+    color: black;
+  }
 
   img {
     width: 100%;
+  }
+
+  line {
+    stroke: $dark-gray;
+    stroke-dasharray: 1;
+  }
+
+  text {
+    fill: $dark-gray;
+  }
+}
+
+.legend-bsy {
+
+  .bsy-bar-legend-circle {
+    fill: $white;
+    stroke: $black;
+  }
+
+  circle {
+    @include transition-property(all);
+    @include transition-duration($very-fast-transition);
+    @include transition-timing-function(ease-in);
+  }
+
+  .bsy-color-legend-container {
+    margin-top: 32px;
+
+  }
+
+
+  .Operating-Level.budgets {
+    fill: $scenario-bar-ol;
+  }
+  .Above-Operating-Level.budgets {
+    fill: $scenario-bar-aol;
+  }
+  .Operating-Level.expenditures {
+    fill: $scenario-bar-exp;
+  }
+
+  .bsy-color-legend {
+    stroke: $dark-gray
+  }
+
+  .ADMIN {
+    fill: $admin;
+  }
+  .STAFF {
+    fill: $staff;
+  }
+  .PROJECT {
+    fill: $project;
+  }
+  .PARTNER {
+    fill: $partner;
+  }
+  .ADMIN:hover {
+    fill: $admin-hover;
+  }
+  .STAFF:hover {
+    fill: $staff-hover;
+  }
+  .PROJECT:hover {
+    fill: $project-hover;
+  }
+  .PARTNER:hover {
+    fill: $partner-hover;
+  }
+  .PILLAR-1, .LYPK {
+    fill: $pillar1;
+  }
+  .PILLAR-2, .LYPM {
+    fill: $pillar2;
+  }
+  .PILLAR-3, .LYPN {
+    fill: $pillar3;
+  }
+  .PILLAR-4, .LYPJ {
+    fill: $pillar4;
   }
 }

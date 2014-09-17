@@ -23,6 +23,7 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
           budget_type: true
           pillar: false
         callback: (name, attr) =>
+          $.publish "legend.breakdown", [name]
           @breakdownBy = name
           @render()
       },
@@ -266,7 +267,8 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
 
     @$el.find('.box').tipsy()
 
-    @$el.find('.legend-container').html @legendView.render().el unless @isExport
+    if @$el.find('.legend-container').is ':empty'
+      @$el.find('.legend-container').html @legendView.render().el unless @isExport
 
     @g.select('.y.axis')
       .transition()
@@ -397,6 +399,7 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
         subtitles: ['in US Dollars']
 
   close: ->
+    @legendView?.close()
     @unbind()
     $.unsubscribe "hover.#{@cid}.figure"
     $.unsubscribe "mouseout.#{@cid}.figure"

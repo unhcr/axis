@@ -286,16 +286,16 @@ line {
     }
 
     .ADMIN-bar {
-      fill: #1da3f6;
+      fill: $admin-hover;
     }
     .STAFF-bar {
-      fill: #e13ac1;
+      fill: $staff-hover;
     }
     .PROJECT-bar {
-      fill: #c0f633;
+      fill: $project-hover;
     }
     .PARTNER-bar {
-      fill: #fd7b56;
+      fill: $partner-hover;
     }
 
   }
