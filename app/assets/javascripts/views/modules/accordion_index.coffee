@@ -65,6 +65,8 @@ class Visio.Views.AccordionIndexView extends Backbone.View
       @views[viewId] = @showView({ model: parameter })
     @$el.append @views[viewId].render(isRerender).el
 
+    @views[viewId].drawFigures?() if @views[viewId].isOpen()
+
   sort: (parameterA, parameterB) ->
     0
 
