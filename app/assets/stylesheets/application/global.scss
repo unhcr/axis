@@ -1642,9 +1642,10 @@ a {
 
 .graph-logo {
   background-image: url('/assets/AXIS-ICON.png');
-  background-size: 32px 33px;
-  width: 32px;
+  background-size: auto 33px;
   height: 33px;
+  margin-bottom: -6px;
+  background-repeat: no-repeat;
 }
 
 .filter-system-container {
