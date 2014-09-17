@@ -13,12 +13,8 @@ module Parsers
     def parse(csv_filename)
       @relations = [
         GoalsOperations,
-        GoalsPlans,
-        GoalsPpgs,
-        GoalsProblemObjectives,
-        GoalsRightsGroups,
-        GoalsIndicators,
         GoalsOutputs,
+        GoalsProblemObjectives,
         OperationsOutputs,
         OperationsPpgs,
         OperationsProblemObjectives,
@@ -26,10 +22,6 @@ module Parsers
         OutputsPlans,
         OutputsProblemObjectives,
         OutputsPpgs,
-        PlansPpgs,
-        PlansProblemObjectives,
-        PlansRightsGroups,
-        ProblemObjectivesRightsGroups,
         PpgsProblemObjectives
       ]
 
