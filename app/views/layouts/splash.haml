@@ -6,14 +6,14 @@
     = stylesheet_link_tag    "application", :media => "all"
     = javascript_include_tag "application"
     = csrf_meta_tags
-%body.ui-invert-theme{ :class => "#{controller.action_name} layout-splash" }
-  .container-fluid
+  %body.ui-invert-theme{ :class => "#{controller.action_name} layout-splash" }
+    .container-fluid
 
 
-    :javascript
-      window.Visio.user = new Visio.Models.User(#{current_user.to_json.html_safe})
-      window.Visio.env = "#{Rails.env}"
-      window.Visio.configuration = #{@configuration.to_json.html_safe}
-    .content
-      = yield
+      :javascript
+        window.Visio.user = new Visio.Models.User(#{current_user.to_json.html_safe})
+        window.Visio.env = "#{Rails.env}"
+        window.Visio.configuration = #{@configuration.to_json.html_safe}
+      .content
+        = yield
 
