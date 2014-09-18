@@ -85,7 +85,7 @@ class Visio.Legends.Bsy extends Visio.Legends.Base
     #
     #
     circleHeight  = 200
-    circlePadding = 6
+    circlePadding = 12
     circleLineLength = 40
     r             = 7
 
