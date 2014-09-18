@@ -135,14 +135,23 @@ line {
     fill: $orange;
   }
 
+  /* active is for datums chosen when exporting */
   .point-container.active .point, .point-container.active .point-shadow {
-    fill: white;
-    stroke: $primary;
-    stroke-width: 2px;
+    fill: $yellow-green;
   }
 
+  /* selected is for the datum that is clicked */
+  .point-container.selected .point, .point-container.selected .point-shadow {
+    fill: $yellow-green;
+  }
+
+  /* queried are points found when searching the graph */
   .point-container.queried .point, .point-container.queried .point-shadow {
     fill: $yellow-green;
+  }
+
+  .voronoi {
+    cursor: pointer;
   }
 
   .point-container .point-shadow {
