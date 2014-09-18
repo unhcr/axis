@@ -2248,10 +2248,10 @@ a {
 }
 
 .option-menu {
-  -moz-transition:max-height $fast-transition;
-  -webkit-transition:max-height $fast-transition;
-  -o-transition:max-height $fast-transition;
-  transition:max-height $fast-transition;
+  -moz-transition:max-height $very-fast-transition;
+  -webkit-transition:max-height $very-fast-transition;
+  -o-transition:max-height $very-fast-transition;
+  transition:max-height $very-fast-transition;
   max-height: $option-menu-height;
   height: $option-menu-height;
   border-top: 1px solid $light-gray;
