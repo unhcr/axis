@@ -56,6 +56,7 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
     super config
 
     @tooltip = null
+    @selectedDatum = null
 
     self = @
     @svg.on('mouseleave', () ->
@@ -149,7 +150,10 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
     points.attr('r', 3)
       .attr('class', (d) ->
         clazz = Visio.Utils.stringToCssClass(d[d.groupBy])
-        ['budget-point', clazz, "budget-point-#{clazz}"].join(' '))
+        ['budget-point',
+          "budget-point-#{d.year}",
+          clazz,
+          "budget-point-#{clazz}"].join(' '))
       .transition()
       .duration(Visio.Durations.FAST)
       .attr('cx', (d) => @x(d.year))
@@ -164,6 +168,7 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
     voronoi.attr('class', (d, i) -> 'voronoi')
       .attr('d', @polygon)
       .on('mouseenter', (d) => @onMouseenterVoronoi(d, filtered) )
+      .on('click', (d) => @onMouseclickVoronoi(d, filtered) )
 
     if @isExport
       voronoi.on('click', (d, i) =>
@@ -277,6 +282,46 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
         year: d.point.year
         collection: new Backbone.Collection(pointData)
       @tooltip.render()
+
+  onMouseclickVoronoi: (d, filtered) =>
+
+    if @selectedDatum == d.point
+      pointData = []
+      @selectedDatum = null
+    else
+      pointData = _.chain(filtered).flatten().where({ year: d.point.year }).value()
+      @selectedDatum = d.point
+
+    pointLine = @g.selectAll('.budget-point-line').data [d.point.year]
+    pointLine.enter().append 'line'
+    pointLine.transition().duration(Visio.Durations.VERY_FAST).ease('ease-in')
+      .attr('class', 'budget-point-line')
+      .attr('x1', (d) => @x(d))
+      .attr('x2', (d) => @x(d))
+      .attr('y1', (d) => 0)
+      .attr('y2', (d) => @adjustedHeight)
+
+    pointShadows = @g.selectAll('.budget-point-shadow-selected').data pointData
+    pointShadows.enter().append 'circle'
+    pointShadows
+      .attr('r', 7)
+      .attr('class', (d) ->
+        ['budget-point-shadow-selected', Visio.Utils.stringToCssClass(d[d.groupBy])].join(' '))
+    pointShadows.transition().duration(Visio.Durations.VERY_FAST).ease('ease-in')
+      .attr('cx', (d) => @x(d.year))
+      .attr('cy', (d) => @y(d.amount))
+    pointShadows.exit().remove()
+
+    points = @g.selectAll('.budget-point-selected').data pointData
+    points.enter().append 'circle'
+    points
+      .attr('r', 5)
+      .attr('class', (d) ->
+        ['budget-point-selected', Visio.Utils.stringToCssClass(d[d.groupBy])].join(' '))
+    points.transition().duration(Visio.Durations.VERY_FAST).ease('ease-in')
+      .attr('cx', (d) => @x(d.year))
+      .attr('cy', (d) => @y(d.amount))
+    points.exit().remove()
 
   yAxisLabel: ->
     return @templateLabel

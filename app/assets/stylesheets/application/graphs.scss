@@ -12,7 +12,6 @@ line {
 .svg-bmy-figure, .svg-bmys-figure {
   .budget-line {
     stroke: $light-gray;
-    fill: none;
     stroke-width: 2px;
   }
   .budget-line.active {
@@ -24,44 +23,72 @@ line {
     fill: $light-gray;
   }
 
+  .budget-point-line {
+    stroke: $dark-gray;
+    stroke-dasharray: 1;
+  }
+
+  .voronoi:hover {
+    cursor: pointer;
+  }
+
   .budget-point.active {
     stroke: $black;
     fill: $black;
   }
 
+  .budget-point-shadow-selected {
+    opacity: .4;
+  }
+
   .ADMIN {
     stroke: $admin;
+    fill: $admin;
   }
   .STAFF {
     stroke: $staff;
+    fill: $staff;
   }
   .PROJECT {
     stroke: $project;
+    fill: $project;
   }
   .PARTNER {
     stroke: $partner;
+    fill: $partner;
   }
   .PILLAR-1, .LYPK {
     stroke: $pillar1;
+    fill: $pillar1;
   }
   .PILLAR-2, .LYPM {
     stroke: $pillar2;
+    fill: $pillar2;
   }
   .PILLAR-3, .LYPN {
     stroke: $pillar3;
+    fill: $pillar3;
   }
   .PILLAR-4, .LYPJ {
     stroke: $pillar4;
+    fill: $pillar4;
   }
   .Above-Operating-Level {
     stroke: $primary-soft;
+    fill: $primary-soft;
   }
   .Operating-Level {
     stroke: $primary-light;
+    fill: $primary-light;
   }
   .total {
     stroke: $total;
+    fill: $total;
     stroke-width: 6px;
+  }
+
+  .budget-line {
+    fill: none;
   }
 
   .budget-point-total {
