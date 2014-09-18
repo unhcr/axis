@@ -4,11 +4,6 @@
   fill: $map-background;
 }
 
-.country {
-  fill: $country-color;
-  stroke-width: .5px;
-  stroke: $map-background;
-}
 
 line {
   shape-rendering: crispEdges;
@@ -127,6 +122,23 @@ line {
 
 .axis text tspan {
   font-size: 11px;
+}
+
+.svg-map-figure {
+  .country.available {
+    cursor: pointer;
+  }
+  .country.available:hover {
+
+  }
+  .country {
+    fill: $country-color;
+    stroke-width: .5px;
+    stroke: $map-background;
+  }
+  .country.selected {
+    stroke-width: 2px;
+  }
 }
 
 .svg-absy-figure {
