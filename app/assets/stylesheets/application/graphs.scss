@@ -176,12 +176,12 @@ line {
 
   /* active is for datums chosen when exporting */
   .point-container.active .point, .point-container.active .point-shadow {
-    fill: $yellow-green;
+    fill: $orange;
   }
 
   /* selected is for the datum that is clicked */
   .point-container.selected .point, .point-container.selected .point-shadow {
-    fill: $yellow-green;
+    fill: $orange;
   }
 
   /* queried are points found when searching the graph */
