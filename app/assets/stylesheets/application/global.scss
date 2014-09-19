@@ -3039,15 +3039,36 @@ a {
   }
 }
 
-.export {
-  background-image: url(/assets/icons/export.png);
+.export, .narrative {
   background-size: 18px;
-  width: 60px;
+  width: $header-button-height;
   position: relative;
   border-right: 1px $dark-gray solid;
   background-repeat: no-repeat;
   background-position: center;
   cursor: pointer;
+}
+
+.narrative {
+  background-image: url(/assets/icons/narrative.png);
+  border-right: none;
+}
+
+.narrative:hover {
+  background-image: url(/assets/icons/narrative_hover.png);
+}
+
+.narrative.disabled {
+  background-image: url(/assets/icons/narrative_disabled.png);
+  opacity: 1;
+}
+
+.narrative.disabled:hover {
+  background-image: url(/assets/icons/narrative_disabled.png);
+}
+
+.export {
+  background-image: url(/assets/icons/export.png);
 }
 
 .export:hover {
