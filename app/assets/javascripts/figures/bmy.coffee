@@ -292,7 +292,8 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
       pointData = _.chain(filtered).flatten().where({ year: d.point.year }).value()
       @selectedDatum = d.point
 
-    pointLine = @g.selectAll('.budget-point-line').data [d.point.year]
+    pointLineData = if @selectedDatum? then [d.point.year] else []
+    pointLine = @g.selectAll('.budget-point-line').data pointLineData
     pointLine.enter().append 'line'
     pointLine.transition().duration(Visio.Durations.VERY_FAST).ease('ease-in')
       .attr('class', 'budget-point-line')
@@ -300,6 +301,7 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
       .attr('x2', (d) => @x(d))
       .attr('y1', (d) => 0)
       .attr('y2', (d) => @adjustedHeight)
+    pointLine.exit().remove()
 
     pointShadows = @g.selectAll('.budget-point-shadow-selected').data pointData
     pointShadows.enter().append 'circle'
