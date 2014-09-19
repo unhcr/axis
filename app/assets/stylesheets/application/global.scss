@@ -209,6 +209,9 @@ body.splash {
   -webkit-transition:background-color $medium-transition;
   -o-transition:background-color $medium-transition;
   transition:background-color $medium-transition;
+  a {
+    color: $black;
+  }
 
 }
 
