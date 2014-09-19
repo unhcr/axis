@@ -33,8 +33,8 @@ class Visio.Views.Header extends Backbone.View
     @menuOptions =
       module_type:
         human: 'DASHBOARDS'
-        values: [Visio.FigureTypes.ICMY, Visio.FigureTypes.ISY, Visio.FigureTypes.BSY, Visio.FigureTypes.MAP
-                 Visio.FigureTypes.BMY, Visio.FigureTypes.ABSY, Visio.FigureTypes.OVERVIEW]
+        values: [Visio.FigureTypes.OVERVIEW, Visio.FigureTypes.MAP, Visio.FigureTypes.ICMY, Visio.FigureTypes.ISY, Visio.FigureTypes.BSY,
+                 Visio.FigureTypes.BMY, Visio.FigureTypes.ABSY]
         key: 'module_type'
         currentValue: -> Visio.manager.get('module_type')
         currentHuman: -> Visio.Utils.figureTypeByName(Visio.manager.get('module_type')).human
