@@ -9,7 +9,8 @@ class Visio.Views.Dashboard extends Backbone.View
     { fn: 'indicatorCount', human: 'Indicators', formatter: Visio.Formats.NUMBER },
     { fn: 'budget', human: 'Budget', formatter: Visio.Formats.MONEY },
     { fn: 'expenditure', human: 'Expenditure', formatter: Visio.Formats.MONEY },
-    { fn: 'spent', human: 'Spent', formatter: Visio.Formats.PERCENT }
+    { fn: 'spent', human: 'Spent', formatter: Visio.Formats.PERCENT },
+    { fn: 'indicatorSum', human: 'Indicator Sum', formatter: Visio.Formats.SI }
   ]
 
   barFigureData: [
@@ -72,6 +73,9 @@ class Visio.Views.Dashboard extends Backbone.View
 
   expenditure: =>
     @parameter.selectedExpenditure(Visio.manager.year(), @filters)
+
+  indicatorSum: =>
+    @parameter.selectedIndicatorSum Visio.manager.year(), @filters
 
   spent: =>
     spent = @expenditure() / @budget()

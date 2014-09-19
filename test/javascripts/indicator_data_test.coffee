@@ -4,6 +4,17 @@ module 'Indicator Data',
     Visio.manager = new Visio.Models.Manager()
     Visio.manager.set 'reported_type', Visio.Algorithms.REPORTED_VALUES.myr
 
+test 'sum', ->
+  data = new Visio.Collections.IndicatorDatum()
+  data.reset([
+    { id: 'high1', myr: 50, year: 2012 },
+    { id: 'high2', myr: 50, year: 2012 },
+    { id: 'high3', myr: 50, year: 2013 },
+    { id: 'high4', myr: 50, year: 2013 },
+  ])
+
+  strictEqual data.sum(), 200
+
 test 'output achievement collection', ->
   Visio.manager.get('outputs').reset([
     {

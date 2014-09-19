@@ -8,6 +8,7 @@
   %section.row.bottom-flush.contain
     .col-md-3
       - list = ['budget', 'spent']
+      - list.push 'indicatorSum' if Visio.manager.get('indicator')?.isNumber()
       - _.each list, (name) ->
         - keyFigure = _.findWhere context.keyFigures, { fn: name }
         .row
@@ -15,10 +16,12 @@
             .ui-huge-number.number
               0
             %div
-              %span.label-prefix
-                = context.labelPrefix + ' '
+              - unless name == 'indicatorSum'
+                %span.label-prefix
+                  = context.labelPrefix + ' '
               = keyFigure.human
             %span.ui-primary-soft.js-operation-name All&nbsp;Target&nbsp;Countries
+
     .col-md-9
       .row
       - _.each context.barFigureData, (d, idx) ->

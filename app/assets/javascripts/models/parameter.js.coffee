@@ -129,6 +129,15 @@ class Visio.Models.Parameter extends Visio.Models.Syncable
     data = @strategyIndicatorData(null, year, filters)
     data.outputAchievement()
 
+  # If it's a number indicator sum all data associated
+  selectedIndicatorSum: (year, filters = null) ->
+    console.warn 'Warning, using outside of indicator dashboard' unless Visio.manager.get('indicator')
+
+    null unless Visio.manager.get('indicator')?.isNumber()
+
+    data = @selectedIndicatorData year, filters
+    data.sum()
+
   selectedOutputAchievement: (year, filters = null) ->
     data = @selectedIndicatorData year, filters
     data.outputAchievement()

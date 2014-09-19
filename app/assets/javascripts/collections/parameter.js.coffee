@@ -77,6 +77,15 @@ class Visio.Collections.Parameter extends Visio.Collections.Syncable
 
     @selectedAchievement year, filters
 
+  # If it's a number indicator sum all data associated
+  selectedIndicatorSum: (year, filters = null) ->
+    console.warn 'Warning, using outside of indicator dashboard' unless Visio.manager.get('indicator')
+
+    null unless Visio.manager.get('indicator')?.isNumber()
+
+    data = @selectedIndicatorData year, filters
+    data.sum()
+
   selectedAchievement: (year, filters = null) ->
     data = @selectedIndicatorData year, filters
     data.achievement()

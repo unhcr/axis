@@ -35,7 +35,7 @@ class Indicator < ActiveRecord::Base
     options ||= {}
     options[:include] ||= {}
     Jbuilder.new do |json|
-      json.extract! self, :is_gsp, :is_performance, :name, :id
+      json.extract! self, :is_gsp, :is_performance, :name, :id, :indicator_type
       if options[:include][:ids]
         json.ppg_ids self.ppg_ids.inject({}) { |h, id| h[id] = true; h }
         json.operation_ids self.operation_ids.inject({}) { |h, id| h[id] = true; h }
