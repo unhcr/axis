@@ -27,7 +27,7 @@ class Visio.Views.IcmyView extends Visio.Views.AccordionIndexView
       margin:
         top: 90
         bottom: 90
-        left: 120
+        left: 180
         right: 80
 
     @figure = new Visio.Figures.Icmy config

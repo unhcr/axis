@@ -11,14 +11,16 @@
 
 .row.figures
   - list = ['budget', 'spent']
+  - list.push 'indicatorSum' if Visio.manager.get('indicator')?.isNumber()
   - _.each list, (keyFigure) ->
     - c = _.findWhere context.keyFigures, { fn: keyFigure }
     .col-md-4{ :class => "keyFigure #{c.fn}-#{context.cid}" }
       .ui-small-number.number.bold
         0
       %div
-        %span.label-prefix
-          = context.labelPrefix + ' '
+        - unless keyFigure == 'indicatorSum'
+          %span.label-prefix
+            = context.labelPrefix + ' '
         = c.human
 
 .row.tabs

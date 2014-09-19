@@ -16,4 +16,10 @@ class Visio.Legends.Base extends Backbone.View
 
   render: ->
     @$el.html @template { type: @type }
+
+    @drawFigures?()
     @
+
+  close: ->
+    @unbind()
+    @remove()

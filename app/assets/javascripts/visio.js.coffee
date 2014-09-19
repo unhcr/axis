@@ -258,17 +258,17 @@ Visio.AggregationTypes = [
   ]
 
 Visio.Algorithms.CRITICALITIES = [
-    { value: Visio.Algorithms.ALGO_RESULTS.success }
-    { value: Visio.Algorithms.ALGO_RESULTS.ok }
-    { value: Visio.Algorithms.ALGO_RESULTS.fail }
-    { value: Visio.Algorithms.STATUS.missing }
+    { value: Visio.Algorithms.ALGO_RESULTS.success, description: 'The indicator is in an acceptable rangle.' }
+    { value: Visio.Algorithms.ALGO_RESULTS.ok, description: 'The indicator is in an unacceptable range.' }
+    { value: Visio.Algorithms.ALGO_RESULTS.fail, description: 'The indicator is in a critical range.' }
+    { value: Visio.Algorithms.STATUS.missing, description: 'The indicator is missing data.' }
   ]
 
 Visio.Algorithms.THRESHOLDS = [
-    { value: Visio.Algorithms.ALGO_RESULTS.high }
-    { value: Visio.Algorithms.ALGO_RESULTS.medium }
-    { value: Visio.Algorithms.ALGO_RESULTS.low }
-    { value: Visio.Algorithms.STATUS.missing }
+    { value: Visio.Algorithms.ALGO_RESULTS.high, description: 'The indicator has achieved over 80% of its target.' }
+    { value: Visio.Algorithms.ALGO_RESULTS.medium, description: 'The indicator has achieved over 60% of its target.' }
+    { value: Visio.Algorithms.ALGO_RESULTS.low, description: 'The indicator has not achieved 60% of its target.' }
+    { value: Visio.Algorithms.STATUS.missing, description: 'The indicator is missing data.' }
   ]
 
 Visio.Schema =

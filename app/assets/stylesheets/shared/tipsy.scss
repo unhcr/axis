@@ -8,7 +8,6 @@
   padding: 5px;
   z-index: 100000;
   pointer-events: none;
-  width: 330px;
   overflow: hidden;
 
   .tipsy-parameter-name {
@@ -30,9 +29,6 @@
 
   .divider {
     margin: 6px 50px;
-  }
-
-  .row {
   }
 
   /* For ISY tooltip */
@@ -71,6 +67,11 @@
   }
 
 }
+.absy-tipsy, .bsy-tipsy, .isy-tipsy, .map-tipsy, .bmy-tipsy, .bmys-tipsy {
+  width: 330px;
+
+}
+
 .tipsy h1 {
   font-size: 13px;
   height: 30px;
@@ -112,6 +113,14 @@
   .tipsy-inner .tipsy-title {
     margin: 5px inherit;
   }
+
+.tipsy-black {
+  .tipsy-inner {
+    padding: 14px 20px;
+    color: white;
+    background: rgba(10,10,10, 0.95);
+  }
+}
 
   .tipsy-back {
     float: right;

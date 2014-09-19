@@ -3,6 +3,7 @@
   .row
     .col-md-12.right-text.header-buttons
       .export.header-button
+      .narrative.disabled.header-button
   .row
     .col-md-12.tooltip-container.top-flush
 .row

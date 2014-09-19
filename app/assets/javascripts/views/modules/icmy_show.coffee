@@ -18,7 +18,7 @@ class Visio.Views.IcmyShowView extends Visio.Views.AccordionShowView
       margin:
         top: 90
         bottom: 80
-        left: 120
+        left: 180
         right: 40
       width: width
       height: 450

@@ -1,10 +1,30 @@
 class NarrativesController < ApplicationController
 
-  def summary
+  def summarize
 
-    ids = params[:ids]
+    ids = params[:ids] || {}
+    report_type = params[:report_type] || 'Mid Year Report'
+    year = params[:year] || 2013
 
-    Narrative.summarize ids
+    token = Narrative.summarize ids, report_type, year
 
+    render :json => {
+      :success => true,
+      :message => 'Summarizing article',
+      :token => token
+    }
+
+  end
+
+  def status
+    token = params[:token]
+
+    summary = Redis.current.get(token)
+
+    render :json => {
+      :success => true,
+      :complete => !summary.nil?,
+      :summary => summary
+    }
   end
 end

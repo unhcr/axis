@@ -16,10 +16,10 @@ Visio.Mixins.Exportable =
 
     if @collection?
       config.collection = @collection.toJSON()
-      config.collectionName = @collection.constructor.name
+      config.collectionName = @collection.name.className
     if @model?
       config.model = @model.toJSON()
-      config.modelName = @model.constructor.name
+      config.modelName = @model.name.className
 
     if @filters?
       config.filters = @filters.toJSON()

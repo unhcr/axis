@@ -8,6 +8,7 @@
           != window.HAML['shared/dashboard_meta']()
     .pull-right.header-buttons
       .export.header-button
+      .narrative.disabled.header-button
 .row
   .col-md-12{ :class => ('center-text' unless context.figure.summary) }
     - if context.figure.summary

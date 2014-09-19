@@ -50,6 +50,20 @@ class Visio.Figures.Base extends Backbone.View
 
     @selection = d3.select @$el.find('figure')[0]
 
+    $narrative = @$el.find('.narrative')
+    $narrative.attr 'original-title', HAML['tooltips/info']({ text: 'Narrative' }) if $narrative
+    $narrative.tipsy
+      className: 'tipsy-black'
+      trigger: 'hover'
+      offset: 30
+
+    $exp = @$el.find('.export')
+    $exp.attr 'original-title', HAML['tooltips/info']({ text: 'Export' }) if $exp
+    $exp.tipsy
+      className: 'tipsy-black'
+      trigger: 'hover'
+      offset: 30
+
 
     # Adjust for margins
     @adjustedWidth = (config.width - @margin.left - @margin.right)

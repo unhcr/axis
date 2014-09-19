@@ -25,4 +25,5 @@
       %button.signin{ :type => 'submit' } GO.
   - else
     %h6
-      You're already logged in!
+      You're already logged in! Go to the
+      %a{ :href => '/' }home page.

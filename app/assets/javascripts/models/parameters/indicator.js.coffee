@@ -6,3 +6,7 @@ class Visio.Models.Indicator extends Visio.Models.Parameter
 
   name: Visio.Parameters.INDICATORS
 
+  isNumber: ->
+    @get('indicator_type') == Visio.IndicatorTypes.NCNUMBER or
+      @get('indicator_type') == Visio.IndicatorTypes.NUMBEROF
+

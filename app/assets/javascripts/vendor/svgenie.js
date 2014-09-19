@@ -9,7 +9,7 @@
 
 var svgenie = (function(){
     "use strict";
-    
+
     var _serializeXmlNode = function (xmlNode) {
         if (typeof window.XMLSerializer != "undefined") {
             return (new window.XMLSerializer()).serializeToString(xmlNode);
@@ -18,13 +18,13 @@ var svgenie = (function(){
         }
         return "";
     };
-    
+
     var _toCanvas = function( svg, options, callback ){
         if ( typeof svg == "string" ){
             if ( svg.substr(0,1) == "#" ) { svg = svg.substr(1); }
             svg = document.getElementById(svg);
         }
-        
+
         // Hopefully don't need to attach anything to the DOM
         var canvas = document.createElement("canvas");
         canvas.setAttribute("height",svg.offsetHeight);
@@ -35,15 +35,15 @@ var svgenie = (function(){
             renderCallback : function(){ callback( canvas ); }
         });
     };
-    
+
     var _toDataURL = function( id, options, callback ){
         _toCanvas( id, options, function( canvas ){
             callback( canvas.toDataURL("image/png"), canvas );
         });
     };
-    
+
     var _save = function( id, options ){
-        
+
         _toDataURL( id, options, function(data, canvas){
             _saveToFile({
                 data : data,
@@ -52,10 +52,10 @@ var svgenie = (function(){
             });
         });
     };
-    
+
     var _saveToFile = function( conf ){
         var a = document.createElement( "a" );
-        
+
         // Can we use the "download" attribute? (Chrome && FF20)
         if( a.download != null ){
             a.href = conf.data;
@@ -63,25 +63,25 @@ var svgenie = (function(){
             _pretendClick(a);
             return;
         };
-        
+
         // IE10
         if( window.navigator.msSaveBlob ){
-            conf.canvas.toBlob( function ( blobby ){
+            conf.canvas.msToBlob( function ( blobby ){
                 if( window.navigator.msSaveBlob ){
                     window.navigator.msSaveBlob( blobby, conf.name );
                 }
             }, "image/png" );
             return;
         }
-        
+
     };
-    
+
     function _pretendClick(eElement) {
         var oEvent = document.createEvent("MouseEvents");
         oEvent.initMouseEvent( "click", true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null );
         return eElement.dispatchEvent(oEvent);
     };
-    
+
     return {
         save : _save,
         toCanvas : _toCanvas,

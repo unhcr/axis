@@ -49,6 +49,8 @@ class Visio.Figures.Icmy extends Visio.Figures.Base
     self = @
 
     @tooltip = null
+    @tickPadding = 20
+
     @svg.on('mouseleave', () ->
       self.tooltip.close() if self.tooltip?
       self.tooltip = null
@@ -86,7 +88,7 @@ class Visio.Figures.Icmy extends Visio.Figures.Base
       .ticks(5)
       .innerTickSize(14)
       .tickFormat((d) -> return d * 100)
-      .tickPadding(20)
+      .tickPadding(@tickPadding)
       .tickSize(-@adjustedWidth)
 
     @g.append('g')
@@ -94,9 +96,9 @@ class Visio.Figures.Icmy extends Visio.Figures.Base
       .attr('transform', 'translate(0,0)')
       .append("text")
         .attr("y", -60)
-        .attr('transform', 'translate(-58, 0)')
+        .attr('transform', "translate(-#{@tickPadding}, 0)")
         .attr("dy", "-.21em")
-        .style("text-anchor", "middle")
+        .style("text-anchor", "end")
         .html =>
           @yAxisLabel()
 

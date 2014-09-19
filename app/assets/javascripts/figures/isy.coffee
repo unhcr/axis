@@ -281,19 +281,6 @@ class Visio.Figures.Isy extends Visio.Figures.Base
 
           bars.exit().remove()
 
-        if d.get(Visio.Algorithms.GOAL_TYPES.target)?
-          target = box.selectAll('.target').data([d])
-          target.enter().append('circle')
-          target.attr('class', 'target')
-          target.transition()
-            .duration(Visio.Durations.FAST)
-            .attr('r', 5)
-            .attr('cy', (d) ->
-              self.y(d.get(Visio.Algorithms.GOAL_TYPES.target)))
-            .attr('cx', self.barWidth)
-
-          target.exit().remove()
-
         if d.get(Visio.Algorithms.REPORTED_VALUES.baseline)?
           baseline = box.selectAll('.baseline').data([d])
           baseline.enter().append('polygon')
@@ -322,6 +309,20 @@ class Visio.Figures.Isy extends Visio.Figures.Base
             )
 
           baseline.exit().remove()
+
+        if d.get(Visio.Algorithms.GOAL_TYPES.target)?
+          target = box.selectAll('.target').data([d])
+          target.enter().append('circle')
+          target.attr('class', 'target')
+          target.transition()
+            .duration(Visio.Durations.FAST)
+            .attr('r', 5)
+            .attr('cy', (d) ->
+              self.y(d.get(Visio.Algorithms.GOAL_TYPES.target)))
+            .attr('cx', self.barWidth)
+
+          target.exit().remove()
+
       )
 
     boxes.on 'click', (d, i) =>

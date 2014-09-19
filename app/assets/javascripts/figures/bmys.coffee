@@ -54,4 +54,6 @@ class Visio.Figures.BmySummary extends Visio.Figures.Bmy
         model: new Backbone.Model(d.point)
       @tooltip.render()
 
+  onMouseclickVoronoi: (d) =>
+
 

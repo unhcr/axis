@@ -111,7 +111,6 @@ task :build => :environment do
   fm = FetchMonitor.create if fm.nil?
 
   Rake::Task['build:relations'].invoke
-  Rake::Task['build:countries'].invoke
   Rake::Task['build:budgets'].invoke
   Rake::Task['build:msrp'].invoke
   Rake::Task['build:narratives'].invoke
@@ -120,6 +119,7 @@ task :build => :environment do
   Rake::Task['build:indicator_data_impact'].invoke
   Rake::Task['build:indicator_data_perf'].invoke
   Rake::Task['build:operations'].invoke
+  Rake::Task['build:countries'].invoke
   Rake::Task['build:outputs'].invoke
   Rake::Task['build:problem_objectives'].invoke
   Rake::Task['build:goals'].invoke

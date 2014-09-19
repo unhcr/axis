@@ -102,6 +102,18 @@ test 'selected', () ->
     strictEqual(selected.length, 1)
     ok(selected.get(1))
 
+test 'formattedIds', ->
+
+  Visio.manager.set 'selected', { operations: { 'BEN': true }, ppgs: { 'LISA': true } }
+
+  formatted = Visio.manager.formattedIds()
+
+  ok _.isArray formatted.operation_ids
+  ok _.isArray formatted.ppg_ids
+
+  strictEqual formatted.operation_ids.length, 1
+  strictEqual formatted.ppg_ids.length, 1
+
 test 'plan', () ->
   Visio.manager.get('plans').reset([
     {

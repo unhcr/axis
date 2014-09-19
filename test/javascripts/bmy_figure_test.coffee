@@ -12,17 +12,17 @@ module 'BMY Figure',
         bottom: 0
       width: 100
       height: 100)
+    sinon.stub Visio.Models.Output.prototype, 'selectedBudgetData', => @budgets
     @d = new Visio.Models.Output({ id: 1 })
-    sinon.stub @d, 'selectedBudgetData', -> @budgets
   teardown: ->
     @figure.unsubscribe()
-    @d.selectedBudgetData.restore()
+    Visio.Models.Output.prototype.selectedBudgetData.restore()
 
 test 'filtered', ->
   @figure.filters.get('scenario').filter(Visio.Scenarios.AOL, true)
   @figure.filters.get('scenario').filter(Visio.Scenarios.OL, true)
 
-  memo = @figure.filtered @budgets
+  memo = @figure.filtered @d
 
   strictEqual memo.length, 3, 'Should have three lines'
   ok _.find memo, ((array) -> array[array.groupBy] == Visio.Budgets.ADMIN), 'One line should have ADMIN type'
@@ -39,7 +39,7 @@ test 'filtered - no total', ->
   @figure.filters.get('scenario').filter Visio.Scenarios.OL, true, { silent: true }
   @figure.filters.get('show_total').filter 'Show Total', false, { silent: true }
 
-  memo = @figure.filtered @budgets
+  memo = @figure.filtered @d
 
   strictEqual memo.length, 2, 'Should have two lines'
   ok _.find memo, ((array) -> array[array.groupBy] == Visio.Budgets.ADMIN), 'One line should have ADMIN type'
@@ -48,7 +48,7 @@ test 'filtered - no total', ->
 test 'render', ->
   @figure.filters.get('scenario').filter(Visio.Scenarios.AOL, true)
   @figure.filters.get('scenario').filter(Visio.Scenarios.OL, true)
-  @figure.collectionFn @budgets
+  @figure.collectionFn @d
   @figure.render()
 
   strictEqual $(@figure.el).find('.budget-line').length, 3, 'Should have drawn 3 budget lines'
@@ -56,14 +56,14 @@ test 'render', ->
 test 'select', ->
   @figure.isExport = true
   @figure.subscribe()
-  @figure.collectionFn @budgets
+  @figure.modelFn @d
   @figure.render()
   i = 0
 
   strictEqual d3.select(@figure.el).selectAll('.active').size(), 0, 'Should have no active elements'
 
-  $.publish("select.#{@figure.figureId()}.figure", [@figure.filtered(@budgets)[i], i])
+  $.publish("select.#{@figure.figureId()}.figure", [@figure.filtered(@d)[i], i])
   strictEqual d3.select(@figure.el).selectAll('.active').size(), 1, 'Should have one active elements'
 
-  $.publish("select.#{@figure.figureId()}.figure", [@figure.filtered(@budgets)[i], i])
+  $.publish("select.#{@figure.figureId()}.figure", [@figure.filtered(@d)[i], i])
   strictEqual d3.select(@figure.el).selectAll('.active').size(), 0, 'Should have no active elements'

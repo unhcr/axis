@@ -8,6 +8,7 @@
   %section.row.bottom-flush.contain
     .col-md-3
       - list = ['budget', 'spent']
+      - list.push 'indicatorSum' if Visio.manager.get('indicator')?.isNumber()
       - _.each list, (name) ->
         - keyFigure = _.findWhere context.keyFigures, { fn: name }
         .row
@@ -15,10 +16,12 @@
             .ui-huge-number.number
               0
             %div
-              %span.label-prefix
-                = context.labelPrefix + ' '
+              - unless name == 'indicatorSum'
+                %span.label-prefix
+                  = context.labelPrefix + ' '
               = keyFigure.human
             %span.ui-primary-soft.js-operation-name All&nbsp;Target&nbsp;Countries
+
     .col-md-9
       .row
       - _.each context.barFigureData, (d, idx) ->
@@ -27,18 +30,17 @@
             .bar-axis
           %div{ :class => "#{d.figure.name}-figure-#{context.cid} bar-figure" }
 
-  .row.divider-black.contain
+  .row.divider-light-gray.contain
   %section.row.contain
     .col-md-9.col-md-offset-3
       .row
-      - _.each context.barFigureData, (d) ->
-        .col-md-4
+      - _.each context.barFigureData, (d, i, list) ->
+        .col-md-4.bar-figure-labels{ :class => 'last' if i == list.length - 1 }
           .row
             .col-md-12
               %h6
                 = d.title
-              <!-- %small = d.description -->
-          .row
+          .row.bar-figure-numbers
             .col-md-4
               %span.ui-small-number.number{ :class => "#{d.figure.name}-type-count-#{context.cid}" }
 
@@ -53,6 +55,28 @@
             .col-md-6
               %small
                 Times Selected
+
+  %section.row.contain.interactive-legend-container
+    .col-md-2
+      %small
+        %b
+          INTERACTIVE LEGEND
+
+    .col-md-4
+      %small
+        %b Color
+        shows Achievement of Target
+      - _.each context.thresholds, (v) ->
+        .inline-block.interactive-legend{ :class => v.value, { 'original-title' => HAML['tooltips/info']({ text: v.description })  } }
+
+
+    .col-md-4
+      %small
+        %b Color
+        shows Impact Criticality
+      - _.each context.criticalities, (v) ->
+        .inline-block.interactive-legend{ :class => v.value, { 'original-title' => HAML['tooltips/info']({ text: v.description })  } }
+
 
   .divider-black
   %section.row

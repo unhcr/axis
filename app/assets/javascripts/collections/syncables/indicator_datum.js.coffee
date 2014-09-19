@@ -109,6 +109,10 @@ class Visio.Collections.IndicatorDatum extends Visio.Collections.Syncable
 
     result
 
+  sum: (reported) ->
+    reported ||= Visio.manager.get 'reported_type'
+
+    @reduce ((sum, model) -> sum + model.get(reported)), 0
 
   achievement: (reported) ->
     reported ||= Visio.manager.get 'reported_type'

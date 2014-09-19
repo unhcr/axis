@@ -41,11 +41,9 @@ class Visio.Views.BmyView extends Visio.Views.AccordionIndexView
 
   drawFigures: ->
     data = []
-    parameters = Visio.manager.selected(Visio.manager.get('aggregation_type')).models
-    _.each parameters, (model) ->
-      data = data.concat model.selectedBudgetData(Visio.Constants.ANY_YEAR).models
+    parameters = Visio.manager.selected(Visio.manager.get('aggregation_type'))
 
-    @figure.collectionFn new Visio.Collections.Budget(data)
+    @figure.collectionFn parameters
     @figure.groupBy = "#{Visio.Utils.parameterByPlural(Visio.manager.get('aggregation_type')).singular}_id"
     @figure.render()
 

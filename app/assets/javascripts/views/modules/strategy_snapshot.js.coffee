@@ -80,6 +80,19 @@ class Visio.Views.SnapshotView extends Visio.Views.Dashboard
     if @parameterSlider?
       @parameterSlider.drawFigures()
 
+    $exp = @$el.find('.export')
+    $exp.attr 'original-title', HAML['tooltips/info']({ text: 'Export' }) if $exp
+    $exp.tipsy
+      className: 'tipsy-black'
+      trigger: 'hover'
+      offset: 30
+
+    @$el.find('.interactive-legend').tipsy
+      className: 'tipsy-black'
+      trigger: 'hover'
+      offset: 30
+
+
     @
 
   onGridView: ->

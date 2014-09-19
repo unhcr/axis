@@ -17,6 +17,10 @@ class Visio.Figures.Map extends Visio.Figures.Base
     @collection or= new Visio.Collections.Operation()
     @zoomMax = 2.2
     @zoomMin = 0.5
+    @strokeMin = .5
+    @strokeMax = 2
+
+    @selectedDatum = null
 
     @translateExtent =
       left: 843
@@ -116,7 +120,12 @@ class Visio.Figures.Map extends Visio.Figures.Base
 
       world.attr('class', (d) ->
 
-        ['country', d.properties.adm0_a3].join(' ')
+        classList = ['country', d.properties.adm0_a3]
+
+        operation = _.find filtered, (o) -> o.get('country').iso3 == d.properties.adm0_a3
+        classList.push 'available' if operation
+
+        classList.join ' '
         )
         .attr('d', @path)
         .on('mouseenter', (d) ->
@@ -143,6 +152,22 @@ class Visio.Figures.Map extends Visio.Figures.Base
             else
               return self.i self.scale(value)
         )
+
+      world.on('click', (d) ->
+        operation = _.find filtered, (o) -> o.get('country').iso3 == d.properties.adm0_a3
+        return unless operation
+
+        d3.select(self.el).selectAll('.country').classed 'selected', false
+
+        if self.selectedDatum?.id == operation.id
+          self.selectedDatum = null
+        else
+          self.selectedDatum = operation
+          d3.select(@).classed 'selected', true
+          d3.select(@).moveToFront()
+        self.scaleStroke()
+
+      )
 
     centers = @g.selectAll('.center')
       .data(filtered, (d) -> d.id)
@@ -227,7 +252,7 @@ class Visio.Figures.Map extends Visio.Figures.Base
     else if absTranslateY > @translateExtent.top
       translate[1] = @translateExtent.top * Math.abs(scale)
 
-    $('.country').css('stroke-width', .5 / scale + 'px')
+    @scaleStroke scale
 
     @g.attr("transform","translate(#{translate.join(",")})scale(#{scale})")
     @g.select('.background-rect')
@@ -240,6 +265,11 @@ class Visio.Figures.Map extends Visio.Figures.Base
 
     for key, value of @views
       value.render(true)
+
+  scaleStroke: (scale) =>
+    scale or= @zoom.scale()
+    $('.country').css('stroke-width', @strokeMin / scale + 'px')
+    $('.country.selected').css('stroke-width', @strokeMax / scale + 'px')
 
   getMap: =>
     @model.getMap()

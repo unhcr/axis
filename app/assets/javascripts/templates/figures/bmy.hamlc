@@ -3,6 +3,7 @@
   .figure-bar
     .pull-right.header-buttons
       .export.header-button
+      .narrative.disabled.header-button
 .row
   .col-md-12.center-text
     %figure.figure
