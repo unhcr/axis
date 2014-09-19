@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140910134758) do
+ActiveRecord::Schema.define(:version => 20140919073230) do
 
   create_table "admin_configurations", :force => true do |t|
     t.integer  "startyear",                :default => 2012
@@ -232,6 +232,7 @@ ActiveRecord::Schema.define(:version => 20140910134758) do
     t.datetime "updated_at",                        :null => false
     t.boolean  "is_deleted",     :default => false
     t.datetime "found_at"
+    t.string   "indicator_type"
   end
 
   add_index "indicators", ["id"], :name => "index_indicators_on_id", :unique => true

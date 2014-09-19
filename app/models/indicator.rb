@@ -6,7 +6,7 @@ class Indicator < ActiveRecord::Base
   include Tire::Model::Search
   include Tire::Model::Callbacks
 
-  attr_accessible :is_gsp, :is_performance, :name
+  attr_accessible :is_gsp, :is_performance, :name, :indicator_type
 
   has_many :indicators_outputs, :class_name    => 'IndicatorsOutputs'
   has_many :outputs, :uniq => true, :through => :indicators_outputs

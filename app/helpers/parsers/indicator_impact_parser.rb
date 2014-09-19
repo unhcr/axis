@@ -6,6 +6,7 @@ module Parsers
       @csvfields ||= {
         :id => 'ID',
         :name => 'NAME',
+        :indicator_type => 'TYPE',
         :is_performance => lambda { |row| return false }
       }
     end
