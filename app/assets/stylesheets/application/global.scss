@@ -2163,6 +2163,7 @@ a {
 .strategy-snapshot {
 
   .bar-axis {
+    border-right: 1px solid $light-gray;
     position: absolute;
     right: 0;
     bottom: 0;
@@ -2833,6 +2834,42 @@ a {
   white-space: normal;
 }
 
+.interactive-legend-container {
+  small {
+    padding-right: 8px;
+  }
+}
+
+.interactive-legend {
+  width: 12px;
+  height: 12px;
+  @include border-radius(12px);
+  background-color: black;
+  vertical-align: middle;
+}
+.interactive-legend.high {
+  background-color: $high;
+}
+.interactive-legend.medium {
+  background-color: $medium;
+}
+.interactive-legend.low {
+  background-color: $low;
+}
+.interactive-legend.missing {
+  background-color: $missing;
+}
+
+.interactive-legend.success {
+  background-color: $success;
+}
+.interactive-legend.ok {
+  background-color: $ok;
+}
+.interactive-legend.fail {
+  background-color: $fail;
+}
+
 .ok-criticality {
   .svg-circle-figure {
     .foreground {
@@ -3139,6 +3176,7 @@ a {
   position: relative;
   height: $snapshot-bar-container-height;
 
+
   .bar-figure {
     text-align: center;
     position: absolute;
@@ -3151,8 +3189,26 @@ a {
     }
   }
 }
-.snapshot-bar-figure-container:last-child {
-  border-left: 1px solid $light-gray;
+.bar-figure-labels {
+  border-right: 1px solid $light-gray;
+  padding-left: 35px;
+
+  .bar-figure-numbers {
+    height: 22px;
+    overflow-y: hidden;
+  }
+
+  h6 {
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+
+  .number {
+    margin-bottom: -8px;
+  }
+}
+.bar-figure-labels.last {
+  border-right: none;
 }
 
 .login-container {

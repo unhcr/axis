@@ -87,6 +87,12 @@ class Visio.Views.SnapshotView extends Visio.Views.Dashboard
       trigger: 'hover'
       offset: 30
 
+    @$el.find('.interactive-legend').tipsy
+      className: 'tipsy-black'
+      trigger: 'hover'
+      offset: 30
+
+
     @
 
   onGridView: ->
