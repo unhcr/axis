@@ -18,7 +18,6 @@ module Parsers
         OperationsOutputs,
         OperationsPpgs,
         OperationsProblemObjectives,
-        OperationsRightsGroups,
         OutputsPlans,
         OutputsProblemObjectives,
         OutputsPpgs,
