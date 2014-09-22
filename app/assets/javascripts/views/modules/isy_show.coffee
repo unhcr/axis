@@ -24,6 +24,8 @@ class Visio.Views.IsyShowView extends Visio.Views.AccordionShowView
       height: 405
 
     @isyFigure = new Visio.Figures.Isy config
+    @narratify @isyFigure
+
     @filterBy = new Visio.Views.FilterBy({ figure: @isyFigure, })
     @queryBy = new Visio.Views.QueryBy figure: @isyFigure, placeholder: 'Search for an indicator'
     @sortBy = new Visio.Views.Dropdown

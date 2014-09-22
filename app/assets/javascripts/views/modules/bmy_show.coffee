@@ -26,6 +26,8 @@ class Visio.Views.BmyShowView extends Visio.Views.AccordionShowView
     @figure = new Visio.Figures.Bmy config
     @filterBy = new Visio.Views.FilterBy({ figure: @figure, })
 
+    @narratify @figure
+
   render: (isRerender) ->
 
     unless isRerender

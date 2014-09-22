@@ -31,7 +31,7 @@ class Visio.Figures.Isy extends Visio.Figures.Base
         human: { true: 'performance', false: 'impact' }
         hidden: Visio.manager.get('indicator')?
         callback: (name, attr) =>
-          @selectedDatum = null
+          @selectedDatum.set 'd', null
           @isPerformanceFn(name == 'true')
           @x.domain [0, @maxIndicators]
           $.publish "drawFigures.#{@cid}.figure"
@@ -46,7 +46,7 @@ class Visio.Figures.Isy extends Visio.Figures.Base
         human: humanGoalTypes
         callback: (name, attr) =>
           @goalTypeFn(name).render()
-          $.publish "hover.#{@cid}.figure", @selectedDatum || 0
+          $.publish "hover.#{@cid}.figure", @selectedDatum.get('d') || 0
       }
     ])
 
@@ -151,7 +151,7 @@ class Visio.Figures.Isy extends Visio.Figures.Base
 
 
     $(@svg.node()).parent().on 'mouseleave', =>
-      $.publish "hover.#{@cid}.figure", [@selectedDatum, true] if @selectedDatum
+      $.publish "hover.#{@cid}.figure", [@selectedDatum.get('d'), true] if @selectedDatum.get('d')?
 
   render: ->
     filtered = @filtered @collection
@@ -193,7 +193,7 @@ class Visio.Figures.Isy extends Visio.Figures.Base
           .attr('y', -self.barMargin)
           .attr('class', (d) ->
             classList = ['bar-container']
-            classList.push 'selected' if d.id == self.selectedDatum?.id
+            classList.push 'selected' if d.id == self.selectedDatum.get('d')?.id
             classList.push 'hover' if d.id == self.hoverDatum?.id
 
             return classList.join ' ')
@@ -206,7 +206,7 @@ class Visio.Figures.Isy extends Visio.Figures.Base
           .attr('y', -self.barMargin)
           .attr('class', (d) ->
             classList = ['hover-container']
-            classList.push 'selected' if d.id == self.selectedDatum?.id
+            classList.push 'selected' if d.id == self.selectedDatum.get('d')?.id
             classList.push 'hover' if d.id == self.hoverDatum?.id
             classList.join ' ')
 
@@ -326,13 +326,13 @@ class Visio.Figures.Isy extends Visio.Figures.Base
       )
 
     boxes.on 'click', (d, i) =>
-      if @selectedDatum?.id == d.id
+      if @selectedDatum.get('d')?.id == d.id
         barContainer = @g.select ".box-#{d.id} .bar-container"
         barContainer.classed 'selected', false
-        @selectedDatum = null
+        @selectedDatum.set 'd', null
         return
 
-      @selectedDatum = d
+      @selectedDatum.set 'd', d
       @g.selectAll('.bar-container').classed 'selected', false
       barContainer = @g.select ".box-#{d.id} .bar-container"
       barContainer.classed 'selected', true

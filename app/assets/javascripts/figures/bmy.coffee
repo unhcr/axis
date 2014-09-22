@@ -57,7 +57,6 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
     super config
 
     @tooltip = null
-    @selectedDatum = null
 
     self = @
     @svg.on('mouseleave', () ->
@@ -286,16 +285,16 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
 
   onMouseclickVoronoi: (d, filtered) =>
 
-    if @selectedDatum == d.point
+    if @selectedDatum.get('d') == d.point
       @renderSelectedComponents null, []
     else
       pointData = _.chain(filtered).flatten().where({ year: d.point.year }).value()
       @renderSelectedComponents d.point, pointData
 
   renderSelectedComponents: (point, pointData) =>
-    @selectedDatum = point
+    @selectedDatum.set 'd', point
 
-    pointLineData = if @selectedDatum? then [point.year] else []
+    pointLineData = if @selectedDatum.get('d')? then [point.year] else []
     pointLine = @g.selectAll('.budget-point-line').data pointLineData
     pointLine.enter().append 'line'
     pointLine.transition().duration(Visio.Durations.VERY_FAST).ease('ease-in')

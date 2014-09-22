@@ -1,5 +1,7 @@
 class Visio.Views.AccordionShowView extends Backbone.View
 
+  @include Visio.Mixins.Narratify
+
   isOpen: =>
     @$el.hasClass 'open'
 

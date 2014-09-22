@@ -1,5 +1,7 @@
 class Visio.Views.AccordionIndexView extends Backbone.View
 
+  @include Visio.Mixins.Narratify
+
   initialize: (options) ->
     @views = {}
 

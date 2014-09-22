@@ -29,6 +29,8 @@ class Visio.Views.BmyView extends Visio.Views.AccordionIndexView
 
     @figure = new Visio.Figures.BmySummary config
 
+    @narratify @figure
+
   render: (isRerender) ->
     super isRerender
 

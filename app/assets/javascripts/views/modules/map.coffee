@@ -1,5 +1,7 @@
 class Visio.Views.MapView extends Backbone.View
 
+  @include Visio.Mixins.Narratify
+
   template: HAML['modules/map']
 
   className: 'module'
@@ -16,13 +18,10 @@ class Visio.Views.MapView extends Backbone.View
       width: width
       height: 800
       model: new Visio.Models.Map()
-    #  margin:
-    #    top: 90
-    #    bottom: 90
-    #    left: 140
-    #    right: 80
 
     @figure = new Visio.Figures.Map config
+
+    @narratify @figure
 
   render: (isRerender) ->
 
