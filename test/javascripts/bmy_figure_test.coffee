@@ -54,7 +54,7 @@ test 'render', ->
 
   strictEqual $(@figure.el).find('.budget-line').length, 3, 'Should have drawn 3 budget lines'
 
-test 'select', ->
+test 'active', ->
   @figure.isExport = true
   @figure.subscribe()
   @figure.modelFn @d
@@ -68,3 +68,20 @@ test 'select', ->
 
   $.publish("active.#{@figure.figureId()}.figure", [@figure.filtered(@d)[i], i])
   strictEqual d3.select(@figure.el).selectAll('.active').size(), 0, 'Should have no active elements'
+
+test 'selected', ->
+
+  @figure.modelFn @d
+  @figure.render()
+
+  filtered = @figure.filtered @d
+
+  @figure.onMouseclickVoronoi { point: filtered[0][0] }, filtered
+
+  strictEqual d3.select(@figure.el).selectAll('.budget-point-selected').size(), filtered.length
+  strictEqual @figure.selectedDatum, filtered[0][0]
+
+  @figure.onMouseclickVoronoi { point: filtered[0][0] }, filtered
+
+  strictEqual d3.select(@figure.el).selectAll('.budget-point-selected').size(), 0
+  strictEqual @figure.selectedDatum, null

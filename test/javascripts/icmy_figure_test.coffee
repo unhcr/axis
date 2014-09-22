@@ -64,3 +64,19 @@ test 'render', ->
 
   strictEqual @figure.$el.find('.ic-line').length, 4
 
+test 'selected', ->
+
+  @figure.collectionFn @outputs
+  @figure.render()
+
+  filtered = @figure.filtered @outputs
+
+  @figure.onMouseclickVoronoi { point: filtered[0][0] }, filtered
+
+  strictEqual d3.select(@figure.el).selectAll('.icmy-point-selected').size(), filtered.length
+  strictEqual @figure.selectedDatum, filtered[0][0]
+
+  @figure.onMouseclickVoronoi { point: filtered[0][0] }, filtered
+
+  strictEqual d3.select(@figure.el).selectAll('.icmy-point-selected').size(), 0
+  strictEqual @figure.selectedDatum, null
