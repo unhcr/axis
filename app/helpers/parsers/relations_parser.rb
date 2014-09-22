@@ -59,6 +59,7 @@ module Parsers
         IndicatorsOperations,
         IndicatorsOutputs,
         IndicatorsProblemObjectives,
+        IndicatorsPpgs,
         OperationsOutputs,
         OperationsPpgs,
         OperationsProblemObjectives,
