@@ -21,6 +21,11 @@ class AdminConfiguration < ActiveRecord::Base
     end
   end
 
+  REPORT_TYPE_MAPPING = {
+    'myr' => 'Mid Year Report',
+    'yer' => 'Year-End Report'
+  }
+
   def admin_users
     User.admin_users
   end
