@@ -124,6 +124,8 @@ GEM
       actionmailer (>= 3.0.4)
       activesupport (>= 3.0.4)
     execjs (2.0.2)
+    fakeredis (0.5.0)
+      redis (~> 3.0)
     ffi (1.9.3)
     figaro (0.7.0)
       bundler (~> 1.0)
@@ -246,6 +248,11 @@ GEM
       redis (~> 3.0.4)
       resque (~> 1.25.1)
       rufus-scheduler (~> 2.0.24)
+    resque_spec (0.15.0)
+      resque (>= 1.19.0)
+      rspec-core (>= 2.5.0)
+      rspec-expectations (>= 2.5.0)
+      rspec-mocks (>= 2.5.0)
     rest-client (1.6.7)
       mime-types (>= 1.16)
     rspec-collection_matchers (0.0.2)
@@ -359,6 +366,7 @@ DEPENDENCIES
   equivalent-xml
   exception_notification
   execjs
+  fakeredis
   figaro
   haml
   haml-rails (>= 0.3.4)
@@ -381,6 +389,7 @@ DEPENDENCIES
   rails (= 3.2.13)
   random-word
   resque
+  resque_spec
   rspec-rails (~> 3.0.0.beta)
   ruby-ntlm
   rubyzip
