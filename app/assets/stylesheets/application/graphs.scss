@@ -165,6 +165,7 @@ line {
   }
   .country.selected {
     stroke-width: 2px;
+    stroke: $black;
   }
 }
 
@@ -294,6 +295,36 @@ line {
     stroke: $low;
   }
 
+  .icmy-point-selected.success, .icmy-point-shadow-selected.success  {
+    fill: $success;
+  }
+  .icmy-point-selected.ok, .icmy-point-shadow-selected.ok  {
+    fill: $ok;
+  }
+  .icmy-point-selected.fail, .icmy-point-shadow-selected.fail  {
+    fill: $fail;
+  }
+  .icmy-point-selected.missing, .icmy-point-shadow-selected.missing  {
+    fill: $missing;
+  }
+  .icmy-point-selected.high, .icmy-point-shadow-selected.high  {
+    fill: $high;
+  }
+  .icmy-point-selected.medium, .icmy-point-shadow-selected.medium  {
+    fill: $medium;
+  }
+  .icmy-point-selected.low, .icmy-point-shadow-selected.low  {
+    fill: $low;
+  }
+
+  .icmy-point-shadow-selected {
+    opacity: .4;
+  }
+
+  .icmy-point-line {
+    stroke: $dark-gray;
+    stroke-dasharray: 1;
+  }
   .ic-line {
     stroke-width: 4px;
   }

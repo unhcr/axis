@@ -25,6 +25,8 @@ class Visio.Figures.Icmy extends Visio.Figures.Base
 
           @filters.get('is_performance').filter @isPerformance, true
 
+          @renderSelectedComponents null, []
+
           @render()
       },
       {
@@ -48,6 +50,7 @@ class Visio.Figures.Icmy extends Visio.Figures.Base
     super config, opts
     self = @
 
+    @selectedDatum = null
     @tooltip = null
     @tickPadding = 20
 
@@ -135,6 +138,7 @@ class Visio.Figures.Icmy extends Visio.Figures.Base
     voronoi.enter().append('path')
     voronoi.attr('class', (d, i) -> 'voronoi')
       .attr('d', @polygon)
+      .on('click', (d) => @onMouseclickVoronoi(d, filtered) )
       .on 'mouseenter', (d) =>
         pointData = _.chain(filtered).flatten().where({ year: d.point.year }).value()
         points = @g.selectAll('.point').data pointData
@@ -231,6 +235,50 @@ class Visio.Figures.Icmy extends Visio.Figures.Base
   polygon: (d) ->
     return "M0 0" unless d? and d.length
     "M" + d.join("L") + "Z"
+
+  onMouseclickVoronoi: (d, filtered) =>
+
+    if @selectedDatum == d.point
+      @renderSelectedComponents null, []
+    else
+      pointData = _.chain(filtered).flatten().where({ year: d?.point.year }).value()
+      @renderSelectedComponents d.point, pointData
+
+  renderSelectedComponents: (point, pointData) =>
+    @selectedDatum = point
+
+    pointLineData = if @selectedDatum? then [point.year] else []
+    pointLine = @g.selectAll('.icmy-point-line').data pointLineData
+    pointLine.enter().append 'line'
+    pointLine.transition().duration(Visio.Durations.VERY_FAST).ease('ease-in')
+      .attr('class', 'icmy-point-line')
+      .attr('x1', (d) => @x(d))
+      .attr('x2', (d) => @x(d))
+      .attr('y1', (d) => 0)
+      .attr('y2', (d) => @adjustedHeight)
+    pointLine.exit().remove()
+
+    pointShadows = @g.selectAll('.icmy-point-shadow-selected').data pointData
+    pointShadows.enter().append 'circle'
+    pointShadows
+      .attr('r', 7)
+      .attr('class', (d) ->
+        ['icmy-point-shadow-selected', Visio.Utils.stringToCssClass(d.category)].join(' '))
+    pointShadows.transition().duration(Visio.Durations.VERY_FAST).ease('ease-in')
+      .attr('cx', (d) => @x(d.year))
+      .attr('cy', (d) => @y(d.amount))
+    pointShadows.exit().remove()
+
+    points = @g.selectAll('.icmy-point-selected').data pointData
+    points.enter().append 'circle'
+    points
+      .attr('r', 5)
+      .attr('class', (d) ->
+        ['icmy-point-selected', Visio.Utils.stringToCssClass(d.category)].join(' '))
+    points.transition().duration(Visio.Durations.VERY_FAST).ease('ease-in')
+      .attr('cx', (d) => @x(d.year))
+      .attr('cy', (d) => @y(d.amount))
+    points.exit().remove()
 
   selectable: true
 
