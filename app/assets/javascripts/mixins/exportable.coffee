@@ -49,7 +49,7 @@ Visio.Mixins.Exportable =
     Visio.router.trigger 'export', @config()
 
   subscribe: ->
-    $.subscribe "select.#{@cid}.figure", @select
+    $.subscribe "active.#{@cid}.figure", @select
 
   selectableData: (e) ->
     @filtered @collection || @model
@@ -60,7 +60,7 @@ Visio.Mixins.Exportable =
   events:
     'click .export': 'onExport'
 
-  unsubscribe: => $.unsubscribe "select.#{@cid}.figure"
+  unsubscribe: => $.unsubscribe "active.#{@cid}.figure"
 
   select: (e, d, i) -> console.error('No select implemented')
 

@@ -181,7 +181,7 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
             lineIndex = lineArrayIndex if count == i
             count += 1
 
-        $.publish "select.#{@figureId()}", [d.point, lineIndex])
+        $.publish "active.#{@figureId()}", [d.point, lineIndex])
 
     voronoi.exit().remove()
 

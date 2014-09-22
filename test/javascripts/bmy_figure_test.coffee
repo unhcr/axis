@@ -14,6 +14,7 @@ module 'BMY Figure',
       height: 100)
     sinon.stub Visio.Models.Output.prototype, 'selectedBudgetData', => @budgets
     @d = new Visio.Models.Output({ id: 1 })
+
   teardown: ->
     @figure.unsubscribe()
     Visio.Models.Output.prototype.selectedBudgetData.restore()
@@ -62,8 +63,8 @@ test 'select', ->
 
   strictEqual d3.select(@figure.el).selectAll('.active').size(), 0, 'Should have no active elements'
 
-  $.publish("select.#{@figure.figureId()}.figure", [@figure.filtered(@d)[i], i])
+  $.publish("active.#{@figure.figureId()}.figure", [@figure.filtered(@d)[i], i])
   strictEqual d3.select(@figure.el).selectAll('.active').size(), 1, 'Should have one active elements'
 
-  $.publish("select.#{@figure.figureId()}.figure", [@figure.filtered(@d)[i], i])
+  $.publish("active.#{@figure.figureId()}.figure", [@figure.filtered(@d)[i], i])
   strictEqual d3.select(@figure.el).selectAll('.active').size(), 0, 'Should have no active elements'

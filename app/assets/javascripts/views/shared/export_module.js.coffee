@@ -23,7 +23,7 @@ class Visio.Views.ExportModule extends Backbone.View
     @figure = @model.figure @config
 
     if @config.selectable
-      $.subscribe "select.#{@figure.figureId()}", @select
+      $.subscribe "active.#{@figure.figureId()}", @select
       @selectableData = @figure.selectableData()
 
   render: ->
@@ -51,7 +51,7 @@ class Visio.Views.ExportModule extends Backbone.View
       console.warn "No element found. Returning"
       return
 
-    $.publish "select.#{@figure.figureId()}.figure", [d]
+    $.publish "active.#{@figure.figureId()}.figure", [d]
 
 
   select: (e, d, i) =>
@@ -132,7 +132,7 @@ class Visio.Views.ExportModule extends Backbone.View
     @close()
 
   close: ->
-    $.unsubscribe "select.#{@figure.figureId()}" if @config.selectable
+    $.unsubscribe "active.#{@figure.figureId()}" if @config.selectable
     @figure.unsubscribe() if @figure?.unsubscribe?
     @unbind()
     @remove()

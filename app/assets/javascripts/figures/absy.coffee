@@ -276,7 +276,7 @@ class Visio.Figures.Absy extends Visio.Figures.Base
           $(pointContainer.node()).tipsy('hide')
 
         ).on('click', (d, i) =>
-          $.publish "select.#{@figureId()}", [d.point, i]
+          $.publish "active.#{@figureId()}", [d.point, i]
 
           d3.select(@el).selectAll('.point-container').classed 'selected', false
 

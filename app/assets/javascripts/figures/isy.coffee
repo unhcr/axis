@@ -336,7 +336,7 @@ class Visio.Figures.Isy extends Visio.Figures.Base
       @g.selectAll('.bar-container').classed 'selected', false
       barContainer = @g.select ".box-#{d.id} .bar-container"
       barContainer.classed 'selected', true
-      $.publish "select.#{@figureId()}", [d, i]
+      $.publish "active.#{@figureId()}", [d, i]
 
     boxes.on 'mouseover', (d, i) =>
       offset = @$el.find('.figure').position()

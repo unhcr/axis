@@ -70,13 +70,13 @@ test 'select', ->
 
   ok d3.select(@figure.el).selectAll('.active').empty(), 'Should have no active point'
 
-  $.publish("select.#{@figure.figureId()}.figure", [@d, 0])
+  $.publish("active.#{@figure.figureId()}.figure", [@d, 0])
 
   ok not @figure.isExport, 'Should not be export'
   ok d3.select(@figure.el).selectAll('.active').empty(), 'Should not have active point since it is not export'
 
   @figure.subscribe()
-  $.publish("select.#{@figure.figureId()}.figure", [@d, 0])
+  $.publish("active.#{@figure.figureId()}.figure", [@d, 0])
   strictEqual d3.select(@figure.el).selectAll('.active').size(), 1, 'Should have one active point'
 
 test 'default filters', ->

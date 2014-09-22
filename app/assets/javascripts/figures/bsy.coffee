@@ -261,7 +261,7 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
       @g.selectAll('.bar-container').classed 'selected', false
       barContainer = @g.select ".box-#{d.id} .bar-container"
       barContainer.classed 'selected', true
-      $.publish "select.#{@figureId()}", [d, i]
+      $.publish "active.#{@figureId()}", [d, i]
 
     boxes.exit().remove()
 
