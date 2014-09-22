@@ -14,7 +14,9 @@ class Narrative < ActiveRecord::Base
   SUMMARY_PREFIX = 'summary'
 
 
-  def self.summarize(ids, report_type = 'Mid Year Report', year = 2013)
+  def self.summarize(ids, report_type = nil, year = nil)
+    report_type ||= 'Mid Year Report'
+    year ||= Time.now.year
 
     args = ids.merge({ :report_type => report_type, :year => year })
 
