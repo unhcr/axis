@@ -33,6 +33,7 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
         values: groupByValues
         callback: (name, attr) =>
           @groupBy = name
+          @renderSelectedComponents null, []
           @render()
       },
       {
@@ -286,13 +287,15 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
   onMouseclickVoronoi: (d, filtered) =>
 
     if @selectedDatum == d.point
-      pointData = []
-      @selectedDatum = null
+      @renderSelectedComponents null, []
     else
       pointData = _.chain(filtered).flatten().where({ year: d.point.year }).value()
-      @selectedDatum = d.point
+      @renderSelectedComponents d.point, pointData
 
-    pointLineData = if @selectedDatum? then [d.point.year] else []
+  renderSelectedComponents: (point, pointData) =>
+    @selectedDatum = point
+
+    pointLineData = if @selectedDatum? then [point.year] else []
     pointLine = @g.selectAll('.budget-point-line').data pointLineData
     pointLine.enter().append 'line'
     pointLine.transition().duration(Visio.Durations.VERY_FAST).ease('ease-in')
