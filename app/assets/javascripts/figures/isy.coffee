@@ -328,15 +328,15 @@ class Visio.Figures.Isy extends Visio.Figures.Base
 
     boxes.on 'click', (d, i) =>
       if @selectedDatum.get('d')?.id == d.id
-        barContainer = @g.select ".box-#{d.id} .bar-container"
-        barContainer.classed 'selected', false
+        box = @g.select ".box-#{d.id}"
+        box.classed 'selected', false
         @selectedDatum.set 'd', null
         return
 
       @selectedDatum.set 'd', d
-      @g.selectAll('.bar-container').classed 'selected', false
-      barContainer = @g.select ".box-#{d.id} .bar-container"
-      barContainer.classed 'selected', true
+      @g.selectAll('.box').classed 'selected', false
+      box = @g.select ".box-#{d.id}"
+      box.classed 'selected', true
       $.publish "active.#{@figureId()}", [d, i]
 
     boxes.on 'mouseover', (d, i) =>
@@ -471,6 +471,7 @@ class Visio.Figures.Isy extends Visio.Figures.Base
     classList.push 'box-invisible'  if @x(i) < @x.range()[0] or @x(i) > @x.range()[1]
     classList.push 'gone'  if @x(i) < @x.range()[0] or @x(i) > @x.range()[1]
     classList.push 'inconsistent' unless d.consistent().isConsistent
+    classList.push 'selected' if d.id == @selectedDatum.get('d')?.id
     classList.join(' ')
 
 

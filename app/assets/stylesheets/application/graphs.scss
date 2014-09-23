@@ -356,7 +356,7 @@ line {
     fill: $scenario-bar;
   }
 
-  .box:hover {
+  .box:hover, .box.selected {
     .scenario-bar.Operating-Level-bar.budget-bar {
       fill: $scenario-bar-ol;
     }
@@ -379,6 +379,8 @@ line {
     .PARTNER-bar {
       fill: $partner-hover;
     }
+
+    cursor: pointer;
 
   }
 
@@ -490,6 +492,7 @@ line {
     stroke-width: 1px;
   }
   .box {
+    cursor: pointer;
     -moz-transition:opacity $fast-transition;
     -webkit-transition:opacity $fast-transition;
     -o-transition:opacity $fast-transition;
@@ -500,7 +503,7 @@ line {
     fill: transparent;
   }
 
-  .box:hover {
+  .box:hover, .box.selected {
     .hover-container {
       fill: $off-white;
       stroke: $dark-gray;
@@ -513,7 +516,7 @@ line {
     }
   }
 
-  .box.inconsistent:hover {
+  .box.inconsistent:hover, .box.selected.inconsistent {
     .hover-container {
       fill: $baby-blue;
       stroke: $dark-gray;
