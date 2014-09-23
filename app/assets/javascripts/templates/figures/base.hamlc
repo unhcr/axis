@@ -8,5 +8,6 @@
       .narrative.disabled.header-button
 .row
   .col-md-12
-    .legend-container
+    - if not context.isExport
+      .legend-container
     %figure.figure
