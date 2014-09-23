@@ -30,3 +30,13 @@
             - else
               = 'N/A'
 
+  - if context.inconsistencies?.length > 0
+    .row.isy-tipsy-inconsistencies
+      .col-md-4
+        Inconsistencies
+      .col-md-8.isy-tipsy-inconsistency-texts
+        - _.each context.inconsistencies, (i) ->
+          .row
+            .col-md-12.left-text
+              = i
+

@@ -176,6 +176,7 @@ class Visio.Figures.Isy extends Visio.Figures.Base
         self.templateTooltip
           d: d
           values: values
+          inconsistencies: d.consistent().inconsistencies
       )
       .each((d, i) ->
         box = d3.select @
