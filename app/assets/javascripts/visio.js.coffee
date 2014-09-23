@@ -188,6 +188,11 @@ window.Visio =
       human: 'Rights Groups'
 
   Syncables:
+    NARRATIVES:
+      singular: 'narrative'
+      plural: 'narratives'
+      className: 'Narrative'
+      human: 'Narrative'
     PLANS:
       singular: 'plan'
       plural: 'plans'
