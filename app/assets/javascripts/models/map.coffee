@@ -1,5 +1,7 @@
 class Visio.Models.Map extends Backbone.Model
 
+  name: Visio.FigureTypes.MAP
+
   getMap: ->
     return $.Deferred().resolve(@get('map')).promise() if @get('map')
 

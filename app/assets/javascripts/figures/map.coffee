@@ -293,3 +293,5 @@ class Visio.Figures.Map extends Visio.Figures.Base
 
   filtered: (collection) =>
     collection.filter (o) -> o.get('country')?
+
+  selectedable: false

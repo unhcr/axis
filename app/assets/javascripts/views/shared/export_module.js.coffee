@@ -132,6 +132,8 @@ class Visio.Views.ExportModule extends Backbone.View
 
     svgenie.save html, { name: 'graph.png' }
 
+    @close()
+
   onClose: ->
     @close()
 
