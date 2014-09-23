@@ -57,6 +57,14 @@ body.pdf {
     width: 406px;
   }
 
+  .legend-container {
+    display: block;
+
+    .legend {
+      border: none;
+    }
+  }
+
   .parameter-slider {
     .parameter-slide {
       @include article;
