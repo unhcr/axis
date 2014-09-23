@@ -269,6 +269,9 @@ line {
 }
 
 .svg-icmy-figure {
+  .voronoi {
+    cursor: pointer;
+  }
   .point {
     fill: white;
     stroke-width: 2px;
