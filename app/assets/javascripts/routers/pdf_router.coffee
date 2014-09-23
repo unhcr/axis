@@ -13,6 +13,10 @@ class Visio.Routers.PdfRouter extends Backbone.Router
     # Return empty promise if we've setup already
     return $.Deferred().resolve().promise() if Visio.manager.get('setup')
 
+    include = Visio.exportModule.get('figure_config').includeExternalStrategyData
+
+    Visio.manager.includeExternalStrategyData include
+
     @[Visio.exportModule.get('figure_config').type.name]() if @[Visio.exportModule.get('figure_config').type.name]?
 
     filterIds = {}
