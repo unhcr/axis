@@ -21,7 +21,7 @@ class Visio.Views.IsyShowView extends Visio.Views.AccordionShowView
         left: 115
         right: 30
       width: width
-      height: 405
+      height: 425
 
     @isyFigure = new Visio.Figures.Isy config
     @narratify @isyFigure
