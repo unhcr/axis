@@ -74,9 +74,9 @@ test 'selected', ->
   @figure.onMouseclickVoronoi { point: filtered[0][0] }, filtered
 
   strictEqual d3.select(@figure.el).selectAll('.icmy-point-selected').size(), filtered.length
-  strictEqual @figure.selectedDatum, filtered[0][0]
+  strictEqual @figure.selectedDatum.get('d'), filtered[0][0]
 
   @figure.onMouseclickVoronoi { point: filtered[0][0] }, filtered
 
   strictEqual d3.select(@figure.el).selectAll('.icmy-point-selected').size(), 0
-  strictEqual @figure.selectedDatum, null
+  strictEqual @figure.selectedDatum.get('d'), null
