@@ -6,10 +6,11 @@ class Visio.Legends.Base extends Backbone.View
 
   initialize: ->
     @$el.addClass "legend-#{@type.name}"
-    @$el.css 'width', Visio.Constants.LEGEND_WIDTH + 'px'
+
     if @isPdf
       @template = HAML["pdf/legends/#{@type.name}"]
     else
+      @$el.css 'width', Visio.Constants.LEGEND_WIDTH + 'px'
       @template = HAML["legends/#{@type.name}"]
 
     throw new Error('No legend template defined') unless @template?
