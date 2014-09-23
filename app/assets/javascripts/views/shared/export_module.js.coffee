@@ -82,11 +82,14 @@ class Visio.Views.ExportModule extends Backbone.View
             title: "PDF Report"
             description: "Report is being sent to #{resp.email}"
           @loadingPdf.set 'loading', false
+          @close()
         error: =>
           new Visio.Views.Error
             title: "Error generating PDF"
           NProgress.done()
           @loadingPdf.set 'loading', false
+          @close()
+        error: =>
 
   onClickPdf: ->
     return if @loadingPdf.get 'loading'
@@ -97,6 +100,7 @@ class Visio.Views.ExportModule extends Backbone.View
         NProgress.done()
         window.location.assign @model.pdfUrl()
         @loadingPdf.set 'loading', false
+        @close()
       504: =>
         new Visio.Views.Error
           title: "Error generating PDF"
@@ -134,6 +138,8 @@ class Visio.Views.ExportModule extends Backbone.View
   close: ->
     $.unsubscribe "active.#{@figure.figureId()}" if @config.selectable
     @figure.unsubscribe() if @figure?.unsubscribe?
+    $(window).scrollTop 0
+
     @unbind()
     @remove()
 
