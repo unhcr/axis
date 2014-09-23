@@ -48,7 +48,7 @@
                 :value => ""}
 
       %section.export-settings.row
-        %h3 The Details
+        %h3 Title
         .row
           .col-md-12
             %input{
