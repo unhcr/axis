@@ -55,5 +55,10 @@ class Visio.Figures.BmySummary extends Visio.Figures.Bmy
       @tooltip.render()
 
   onMouseclickVoronoi: (d) =>
+    if @selectedDatum.get('d') == d.point
+      @renderSelectedComponents null, []
+    else
+      @renderSelectedComponents d.point, [d.point]
+
 
 
