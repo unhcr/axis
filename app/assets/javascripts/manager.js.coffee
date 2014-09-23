@@ -277,7 +277,7 @@ class Visio.Models.Manager extends Backbone.Model
       @set 'scenario_type', _state.scenario_type
       @set 'budget_type', _state.budget_type
       @set 'aggregation_type', _state.aggregation_type
-      @set 'reported_type': _state.reported_type
+      @set 'reported_type', _state.reported_type
       @set 'amount_type', _state.amount_type
       @set 'strategies', new Visio.Collections.Strategy _state.strategies
       @set 'selected_strategies', _state.selected_strategies
