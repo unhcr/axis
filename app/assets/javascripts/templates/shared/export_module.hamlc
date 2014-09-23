@@ -58,15 +58,6 @@
               :type => "text",
               :maxlength => '80',
               :value => ""}
-        .row
-          .col-md-12
-            %textarea{
-              :class => 'full-width',
-              :cols => "20",
-              :maxlength => Visio.Constants.CMS.TEXTAREA_MAXLEN,
-              :name => "description",
-              :placeholder => context.model.description,
-              :rows => "5"}
     %section.row
       %h3 Go Time.
       <!-- %button.pdf Export -->
