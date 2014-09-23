@@ -32,7 +32,7 @@ class Visio.Routers.PdfRouter extends Backbone.Router
     figureConfig.width = $(@selector).width()
     figureConfig.height = 470
     figureConfig.margin =
-      left: 80
+      left: 120
       bottom: 80
       top: 70
       right: 40
