@@ -80,6 +80,7 @@ class Visio.Figures.Map extends Visio.Figures.Base
           selectedPopulation: 'Populations'
         }
         callback: (name, attr) =>
+          @selectedDatum.set 'd', null
           @render()
       }
 
