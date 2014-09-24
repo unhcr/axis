@@ -1643,7 +1643,7 @@ a {
   height: 100%;
   position: fixed;
   z-index: -1;
-  top: 0;
+  top: $header-height;
   right: 0;
   background-color: $off-white;
 
@@ -2163,15 +2163,12 @@ a {
   }
 }
 
-.full-shift {
-  right: -$narrative-panel-width !important;
-  left: $narrative-panel-width !important;
-}
-
-.full-shift-right {
+.shift-right {
   right: $narrative-panel-width !important;
-  left: -$narrative-panel-width !important;
-
+  /* Legends should disappear */
+  .legend-container {
+    display: none;
+  }
 }
 
 .actions {

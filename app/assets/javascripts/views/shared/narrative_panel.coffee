@@ -14,10 +14,10 @@ class Visio.Views.NarrativePanel extends Backbone.View
 
   timeout: 2000 # 2 seconds
 
-  openClass: 'full-shift full-shift-right'
+  openClass: 'shift-right'
 
   onNarratifyStateToggle: (e) =>
-    $('.page, #header').toggleClass @openClass
+    $('.page').toggleClass @openClass
     $('.header-buttons .narrative').toggleClass 'open'
 
   onNarratify: (e, selectedDatum) =>
@@ -30,7 +30,7 @@ class Visio.Views.NarrativePanel extends Backbone.View
 
 
   isOpen: =>
-    $('.page, #header').hasClass @openClass
+    $('.page').hasClass @openClass
 
 
   summarize: (parameters) ->
