@@ -14,6 +14,9 @@ module Parsers
         :elt_id => 'ELTID',
         :plan_el_type => 'PLANELTYPE',
         :usertxt => 'USERTXT',
+        :usertxt_length => lambda do |row|
+            return row['USERTXT'].nil? ? 0 : row['USERTXT'].length
+          end,
         :createusr => 'CREATEUSR',
         :id => 'REPORTID',
         :report_type => 'REPORT_TYPE',

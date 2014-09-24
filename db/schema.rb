@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140919073230) do
+ActiveRecord::Schema.define(:version => 20140924115534) do
 
   create_table "admin_configurations", :force => true do |t|
     t.integer  "startyear",                :default => 2012
@@ -304,6 +304,7 @@ ActiveRecord::Schema.define(:version => 20140919073230) do
     t.integer  "year"
     t.datetime "created_at",           :null => false
     t.datetime "updated_at",           :null => false
+    t.integer  "usertxt_length"
   end
 
   add_index "narratives", ["id"], :name => "index_narratives_on_id", :unique => true
