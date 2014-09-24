@@ -17,13 +17,6 @@ Visio.Mixins.Narratify =
 
     @$el.on 'click', '.narrative', @onClickNarrativeBtn.bind(@)
 
-    previousClose = @close
-
-    @close = ->
-      $narrativeBtn.off 'click'
-      $overlay.remove()
-      previousClose.apply @, arguments
-
   isNarrativePanelOpen: ->
     Visio.router.narrativePanel.isOpen()
 

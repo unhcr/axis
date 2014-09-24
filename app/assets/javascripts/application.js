@@ -32,6 +32,7 @@
 //= require ./views/shared/notifications/notification
 //= require ./views/shared/dashboard
 //= require ./views/sliders/slider
+//= require ./views/modules/base
 //= require ./figures/base
 //= require ./figures/bar
 //= require ./figures/bmy

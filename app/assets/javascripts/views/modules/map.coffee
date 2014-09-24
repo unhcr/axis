@@ -1,4 +1,4 @@
-class Visio.Views.MapView extends Backbone.View
+class Visio.Views.MapView extends Visio.Views.Module
 
   @include Visio.Mixins.Narratify
 

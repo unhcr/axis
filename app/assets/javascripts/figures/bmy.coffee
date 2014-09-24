@@ -333,3 +333,6 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
         subtitles: ['in US Dollars']
 
 
+  close: =>
+    super
+    self.tooltip?.close()

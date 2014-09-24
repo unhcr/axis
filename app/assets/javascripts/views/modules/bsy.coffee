@@ -1,4 +1,4 @@
-class Visio.Views.BsyView extends Backbone.View
+class Visio.Views.BsyView extends Visio.Views.Module
 
   @include Visio.Mixins.Narratify
 

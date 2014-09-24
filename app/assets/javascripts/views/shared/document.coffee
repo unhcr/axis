@@ -12,15 +12,19 @@ class Visio.Views.Document extends Backbone.View
 
     # Rotate through aggregation types
     $(document).on 'keydown', null, 'a', @onAKey
+    $(document).on 'keydown', null, 'shift+a', @onShiftAKey
 
     # Rotate through years
     $(document).on 'keydown', null, 'y', @onYKey
+    $(document).on 'keydown', null, 'shift+y', @onShiftYKey
 
     # Rotate through reported types
     $(document).on 'keydown', null, 'r', @onRKey
+    $(document).on 'keydown', null, 'shift+r', @onRKey
 
     # Rotate through dashboards types
     $(document).on 'keydown', null, 'n', @onNKey
+    $(document).on 'keydown', null, 'shift+n', @onShiftNKey
 
     # Overview dashboard
     $(document).on 'keydown', null, 'o', @onOKey
@@ -44,6 +48,16 @@ class Visio.Views.Document extends Backbone.View
       type.name == Visio.manager.get 'module_type'
 
     currIdx = if currIdx + 1 >= Visio.Dashboards.length then 0 else currIdx + 1
+
+    Visio.manager.set 'module_type', Visio.Dashboards[currIdx].name
+
+  onShiftNKey: ->
+    currIdx = 0
+    current = _.find Visio.Dashboards, (type, idx) ->
+      currIdx = idx
+      type.name == Visio.manager.get 'module_type'
+
+    currIdx = if currIdx - 1 < 0 then Visio.Dashboards.length - 1 else currIdx - 1
 
     Visio.manager.set 'module_type', Visio.Dashboards[currIdx].name
 
@@ -81,6 +95,16 @@ class Visio.Views.Document extends Backbone.View
 
     Visio.manager.set 'aggregation_type', Visio.AggregationTypes[currIdx].name
 
+  onShiftAKey: ->
+    currIdx = 0
+    current = _.find Visio.AggregationTypes, (type, idx) ->
+      currIdx = idx
+      type.name == Visio.manager.get 'aggregation_type'
+
+    currIdx = if currIdx - 1 < 0 then Visio.AggregationTypes.length - 1 else currIdx - 1
+
+    Visio.manager.set 'aggregation_type', Visio.AggregationTypes[currIdx].name
+
   onRKey: ->
     if Visio.manager.get('reported_type') == Visio.Algorithms.REPORTED_VALUES.myr
       Visio.manager.set 'reported_type', Visio.Algorithms.REPORTED_VALUES.yer
@@ -94,6 +118,16 @@ class Visio.Views.Document extends Backbone.View
 
     if Visio.manager.get('yearList').indexOf(newYear) == -1
       newYear = Visio.manager.get('yearList')[0]
+
+    Visio.manager.year newYear
+
+  onShiftYKey: ->
+    currYear = Visio.manager.year()
+
+    newYear = currYear - 1
+
+    if Visio.manager.get('yearList').indexOf(newYear) == -1
+      newYear = Visio.manager.get('yearList')[Visio.manager.get('yearList').length - 1]
 
     Visio.manager.year newYear
 

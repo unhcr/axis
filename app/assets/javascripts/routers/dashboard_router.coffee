@@ -51,6 +51,8 @@ class Visio.Routers.DashboardRouter extends Visio.Routers.GlobalRouter
     @setup().done(() =>
       viewClass = figureType[0].toUpperCase() + figureType.slice(1) + 'View'
 
+      @moduleView?.close()
+
       @moduleView = new Visio.Views[viewClass]()
 
       @module.html @moduleView.render().el

@@ -302,3 +302,7 @@ class Visio.Figures.Icmy extends Visio.Figures.Base
     return @templateLabel
         title: human,
         subtitles: ['% of Progress']
+
+  close: =>
+    super
+    @tooltip?.close()
