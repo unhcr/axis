@@ -277,6 +277,16 @@ Visio.Algorithms.THRESHOLDS = [
     { value: Visio.Algorithms.STATUS.missing, description: 'The indicator is missing data.' }
   ]
 
+Visio.Dashboards = [
+    Visio.FigureTypes.OVERVIEW,
+    Visio.FigureTypes.MAP,
+    Visio.FigureTypes.ICMY,
+    Visio.FigureTypes.ISY,
+    Visio.FigureTypes.BSY,
+    Visio.FigureTypes.BMY,
+    Visio.FigureTypes.ABSY
+  ]
+
 Visio.Schema =
     stores: []
 
