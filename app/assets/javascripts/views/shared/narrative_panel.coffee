@@ -4,25 +4,29 @@ class Visio.Views.NarrativePanel extends Backbone.View
 
   initialize: ->
 
+    $.subscribe 'narratify-toggle-state', @onNarratifyStateToggle
     $.subscribe 'narratify', @onNarratify
 
   render: ->
+
+    @$el.html @template()
+    @
 
   timeout: 2000 # 2 seconds
 
   openClass: 'full-shift full-shift-right'
 
-  onNarratify: (e, selectedDatum, $narrativeBtn) =>
+  onNarratifyStateToggle: (e) =>
     $('.page, #header').toggleClass @openClass
-    $narrativeBtn.toggleClass 'open'
+    $('.header-buttons .narrative').toggleClass 'open'
 
+  onNarratify: (e, selectedDatum) =>
 
-    if @isOpen()
-      summaryParameters = selectedDatum.summaryParameters()
-      @summarize(summaryParameters).done (resp) =>
-        console.log resp
-        if resp.success
-          @fetchSummary resp.token, @timeout
+    summaryParameters = selectedDatum.summaryParameters()
+    @summarize(summaryParameters).done (resp) =>
+      console.log resp
+      if resp.success
+        @fetchSummary resp.token, @timeout
 
 
   isOpen: =>
@@ -35,12 +39,15 @@ class Visio.Views.NarrativePanel extends Backbone.View
   fetchSummary: (token, timeout, attempts) ->
     timeout or= 2000
     nAttempts = 0
+    $panel = @$el.find('.panel')
+    $panel.text 'thinking...!'
 
-    doneFn = (resp) ->
+    doneFn = (resp) =>
       console.log resp
       nAttempts += 1
       if resp.success and resp.complete
         console.log resp.summary
+        $panel.text resp.summary
       else
         console.log 'trying again'
         if !attempts? or nAttempts < attempts
@@ -50,6 +57,7 @@ class Visio.Views.NarrativePanel extends Backbone.View
 
 
   close: ->
+    $.unsubscribe 'narratify-toggle-state'
     $.unsubscribe 'narratify'
     @unbind()
     @remove()

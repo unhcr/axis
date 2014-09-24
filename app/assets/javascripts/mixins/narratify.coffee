@@ -4,7 +4,16 @@ Visio.Mixins.Narratify =
     @selectedDatum = selectedDatum = figure.selectedDatum
 
     selectedDatum.on 'change:d', () =>
-      d3.select(@el).select('.narrative').classed 'disabled', !selectedDatum.get('d')?
+      # This works based on ordering of accordion when selecting summary ele. Should change to have figure
+      # ids attached to buttons
+
+      narrativeBtn = d3.select(@el).select('.narrative')
+      narrativeBtn.classed 'disabled', !selectedDatum.get('d')?
+
+      # If it's already open, let's just load up the next narrative
+      if @isNarrativePanelOpen()
+        $.publish 'narratify', [@selectedDatum]
+
 
     @$el.on 'click', '.narrative', @onClickNarrativeBtn.bind(@)
 
@@ -15,9 +24,15 @@ Visio.Mixins.Narratify =
       $overlay.remove()
       previousClose.apply @, arguments
 
+  isNarrativePanelOpen: ->
+    Visio.router.narrativePanel.isOpen()
+
   onClickNarrativeBtn:  (e) ->
     e.stopPropagation()
     $target = $(e.currentTarget)
     return if $target.hasClass 'disabled'
 
-    $.publish 'narratify', [@selectedDatum, $target]
+    $.publish 'narratify-toggle-state'
+
+    if @isNarrativePanelOpen()
+      $.publish 'narratify', [@selectedDatum]
