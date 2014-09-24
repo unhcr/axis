@@ -1,4 +1,6 @@
 module SummarizeJob
+  require 'open3'
+
   @queue = :summarize
 
   PROCESSING = 'processing'
@@ -17,8 +19,11 @@ module SummarizeJob
           -a #{Shellwords.escape(args.to_json)} \
           -e #{Rails.env} \
           -d #{db_config}"
-      summary = system(cmd)
 
+      summary = nil
+      Open3.popen3(cmd) do |stdin, stdout, stderr, wait_thr|
+        summary = stdout.read
+      end
       Redis.current.del "#{token}_#{PROCESSING}"
     end
 

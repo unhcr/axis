@@ -27,6 +27,7 @@
 //= require ./models/parameter
 //= require ./collections/syncables/amount_type
 //= require ./models/syncables/amount_type
+//= require ./models/selected_datum
 //= require ./views/tooltips/d3_tooltip
 //= require ./views/shared/notifications/notification
 //= require ./views/shared/dashboard

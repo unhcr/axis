@@ -1,6 +1,7 @@
 window.Visio =
   Models: {}
   Collections: {}
+  SelectedData: {}
   Views: {}
   Mixins: {}
   Routers: {}

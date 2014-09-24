@@ -33,4 +33,9 @@ class Narrative < ActiveRecord::Base
 
     token
   end
+
+  def self.clear_summary_cache
+    keys = Redis.current.keys "#{SUMMARY_PREFIX}*"
+    Redis.current.del keys
+  end
 end

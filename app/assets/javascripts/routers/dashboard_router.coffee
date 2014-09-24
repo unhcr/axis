@@ -8,6 +8,8 @@ class Visio.Routers.DashboardRouter extends Visio.Routers.GlobalRouter
 
     @documentView = new Visio.Views.Document()
 
+    @narrativePanel = new Visio.Views.NarrativePanel
+      el: $('#narrative-panel')
 
     Visio.manager.on 'change:module_type', =>
       Visio.router.navigate Visio.Utils.generateOverviewUrl(), { trigger: true }

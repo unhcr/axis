@@ -65,7 +65,7 @@ Visio::Application.routes.draw do
     end
   end
 
-  visio_resources :narratives do
+  resources :narratives do
     collection do
       get 'summarize' => 'narratives#summarize'
       post 'summarize' => 'narratives#summarize'
