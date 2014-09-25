@@ -4,7 +4,7 @@ class Narrative < ActiveRecord::Base
   extend AmountHelpers
 
   attr_accessible :operation_id, :plan_id, :year, :goal_id, :problem_objective_id, :output_id,
-    :ppg_id, :elt_id, :plan_el_type, :usertxt, :createusr, :id, :report_type
+    :ppg_id, :elt_id, :plan_el_type, :usertxt, :createusr, :id, :report_type, :is_deleted
 
   belongs_to :operation
   belongs_to :plan

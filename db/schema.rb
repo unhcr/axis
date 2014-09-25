@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140924115534) do
+ActiveRecord::Schema.define(:version => 20140925080101) do
 
   create_table "admin_configurations", :force => true do |t|
     t.integer  "startyear",                :default => 2012
@@ -288,7 +288,7 @@ ActiveRecord::Schema.define(:version => 20140924115534) do
   end
 
   create_table "narratives", :id => false, :force => true do |t|
-    t.string   "id",                   :null => false
+    t.string   "id",                                      :null => false
     t.datetime "found_at"
     t.string   "operation_id"
     t.string   "plan_id"
@@ -302,9 +302,10 @@ ActiveRecord::Schema.define(:version => 20140924115534) do
     t.string   "report_type"
     t.string   "plan_el_type"
     t.integer  "year"
-    t.datetime "created_at",           :null => false
-    t.datetime "updated_at",           :null => false
+    t.datetime "created_at",                              :null => false
+    t.datetime "updated_at",                              :null => false
     t.integer  "usertxt_length"
+    t.boolean  "is_deleted",           :default => false
   end
 
   add_index "narratives", ["id"], :name => "index_narratives_on_id", :unique => true
