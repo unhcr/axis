@@ -22,46 +22,50 @@ class Visio.Models.IndicatorDatum extends Visio.Models.Syncable
     'targetGreaterThanBaseline']
 
   myrGreaterThanBaseline: =>
-    inconsistency = 'MYR is less than baseline'
     baseline = @get Visio.Algorithms.REPORTED_VALUES.baseline
     myr = @get Visio.Algorithms.REPORTED_VALUES.myr
 
     if @get 'reversal'
-      return inconsistency if myr >= baseline and _.isNumber(myr)
+      inconsistency = 'MYR is greater than baseline'
+      return inconsistency if myr > baseline and _.isNumber(myr)
     else
+      inconsistency = 'MYR is less than baseline'
       return inconsistency if myr < baseline and _.isNumber(myr)
     null
 
   yerGreaterThanBaseline: =>
-    inconsistency = 'YER is less than baseline'
     baseline = @get Visio.Algorithms.REPORTED_VALUES.baseline
     yer = @get Visio.Algorithms.REPORTED_VALUES.yer
 
     if @get 'reversal'
-      return inconsistency if yer >= baseline and _.isNumber(yer)
+      inconsistency = 'YER is greater than baseline'
+      return inconsistency if yer > baseline and _.isNumber(yer)
     else
+      inconsistency = 'YER is less than baseline'
       return inconsistency if yer < baseline and _.isNumber(yer)
     null
 
   yerGreaterThanMyr: =>
-    inconsistency = 'YER is less than MYR'
     myr = @get Visio.Algorithms.REPORTED_VALUES.myr
     yer = @get Visio.Algorithms.REPORTED_VALUES.yer
 
     if @get 'reversal'
-      return inconsistency if yer >= myr and _.isNumber(yer) and _.isNumber(myr)
+      inconsistency = 'YER is greater than MYR'
+      return inconsistency if yer > myr and _.isNumber(yer) and _.isNumber(myr)
     else
+      inconsistency = 'YER is less than MYR'
       return inconsistency if yer < myr and _.isNumber(yer) and _.isNumber(myr)
     null
 
   targetGreaterThanBaseline: =>
-    inconsistency = 'Impact target is less than basline'
     impTarget = @get Visio.Algorithms.GOAL_TYPES.imp_target
     baseline = @get Visio.Algorithms.REPORTED_VALUES.baseline
 
     if @get 'reversal'
+      inconsistency = 'Impact target is greater than basline'
       return inconsistency if impTarget >= baseline
     else
+      inconsistency = 'Impact target is less than basline'
       return inconsistency if impTarget < baseline
     null
 

@@ -29,11 +29,6 @@ body.pdf {
   padding: 0 50px;
 
   .pdf-page.country-list {
-    background-color: $primary-soft;
-
-    span {
-      color: white;
-    }
   }
 
 
@@ -55,6 +50,14 @@ body.pdf {
 
   .parameter-show {
     width: 406px;
+  }
+
+  .legend-container {
+    display: block;
+
+    .legend {
+      border: none;
+    }
   }
 
   .parameter-slider {

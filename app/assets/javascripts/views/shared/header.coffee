@@ -33,8 +33,7 @@ class Visio.Views.Header extends Backbone.View
     @menuOptions =
       module_type:
         human: 'DASHBOARDS'
-        values: [Visio.FigureTypes.OVERVIEW, Visio.FigureTypes.MAP, Visio.FigureTypes.ICMY, Visio.FigureTypes.ISY, Visio.FigureTypes.BSY,
-                 Visio.FigureTypes.BMY, Visio.FigureTypes.ABSY]
+        values: Visio.Dashboards
         key: 'module_type'
         currentValue: -> Visio.manager.get('module_type')
         currentHuman: -> Visio.Utils.figureTypeByName(Visio.manager.get('module_type')).human
@@ -63,6 +62,7 @@ class Visio.Views.Header extends Backbone.View
         currentValue: -> Visio.manager.year()
         currentHuman: -> Visio.manager.year()
 
+    $.subscribe 'toggle-filter-state', @toggleFilterSystem
     @render()
 
   render: ->
@@ -136,6 +136,9 @@ class Visio.Views.Header extends Backbone.View
     @markOld()
 
   onClickMenuIcon: (e) =>
+    $.publish 'toggle-filter-state'
+
+  toggleFilterSystem: =>
     @$el.toggleClass 'filter-open'
     @filterSystem.toggleState()
     $('#navigation').removeClass('gone')
@@ -194,6 +197,7 @@ class Visio.Views.Header extends Backbone.View
     Visio.manager.set data.key, data.value
 
   close: =>
+    $.unsubscribe 'toggle-filter-state'
     @filterSystem?.close()
     @unbind()
     @remove()

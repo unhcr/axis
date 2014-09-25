@@ -32,6 +32,14 @@
   }
 
   /* For ISY tooltip */
+
+  .isy-tipsy-inconsistencies {
+    border-top: 1px solid #ccc;
+  }
+  .isy-tipsy-inconsistency-texts {
+    border-left: 1px solid #ccc;
+    padding-bottom: 5px;
+  }
   .value-numbers {
     text-align: left;
     font-size: 12px;

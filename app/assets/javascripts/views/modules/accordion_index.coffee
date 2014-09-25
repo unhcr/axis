@@ -1,4 +1,6 @@
-class Visio.Views.AccordionIndexView extends Backbone.View
+class Visio.Views.AccordionIndexView extends Visio.Views.Module
+
+  @include Visio.Mixins.Narratify
 
   initialize: (options) ->
     @views = {}

@@ -31,7 +31,7 @@ class Visio.Figures.Isy extends Visio.Figures.Base
         human: { true: 'performance', false: 'impact' }
         hidden: Visio.manager.get('indicator')?
         callback: (name, attr) =>
-          @selectedDatum = null
+          @selectedDatum.set 'd', null
           @isPerformanceFn(name == 'true')
           @x.domain [0, @maxIndicators]
           $.publish "drawFigures.#{@cid}.figure"
@@ -46,7 +46,7 @@ class Visio.Figures.Isy extends Visio.Figures.Base
         human: humanGoalTypes
         callback: (name, attr) =>
           @goalTypeFn(name).render()
-          $.publish "hover.#{@cid}.figure", @selectedDatum || 0
+          $.publish "hover.#{@cid}.figure", @selectedDatum.get('d') || 0
       }
     ])
 
@@ -151,7 +151,7 @@ class Visio.Figures.Isy extends Visio.Figures.Base
 
 
     $(@svg.node()).parent().on 'mouseleave', =>
-      $.publish "hover.#{@cid}.figure", [@selectedDatum, true] if @selectedDatum
+      $.publish "hover.#{@cid}.figure", [@selectedDatum.get('d'), true] if @selectedDatum.get('d')?
 
   render: ->
     filtered = @filtered @collection
@@ -176,6 +176,7 @@ class Visio.Figures.Isy extends Visio.Figures.Base
         self.templateTooltip
           d: d
           values: values
+          inconsistencies: d.consistent().inconsistencies
       )
       .each((d, i) ->
         box = d3.select @
@@ -193,7 +194,7 @@ class Visio.Figures.Isy extends Visio.Figures.Base
           .attr('y', -self.barMargin)
           .attr('class', (d) ->
             classList = ['bar-container']
-            classList.push 'selected' if d.id == self.selectedDatum?.id
+            classList.push 'selected' if d.id == self.selectedDatum.get('d')?.id
             classList.push 'hover' if d.id == self.hoverDatum?.id
 
             return classList.join ' ')
@@ -206,7 +207,7 @@ class Visio.Figures.Isy extends Visio.Figures.Base
           .attr('y', -self.barMargin)
           .attr('class', (d) ->
             classList = ['hover-container']
-            classList.push 'selected' if d.id == self.selectedDatum?.id
+            classList.push 'selected' if d.id == self.selectedDatum.get('d')?.id
             classList.push 'hover' if d.id == self.hoverDatum?.id
             classList.join ' ')
 
@@ -326,17 +327,17 @@ class Visio.Figures.Isy extends Visio.Figures.Base
       )
 
     boxes.on 'click', (d, i) =>
-      if @selectedDatum?.id == d.id
-        barContainer = @g.select ".box-#{d.id} .bar-container"
-        barContainer.classed 'selected', false
-        @selectedDatum = null
+      if @selectedDatum.get('d')?.id == d.id
+        box = @g.select ".box-#{d.id}"
+        box.classed 'selected', false
+        @selectedDatum.set 'd', null
         return
 
-      @selectedDatum = d
-      @g.selectAll('.bar-container').classed 'selected', false
-      barContainer = @g.select ".box-#{d.id} .bar-container"
-      barContainer.classed 'selected', true
-      $.publish "select.#{@figureId()}", [d, i]
+      @selectedDatum.set 'd', d
+      @g.selectAll('.box').classed 'selected', false
+      box = @g.select ".box-#{d.id}"
+      box.classed 'selected', true
+      $.publish "active.#{@figureId()}", [d, i]
 
     boxes.on 'mouseover', (d, i) =>
       offset = @$el.find('.figure').position()
@@ -470,6 +471,7 @@ class Visio.Figures.Isy extends Visio.Figures.Base
     classList.push 'box-invisible'  if @x(i) < @x.range()[0] or @x(i) > @x.range()[1]
     classList.push 'gone'  if @x(i) < @x.range()[0] or @x(i) > @x.range()[1]
     classList.push 'inconsistent' unless d.consistent().isConsistent
+    classList.push 'selected' if d.id == @selectedDatum.get('d')?.id
     classList.join(' ')
 
 

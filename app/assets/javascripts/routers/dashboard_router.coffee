@@ -8,6 +8,9 @@ class Visio.Routers.DashboardRouter extends Visio.Routers.GlobalRouter
 
     @documentView = new Visio.Views.Document()
 
+    @narrativePanel = new Visio.Views.NarrativePanel
+      el: $('#narrative-panel')
+    @narrativePanel.render()
 
     Visio.manager.on 'change:module_type', =>
       Visio.router.navigate Visio.Utils.generateOverviewUrl(), { trigger: true }
@@ -47,6 +50,8 @@ class Visio.Routers.DashboardRouter extends Visio.Routers.GlobalRouter
     Visio.manager.set { 'module_type': figureType }, { silent: true } if figureType?
     @setup().done(() =>
       viewClass = figureType[0].toUpperCase() + figureType.slice(1) + 'View'
+
+      @moduleView?.close()
 
       @moduleView = new Visio.Views[viewClass]()
 

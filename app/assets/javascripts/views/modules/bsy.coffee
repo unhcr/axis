@@ -1,4 +1,6 @@
-class Visio.Views.BsyView extends Backbone.View
+class Visio.Views.BsyView extends Visio.Views.Module
+
+  @include Visio.Mixins.Narratify
 
   template: HAML['modules/bsy']
 
@@ -18,6 +20,8 @@ class Visio.Views.BsyView extends Backbone.View
         right: 80
 
     @figure = new Visio.Figures.Bsy @config
+    @narratify @figure
+
     @filterBy = new Visio.Views.FilterBy figure: @figure
     @queryBy = new Visio.Views.QueryBy figure: @figure
     @sortBy = new Visio.Views.Dropdown

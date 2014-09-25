@@ -1,7 +1,0 @@
-%select.dropdown
-  - _.each context.years, (year) ->
-    %option.ui-line-item-theme{
-        :value => "year#{Visio.Constants.SEPARATOR + year}",
-        :selected => year == Visio.manager.year() }
-
-      = year

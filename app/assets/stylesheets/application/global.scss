@@ -254,6 +254,10 @@ body.layout-cms {
   min-width: $header-min-width;
   height: $header-height;
 
+  @include transition-property(all);
+  @include transition-duration($very-fast-transition);
+  @include transition-timing-function(ease-in);
+
   section {
     position: relative;
   }
@@ -324,6 +328,8 @@ body.layout-cms {
 }
 
 #header.breadcrumb {
+  padding-right: 15px;
+
   .menu-icon:after {
     background-image: url(/assets/AXIS-LOGO-ORANGE-SMALL.png);
     width: 90px;
@@ -846,6 +852,9 @@ h5 {
 
 .right-text {
   text-align: right;
+}
+.left-text {
+  text-align: left;
 }
 
 .justify-text {
@@ -1628,6 +1637,18 @@ a {
     background-color: $ok;
   }
 }
+
+#narrative-panel {
+  width: $narrative-panel-width;
+  height: 100%;
+  position: fixed;
+  z-index: -1;
+  top: $header-height;
+  right: 0;
+  background-color: $off-white;
+
+}
+
 #filter-system {
   @include box-shadow-right;
   width: $filter-system-width;
@@ -1638,7 +1659,6 @@ a {
   margin-top: $header-height;
   top: 0;
   left: 0;
-  height: 100%;
   background-color: white;
 
 }
@@ -2123,10 +2143,9 @@ a {
   right: 0;
   left: 0;
   background-color: inherit;
-  -moz-transition:left $very-fast-transition ease-out;
-  -webkit-transition:left $very-fast-transition ease-out;
-  -o-transition:left $very-fast-transition ease-out;
-  transition:left $very-fast-transition ease-out;
+  @include transition-property(all);
+  @include transition-duration($very-fast-transition);
+  @include transition-timing-function(ease-in);
 }
 
 .shift {
@@ -2141,6 +2160,14 @@ a {
 
   .fixed-top {
     left: $filter-system-width + 15px;
+  }
+}
+
+.shift-right {
+  right: $narrative-panel-width !important;
+  /* Legends should disappear */
+  .legend-container {
+    display: none;
   }
 }
 
@@ -2398,6 +2425,14 @@ a {
     input {
       border: 1px solid $light-gray;
     }
+  }
+
+  section {
+    padding-bottom: 20px;
+  }
+
+  h3 {
+    margin-bottom: 20px;
   }
 
   figure {
@@ -3098,7 +3133,7 @@ a {
   border-right: none;
 }
 
-.narrative:hover {
+.narrative:hover, .narrative.open {
   background-image: url(/assets/icons/narrative_hover.png);
 }
 

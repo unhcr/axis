@@ -14,4 +14,9 @@
           = v.scenario.scenario + ' ' + v.scenario.type.human
       .row
         .col-xs-12.tipsy-number
-          = Visio.Formats.MONEY v.sum
+          - if v.scenario.scenario == Visio.Scenarios.OL and v.scenario.type == Visio.Syncables.BUDGETS
+            - aol = _.find context.values, (value) -> value.scenario.scenario == Visio.Scenarios.AOL
+            = "#{Visio.Formats.MONEY v.sum} (#{Visio.Formats.PERCENT(v.sum / (aol.sum + v.sum))} of OP) "
+          - else
+            = Visio.Formats.MONEY v.sum
+

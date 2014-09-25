@@ -23,7 +23,7 @@ class Visio.Views.ExportModule extends Backbone.View
     @figure = @model.figure @config
 
     if @config.selectable
-      $.subscribe "select.#{@figure.figureId()}", @select
+      $.subscribe "active.#{@figure.figureId()}", @select
       @selectableData = @figure.selectableData()
 
   render: ->
@@ -51,7 +51,7 @@ class Visio.Views.ExportModule extends Backbone.View
       console.warn "No element found. Returning"
       return
 
-    $.publish "select.#{@figure.figureId()}.figure", [d]
+    $.publish "active.#{@figure.figureId()}.figure", [d]
 
 
   select: (e, d, i) =>
@@ -82,11 +82,14 @@ class Visio.Views.ExportModule extends Backbone.View
             title: "PDF Report"
             description: "Report is being sent to #{resp.email}"
           @loadingPdf.set 'loading', false
+          @close()
         error: =>
           new Visio.Views.Error
             title: "Error generating PDF"
           NProgress.done()
           @loadingPdf.set 'loading', false
+          @close()
+        error: =>
 
   onClickPdf: ->
     return if @loadingPdf.get 'loading'
@@ -97,6 +100,7 @@ class Visio.Views.ExportModule extends Backbone.View
         NProgress.done()
         window.location.assign @model.pdfUrl()
         @loadingPdf.set 'loading', false
+        @close()
       504: =>
         new Visio.Views.Error
           title: "Error generating PDF"
@@ -128,12 +132,16 @@ class Visio.Views.ExportModule extends Backbone.View
 
     svgenie.save html, { name: 'graph.png' }
 
+    @close()
+
   onClose: ->
     @close()
 
   close: ->
-    $.unsubscribe "select.#{@figure.figureId()}" if @config.selectable
+    $.unsubscribe "active.#{@figure.figureId()}" if @config.selectable
     @figure.unsubscribe() if @figure?.unsubscribe?
+    $(window).scrollTop 0
+
     @unbind()
     @remove()
 

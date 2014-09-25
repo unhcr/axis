@@ -1,5 +1,7 @@
 class Visio.Views.IcmyShowView extends Visio.Views.AccordionShowView
 
+  @include Visio.Mixins.Narratify
+
   template: HAML['modules/icmy_show']
 
   className: 'icmy-container accordion-show-container'
@@ -25,6 +27,7 @@ class Visio.Views.IcmyShowView extends Visio.Views.AccordionShowView
 
     @figure = new Visio.Figures.Icmy config
     @filterBy = new Visio.Views.FilterBy({ figure: @figure, })
+    @narratify @figure
 
   render: (isRerender) ->
 

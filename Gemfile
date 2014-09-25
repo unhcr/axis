@@ -66,6 +66,11 @@ group :development, :test do
   gem 'pry-rails'
   gem 'pry'
   gem 'pry-stack_explorer'
+end
+
+group :test do
+  gem "fakeredis", :require => "fakeredis/rspec"
+  gem 'resque_spec'
   gem 'coveralls', require: false
 end
 

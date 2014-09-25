@@ -54,7 +54,7 @@
                 = d.unit
             .col-md-6
               %small
-                Times Selected
+                Times&nbsp;Selected
 
   %section.row.contain.interactive-legend-container
     .col-md-2

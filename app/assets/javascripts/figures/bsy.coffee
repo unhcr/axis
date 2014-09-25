@@ -119,7 +119,7 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
       .attr('y2', @adjustedHeight)
 
     $(@svg.node()).parent().on 'mouseleave', =>
-      $.publish "hover.#{@cid}.figure", [@selectedDatum, true] if @selectedDatum
+      $.publish "hover.#{@cid}.figure", [@selectedDatum.get('d'), true] if @selectedDatum.get('d')?
 
   render: ->
     filtered = @filtered @collection
@@ -141,7 +141,7 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
 
     boxes = @g.selectAll('g.box').data filtered, (d) -> d.id
     boxes.enter().append('g')
-    boxes.attr('class', (d) -> ['box', "box-#{d.id}"].join(' '))
+    boxes.attr('class', @boxClasslist)
       .style('opacity', (d, i) -> if self.x(i) < 0 then 0 else 1)
       .transition()
       .duration(Visio.Durations.FAST)
@@ -158,7 +158,6 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
           .attr('y', -self.barMargin / 2)
           .attr('class', (d) ->
             classList = ['bar-container']
-            classList.push 'selected' if d.id == self.selectedDatum?.id
             classList.push 'hover' if d.id == self.hoverDatum?.id
 
             return classList.join ' ')
@@ -251,17 +250,17 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
       $.publish "mouseout.#{self.cid}.figure", idx
 
     boxes.on 'click', (d, i) =>
-      if @selectedDatum?.id == d.id
-        barContainer = @g.select ".box-#{d.id} .bar-container"
-        barContainer.classed 'selected', false
-        @selectedDatum = null
+      if @selectedDatum.get('d')?.id == d.id
+        box = @g.select ".box-#{d.id}"
+        box.classed 'selected', false
+        @selectedDatum.set 'd', null
         return
 
-      @selectedDatum = d
-      @g.selectAll('.bar-container').classed 'selected', false
-      barContainer = @g.select ".box-#{d.id} .bar-container"
-      barContainer.classed 'selected', true
-      $.publish "select.#{@figureId()}", [d, i]
+      @selectedDatum.set 'd', d
+      @g.selectAll('.box').classed 'selected', false
+      box = @g.select ".box-#{d.id}"
+      box.classed 'selected', true
+      $.publish "active.#{@figureId()}", [d, i]
 
     boxes.exit().remove()
 
@@ -306,6 +305,11 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
     filters.add @filters.toJSON()
 
     b.selectedBudget(null, filters) - a.selectedBudget(null, filters)
+
+  boxClasslist: (d) =>
+    classList = ['box', "box-#{d.id}"]
+    classList.push 'selected' if d.id == @selectedDatum.get('d')?.id
+    classList.join ' '
 
   filtered: (collection) =>
     _.chain(collection.models).filter(@queryByFn).sort(@sortFn).value()
@@ -359,25 +363,20 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
     return unless @hoverDatum?
     box.select('.bar-container').classed 'hover', true
 
-    if idx >= @maxParameters and scroll
-      difference = idx - @maxParameters
-      @x.domain [0 + difference, @maxParameters + difference]
-      @g.selectAll('g.box')
-        .transition()
-        .duration(Visio.Durations.VERY_FAST)
-        .attr('transform', (d, i) => 'translate(' + @x(i) + ', 0)')
-        .style('opacity', (d, i) -> if self.x(i) < 0 then 0 else 1)
-    else if @x.domain()[0] > 0 and scroll
-      @x.domain [0, @maxParameters]
-      @g.selectAll('g.box')
-        .transition()
-        .duration(Visio.Durations.VERY_FAST)
-        .attr('transform', (d, i) => 'translate(' + @x(i) + ', 0)')
-        .style('opacity', (d, i) -> if self.x(i) < 0 then 0 else 1)
+    if scroll
+      if idx >= @maxParameters
+        difference = idx - @maxParameters
+        @x.domain [0 + difference, @maxParameters + difference]
 
-    @g.selectAll('.circle').data([])
-      .exit().transition().duration(Visio.Durations.VERY_FAST).attr('r', 0).remove()
-    @g.selectAll('.label').remove()
+      else if @x.domain()[0] > 0
+        @x.domain [0, @maxParameters]
+
+      @g.selectAll('g.box')
+        .transition()
+        .duration(Visio.Durations.VERY_FAST)
+        .attr('transform', (d, i) => 'translate(' + @x(i) + ', 0)')
+        .style('opacity', (d, i) -> if self.x(i) < 0 then 0 else 1)
+        .attr 'class', @boxClasslist
 
   breakdownTypes: =>
     if @breakdownBy == 'budget_type'

@@ -74,7 +74,6 @@ class Visio.Figures.Absy extends Visio.Figures.Base
 
     @algorithm or= 'selectedBudget'
 
-    @selectedDatum = null
     @tickPadding = 20
 
     @x = d3.scale.linear()
@@ -276,17 +275,17 @@ class Visio.Figures.Absy extends Visio.Figures.Base
           $(pointContainer.node()).tipsy('hide')
 
         ).on('click', (d, i) =>
-          $.publish "select.#{@figureId()}", [d.point, i]
+          $.publish "active.#{@figureId()}", [d.point, i]
 
           d3.select(@el).selectAll('.point-container').classed 'selected', false
 
 
           # Clicked the same point so deactivate
-          if @selectedDatum?.id == d.point.id
-            @selectedDatum = null
+          if @selectedDatum.get('d')?.id == d.point.id
+            @selectedDatum.set 'd', null
           else
-            @selectedDatum = d.point
-            d3.select(@el).select(".point-container.id-#{@selectedDatum.id}").classed 'selected', true
+            @selectedDatum.set 'd', d.point
+            d3.select(@el).select(".point-container.id-#{@selectedDatum.get('d').id}").classed 'selected', true
 
         )
 

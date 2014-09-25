@@ -33,6 +33,7 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
         values: groupByValues
         callback: (name, attr) =>
           @groupBy = name
+          @renderSelectedComponents null, []
           @render()
       },
       {
@@ -56,7 +57,6 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
     super config
 
     @tooltip = null
-    @selectedDatum = null
 
     self = @
     @svg.on('mouseleave', () ->
@@ -180,7 +180,7 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
             lineIndex = lineArrayIndex if count == i
             count += 1
 
-        $.publish "select.#{@figureId()}", [d.point, lineIndex])
+        $.publish "active.#{@figureId()}", [d.point, lineIndex])
 
     voronoi.exit().remove()
 
@@ -285,14 +285,16 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
 
   onMouseclickVoronoi: (d, filtered) =>
 
-    if @selectedDatum == d.point
-      pointData = []
-      @selectedDatum = null
+    if @selectedDatum.get('d') == d.point
+      @renderSelectedComponents null, []
     else
       pointData = _.chain(filtered).flatten().where({ year: d.point.year }).value()
-      @selectedDatum = d.point
+      @renderSelectedComponents d.point, pointData
 
-    pointLineData = if @selectedDatum? then [d.point.year] else []
+  renderSelectedComponents: (point, pointData) =>
+    @selectedDatum.set 'd', point
+
+    pointLineData = if @selectedDatum.get('d')? then [point.year] else []
     pointLine = @g.selectAll('.budget-point-line').data pointLineData
     pointLine.enter().append 'line'
     pointLine.transition().duration(Visio.Durations.VERY_FAST).ease('ease-in')
@@ -331,3 +333,6 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
         subtitles: ['in US Dollars']
 
 
+  close: =>
+    super
+    self.tooltip?.close()

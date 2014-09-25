@@ -1,5 +1,7 @@
 class Visio.Views.IcmyView extends Visio.Views.AccordionIndexView
 
+  @include Visio.Mixins.Narratify
+
   showView: (options) -> new Visio.Views.IcmyShowView(options)
 
   className: 'module'
@@ -31,6 +33,7 @@ class Visio.Views.IcmyView extends Visio.Views.AccordionIndexView
         right: 80
 
     @figure = new Visio.Figures.Icmy config
+    @narratify @figure
 
   render: (isRerender) ->
     super isRerender

@@ -1,6 +1,8 @@
 class Narrative < ActiveRecord::Base
   self.primary_key = :id
   include SyncableModel
+  extend AmountHelpers
+
   attr_accessible :operation_id, :plan_id, :year, :goal_id, :problem_objective_id, :output_id,
     :ppg_id, :elt_id, :plan_el_type, :usertxt, :createusr, :id, :report_type
 
@@ -14,7 +16,9 @@ class Narrative < ActiveRecord::Base
   SUMMARY_PREFIX = 'summary'
 
 
-  def self.summarize(ids, report_type = 'Mid Year Report', year = 2013)
+  def self.summarize(ids, report_type = nil, year = nil)
+    report_type ||= 'Mid Year Report'
+    year ||= Time.now.year
 
     args = ids.merge({ :report_type => report_type, :year => year })
 
@@ -28,5 +32,10 @@ class Narrative < ActiveRecord::Base
     Resque.enqueue SummarizeJob, token, args
 
     token
+  end
+
+  def self.clear_summary_cache
+    keys = Redis.current.keys "#{SUMMARY_PREFIX}*"
+    Redis.current.del keys
   end
 end

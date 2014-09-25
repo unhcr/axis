@@ -1,10 +1,4 @@
 module SyncableParameterModel
-  def touch_data(assoc)
-    self.budgets.update_all(:updated_at => Time.now) if defined? self.budgets
-    self.indicator_data.update_all(:updated_at => Time.now) if defined? self.indicator_data
-    self.expenditures.update_all(:updated_at => Time.now) if defined? self.expenditures
-  end
-
   def self.included(base)
     base.extend(ClassMethods)
 
@@ -14,9 +8,7 @@ module SyncableParameterModel
       base.has_many through, :class_name => class_name
       base.has_many :strategy_objectives,
         :uniq => true,
-        :through => through,
-        :before_add => :touch_data,
-        :before_remove => :touch_data
+        :through => through
     end
 
   end

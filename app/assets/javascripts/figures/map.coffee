@@ -20,8 +20,6 @@ class Visio.Figures.Map extends Visio.Figures.Base
     @strokeMin = .5
     @strokeMax = 2
 
-    @selectedDatum = null
-
     @translateExtent =
       left: 843
       right: -743
@@ -82,6 +80,7 @@ class Visio.Figures.Map extends Visio.Figures.Base
           selectedPopulation: 'Populations'
         }
         callback: (name, attr) =>
+          @selectedDatum.set 'd', null
           @render()
       }
 
@@ -159,10 +158,10 @@ class Visio.Figures.Map extends Visio.Figures.Base
 
         d3.select(self.el).selectAll('.country').classed 'selected', false
 
-        if self.selectedDatum?.id == operation.id
-          self.selectedDatum = null
+        if self.selectedDatum.get('d')?.id == operation.id
+          self.selectedDatum.set 'd', null
         else
-          self.selectedDatum = operation
+          self.selectedDatum.set 'd', operation
           d3.select(@).classed 'selected', true
           d3.select(@).moveToFront()
         self.scaleStroke()
@@ -294,3 +293,5 @@ class Visio.Figures.Map extends Visio.Figures.Base
 
   filtered: (collection) =>
     collection.filter (o) -> o.get('country')?
+
+  selectedable: false

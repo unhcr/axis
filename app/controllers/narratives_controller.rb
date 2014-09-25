@@ -1,4 +1,5 @@
 class NarrativesController < ApplicationController
+  include SyncableData
 
   def summarize
 

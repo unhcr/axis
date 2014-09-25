@@ -1,6 +1,7 @@
 window.Visio =
   Models: {}
   Collections: {}
+  SelectedData: {}
   Views: {}
   Mixins: {}
   Routers: {}
@@ -188,6 +189,11 @@ window.Visio =
       human: 'Rights Groups'
 
   Syncables:
+    NARRATIVES:
+      singular: 'narrative'
+      plural: 'narratives'
+      className: 'Narrative'
+      human: 'Narrative'
     PLANS:
       singular: 'plan'
       plural: 'plans'
@@ -269,6 +275,16 @@ Visio.Algorithms.THRESHOLDS = [
     { value: Visio.Algorithms.ALGO_RESULTS.medium, description: 'The indicator has achieved over 60% of its target.' }
     { value: Visio.Algorithms.ALGO_RESULTS.low, description: 'The indicator has not achieved 60% of its target.' }
     { value: Visio.Algorithms.STATUS.missing, description: 'The indicator is missing data.' }
+  ]
+
+Visio.Dashboards = [
+    Visio.FigureTypes.OVERVIEW,
+    Visio.FigureTypes.MAP,
+    Visio.FigureTypes.ICMY,
+    Visio.FigureTypes.ISY,
+    Visio.FigureTypes.BSY,
+    Visio.FigureTypes.BMY,
+    Visio.FigureTypes.ABSY
   ]
 
 Visio.Schema =

@@ -1,4 +1,6 @@
-class Visio.Views.AbsyView extends Backbone.View
+class Visio.Views.AbsyView extends Visio.Views.Module
+
+  @include Visio.Mixins.Narratify
 
   template: HAML['modules/absy']
 
@@ -23,6 +25,8 @@ class Visio.Views.AbsyView extends Backbone.View
 
     @figure = new Visio.Figures.Absy config
     @queryBy = new Visio.Views.QueryBy figure: @figure
+
+    @narratify @figure
 
   render: (isRerender) ->
 

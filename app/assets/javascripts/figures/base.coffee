@@ -48,6 +48,11 @@ class Visio.Figures.Base extends Backbone.View
 
     @$el.html @template(_.extend(opts, templateOpts))
 
+    if Visio.SelectedData[@type.className]?
+      @selectedDatum = new Visio.SelectedData[@type.className]({ d: null })
+    else
+      @selectedDatum = new Visio.Models.SelectedDatum({ d: null })
+
     @selection = d3.select @$el.find('figure')[0]
 
     $narrative = @$el.find('.narrative')
@@ -84,5 +89,6 @@ class Visio.Figures.Base extends Backbone.View
   selectable: true
 
   close: ->
+    @selectedDatum.off()
     @unbind()
     @remove()

@@ -1,22 +1,6 @@
 .pdf-page.country-list.pb_after
-  - Visio.manager.strategies(_.keys(Visio.manager.get('selected_strategies'))).each (strategy) ->
-    %h3
-      = strategy.get 'name'
-
-  .divider
-
-  - plans = context.figure.filtered(context.collection)
-  .row
-    .col-md-12
-      %span.ui-huge-number
-        = plans.length
-      TARGET COUNTRIES
-
-  .row
-    .col-md-12
-      - _.each plans, (plan) ->
-        %span.ui-large-header
-          = plan.toString()
+  %h3
+    = Visio.manager.get('dashboard').get 'name'
 
   %figure
 
