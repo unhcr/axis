@@ -21,25 +21,45 @@ class Visio.Views.NarrativePanel extends Backbone.View
     $('.header-buttons .narrative').toggleClass 'open'
 
   onNarratify: (e, selectedDatum) =>
+    @model = selectedDatum
 
-    summaryParameters = selectedDatum.summaryParameters()
+    summaryParameters = @model.summaryParameters()
     @summarize(summaryParameters).done (resp) =>
       console.log resp
       if resp.success
         @fetchSummary resp.token, @timeout
 
+    $panel = @$el.find('.panel .full-text')
+    @fetchText(0,
+      summaryParameters.ids,
+      summaryParameters.reported_type,
+      summaryParameters.year).done (resp) =>
+        $panel.html ''
+        _.each resp, (d) ->
+          console.log d.usertxt
+          $panel.append d.usertxt.replace(/\\n/g, '<br />')
 
   isOpen: =>
     $('.page').hasClass @openClass
 
-
   summarize: (parameters) ->
     $.post('/narratives/summarize', parameters)
+
+  fetchText: (page, ids, reported_type, year, limit = 30) ->
+    options =
+      limit: limit
+      optimize: true
+      filter_ids: ids
+      where: "USERTXT is not null AND report_type = '#{Visio.Utils.dbMetric(reported_type)}' AND year = '#{year}'"
+      offset: limit * page
+
+    $.post('/narratives', options)
+
 
   fetchSummary: (token, timeout, attempts) ->
     timeout or= 2000
     nAttempts = 0
-    $panel = @$el.find('.panel')
+    $panel = @$el.find('.panel .summary')
     $panel.text 'thinking...!'
 
     doneFn = (resp) =>

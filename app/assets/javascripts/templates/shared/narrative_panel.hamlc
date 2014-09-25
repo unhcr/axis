@@ -1,1 +1,4 @@
 .panel
+  .panel-text.summary
+  = '-------'
+  .panel-text.full-text

@@ -1639,13 +1639,17 @@ a {
 }
 
 #narrative-panel {
-  width: $narrative-panel-width;
+  width: $filter-system-width;
   height: 100%;
   position: fixed;
-  z-index: -1;
   top: $header-height;
   right: 0;
   background-color: $off-white;
+
+  .panel-text {
+    max-height: 500px;
+    overflow: auto;
+  }
 
 }
 
