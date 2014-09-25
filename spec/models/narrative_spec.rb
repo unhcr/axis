@@ -1,5 +1,6 @@
 require 'spec_helper'
 require 'fakeredis'
+require 'open3'
 
 describe Narrative do
 
@@ -9,7 +10,7 @@ describe Narrative do
   end
 
   it "should summarize a narrative" do
-    allow(SummarizeJob).to receive('system').and_return 'dummy'
+    allow(Open3).to receive('popen3').and_return 'dummy'
 
     ids = { :operation_ids => ['BEN'] }
 
@@ -22,7 +23,7 @@ describe Narrative do
     summary = Redis.current.get token
     processing = Redis.current.get "#{token}_#{SummarizeJob::PROCESSING}"
 
-    expect(summary).to eq('dummy')
+    expect(summary).to eq('')
     processing.should be_nil
 
     ttl = Redis.current.ttl(token)
