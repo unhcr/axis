@@ -19,17 +19,8 @@ module AmountHelpers
         .where(where).limit(limit)
   end
 
-  def models_optimized(ids = {})
-    conditions = []
-
-    # TODO Check accuracy of using problem_objective and output with OR
-    conditions << "operation_id IN ('#{ids[:operation_ids].join("','")}')" if ids[:operation_ids]
-    conditions << "plan_id IN ('#{ids[:plan_ids].join("','")}')" if ids[:plan_ids]
-    conditions << "ppg_id IN ('#{ids[:ppg_ids].join("','")}')" if ids[:ppg_ids]
-    conditions << "goal_id IN ('#{ids[:goal_ids].join("','")}')" if ids[:goal_ids]
-    conditions << "problem_objective_id IN ('#{ids[:problem_objective_ids].join("','")}')" if ids[:problem_objective_ids]
-    conditions << "(output_id IN ('#{ids[:output_ids].join("','")}') OR output_id IS NULL)" if ids[:output_ids]
-
+  def models_optimized(ids = {}, limit = nil, where = nil, offset = nil)
+    conditions = generate_conditions ids
     query_string = conditions.join(' AND ')
 
     # Need to include Strategy Objective ids
@@ -61,7 +52,32 @@ module AmountHelpers
       from #{self.table_name}
       ) t
       where is_deleted = false AND #{query_string}"
+
+    sql += " AND (#{where})" unless where.nil?
+    sql += " LIMIT #{sanitize(limit)}" unless limit.nil?
+    sql += " OFFSET #{sanitize(offset)}" unless offset.nil?
+
     ActiveRecord::Base.connection.execute(sql)
 
   end
+
+  def sanitize(sql)
+    ActiveRecord::Base::sanitize(sql)
+  end
+
+  def generate_conditions(ids)
+
+    conditions = []
+
+    # TODO Check accuracy of using problem_objective and output with OR
+    conditions << "operation_id IN ('#{ids[:operation_ids].join("','")}')" if ids[:operation_ids]
+    conditions << "plan_id IN ('#{ids[:plan_ids].join("','")}')" if ids[:plan_ids]
+    conditions << "ppg_id IN ('#{ids[:ppg_ids].join("','")}')" if ids[:ppg_ids]
+    conditions << "goal_id IN ('#{ids[:goal_ids].join("','")}')" if ids[:goal_ids]
+    conditions << "problem_objective_id IN ('#{ids[:problem_objective_ids].join("','")}')" if ids[:problem_objective_ids]
+    conditions << "(output_id IN ('#{ids[:output_ids].join("','")}') OR output_id IS NULL)" if ids[:output_ids]
+
+    conditions
+  end
+
 end

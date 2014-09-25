@@ -84,6 +84,7 @@ class Strategy < ActiveRecord::Base
   def data_optimized(resource = IndicatorDatum, limit = nil, where = {})
     ids = parameter_ids
     ids[:indicator_ids] = self.indicator_ids if resource == IndicatorDatum
+    ids.delete :output_ids if resource == Narrative
 
     resource.models_optimized ids
   end
@@ -91,6 +92,7 @@ class Strategy < ActiveRecord::Base
   def data(resource = IndicatorDatum, limit = nil, where = {})
     ids = parameter_ids
     ids[:indicator_ids] = self.indicator_ids if resource == IndicatorDatum
+    ids.delete :output_ids if resource == Narrative
 
     resource.models(ids, limit, where)
   end
