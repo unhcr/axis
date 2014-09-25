@@ -72,6 +72,7 @@ Visio::Application.routes.draw do
       get 'status/:token' => 'narratives#status'
       get 'total_characters' => 'narratives#total_characters'
     end
+    post 'index', on: :collection
   end
 
   root :to => 'application#index'
