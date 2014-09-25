@@ -51,7 +51,7 @@ class Visio.Figures.Base extends Backbone.View
     if Visio.SelectedData[@type.className]?
       @selectedDatum = new Visio.SelectedData[@type.className]({ d: null })
     else
-      @selectedDatum = new Visio.Models.SelectedDatum({ d: null })
+      @selectedDatum = new Visio.SelectedData.Base({ d: null })
 
     @selection = d3.select @$el.find('figure')[0]
 

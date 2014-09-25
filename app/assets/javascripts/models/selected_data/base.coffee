@@ -1,4 +1,4 @@
-class Visio.Models.SelectedDatum extends Backbone.Model
+class Visio.SelectedData.Base extends Backbone.Model
 
   year: ->
     Visio.manager.year()
