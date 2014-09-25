@@ -16,6 +16,9 @@ class Visio.SelectedData.Base extends Backbone.Model
 
     ids
 
+  name: ->
+    @get('d').toString()
+
   idField: ->
     "#{@get('d').name.singular}_ids"
 

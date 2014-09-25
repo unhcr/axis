@@ -7,6 +7,9 @@ class Visio.Views.NarrativePanel extends Backbone.View
     $.subscribe 'narratify-toggle-state', @onNarratifyStateToggle
     $.subscribe 'narratify', @onNarratify
 
+  events:
+    'click .download': 'onDownload'
+
   render: ->
 
     @$el.html @template()
@@ -19,6 +22,16 @@ class Visio.Views.NarrativePanel extends Backbone.View
   onNarratifyStateToggle: (e) =>
     $('.page').toggleClass @openClass
     $('.header-buttons .narrative').toggleClass 'open'
+
+  onDownload: (e) =>
+    params = @model.summaryParameters()
+
+    options =
+      name: "#{@model.name()} - #{params.year} - #{params.reported_type}"
+      filter_ids: params.ids
+      where: "USERTXT is not null AND report_type = '#{Visio.Utils.dbMetric(params.reported_type)}' AND year = '#{params.year}'"
+
+    window.location = "/narratives/download.docx?#{$.param(options)}"
 
   onNarratify: (e, selectedDatum) =>
     @model = selectedDatum

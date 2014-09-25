@@ -1,0 +1,54 @@
+!!!
+.div
+  %p{ :style => 'text-align:center;width:100%;font-size:60px' }
+    %b
+      = @name
+
+  .-line-break
+  .-line-break
+  .-line-break
+  - @narratives.each do |n|
+    %table
+      %tbody
+        - if n['operation_id']
+          %tr
+            %td
+              %b
+                = "Operation:"
+            %td
+              = Operation.find(n['operation_id']).name
+        - if n['ppg_id']
+          %tr
+            %td
+              %b
+                = "PPG:"
+            %td
+              = Ppg.find(n['ppg_id']).name
+        - if n['goal_id']
+          %tr
+            %td
+              %b
+                = "Goal:"
+            %td
+              = Goal.find(n['goal_id']).name
+        - if n['problem_objective_id']
+          %tr
+            %td
+              %b
+                = "Objective:"
+            %td
+              = ProblemObjective.find(n['problem_objective_id']).objective_name
+        - if n['output_id']
+          %tr
+            %td
+              %b
+                = "Output:"
+            %td
+              = Output.find(n['output_id']).name
+
+    - paragraphs = n['usertxt'].split("\\n")
+    - paragraphs.each do |p|
+      %p
+        = p
+    .-line-break
+
