@@ -34,6 +34,17 @@ class Narrative < ActiveRecord::Base
     token
   end
 
+  def self.total_characters(ids = {})
+    conditions = generate_conditions ids
+    query_string = conditions.join(' AND ')
+
+    sql = "select sum(#{self.table_name}.usertxt_length) as total_characters
+           from #{self.table_name}
+           where is_deleted = false AND #{query_string}"
+
+    ActiveRecord::Base.connection.execute(sql)
+  end
+
   def self.clear_summary_cache
     keys = Redis.current.keys "#{SUMMARY_PREFIX}*"
     Redis.current.del keys

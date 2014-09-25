@@ -28,4 +28,10 @@ class NarrativesController < ApplicationController
       :summary => summary
     }
   end
+
+  def total_characters
+    render :json => {
+        :total_characters => Narrative.total_characters(params[:filter_ids]).values[0][0] || 0
+      }
+  end
 end
