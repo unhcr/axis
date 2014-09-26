@@ -12,22 +12,20 @@ class Visio.Views.IsyShowView extends Visio.Views.AccordionShowView
     'oTransitionEnd': 'onParameterTransitionEnd'
 
   initialize: (options) ->
-    width = $('#module').width() - (Visio.Constants.FILTERS_WIDTH + 40)
-
     config =
       margin:
         top: 85
         bottom: 50
         left: 115
         right: 30
-      width: width
+      width: @figureWidth true
       height: 425
 
-    @isyFigure = new Visio.Figures.Isy config
-    @narratify @isyFigure
+    @figure = new Visio.Figures.Isy config
+    @narratify @figure
 
-    @filterBy = new Visio.Views.FilterBy({ figure: @isyFigure, })
-    @queryBy = new Visio.Views.QueryBy figure: @isyFigure, placeholder: 'Search for an indicator'
+    @filterBy = new Visio.Views.FilterBy({ figure: @figure, })
+    @queryBy = new Visio.Views.QueryBy figure: @figure, placeholder: 'Search for an indicator'
     @sortBy = new Visio.Views.Dropdown
       title: 'Sort By'
       data: [
@@ -37,27 +35,27 @@ class Visio.Views.IsyShowView extends Visio.Views.AccordionShowView
         ]
       callback: (value, data) =>
         progress = _.findWhere _.values(Visio.ProgressTypes), { value: value }
-        @isyFigure.sortAttribute = progress
-        @isyFigure.render()
+        @figure.sortAttribute = progress
+        @figure.render()
 
-    $.subscribe "hover.#{@isyFigure.cid}.figure", (e, idxOrDatum) =>
+    $.subscribe "hover.#{@figure.cid}.figure", (e, idxOrDatum) =>
       if idxOrDatum instanceof Visio.Models.IndicatorDatum
-        value = @isyFigure.findBoxByDatum(idxOrDatum).idx
+        value = @figure.findBoxByDatum(idxOrDatum).idx
       else
         value = idxOrDatum
 
       @$el.find('.slider').slider 'value', value
       @$el.find('.slider .ui-slider-handle').attr 'data-value', value + 1
 
-    $.subscribe "drawFigures.#{@isyFigure.cid}.figure", @drawFigures
+    $.subscribe "drawFigures.#{@figure.cid}.figure", @drawFigures
 
   render: (isRerender) ->
     situationAnalysis = @model.selectedSituationAnalysis()
 
     if !isRerender
-      @$el.html @template({ parameter: @model, figureId: @isyFigure.figureId() })
+      @$el.html @template({ parameter: @model, figureId: @figure.figureId() })
 
-      @$el.find('.indicator-bar-graph').html @isyFigure.el
+      @$el.find('.indicator-bar-graph').html @figure.el
       @$el.find('.header-buttons').append @filterBy.render().el
       @$el.find('.header-buttons').append @sortBy.render().el
       @$el.find('.header-buttons').append @queryBy.render().el
@@ -88,29 +86,36 @@ class Visio.Views.IsyShowView extends Visio.Views.AccordionShowView
     @
 
   onStop: (e, ui) =>
-    $.publish "mouseout.#{@isyFigure.cid}.figure", ui.value
+    $.publish "mouseout.#{@figure.cid}.figure", ui.value
 
   onSlide: (e, ui) =>
-    $.publish "hover.#{@isyFigure.cid}.figure", ui.value
+    $.publish "hover.#{@figure.cid}.figure", ui.value
     @$el.find('.slider .ui-slider-handle').attr 'data-value', ui.value + 1
 
   drawFigures: =>
-    @isyFigure.collectionFn @model.selectedIndicatorData()
-    max = @isyFigure.filtered(@isyFigure.collection).length
+    # rerender filter by
+    @filterBy.render true
 
-    @isyFigure.render()
+    @figure.collectionFn @model.selectedIndicatorData()
+    max = @figure.filtered(@figure.collection).length
+
+    @figure.render()
 
     $slider = @$el.find('.slider')
     $slider.slider 'option', 'max', max - 1
     $slider.attr 'data-max', max
 
     # No reason to show slider if there is nothing to slide
-    if max < @isyFigure.maxIndicators
+    if max < @figure.maxIndicators
       $slider.addClass 'gone'
     else
       $slider.removeClass 'gone'
 
   removeInstances: =>
-    $.unsubscribe "drawFigures.#{@isyFigure.cid}.figure"
-    $.unsubscribe "hover.#{@isyFigure.cid}.figure"
-    @isyFigure.close()
+    $.unsubscribe "drawFigures.#{@figure.cid}.figure"
+    $.unsubscribe "hover.#{@figure.cid}.figure"
+    @figure?.close()
+
+  close: =>
+    super
+    @removeInstances()

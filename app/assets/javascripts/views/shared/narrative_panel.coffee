@@ -5,7 +5,11 @@ class Visio.Views.NarrativePanel extends Backbone.View
   initialize: ->
 
     $.subscribe 'narratify-toggle-state', @onNarratifyStateToggle
+    $.subscribe 'narratify-close', @onNarratifyClose
     $.subscribe 'narratify', @onNarratify
+
+  events:
+    'click .download': 'onDownload'
 
   render: ->
 
@@ -20,26 +24,66 @@ class Visio.Views.NarrativePanel extends Backbone.View
     $('.page').toggleClass @openClass
     $('.header-buttons .narrative').toggleClass 'open'
 
-  onNarratify: (e, selectedDatum) =>
+    $.publish 'close-filter-system' if @isOpen()
 
-    summaryParameters = selectedDatum.summaryParameters()
+  onNarratifyClose: (e) =>
+    $('.page').removeClass @openClass
+    $('.header-buttons .narrative').removeClass 'open'
+
+  onDownload: (e) =>
+    params = @model.summaryParameters()
+
+    options =
+      name: "#{@model.name()} - #{params.year} - #{params.reported_type}"
+      filter_ids: params.ids
+      where: "USERTXT is not null AND
+        report_type = '#{Visio.Utils.dbMetric(params.reported_type)}' AND
+        year = '#{params.year}'"
+
+    path = "/narratives/download.docx?#{$.param(options)}"
+
+    Visio.Utils.redirect path
+
+  onNarratify: (e, selectedDatum) =>
+    @model = selectedDatum
+
+    summaryParameters = @model.summaryParameters()
     @summarize(summaryParameters).done (resp) =>
       console.log resp
       if resp.success
         @fetchSummary resp.token, @timeout
 
+    $panel = @$el.find('.panel .full-text')
+    @fetchText(0,
+      summaryParameters.ids,
+      summaryParameters.reported_type,
+      summaryParameters.year).done (resp) =>
+        $panel.html ''
+        _.each resp, (d) ->
+          console.log d.usertxt
+          $panel.append d.usertxt.replace(/\\n/g, '<br />')
 
   isOpen: =>
     $('.page').hasClass @openClass
 
-
   summarize: (parameters) ->
     $.post('/narratives/summarize', parameters)
+
+  fetchText: (page, ids, reported_type, year, limit = 30) ->
+    options =
+      limit: limit
+      optimize: true
+      filter_ids: ids
+      where: "USERTXT is not null AND report_type = '#{Visio.Utils.dbMetric(reported_type)}' AND year = '#{year}'"
+      offset: limit * page
+
+    $.post('/narratives', options)
+
 
   fetchSummary: (token, timeout, attempts) ->
     timeout or= 2000
     nAttempts = 0
-    $panel = @$el.find('.panel')
+    $panel = @$el.find('.panel .summary')
     $panel.text 'thinking...!'
 
     doneFn = (resp) =>
@@ -58,6 +102,7 @@ class Visio.Views.NarrativePanel extends Backbone.View
 
   close: ->
     $.unsubscribe 'narratify-toggle-state'
+    $.unsubscribe 'narratify-close'
     $.unsubscribe 'narratify'
     @unbind()
     @remove()

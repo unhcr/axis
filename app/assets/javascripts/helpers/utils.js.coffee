@@ -30,6 +30,13 @@ Visio.Utils.signup = (firstname, lastname, login, password, passwordConf, callba
       callback(resp)
   )
 
+Visio.Utils.redirect = (path, _blank) ->
+  return unless path?
+  if _blank
+    return window.open path
+
+  window.location = path
+
 Visio.Utils.signout = (callback) ->
 
   $.ajax(
@@ -75,6 +82,15 @@ Visio.Utils.parseTransform = (string) ->
 
 Visio.Utils.countToFormatter = (value) ->
   d3.format('d')(value.toFixed(0)) || 0
+
+Visio.Utils.dbMetric = (metric) ->
+  switch metric
+    when Visio.Algorithms.REPORTED_VALUES.myr
+      'Mid Year Report'
+    when Visio.Algorithms.REPORTED_VALUES.yer
+      'Year-End Report'
+    else
+      metric
 
 Visio.Utils.humanMetric = (metric) ->
   if metric == Visio.Algorithms.REPORTED_VALUES.myr

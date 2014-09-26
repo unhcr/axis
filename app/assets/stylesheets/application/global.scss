@@ -1639,13 +1639,17 @@ a {
 }
 
 #narrative-panel {
-  width: $narrative-panel-width;
+  width: $filter-system-width;
   height: 100%;
   position: fixed;
-  z-index: -1;
   top: $header-height;
   right: 0;
   background-color: $off-white;
+
+  .panel-text {
+    max-height: 500px;
+    overflow: auto;
+  }
 
 }
 
@@ -2164,7 +2168,7 @@ a {
 }
 
 .shift-right {
-  right: $narrative-panel-width !important;
+  right: $filter-system-width !important;
   /* Legends should disappear */
   .legend-container {
     display: none;
@@ -2533,21 +2537,26 @@ a {
       .title { border-top: 2px solid $primary-light }
     }
 
-    .PILLAR-1 {
+    .PILLAR-1, .LYPK {
       color: $pillar1;
       .title { border-top: 2px solid $pillar1 }
     }
-    .PILLAR-2 {
+    .PILLAR-2, .LYPM {
       color: $pillar2;
       .title { border-top: 2px solid $pillar2 }
     }
-    .PILLAR-3 {
+    .PILLAR-3, .LYPN {
       color: $pillar3;
       .title { border-top: 2px solid $pillar3 }
     }
-    .PILLAR-4 {
+    .PILLAR-4, .LYPJ {
       color: $pillar4;
       .title { border-top: 2px solid $pillar4 }
+    }
+
+    .PILLAR-4, .LYPL {
+      color: $pillar5;
+      .title { border-top: 2px solid $pillar5 }
     }
 
     .ADMIN {

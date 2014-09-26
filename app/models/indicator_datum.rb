@@ -64,7 +64,7 @@ class IndicatorDatum < ActiveRecord::Base
 
   end
 
-  def self.models_optimized(ids = {})
+  def self.models_optimized(ids = {}, limit = nil, where = nil, offset = nil)
     conditions = []
 
     conditions << "operation_id IN ('#{ids[:operation_ids].join("','")}')" if ids[:operation_ids]
@@ -117,6 +117,9 @@ class IndicatorDatum < ActiveRecord::Base
       from #{self.table_name}
       ) t
       where is_deleted = false AND #{query_string}"
+
+    sql += " LIMIT #{sanitize(limit)}" unless limit.nil?
+    sql += " OFFSET #{sanitize(offset)}" unless offset.nil?
 
     ActiveRecord::Base.connection.execute(sql)
 

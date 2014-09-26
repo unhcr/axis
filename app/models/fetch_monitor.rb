@@ -12,7 +12,7 @@ class FetchMonitor < ActiveRecord::Base
     return unless self.starttime
 
     parameters = [Plan, Ppg, Goal, RightsGroup, ProblemObjective, Output, Indicator,
-      IndicatorDatum, Budget, Expenditure]
+      IndicatorDatum, Budget, Expenditure, Narrative]
 
     parameters.each do |parameter|
       to_delete = parameter.where('found_at < ?', self.starttime).all

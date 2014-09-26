@@ -221,6 +221,19 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
       datum = { amount: 0, year: budget.get('year') }
       datum['groupBy'] = @groupBy
       datum[@groupBy] = budget.get @groupBy
+      datum.summary = false
+
+
+      if @modelOrCollection instanceof Backbone.Collection
+        datum.model_id = budget.get @groupBy
+        datum.id_type = Visio.Utils.parameterBySingular(@groupBy.replace('_id',''))
+        datum.name = Visio.manager.get(datum.id_type.plural).get(datum.model_id).toString()
+      else
+        datum.model_id = @modelOrCollection.id
+        datum.id_type = @modelOrCollection.name
+        datum.name = @modelOrCollection.toString()
+
+
       lineData.push datum unless @filters.isFiltered budget
 
     datum.amount += budget.get 'amount'
@@ -240,6 +253,13 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
         total = { amount: 0, year: budget.get('year') }
         total['groupBy'] = @groupBy
         total[@groupBy] = 'total'
+        total.summary = @modelOrCollection instanceof Backbone.Collection
+
+        unless total.summary
+          total.model_id = @modelOrCollection.id
+          total.id_type = @modelOrCollection.name
+          total.name = @modelOrCollection.toString()
+
         totalData.push total
       total.amount += budget.get 'amount'
 
@@ -248,7 +268,8 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
   filtered: (modelOrCollection) =>
     budgetData = modelOrCollection.selectedBudgetData(Visio.Constants.ANY_YEAR, @filters).models
 
-    _.chain(budgetData).reduce(@reduceFn, []).value()
+    @modelOrCollection = modelOrCollection
+    _.chain(budgetData).reduce(@reduceFn, [], @).value()
 
   polygon: (d) ->
     return "M0 0" unless d? and d.length
@@ -335,4 +356,4 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
 
   close: =>
     super
-    self.tooltip?.close()
+    @tooltip?.close()

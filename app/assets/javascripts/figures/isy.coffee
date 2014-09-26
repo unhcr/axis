@@ -33,6 +33,18 @@ class Visio.Figures.Isy extends Visio.Figures.Base
         callback: (name, attr) =>
           @selectedDatum.set 'd', null
           @isPerformanceFn(name == 'true')
+
+          @svg.classed 'isy-performance', @isPerformance
+
+          @labelView.close()
+
+          # Logic for if user selects performance and has standard set which should not be possible
+          if @isPerformance and @goalType == Visio.Algorithms.GOAL_TYPES.standard
+            # Switch to target
+            @filters.get('achievement').filter Visio.Algorithms.GOAL_TYPES.target, true
+            @goalTypeFn @filters.get('achievement').active()
+
+
           @x.domain [0, @maxIndicators]
           $.publish "drawFigures.#{@cid}.figure"
           $.publish "hover.#{@cid}.figure", 0
@@ -41,8 +53,12 @@ class Visio.Figures.Isy extends Visio.Figures.Base
         id: 'achievement'
         filterType: 'radio'
         values: _.object(_.values(Visio.Algorithms.GOAL_TYPES), _.values(Visio.Algorithms.GOAL_TYPES).map(
-          (achievement_type) ->
-            Visio.manager.get('achievement_type') == achievement_type))
+          (goalType) ->
+            type = if performanceValues.true
+                Visio.Algorithms.GOAL_TYPES.target
+              else
+                Visio.Algorithms.GOAL_TYPES.standard
+            type == goalType))
         human: humanGoalTypes
         callback: (name, attr) =>
           @goalTypeFn(name).render()
@@ -90,7 +106,7 @@ class Visio.Figures.Isy extends Visio.Figures.Base
       .tickSize(-@adjustedWidth)
       .tickPadding(@tickPadding)
 
-    @goalType = config.goalType || Visio.Algorithms.GOAL_TYPES.target
+    @goalType = @filters.get('achievement').active()
 
     @g.append('g')
       .attr('class', 'y axis')
@@ -115,15 +131,15 @@ class Visio.Figures.Isy extends Visio.Figures.Base
 
     # Lines
     #
-    # Bottom line of ISY graph
+    # Bottom line of criticality dots
     @g.append('line')
-      .attr('class', 'isy-line')
+      .attr('class', 'isy-line isy-line-bottom')
       .attr('x1', 0)
       .attr('x2', @adjustedWidth)
       .attr('y1', @adjustedHeight + 2 * @footerHeight)
       .attr('y2', @adjustedHeight + 2 * @footerHeight)
 
-    # Bottom line of criticality dots
+    # Bottom line of ISY graph
     @g.append('line')
       .attr('class', 'isy-line')
       .attr('x1', 0)
@@ -141,7 +157,7 @@ class Visio.Figures.Isy extends Visio.Figures.Base
 
     # Labels
     @g.append('text')
-      .attr('class', 'label')
+      .attr('class', 'label isy-crit-label')
       .attr('x', @graphWidth + @labelContainerPaddingLeft)
       .attr('text-anchor', 'start')
       .attr('y', @adjustedHeight + @footerHeight)
@@ -175,6 +191,7 @@ class Visio.Figures.Isy extends Visio.Figures.Base
         ]
         self.templateTooltip
           d: d
+          goalType: self.goalType
           values: values
           inconsistencies: d.consistent().inconsistencies
       )
@@ -479,14 +496,13 @@ class Visio.Figures.Isy extends Visio.Figures.Base
     @g.selectAll('.bar-container').classed 'hover', false
 
   close: ->
-    @unbind()
+    super
     $.unsubscribe "hover.#{@cid}.figure"
     $.unsubscribe "mouseout.#{@cid}.figure"
-    @remove()
 
   yAxisLabel: ->
 
-    achievement_type = Visio.Utils.humanMetric Visio.manager.get 'achievement_type'
+    goalHuman = Visio.Utils.humanMetric @goalType
     return @templateLabel
         title: 'Achievement',
-        subtitles: ['% of Progress', "towards #{achievement_type}"]
+        subtitles: ['% of Progress', "towards #{goalHuman}"]

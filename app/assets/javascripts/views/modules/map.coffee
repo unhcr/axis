@@ -9,13 +9,9 @@ class Visio.Views.MapView extends Visio.Views.Module
   id: 'map'
 
   initialize: (options) ->
-    width = $('#module').width()
-
-    #unless $('.page').hasClass('shift')
-    #  width -= (Visio.Constants.LEGEND_WIDTH + 40)
 
     config =
-      width: width
+      width: @figureWidth false
       height: 800
       model: new Visio.Models.Map()
 

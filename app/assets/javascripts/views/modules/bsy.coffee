@@ -9,9 +9,8 @@ class Visio.Views.BsyView extends Visio.Views.Module
   id: 'bsy'
 
   initialize: (options) ->
-    width = $('#module').width() - (Visio.Constants.FILTERS_WIDTH + 40)
     @config =
-      width: width
+      width: @figureWidth true
       height: 375
       margin:
         top: 85

@@ -12,7 +12,7 @@ class Visio.Views.ExportModule extends Backbone.View
     'click .close': 'onClose'
 
   initialize: (options) ->
-    $(document).scrollTop(0)
+    $(document).scrollTop 0
     @config = @model.get 'figure_config'
     @loadingPdf = new Backbone.Model
       loading: false

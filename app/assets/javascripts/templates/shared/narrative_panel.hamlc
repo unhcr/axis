@@ -1,1 +1,5 @@
 .panel
+  .download Download as docx
+  .panel-text.summary
+  = '-------'
+  .panel-text.full-text

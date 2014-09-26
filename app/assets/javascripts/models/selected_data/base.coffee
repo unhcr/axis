@@ -1,4 +1,4 @@
-class Visio.Models.SelectedDatum extends Backbone.Model
+class Visio.SelectedData.Base extends Backbone.Model
 
   year: ->
     Visio.manager.year()
@@ -15,6 +15,9 @@ class Visio.Models.SelectedDatum extends Backbone.Model
     ids[idField] = [@id()]
 
     ids
+
+  name: ->
+    @get('d').toString()
 
   idField: ->
     "#{@get('d').name.singular}_ids"

@@ -1,0 +1,9 @@
+one:
+  operation_id: BEN
+  usertxt: ben
+  usertxt_length: 3
+
+two:
+  operation_id: LISA
+  usertxt: lisa
+  usertxt_length: 4

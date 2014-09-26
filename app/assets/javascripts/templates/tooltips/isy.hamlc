@@ -24,8 +24,8 @@
               = 'N/A'
 
           .value-number.value-relative.col-md-6{ :class => 'last' if i == list.length - 1 }
-            - if context.d.get(v.value)? and context.d.get(Visio.manager.get('achievement_type'))?
-              = Visio.Formats.PERCENT context.d.get(v.value) / context.d.get(Visio.manager.get('achievement_type'))
+            - if context.d.get(v.value)? and context.d.get(context.goalType)?
+              = Visio.Formats.PERCENT context.d.get(v.value) / context.d.get(context.goalType)
 
             - else
               = 'N/A'

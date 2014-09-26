@@ -28,4 +28,30 @@ class NarrativesController < ApplicationController
       :summary => summary
     }
   end
+
+  def to_docx
+    @name = params[:name] || "Narrative Report"
+
+    @narratives = resource.models_optimized(params[:filter_ids],
+                                            params[:limit],
+                                            params[:where],
+                                            params[:offset]).values[0][0] || []
+    @narratives = JSON.parse(@narratives)
+
+    html = view_context.render :template => 'layouts/narrative_word'
+    filename = "#{@name}.docx"
+    file = Htmltoword::Document.create(html, filename)
+
+    send_file file.path,
+      :filename => filename,
+      :disposition => 'inline',
+      :type => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+
+  end
+
+  def total_characters
+    render :json => {
+        :total_characters => Narrative.total_characters(params[:filter_ids]).values[0][0] || 0
+      }
+  end
 end

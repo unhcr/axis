@@ -21,16 +21,17 @@ module 'ICMY Figure',
       }
     ])
 
-    sinon.stub Visio.Collections.Output.prototype, 'selectedSituationAnalysis', ->
+    sinon.stub Visio.Collections.Output.prototype, 'selectedSituationAnalysis', (year, filters) ->
+      console.log arguments
       counts = {}
       counts[Visio.Algorithms.ALGO_RESULTS.success] = 2
       counts[Visio.Algorithms.ALGO_RESULTS.ok] = 0
       counts[Visio.Algorithms.ALGO_RESULTS.fail] = 0
-      counts[Visio.Algorithms.STATUS.missing] = 4
+      counts[Visio.Algorithms.STATUS.missing] = if year == 2014 then 2 else 4
       return {
         result: .5
         counts: counts
-        total: 0
+        total: if year == 2014 then 4 else 0
         typeTotal: 2
       }
 
@@ -42,7 +43,7 @@ test 'filtered', ->
 
   filtered = @figure.filtered @outputs
 
-  countedYears = _.filter Visio.manager.get('yearList'), (year) -> year + 1 <= (new Date()).getFullYear()
+  countedYears = _.filter Visio.manager.get('yearList'), (year) -> year <= (new Date()).getFullYear()
 
   strictEqual Visio.Collections.Output.prototype.selectedSituationAnalysis.callCount,
     countedYears.length
@@ -53,7 +54,7 @@ test 'filtered', ->
       when Visio.Algorithms.ALGO_RESULTS.success
         strictEqual lineData.amount, 2 * lineData.length
       when Visio.Algorithms.STATUS.missing
-        strictEqual lineData.amount, 4 * lineData.length
+        strictEqual lineData.amount, (4 * lineData.length) - 2
       else
         strictEqual lineData.amount, 0
 

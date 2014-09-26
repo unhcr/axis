@@ -38,14 +38,6 @@ class Visio.Views.Header extends Backbone.View
         currentValue: -> Visio.manager.get('module_type')
         currentHuman: -> Visio.Utils.figureTypeByName(Visio.manager.get('module_type')).human
 
-      reported_type:
-        human: 'REPORT TYPE'
-        values: [{ human: 'YER', name: Visio.Algorithms.REPORTED_VALUES.yer },
-                 { human: 'MYR', name: Visio.Algorithms.REPORTED_VALUES.myr }]
-        key: 'reported_type'
-        currentValue: -> Visio.manager.get('reported_type')
-        currentHuman: -> Visio.manager.get('reported_type').toUpperCase()
-
       aggregation_type:
         human: 'AGGREGATE'
         values: [Visio.Parameters.OPERATIONS, Visio.Parameters.PPGS, Visio.Parameters.GOALS,
@@ -55,6 +47,14 @@ class Visio.Views.Header extends Backbone.View
         currentValue: -> Visio.manager.get('aggregation_type')
         currentHuman: -> Visio.Utils.parameterByName(Visio.manager.get('aggregation_type')).human
 
+      reported_type:
+        human: 'REPORT TYPE'
+        values: [{ human: 'YER', name: Visio.Algorithms.REPORTED_VALUES.yer },
+                 { human: 'MYR', name: Visio.Algorithms.REPORTED_VALUES.myr }]
+        key: 'reported_type'
+        currentValue: -> Visio.manager.get('reported_type')
+        currentHuman: -> Visio.manager.get('reported_type').toUpperCase()
+
       year:
         human: 'YEAR'
         values: _.map Visio.manager.get('yearList'), (year) -> { human: year, name: year }
@@ -62,7 +62,8 @@ class Visio.Views.Header extends Backbone.View
         currentValue: -> Visio.manager.year()
         currentHuman: -> Visio.manager.year()
 
-    $.subscribe 'toggle-filter-state', @toggleFilterSystem
+    $.subscribe 'toggle-filter-system', @toggleFilterSystem
+    $.subscribe 'close-filter-system', @closeFilterSystem
     @render()
 
   render: ->
@@ -136,12 +137,17 @@ class Visio.Views.Header extends Backbone.View
     @markOld()
 
   onClickMenuIcon: (e) =>
-    $.publish 'toggle-filter-state'
+    $.publish 'toggle-filter-system'
 
   toggleFilterSystem: =>
     @$el.toggleClass 'filter-open'
     @filterSystem.toggleState()
-    $('#navigation').removeClass('gone')
+
+    $.publish 'narratify-close' if @filterSystem.isOpen()
+
+  closeFilterSystem: =>
+    @$el.removeClass 'filter-open'
+    @filterSystem.toggleState() if @filterSystem.isOpen()
 
   onMouseleave: (e) =>
 
@@ -197,7 +203,8 @@ class Visio.Views.Header extends Backbone.View
     Visio.manager.set data.key, data.value
 
   close: =>
-    $.unsubscribe 'toggle-filter-state'
+    $.unsubscribe 'toggle-filter-system'
+    $.unsubscribe 'close-filter-system'
     @filterSystem?.close()
     @unbind()
     @remove()

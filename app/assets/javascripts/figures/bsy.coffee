@@ -398,8 +398,7 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
         subtitles: ['in US Dollars']
 
   close: ->
+    super
     @legendView?.close()
-    @unbind()
     $.unsubscribe "hover.#{@cid}.figure"
     $.unsubscribe "mouseout.#{@cid}.figure"
-    @remove()

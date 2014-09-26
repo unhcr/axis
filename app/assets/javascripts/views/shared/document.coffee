@@ -83,7 +83,7 @@ class Visio.Views.Document extends Backbone.View
     Visio.router.navigate Visio.FigureTypes.ABSY.name, { trigger: true }
 
   onFKey: ->
-    $.publish 'toggle-filter-state'
+    $.publish 'toggle-filter-system'
 
   onAKey: ->
     currIdx = 0

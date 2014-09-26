@@ -197,7 +197,7 @@ class Visio.Figures.Icmy extends Visio.Figures.Base
     memo = []
     _.each Visio.manager.get('yearList'), (year) =>
 
-      return if year + 1 > (new Date()).getFullYear()
+      return if year > (new Date()).getFullYear()
 
       result = collection[@algorithm] year, @filters
 
@@ -219,7 +219,16 @@ class Visio.Figures.Icmy extends Visio.Figures.Base
         datum = _.findWhere lineData, { year: year, category: category }
         found = datum?
 
-        datum or= { amount: 0, year: year, category: category }
+        id = if collection.length == 1 then collection.at(0).id else null
+
+        datum or=
+          amount: 0
+          year: year
+          category: category
+          summary: @summary
+          model_id: id
+          id_type: collection.name
+          name: collection.toString()
 
         # Keeps track of total in that year for that category
         datum.amount += count
@@ -305,4 +314,5 @@ class Visio.Figures.Icmy extends Visio.Figures.Base
 
   close: =>
     super
+    console.log 'clsing'
     @tooltip?.close()

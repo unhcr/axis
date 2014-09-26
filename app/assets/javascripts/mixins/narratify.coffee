@@ -29,3 +29,4 @@ Visio.Mixins.Narratify =
 
     if @isNarrativePanelOpen()
       $.publish 'narratify', [@selectedDatum]
+      $.publish 'close-filter-system'

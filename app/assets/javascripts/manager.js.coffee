@@ -281,7 +281,7 @@ class Visio.Models.Manager extends Backbone.Model
       @set 'amount_type', _state.amount_type
       @set 'strategies', new Visio.Collections.Strategy _state.strategies
       @set 'strategy_id', _state.strategy_id
-      @set 'dashboard', new Backbone.Model _state.dashboard
+      @set 'dashboard', new Backbone.Model(_state.dashboard) if _state.dashboard
       return _state
     else
       return {
@@ -295,6 +295,6 @@ class Visio.Models.Manager extends Backbone.Model
         amount_type: @get 'amount_type'
         strategies: @get('strategies').toJSON()
         strategy_id: @get 'strategy_id'
-        dashboard: @get('dashboard').toJSON()
+        dashboard: @get('dashboard')?.toJSON()
       }
 
