@@ -33,6 +33,12 @@ class Visio.Figures.Isy extends Visio.Figures.Base
         callback: (name, attr) =>
           @selectedDatum.set 'd', null
           @isPerformanceFn(name == 'true')
+          # Logic for if user selects performance and has standard set which should not be possible
+          if @isPerformance and @goalType == Visio.Algorithms.GOAL_TYPES.standard
+            # Switch to target
+            @filters.get('achievement').filter Visio.Algorithms.GOAL_TYPES.target, true
+            @goalTypeFn @filters.get('achievement').active()
+
           @x.domain [0, @maxIndicators]
           $.publish "drawFigures.#{@cid}.figure"
           $.publish "hover.#{@cid}.figure", 0

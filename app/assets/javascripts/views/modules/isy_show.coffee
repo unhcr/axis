@@ -93,6 +93,9 @@ class Visio.Views.IsyShowView extends Visio.Views.AccordionShowView
     @$el.find('.slider .ui-slider-handle').attr 'data-value', ui.value + 1
 
   drawFigures: =>
+    # rerender filter by
+    @filterBy.render true
+
     @figure.collectionFn @model.selectedIndicatorData()
     max = @figure.filtered(@figure.collection).length
 
