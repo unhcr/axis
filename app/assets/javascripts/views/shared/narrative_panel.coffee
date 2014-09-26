@@ -1,6 +1,20 @@
 class Visio.Views.NarrativePanel extends Backbone.View
 
   template: HAML['shared/narrative_panel']
+  templateFullText: HAML['shared/narrative_panels/full_text']
+  templateSummary: HAML['shared/narrative_panels/summary']
+
+  textTypes:
+    summary:
+      name: 'summary'
+      human: 'Summary'
+    fullText:
+      name: 'full_text'
+      human: 'Full Text'
+
+  textType: 'summary'
+
+  timeout: 2000 # 2 seconds
 
   initialize: ->
 
@@ -10,15 +24,56 @@ class Visio.Views.NarrativePanel extends Backbone.View
 
   events:
     'click .download': 'onDownload'
+    'change input': 'onChangeTextType'
 
   render: ->
 
-    @$el.html @template()
+    @$el.html @template
+      model: @model
+      textTypes: @textTypes
+      textType: @textType
+    @renderTextType @textType
     @
 
-  timeout: 2000 # 2 seconds
+  renderSummary: =>
+    @$el.find('.panel-text').html @templateSummary
+      model: @model
+
+    summaryParameters = @model.summaryParameters()
+    @summarize(summaryParameters).done (resp) =>
+      if resp.success
+        @fetchSummary resp.token, @timeout
+
+  renderFullText: =>
+    @$el.find('.panel-text').html @templateFullText
+      model: @model
+
+    summaryParameters = @model.summaryParameters()
+    $panel = @$el.find(".panel .panel-full_text-#{@model.cid}")
+    @fetchText(0,
+      summaryParameters.ids,
+      summaryParameters.reported_type,
+      summaryParameters.year).done (resp) =>
+        $panel.html ''
+        _.each resp, (d) ->
+          console.log d.usertxt
+          $panel.append d.usertxt.replace(/\\n/g, '<br />')
+
+
+  renderTextType: (textType) ->
+    switch textType
+      when @textTypes.summary.name
+        @renderSummary()
+      when @textTypes.fullText.name
+        @renderFullText()
 
   openClass: 'shift-right'
+
+  onChangeTextType: (e) =>
+    @textType = $(e.currentTarget).val()
+
+    @renderTextType @textType
+
 
   onNarratifyStateToggle: (e) =>
     $('.page').toggleClass @openClass
@@ -46,22 +101,9 @@ class Visio.Views.NarrativePanel extends Backbone.View
 
   onNarratify: (e, selectedDatum) =>
     @model = selectedDatum
+    @render()
 
-    summaryParameters = @model.summaryParameters()
-    @summarize(summaryParameters).done (resp) =>
-      console.log resp
-      if resp.success
-        @fetchSummary resp.token, @timeout
 
-    $panel = @$el.find('.panel .full-text')
-    @fetchText(0,
-      summaryParameters.ids,
-      summaryParameters.reported_type,
-      summaryParameters.year).done (resp) =>
-        $panel.html ''
-        _.each resp, (d) ->
-          console.log d.usertxt
-          $panel.append d.usertxt.replace(/\\n/g, '<br />')
 
   isOpen: =>
     $('.page').hasClass @openClass
@@ -83,7 +125,7 @@ class Visio.Views.NarrativePanel extends Backbone.View
   fetchSummary: (token, timeout, attempts) ->
     timeout or= 2000
     nAttempts = 0
-    $panel = @$el.find('.panel .summary')
+    $panel = @$el.find(".panel .panel-summary-#{@model.cid}")
     $panel.text 'thinking...!'
 
     doneFn = (resp) =>

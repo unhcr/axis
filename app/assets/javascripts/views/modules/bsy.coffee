@@ -29,6 +29,7 @@ class Visio.Views.BsyView extends Visio.Views.Module
           { label: 'Comprehensive Budget', value: 'total', checked: true },
           { label: 'OL Budget', value: Visio.Scenarios.OL },
           { label: 'AOL Budget', value: Visio.Scenarios.AOL },
+          { label: '% of OP', value: 'percent' },
         ]
       callback: (value, data) =>
         @figure.sortAttribute = value

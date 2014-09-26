@@ -1,5 +1,23 @@
-.panel
-  .download Download as docx
-  .panel-text.summary
-  = '-------'
-  .panel-text.full-text
+.panel.container-fluid
+
+  .row
+    .col-md-12
+      %h3
+        = context.model.name()
+      %h6
+        = "#{context.model.year()} - #{context.model.reportedType().toUpperCase()}"
+  .row.tabs
+    - for key, textType of context.textTypes
+      .col-md-4.horizontal-flush.ui-tab-radio
+        %input{ :type => 'radio', :id => "np-#{textType.name}-#{context.model.cid}", :name => context.model.cid, :value => textType.name, :checked => textType.name == context.textType }
+        %label{ :for => "np-#{textType.name}-#{context.model.cid}" }
+          = textType.human
+
+  .row
+    .col-md-12
+      .panel-text
+
+  .row
+    .col-md-12
+      %a.download.ui-black
+        Download as docx

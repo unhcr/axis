@@ -1,0 +1,1 @@
+.panel-summary{ :class => "panel-summary-#{@model.cid}" }

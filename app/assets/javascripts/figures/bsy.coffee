@@ -125,7 +125,14 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
     filtered = @filtered @collection
 
     # Expensive computation so don't want to repeat if not necessary
-    @y.domain [0, d3.max(filtered, (d) -> d.selectedBudget(Visio.manager.year(), @filters))]
+    @y.domain [0, d3.max(filtered, (d) ->
+      data = d.selectedBudgetData(Visio.manager.year(), @filters)
+      olData = (new Visio.Collections.Budget(data.where({ scenario: Visio.Scenarios.OL }))).amount()
+      aolData = (new Visio.Collections.Budget(data.where({ scenario: Visio.Scenarios.AOL }))).amount()
+
+      if olData > aolData then olData else aolData
+
+    )]
 
 
     self = @
@@ -304,7 +311,21 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
 
     filters.add @filters.toJSON()
 
-    b.selectedBudget(null, filters) - a.selectedBudget(null, filters)
+    if @sortAttribute == 'percent'
+      filters.remove 'scenario'
+      bData = b.selectedBudgetData(null, filters)
+      aData = a.selectedBudgetData(null, filters)
+      bOL = new Visio.Collections.Budget(bData.where({ scenario: Visio.Scenarios.OL })).amount()
+      aOL = new Visio.Collections.Budget(aData.where({ scenario: Visio.Scenarios.OL })).amount()
+      bAOL = new Visio.Collections.Budget(bData.where({ scenario: Visio.Scenarios.AOL })).amount()
+      aAOL = new Visio.Collections.Budget(aData.where({ scenario: Visio.Scenarios.AOL })).amount()
+      v = (bOL / (bOL + bAOL)) - (aOL / (aOL + aAOL))
+
+      if v != 0 then v else (bOL + bAOL) - (aOL + aAOL)
+
+
+    else
+      b.selectedBudget(null, filters) - a.selectedBudget(null, filters)
 
   boxClasslist: (d) =>
     classList = ['box', "box-#{d.id}"]
