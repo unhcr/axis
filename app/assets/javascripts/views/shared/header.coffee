@@ -142,14 +142,12 @@ class Visio.Views.Header extends Backbone.View
   toggleFilterSystem: =>
     @$el.toggleClass 'filter-open'
     @filterSystem.toggleState()
-    $('#navigation').removeClass('gone')
 
     $.publish 'narratify-close' if @filterSystem.isOpen()
 
   closeFilterSystem: =>
     @$el.removeClass 'filter-open'
     @filterSystem.toggleState() if @filterSystem.isOpen()
-    $('#navigation').addClass('gone')
 
   onMouseleave: (e) =>
 

@@ -5,10 +5,14 @@ module 'Header Test',
     Visio.manager = new Visio.Models.Manager()
     Visio.manager.set 'dashboard', (new Visio.Models.Strategy())
 
+    $('#qunit-fixture').append '<div class="page"></div>'
+    $('#qunit-fixture').append '<div id="filter-system" class="gone"></div>'
+
     @view = new Visio.Views.Header()
 
   teardown: ->
     @view.close()
+    $('#qunit-fixture').empty()
 
 test 'render normal', ->
 
@@ -31,6 +35,25 @@ test 'setup filterSystem', ->
   Visio.manager.set 'setup', true
 
   ok @view.filterSystem?
+
+test 'toggle filter system', ->
+  Visio.manager.set 'setup', true
+
+  spy = sinon.spy()
+  $.subscribe 'narratify-close', spy
+
+  ok !@view.filterSystem.isOpen(), 'Should start closed'
+  @view.onClickMenuIcon()
+
+  ok @view.filterSystem.isOpen()
+  ok spy.calledOnce
+
+  @view.onClickMenuIcon()
+  ok !@view.filterSystem.isOpen()
+  ok spy.calledOnce
+
+  $.unsubscribe 'narratify-close'
+
 
 test 'click dashboard item', ->
 

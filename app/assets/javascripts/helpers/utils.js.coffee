@@ -30,6 +30,13 @@ Visio.Utils.signup = (firstname, lastname, login, password, passwordConf, callba
       callback(resp)
   )
 
+Visio.Utils.redirect = (path, _blank) ->
+  return unless path?
+  if _blank
+    return window.open path
+
+  window.location = path
+
 Visio.Utils.signout = (callback) ->
 
   $.ajax(

@@ -24,7 +24,7 @@ class Visio.Views.NarrativePanel extends Backbone.View
     $('.page').toggleClass @openClass
     $('.header-buttons .narrative').toggleClass 'open'
 
-    $.publish 'close-filter-sytem' if @isOpen()
+    $.publish 'close-filter-system' if @isOpen()
 
   onNarratifyClose: (e) =>
     $('.page').removeClass @openClass
@@ -36,9 +36,13 @@ class Visio.Views.NarrativePanel extends Backbone.View
     options =
       name: "#{@model.name()} - #{params.year} - #{params.reported_type}"
       filter_ids: params.ids
-      where: "USERTXT is not null AND report_type = '#{Visio.Utils.dbMetric(params.reported_type)}' AND year = '#{params.year}'"
+      where: "USERTXT is not null AND
+        report_type = '#{Visio.Utils.dbMetric(params.reported_type)}' AND
+        year = '#{params.year}'"
 
-    window.location = "/narratives/download.docx?#{$.param(options)}"
+    path = "/narratives/download.docx?#{$.param(options)}"
+
+    Visio.Utils.redirect path
 
   onNarratify: (e, selectedDatum) =>
     @model = selectedDatum
