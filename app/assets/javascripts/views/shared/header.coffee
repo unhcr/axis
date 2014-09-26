@@ -62,7 +62,8 @@ class Visio.Views.Header extends Backbone.View
         currentValue: -> Visio.manager.year()
         currentHuman: -> Visio.manager.year()
 
-    $.subscribe 'toggle-filter-state', @toggleFilterSystem
+    $.subscribe 'toggle-filter-system', @toggleFilterSystem
+    $.subscribe 'close-filter-system', @closeFilterSystem
     @render()
 
   render: ->
@@ -136,12 +137,19 @@ class Visio.Views.Header extends Backbone.View
     @markOld()
 
   onClickMenuIcon: (e) =>
-    $.publish 'toggle-filter-state'
+    $.publish 'toggle-filter-system'
 
   toggleFilterSystem: =>
     @$el.toggleClass 'filter-open'
     @filterSystem.toggleState()
     $('#navigation').removeClass('gone')
+
+    $.publish 'narratify-close' if @filterSystem.isOpen()
+
+  closeFilterSystem: =>
+    @$el.removeClass 'filter-open'
+    @filterSystem.toggleState() if @filterSystem.isOpen()
+    $('#navigation').addClass('gone')
 
   onMouseleave: (e) =>
 
@@ -197,7 +205,8 @@ class Visio.Views.Header extends Backbone.View
     Visio.manager.set data.key, data.value
 
   close: =>
-    $.unsubscribe 'toggle-filter-state'
+    $.unsubscribe 'toggle-filter-system'
+    $.unsubscribe 'close-filter-system'
     @filterSystem?.close()
     @unbind()
     @remove()

@@ -5,6 +5,7 @@ class Visio.Views.NarrativePanel extends Backbone.View
   initialize: ->
 
     $.subscribe 'narratify-toggle-state', @onNarratifyStateToggle
+    $.subscribe 'narratify-close', @onNarratifyClose
     $.subscribe 'narratify', @onNarratify
 
   events:
@@ -22,6 +23,12 @@ class Visio.Views.NarrativePanel extends Backbone.View
   onNarratifyStateToggle: (e) =>
     $('.page').toggleClass @openClass
     $('.header-buttons .narrative').toggleClass 'open'
+
+    $.publish 'close-filter-sytem' if @isOpen()
+
+  onNarratifyClose: (e) =>
+    $('.page').removeClass @openClass
+    $('.header-buttons .narrative').removeClass 'open'
 
   onDownload: (e) =>
     params = @model.summaryParameters()
@@ -91,6 +98,7 @@ class Visio.Views.NarrativePanel extends Backbone.View
 
   close: ->
     $.unsubscribe 'narratify-toggle-state'
+    $.unsubscribe 'narratify-close'
     $.unsubscribe 'narratify'
     @unbind()
     @remove()

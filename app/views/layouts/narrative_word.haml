@@ -1,6 +1,6 @@
 !!!
 .div
-  %p{ :style => 'text-align:center;width:100%;font-size:60px' }
+  %h3{ :style => 'text-align:center;width:100%;' }
     %b
       = @name
 
@@ -12,38 +12,38 @@
       %tbody
         - if n['operation_id']
           %tr
-            %td
+            %td{ :style => 'text-align:right' }
               %b
                 = "Operation:"
-            %td
+            %td{ :style => 'text-align:left' }
               = Operation.find(n['operation_id']).name
         - if n['ppg_id']
           %tr
-            %td
+            %td{ :style => 'text-align:right' }
               %b
                 = "PPG:"
-            %td
+            %td{ :style => 'text-align:left' }
               = Ppg.find(n['ppg_id']).name
         - if n['goal_id']
           %tr
-            %td
+            %td{ :style => 'text-align:right' }
               %b
                 = "Goal:"
-            %td
+            %td{ :style => 'text-align:left' }
               = Goal.find(n['goal_id']).name
         - if n['problem_objective_id']
           %tr
-            %td
+            %td{ :style => 'text-align:right' }
               %b
                 = "Objective:"
-            %td
+            %td{ :style => 'text-align:left' }
               = ProblemObjective.find(n['problem_objective_id']).objective_name
         - if n['output_id']
           %tr
-            %td
+            %td{ :style => 'text-align:right' }
               %b
                 = "Output:"
-            %td
+            %td{ :style => 'text-align:left' }
               = Output.find(n['output_id']).name
 
     - paragraphs = n['usertxt'].split("\\n")
