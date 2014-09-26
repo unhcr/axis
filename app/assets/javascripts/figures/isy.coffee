@@ -53,8 +53,12 @@ class Visio.Figures.Isy extends Visio.Figures.Base
         id: 'achievement'
         filterType: 'radio'
         values: _.object(_.values(Visio.Algorithms.GOAL_TYPES), _.values(Visio.Algorithms.GOAL_TYPES).map(
-          (achievement_type) ->
-            Visio.manager.get('achievement_type') == achievement_type))
+          (goalType) ->
+            type = if performanceValues.true
+                Visio.Algorithms.GOAL_TYPES.target
+              else
+                Visio.Algorithms.GOAL_TYPES.standard
+            type == goalType))
         human: humanGoalTypes
         callback: (name, attr) =>
           @goalTypeFn(name).render()
@@ -102,7 +106,7 @@ class Visio.Figures.Isy extends Visio.Figures.Base
       .tickSize(-@adjustedWidth)
       .tickPadding(@tickPadding)
 
-    @goalType = config.goalType || Visio.Algorithms.GOAL_TYPES.target
+    @goalType = @filters.get('achievement').active()
 
     @g.append('g')
       .attr('class', 'y axis')
@@ -187,6 +191,7 @@ class Visio.Figures.Isy extends Visio.Figures.Base
         ]
         self.templateTooltip
           d: d
+          goalType: self.goalType
           values: values
           inconsistencies: d.consistent().inconsistencies
       )
@@ -497,7 +502,7 @@ class Visio.Figures.Isy extends Visio.Figures.Base
 
   yAxisLabel: ->
 
-    achievement_type = Visio.Utils.humanMetric Visio.manager.get 'achievement_type'
+    goalHuman = Visio.Utils.humanMetric @goalType
     return @templateLabel
         title: 'Achievement',
-        subtitles: ['% of Progress', "towards #{achievement_type}"]
+        subtitles: ['% of Progress', "towards #{goalHuman}"]
