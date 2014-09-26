@@ -10,3 +10,7 @@ class Visio.SelectedData.Isy extends Visio.SelectedData.Base
       problem_objective_ids: [@get('d').get('problem_objective_id')]
 
     ids
+
+  name: ->
+    Visio.manager.get('indicators').get(@get('d').get('indicator_id')).toString()
+

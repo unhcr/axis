@@ -221,6 +221,19 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
       datum = { amount: 0, year: budget.get('year') }
       datum['groupBy'] = @groupBy
       datum[@groupBy] = budget.get @groupBy
+      datum.summary = false
+
+
+      if @collection?
+        datum.id = budget.get @groupBy
+        datum.id_type = Visio.Utils.parameterBySingular(@groupBy.replace('_id',''))
+        datum.name = Visio.manager.get(datum.id_type.plural).get(datum.id).toString()
+      else
+        datum.id = @model.id
+        datum.id_type = @model.name
+        datum.name = @model.toString()
+
+
       lineData.push datum unless @filters.isFiltered budget
 
     datum.amount += budget.get 'amount'
@@ -240,6 +253,13 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
         total = { amount: 0, year: budget.get('year') }
         total['groupBy'] = @groupBy
         total[@groupBy] = 'total'
+        total.summary = @collection?
+
+        unless total.summary
+          total.id = @model.id
+          total.id_type = @model.name
+          total.name = @model.toString()
+
         totalData.push total
       total.amount += budget.get 'amount'
 

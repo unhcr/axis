@@ -10,12 +10,15 @@ class Visio.SelectedData.My extends Visio.SelectedData.Base
 
     "#{parameter.singular}_ids"
 
+  name: ->
+    @get('d').name
+
   formattedIds: ->
     ids = Visio.manager.formattedIds()
 
     idField = @idField()
 
-    #ids[idField] = @collection.pluck('id')
+    ids["#{@get('d').id_type.singular}_ids"] = [@get('d').id] unless @get('d').summary
 
+    console.log ids
     ids
-
