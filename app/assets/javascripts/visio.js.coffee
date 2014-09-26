@@ -121,7 +121,7 @@ window.Visio =
     LONG_NUMBER: d3.format(',f')
   Constants:
     FILTERS_WIDTH: 412
-    LEGEND_WIDTH: 300
+    LEGEND_WIDTH: 380
     ANY_YEAR: 'ANY_YEAR'
     ANY_STRATEGY_OBJECTIVE: 'ANY_STRATEGY_OBJECTIVE'
     DB_NAME: 'visio'

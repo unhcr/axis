@@ -1639,16 +1639,29 @@ a {
 }
 
 #narrative-panel {
+  @include box-shadow-left;
   width: $filter-system-width;
   height: 100%;
   position: fixed;
   top: $header-height;
   right: 0;
   background-color: $off-white;
+  padding: 40px;
 
   .panel-text {
     max-height: 500px;
     overflow: auto;
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
+  .tabs {
+    padding-top: 20px;
+    margin-bottom: 10px;
+  }
+
+  label {
+    background-color: $off-white;
   }
 
 }
@@ -2169,6 +2182,7 @@ a {
 
 .shift-right {
   right: $filter-system-width !important;
+  margin-right: 5px;
   /* Legends should disappear */
   .legend-container {
     display: none;
@@ -2379,6 +2393,7 @@ a {
 #module {
   background-color: white;
   min-height: 800px;
+  overflow-x: hidden;
 }
 
 [data-prefix]:before {

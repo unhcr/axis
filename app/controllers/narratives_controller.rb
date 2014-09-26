@@ -33,7 +33,7 @@ class NarrativesController < ApplicationController
     @name = params[:name] || "Narrative Report"
 
     @narratives = resource.models_optimized(params[:filter_ids],
-                                            params[:limit],
+                                            nil,
                                             params[:where],
                                             params[:offset]).values[0][0] || []
     @narratives = JSON.parse(@narratives)
