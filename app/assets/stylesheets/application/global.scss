@@ -2537,21 +2537,26 @@ a {
       .title { border-top: 2px solid $primary-light }
     }
 
-    .PILLAR-1 {
+    .PILLAR-1, .LYPK {
       color: $pillar1;
       .title { border-top: 2px solid $pillar1 }
     }
-    .PILLAR-2 {
+    .PILLAR-2, .LYPM {
       color: $pillar2;
       .title { border-top: 2px solid $pillar2 }
     }
-    .PILLAR-3 {
+    .PILLAR-3, .LYPN {
       color: $pillar3;
       .title { border-top: 2px solid $pillar3 }
     }
-    .PILLAR-4 {
+    .PILLAR-4, .LYPJ {
       color: $pillar4;
       .title { border-top: 2px solid $pillar4 }
+    }
+
+    .PILLAR-4, .LYPL {
+      color: $pillar5;
+      .title { border-top: 2px solid $pillar5 }
     }
 
     .ADMIN {

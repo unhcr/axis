@@ -225,11 +225,11 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
 
 
       if @modelOrCollection instanceof Backbone.Collection
-        datum.id = budget.get @groupBy
+        datum.model_id = budget.get @groupBy
         datum.id_type = Visio.Utils.parameterBySingular(@groupBy.replace('_id',''))
-        datum.name = Visio.manager.get(datum.id_type.plural).get(datum.id).toString()
+        datum.name = Visio.manager.get(datum.id_type.plural).get(datum.model_id).toString()
       else
-        datum.id = @modelOrCollection.id
+        datum.model_id = @modelOrCollection.id
         datum.id_type = @modelOrCollection.name
         datum.name = @modelOrCollection.toString()
 
@@ -256,7 +256,7 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
         total.summary = @modelOrCollection instanceof Backbone.Collection
 
         unless total.summary
-          total.id = @modelOrCollection.id
+          total.model_id = @modelOrCollection.id
           total.id_type = @modelOrCollection.name
           total.name = @modelOrCollection.toString()
 

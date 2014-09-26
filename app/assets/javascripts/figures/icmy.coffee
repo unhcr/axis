@@ -226,7 +226,7 @@ class Visio.Figures.Icmy extends Visio.Figures.Base
           year: year
           category: category
           summary: @summary
-          id: id
+          model_id: id
           id_type: collection.name
           name: collection.toString()
 

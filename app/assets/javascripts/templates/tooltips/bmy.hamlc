@@ -2,7 +2,14 @@
   - _.each context.sortedModels, (model) ->
     %section{ :class => "row #{Visio.Utils.stringToCssClass(model.get(model.get('groupBy')))} group-type" }
       %div.title
-        = model.get(model.get('groupBy'))?.toUpperCase()
+        - groupBy = model.get(model.get('groupBy'))
+        - if Visio.Budgets.hasOwnProperty(groupBy)
+          = Visio.Budgets[groupBy]
+        - else if Visio.Pillars.hasOwnProperty(groupBy)
+          = Visio.Pillars[groupBy]
+        - else
+          = groupBy?.toUpperCase()
+
       .tooltip-number
         = "$" + Visio.Formats.COMMA(model.get('amount'))
 

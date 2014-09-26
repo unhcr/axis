@@ -18,7 +18,7 @@ class Visio.SelectedData.My extends Visio.SelectedData.Base
 
     idField = @idField()
 
-    ids["#{@get('d').id_type.singular}_ids"] = [@get('d').id] unless @get('d').summary
+    ids["#{@get('d').id_type.singular}_ids"] = [@get('d').model_id] unless @get('d').summary
 
     console.log ids
     ids
