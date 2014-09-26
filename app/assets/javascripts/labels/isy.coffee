@@ -17,3 +17,7 @@ class Visio.Labels.Isy extends Backbone.View
       params: @params
 
     @
+
+  close: ->
+    @unbind()
+    @remove()

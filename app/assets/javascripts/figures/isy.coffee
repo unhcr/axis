@@ -33,6 +33,7 @@ class Visio.Figures.Isy extends Visio.Figures.Base
         callback: (name, attr) =>
           @selectedDatum.set 'd', null
           @isPerformanceFn(name == 'true')
+          @labelView.close()
           # Logic for if user selects performance and has standard set which should not be possible
           if @isPerformance and @goalType == Visio.Algorithms.GOAL_TYPES.standard
             # Switch to target
