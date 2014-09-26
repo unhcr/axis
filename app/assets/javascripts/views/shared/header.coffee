@@ -38,14 +38,6 @@ class Visio.Views.Header extends Backbone.View
         currentValue: -> Visio.manager.get('module_type')
         currentHuman: -> Visio.Utils.figureTypeByName(Visio.manager.get('module_type')).human
 
-      reported_type:
-        human: 'REPORT TYPE'
-        values: [{ human: 'YER', name: Visio.Algorithms.REPORTED_VALUES.yer },
-                 { human: 'MYR', name: Visio.Algorithms.REPORTED_VALUES.myr }]
-        key: 'reported_type'
-        currentValue: -> Visio.manager.get('reported_type')
-        currentHuman: -> Visio.manager.get('reported_type').toUpperCase()
-
       aggregation_type:
         human: 'AGGREGATE'
         values: [Visio.Parameters.OPERATIONS, Visio.Parameters.PPGS, Visio.Parameters.GOALS,
@@ -54,6 +46,14 @@ class Visio.Views.Header extends Backbone.View
         key: 'aggregation_type'
         currentValue: -> Visio.manager.get('aggregation_type')
         currentHuman: -> Visio.Utils.parameterByName(Visio.manager.get('aggregation_type')).human
+
+      reported_type:
+        human: 'REPORT TYPE'
+        values: [{ human: 'YER', name: Visio.Algorithms.REPORTED_VALUES.yer },
+                 { human: 'MYR', name: Visio.Algorithms.REPORTED_VALUES.myr }]
+        key: 'reported_type'
+        currentValue: -> Visio.manager.get('reported_type')
+        currentHuman: -> Visio.manager.get('reported_type').toUpperCase()
 
       year:
         human: 'YEAR'
