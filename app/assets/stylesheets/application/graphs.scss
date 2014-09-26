@@ -558,6 +558,21 @@ line {
   }
 }
 
+.svg-isy-figure.isy-performance {
+  .isy-crit-label {
+    display: none;
+  }
+
+  .bar-footer {
+    display: none;
+  }
+
+  .isy-line-bottom {
+    display: none;
+  }
+
+}
+
 .spark-bar-graph {
   margin-right: -2px;
 }

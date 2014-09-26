@@ -33,12 +33,17 @@ class Visio.Figures.Isy extends Visio.Figures.Base
         callback: (name, attr) =>
           @selectedDatum.set 'd', null
           @isPerformanceFn(name == 'true')
+
+          @svg.classed 'isy-performance', @isPerformance
+
           @labelView.close()
+
           # Logic for if user selects performance and has standard set which should not be possible
           if @isPerformance and @goalType == Visio.Algorithms.GOAL_TYPES.standard
             # Switch to target
             @filters.get('achievement').filter Visio.Algorithms.GOAL_TYPES.target, true
             @goalTypeFn @filters.get('achievement').active()
+
 
           @x.domain [0, @maxIndicators]
           $.publish "drawFigures.#{@cid}.figure"
@@ -122,15 +127,15 @@ class Visio.Figures.Isy extends Visio.Figures.Base
 
     # Lines
     #
-    # Bottom line of ISY graph
+    # Bottom line of criticality dots
     @g.append('line')
-      .attr('class', 'isy-line')
+      .attr('class', 'isy-line isy-line-bottom')
       .attr('x1', 0)
       .attr('x2', @adjustedWidth)
       .attr('y1', @adjustedHeight + 2 * @footerHeight)
       .attr('y2', @adjustedHeight + 2 * @footerHeight)
 
-    # Bottom line of criticality dots
+    # Bottom line of ISY graph
     @g.append('line')
       .attr('class', 'isy-line')
       .attr('x1', 0)
@@ -148,7 +153,7 @@ class Visio.Figures.Isy extends Visio.Figures.Base
 
     # Labels
     @g.append('text')
-      .attr('class', 'label')
+      .attr('class', 'label isy-crit-label')
       .attr('x', @graphWidth + @labelContainerPaddingLeft)
       .attr('text-anchor', 'start')
       .attr('y', @adjustedHeight + @footerHeight)
