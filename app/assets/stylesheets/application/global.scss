@@ -2168,7 +2168,7 @@ a {
 }
 
 .shift-right {
-  right: $narrative-panel-width !important;
+  right: $filter-system-width !important;
   /* Legends should disappear */
   .legend-container {
     display: none;
