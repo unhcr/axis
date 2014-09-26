@@ -13,10 +13,6 @@ class Visio.Views.BmyView extends Visio.Views.AccordionIndexView
 
   initialize: (options) ->
     super options
-    width = $('#module').width()
-
-    unless $('.page').hasClass('shift')
-      width -= (Visio.Constants.LEGEND_WIDTH + 40)
 
     config =
       margin:
@@ -24,7 +20,7 @@ class Visio.Views.BmyView extends Visio.Views.AccordionIndexView
         bottom: 90
         left: 100
         right: 80
-      width: width
+      width: @figureWidth true
       height: 600
 
     @figure = new Visio.Figures.BmySummary config

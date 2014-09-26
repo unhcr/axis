@@ -14,15 +14,13 @@ class Visio.Views.IcmyShowView extends Visio.Views.AccordionShowView
     'oTransitionEnd': 'onParameterTransitionEnd'
 
   initialize: (options) ->
-    width = $('#module').width()
-
     config =
       margin:
         top: 90
         bottom: 80
         left: 180
         right: 40
-      width: width
+      width: @figureWidth false
       height: 450
 
     @figure = new Visio.Figures.Icmy config

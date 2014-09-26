@@ -314,4 +314,5 @@ class Visio.Figures.Icmy extends Visio.Figures.Base
 
   close: =>
     super
+    console.log 'clsing'
     @tooltip?.close()

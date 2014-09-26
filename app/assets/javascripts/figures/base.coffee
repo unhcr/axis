@@ -90,5 +90,8 @@ class Visio.Figures.Base extends Backbone.View
 
   close: ->
     @selectedDatum.off()
+
+    # remove any tipsy elements
+    $('.tipsy').remove()
     @unbind()
     @remove()

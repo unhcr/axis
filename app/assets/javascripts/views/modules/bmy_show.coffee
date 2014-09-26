@@ -12,7 +12,6 @@ class Visio.Views.BmyShowView extends Visio.Views.AccordionShowView
     'oTransitionEnd': 'onParameterTransitionEnd'
 
   initialize: (options) ->
-    width = $('#module').width()
 
     config =
       margin:
@@ -20,7 +19,7 @@ class Visio.Views.BmyShowView extends Visio.Views.AccordionShowView
         bottom: 80
         left: 120
         right: 40
-      width: width
+      width: @figureWidth false
       height: 450
 
     @figure = new Visio.Figures.Bmy config

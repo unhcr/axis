@@ -479,10 +479,9 @@ class Visio.Figures.Isy extends Visio.Figures.Base
     @g.selectAll('.bar-container').classed 'hover', false
 
   close: ->
-    @unbind()
+    super
     $.unsubscribe "hover.#{@cid}.figure"
     $.unsubscribe "mouseout.#{@cid}.figure"
-    @remove()
 
   yAxisLabel: ->
 

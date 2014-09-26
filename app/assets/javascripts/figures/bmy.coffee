@@ -356,4 +356,4 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
 
   close: =>
     super
-    self.tooltip?.close()
+    @tooltip?.close()

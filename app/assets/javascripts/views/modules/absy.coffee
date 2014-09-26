@@ -9,13 +9,8 @@ class Visio.Views.AbsyView extends Visio.Views.Module
   id: 'absy'
 
   initialize: (options) ->
-    width = $('#module').width()
-
-    unless $('.page').hasClass('shift')
-      width -= (Visio.Constants.LEGEND_WIDTH + 40)
-
     config =
-      width: width
+      width: @figureWidth true
       height: 600
       margin:
         top: 90
