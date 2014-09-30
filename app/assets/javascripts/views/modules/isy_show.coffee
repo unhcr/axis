@@ -115,6 +115,7 @@ class Visio.Views.IsyShowView extends Visio.Views.AccordionShowView
   removeInstances: =>
     $.unsubscribe "drawFigures.#{@figure.cid}.figure"
     $.unsubscribe "hover.#{@figure.cid}.figure"
+    @figure.tooltip?.close()
     @figure?.close()
 
   close: =>

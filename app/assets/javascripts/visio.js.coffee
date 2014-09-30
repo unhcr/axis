@@ -131,7 +131,8 @@ window.Visio =
       TEXTAREA_MAXLEN: 900
 
   Texts:
-    STRATEGY_DESC: 'Global or Regional Strategies are defined by focal points in HQ or RO. The visualizations in the dashboads'
+    STRATEGY_DESC: 'Global strategies are defined by headquarters or regional offices. You can also create your own strategy or view strategies that others have shared with you.'
+    STRATEGY_TITLE: 'Choose a strategy, operation or indicator to begin.'
     ABSY_LEGEND: 'This dashboard depicts the allocated budget for Operations, PPGs, Goals, Outputs, Objectives, and Strategy Objectives against achievements.'
 
   Stores:
