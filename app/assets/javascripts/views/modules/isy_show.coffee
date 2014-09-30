@@ -33,10 +33,14 @@ class Visio.Views.IsyShowView extends Visio.Views.AccordionShowView
           { label: 'Baseline to MYR', value: Visio.ProgressTypes.BASELINE_MYR.value, checked: true },
           { label: 'Baseline to YER', value: Visio.ProgressTypes.BASELINE_YER.value },
           { label: 'MYR to YER', value: Visio.ProgressTypes.MYR_YER.value },
+          { label: '# of Inconsistencies', value: 'inconsistent' }
         ]
       callback: (value, data) =>
-        progress = _.findWhere _.values(Visio.ProgressTypes), { value: value }
-        @figure.sortAttribute = progress
+        if value == 'inconsistent'
+          @figure.sortAttribute = value
+        else
+          progress = _.findWhere _.values(Visio.ProgressTypes), { value: value }
+          @figure.sortAttribute = progress
         @figure.render()
 
     $.subscribe "hover.#{@figure.cid}.figure", (e, idxOrDatum) =>
