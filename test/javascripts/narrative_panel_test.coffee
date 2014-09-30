@@ -3,9 +3,13 @@ module 'Narrative Panel',
     Visio.manager = new Visio.Models.Manager()
     @selectedDatum = new Visio.SelectedData.Base({ d: new Visio.Models.Operation() })
     @panel = new Visio.Views.NarrativePanel()
+    @panel.model = @selectedDatum
     $('#qunit-fixture').append '<div class="page"></div>'
 
+    sinon.stub @panel, 'fetchSummary', () ->
+
   teardown: ->
+    @panel.fetchSummary.restore()
     @panel.close()
     $('#qunit-fixture').empty()
 
@@ -50,7 +54,6 @@ test 'onDownload', ->
 
   @panel.render()
 
-  @panel.model = @selectedDatum
 
   @panel.onDownload()
 

@@ -129,7 +129,6 @@ class Visio.Views.NarrativePanel extends Backbone.View
     $panel.text 'thinking...!'
 
     doneFn = (resp) =>
-      console.log resp
       nAttempts += 1
       if resp.success and resp.complete
         console.log resp.summary
@@ -140,7 +139,6 @@ class Visio.Views.NarrativePanel extends Backbone.View
           window.setTimeout (() -> $.get("/narratives/status/#{token}").done doneFn), timeout
 
     $.get("/narratives/status/#{token}").done doneFn
-
 
   close: ->
     $.unsubscribe 'narratify-toggle-state'
