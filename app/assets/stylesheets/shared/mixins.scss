@@ -180,8 +180,12 @@
 }
 
 @mixin header-button {
+  @include transition-property(max-width);
+  @include transition-duration($very-fast-transition);
+  @include transition-timing-function(ease-in);
   margin-bottom: 0;
   width: $header-button-width;
+  max-width: $header-button-width;
   height: $header-button-height;
   line-height: $header-button-height;
   background-color: $off-white;
@@ -192,6 +196,65 @@
   text-align: left;
   color: $black;
   margin-top: -1px;
+
+}
+
+@mixin header-button-small {
+  max-width: $header-button-height;
+  overflow: hidden;
+}
+
+@mixin header-button-open {
+  max-width: $header-button-width;
+  overflow: visible;
+}
+
+
+@mixin header-button-iconify {
+  .header-button {
+    @include header-button-small;
+  }
+  .header-button.open {
+    @include header-button-open;
+  }
+  .header-button:before {
+    content: '';
+    width: $header-button-height - 1;
+    height: $header-button-height - 2;
+    display: block;
+    background-size: 18px;
+    background-position: center;
+    background-repeat: no-repeat;
+    pointer-events: none;
+    position: absolute;
+    cursor: pointer;
+  }
+
+  .header-button.query-by:before {
+    background-image: url(/assets/icons/search.png);
+    background-color: $off-white;
+  }
+  .header-button.query-by:hover:before {
+    background-image: url(/assets/icons/search_hover.png);
+  }
+  .header-button.filter-by:before {
+    background-image: url(/assets/icons/filters.png);
+    background-color: $off-white;
+  }
+  .header-button.filter-by:hover:before {
+    background-image: url(/assets/icons/filters_hover.png);
+  }
+  .header-button.sort-by:before {
+    background-image: url(/assets/icons/sort.png);
+    background-color: $off-white;
+  }
+  .header-button.sort-by:hover:before {
+    background-image: url(/assets/icons/sort_hover.png);
+  }
+  .header-button.open:before {
+    display: none;
+  }
+
 }
 
 @mixin hover-shadow {

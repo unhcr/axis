@@ -26,7 +26,7 @@ class Visio.Views.FilterBy extends Backbone.View
     else
       @$el.removeClass 'open styled'
 
-    @$el.find('.filters').on 'mouseleave', @onToggleFilters
+    @$el.on 'mouseleave', @onCloseFilters
     @
 
   onFilter: (e) ->
@@ -49,10 +49,17 @@ class Visio.Views.FilterBy extends Backbone.View
     if not @isOpen() and e.originalEvent.propertyName == 'max-height'
       @$el.removeClass 'styled'
 
+  onCloseFilters: (e) =>
+    e.stopPropagation()
+    @$el.removeClass('open')
+    @$el.removeClass('styled')
+    $(e.currentTarget).find('.filters').removeClass('open')
+
   onToggleFilters: (e) =>
+    e.stopPropagation()
     return if @transitioning
     @transitioning = true
-    $(e.currentTarget).toggleClass('open')
+    $(e.currentTarget).find('.filters').toggleClass('open')
     @$el.toggleClass('open')
     if @isOpen()
       @$el.toggleClass('styled')

@@ -24,6 +24,7 @@ class Visio.Views.BsyView extends Visio.Views.Module
     @filterBy = new Visio.Views.FilterBy figure: @figure
     @queryBy = new Visio.Views.QueryBy figure: @figure
     @sortBy = new Visio.Views.Dropdown
+      className: 'sort-by'
       title: 'Sort By'
       data: [
           { label: 'Comprehensive Budget', value: 'total', checked: true },

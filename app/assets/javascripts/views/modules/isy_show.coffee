@@ -27,6 +27,7 @@ class Visio.Views.IsyShowView extends Visio.Views.AccordionShowView
     @filterBy = new Visio.Views.FilterBy({ figure: @figure, })
     @queryBy = new Visio.Views.QueryBy figure: @figure, placeholder: 'Search for an indicator'
     @sortBy = new Visio.Views.Dropdown
+      className: 'sort-by'
       title: 'Sort By'
       data: [
           { label: 'Baseline to MYR', value: Visio.ProgressTypes.BASELINE_MYR.value, checked: true },

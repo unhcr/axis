@@ -8,6 +8,8 @@ class Visio.Views.QueryBy extends Backbone.View
 
   events:
     'keyup input': 'onQuery'
+    'focus input': 'onFocus'
+    'blur input': 'onBlur'
 
   initialize: (options) ->
     @figure = options.figure
@@ -17,6 +19,14 @@ class Visio.Views.QueryBy extends Backbone.View
   render: (isRerender) ->
     @$el.html @template({ figure: @figure, placeholder: @placeholder })
     @
+
+  onFocus: (e) ->
+    e.stopPropagation()
+    @$el.addClass 'open'
+
+  onBlur: (e) ->
+    e.stopPropagation()
+    @$el.removeClass 'open'
 
   onQuery: (e) ->
     e.stopPropagation()

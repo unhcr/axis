@@ -577,6 +577,10 @@ body.index {
       text-decoration: none;
       color: $orange;
     }
+
+    h1 {
+      margin-bottom: 0;
+    }
   }
 
   .menu-tabs , .menu-content-container {
@@ -607,7 +611,7 @@ body.index {
   }
 
   .menu-desc {
-    height: 180px;
+    height: 120px;
   }
 
 }
@@ -2609,12 +2613,25 @@ a {
   }
 }
 
+.dashboard-meta {
+  white-space: nowrap;
+}
+
 .header-button:hover {
   color: $orange;
 }
 
 .header-button {
-  @include header-button
+  @include header-button;
+}
+
+/* When narratives or filters are open */
+.page.shift, .page.shift-right {
+  @include header-button-iconify;
+}
+
+@media(max-width: 1300px) {
+  @include header-button-iconify;
 }
 
 .query-by {

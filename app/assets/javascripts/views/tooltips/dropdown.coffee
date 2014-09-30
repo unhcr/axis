@@ -2,8 +2,6 @@ class Visio.Views.Dropdown extends Backbone.View
 
   template: HAML['tooltips/dropdown']
 
-  className: 'visio-dropdown-container header-button'
-
   events:
     'change input': 'onChange'
     'click .visio-dropdown-toggle': 'onToggleDropdown'
@@ -16,6 +14,7 @@ class Visio.Views.Dropdown extends Backbone.View
     @title = options.title
     @data = options.data
     @callback = options.callback
+    @$el.addClass 'visio-dropdown-container header-button'
 
   render: (isRerender) ->
     open = if isRerender? then @isOpen() else false
@@ -29,7 +28,7 @@ class Visio.Views.Dropdown extends Backbone.View
     else
       @$el.removeClass 'open styled'
 
-    @$el.find('.visio-dropdown').on 'mouseleave', @onToggleDropdown
+    @$el.on 'mouseleave', @onCloseDropdown
     @
 
   onTransitionEnd: (e) =>
@@ -49,7 +48,13 @@ class Visio.Views.Dropdown extends Backbone.View
   isOpen: =>
     @$el.hasClass 'open'
 
+  onCloseDropdown: (e) =>
+    e.stopPropagation()
+    @$el.removeClass('open')
+    @$el.removeClass('styled')
+
   onToggleDropdown: (e) =>
+    e.stopPropagation()
     return if @transitioning
     @transitioning = true
     @$el.toggleClass('open')
