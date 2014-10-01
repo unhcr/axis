@@ -24,6 +24,7 @@ class Visio.Views.NarrativePanel extends Backbone.View
 
   events:
     'click .download': 'onDownload'
+    'click .close': 'onNarratifyClose'
     'change input': 'onChangeTextType'
 
   render: ->

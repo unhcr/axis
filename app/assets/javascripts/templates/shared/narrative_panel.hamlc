@@ -1,4 +1,7 @@
 .panel.container-fluid
+  .row
+    .col-md-12
+      .close
 
   .row
     .col-md-12
