@@ -20,11 +20,13 @@ module 'Overview Router',
     @server = sinon.fakeServer.create()
     @server.respondWith 'GET', /.*/, [200, {'Content-Type': 'application/json'}, JSON.stringify(models)]
 
+    sinon.stub Visio.Views.NarrativePanel.prototype, 'fetchSummary', () ->
+
   teardown: ->
     Visio.manager.get('db').clear()
     $.get.restore()
     @server.restore()
-
+    Visio.Views.NarrativePanel.prototype.fetchSummary.restore()
 
 asyncTest 'setup', ->
 
