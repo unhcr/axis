@@ -387,11 +387,14 @@ class Visio.Figures.Isy extends Visio.Figures.Base
     @
 
   sortFn: (a, b) =>
+    if @sortAttribute == 'inconsistent'
+      b.consistent().inconsistencies.length - a.consistent().inconsistencies.length
 
-    reversedA = if a.get('reversal') then -1 else 1
-    reversedB = if b.get('reversal') then -1 else 1
+    else
+      reversedA = if a.get('reversal') then -1 else 1
+      reversedB = if b.get('reversal') then -1 else 1
 
-    (reversedB * @progressDifference(b)) - (reversedA * @progressDifference(a))
+      (reversedB * @progressDifference(b)) - (reversedA * @progressDifference(a))
 
   transformSortFn: (a, b) =>
     elA = @g.select ".box-#{a.id}"

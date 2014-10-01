@@ -11,6 +11,15 @@ class Visio.Routers.DashboardRouter extends Visio.Routers.GlobalRouter
     @narrativePanel = new Visio.Views.NarrativePanel
       el: $('#narrative-panel')
 
+    fn = =>
+      @figure Visio.manager.get('module_type')
+      Visio.Utils.dashboardMeta()
+
+    throttled = _.throttle fn, 400
+
+    $(window).on 'resize', (e) =>
+      throttled()
+
     Visio.manager.on 'change:module_type', =>
       Visio.router.navigate Visio.Utils.generateOverviewUrl(), { trigger: true }
       Visio.Utils.dashboardMeta()
@@ -52,6 +61,7 @@ class Visio.Routers.DashboardRouter extends Visio.Routers.GlobalRouter
 
       @moduleView?.close()
 
+      $(document).scrollTop 0
       @moduleView = new Visio.Views[viewClass]()
 
       @module.html @moduleView.render().el

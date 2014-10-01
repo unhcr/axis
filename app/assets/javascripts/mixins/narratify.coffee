@@ -10,6 +10,10 @@ Visio.Mixins.Narratify =
       narrativeBtn = d3.select(@el).select('.narrative')
       narrativeBtn.classed 'disabled', !selectedDatum.get('d')?
 
+      unless selectedDatum.get('d')?
+        $.publish 'narratify-close'
+        return
+
       # If it's already open, let's just load up the next narrative
       if @isNarrativePanelOpen()
         $.publish 'narratify', [@selectedDatum]

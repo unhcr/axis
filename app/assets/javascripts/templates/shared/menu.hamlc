@@ -1,7 +1,11 @@
 .menu
   .row
+    .col-md-10
+      %h1
+        = Visio.Texts.STRATEGY_TITLE
+  .row
     .col-md-6
-      %h2.menu-desc
+      %h3.menu-desc
         = Visio.Texts.STRATEGY_DESC
 
   .row

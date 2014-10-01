@@ -4,4 +4,4 @@
 %p
   = Visio.Texts.ABSY_LEGEND
 
-%img{ :src => '/assets/legends/absy.jpg' }
+%img{ :width => 200, :src => '/assets/legends/absy.jpg' }

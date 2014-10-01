@@ -48,4 +48,5 @@ class Visio.Views.BmyShowView extends Visio.Views.AccordionShowView
 
   removeInstances: =>
     @filterBy.close()
+    @figure.tooltip?.close()
     @figure.unsubscribe()
