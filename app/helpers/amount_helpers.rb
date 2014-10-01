@@ -24,8 +24,8 @@ module AmountHelpers
     query_string = conditions.join(' AND ')
 
     # Need to include Strategy Objective ids
-    sql = "select array_to_json(array_agg(row_to_json(t)))
-      from (
+    outerSql = "select array_to_json(array_agg(row_to_json(t))) from ( "
+    innerSql = "
         select #{self.table_name}.*,
           (
             select array_to_json(array_agg(row_to_json(d)::json->'strategy_objective_id'))
@@ -50,12 +50,13 @@ module AmountHelpers
             ) as d
         ) as strategy_objective_ids
       from #{self.table_name}
-      ) t
       where is_deleted = false AND #{query_string}"
 
-    sql += " AND (#{where})" unless where.nil?
-    sql += " LIMIT #{sanitize(limit)}" unless limit.nil?
-    sql += " OFFSET #{sanitize(offset)}" unless offset.nil?
+    innerSql += " AND (#{where})" unless where.nil?
+    innerSql += " LIMIT #{sanitize(limit)}" unless limit.nil?
+    innerSql += " OFFSET #{sanitize(offset)}" unless offset.nil?
+
+    sql = outerSql + innerSql  + ") t"
 
     ActiveRecord::Base.connection.execute(sql)
 

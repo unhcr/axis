@@ -126,6 +126,38 @@ class NarrativesControllerTest < ActionController::TestCase
 
   end
 
+  test 'limit - should get one narrative' do
+    datum = Narrative.new()
+    datum.id = 'abc'
+    datum.operation = operations(:one)
+    datum.plan = plans(:one)
+    datum.ppg = ppgs(:one)
+    datum.goal = goals(:one)
+    datum.problem_objective = problem_objectives(:one)
+    datum.save
+
+    datum2 = Narrative.new()
+    datum2.id = 'def'
+    datum2.operation = operations(:one)
+    datum2.plan = plans(:one)
+    datum2.ppg = ppgs(:one)
+    datum2.goal = goals(:one)
+    datum2.problem_objective = problem_objectives(:one)
+    datum2.save
+
+    post :index, { :filter_ids => {
+        :operation_ids => [datum.operation_id],
+        :problem_objective_ids => [datum.problem_objective_id],
+        :output_ids => [datum.output_id],
+      }, :optimize => true, :limit => 1 }
+
+    assert_response :success
+
+    r = JSON.parse(response.body)
+
+    assert_equal 1, r.length
+  end
+
   test "should get one new narrative data - filter_ids - optimize" do
     datum = Narrative.new()
     datum.id = 'abc'

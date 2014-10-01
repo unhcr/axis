@@ -14,10 +14,12 @@ module SyncableData
       end
     elsif params[:filter_ids]
       if optimize
-        render :json => resource.models_optimized(params[:filter_ids],
-                                                  params[:limit],
-                                                  params[:where],
-                                                  params[:offset]).values[0][0] || []
+        results = resource.models_optimized(params[:filter_ids],
+                                           params[:limit],
+                                           params[:where],
+                                           params[:offset])
+        values = results.values.present? ? results.values[0][0] : []
+        render :json => values
       else
         render :json => resource.models(params[:filter_ids], params[:limit], params[:where])
       end
