@@ -6,10 +6,21 @@ module 'Narrative Panel',
     @panel.model = @selectedDatum
     $('#qunit-fixture').append '<div class="page"></div>'
 
-    sinon.stub @panel, 'fetchSummary', () ->
+    @server = sinon.fakeServer.create()
+    narratives = [{ id: 'abc', usertxt: 'ben' }, { id: 'def', usertxt: 'lisa' }]
+    @server.respondWith 'GET', /.*status.*/,
+      [200, {'Content-Type': 'application/json'}, JSON.stringify({ success: true, token: 'token', complete: true, summary: 'my summary' })]
+
+    @server.respondWith 'POST', /.*summarize.*/,
+      [200, {'Content-Type': 'application/json'}, JSON.stringify({ success: true })]
+
+    @server.respondWith 'POST', /narratives/,
+      [200, {'Content-Type': 'application/json'}, JSON.stringify(narratives)]
+
 
   teardown: ->
-    @panel.fetchSummary.restore()
+
+    @server.restore()
     @panel.close()
     $('#qunit-fixture').empty()
 
@@ -17,12 +28,16 @@ module 'Narrative Panel',
 test 'render', ->
 
   @panel.render()
+  @server.respond()
 
+  strictEqual @panel.$el.find('.panel-text').text(), 'my summary'
   ok @panel.$el.find('.panel').size() > 0
+
 
 test 'narratify-toggle-state', ->
 
   @panel.render()
+  @server.respond()
 
   closeFilters = sinon.spy()
 
@@ -39,6 +54,7 @@ test 'narratify-toggle-state', ->
 test 'narratify-close', ->
 
   @panel.render()
+  @server.respond()
 
   $.publish 'narratify-toggle-state'
   $.publish 'narratify-close'
@@ -48,11 +64,25 @@ test 'narratify-close', ->
   $.publish 'narratify-close'
   ok !@panel.isOpen()
 
+test 'renderTextType', ->
+
+  @panel.render()
+  @server.respond()
+
+  @panel.renderTextType 'summary'
+  @server.respond()
+  strictEqual @panel.$el.find('.panel-text').text(), 'my summary'
+
+  @panel.renderTextType 'full_text'
+  @server.respond()
+  strictEqual @panel.$el.find('.panel-text').text(), 'benlisa'
+
 test 'onDownload', ->
 
   stub = sinon.stub Visio.Utils, 'redirect'
 
   @panel.render()
+  @server.respond()
 
 
   @panel.onDownload()

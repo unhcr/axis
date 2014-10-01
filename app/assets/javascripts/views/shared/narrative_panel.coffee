@@ -1,26 +1,28 @@
 class Visio.Views.NarrativePanel extends Backbone.View
 
   template: HAML['shared/narrative_panel']
-  templateFullText: HAML['shared/narrative_panels/full_text']
-  templateSummary: HAML['shared/narrative_panels/summary']
 
   textTypes:
     summary:
       name: 'summary'
       human: 'Summary'
-    fullText:
+      template: HAML['shared/narrative_panels/summary']
+    full_text:
       name: 'full_text'
       human: 'Full Text'
+      template: HAML['shared/narrative_panels/full_text']
 
   textType: 'summary'
 
   timeout: 2000 # 2 seconds
 
   initialize: ->
+    @panels = new Visio.Collections.Panel
 
     $.subscribe 'narratify-toggle-state', @onNarratifyStateToggle
     $.subscribe 'narratify-close', @onNarratifyClose
     $.subscribe 'narratify', @onNarratify
+    $.subscribe 'narratify-scroll.bottom', @onScrollBottom
 
   events:
     'click .download': 'onDownload'
@@ -36,37 +38,59 @@ class Visio.Views.NarrativePanel extends Backbone.View
     @renderTextType @textType
     @
 
-  renderSummary: =>
-    @$el.find('.panel-text').html @templateSummary
+  renderTextType: (textTypeName) ->
+    textType = @textTypes[textTypeName]
+
+    @$el.find('.panel-text').html textType.template
       model: @model
 
-    summaryParameters = @model.summaryParameters()
-    @summarize(summaryParameters).done (resp) =>
-      if resp.success
-        @fetchSummary resp.token, @timeout
-
-  renderFullText: =>
-    @$el.find('.panel-text').html @templateFullText
-      model: @model
+    @$el.find('.panel-text').on 'scroll', @onScroll if textType == @textTypes.full_text
 
     summaryParameters = @model.summaryParameters()
-    $panel = @$el.find(".panel .panel-full_text-#{@model.cid}")
-    @fetchText(0,
-      summaryParameters.ids,
-      summaryParameters.reported_type,
-      summaryParameters.year).done (resp) =>
-        $panel.html ''
-        _.each resp, (d) ->
-          console.log d.usertxt
-          $panel.append d.usertxt.replace(/\\n/g, '<br />')
 
+    panelId = @getPanelId summaryParameters
+    panel = @panels.get panelId
+    $panel = @$el.find(".panel .panel-#{textType.name}-#{@model.cid}")
 
-  renderTextType: (textType) ->
-    switch textType
+    if panel
+      if textType == @textTypes.summary and panel.get(textType.name)
+        $panel.text panel.get(textType.name)
+        return
+      else if textType == @textTypes.full_text and panel.get('narratives').length
+        $panel.html panel.get('narratives').toHtmlText()
+        return
+
+    if not panel
+      panel = new Visio.Models.Panel
+        id: panelId
+      @panels.add panel
+
+    switch textType.name
       when @textTypes.summary.name
-        @renderSummary()
-      when @textTypes.fullText.name
-        @renderFullText()
+        @summarize(summaryParameters).done (resp) => @doneSummarize(resp, panel)
+      when @textTypes.full_text.name
+        return if panel.get 'loaded'
+        @fetchText(panel.get('page'), summaryParameters).done (resp) =>
+          @doneText(resp, panel, $panel)
+
+
+  doneText: (resp, panel, $panel) ->
+    if !resp or resp.length == 0
+      panel.set 'loaded', true
+
+    narratives = new Visio.Collections.Narrative(resp)
+    panel.get('narratives').add narratives.models
+    panel.set 'page', panel.get('page') + 1
+
+    $panel.append narratives.toHtmlText()
+
+  doneSummarize: (resp, panel) =>
+    if resp.success
+      @fetchSummary resp.token, panel, @timeout
+
+
+  getPanelId: (summaryParameters) ->
+    JSON.stringify(summaryParameters).hashCode()
 
   openClass: 'shift-right'
 
@@ -105,6 +129,27 @@ class Visio.Views.NarrativePanel extends Backbone.View
     @render()
 
 
+  onScroll: (e) =>
+    fn = =>
+      $panel = $(e.currentTarget)
+
+      scrollTop = $panel.scrollTop()
+      scrollHeight = $panel[0].scrollHeight
+
+      bottomOffset = 300
+
+      if scrollTop + $panel.height() + bottomOffset > scrollHeight
+        summaryParameters = @model.summaryParameters()
+
+        panelId = @getPanelId summaryParameters
+        panel = @panels.get panelId
+        return if !panel or panel.get 'loaded'
+
+        @fetchText(panel.get('page'), summaryParameters).done (resp) =>
+          @doneText(resp, panel, $panel)
+
+    throttled = _.throttle fn, 500
+    throttled()
 
   isOpen: =>
     $('.page').hasClass @openClass
@@ -112,18 +157,20 @@ class Visio.Views.NarrativePanel extends Backbone.View
   summarize: (parameters) ->
     $.post('/narratives/summarize', parameters)
 
-  fetchText: (page, ids, reported_type, year, limit = 30) ->
+  fetchText: (page, summaryParameters, limit = 5) ->
     options =
       limit: limit
       optimize: true
-      filter_ids: ids
-      where: "USERTXT is not null AND report_type = '#{Visio.Utils.dbMetric(reported_type)}' AND year = '#{year}'"
+      filter_ids: summaryParameters.ids
+      where: "USERTXT is not null AND
+        report_type = '#{Visio.Utils.dbMetric(summaryParameters.reported_type)}' AND
+        year = '#{summaryParameters.year}'"
       offset: limit * page
 
     $.post('/narratives', options)
 
 
-  fetchSummary: (token, timeout, attempts) ->
+  fetchSummary: (token, panel, timeout, attempts) ->
     timeout or= 2000
     nAttempts = 0
     $panel = @$el.find(".panel .panel-summary-#{@model.cid}")
@@ -132,7 +179,7 @@ class Visio.Views.NarrativePanel extends Backbone.View
     doneFn = (resp) =>
       nAttempts += 1
       if resp.success and resp.complete
-        console.log resp.summary
+        panel.set 'summary', resp.summary
         $panel.text resp.summary
       else
         console.log 'trying again'
