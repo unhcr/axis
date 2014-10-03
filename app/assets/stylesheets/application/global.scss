@@ -2416,11 +2416,6 @@ a {
   width: 100%;
   height: 100%;
   top: 0;
-  .row {
-    max-width: $row-inner-width;
-    margin: 0 auto;
-  }
-
 }
 
 .export-module {
@@ -2451,6 +2446,7 @@ a {
   }
 
   section {
+    min-width: 1000px;
     padding-bottom: 20px;
   }
 

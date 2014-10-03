@@ -20,6 +20,9 @@ class Visio.Views.ExportModule extends Backbone.View
     @loadingPdf.on 'change:loading', =>
       @$el.find('.pdf').toggleClass 'disabled'
 
+    @config.width = Visio.Constants.EXPORT_WIDTH
+    @config.height = Visio.Constants.EXPORT_HEIGHT
+
     @figure = @model.figure @config
 
     if @config.selectable

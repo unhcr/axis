@@ -122,6 +122,10 @@ window.Visio =
   Constants:
     FILTERS_WIDTH: 412
     LEGEND_WIDTH: 380
+    # Width of entire export figure including legend
+    EXPORT_WIDTH: 1000
+    EXPORT_LEGEND_WIDTH: 300
+    EXPORT_HEIGHT: 500
     ANY_YEAR: 'ANY_YEAR'
     ANY_STRATEGY_OBJECTIVE: 'ANY_STRATEGY_OBJECTIVE'
     DB_NAME: 'visio'

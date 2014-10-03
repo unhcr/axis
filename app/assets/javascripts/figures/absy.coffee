@@ -336,6 +336,11 @@ class Visio.Figures.Absy extends Visio.Figures.Base
     isActive = pointContainer.classed 'active'
     pointContainer.classed 'active', not isActive
 
+    data = []
+    @g.selectAll('.active').each (d) -> data.push d
+
+    @renderSvgLegend d, i
+
   isSelected: (id) =>
     _.include @selected, "#{id}"
 

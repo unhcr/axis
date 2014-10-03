@@ -74,6 +74,9 @@ class Visio.Figures.Base extends Backbone.View
     @adjustedWidth = (config.width - @margin.left - @margin.right)
     @adjustedHeight = (config.height - @margin.top - @margin.bottom)
 
+    if @isExport
+      @adjustedWidth -= Visio.Constants.EXPORT_LEGEND_WIDTH
+
     @svg = @selection.append('svg')
       .attr('width', config.width)
       .attr('height', config.height)
@@ -83,10 +86,85 @@ class Visio.Figures.Base extends Backbone.View
     @g = @svg.append('g')
       .attr('transform', "translate(#{@margin.left}, #{@margin.top})")
 
+    # gLegend, used for PNG exports
+    if @isExport
+      @yGLegend = d3.scale.linear()
+        .domain([0, 10])
+        .range([0, Visio.Constants.EXPORT_HEIGHT])
+      @gLegend = @svg.append('g')
+        .attr('transform', "translate(#{@adjustedWidth + @margin.left}, #{@margin.top})")
+        .attr('class', "svg-#{@type.name}-legend svg-legend")
+      @gLegendData = new Backbone.Collection()
 
     @subscribe() if config.isExport
 
   selectable: true
+
+  renderSvgLegend: (d, i) =>
+
+    if @gLegendData.get(@datumId(d))?
+      @gLegendData.remove @datumId(d)
+    else
+      label = @selectableLabel d, i
+      @gLegendData.add { id: @datumId(d), d: d, label: label }
+
+    gLegends = @gLegend.selectAll('.g-legend').data @gLegendData.models
+    gLegends.enter().append('text')
+    gLegends
+      .attr('class', 'g-legend')
+      .attr('text-anchor', 'start')
+      .attr('dy', '-.33em')
+      .attr('x', 80)
+      .attr('y', (d, i) => @yGLegend(i))
+      .text((m) => @datumToString(m.get('d')))
+      .call @wrap, Visio.Constants.EXPORT_LEGEND_WIDTH - 80
+
+    gLegends.exit().remove()
+
+    gLegendLabels = @gLegend.selectAll('.g-legend-label').data @gLegendData.models
+    gLegendLabels.enter().append('text')
+    gLegendLabels
+      .attr('class', (d) => ['g-legend-label', @datumClass(d)].join(' '))
+      .attr('text-anchor', 'start')
+      .attr('dy', '-.33em')
+      .attr('x', 40)
+      .attr('y', (d, i) => @yGLegend(i))
+      .text((m) => m.get('label'))
+
+    gLegendLabels.exit().remove()
+
+  datumClass: ->
+
+  datumId: (d) =>
+    d.id
+
+  datumToString: (d) =>
+    d.toString()
+
+  wrap: (text, width) =>
+    text.each ->
+      text = d3.select @
+      fontSize = +window.getComputedStyle(text.node(), null).getPropertyValue('font-size').replace('px', '')
+      words = text.text().split(/\s+/).reverse()
+      line = []
+      lineNumber = 0
+      padding = 2
+      y = +text.attr("y")
+      x = +text.attr("x")
+      dy = parseFloat(text.attr("dy"))
+      tspan = text.text(null).append("tspan").attr("x", x).attr("y", y).attr("dy", dy + "em")
+
+      while word = words.pop()
+        line.push(word)
+        tspan.text(line.join(" "))
+        if tspan.node().getComputedTextLength() > width
+          line.pop()
+          tspan.text(line.join(" "))
+          line = [word]
+          lineNumber += 1
+          tspan = text.append("tspan")
+            .attr("x", x).attr("y", y + (lineNumber * (fontSize + padding)))
+            .attr("dy", dy + "em").text(word)
 
   close: ->
     @selectedDatum.off()
