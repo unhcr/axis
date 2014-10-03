@@ -96,8 +96,8 @@ window.Visio =
     LYPK: 'Refugee'
     LYPM: 'Internally Displaced'
     LYPN: 'Returnee'
-    LYPJ: 'All populations of conern'
     LYPL: 'Stateless'
+    LYPJ: 'All populations of conern'
   IndicatorTypes:
     PERCENTAGE: 'PERCENTAGE'
     YESNOPARTIAL: 'YESNOPARTIAL'

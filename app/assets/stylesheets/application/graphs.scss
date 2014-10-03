@@ -69,7 +69,7 @@ line {
     stroke: $pillar3;
     fill: $pillar3;
   }
-  .PILLAR-4, .LYPJ {
+  .PILLAR-4, .LYPL {
     stroke: $pillar4;
     fill: $pillar4;
   }
@@ -356,7 +356,7 @@ line {
     fill: $scenario-bar;
   }
 
-  .box:hover, .box.selected {
+  .box:hover, .box.selected, .box.active {
     .scenario-bar.Operating-Level-bar.budget-bar {
       fill: $scenario-bar-ol;
     }
@@ -393,9 +393,8 @@ line {
   .box.faded {
     opacity: .6;
   }
-  .box.active {
-    stroke: black;
-    stroke-width: 1px;
+  .box.box-invisible {
+    opacity: 0;
   }
   .box {
     -moz-transition:opacity $fast-transition;
@@ -424,7 +423,7 @@ line {
   .PILLAR-3-bar, .LYPN-bar {
     fill: $pillar3;
   }
-  .PILLAR-4-bar, .LYPJ-bar {
+  .PILLAR-4-bar, .LYPL-bar {
     fill: $pillar4;
   }
   .bsy-line {
