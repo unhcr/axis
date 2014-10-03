@@ -23,23 +23,7 @@
       .row
         .col-md-12
           %figure
-      - if context.model.figure_config.selectable
-        %section.export-selections.row
-          .col-md-12
-            %h4 Make Your Selections.
-            .ui-small-header LABEL
-            %div
-              = "Click to select data points"
-            %figcaption
-              - _.each context.selectableData, (d, i) ->
-                .visio-checkbox.visio-checkbox-vertical
-                  %input{
-                    :id => "datum-#{i}",
-                    :type => "checkbox",
-                    :data => { :id => d.id },
-                    :value => "#{i}"}
-                  %label{:for => "datum-#{i}"}
-                    = context.selectableLabel d, i
+
     %section.row
       %h3 Go Time.
       %button.email Email

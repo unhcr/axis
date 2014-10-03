@@ -121,11 +121,13 @@ window.Visio =
     LONG_NUMBER: d3.format(',f')
   Constants:
     FILTERS_WIDTH: 412
-    LEGEND_WIDTH: 380
+    LEGEND_WIDTH: 300
     # Width of entire export figure including legend
     EXPORT_WIDTH: 1000
     EXPORT_LEGEND_WIDTH: 300
-    EXPORT_HEIGHT: 500
+    EXPORT_LABELS_WIDTH: 300
+    EXPORT_LABELS_HEIGHT: 400
+    EXPORT_HEIGHT: 800
     ANY_YEAR: 'ANY_YEAR'
     ANY_STRATEGY_OBJECTIVE: 'ANY_STRATEGY_OBJECTIVE'
     DB_NAME: 'visio'

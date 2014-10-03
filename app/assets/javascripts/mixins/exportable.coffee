@@ -56,7 +56,7 @@ Visio.Mixins.Exportable =
     @filtered @collection || @model
 
   selectableLabel: (d, i) ->
-    Visio.Constants.ALPHABET[i]
+    Visio.Utils.numberToLetter i
 
   events:
     'click .export': 'onExport'

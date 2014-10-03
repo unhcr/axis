@@ -75,6 +75,7 @@ class Visio.Figures.Base extends Backbone.View
     @adjustedHeight = (config.height - @margin.top - @margin.bottom)
 
     if @isExport
+      @adjustedHeight -= Visio.Constants.EXPORT_LABELS_HEIGHT
       @adjustedWidth -= Visio.Constants.EXPORT_LEGEND_WIDTH
 
     @svg = @selection.append('svg')
@@ -86,52 +87,86 @@ class Visio.Figures.Base extends Backbone.View
     @g = @svg.append('g')
       .attr('transform', "translate(#{@margin.left}, #{@margin.top})")
 
-    # gLegend, used for PNG exports
+    # gLabels, used for PNG exports
     if @isExport
       @yGLegend = d3.scale.linear()
         .domain([0, 10])
-        .range([0, Visio.Constants.EXPORT_HEIGHT])
-      @gLegend = @svg.append('g')
-        .attr('transform', "translate(#{@adjustedWidth + @margin.left}, #{@margin.top})")
-        .attr('class', "svg-#{@type.name}-legend svg-legend")
-      @gLegendData = new Backbone.Collection()
+        .range([0, Visio.Constants.EXPORT_LABELS_HEIGHT])
+      @xGLegend = d3.scale.linear()
+        .domain([0, 1])
+        .range([-@margin.left, (Visio.Constants.EXPORT_WIDTH / 3) - @margin.right])
+      @gLabels = @svg.append('g')
+        .attr('transform', "translate(#{@margin.left}, #{@margin.top + @adjustedHeight + @margin.bottom})")
+        .attr('class', "svg-#{@type.name}-labels svg-labels")
+      @activeData = new Backbone.Collection()
 
     @subscribe() if config.isExport
 
   selectable: true
 
-  renderSvgLegend: (d, i) =>
+  select: (d, i) =>
 
-    if @gLegendData.get(@datumId(d))?
-      @gLegendData.remove @datumId(d)
+    if @activeData.get(@datumId(d))?
+      @activeData.remove @datumId(d)
     else
-      label = @selectableLabel d, i
-      @gLegendData.add { id: @datumId(d), d: d, label: label }
+      @activeData.add { id: @datumId(d), d: d }
 
-    gLegends = @gLegend.selectAll('.g-legend').data @gLegendData.models
-    gLegends.enter().append('text')
-    gLegends
-      .attr('class', 'g-legend')
+  renderSvgLegend: =>
+
+    svgLegend = @g.append('svg')
+      .attr('x', @margin.left + @adjustedWidth)
+      .attr('width', Visio.Constants.EXPORT_LEGEND_WIDTH)
+      .attr('height', @adjustedHeight)
+    $(svgLegend.node()).html @legendView.drawFigures?(svgLegend.node())
+
+  renderSvgLabels: =>
+
+    gLabels = @gLabels.selectAll('.g-label').data @activeData.models
+    gLabels.enter().append('text')
+    gLabels
+      .attr('class', 'g-label')
       .attr('text-anchor', 'start')
       .attr('dy', '-.33em')
-      .attr('x', 80)
-      .attr('y', (d, i) => @yGLegend(i))
+      .attr('x', (d, i) => 30 + @xGLegend(Math.floor(i / @yGLegend.domain()[1])))
+      .attr('y', (d, i) => @yGLegend(i % @yGLegend.domain()[1]))
       .text((m) => @datumToString(m.get('d')))
-      .call @wrap, Visio.Constants.EXPORT_LEGEND_WIDTH - 80
+      .call @wrap, (Visio.Constants.EXPORT_WIDTH / 3) - (@margin.right / 3)
 
-    gLegends.exit().remove()
+    gLabels.exit().remove()
 
-    gLegendLabels = @gLegend.selectAll('.g-legend-label').data @gLegendData.models
-    gLegendLabels.enter().append('text')
-    gLegendLabels
-      .attr('class', (d) => ['g-legend-label', @datumClass(d)].join(' '))
+    gLabelTexts = @gLabels.selectAll('.g-label-index').data @activeData.models
+    gLabelTexts.enter().append('text')
+    gLabelTexts
+      .attr('class', (d) => ['g-label-index', @datumClass(d)].join(' '))
       .attr('text-anchor', 'start')
       .attr('dy', '-.33em')
-      .attr('x', 40)
-      .attr('y', (d, i) => @yGLegend(i))
-      .text((m) => m.get('label'))
+      .attr('x', (d, i) => 5 + @xGLegend(Math.floor(i / @yGLegend.domain()[1])))
+      .attr('y', (d, i) => @yGLegend(i % @yGLegend.domain()[1]))
+      .text (m) =>
+        index = @activeData.indexOf m
+        @selectableLabel m, index
 
-    gLegendLabels.exit().remove()
+    gLabelTexts.exit().remove()
+
+    @graphLabels()
+
+    graphLabels = @g.selectAll(@containerClass)
+
+  graphLabels: =>
+    self = @
+
+    @g.selectAll(".#{@containerClass} .label").remove()
+
+    graphLabels = @g.selectAll('.active.' + @containerClass)
+    graphLabels.each (d, i) ->
+
+      c = d3.select(@)
+      c.append('text')
+        .attr('class', 'label')
+        .text (m) =>
+          index = self.activeData.indexOf m
+          self.selectableLabel m, index
+
 
   datumClass: ->
 
@@ -140,6 +175,9 @@ class Visio.Figures.Base extends Backbone.View
 
   datumToString: (d) =>
     d.toString()
+
+  getPNGSvg: =>
+    @$el.find('svg')
 
   wrap: (text, width) =>
     text.each ->

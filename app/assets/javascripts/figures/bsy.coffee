@@ -114,7 +114,7 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
     @g.append('line')
       .attr('class', 'bsy-line')
       .attr('x1', 0)
-      .attr('x2', @width)
+      .attr('x2', @adjustedWidth)
       .attr('y1', @adjustedHeight)
       .attr('y2', @adjustedHeight)
 
@@ -149,7 +149,6 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
     boxes = @g.selectAll('g.box').data filtered, (d) -> d.id
     boxes.enter().append('g')
     boxes.attr('class', @boxClasslist)
-      .style('opacity', (d, i) -> if self.x(i) < 0 then 0 else 1)
       .transition()
       .duration(Visio.Durations.FAST)
       .attr('transform', (d, i) -> 'translate(' + self.x(i) + ', 0)')
@@ -246,6 +245,19 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
           self.templateTooltip
             values: values
             d: d
+
+        # Conditional Labels
+
+        if self.isExport
+          labels = box.selectAll('.label').data([d])
+          labels.enter().append('text')
+          labels.attr('class', 'label')
+            .attr('x', (scenarios.length / 2) * self.barWidth)
+            .attr('y', self.adjustedHeight + 2 * self.barWidth)
+            .attr('dy', '.3em')
+            .attr('text-anchor', 'start')
+            .text((d) -> Visio.Utils.numberToLetter idx)
+
       )
 
     boxes.on 'mouseenter', (d, idx) ->
@@ -264,7 +276,7 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
         return
 
       @selectedDatum.set 'd', d
-      @g.selectAll('.box').classed 'selected', false
+      @g.selectAll('.box').classed 'selected', false unless @isExport
       box = @g.select ".box-#{d.id}"
       box.classed 'selected', true
       $.publish "active.#{@figureId()}", [d, i]
@@ -327,9 +339,11 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
     else
       b.selectedBudget(null, filters) - a.selectedBudget(null, filters)
 
-  boxClasslist: (d) =>
+  boxClasslist: (d, i) =>
     classList = ['box', "box-#{d.id}"]
     classList.push 'selected' if d.id == @selectedDatum.get('d')?.id
+    classList.push 'active' if @activeData?.get(d.id)?
+    classList.push 'box-invisible'  if @x(i) < @x.range()[0] or @x(i) + 3 * @barWidth  > @x.range()[1]
     classList.join ' '
 
   filtered: (collection) =>
@@ -357,9 +371,15 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
     result
 
   select: (e, d, i) =>
+    super d, i
+
     box = @g.select(".box-#{d.id}")
     isActive = box.classed 'active'
     box.classed 'active', not isActive
+
+    @renderSvgLegend d, i
+
+  getPNGSvg: =>
 
   hover: (e, idxOrDatum, scroll = true) =>
     self = @
@@ -396,7 +416,6 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
         .transition()
         .duration(Visio.Durations.VERY_FAST)
         .attr('transform', (d, i) => 'translate(' + @x(i) + ', 0)')
-        .style('opacity', (d, i) -> if self.x(i) < 0 then 0 else 1)
         .attr 'class', @boxClasslist
 
   breakdownTypes: =>
@@ -407,9 +426,6 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
 
   mouseout: (e, i) =>
     @g.selectAll('.bar-container').classed 'hover', false
-    @g.selectAll('.circle').data([])
-      .exit().transition().duration(Visio.Durations.VERY_FAST).attr('r', 0).remove()
-    @g.selectAll('.label').remove()
 
   yAxisLabel: ->
 

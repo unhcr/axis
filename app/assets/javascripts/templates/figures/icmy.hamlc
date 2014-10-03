@@ -1,4 +1,4 @@
-- unless context.figure.summary
+- if not context.figure.summary and not context.isExport
   .divider.divider-dark-gray
 - if context.exportable and not context.isExport
   .figure-bar

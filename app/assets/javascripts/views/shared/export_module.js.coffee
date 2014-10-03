@@ -126,7 +126,12 @@ class Visio.Views.ExportModule extends Backbone.View
 
   onClickPng: =>
     @buildModule()
-    @$el.find('svg').parent().inlinify()
+
+    $svg = @figure.getPNGSvg()
+
+    $svg.parent().inlinify()
+
+
 
     html = d3.select(@el).select('svg')
       .attr('version', 1.1)

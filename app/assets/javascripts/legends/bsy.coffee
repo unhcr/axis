@@ -8,7 +8,7 @@ class Visio.Legends.Bsy extends Visio.Legends.Base
 
   type: Visio.FigureTypes.BSY
 
-  drawFigures: ->
+  drawFigures: (svgEl) ->
     # Bar legend
     #
     height = 75
@@ -17,7 +17,10 @@ class Visio.Legends.Bsy extends Visio.Legends.Base
     barCircleRadius = 2
     barLineEnd = 58
 
-    svg = d3.select(@$el.find('.bsy-bar-legend-container')[0])
+    d3.select(svgEl).attr('height', 400)
+    d3.select(svgEl).attr('width', Visio.Constants.LEGEND_WIDTH)
+
+    svg = d3.select(svgEl).append('svg')
     svg.attr('width', Visio.Constants.LEGEND_WIDTH)
     svg.attr('height', height)
 
@@ -89,9 +92,10 @@ class Visio.Legends.Bsy extends Visio.Legends.Base
     circleLineLength = 40
     r             = 7
 
-    circleSvg = d3.select(@$el.find('.bsy-color-legend-container')[0])
+    circleSvg = d3.select(svgEl).append('svg')
     circleSvg.attr('width', Visio.Constants.LEGEND_WIDTH)
     circleSvg.attr('height', circleHeight)
+      .attr('y', height + 30)
 
     circleData = @circleData @breakdownBy
     circles = circleSvg.selectAll('.bsy-color-legend').data(circleData, (d, i) -> i)

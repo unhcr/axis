@@ -18,7 +18,7 @@ class Visio.Legends.Base extends Backbone.View
   render: ->
     @$el.html @template { type: @type }
 
-    @drawFigures?()
+    @drawFigures?(@$el.find('svg')[0])
     @
 
   close: ->

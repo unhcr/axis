@@ -6,6 +6,8 @@ class Visio.Figures.Absy extends Visio.Figures.Base
 
   templateTooltip: HAML['tooltips/absy']
 
+  containerClass: 'point-container'
+
   initialize: (config = {}) ->
     @attrConfig.push 'algorithm'
     config.query or= ''
@@ -158,11 +160,11 @@ class Visio.Figures.Absy extends Visio.Figures.Base
       @domain = [0, maxAmount]
       @x.domain(@domain)
 
-    pointContainers = @g.selectAll('.point-container').data(filtered, (d) -> d.refId())
+    pointContainers = @g.selectAll(".#{@containerClass}").data(filtered, (d) -> d.refId())
     pointContainers.enter().append('g')
     pointContainers
         .attr('class', (d) ->
-          classList = ['point-container', "id-#{d.refId()}"]
+          classList = [self.containerClass, "id-#{d.refId()}"]
 
           if self.isQueried d
             classList.push 'queried'
@@ -233,12 +235,8 @@ class Visio.Figures.Absy extends Visio.Figures.Base
 
 
           # Conditional Labels
-          if self.isExport
-            labels = pointContainer.selectAll('.label').data([d])
-          else if self.isPdf and not _.isEmpty self.selected
+          if (self.isPdf and not _.isEmpty self.selected)
             labels = pointContainer.selectAll('.label').data(_.filter([d], (d) => self.isSelected(d.id)))
-
-          if self.isExport or (self.isPdf and not _.isEmpty self.selected)
             labels.enter().append('text')
             labels.attr('class', 'label')
               .attr('x', (d) => self.x(d[self.algorithm](Visio.manager.year(), self.filters)))
@@ -247,9 +245,10 @@ class Visio.Figures.Absy extends Visio.Figures.Base
               .attr('text-anchor', 'middle')
               .text((d) ->
                 if self.isPdf
-                  Visio.Constants.ALPHABET[_.indexOf self.selected, "#{d.id}"]
+                  Visio.Utils.numberToLetter(_.indexOf self.selected, "#{d.id}")
                 else
-                  Visio.Constants.ALPHABET[i]
+                  _.find self.activeData, (a, i) -> a.id == d.id
+                  Visio.Utils.numberToLetter self.activeData.indexOf(a)
               )
 
         )
@@ -264,20 +263,20 @@ class Visio.Figures.Absy extends Visio.Figures.Base
         .attr("d", @polygon)
         .on('mouseenter', (d) =>
           # Hack for when we move from one to voronoi to another to which fires enter, enter, out in Chrome
-          pointContainer = @g.select(".point-container.id-#{d.point.refId()}")
+          pointContainer = @g.select(".#{self.containerClass}.id-#{d.point.refId()}")
           $(pointContainer.node()).tipsy('show')
 
           pointContainer.moveToFront()
           pointContainer.classed 'focus', true
         ).on('mouseout', (d) =>
-          pointContainer = @g.select(".point-container.id-#{d.point.refId()}")
+          pointContainer = @g.select(".#{self.containerClass}.id-#{d.point.refId()}")
           pointContainer.classed 'focus', false
           $(pointContainer.node()).tipsy('hide')
 
         ).on('click', (d, i) =>
           $.publish "active.#{@figureId()}", [d.point, i]
 
-          d3.select(@el).selectAll('.point-container').classed 'selected', false
+          d3.select(@el).selectAll(".#{self.containerClass}").classed 'selected', false
 
 
           # Clicked the same point so deactivate
@@ -285,7 +284,8 @@ class Visio.Figures.Absy extends Visio.Figures.Base
             @selectedDatum.set 'd', null
           else
             @selectedDatum.set 'd', d.point
-            d3.select(@el).select(".point-container.id-#{@selectedDatum.get('d').id}").classed 'selected', true
+
+            d3.select(@el).select(".#{self.containerClass}.id-#{@selectedDatum.get('d').id}").classed 'selected', true unless @isExport
 
         )
 
@@ -314,9 +314,12 @@ class Visio.Figures.Absy extends Visio.Figures.Base
     if @isPdf
       @legendView.collection = new @collection.constructor(_.filter(filtered, (d) => self.isSelected(d.id)))
 
-    @$el.find('.legend-container').html @legendView.render().el unless @isExport
+    if @isExport
+      @renderSvgLegend()
+    else
+      @$el.find('.legend-container').html @legendView.render().el
 
-    @$el.find('.point-container').tipsy()
+    @$el.find(".#{@containerClass}").tipsy()
 
     @
 
@@ -331,15 +334,14 @@ class Visio.Figures.Absy extends Visio.Figures.Base
     "M" + d.join("L") + "Z"
 
   select: (e, d, i) =>
-    pointContainer = @g.select(".point-container.id-#{d.refId()}")
+    super d,i
+
+    pointContainer = @g.select(".#{@containerClass}.id-#{d.refId()}")
     console.warn 'Selected element is empty' if pointContainer.empty()
     isActive = pointContainer.classed 'active'
     pointContainer.classed 'active', not isActive
 
-    data = []
-    @g.selectAll('.active').each (d) -> data.push d
-
-    @renderSvgLegend d, i
+    @renderSvgLabels()
 
   isSelected: (id) =>
     _.include @selected, "#{id}"
@@ -356,6 +358,26 @@ class Visio.Figures.Absy extends Visio.Figures.Base
       title = 'Budget'
     else
       title = 'Expenditure Rate (%)'
+
+  graphLabels: =>
+    self = @
+
+    @g.selectAll(".#{@containerClass} .graph-label").remove()
+
+    graphLabels = @g.selectAll('.graph-label').data @activeData.models
+    graphLabels.enter().append('text')
+      .attr('class', 'label graph-label')
+      .attr('x', (m) =>
+        d = m.get('d')
+        self.x(d[self.algorithm](Visio.manager.year(), self.filters)))
+      .attr('y', (m) =>
+        d = m.get('d')
+        self.y(d.selectedAchievement(Visio.manager.year(), self.filters).result))
+      .attr('dy', '.3em')
+      .text (m) =>
+        index = self.activeData.indexOf m
+        self.selectableLabel m, index
+
 
   yAxisLabel: ->
 
