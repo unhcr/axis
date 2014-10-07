@@ -204,6 +204,7 @@ class Visio.Figures.Map extends Visio.Figures.Base
       )
 
     @$el.find('.center').tipsy()
+    @tipsyHeaderBtns()
     @
 
   algorithmValue: (operation) ->

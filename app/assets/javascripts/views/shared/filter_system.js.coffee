@@ -10,21 +10,25 @@ class Visio.Views.FilterSystemView extends Backbone.View
       type: 'filters'
       fn: 'renderFilters'
       human: 'Filter'
+      tooltipText: Visio.TooltipTexts.MENU_FILTER
     },
     {
       type: 'strategies'
       fn: 'renderStrategies'
       human: 'Strategy'
+      tooltipText: Visio.TooltipTexts.MENU_STRATEGY
     }
     {
       type: 'operations'
       fn: 'renderPages'
       human: 'Operation'
+      tooltipText: Visio.TooltipTexts.MENU_OPERATION
     },
     {
       type: 'indicators'
       fn: 'renderPages'
       human: 'Indicator'
+      tooltipText: Visio.TooltipTexts.MENU_INDICATOR
     }
   ]
 
@@ -86,6 +90,11 @@ class Visio.Views.FilterSystemView extends Backbone.View
       plural = view.collection.name.plural
       $target = @$el.find(".ui-accordion-content.#{plural}")
       $target.prepend view.render().el
+
+    @$el.find('.filter-option').tipsy
+      trigger: 'hover'
+      className: 'tipsy-black'
+      delayIn: 1000
 
   renderPages: (option) ->
     @$el.addClass 'filter-system-orange'

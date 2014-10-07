@@ -284,6 +284,7 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
     boxes.exit().remove()
 
     @$el.find('.box').tipsy()
+    @tipsyHeaderBtns()
 
     if @$el.find('.legend-container').is ':empty'
       @$el.find('.legend-container').html @legendView.render().el unless @isExport

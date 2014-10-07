@@ -321,6 +321,7 @@ class Visio.Figures.Absy extends Visio.Figures.Base
 
     @$el.find(".#{@containerClass}").tipsy()
 
+    @tipsyHeaderBtns()
     @
 
 

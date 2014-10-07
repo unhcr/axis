@@ -384,6 +384,8 @@ class Visio.Figures.Isy extends Visio.Figures.Base
     @$el.find('.legend-container').html @legendView.render().el unless @isExport
     @$el.find('.box').tipsy
       trigger: 'hover'
+
+    @tipsyHeaderBtns()
     @
 
   sortFn: (a, b) =>

@@ -145,6 +145,22 @@ window.Visio =
     BSY_LEGEND: 'This dashboard displays the budget for each element of the specified aggregation type (Operations, PPGs, Goals, Objectives, or Outputs). Each bar is broken down by budget components, pillars or scenarios (AOL, OL), depending on the filters.'
     BMY_LEGEND: 'This dashboard displays the trends in budget over time. The first line graph displays the budget for each element of the specified aggregation type (Operations, PPGs, Goals, Objectives, or Outputs), over time. Below there is a breakdown for each of the elements.'
 
+  TooltipTexts:
+    MENU_FILTER: 'Select a filter'
+    MENU_STRATEGY: 'Select a strategy'
+    MENU_INDICATOR: 'Select an indicator'
+    MENU_OPERATION: 'Select an operation'
+
+    HEADER_DASHBOARDS: 'Select a dashboard'
+    HEADER_AGGREGATE: 'Define the element to aggregate by'
+    HEADER_YEAR: 'Select the year'
+    HEADER_REPORT_TYPE: 'Select Mid Year Report or Year End Report'
+
+    TOOLBAR_NARRATIVE: 'Narrative for the selected element'
+    TOOLBAR_SORT_BY: 'Sort the data'
+    TOOLBAR_FILTER_BY: 'Filter options for displaying the data'
+    TOOLBAR_EXPORT: 'Export as image or PDF'
+
   Stores:
     MAP: 'map'
     SYNC: 'sync_date'

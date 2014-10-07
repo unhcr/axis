@@ -1,4 +1,7 @@
 .filter-options
   - _.each context.options, (option) ->
-    .col-xs-3.filter-option{ :data => { :system => option.type }, :class => ('selected' if option.type == context.selected ) }
+    .col-xs-3.filter-option{
+        'original-title' => option.tooltipText,
+        :data => { :system => option.type },
+        :class => ('selected' if option.type == context.selected ) }
       = option.human

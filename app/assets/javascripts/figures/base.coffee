@@ -55,21 +55,6 @@ class Visio.Figures.Base extends Backbone.View
 
     @selection = d3.select @$el.find('figure')[0]
 
-    $narrative = @$el.find('.narrative')
-    $narrative.attr 'original-title', HAML['tooltips/info']({ text: 'Narrative' }) if $narrative
-    $narrative.tipsy
-      className: 'tipsy-black'
-      trigger: 'hover'
-      offset: 30
-
-    $exp = @$el.find('.export')
-    $exp.attr 'original-title', HAML['tooltips/info']({ text: 'Export' }) if $exp
-    $exp.tipsy
-      className: 'tipsy-black'
-      trigger: 'hover'
-      offset: 30
-
-
     # Adjust for margins
     @adjustedWidth = (config.width - @margin.left - @margin.right)
     @adjustedHeight = (config.height - @margin.top - @margin.bottom)
@@ -151,6 +136,28 @@ class Visio.Figures.Base extends Backbone.View
     @graphLabels()
 
     graphLabels = @g.selectAll(@containerClass)
+
+  tipsyHeaderBtns: =>
+    tipsyOpts =
+      className: 'tipsy-black'
+      trigger: 'hover'
+      offset: 30
+
+    $narrative = @$el.find('.narrative')
+    $narrative.attr 'original-title', Visio.TooltipTexts.TOOLBAR_NARRATIVE if $narrative
+    $narrative.tipsy tipsyOpts
+
+    $exp = @$el.find('.export')
+    $exp.attr 'original-title', Visio.TooltipTexts.TOOLBAR_EXPORT if $exp
+    $exp.tipsy tipsyOpts
+
+    $sortBy = @$el.find('.sort-by')
+    $sortBy.attr 'original-title', Visio.TooltipTexts.TOOLBAR_SORT_BY if $sortBy
+    $sortBy.tipsy tipsyOpts
+
+    $filterBy = @$el.find('.filter-by')
+    $filterBy.attr 'original-title', Visio.TooltipTexts.TOOLBAR_FILTER_BY if $filterBy
+    $filterBy.tipsy tipsyOpts
 
   graphLabels: =>
 

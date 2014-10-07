@@ -33,6 +33,7 @@ class Visio.Views.Header extends Backbone.View
     @menuOptions =
       module_type:
         human: 'DASHBOARDS'
+        tooltipText: Visio.TooltipTexts.HEADER_DASHBOARDS
         values: Visio.Dashboards
         key: 'module_type'
         currentValue: -> Visio.manager.get('module_type')
@@ -40,6 +41,7 @@ class Visio.Views.Header extends Backbone.View
 
       aggregation_type:
         human: 'AGGREGATE'
+        tooltipText: Visio.TooltipTexts.HEADER_AGGREGATE
         values: [Visio.Parameters.OPERATIONS, Visio.Parameters.PPGS, Visio.Parameters.GOALS,
                  Visio.Parameters.PROBLEM_OBJECTIVES, Visio.Parameters.OUTPUTS,
                  Visio.Parameters.STRATEGY_OBJECTIVES]
@@ -49,6 +51,7 @@ class Visio.Views.Header extends Backbone.View
 
       reported_type:
         human: 'REPORT TYPE'
+        tooltipText: Visio.TooltipTexts.HEADER_REPORT_TYPE
         values: [{ human: 'YER', name: Visio.Algorithms.REPORTED_VALUES.yer },
                  { human: 'MYR', name: Visio.Algorithms.REPORTED_VALUES.myr }]
         key: 'reported_type'
@@ -57,6 +60,7 @@ class Visio.Views.Header extends Backbone.View
 
       year:
         human: 'YEAR'
+        tooltipText: Visio.TooltipTexts.HEADER_YEAR
         values: _.map Visio.manager.get('yearList'), (year) -> { human: year, name: year }
         key: 'year'
         currentValue: -> Visio.manager.year()
@@ -78,6 +82,8 @@ class Visio.Views.Header extends Backbone.View
     @$el.removeClass 'breadcrumb'
     open = if @filterSystem? then @filterSystem.isOpen() else false
     d3.select(@el).classed 'filter-open', open
+    @tipsy()
+
     @
 
   renderBreadcrumb: ->
@@ -87,8 +93,16 @@ class Visio.Views.Header extends Backbone.View
     @$el.addClass 'breadcrumb'
     open = if @filterSystem? then @filterSystem.isOpen() else false
     d3.select(@el).classed 'filter-open', open
+    @tipsy()
 
     @
+
+  tipsy: ->
+    @$el.find('.menu-option').tipsy
+      trigger: 'hover'
+      className: 'tipsy-black'
+      delayIn: 1000
+      gravity: 'n'
 
   isBreadcrumb: ->
     @$el.hasClass 'breadcrumb'
