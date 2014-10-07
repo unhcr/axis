@@ -1,13 +1,18 @@
 .panel.container-fluid
+  .close
+
+  .row
+    .col-md-12.header-buttons
+      .export.header-button
   .row
     .col-md-12
-      .close
+      .divider.divider-dark-gray.top-flush
 
   .row
     .col-md-12
       %h3
         = context.model.name()
-      %h6
+      %div
         = "#{context.model.year()} - #{context.model.reportedType().toUpperCase()}"
   .row.tabs
     - for key, textType of context.textTypes
@@ -19,8 +24,3 @@
   .row
     .col-md-12
       .panel-text
-
-  .row
-    .col-md-12
-      %a.download.ui-black
-        Download as docx

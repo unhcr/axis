@@ -1,0 +1,8 @@
+%form.gone#download-form{ :action => '/narratives/download', :method => 'POST' }
+  %input{ :type => 'hidden', :name => 'name', :value => @model.name() }
+  %input{ :type => 'hidden', :name => 'filter_ids', :value => JSON.stringify(@model.formattedIds()) }
+  %input{ :type => 'hidden', :name => 'where', :value => "USERTXT is not null AND
+        report_type = '#{Visio.Utils.dbMetric(@model.reportedType())}' AND
+        year = '#{@model.year()}'" }
+  %input{ :type => 'hidden', :name => 'authenticity_token', :value => $('meta[name="csrf-token"]').attr('content') }
+  %input{ :type => 'submit' }

@@ -1,1 +1,2 @@
 .panel-summary{ :class => "panel-summary-#{@model.cid}" }
+!= HAML['shared/narrative_panels/form']({ model: @model })

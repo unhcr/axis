@@ -1648,6 +1648,19 @@ a {
   background-color: $off-white;
   padding: 40px;
 
+  .panel {
+    padding-top: 60px;
+  }
+
+  .tabs {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .header-button {
+    margin-bottom: -3px;
+  }
+
   .panel-text {
     max-height: 500px;
     overflow: auto;
