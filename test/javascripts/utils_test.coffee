@@ -31,3 +31,16 @@ test 'nl2br', ->
   arr = breaks.split '<br />'
 
   strictEqual arr.length, 3
+
+test 'numberToLetter', ->
+  letter = Visio.Utils.numberToLetter 2
+  strictEqual letter, 'c'
+
+  letter = Visio.Utils.numberToLetter 52
+  strictEqual letter, 'ba'
+
+  letter = Visio.Utils.numberToLetter 26
+  strictEqual letter, 'aa'
+
+  letter = Visio.Utils.numberToLetter 999
+  strictEqual letter, 'all'

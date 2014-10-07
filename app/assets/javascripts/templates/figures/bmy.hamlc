@@ -1,5 +1,5 @@
-.divider.divider-dark-gray
 - if context.exportable and not context.isExport
+  .divider.divider-dark-gray
   .figure-bar
     .pull-right.header-buttons
       .export.header-button

@@ -20,5 +20,4 @@ class Visio.SelectedData.My extends Visio.SelectedData.Base
 
     ids["#{@get('d').id_type.singular}_ids"] = [@get('d').model_id] unless @get('d').summary
 
-    console.log ids
     ids

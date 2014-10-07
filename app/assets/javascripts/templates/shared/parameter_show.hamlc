@@ -1,6 +1,6 @@
 %header
   .idx
-    = Visio.Constants.ALPHABET[context.idx]
+    = Visio.Utils.numberToLetter context.idx
 
   - if context.model.get('country')
     .row

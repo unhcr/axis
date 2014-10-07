@@ -194,6 +194,7 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
       .duration(Visio.Durations.FAST)
       .call(@yAxis)
 
+    @tipsyHeaderBtns()
     @
 
   # Transforms parameter into data for the BMY graph

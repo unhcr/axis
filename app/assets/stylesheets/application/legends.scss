@@ -91,7 +91,13 @@
   .PILLAR-3, .LYPN {
     fill: $pillar3;
   }
-  .PILLAR-4, .LYPJ {
+  .PILLAR-4, .LYPL {
     fill: $pillar4;
+  }
+}
+
+.svg-labels {
+  .g-label-index {
+    font-weight: bold;
   }
 }

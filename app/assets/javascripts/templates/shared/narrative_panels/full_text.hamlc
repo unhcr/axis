@@ -1,1 +1,2 @@
 .panel-full_text{ :class => "panel-full_text-#{@model.cid}" }
+!= HAML['shared/narrative_panels/form']({ model: @model })

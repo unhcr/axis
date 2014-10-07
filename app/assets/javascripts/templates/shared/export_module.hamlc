@@ -1,52 +1,9 @@
 .row
-  .col-md-8.col-centered
+  .col-md-10.col-centered
     %section.overlay-header.row
       .close
-      %h1 Create a PDF.
-
-      - if context.model.figure_config.selectable
-        %h3 Select Data.
-    %section.overlay-content.export-figure.row
-      %figure
-      - if context.model.figure_config.selectable
-        %section.export-selections.row
-          %h4 Make Your Selections.
-          .ui-small-header LABEL
-          %div
-            = "Click to select data points"
-          %figcaption
-            - _.each context.selectableData, (d, i) ->
-              .visio-checkbox.visio-checkbox-vertical
-                %input{
-                  :id => "datum-#{i}",
-                  :type => "checkbox",
-                  :data => { :id => d.id },
-                  :value => "#{i}"}
-                %label{:for => "datum-#{i}"}
-                  = context.selectableLabel d, i
+      %h1 Export
     %form
-      - if context.model.figure_config.hasAxis
-        %section.export-axis
-          %h3 The Axis
-          .row
-            .col-md-12
-              %input{
-                :class => 'full-width',
-                :name => "xAxis",
-                :placeholder => 'X Axis',
-                :type => "text",
-                :maxlength => '80',
-                :value => ""}
-          .row
-            .col-md-12
-              %input{
-                :class => 'full-width',
-                :name => "yAxis",
-                :placeholder => 'Y Axis',
-                :type => "text",
-                :maxlength => '80',
-                :value => ""}
-
       %section.export-settings.row
         %h3 Title
         .row
@@ -58,8 +15,16 @@
               :type => "text",
               :maxlength => '80',
               :value => ""}
+
+    %section.overlay-content.export-figure.row
+      - if context.model.figure_config.selectable
+        %h3 Select Data.
+
+      .row
+        .col-md-12
+          %figure
+
     %section.row
       %h3 Go Time.
-      <!-- %button.pdf Export -->
       %button.email Email
       %button.png PNG

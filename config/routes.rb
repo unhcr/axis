@@ -72,6 +72,7 @@ Visio::Application.routes.draw do
       get 'status/:token' => 'narratives#status'
       get 'total_characters' => 'narratives#total_characters'
       get 'download' => 'narratives#to_docx'
+      post 'download' => 'narratives#to_docx'
     end
     post 'index', on: :collection
   end

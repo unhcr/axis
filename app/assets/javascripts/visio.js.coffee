@@ -17,7 +17,7 @@ window.Visio =
     # Indicator Criticality Multiple Year
     ICMY:
       className: 'Icmy'
-      human: 'Impact Criticality vs Time'
+      human: 'Indicators over time'
       name: 'icmy'
     # Indicator Criticality Single Year
     ICSY:
@@ -58,22 +58,22 @@ window.Visio =
     # Achievement Budget Single Year
     ABSY:
       className: 'Absy'
-      human: 'Achievement vs Budget'
+      human: 'Indicators vs Budget'
       name: 'absy'
     # Achievement Budget Single Year
     BSY:
       className: 'Bsy'
-      human: 'Budget Single Year'
+      human: 'Budget'
       name: 'bsy'
     # Budget Multiple Year
     BMY:
       className: 'Bmy'
-      human: 'Budget vs Time'
+      human: 'Budget over time'
       name: 'bmy'
     # Budget Multiple Year Summary
     BMY_SUMMARY:
       className: 'BmySummary'
-      human: 'Budget vs Time'
+      human: 'Budget over time'
       name: 'bmys'
     # Indicators Single Year
     ISY:
@@ -96,8 +96,8 @@ window.Visio =
     LYPK: 'Refugee'
     LYPM: 'Internally Displaced'
     LYPN: 'Returnee'
-    LYPJ: 'All populations of conern'
     LYPL: 'Stateless'
+    LYPJ: 'All populations of conern'
   IndicatorTypes:
     PERCENTAGE: 'PERCENTAGE'
     YESNOPARTIAL: 'YESNOPARTIAL'
@@ -121,7 +121,13 @@ window.Visio =
     LONG_NUMBER: d3.format(',f')
   Constants:
     FILTERS_WIDTH: 412
-    LEGEND_WIDTH: 380
+    LEGEND_WIDTH: 300
+    # Width of entire export figure including legend
+    EXPORT_WIDTH: 1000
+    EXPORT_LEGEND_WIDTH: 300
+    EXPORT_LABELS_WIDTH: 300
+    EXPORT_LABELS_HEIGHT: 400
+    EXPORT_HEIGHT: 800
     ANY_YEAR: 'ANY_YEAR'
     ANY_STRATEGY_OBJECTIVE: 'ANY_STRATEGY_OBJECTIVE'
     DB_NAME: 'visio'
@@ -134,6 +140,26 @@ window.Visio =
     STRATEGY_DESC: 'Global strategies are defined by headquarters or regional offices. You can also create your own strategy or view strategies that others have shared with you.'
     STRATEGY_TITLE: 'Choose a strategy, operation or indicator to begin.'
     ABSY_LEGEND: 'This dashboard depicts the allocated budget for Operations, PPGs, Goals, Outputs, Objectives, and Strategy Objectives against achievements.'
+    ISY_LEGEND: 'This dashboard displays the progress of each indicator. Each bar illustrates the percentage of progress from the baseline towards the target or standard. Details are showed on rollover.'
+    ICMY_LEGEND: 'This dashboard displays the progress of indicators over time. The first line graph aggregates all indicators. Below there is a breakdown  for each element of the specified aggregation type (Operations, PPGs, Goals, Objectives, or Outputs).'
+    BSY_LEGEND: 'This dashboard displays the budget for each element of the specified aggregation type (Operations, PPGs, Goals, Objectives, or Outputs). Each bar is broken down by budget components, pillars or scenarios (AOL, OL), depending on the filters.'
+    BMY_LEGEND: 'This dashboard displays the trends in budget over time. The first line graph displays the budget for each element of the specified aggregation type (Operations, PPGs, Goals, Objectives, or Outputs), over time. Below there is a breakdown for each of the elements.'
+
+  TooltipTexts:
+    MENU_FILTER: 'Select a filter'
+    MENU_STRATEGY: 'Select a strategy'
+    MENU_INDICATOR: 'Select an indicator'
+    MENU_OPERATION: 'Select an operation'
+
+    HEADER_DASHBOARDS: 'Select a dashboard'
+    HEADER_AGGREGATE: 'Define the element to aggregate by'
+    HEADER_YEAR: 'Select the year'
+    HEADER_REPORT_TYPE: 'Select Mid Year Report or Year End Report'
+
+    TOOLBAR_NARRATIVE: 'Narrative for the selected element'
+    TOOLBAR_SORT_BY: 'Sort the data'
+    TOOLBAR_FILTER_BY: 'Filter options for displaying the data'
+    TOOLBAR_EXPORT: 'Export as image or PDF'
 
   Stores:
     MAP: 'map'
@@ -265,27 +291,27 @@ Visio.AggregationTypes = [
   ]
 
 Visio.Algorithms.CRITICALITIES = [
-    { value: Visio.Algorithms.ALGO_RESULTS.success, description: 'The indicator is in an acceptable rangle.' }
-    { value: Visio.Algorithms.ALGO_RESULTS.ok, description: 'The indicator is in an unacceptable range.' }
-    { value: Visio.Algorithms.ALGO_RESULTS.fail, description: 'The indicator is in a critical range.' }
-    { value: Visio.Algorithms.STATUS.missing, description: 'The indicator is missing data.' }
+    { value: Visio.Algorithms.ALGO_RESULTS.success, description: 'Percentage of indicators in an acceptable range.' }
+    { value: Visio.Algorithms.ALGO_RESULTS.ok, description: 'Percentage of indicators in an unacceptable range.' }
+    { value: Visio.Algorithms.ALGO_RESULTS.fail, description: 'Percentage of indicators in a critical range.' }
+    { value: Visio.Algorithms.STATUS.missing, description: 'Percentage of indicators with missing data.' }
   ]
 
 Visio.Algorithms.THRESHOLDS = [
-    { value: Visio.Algorithms.ALGO_RESULTS.high, description: 'The indicator has achieved over 80% of its target.' }
-    { value: Visio.Algorithms.ALGO_RESULTS.medium, description: 'The indicator has achieved over 60% of its target.' }
-    { value: Visio.Algorithms.ALGO_RESULTS.low, description: 'The indicator has not achieved 60% of its target.' }
-    { value: Visio.Algorithms.STATUS.missing, description: 'The indicator is missing data.' }
+    { value: Visio.Algorithms.ALGO_RESULTS.high, description: 'Percentage of indicators that have achieved over 60% of their target.' }
+    { value: Visio.Algorithms.ALGO_RESULTS.medium, description: 'Percentage of indicators that have achieved over 60% of their target.' }
+    { value: Visio.Algorithms.ALGO_RESULTS.low, description: 'Percentage of indicators that have achieved less than 60% of their target.' }
+    { value: Visio.Algorithms.STATUS.missing, description: 'Percentage of indicators with missing data.' }
   ]
 
 Visio.Dashboards = [
     Visio.FigureTypes.OVERVIEW,
     Visio.FigureTypes.MAP,
-    Visio.FigureTypes.ICMY,
+    Visio.FigureTypes.ABSY
     Visio.FigureTypes.ISY,
+    Visio.FigureTypes.ICMY,
     Visio.FigureTypes.BSY,
     Visio.FigureTypes.BMY,
-    Visio.FigureTypes.ABSY
   ]
 
 Visio.Schema =

@@ -6,3 +6,6 @@ class Visio.Collections.Narrative extends Visio.Collections.AmountType
 
   url: '/narratives'
 
+  toHtmlText: ->
+
+    @pluck('usertxt').join('<br />').replace(/\\n/g, '<br />')

@@ -183,6 +183,7 @@ class Visio.Figures.Icmy extends Visio.Figures.Base
         @yAxisLabel()
 
     @$el.find('.legend-container').html @legendView.render().el
+    @tipsyHeaderBtns()
     @
 
   mapFn: (lineData, idx, memo) =>

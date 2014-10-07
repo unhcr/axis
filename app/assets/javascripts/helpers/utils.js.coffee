@@ -134,6 +134,20 @@ Visio.Utils.stringToCssClass = (string) ->
   return string unless string
   string.replace(/\ /g, '-')
 
+Visio.Utils.numberToLetter = (n) ->
+  alphabet = 'abcdefghijklmnopqrstuvwxyz'
+  return alphabet[n] if alphabet[n]?
+
+  letter = ''
+
+  while n > 0
+    r = n % alphabet.length
+    r -= 1 if n < alphabet.length
+    n = Math.floor n / alphabet.length
+
+    letter = alphabet[r] + letter
+
+  letter
 
 Visio.Utils.generateOverviewUrl = ->
   [Visio.manager.get('module_type'),

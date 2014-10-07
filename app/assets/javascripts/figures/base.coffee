@@ -55,24 +55,13 @@ class Visio.Figures.Base extends Backbone.View
 
     @selection = d3.select @$el.find('figure')[0]
 
-    $narrative = @$el.find('.narrative')
-    $narrative.attr 'original-title', HAML['tooltips/info']({ text: 'Narrative' }) if $narrative
-    $narrative.tipsy
-      className: 'tipsy-black'
-      trigger: 'hover'
-      offset: 30
-
-    $exp = @$el.find('.export')
-    $exp.attr 'original-title', HAML['tooltips/info']({ text: 'Export' }) if $exp
-    $exp.tipsy
-      className: 'tipsy-black'
-      trigger: 'hover'
-      offset: 30
-
-
     # Adjust for margins
     @adjustedWidth = (config.width - @margin.left - @margin.right)
     @adjustedHeight = (config.height - @margin.top - @margin.bottom)
+
+    if @isExport
+      @adjustedHeight -= Visio.Constants.EXPORT_LABELS_HEIGHT
+      @adjustedWidth -= Visio.Constants.EXPORT_LEGEND_WIDTH
 
     @svg = @selection.append('svg')
       .attr('width', config.width)
@@ -83,10 +72,130 @@ class Visio.Figures.Base extends Backbone.View
     @g = @svg.append('g')
       .attr('transform', "translate(#{@margin.left}, #{@margin.top})")
 
+    # gLabels, used for PNG exports
+    if @isExport
+      @yGLegend = d3.scale.linear()
+        .domain([0, 10])
+        .range([0, Visio.Constants.EXPORT_LABELS_HEIGHT])
+      @xGLegend = d3.scale.linear()
+        .domain([0, 1])
+        .range([-@margin.left, (Visio.Constants.EXPORT_WIDTH / 3) - @margin.right])
+      @gLabels = @svg.append('g')
+        .attr('transform', "translate(#{@margin.left}, #{@margin.top + @adjustedHeight + @margin.bottom})")
+        .attr('class', "svg-#{@type.name}-labels svg-labels")
+      @activeData = new Backbone.Collection()
 
     @subscribe() if config.isExport
 
   selectable: true
+
+  select: (d, i) =>
+
+    if @activeData.get(@datumId(d))?
+      @activeData.remove @datumId(d)
+    else
+      @activeData.add { id: @datumId(d), d: d }
+
+  renderSvgLegend: =>
+
+    svgLegend = @g.append('svg')
+      .attr('x', @margin.left + @adjustedWidth)
+      .attr('width', Visio.Constants.EXPORT_LEGEND_WIDTH)
+      .attr('height', @adjustedHeight)
+    $(svgLegend.node()).html @legendView.drawFigures?(svgLegend.node())
+
+  renderSvgLabels: =>
+
+    gLabels = @gLabels.selectAll('.g-label').data @activeData.models
+    gLabels.enter().append('text')
+    gLabels
+      .attr('class', 'g-label')
+      .attr('text-anchor', 'start')
+      .attr('dy', '-.33em')
+      .attr('x', (d, i) => 30 + @xGLegend(Math.floor(i / @yGLegend.domain()[1])))
+      .attr('y', (d, i) => @yGLegend(i % @yGLegend.domain()[1]))
+      .text((m) => @datumToString(m.get('d')))
+      .call @wrap, (Visio.Constants.EXPORT_WIDTH / 3) - (@margin.right / 3)
+
+    gLabels.exit().remove()
+
+    gLabelTexts = @gLabels.selectAll('.g-label-index').data @activeData.models
+    gLabelTexts.enter().append('text')
+    gLabelTexts
+      .attr('class', (d) => ['g-label-index', @datumClass(d)].join(' '))
+      .attr('text-anchor', 'start')
+      .attr('dy', '-.33em')
+      .attr('x', (d, i) => 5 + @xGLegend(Math.floor(i / @yGLegend.domain()[1])))
+      .attr('y', (d, i) => @yGLegend(i % @yGLegend.domain()[1]))
+      .text (m) =>
+        index = @activeData.indexOf m
+        @selectableLabel m, index
+
+    gLabelTexts.exit().remove()
+
+    @graphLabels()
+
+    graphLabels = @g.selectAll(@containerClass)
+
+  tipsyHeaderBtns: =>
+    tipsyOpts =
+      className: 'tipsy-black'
+      trigger: 'hover'
+      offset: 30
+
+    $narrative = @$el.find('.narrative')
+    $narrative.attr 'original-title', Visio.TooltipTexts.TOOLBAR_NARRATIVE if $narrative
+    $narrative.tipsy tipsyOpts
+
+    $exp = @$el.find('.export')
+    $exp.attr 'original-title', Visio.TooltipTexts.TOOLBAR_EXPORT if $exp
+    $exp.tipsy tipsyOpts
+
+    $sortBy = @$el.find('.sort-by')
+    $sortBy.attr 'original-title', Visio.TooltipTexts.TOOLBAR_SORT_BY if $sortBy
+    $sortBy.tipsy tipsyOpts
+
+    $filterBy = @$el.find('.filter-by')
+    $filterBy.attr 'original-title', Visio.TooltipTexts.TOOLBAR_FILTER_BY if $filterBy
+    $filterBy.tipsy tipsyOpts
+
+  graphLabels: =>
+
+  datumClass: ->
+
+  datumId: (d) =>
+    d.id
+
+  datumToString: (d) =>
+    d.toString()
+
+  getPNGSvg: =>
+    @$el.find('svg')
+
+  wrap: (text, width) =>
+    text.each ->
+      text = d3.select @
+      fontSize = +window.getComputedStyle(text.node(), null).getPropertyValue('font-size').replace('px', '')
+      words = text.text().split(/\s+/).reverse()
+      line = []
+      lineNumber = 0
+      padding = 2
+      y = +text.attr("y")
+      x = +text.attr("x")
+      dy = parseFloat(text.attr("dy"))
+      tspan = text.text(null).append("tspan").attr("x", x).attr("y", y).attr("dy", dy + "em")
+
+      while word = words.pop()
+        line.push(word)
+        tspan.text(line.join(" "))
+        if tspan.node().getComputedTextLength() > width
+          line.pop()
+          tspan.text(line.join(" "))
+          line = [word]
+          lineNumber += 1
+          tspan = text.append("tspan")
+            .attr("x", x).attr("y", y + (lineNumber * (fontSize + padding)))
+            .attr("dy", dy + "em").text(word)
 
   close: ->
     @selectedDatum.off()
