@@ -30,7 +30,9 @@ class NarrativesController < ApplicationController
   end
 
   def to_docx
-    @name = params[:name] || "Narrative Report"
+    @name = params[:name]
+    @name = "Narrative Report" if @name.nil? or @name.empty?
+    params[:filter_ids] = JSON.parse(params[:filter_ids]) if params[:filter_ids].present?
 
     @narratives = resource.models_optimized(params[:filter_ids],
                                             nil,
@@ -42,9 +44,9 @@ class NarrativesController < ApplicationController
     filename = "#{@name}.docx"
     file = Htmltoword::Document.create(html, filename)
 
-    send_file file.path,
+    send_data File.read(file.path),
       :filename => filename,
-      :disposition => 'inline',
+      :disposition => 'attachment',
       :type => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
 
   end
