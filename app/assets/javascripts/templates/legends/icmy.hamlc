@@ -1,0 +1,5 @@
+%h6
+  = context.type.human
+
+%p
+  = Visio.Texts.ICMY_LEGEND
