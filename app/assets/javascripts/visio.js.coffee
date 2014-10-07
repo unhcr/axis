@@ -73,7 +73,7 @@ window.Visio =
     # Budget Multiple Year Summary
     BMY_SUMMARY:
       className: 'BmySummary'
-      human: 'Budget vs Time'
+      human: 'Budget over time'
       name: 'bmys'
     # Indicators Single Year
     ISY:
