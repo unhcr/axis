@@ -1289,14 +1289,10 @@ button, input {
   right: .8em;
   cursor: pointer;
   z-index: 10;
-
-  border-radius: 30px;
-  background-color: $white;
-  border: 2px $primary-soft solid;
 }
 
-.close:hover {
-  background-color: darken($white, 10%);
+.close:hover:before {
+  color: $black;
 }
 
 .close:before {
@@ -1306,7 +1302,7 @@ button, input {
   text-align: center;
   font-size: 15px;
   font-weight: bold;
-  color: $primary-soft;
+  color: $dark-gray;
   padding-top: 5px
 }
 
