@@ -2,10 +2,6 @@
   = context.type.human
 
 %p
-  This dashboard depicts the allocated budget for Operations, PPGs, Goals, Outputs, Objectives, and Strategy Objectives against achievements.
-
-%p
-  %b Color
-  legend.
+  = Visio.Texts.BSY_LEGEND
 
 %svg
