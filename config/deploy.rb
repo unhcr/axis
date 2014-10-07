@@ -40,7 +40,11 @@ default_run_options[:env] = {
     'HTTPS_PROXY_REQUEST_FULLURI' => 'false',
 }
 
-set :workers, { "shrimp" => 5, "pdf_email" => 5 }
+set :workers, {
+  "shrimp" => 5,
+  "pdf_email" => 5,
+  "summarize" => 5
+}
 
 # ensure http_proxy variables are set
 set :default_environment, {
