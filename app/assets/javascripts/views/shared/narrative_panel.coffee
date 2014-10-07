@@ -25,7 +25,7 @@ class Visio.Views.NarrativePanel extends Backbone.View
     $.subscribe 'narratify-scroll.bottom', @onScrollBottom
 
   events:
-    'click .download': 'onDownload'
+    'click .export': 'onDownload'
     'click .close': 'onNarratifyClose'
     'change input': 'onChangeTextType'
 
@@ -88,6 +88,14 @@ class Visio.Views.NarrativePanel extends Backbone.View
     if resp.success
       @fetchSummary resp.token, panel, @timeout
 
+  search: (query) =>
+    summaryParameters = @model.summaryParameters
+
+    options =
+      filter_ids: params.ids
+      where: "USERTXT is not null AND
+        report_type = '#{Visio.Utils.dbMetric(params.reported_type)}' AND
+        year = '#{params.year}'"
 
   getPanelId: (summaryParameters) ->
     JSON.stringify(summaryParameters).hashCode()
@@ -111,18 +119,10 @@ class Visio.Views.NarrativePanel extends Backbone.View
     $('.header-buttons .narrative').removeClass 'open'
 
   onDownload: (e) =>
-    params = @model.summaryParameters()
-
-    options =
-      name: "#{@model.name()} - #{params.year} - #{params.reported_type}"
-      filter_ids: params.ids
-      where: "USERTXT is not null AND
-        report_type = '#{Visio.Utils.dbMetric(params.reported_type)}' AND
-        year = '#{params.year}'"
-
-    path = "/narratives/download.docx?#{$.param(options)}"
-
-    Visio.Utils.redirect path
+    e.stopPropagation()
+    console.log 'here'
+    $form = @$el.find('#download-form')
+    $form.submit()
 
   onNarratify: (e, selectedDatum) =>
     @model = selectedDatum
