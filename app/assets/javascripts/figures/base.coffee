@@ -153,20 +153,6 @@ class Visio.Figures.Base extends Backbone.View
     graphLabels = @g.selectAll(@containerClass)
 
   graphLabels: =>
-    self = @
-
-    @g.selectAll(".#{@containerClass} .label").remove()
-
-    graphLabels = @g.selectAll('.active.' + @containerClass)
-    graphLabels.each (d, i) ->
-
-      c = d3.select(@)
-      c.append('text')
-        .attr('class', 'label')
-        .text (m) =>
-          index = self.activeData.indexOf m
-          self.selectableLabel m, index
-
 
   datumClass: ->
 
