@@ -301,30 +301,15 @@ class Visio.Figures.Isy extends Visio.Figures.Base
 
         if d.get(Visio.Algorithms.REPORTED_VALUES.baseline)?
           baseline = box.selectAll('.baseline').data([d])
-          baseline.enter().append('polygon')
+          baseline.enter().append('rect')
           baseline.attr('class', 'baseline')
           baseline.transition()
             .duration(Visio.Durations.FAST)
-            .attr('points', (d) ->
-              points = []
+            .attr('x', 0)
+            .attr('y', (d) -> self.y(d.get(Visio.Algorithms.REPORTED_VALUES.baseline)) - (self.barWidth / 2) - .5)
+            .attr('height', self.barWidth)
+            .attr('width', 2 * self.barWidth)
 
-              y = self.y(d.get(Visio.Algorithms.REPORTED_VALUES.baseline))
-
-              # Left
-              points.push [0, y]
-
-              # Bottom
-              points.push [self.barWidth, y + self.barWidth]
-
-              # Right
-              points.push [2 * self.barWidth, y]
-
-              # Top
-              points.push [self.barWidth, y - self.barWidth]
-
-              path = _.map(points, (point) -> point.join(',')).join(' ')
-
-            )
 
           baseline.exit().remove()
 

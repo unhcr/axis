@@ -172,7 +172,7 @@ class Visio.Views.NarrativePanel extends Backbone.View
 
   fetchSummary: (token, panel, timeout, attempts) ->
     timeout or= 2000
-    nAttempts = 0
+    nAttempts = 20
     $panel = @$el.find(".panel .panel-summary-#{@model.cid}")
     $panel.text 'thinking...!'
 
