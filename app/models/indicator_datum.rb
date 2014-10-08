@@ -83,6 +83,24 @@ class IndicatorDatum < ActiveRecord::Base
     end
     query_string = conditions.join(' AND ')
 
+    sqlStrategyObjectives = "
+      select strategy_objective_id
+      from goals_strategy_objectives
+      where goal_id = #{self.table_name}.goal_id
+
+      INTERSECT
+
+      select strategy_objective_id
+      from problem_objectives_strategy_objectives
+      where problem_objective_id = #{self.table_name}.problem_objective_id
+
+      INTERSECT
+
+      select strategy_objective_id
+      from indicators_strategy_objectives
+      where indicator_id = #{self.table_name}.indicator_id"
+
+
     # Need to include Strategy Objective ids
     sql = "select array_to_json(array_agg(row_to_json(t)))
       from (
@@ -91,15 +109,7 @@ class IndicatorDatum < ActiveRecord::Base
             select array_to_json(array_agg(row_to_json(d)::json->'strategy_objective_id'))
             from (
 
-              select strategy_objective_id
-              from goals_strategy_objectives
-              where goal_id = #{self.table_name}.goal_id
-
-              INTERSECT
-
-              select strategy_objective_id
-              from problem_objectives_strategy_objectives
-              where problem_objective_id = #{self.table_name}.problem_objective_id
+              #{sqlStrategyObjectives}
 
               INTERSECT
 
@@ -107,19 +117,31 @@ class IndicatorDatum < ActiveRecord::Base
               from outputs_strategy_objectives
               where output_id = #{self.table_name}.output_id
 
-              INTERSECT
-
-              select strategy_objective_id
-              from indicators_strategy_objectives
-              where indicator_id = #{self.table_name}.indicator_id
             ) as d
         ) as strategy_objective_ids
-      from #{self.table_name}
+        from #{self.table_name}
+        where is_performance = true
+
+        UNION ALL
+
+        select #{self.table_name}.*,
+          (
+            select array_to_json(array_agg(row_to_json(d)::json->'strategy_objective_id'))
+            from (
+
+              #{sqlStrategyObjectives}
+
+            ) as d
+        ) as strategy_objective_ids
+        from #{self.table_name}
+        where is_performance = false
+
       ) t
       where is_deleted = false AND #{query_string}"
 
     sql += " LIMIT #{sanitize(limit)}" unless limit.nil?
     sql += " OFFSET #{sanitize(offset)}" unless offset.nil?
+
 
     ActiveRecord::Base.connection.execute(sql)
 
