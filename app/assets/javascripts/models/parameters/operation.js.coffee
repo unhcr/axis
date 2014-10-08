@@ -10,7 +10,9 @@ class Visio.Models.Operation extends Visio.Models.Parameter
 
     populations = @get 'populations'
 
-    _.reduce populations, ((sum, p) -> if ids[p.ppg_id]? then sum + p.value else sum ), 0
+    _.reduce populations, ((sum, p) ->
+      if ids[p.ppg_id]? and p.year == year then sum + p.value else sum )
+    , 0
 
   selectedPopulation: (year, filters = null) ->
     year or= Visio.manager.year()
