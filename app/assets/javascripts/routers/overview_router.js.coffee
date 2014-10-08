@@ -30,9 +30,18 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.DashboardRouter
            Visio.manager.get('indicators').fetch(options),
            Visio.manager.get('strategy_objectives').fetch(
              { data: { where: { strategy_id: Visio.manager.get('strategy_id') } } }),
-           Visio.manager.get('expenditures').fetch({ data: { strategy_id: Visio.manager.get('strategy_id') } })
-           Visio.manager.get('budgets').fetch({ data: { strategy_id: Visio.manager.get('strategy_id') } })
-           Visio.manager.get('indicator_data').fetch({ data: { strategy_id: Visio.manager.get('strategy_id') } })
+           Visio.manager.get('expenditures').fetch({ data: {
+             strategy_id: Visio.manager.get('strategy_id'),
+             optimize: true
+           } })
+           Visio.manager.get('budgets').fetch({ data: {
+             strategy_id: Visio.manager.get('strategy_id'),
+             optimize: true
+           } })
+           Visio.manager.get('indicator_data').fetch({ data: {
+             strategy_id: Visio.manager.get('strategy_id'),
+             optimize: true
+           } })
     ).done( =>
 
       try
