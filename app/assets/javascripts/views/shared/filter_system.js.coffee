@@ -94,7 +94,7 @@ class Visio.Views.FilterSystemView extends Backbone.View
     @$el.find('.filter-option').tipsy
       trigger: 'hover'
       className: 'tipsy-black'
-      delayIn: 1000
+      delayIn: 0
 
   renderPages: (option) ->
     @$el.addClass 'filter-system-orange'
