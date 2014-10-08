@@ -120,7 +120,6 @@ class Visio.Views.NarrativePanel extends Backbone.View
 
   onDownload: (e) =>
     e.stopPropagation()
-    console.log 'here'
     $form = @$el.find('#download-form')
     $form.submit()
 

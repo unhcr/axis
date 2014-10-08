@@ -60,26 +60,21 @@ module 'Export Module View',
 test 'render', ->
   @exportView.render()
 
-  strictEqual $(@exportView.el).find('figcaption input').length, 2, 'Should have two input boxes'
   strictEqual $(@exportView.el).find('figure .box').length, 2, 'Should have two bars'
 
 test 'select', ->
   @exportView.render()
   i = 0
   d = @exportView.selectableData[i]
-  strictEqual $(@exportView.el).find('figcaption input').length, 2
   strictEqual $(@exportView.el).find('figure .box').length, 2
 
   $.publish "active.#{@exportView.figure.figureId()}", [d, i]
-  strictEqual @exportView.$el.find(':checked').length, 1, 'Should make one active'
   strictEqual @exportView.$el.find('figure .active').length, 1, 'Should make one active in isy figure'
 
   $.publish "active.#{@exportView.figure.figureId()}", [d, i]
-  strictEqual @exportView.$el.find(':checked').length, 0, 'Should toggle it off'
   strictEqual @exportView.$el.find('figure .active').length, 0, 'Should toggle off active in isy figure'
 
   $.publish "active.#{@exportView.figure.figureId()}.figure", [d, i]
-  strictEqual @exportView.$el.find(':checked').length, 0, 'Should not affect view'
   strictEqual @exportView.$el.find('figure .active').length, 1, 'Should toggle on active in isy figure'
 
 test 'Required functions', ->
