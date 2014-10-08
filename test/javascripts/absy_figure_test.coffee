@@ -10,6 +10,16 @@ module 'ABSY Figure',
       width: 100
       height: 100
       )
+    @figureExport = new Visio.Figures.Absy(
+      isExport: true
+      margin:
+        left: 0
+        right: 0
+        top: 0
+        bottom: 0
+      width: 100
+      height: 100
+      )
     @d = new Visio.Models.Output({ id: 1, name: 'abc' })
     sinon.stub @d, 'selectedBudget', -> 10
     sinon.stub @d, 'selectedExpenditureRate', -> .5
@@ -65,19 +75,15 @@ test 'filtered', ->
 
 
 test 'select', ->
-  @figure.collectionFn new Visio.Collections.Output([@d])
-  @figure.render()
+  @figureExport.collectionFn new Visio.Collections.Output([@d])
+  @figureExport.render()
 
-  ok d3.select(@figure.el).selectAll('.active').empty(), 'Should have no active point'
+  ok d3.select(@figureExport.el).selectAll('.active').empty(), 'Should have no active point'
 
-  $.publish("active.#{@figure.figureId()}.figure", [@d, 0])
+  $.publish("active.#{@figureExport.figureId()}.figure", [@d, 0])
 
-  ok not @figure.isExport, 'Should not be export'
-  ok d3.select(@figure.el).selectAll('.active').empty(), 'Should not have active point since it is not export'
-
-  @figure.subscribe()
-  $.publish("active.#{@figure.figureId()}.figure", [@d, 0])
-  strictEqual d3.select(@figure.el).selectAll('.active').size(), 1, 'Should have one active point'
+  ok @figureExport.isExport, 'Should be export'
+  strictEqual d3.select(@figureExport.el).selectAll('.active').size(), 1, 'Should have one active point'
 
 test 'default filters', ->
 

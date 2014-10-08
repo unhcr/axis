@@ -30,7 +30,7 @@ test 'render', ->
   @panel.render()
   @server.respond()
 
-  strictEqual @panel.$el.find('.panel-text').text(), 'my summary'
+  strictEqual @panel.$el.find('.panel-text').text().trim(), 'my summary'
   ok @panel.$el.find('.panel').size() > 0
 
 
@@ -71,25 +71,8 @@ test 'renderTextType', ->
 
   @panel.renderTextType 'summary'
   @server.respond()
-  strictEqual @panel.$el.find('.panel-text').text(), 'my summary'
+  strictEqual @panel.$el.find('.panel-text').text().trim(), 'my summary'
 
   @panel.renderTextType 'full_text'
   @server.respond()
-  strictEqual @panel.$el.find('.panel-text').text(), 'benlisa'
-
-test 'onDownload', ->
-
-  stub = sinon.stub Visio.Utils, 'redirect'
-
-  @panel.render()
-  @server.respond()
-
-
-  @panel.onDownload()
-
-  ok stub.calledOnce
-  ok stub.calledWithMatch('name')
-  ok stub.calledWithMatch('filter_ids')
-  ok stub.calledWithMatch('year')
-  ok stub.calledWithMatch('report_type')
-  ok stub.calledWithMatch('USERTXT')
+  strictEqual @panel.$el.find('.panel-text').text().trim(), 'benlisa'
