@@ -83,6 +83,7 @@ class StrategyTest < ActiveSupport::TestCase
     datum.problem_objective = problem_objectives(:one)
     datum.output = outputs(:one)
     datum.indicator = indicators(:one)
+    datum.is_performance = true
     datum.save
 
     data = @s.data_optimized(IndicatorDatum)
