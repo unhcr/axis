@@ -1,7 +1,7 @@
 .legend-bsy, .legend-absy, .legend-bmys, .legend-icmy, .legend-isy {
   min-height: 464px;
   color: $dark-gray;
-  border-left: 1px solid $black;
+  border-left: 1px solid $dark-gray;
   padding-left: 12px;
   margin-right: 12px;
   padding-top: 20px;
@@ -23,6 +23,10 @@
   text {
     fill: $dark-gray;
   }
+}
+
+.color-legend {
+  stroke: $dark-gray
 }
 
 .legend-bsy {
@@ -54,9 +58,6 @@
     fill: $scenario-bar-exp;
   }
 
-  .bsy-color-legend {
-    stroke: $dark-gray
-  }
 
   .ADMIN {
     fill: $admin;
@@ -94,6 +95,48 @@
   .PILLAR-4, .LYPL {
     fill: $pillar4;
   }
+}
+
+.legend-bmys {
+  .Breakdown {
+    fill: $light-gray;
+  }
+}
+
+.legend-absy {
+  .Outside-Strategy {
+    fill: lighten($purple, 20%);
+  }
+  .Within-Strategy {
+    fill: $purple;
+  }
+}
+
+.legend-icmy {
+
+  .success {
+    fill: $success;
+  }
+  .ok {
+    fill: $ok;
+  }
+  .fail {
+    fill: $fail;
+  }
+  .missing {
+    fill: $missing;
+  }
+
+  .high {
+    fill: $high;
+  }
+  .medium {
+    fill: $medium;
+  }
+  .low {
+    fill: $low;
+  }
+
 }
 
 .svg-labels {

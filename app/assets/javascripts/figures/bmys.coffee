@@ -8,7 +8,6 @@ class Visio.Figures.BmySummary extends Visio.Figures.Bmy
     @filters.get('group_by').set 'hidden', true
 
     @groupBy = "#{Visio.Utils.parameterByPlural(Visio.manager.get('aggregation_type')).singular}_id"
-    @legendView = new Visio.Legends.BmySummary()
 
   render: ->
     super

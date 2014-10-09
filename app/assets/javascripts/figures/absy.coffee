@@ -140,13 +140,6 @@ class Visio.Figures.Absy extends Visio.Figures.Base
         .html =>
           @xAxisLabel()
 
-    # Legend setup
-    if @isPdf
-      @legendView = new Visio.Legends.AbsyPdf
-        figure: @
-    else
-      @legendView = new Visio.Legends.Absy()
-
   render: ->
     filtered = @filtered @collection
 

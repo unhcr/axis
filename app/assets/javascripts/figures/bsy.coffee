@@ -106,8 +106,6 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
     $.subscribe "mouseout.#{@cid}.figure", @mouseout
 
 
-    @legendView = new Visio.Legends.Bsy()
-
     # Lines
     #
     # Bottom line of BSY graph
@@ -286,8 +284,7 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
     @$el.find('.box').tipsy()
     @tipsyHeaderBtns()
 
-    if @$el.find('.legend-container').is ':empty'
-      @$el.find('.legend-container').html @legendView.render().el unless @isExport
+    @$el.find('.legend-container').html @legendView.render().el unless @isExport
 
     @g.select('.y.axis')
       .transition()
@@ -437,6 +434,5 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
 
   close: ->
     super
-    @legendView?.close()
     $.unsubscribe "hover.#{@cid}.figure"
     $.unsubscribe "mouseout.#{@cid}.figure"
