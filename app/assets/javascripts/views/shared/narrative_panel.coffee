@@ -70,8 +70,10 @@ class Visio.Views.NarrativePanel extends Backbone.View
         @summarize(summaryParameters).done (resp) => @doneSummarize(resp, panel)
       when @textTypes.full_text.name
         return if panel.get 'loaded'
+        NProgress.start()
         @fetchText(panel.get('page'), summaryParameters).done (resp) =>
           @doneText(resp, panel, $panel)
+          NProgress.done()
 
 
   doneText: (resp, panel, $panel) ->
