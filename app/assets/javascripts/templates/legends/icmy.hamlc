@@ -3,3 +3,5 @@
 
 %p
   = Visio.Texts.ICMY_LEGEND
+
+%svg

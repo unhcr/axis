@@ -42,6 +42,10 @@ class Visio.Figures.Map extends Visio.Figures.Base
     @scale = d3.scale.linear()
       .range([0, 1])
 
+    scenarioValues = {}
+    scenarioValues[Visio.Scenarios.AOL] = false
+    scenarioValues[Visio.Scenarios.OL] = true
+
     @category = d3.scale.ordinal()
       .domain([
         Visio.Algorithms.ALGO_RESULTS.fail,
@@ -67,6 +71,13 @@ class Visio.Figures.Map extends Visio.Figures.Base
       delete values['selectedPerformanceAchievement']
 
     @filters = new Visio.Collections.FigureFilter([
+      {
+        id: 'scenario'
+        filterType: 'checkbox'
+        values: scenarioValues
+        classback: (name, attr) =>
+          @render()
+      },
       {
         id: 'algorithm'
         filterType: 'radio'
@@ -211,13 +222,13 @@ class Visio.Figures.Map extends Visio.Figures.Base
     algorithm = @filters.get('algorithm').active()
     switch algorithm
       when 'selectedSituationAnalysis'
-        value = operation[algorithm]()
+        value = operation[algorithm] Visio.manager.year(), @filters
         value.category
       when 'selectedImpactAchievement', 'selectedPerformanceAchievement'
-        value = operation[algorithm]()
+        value = operation[algorithm] Visio.manager.year(), @filters
         value.result
       else
-        value = operation[algorithm]()
+        value = operation[algorithm] Visio.manager.year(), @filters
 
   algorithmDomain: (filtered) ->
     algorithm = @filters.get('algorithm').active()

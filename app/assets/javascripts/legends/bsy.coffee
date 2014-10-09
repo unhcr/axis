@@ -2,7 +2,6 @@ class Visio.Legends.Bsy extends Visio.Legends.Base
 
   initialize: ->
     super
-    @breakdownBy = 'budget_type'
 
     $.subscribe 'legend.breakdown', @onChangeBreakdown
 
@@ -84,65 +83,18 @@ class Visio.Legends.Bsy extends Visio.Legends.Base
 
     barLabels.exit().remove()
 
-    # Circle legend
-    #
-    #
-    circleHeight  = 200
-    circlePadding = 12
-    circleLineLength = 40
-    r             = 7
+    @drawCircleLegend svgEl, { y: height }
 
-    circleSvg = d3.select(svgEl).append('svg')
-    circleSvg.attr('width', Visio.Constants.LEGEND_WIDTH)
-    circleSvg.attr('height', circleHeight)
-      .attr('y', height + 30)
 
-    circleData = @circleData @breakdownBy
-    circles = circleSvg.selectAll('.bsy-color-legend').data(circleData, (d, i) -> i)
-    circles.enter().append('circle')
-    circles.attr('class', (d) ->
-      classList = ['bsy-color-legend']
-      classList.push Visio.Utils.stringToCssClass d
-      classList.join ' '
-      )
-    circles
-      .transition()
-      .duration(Visio.Durations.FAST)
-      .attr('cx', r + 2)
-      .attr('cy', (d, i) -> ((2 * r + circlePadding) * i) + r + 2)
-      .attr('r', r)
-    circles
-      .exit().transition().duration(Visio.Durations.FAST).attr('r', 0).remove()
-
-    circleLines = circleSvg.selectAll('.bsy-color-legend-line').data(circleData)
-    circleLines.enter().append('line')
-    circleLines.attr('class', (d) -> 'bsy-color-legend-line')
-      .attr('x1', (2 * r) + 2)
-      .attr('x2', (2 * r) + 2 + circleLineLength)
-      .attr('y1', (d, i) -> ((2 * r + circlePadding) * i) + r + 2)
-      .attr('y2', (d, i) -> ((2 * r + circlePadding) * i) + r + 2)
-    circleLines.exit().remove()
-
-    circleLabels = circleSvg.selectAll('.bsy-color-legend-label').data(circleData)
-    circleLabels.enter().append('text')
-    circleLabels.attr('class', (d) -> 'bsy-color-legend-label')
-      .attr('x', (2 * r) + 2 + circleLineLength)
-      .attr('y', (d, i) -> ((2 * r + circlePadding) * i) + r + 2)
-      .attr('dy', '.33em')
-      .text((d) -> Visio.Budgets[d] or Visio.Pillars[d])
-    circleLabels.exit().remove()
-
-  circleData: (breakdown) ->
-
-    switch breakdown
+  circleData: () =>
+    switch @figure.breakdownBy
       when 'budget_type'
         _.keys Visio.Budgets
       when 'pillar'
         _.keys Visio.Pillars
 
-  onChangeBreakdown: (e, breakdownBy) =>
-    @breakdownBy = breakdownBy
-    @drawFigures()
+  circleText: (d) =>
+    Visio.Budgets[d] or Visio.Pillars[d]
 
   close: ->
     $.unsubscribe "legend.breakdown"

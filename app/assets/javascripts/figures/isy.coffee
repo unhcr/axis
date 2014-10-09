@@ -126,7 +126,6 @@ class Visio.Figures.Isy extends Visio.Figures.Base
     @sortAttribute = Visio.ProgressTypes.BASELINE_MYR
     @isPerformanceFn @filters.get('is_performance').active() == 'true'
 
-    @legendView = new Visio.Legends.Isy()
     @labelView = new Visio.Labels.Isy()
 
     # Lines

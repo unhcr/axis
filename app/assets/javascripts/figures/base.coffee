@@ -53,6 +53,10 @@ class Visio.Figures.Base extends Backbone.View
     else
       @selectedDatum = new Visio.SelectedData.Base({ d: null })
 
+    legendClass = if @isPdf then "#{@type.className}Pdf" else @type.className
+
+    @legendView = new Visio.Legends[legendClass]?({ figure: @ })
+
     @selection = d3.select @$el.find('figure')[0]
 
     # Adjust for margins
@@ -199,6 +203,7 @@ class Visio.Figures.Base extends Backbone.View
 
   close: ->
     @selectedDatum.off()
+    @legendView?.close()
 
     # remove any tipsy elements
     $('.tipsy').remove()

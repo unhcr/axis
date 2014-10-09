@@ -109,16 +109,6 @@ class Visio.Figures.Icmy extends Visio.Figures.Base
       .attr('transform', "translate(0,#{@adjustedHeight})")
 
 
-    # Legend Setup
-    if @isPdf
-      @legendView = new Visio.Legends.IcmyPdf
-        figure: @
-        collection: @collection
-        selected: @selected
-    else
-      @legendView = new Visio.Legends.Icmy()
-
-
   render: ->
     filtered = @filtered @collection
 

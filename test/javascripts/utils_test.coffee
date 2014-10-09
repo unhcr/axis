@@ -43,4 +43,4 @@ test 'numberToLetter', ->
   strictEqual letter, 'aa'
 
   letter = Visio.Utils.numberToLetter 999
-  strictEqual letter, 'all'
+  strictEqual letter, 'aml'
