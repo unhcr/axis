@@ -75,6 +75,8 @@ class Visio.Figures.Map extends Visio.Figures.Base
         id: 'scenario'
         filterType: 'checkbox'
         values: scenarioValues
+        classback: (name, attr) =>
+          @render()
       },
       {
         id: 'algorithm'
