@@ -111,6 +111,8 @@ Visio.Utils.humanMetric = (metric) ->
     return 'Not Acceptable'
   else if metric == Visio.Algorithms.ALGO_RESULTS.fail
     return 'Critical'
+  else if metric == Visio.Algorithms.ALGO_RESULTS.inconsistent
+    return 'Inconsistent'
   else if metric == Visio.Algorithms.STATUS.missing
     return 'Non-reported'
   else if metric == Visio.Algorithms.ALGO_RESULTS.high

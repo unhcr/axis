@@ -3,3 +3,5 @@
 
 %p
   = Visio.Texts.ISY_LEGEND
+
+%svg{ :height => 300, :width => Visio.Constants.LEGEND_WIDTH }
