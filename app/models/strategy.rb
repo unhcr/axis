@@ -4,6 +4,7 @@ class Strategy < ActiveRecord::Base
     :overview => 'overview',
     :operation => 'operation',
   }
+  ANY_STRATEGY_OBJECTIVE = 'ANY_STRATEGY_OBJECTIVE'
 
   attr_accessible :name, :description, :dashboard_type
 
@@ -182,12 +183,22 @@ class Strategy < ActiveRecord::Base
       .select { |json| json['id'].present? }
       .map { |json| json['id'] }
     deleted_strategy_objective_ids = self.strategy_objective_ids - strategy_objective_ids
+
     StrategyObjective.destroy(deleted_strategy_objective_ids)
-    self.strategy_objective_ids = strategy_objective_ids
+
+    self.strategy_objective_ids = strategy_objective_ids.select do
+      |d| d != ANY_STRATEGY_OBJECTIVE
+    end
+
     if strategy_json[:strategy_objectives]
       strategy_json[:strategy_objectives].each do |json|
-        so = json['id'].present? ? self.strategy_objectives.find(json['id']) :
-          self.strategy_objectives.new()
+        so = nil
+        if json['id'].present? and json['id'] != ANY_STRATEGY_OBJECTIVE
+          so = self.strategy_objectives.find(json['id'])
+        else
+          so = self.strategy_objectives.new()
+        end
+
         so.update_attributes(
           :name => json['name'],
           :description => json['description'])

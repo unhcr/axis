@@ -31,3 +31,6 @@
                     - unless context.dashboard.include(p.hash.singular, d.id)
                       [NOT IN STRATEGY]
                     = d.toString()
+
+  .btn.save-as-strategy
+    Save as strategy

@@ -207,27 +207,46 @@ class Visio.Models.Manager extends Backbone.Model
 
     formatted
 
-  plan: (idOrISO) ->
-    plan = @get('plans').get(idOrISO)
+  toStrategyParams: ->
+    selected = Visio.manager.get('selected')
 
-    if !plan
-      plan = @get('plans').find (p) =>
-        if p.get('country')
-          p.get('country').iso3 == idOrISO && p.get('year') == @year()
-        else
-          false
+    params = {}
 
-    return plan
+    params.operations = _.map _.keys(selected.operations), (id) -> { id: id }
+    params.ppgs = _.map _.keys(selected.ppgs), (id) -> { id: id }
 
-  # Returns plan ids from selected strategies
-  selectedStrategyPlanIds: () ->
-    strategyIds = _.keys @get('selected_strategies')
+    params.strategy_objectives = _.filter @get('strategy_objectives').toJSON(), (d) ->
+        selected.strategy_objectives[d.id] and d.id != Visio.Constants.ANY_STRATEGY_OBJECTIVE
 
-    return [] if _.isEmpty strategyIds
-    strategies = @strategies strategyIds
+    _.each params.strategy_objectives, (so) ->
+      so.goals = _.filter so.goals, (d) -> selected.goals[d.id]
+      so.problem_objectives = _.filter so.problem_objectives, (d) -> selected.problem_objectives[d.id]
+      so.outputs = _.filter so.outputs, (d) -> selected.outputs[d.id]
+      so.indicators = _.filter so.indicators, (d) -> selected.indicators[d.id]
 
-    planIds = strategies.map (strategy) -> _.keys(strategy.get("#{Visio.Syncables.PLANS.singular}_ids"))
-    planIds = _.intersection.apply(null, planIds)
+    if @includeExternalStrategyData()
+      so.goals = _.filter @get('goals').toJSON(), (d) ->
+        selected.goals[d.id] and _.every params.strategy_objectives, (so) ->
+          not (_.find so.goals, (p) -> p.id == d.id)
+
+      so.problem_objectives = _.filter @get('problem_objectives').toJSON(), (d) ->
+        selected.problem_objectives[d.id] and _.every params.strategy_objectives, (so) ->
+          not (_.find so.problem_objectives, (p) -> p.id == d.id)
+
+      so.outputs = _.filter @get('outputs').toJSON(), (d) ->
+        selected.outputs[d.id] and _.every params.strategy_objectives, (so) ->
+          not (_.find so.outputs, (p) -> p.id == d.id)
+
+      so.indicators = _.filter @get('indicators').toJSON(), (d) ->
+        selected.indicators[d.id] and _.every params.strategy_objectives, (so) ->
+          not (_.find so.indicators, (p) -> p.id == d.id)
+
+
+      params.strategy_objectives.push so
+
+
+    params
+
 
   getSyncDate: (id) ->
     return $.Deferred().resolve().promise() unless @get 'use_local_db'

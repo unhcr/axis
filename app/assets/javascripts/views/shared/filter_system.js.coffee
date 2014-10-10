@@ -41,6 +41,7 @@ class Visio.Views.FilterSystemView extends Backbone.View
     'click .filter-option': 'onClickFilterOption'
     'click .deselect': 'onDeselect'
     'click .reset': 'onReset'
+    'click .save-as-strategy' : 'onSaveAsStrategy'
     'change .visio-checkbox input': 'onChangeSelection'
     'keyup .page-filter': 'onFilterPages'
 
@@ -121,6 +122,9 @@ class Visio.Views.FilterSystemView extends Backbone.View
       sharedStrategies: Visio.manager.sharedStrategies().toJSON()
       options: Visio.Views.FilterSystemView.OPTIONS
       selected: 'strategies'
+
+  onSaveAsStrategy: (e) ->
+    $('body').append (new Visio.Views.SaveAsStrategy().render().el)
 
   onChangeSelection: (e) ->
     $target = $(e.currentTarget)
