@@ -1683,12 +1683,12 @@ a {
   @include box-shadow-right;
   width: $filter-system-width;
   overflow-x: hidden;
-  height: 100%;
   position: fixed;
   z-index: 12;
   margin-top: $header-height;
   top: 0;
   left: 0;
+  bottom: 0;
   background-color: white;
 
 }
@@ -1725,6 +1725,7 @@ a {
     width: $filter-system-width;
     top: $header-height + 1;
     background-color: white;
+    z-index: 10;
 
     .filter-option {
       cursor: pointer;
@@ -3153,6 +3154,7 @@ a {
   bottom: 0;
   background-color: white;
   opacity: .8;
+  z-index: 100;
 }
 
 .nested-items {
