@@ -50,6 +50,7 @@ class Visio.Views.FilterSystemView extends Backbone.View
     throw new Error('Invalid filter system view') unless option
 
     @[option.fn](option)
+    $('.tipsy').remove()
     @
 
 
