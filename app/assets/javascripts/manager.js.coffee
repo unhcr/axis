@@ -225,6 +225,7 @@ class Visio.Models.Manager extends Backbone.Model
       so.indicators = _.filter so.indicators, (d) -> selected.indicators[d.id]
 
     if @includeExternalStrategyData()
+      so = @get('strategy_objectives').get(Visio.Constants.ANY_STRATEGY_OBJECTIVE).toJSON()
       so.goals = _.filter @get('goals').toJSON(), (d) ->
         selected.goals[d.id] and _.every params.strategy_objectives, (so) ->
           not (_.find so.goals, (p) -> p.id == d.id)
