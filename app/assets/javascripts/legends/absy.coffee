@@ -4,6 +4,7 @@ class Visio.Legends.Absy extends Visio.Legends.Base
 
   drawFigures: (svgEl) ->
     @drawCircleLegend svgEl
+    svgEl
 
   circleData: =>
     ['Within Strategy', 'Outside Strategy']

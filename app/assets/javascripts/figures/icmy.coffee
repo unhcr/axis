@@ -97,8 +97,8 @@ class Visio.Figures.Icmy extends Visio.Figures.Base
       .attr('class', 'y axis')
       .attr('transform', 'translate(0,0)')
       .append("text")
-        .attr("y", -60)
-        .attr('transform', "translate(-#{@tickPadding}, 0)")
+        .attr("y", 0)
+        .attr('transform', "translate(-#{@tickPadding}, -60)")
         .attr("dy", "-.21em")
         .style("text-anchor", "end")
         .html =>
@@ -172,7 +172,8 @@ class Visio.Figures.Icmy extends Visio.Figures.Base
       .html =>
         @yAxisLabel()
 
-    @$el.find('.legend-container').html @legendView.render().el
+    @renderLegend()
+
     @tipsyHeaderBtns()
     @
 

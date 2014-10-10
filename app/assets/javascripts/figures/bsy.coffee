@@ -95,9 +95,9 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
       .attr('class', 'y axis')
       .attr('transform', 'translate(0,0)')
       .append("text")
-        .attr("y", -25)
+        .attr("y", 0)
         .attr("dy", "-.21em")
-        .attr("transform", "translate(#{-@tickPadding}, 0)")
+        .attr("transform", "translate(#{-@tickPadding}, -25)")
         .attr('text-anchor', 'end')
         .html =>
           @yAxisLabel()
@@ -283,8 +283,8 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
 
     @$el.find('.box').tipsy()
     @tipsyHeaderBtns()
+    @renderLegend()
 
-    @$el.find('.legend-container').html @legendView.render().el unless @isExport
 
     @g.select('.y.axis')
       .transition()
@@ -342,6 +342,7 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
     classList.push 'selected' if d.id == @selectedDatum.get('d')?.id
     classList.push 'active' if @activeData?.get(d.id)?
     classList.push 'box-invisible'  if @x(i) < @x.range()[0] or @x(i) + 3 * @barWidth  > @x.range()[1]
+    classList.push 'gone'  if @x(i) < @x.range()[0] or @x(i) + 3 * @barWidth  > @x.range()[1]
     classList.join ' '
 
   filtered: (collection) =>
@@ -378,6 +379,7 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
     @renderSvgLegend d, i
 
   getPNGSvg: =>
+    @$el.find('svg')[0]
 
   hover: (e, idxOrDatum, scroll = true) =>
     self = @

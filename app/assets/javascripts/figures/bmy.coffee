@@ -105,8 +105,8 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
       .attr('class', 'y axis')
       .attr('transform', 'translate(0,0)')
       .append("text")
-        .attr("y", -60)
-        .attr('transform', 'translate(-20, 0)')
+        .attr("y", 0)
+        .attr('transform', 'translate(-20, -60)')
         .attr("dy", "-.21em")
         .style("text-anchor", "end")
         .html =>
@@ -193,6 +193,8 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
       .transition()
       .duration(Visio.Durations.FAST)
       .call(@yAxis)
+
+    @renderLegend()
 
     @tipsyHeaderBtns()
     @

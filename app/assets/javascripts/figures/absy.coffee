@@ -122,8 +122,8 @@ class Visio.Figures.Absy extends Visio.Figures.Base
       .attr('class', 'y axis')
       .attr('transform', 'translate(0,0)')
       .append("text")
-        .attr("y", -60)
-        .attr('transform', "translate(-#{@tickPadding}, 0)")
+        .attr("y", 0)
+        .attr('transform', "translate(-#{@tickPadding}, -60)")
         .attr("dy", "-.21em")
         .style("text-anchor", "end")
         .html =>
@@ -133,8 +133,8 @@ class Visio.Figures.Absy extends Visio.Figures.Base
       .attr('class', 'x axis')
       .attr('transform', "translate(0,#{@adjustedHeight})")
       .append("text")
-        .attr('y', 35)
-        .attr('transform', "translate(-#{@tickPadding}, 0)")
+        .attr('y', 0)
+        .attr('transform', "translate(-#{@tickPadding}, 35)")
         .attr("dy", "-.21em")
         .style("text-anchor", "end")
         .html =>
@@ -307,11 +307,8 @@ class Visio.Figures.Absy extends Visio.Figures.Base
     if @isPdf
       @legendView.collection = new @collection.constructor(_.filter(filtered, (d) => self.isSelected(d.id)))
 
-    if @isExport
-      @renderSvgLegend()
-    else
-      @$el.find('.legend-container').html @legendView.render().el
 
+    @renderLegend()
     @$el.find(".#{@containerClass}").tipsy()
 
     @tipsyHeaderBtns()
