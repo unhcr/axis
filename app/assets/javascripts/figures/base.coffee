@@ -104,7 +104,7 @@ class Visio.Figures.Base extends Backbone.View
     if @isExport
       @renderSvgLegend()
     else
-      @$el.find('.legend-container').html @legendView.render().el
+      @$el.find('.legend-container').html @legendView?.render().el
 
   renderSvgLegend: =>
 
@@ -113,7 +113,7 @@ class Visio.Figures.Base extends Backbone.View
       .attr('width', Visio.Constants.EXPORT_LEGEND_WIDTH)
       .attr('height', @adjustedHeight)
       .attr('class', "legend-#{@type.name}")
-    @legendView.drawFigures?(svgLegend.node())
+    @legendView?.drawFigures?(svgLegend.node())
 
   renderSvgLabels: =>
 

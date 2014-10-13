@@ -365,7 +365,7 @@ class Visio.Figures.Isy extends Visio.Figures.Base
       .html =>
         @yAxisLabel()
 
-    @$el.find('.legend-container').html @legendView.render().el unless @isExport
+    @renderLegend()
     @$el.find('.box').tipsy
       trigger: 'hover'
 
