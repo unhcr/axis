@@ -256,6 +256,7 @@ window.Visio =
       high: 'high'
       medium: 'medium'
       low: 'low'
+      inconsistent: 'inconsistent'
 
     REPORTED_VALUES:
       myr: 'myr'

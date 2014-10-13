@@ -7,6 +7,9 @@
       %a{ :href => '/cms/strategies' } CMS
     .account-option
       %a{ :href => '/admin_configuration' } Config
+  - else
+    .account-option
+      %a{ :href => '/cms/strategies?is_personal=true' } Strategy Builder
 
   .account-option
     %a{ :href => '/users/sign_out', :data => { :method => 'delete' }, :rel => 'nofollow' } Sign Out

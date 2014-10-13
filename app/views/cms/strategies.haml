@@ -1,6 +1,6 @@
 .container
   %h1.bottom-flush
-    %a{ :href => '#/', :data => { :visibility => @is_personal ? 'PERSONAL' : 'GLOBAL' } } CMS
+    %a{ :href => '#/', :data => { :visibility => @is_personal ? 'PERSONAL' : 'GLOBAL' } } Strategy Builder
   %h4.top-flush
     - if @is_personal
       = "Build or Edit #{current_user.login}'s Strategies"

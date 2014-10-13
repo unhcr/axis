@@ -100,13 +100,20 @@ class Visio.Figures.Base extends Backbone.View
     else
       @activeData.add { id: @datumId(d), d: d }
 
+  renderLegend: =>
+    if @isExport
+      @renderSvgLegend()
+    else
+      @$el.find('.legend-container').html @legendView?.render().el
+
   renderSvgLegend: =>
 
     svgLegend = @g.append('svg')
       .attr('x', @margin.left + @adjustedWidth)
       .attr('width', Visio.Constants.EXPORT_LEGEND_WIDTH)
       .attr('height', @adjustedHeight)
-    $(svgLegend.node()).html @legendView.drawFigures?(svgLegend.node())
+      .attr('class', "legend-#{@type.name}")
+    @legendView?.drawFigures?(svgLegend.node())
 
   renderSvgLabels: =>
 
@@ -131,15 +138,12 @@ class Visio.Figures.Base extends Backbone.View
       .attr('dy', '-.33em')
       .attr('x', (d, i) => 5 + @xGLegend(Math.floor(i / @yGLegend.domain()[1])))
       .attr('y', (d, i) => @yGLegend(i % @yGLegend.domain()[1]))
-      .text (m) =>
-        index = @activeData.indexOf m
-        @selectableLabel m, index
+      .text (m, i) =>
+        @selectableLabel m, i
 
     gLabelTexts.exit().remove()
 
     @graphLabels()
-
-    graphLabels = @g.selectAll(@containerClass)
 
   tipsyHeaderBtns: =>
     tipsyOpts =

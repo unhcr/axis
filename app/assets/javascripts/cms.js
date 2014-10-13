@@ -26,6 +26,9 @@
 //= require ./models/parameter
 //= require ./collections/syncables/amount_type
 //= require ./models/syncables/amount_type
+//= require ./models/syncables/amount_type
+//= require ./models/selected_data/base.coffee
+//= require ./models/selected_data/my
 //= require_tree ./templates
 //= require_tree ./models/parameters
 //= require_tree ./models/syncables

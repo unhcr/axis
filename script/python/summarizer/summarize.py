@@ -35,7 +35,7 @@ class Summarizer:
       ]
 
   def __init__(self, db_path = 'config/database.yml', env = 'development', language = 'english',
-      args = '{}', max_chars = 500, max_sentences = 150):
+      args = '{}', max_chars = 1200, max_sentences = 150):
 
     self.env = env
     try:

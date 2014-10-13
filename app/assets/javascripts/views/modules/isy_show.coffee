@@ -15,11 +15,11 @@ class Visio.Views.IsyShowView extends Visio.Views.AccordionShowView
     config =
       margin:
         top: 85
-        bottom: 50
+        bottom: 100
         left: 115
         right: 30
       width: @figureWidth true
-      height: 425
+      height: 475
 
     @figure = new Visio.Figures.Isy config
     @narratify @figure

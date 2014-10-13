@@ -1,0 +1,11 @@
+%svg{ :height => 200, :width => Visio.Constants.LEGEND_WIDTH }
+  %g
+  %rect{"enable-background" => "new    ", :fill => "#D2F6FF", :height => "167.614", :stroke => "#CCCCCB", "stroke-miterlimit" => "10", :width => "15.592", :x => "15.58", :y => "10.881"}
+  %g
+    %polygon{"enable-background" => "new    ", :fill => "#F99DF6", :points => "30.732,177.613 23.725,177.613 23.725,89.999 30.732,96.999  "}
+  %g
+    %polygon{"enable-background" => "new    ", :fill => "#88248E", :points => "15.992,177.613 23,177.613 23,126.999 15.992,133.999  "}
+  %g
+    %rect{"enable-background" => "new    ", :fill => "none", :height => "7.733", :stroke => "#5B5B5B", "stroke-miterlimit" => "10", :width => "15.59", :x => "15.581", :y => "177.964"}
+  %g
+    %circle{:cx => "23.376", :cy => "23.667", "enable-background" => "new    ", :fill => "#FFFEFA", :r => "4.252", :stroke => "#5B5B5B", "stroke-miterlimit" => "10"}
