@@ -133,14 +133,18 @@ class Visio.Views.ExportModule extends Backbone.View
 
 
 
-    html = d3.select(@el).select('svg')
-      .attr('version', 1.1)
-      .attr("xmlns", "http://www.w3.org/2000/svg")
-      .node()
+    fn = () =>
+      html = d3.select(@el).select('svg')
+        .attr('version', 1.1)
+        .attr("xmlns", "http://www.w3.org/2000/svg")
+        .node()
 
-    svgenie.save html, { name: 'graph.png' }
+      svgenie.save html, { name: 'graph.png' }
 
-    @close()
+      @close()
+
+    # wait for final render
+    window.setTimeout fn, Visio.Durations.FAST
 
   onClose: ->
     @close()

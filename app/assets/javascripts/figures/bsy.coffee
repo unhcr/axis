@@ -117,8 +117,10 @@ class Visio.Figures.Bsy extends Visio.Figures.Sy
     $(@svg.node()).parent().on 'mouseleave', =>
       $.publish "hover.#{@cid}.figure", [@selectedDatum.get('d'), true] if @selectedDatum.get('d')?
 
-  render: ->
-    filtered = @filtered @collection
+  render: (isPng) ->
+
+    filtered = @filtered @collection, isPng
+    @_filtered = filtered
 
     # Expensive computation so don't want to repeat if not necessary
     @y.domain [0, d3.max(filtered, (d) ->
@@ -242,18 +244,6 @@ class Visio.Figures.Bsy extends Visio.Figures.Sy
             values: values
             d: d
 
-        # Conditional Labels
-
-        if self.isExport
-          labels = box.selectAll('.label').data([d])
-          labels.enter().append('text')
-          labels.attr('class', 'label')
-            .attr('x', (scenarios.length / 2) * self.barWidth)
-            .attr('y', self.adjustedHeight + 2 * self.barWidth)
-            .attr('dy', '.3em')
-            .attr('text-anchor', 'start')
-            .text((d) -> Visio.Utils.numberToLetter idx)
-
       )
 
     boxes.on 'mouseenter', (d, idx) ->
@@ -335,11 +325,10 @@ class Visio.Figures.Bsy extends Visio.Figures.Sy
     else
       b.selectedBudget(null, filters) - a.selectedBudget(null, filters)
 
-  filtered: (collection) =>
-    _.chain(collection.models).filter(@queryByFn).sort(@sortFn).value()
-
-  getPNGSvg: =>
-    @$el.find('svg')[0]
+  filtered: (collection, isPng) =>
+    chain = _.chain(collection.models).filter(@queryByFn).sort(@sortFn)
+    chain = chain.filter(@activeFn) if isPng
+    chain.value()
 
   hover: (e, idxOrDatum, scroll = true) =>
     self = @
@@ -386,6 +375,26 @@ class Visio.Figures.Bsy extends Visio.Figures.Sy
 
   mouseout: (e, i) =>
     @g.selectAll('.bar-container').classed 'hover', false
+
+  graphLabels: =>
+    self = @
+
+    scenariosLength = @filters.get('scenarios-budgets').active().length +
+        @filters.get('scenarios-expenditures').active().length
+
+    @g.selectAll(".graph-label").remove()
+
+    graphLabels = @g.selectAll('.graph-label').data @activeData.models
+    graphLabels.enter().append('text')
+      .attr('class', 'label graph-label')
+      .attr('x', (scenariosLength / 2) * self.barWidth)
+      .attr('x', (m, i) =>
+        idx = _.chain(@_filtered).pluck('id').indexOf(m.id).value()
+        @x(idx) + ((scenariosLength / 2) * self.barWidth))
+      .attr('y', self.adjustedHeight + 2 * self.barWidth)
+      .attr('dy', '.3em')
+      .text (m, i) =>
+        Visio.Utils.numberToLetter i
 
   yAxisLabel: ->
 

@@ -31,7 +31,10 @@ class Visio.Figures.Sy extends Visio.Figures.Base
     isActive = box.classed 'active'
     box.classed 'active', not isActive
 
-    @renderSvgLegend d, i
+    @renderSvgLabels()
+
+  activeFn: (d) =>
+    @activeData?.get(d.id)?
 
   boxClasslist: (d, i) =>
     classList = ['box', "box-#{d.id}"]
@@ -40,6 +43,11 @@ class Visio.Figures.Sy extends Visio.Figures.Base
     classList.push 'box-invisible'  if @x(i) < @x.range()[0] or @x(i) + 3 * @barWidth  > @x.range()[1]
     classList.push 'gone'  if @x(i) < @x.range()[0] or @x(i) + 3 * @barWidth  > @x.range()[1]
     classList.join ' '
+
+  getPNGSvg: =>
+    @render true
+    @renderSvgLabels()
+    $(@$el.find('svg')[0])
 
   close: ->
     super

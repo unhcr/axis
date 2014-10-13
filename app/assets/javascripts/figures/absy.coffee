@@ -365,9 +365,8 @@ class Visio.Figures.Absy extends Visio.Figures.Base
         d = m.get('d')
         self.y(d.selectedAchievement(Visio.manager.year(), self.filters).result))
       .attr('dy', '.3em')
-      .text (m) =>
-        index = self.activeData.indexOf m
-        self.selectableLabel m, index
+      .text (m, i) =>
+        self.selectableLabel m, i
 
 
   yAxisLabel: ->

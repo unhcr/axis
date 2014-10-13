@@ -78,6 +78,11 @@ class Visio.Figures.Isy extends Visio.Figures.Sy
     @labelContainerWidth = 335
     @labelContainerPaddingLeft = 50
 
+    # Do not render labelContainer if we're in export
+    if @isExport
+      @labelContainerWidth = 0
+      @labelContainerPaddingLeft = 0
+
 
     @graphWidth = @adjustedWidth - @labelContainerWidth - @labelContainerPaddingLeft
     @maxIndicators = Math.floor (@graphWidth) / (2 * @barWidth + @barMargin)
@@ -144,13 +149,14 @@ class Visio.Figures.Isy extends Visio.Figures.Sy
       .attr('y1', @adjustedHeight)
       .attr('y2', @adjustedHeight)
 
-    # Divider line between ISY and labels
-    @g.append('line')
-      .attr('class', 'isy-line isy-label-line')
-      .attr('x1', @adjustedWidth - @labelContainerWidth)
-      .attr('x2', @adjustedWidth - @labelContainerWidth)
-      .attr('y1', @adjustedHeight)
-      .attr('y2', 0 - @barMargin)
+    unless @isExport
+      # Divider line between ISY and labels
+      @g.append('line')
+        .attr('class', 'isy-line isy-label-line')
+        .attr('x1', @adjustedWidth - @labelContainerWidth)
+        .attr('x2', @adjustedWidth - @labelContainerWidth)
+        .attr('y1', @adjustedHeight)
+        .attr('y2', 0 - @barMargin)
 
     # Labels
     @g.append('text')
@@ -166,8 +172,8 @@ class Visio.Figures.Isy extends Visio.Figures.Sy
     $(@svg.node()).parent().on 'mouseleave', =>
       $.publish "hover.#{@cid}.figure", [@selectedDatum.get('d'), true] if @selectedDatum.get('d')?
 
-  render: ->
-    filtered = @filtered @collection
+  render: (isPng) ->
+    filtered = @filtered @collection, isPng
 
     self = @
 
@@ -405,8 +411,10 @@ class Visio.Figures.Isy extends Visio.Figures.Sy
   queryByFn: (d) =>
     _.isEmpty(@query) or d.indicator().toString().toLowerCase().indexOf(@query.toLowerCase()) != -1
 
-  filtered: (collection) =>
-    _.chain(collection.models).filter(@filterFn).filter(@queryByFn).sort(@sortFn).value()
+  filtered: (collection, isPng) =>
+    chain = _.chain(collection.models).filter(@filterFn).filter(@queryByFn).sort(@sortFn)
+    chain = chain.filter(@activeFn) if isPng
+    chain.value()
 
   hover: (e, idxOrDatum, scroll = true) =>
     self = @
@@ -452,6 +460,9 @@ class Visio.Figures.Isy extends Visio.Figures.Sy
 
   mouseout: (e, i) =>
     @g.selectAll('.bar-container').classed 'hover', false
+
+  datumToString: (d) =>
+    d.indicator().toString()
 
   yAxisLabel: ->
 

@@ -486,10 +486,6 @@ line {
   .box.box-invisible {
     opacity: 0;
   }
-  .box.active {
-    stroke: black;
-    stroke-width: 1px;
-  }
   .box {
     cursor: pointer;
     -moz-transition:opacity $fast-transition;
@@ -502,7 +498,7 @@ line {
     fill: transparent;
   }
 
-  .box:hover, .box.selected {
+  .box:hover, .box.selected, .box.active {
     .hover-container {
       fill: $off-white;
       stroke: $dark-gray;

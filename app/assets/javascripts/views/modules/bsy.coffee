@@ -11,10 +11,10 @@ class Visio.Views.BsyView extends Visio.Views.Module
   initialize: (options) ->
     @config =
       width: @figureWidth true
-      height: 375
+      height: 435
       margin:
         top: 85
-        bottom: 30
+        bottom: 80
         left: 115
         right: 80
 
