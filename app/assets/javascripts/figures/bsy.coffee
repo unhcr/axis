@@ -1,8 +1,6 @@
-class Visio.Figures.Bsy extends Visio.Figures.Base
+class Visio.Figures.Bsy extends Visio.Figures.Sy
   # Budget Single Year Figure
   # Data: Collection of parameters (operation, ppg, etc.)
-
-  @include Visio.Mixins.Exportable
 
   type: Visio.FigureTypes.BSY
 
@@ -337,46 +335,8 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
     else
       b.selectedBudget(null, filters) - a.selectedBudget(null, filters)
 
-  boxClasslist: (d, i) =>
-    classList = ['box', "box-#{d.id}"]
-    classList.push 'selected' if d.id == @selectedDatum.get('d')?.id
-    classList.push 'active' if @activeData?.get(d.id)?
-    classList.push 'box-invisible'  if @x(i) < @x.range()[0] or @x(i) + 3 * @barWidth  > @x.range()[1]
-    classList.push 'gone'  if @x(i) < @x.range()[0] or @x(i) + 3 * @barWidth  > @x.range()[1]
-    classList.join ' '
-
   filtered: (collection) =>
     _.chain(collection.models).filter(@queryByFn).sort(@sortFn).value()
-
-  findBoxByIndex: (idx) =>
-    boxes = @g.selectAll('.box')
-    result = { box: null, idx: idx, datum: null }
-    boxes.sort(@transformSortFn).each (d, i) ->
-      if idx == i
-        result.box = d3.select(@)
-        result.datum = d
-
-    result
-
-
-  findBoxByDatum: (datum) =>
-    boxes = @g.selectAll('.box')
-    result = { box: null, idx: null, datum: datum }
-    boxes.sort(@transformSortFn).each (d, i) ->
-      if d.id == datum.id
-        result.box = d3.select(@)
-        result.idx = i
-
-    result
-
-  select: (e, d, i) =>
-    super d, i
-
-    box = @g.select(".box-#{d.id}")
-    isActive = box.classed 'active'
-    box.classed 'active', not isActive
-
-    @renderSvgLegend d, i
 
   getPNGSvg: =>
     @$el.find('svg')[0]
@@ -433,8 +393,3 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
     return @templateLabel
         title: 'Budget',
         subtitles: ['in US Dollars']
-
-  close: ->
-    super
-    $.unsubscribe "hover.#{@cid}.figure"
-    $.unsubscribe "mouseout.#{@cid}.figure"

@@ -1,6 +1,4 @@
-class Visio.Figures.Isy extends Visio.Figures.Base
-
-  @include Visio.Mixins.Exportable
+class Visio.Figures.Isy extends Visio.Figures.Sy
 
   type: Visio.FigureTypes.ISY
 
@@ -410,32 +408,6 @@ class Visio.Figures.Isy extends Visio.Figures.Base
   filtered: (collection) =>
     _.chain(collection.models).filter(@filterFn).filter(@queryByFn).sort(@sortFn).value()
 
-  findBoxByIndex: (idx) =>
-    boxes = @g.selectAll('.box')
-    result = { box: null, idx: idx, datum: null }
-    boxes.sort(@transformSortFn).each (d, i) ->
-      if idx == i
-        result.box = d3.select(@)
-        result.datum = d
-
-    result
-
-
-  findBoxByDatum: (datum) =>
-    boxes = @g.selectAll('.box')
-    result = { box: null, idx: null, datum: datum }
-    boxes.sort(@transformSortFn).each (d, i) ->
-      if d.id == datum.id
-        result.box = d3.select(@)
-        result.idx = i
-
-    result
-
-  select: (e, d, i) =>
-    box = @g.select(".box-#{d.id}")
-    isActive = box.classed 'active'
-    box.classed 'active', not isActive
-
   hover: (e, idxOrDatum, scroll = true) =>
     self = @
     @hoverDatum = null
@@ -473,21 +445,13 @@ class Visio.Figures.Isy extends Visio.Figures.Base
     @y.domain [0, +@hoverDatum.get(@goalType)]
 
   boxClasslist: (d, i) =>
-    classList = ['box', "box-#{d.id}"]
-    classList.push 'box-invisible'  if @x(i) < @x.range()[0] or @x(i) > @x.range()[1]
-    classList.push 'gone'  if @x(i) < @x.range()[0] or @x(i) > @x.range()[1]
-    classList.push 'inconsistent' unless d.consistent().isConsistent
-    classList.push 'selected' if d.id == @selectedDatum.get('d')?.id
-    classList.join(' ')
+    classList = super
+    classList += ' inconsistent' unless d.consistent().isConsistent
+    classList
 
 
   mouseout: (e, i) =>
     @g.selectAll('.bar-container').classed 'hover', false
-
-  close: ->
-    super
-    $.unsubscribe "hover.#{@cid}.figure"
-    $.unsubscribe "mouseout.#{@cid}.figure"
 
   yAxisLabel: ->
 
