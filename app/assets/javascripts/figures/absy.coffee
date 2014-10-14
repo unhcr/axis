@@ -47,11 +47,13 @@ class Visio.Figures.Absy extends Visio.Figures.Base
         id: 'budget_type'
         filterType: 'checkbox'
         values: _.object(_.values(Visio.Budgets), _.values(Visio.Budgets).map(-> true))
+        callback: => @render()
       },
       {
         id: 'scenario'
         filterType: 'checkbox'
         values: values
+        callback: => @render()
       },
       {
         id: 'is_performance'
@@ -59,6 +61,7 @@ class Visio.Figures.Absy extends Visio.Figures.Base
         values: performanceValues
         human: { true: 'performance', false: 'impact' }
         hidden: Visio.manager.get('indicator')?
+        callback: => @render()
       },
       {
         id: 'achievement'
@@ -66,8 +69,9 @@ class Visio.Figures.Absy extends Visio.Figures.Base
         values: _.object(_.values(Visio.Algorithms.GOAL_TYPES), _.values(Visio.Algorithms.GOAL_TYPES).map(
           (achievement_type) ->
             Visio.manager.get('achievement_type') == achievement_type))
-        callback: (name, attr) ->
+        callback: (name, attr) =>
           Visio.manager.set('achievement_type', name)
+          @render()
       }
     ])
 
@@ -122,8 +126,8 @@ class Visio.Figures.Absy extends Visio.Figures.Base
       .attr('class', 'y axis')
       .attr('transform', 'translate(0,0)')
       .append("text")
-        .attr("y", -60)
-        .attr('transform', "translate(-#{@tickPadding}, 0)")
+        .attr("y", 0)
+        .attr('transform', "translate(-#{@tickPadding}, -60)")
         .attr("dy", "-.21em")
         .style("text-anchor", "end")
         .html =>
@@ -133,8 +137,8 @@ class Visio.Figures.Absy extends Visio.Figures.Base
       .attr('class', 'x axis')
       .attr('transform', "translate(0,#{@adjustedHeight})")
       .append("text")
-        .attr('y', 35)
-        .attr('transform', "translate(-#{@tickPadding}, 0)")
+        .attr('y', 0)
+        .attr('transform', "translate(-#{@tickPadding}, 35)")
         .attr("dy", "-.21em")
         .style("text-anchor", "end")
         .html =>
@@ -307,11 +311,8 @@ class Visio.Figures.Absy extends Visio.Figures.Base
     if @isPdf
       @legendView.collection = new @collection.constructor(_.filter(filtered, (d) => self.isSelected(d.id)))
 
-    if @isExport
-      @renderSvgLegend()
-    else
-      @$el.find('.legend-container').html @legendView.render().el
 
+    @renderLegend()
     @$el.find(".#{@containerClass}").tipsy()
 
     @tipsyHeaderBtns()
@@ -368,9 +369,8 @@ class Visio.Figures.Absy extends Visio.Figures.Base
         d = m.get('d')
         self.y(d.selectedAchievement(Visio.manager.year(), self.filters).result))
       .attr('dy', '.3em')
-      .text (m) =>
-        index = self.activeData.indexOf m
-        self.selectableLabel m, index
+      .text (m, i) =>
+        self.selectableLabel m, i
 
 
   yAxisLabel: ->

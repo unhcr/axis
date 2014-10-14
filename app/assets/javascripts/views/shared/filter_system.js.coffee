@@ -51,6 +51,11 @@ class Visio.Views.FilterSystemView extends Backbone.View
     throw new Error('Invalid filter system view') unless option
 
     @[option.fn](option)
+    $('.tipsy').remove()
+    @$el.find('.filter-option').tipsy
+      trigger: 'hover'
+      className: 'tipsy-black'
+      delayIn: 0
     @
 
 
@@ -92,10 +97,6 @@ class Visio.Views.FilterSystemView extends Backbone.View
       $target = @$el.find(".ui-accordion-content.#{plural}")
       $target.prepend view.render().el
 
-    @$el.find('.filter-option').tipsy
-      trigger: 'hover'
-      className: 'tipsy-black'
-      delayIn: 0
 
   renderPages: (option) ->
     @$el.addClass 'filter-system-orange'

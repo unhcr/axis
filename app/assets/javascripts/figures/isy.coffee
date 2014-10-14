@@ -1,6 +1,4 @@
-class Visio.Figures.Isy extends Visio.Figures.Base
-
-  @include Visio.Mixins.Exportable
+class Visio.Figures.Isy extends Visio.Figures.Sy
 
   type: Visio.FigureTypes.ISY
 
@@ -9,6 +7,10 @@ class Visio.Figures.Isy extends Visio.Figures.Base
   attrAccessible: ['x', 'y', 'width', 'height', 'collection', 'margin', 'goalType', 'isPerformance']
 
   initialize: (config) ->
+    # which attributes to keep when exporting
+    @attrConfig.push 'sortAttribute'
+    @attrConfig.push 'query'
+
     config.query or= ''
 
     humanGoalTypes = _.object _.values(Visio.Algorithms.GOAL_TYPES),
@@ -48,6 +50,7 @@ class Visio.Figures.Isy extends Visio.Figures.Base
           @x.domain [0, @maxIndicators]
           $.publish "drawFigures.#{@cid}.figure"
           $.publish "hover.#{@cid}.figure", 0
+          @render()
       },
       {
         id: 'achievement'
@@ -61,8 +64,9 @@ class Visio.Figures.Isy extends Visio.Figures.Base
             type == goalType))
         human: humanGoalTypes
         callback: (name, attr) =>
-          @goalTypeFn(name).render()
+          @goalTypeFn(name)
           $.publish "hover.#{@cid}.figure", @selectedDatum.get('d') || 0
+          @render()
       }
     ])
 
@@ -79,6 +83,11 @@ class Visio.Figures.Isy extends Visio.Figures.Base
     # Label Variables
     @labelContainerWidth = 335
     @labelContainerPaddingLeft = 50
+
+    # Do not render labelContainer if we're in export
+    if @isExport
+      @labelContainerWidth = 0
+      @labelContainerPaddingLeft = 0
 
 
     @graphWidth = @adjustedWidth - @labelContainerWidth - @labelContainerPaddingLeft
@@ -112,8 +121,8 @@ class Visio.Figures.Isy extends Visio.Figures.Base
       .attr('class', 'y axis')
       .attr('transform', "translate(0,0)")
       .append("text")
-        .attr("y", -60)
-        .attr("transform", "translate(#{-@tickPadding}, 0)")
+        .attr("y", 0)
+        .attr("transform", "translate(#{-@tickPadding}, -60)")
         .attr("dy", "-.21em")
         .attr('text-anchor', 'end')
         .html =>
@@ -123,8 +132,9 @@ class Visio.Figures.Isy extends Visio.Figures.Base
     $.subscribe "hover.#{@cid}.figure", @hover
     $.subscribe "mouseout.#{@cid}.figure", @mouseout
 
-    @sortAttribute = Visio.ProgressTypes.BASELINE_MYR
+    @sortAttribute = config.sortAttribute or Visio.ProgressTypes.BASELINE_MYR
     @isPerformanceFn @filters.get('is_performance').active() == 'true'
+    @svg.classed 'isy-performance', @isPerformance
 
     @labelView = new Visio.Labels.Isy()
 
@@ -146,13 +156,14 @@ class Visio.Figures.Isy extends Visio.Figures.Base
       .attr('y1', @adjustedHeight)
       .attr('y2', @adjustedHeight)
 
-    # Divider line between ISY and labels
-    @g.append('line')
-      .attr('class', 'isy-line isy-label-line')
-      .attr('x1', @adjustedWidth - @labelContainerWidth)
-      .attr('x2', @adjustedWidth - @labelContainerWidth)
-      .attr('y1', @adjustedHeight)
-      .attr('y2', 0 - @barMargin)
+    unless @isExport
+      # Divider line between ISY and labels
+      @g.append('line')
+        .attr('class', 'isy-line isy-label-line')
+        .attr('x1', @adjustedWidth - @labelContainerWidth)
+        .attr('x2', @adjustedWidth - @labelContainerWidth)
+        .attr('y1', @adjustedHeight)
+        .attr('y2', 0 - @barMargin)
 
     # Labels
     @g.append('text')
@@ -168,8 +179,9 @@ class Visio.Figures.Isy extends Visio.Figures.Base
     $(@svg.node()).parent().on 'mouseleave', =>
       $.publish "hover.#{@cid}.figure", [@selectedDatum.get('d'), true] if @selectedDatum.get('d')?
 
-  render: ->
-    filtered = @filtered @collection
+  render: (opts) ->
+    filtered = @filtered @collection, opts?.isPng
+    @_filtered = filtered
 
     self = @
 
@@ -365,7 +377,7 @@ class Visio.Figures.Isy extends Visio.Figures.Base
       .html =>
         @yAxisLabel()
 
-    @$el.find('.legend-container').html @legendView.render().el unless @isExport
+    @renderLegend()
     @$el.find('.box').tipsy
       trigger: 'hover'
 
@@ -407,34 +419,10 @@ class Visio.Figures.Isy extends Visio.Figures.Base
   queryByFn: (d) =>
     _.isEmpty(@query) or d.indicator().toString().toLowerCase().indexOf(@query.toLowerCase()) != -1
 
-  filtered: (collection) =>
-    _.chain(collection.models).filter(@filterFn).filter(@queryByFn).sort(@sortFn).value()
-
-  findBoxByIndex: (idx) =>
-    boxes = @g.selectAll('.box')
-    result = { box: null, idx: idx, datum: null }
-    boxes.sort(@transformSortFn).each (d, i) ->
-      if idx == i
-        result.box = d3.select(@)
-        result.datum = d
-
-    result
-
-
-  findBoxByDatum: (datum) =>
-    boxes = @g.selectAll('.box')
-    result = { box: null, idx: null, datum: datum }
-    boxes.sort(@transformSortFn).each (d, i) ->
-      if d.id == datum.id
-        result.box = d3.select(@)
-        result.idx = i
-
-    result
-
-  select: (e, d, i) =>
-    box = @g.select(".box-#{d.id}")
-    isActive = box.classed 'active'
-    box.classed 'active', not isActive
+  filtered: (collection, isPng) =>
+    chain = _.chain(collection.models).filter(@filterFn).filter(@queryByFn).sort(@sortFn)
+    chain = chain.filter(@activeFn) if isPng
+    chain.value()
 
   hover: (e, idxOrDatum, scroll = true) =>
     self = @
@@ -473,21 +461,32 @@ class Visio.Figures.Isy extends Visio.Figures.Base
     @y.domain [0, +@hoverDatum.get(@goalType)]
 
   boxClasslist: (d, i) =>
-    classList = ['box', "box-#{d.id}"]
-    classList.push 'box-invisible'  if @x(i) < @x.range()[0] or @x(i) > @x.range()[1]
-    classList.push 'gone'  if @x(i) < @x.range()[0] or @x(i) > @x.range()[1]
-    classList.push 'inconsistent' unless d.consistent().isConsistent
-    classList.push 'selected' if d.id == @selectedDatum.get('d')?.id
-    classList.join(' ')
+    classList = super
+    classList += ' inconsistent' unless d.consistent().isConsistent
+    classList
+
+  graphLabels: =>
+    self = @
+
+    @g.selectAll(".graph-label").remove()
+
+    graphLabels = @g.selectAll('.graph-label').data @activeData.models
+    graphLabels.enter().append('text')
+      .attr('class', 'label graph-label')
+      .attr('x', (m, i) =>
+        idx = _.chain(@_filtered).pluck('id').indexOf(m.id).value()
+        @x(idx) + (self.barWidth))
+      .attr('y', self.adjustedHeight + 3 * self.footerHeight)
+      .attr('dy', '.3em')
+      .text (m, i) =>
+        Visio.Utils.numberToLetter i
 
 
   mouseout: (e, i) =>
     @g.selectAll('.bar-container').classed 'hover', false
 
-  close: ->
-    super
-    $.unsubscribe "hover.#{@cid}.figure"
-    $.unsubscribe "mouseout.#{@cid}.figure"
+  datumToString: (d) =>
+    d.indicator().toString()
 
   yAxisLabel: ->
 

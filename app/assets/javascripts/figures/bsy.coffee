@@ -1,21 +1,26 @@
-class Visio.Figures.Bsy extends Visio.Figures.Base
+class Visio.Figures.Bsy extends Visio.Figures.Sy
   # Budget Single Year Figure
   # Data: Collection of parameters (operation, ppg, etc.)
-
-  @include Visio.Mixins.Exportable
 
   type: Visio.FigureTypes.BSY
 
   templateTooltip: HAML['tooltips/bsy']
 
   initialize: (config) ->
+    # which attributes to keep when exporting
+    @attrConfig.push 'sortAttribute'
+    @attrConfig.push 'query'
+
     # Stores the query of a certain operation. 'ken' will match the Kenya operation
     config.query or= ''
+
+    super config
 
     scenarioExpenditures = {}
     scenarioExpenditures[Visio.Scenarios.OL] = true
 
-    @filters = new Visio.Collections.FigureFilter([
+    @breakdownBy = 'budget_type'
+    @filters or= new Visio.Collections.FigureFilter([
       {
         id: 'breakdown_by'
         filterType: 'radio'
@@ -24,19 +29,20 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
           pillar: false
         callback: (name, attr) =>
           $.publish "legend.breakdown", [name]
-          @breakdownBy = name
           @render()
       },
       {
         id: 'budget_type'
         filterType: 'checkbox'
         values: _.object(_.values(Visio.Budgets), _.values(Visio.Budgets).map(-> true))
+        callback: => @render()
       },
       {
         id: 'pillar'
         filterType: 'checkbox'
         values: _.object(_.keys(Visio.Pillars), _.keys(Visio.Pillars).map(-> true))
         human: Visio.Pillars
+        callback: => @render()
       },
       {
         id: 'scenarios-budgets'
@@ -59,12 +65,10 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
       }
     ])
 
-    super config
 
     # Determines the breakdown of the stack graph. Either budget type or pillar
-    @breakdownBy = 'budget_type'
 
-    @sortAttribute = 'total'
+    @sortAttribute or= 'total'
 
     # Width of a single .bar element
     @barWidth = 10
@@ -95,9 +99,9 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
       .attr('class', 'y axis')
       .attr('transform', 'translate(0,0)')
       .append("text")
-        .attr("y", -25)
+        .attr("y", 0)
         .attr("dy", "-.21em")
-        .attr("transform", "translate(#{-@tickPadding}, 0)")
+        .attr("transform", "translate(#{-@tickPadding}, -25)")
         .attr('text-anchor', 'end')
         .html =>
           @yAxisLabel()
@@ -119,8 +123,12 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
     $(@svg.node()).parent().on 'mouseleave', =>
       $.publish "hover.#{@cid}.figure", [@selectedDatum.get('d'), true] if @selectedDatum.get('d')?
 
-  render: ->
-    filtered = @filtered @collection
+  render: (opts) ->
+
+    filtered = @filtered @collection, opts?.isPng
+    @_filtered = filtered
+
+    breakdownBy = @filters.get('breakdown_by').active()
 
     # Expensive computation so don't want to repeat if not necessary
     @y.domain [0, d3.max(filtered, (d) ->
@@ -210,7 +218,7 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
           _.each breakdownTypes, (breakdownType, j) ->
             # data for scenario and breakdownType
             breakdownData = _.filter amountData, (datum) ->
-              datum.get(self.breakdownBy) == breakdownType
+              datum.get(breakdownBy) == breakdownType
 
             amount = new Visio.Collections.AmountType(breakdownData).amount()
 
@@ -244,18 +252,6 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
             values: values
             d: d
 
-        # Conditional Labels
-
-        if self.isExport
-          labels = box.selectAll('.label').data([d])
-          labels.enter().append('text')
-          labels.attr('class', 'label')
-            .attr('x', (scenarios.length / 2) * self.barWidth)
-            .attr('y', self.adjustedHeight + 2 * self.barWidth)
-            .attr('dy', '.3em')
-            .attr('text-anchor', 'start')
-            .text((d) -> Visio.Utils.numberToLetter idx)
-
       )
 
     boxes.on 'mouseenter', (d, idx) ->
@@ -283,8 +279,8 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
 
     @$el.find('.box').tipsy()
     @tipsyHeaderBtns()
+    @renderLegend()
 
-    @$el.find('.legend-container').html @legendView.render().el unless @isExport
 
     @g.select('.y.axis')
       .transition()
@@ -337,47 +333,10 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
     else
       b.selectedBudget(null, filters) - a.selectedBudget(null, filters)
 
-  boxClasslist: (d, i) =>
-    classList = ['box', "box-#{d.id}"]
-    classList.push 'selected' if d.id == @selectedDatum.get('d')?.id
-    classList.push 'active' if @activeData?.get(d.id)?
-    classList.push 'box-invisible'  if @x(i) < @x.range()[0] or @x(i) + 3 * @barWidth  > @x.range()[1]
-    classList.join ' '
-
-  filtered: (collection) =>
-    _.chain(collection.models).filter(@queryByFn).sort(@sortFn).value()
-
-  findBoxByIndex: (idx) =>
-    boxes = @g.selectAll('.box')
-    result = { box: null, idx: idx, datum: null }
-    boxes.sort(@transformSortFn).each (d, i) ->
-      if idx == i
-        result.box = d3.select(@)
-        result.datum = d
-
-    result
-
-
-  findBoxByDatum: (datum) =>
-    boxes = @g.selectAll('.box')
-    result = { box: null, idx: null, datum: datum }
-    boxes.sort(@transformSortFn).each (d, i) ->
-      if d.id == datum.id
-        result.box = d3.select(@)
-        result.idx = i
-
-    result
-
-  select: (e, d, i) =>
-    super d, i
-
-    box = @g.select(".box-#{d.id}")
-    isActive = box.classed 'active'
-    box.classed 'active', not isActive
-
-    @renderSvgLegend d, i
-
-  getPNGSvg: =>
+  filtered: (collection, isPng) =>
+    chain = _.chain(collection.models).filter(@queryByFn).sort(@sortFn)
+    chain = chain.filter(@activeFn) if isPng
+    chain.value()
 
   hover: (e, idxOrDatum, scroll = true) =>
     self = @
@@ -417,13 +376,33 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
         .attr 'class', @boxClasslist
 
   breakdownTypes: =>
-    if @breakdownBy == 'budget_type'
+    breakdownBy = @filters.get('breakdown_by').active()
+    if breakdownBy == 'budget_type'
       _.values Visio.Budgets
-    else if @breakdownBy == 'pillar'
+    else if breakdownBy == 'pillar'
       _.keys Visio.Pillars
 
   mouseout: (e, i) =>
     @g.selectAll('.bar-container').classed 'hover', false
+
+  graphLabels: =>
+    self = @
+
+    scenariosLength = @filters.get('scenarios-budgets').active().length +
+        @filters.get('scenarios-expenditures').active().length
+
+    @g.selectAll(".graph-label").remove()
+
+    graphLabels = @g.selectAll('.graph-label').data @activeData.models
+    graphLabels.enter().append('text')
+      .attr('class', 'label graph-label')
+      .attr('x', (m, i) =>
+        idx = _.chain(@_filtered).pluck('id').indexOf(m.id).value()
+        @x(idx) + ((scenariosLength / 2) * self.barWidth))
+      .attr('y', self.adjustedHeight + 2 * self.barWidth)
+      .attr('dy', '.3em')
+      .text (m, i) =>
+        Visio.Utils.numberToLetter i
 
   yAxisLabel: ->
 
@@ -431,8 +410,3 @@ class Visio.Figures.Bsy extends Visio.Figures.Base
     return @templateLabel
         title: 'Budget',
         subtitles: ['in US Dollars']
-
-  close: ->
-    super
-    $.unsubscribe "hover.#{@cid}.figure"
-    $.unsubscribe "mouseout.#{@cid}.figure"

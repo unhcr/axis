@@ -136,6 +136,7 @@ class Visio.Views.ParameterSearch extends Backbone.View
             remove: false
             type: 'POST'
             data:
+              optimize: true
               filter_ids: @filterIds @collection.name, id
           $.when.apply(@, dataTypes.map (dataType) ->
             Visio.manager.get(dataType.plural).fetch(dataOptions)).done =>

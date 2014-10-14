@@ -35,6 +35,7 @@
 //= require ./views/sliders/slider
 //= require ./views/modules/base
 //= require ./figures/base
+//= require ./figures/sy
 //= require ./figures/bar
 //= require ./figures/bmy
 //= require ./legends/base

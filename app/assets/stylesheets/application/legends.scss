@@ -29,6 +29,27 @@
   stroke: $dark-gray
 }
 
+.legend-isy {
+  .isy-bar-legend-circle {
+    stroke: $dark-gray;
+    stroke-width: 1px;
+  }
+
+  .yer {
+    fill: $yer;
+  }
+  .myr {
+    fill: $myr;
+  }
+  .inconsistent {
+    fill: $baby-blue;
+  }
+  .imp_target, .baseline {
+    display: none;
+  }
+
+}
+
 .legend-bsy {
 
   .bsy-bar-legend-circle {
