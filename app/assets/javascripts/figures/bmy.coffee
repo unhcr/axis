@@ -40,17 +40,20 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
         id: 'budget_type'
         filterType: 'checkbox'
         values: _.object(_.values(Visio.Budgets), _.values(Visio.Budgets).map(-> true))
+        callback: => @render()
       },
       {
         id: 'pillar'
         filterType: 'checkbox'
         values: _.object(_.keys(Visio.Pillars), _.keys(Visio.Pillars).map(-> true))
         human: Visio.Pillars
+        callback: => @render()
       },
       {
         id: 'scenario'
         filterType: 'checkbox'
         values: values
+        callback: => @render()
       }
     ])
 

@@ -46,6 +46,7 @@ class Visio.Figures.Isy extends Visio.Figures.Sy
           @x.domain [0, @maxIndicators]
           $.publish "drawFigures.#{@cid}.figure"
           $.publish "hover.#{@cid}.figure", 0
+          @render()
       },
       {
         id: 'achievement'
@@ -59,8 +60,9 @@ class Visio.Figures.Isy extends Visio.Figures.Sy
             type == goalType))
         human: humanGoalTypes
         callback: (name, attr) =>
-          @goalTypeFn(name).render()
+          @goalTypeFn(name)
           $.publish "hover.#{@cid}.figure", @selectedDatum.get('d') || 0
+          @render()
       }
     ])
 
@@ -172,8 +174,8 @@ class Visio.Figures.Isy extends Visio.Figures.Sy
     $(@svg.node()).parent().on 'mouseleave', =>
       $.publish "hover.#{@cid}.figure", [@selectedDatum.get('d'), true] if @selectedDatum.get('d')?
 
-  render: (isPng) ->
-    filtered = @filtered @collection, isPng
+  render: (opts) ->
+    filtered = @filtered @collection, opts?.isPng
 
     self = @
 

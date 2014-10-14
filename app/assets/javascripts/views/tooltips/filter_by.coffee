@@ -38,7 +38,6 @@ class Visio.Views.FilterBy extends Backbone.View
     active = $target.is ':checked'
 
     @figure.filters.get(type).filter(attr, active)
-    @figure.render true
 
   isOpen: =>
     @$el.hasClass 'open'

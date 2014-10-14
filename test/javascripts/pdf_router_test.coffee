@@ -103,7 +103,6 @@ test 'index - icmy', ->
     collection: @o
 
   config = @icmy.config()
-  config.selected = [2012]
 
   Visio.router = new Visio.Routers.PdfRouter
     selector: $('<div></div>')
@@ -111,14 +110,13 @@ test 'index - icmy', ->
       figure_config: config
 
   sinon.stub Visio.router, 'setup', ->
-    Visio.router.absy()
     return $.Deferred().resolve().promise()
+
   Visio.router.index()
 
   ok Visio.router.view?
   ok Visio.router.view.isPdf
   strictEqual Visio.router.view.$el.find('.svg-icmy-figure').length, 1
-  strictEqual Visio.router.view.$el.find('.svg-icsy-figure').length, 1
 
   Visio.router.setup.restore()
 

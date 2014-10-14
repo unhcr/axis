@@ -6,7 +6,7 @@ class Visio.Legends.IcmyPdf extends Backbone.View
 
   initialize: (options) ->
     @figure = options.figure
-    @selected = options.selected
+    @activeData = options.figure.activeData
     switch @figure.filters.get('algorithm').active()
       when 'selectedOutputAchievement'
         @legendType = Visio.FigureTypes.OASY
@@ -25,7 +25,7 @@ class Visio.Legends.IcmyPdf extends Backbone.View
     @
 
   addAll: =>
-    _.each @selected, @addOne
+    _.each @activeData, @addOne
 
   addOne: (year, idx) =>
 
