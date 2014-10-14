@@ -130,6 +130,7 @@ class Visio.Figures.Isy extends Visio.Figures.Sy
 
     @sortAttribute = Visio.ProgressTypes.BASELINE_MYR
     @isPerformanceFn @filters.get('is_performance').active() == 'true'
+    @svg.classed 'isy-performance', @isPerformance
 
     @labelView = new Visio.Labels.Isy()
 
@@ -176,6 +177,7 @@ class Visio.Figures.Isy extends Visio.Figures.Sy
 
   render: (opts) ->
     filtered = @filtered @collection, opts?.isPng
+    @_filtered = filtered
 
     self = @
 
@@ -458,6 +460,22 @@ class Visio.Figures.Isy extends Visio.Figures.Sy
     classList = super
     classList += ' inconsistent' unless d.consistent().isConsistent
     classList
+
+  graphLabels: =>
+    self = @
+
+    @g.selectAll(".graph-label").remove()
+
+    graphLabels = @g.selectAll('.graph-label').data @activeData.models
+    graphLabels.enter().append('text')
+      .attr('class', 'label graph-label')
+      .attr('x', (m, i) =>
+        idx = _.chain(@_filtered).pluck('id').indexOf(m.id).value()
+        @x(idx) + (self.barWidth))
+      .attr('y', self.adjustedHeight + 3 * self.footerHeight)
+      .attr('dy', '.3em')
+      .text (m, i) =>
+        Visio.Utils.numberToLetter i
 
 
   mouseout: (e, i) =>

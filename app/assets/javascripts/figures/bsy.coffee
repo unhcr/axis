@@ -389,7 +389,6 @@ class Visio.Figures.Bsy extends Visio.Figures.Sy
     graphLabels = @g.selectAll('.graph-label').data @activeData.models
     graphLabels.enter().append('text')
       .attr('class', 'label graph-label')
-      .attr('x', (scenariosLength / 2) * self.barWidth)
       .attr('x', (m, i) =>
         idx = _.chain(@_filtered).pluck('id').indexOf(m.id).value()
         @x(idx) + ((scenariosLength / 2) * self.barWidth))
