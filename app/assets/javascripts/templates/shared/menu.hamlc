@@ -7,6 +7,9 @@
     .col-md-6
       %h3.menu-desc
         = Visio.Texts.STRATEGY_DESC
+    .col-md-6.axis-video.center-text
+      %iframe{:allowfullscreen => "", :frameborder => "0", :height => "367", :mozallowfullscreen => "", :src => "//player.vimeo.com/video/108805307", :webkitallowfullscreen => "", :width => "500"}
+
 
   .row
     .col-md-3
