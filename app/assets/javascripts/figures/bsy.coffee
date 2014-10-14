@@ -7,13 +7,20 @@ class Visio.Figures.Bsy extends Visio.Figures.Sy
   templateTooltip: HAML['tooltips/bsy']
 
   initialize: (config) ->
+    # which attributes to keep when exporting
+    @attrConfig.push 'sortAttribute'
+    @attrConfig.push 'query'
+
     # Stores the query of a certain operation. 'ken' will match the Kenya operation
     config.query or= ''
+
+    super config
 
     scenarioExpenditures = {}
     scenarioExpenditures[Visio.Scenarios.OL] = true
 
-    @filters = new Visio.Collections.FigureFilter([
+    @breakdownBy = 'budget_type'
+    @filters or= new Visio.Collections.FigureFilter([
       {
         id: 'breakdown_by'
         filterType: 'radio'
@@ -22,7 +29,6 @@ class Visio.Figures.Bsy extends Visio.Figures.Sy
           pillar: false
         callback: (name, attr) =>
           $.publish "legend.breakdown", [name]
-          @breakdownBy = name
           @render()
       },
       {
@@ -59,12 +65,10 @@ class Visio.Figures.Bsy extends Visio.Figures.Sy
       }
     ])
 
-    super config
 
     # Determines the breakdown of the stack graph. Either budget type or pillar
-    @breakdownBy = 'budget_type'
 
-    @sortAttribute = 'total'
+    @sortAttribute or= 'total'
 
     # Width of a single .bar element
     @barWidth = 10
@@ -123,6 +127,8 @@ class Visio.Figures.Bsy extends Visio.Figures.Sy
 
     filtered = @filtered @collection, opts?.isPng
     @_filtered = filtered
+
+    breakdownBy = @filters.get('breakdown_by').active()
 
     # Expensive computation so don't want to repeat if not necessary
     @y.domain [0, d3.max(filtered, (d) ->
@@ -212,7 +218,7 @@ class Visio.Figures.Bsy extends Visio.Figures.Sy
           _.each breakdownTypes, (breakdownType, j) ->
             # data for scenario and breakdownType
             breakdownData = _.filter amountData, (datum) ->
-              datum.get(self.breakdownBy) == breakdownType
+              datum.get(breakdownBy) == breakdownType
 
             amount = new Visio.Collections.AmountType(breakdownData).amount()
 
@@ -370,9 +376,10 @@ class Visio.Figures.Bsy extends Visio.Figures.Sy
         .attr 'class', @boxClasslist
 
   breakdownTypes: =>
-    if @breakdownBy == 'budget_type'
+    breakdownBy = @filters.get('breakdown_by').active()
+    if breakdownBy == 'budget_type'
       _.values Visio.Budgets
-    else if @breakdownBy == 'pillar'
+    else if breakdownBy == 'pillar'
       _.keys Visio.Pillars
 
   mouseout: (e, i) =>

@@ -87,7 +87,8 @@ class Visio.Legends.Bsy extends Visio.Legends.Base
 
 
   circleData: () =>
-    switch @figure.breakdownBy
+    breakdownBy = @figure.filters.get('breakdown_by').active()
+    switch breakdownBy
       when 'budget_type'
         _.keys Visio.Budgets
       when 'pillar'

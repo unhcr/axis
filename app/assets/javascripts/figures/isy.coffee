@@ -7,6 +7,10 @@ class Visio.Figures.Isy extends Visio.Figures.Sy
   attrAccessible: ['x', 'y', 'width', 'height', 'collection', 'margin', 'goalType', 'isPerformance']
 
   initialize: (config) ->
+    # which attributes to keep when exporting
+    @attrConfig.push 'sortAttribute'
+    @attrConfig.push 'query'
+
     config.query or= ''
 
     humanGoalTypes = _.object _.values(Visio.Algorithms.GOAL_TYPES),
@@ -128,7 +132,7 @@ class Visio.Figures.Isy extends Visio.Figures.Sy
     $.subscribe "hover.#{@cid}.figure", @hover
     $.subscribe "mouseout.#{@cid}.figure", @mouseout
 
-    @sortAttribute = Visio.ProgressTypes.BASELINE_MYR
+    @sortAttribute = config.sortAttribute or Visio.ProgressTypes.BASELINE_MYR
     @isPerformanceFn @filters.get('is_performance').active() == 'true'
     @svg.classed 'isy-performance', @isPerformance
 
