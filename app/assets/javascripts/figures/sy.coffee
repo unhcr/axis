@@ -45,7 +45,7 @@ class Visio.Figures.Sy extends Visio.Figures.Base
     classList.join ' '
 
   getPNGSvg: =>
-    @render true
+    @render { isPng: true }
     @renderSvgLabels()
     $(@$el.find('svg')[0])
 

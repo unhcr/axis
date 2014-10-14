@@ -47,11 +47,13 @@ class Visio.Figures.Absy extends Visio.Figures.Base
         id: 'budget_type'
         filterType: 'checkbox'
         values: _.object(_.values(Visio.Budgets), _.values(Visio.Budgets).map(-> true))
+        callback: => @render()
       },
       {
         id: 'scenario'
         filterType: 'checkbox'
         values: values
+        callback: => @render()
       },
       {
         id: 'is_performance'
@@ -59,6 +61,7 @@ class Visio.Figures.Absy extends Visio.Figures.Base
         values: performanceValues
         human: { true: 'performance', false: 'impact' }
         hidden: Visio.manager.get('indicator')?
+        callback: => @render()
       },
       {
         id: 'achievement'
@@ -66,8 +69,9 @@ class Visio.Figures.Absy extends Visio.Figures.Base
         values: _.object(_.values(Visio.Algorithms.GOAL_TYPES), _.values(Visio.Algorithms.GOAL_TYPES).map(
           (achievement_type) ->
             Visio.manager.get('achievement_type') == achievement_type))
-        callback: (name, attr) ->
+        callback: (name, attr) =>
           Visio.manager.set('achievement_type', name)
+          @render()
       }
     ])
 

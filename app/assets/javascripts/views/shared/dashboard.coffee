@@ -45,6 +45,7 @@ class Visio.Views.Dashboard extends Backbone.View
           id: 'scenario'
           filterType: 'checkbox'
           values: values
+          callback: => @render()
         }] )
 
     @barFigures = {}

@@ -29,12 +29,14 @@ class Visio.Figures.Bsy extends Visio.Figures.Sy
         id: 'budget_type'
         filterType: 'checkbox'
         values: _.object(_.values(Visio.Budgets), _.values(Visio.Budgets).map(-> true))
+        callback: => @render()
       },
       {
         id: 'pillar'
         filterType: 'checkbox'
         values: _.object(_.keys(Visio.Pillars), _.keys(Visio.Pillars).map(-> true))
         human: Visio.Pillars
+        callback: => @render()
       },
       {
         id: 'scenarios-budgets'
@@ -117,9 +119,9 @@ class Visio.Figures.Bsy extends Visio.Figures.Sy
     $(@svg.node()).parent().on 'mouseleave', =>
       $.publish "hover.#{@cid}.figure", [@selectedDatum.get('d'), true] if @selectedDatum.get('d')?
 
-  render: (isPng) ->
+  render: (opts) ->
 
-    filtered = @filtered @collection, isPng
+    filtered = @filtered @collection, opts?.isPng
     @_filtered = filtered
 
     # Expensive computation so don't want to repeat if not necessary
