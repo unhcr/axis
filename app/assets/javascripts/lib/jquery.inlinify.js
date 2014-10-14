@@ -17,7 +17,7 @@ $.fn.inlinify = function() {
 
       $ele.each(function (i, elem) {
         if (children.index(elem) !== -1) {
-          elem.style.cssText = rules[j].style.cssText + elem.style.cssText;
+          elem.style.cssText += rules[j].style.cssText;
         }
       });
     }
