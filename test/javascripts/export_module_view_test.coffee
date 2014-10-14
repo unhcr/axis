@@ -2,6 +2,7 @@ module 'Export Module View',
   setup: ->
     Visio.user = new Visio.Models.User()
     Visio.manager = new Visio.Models.Manager()
+    Visio.manager.set 'indicators', new Visio.Collections.Indicator([{ name: 'benji', id: 'd' }])
     figureType = Visio.FigureTypes.ISY
     @data = new Visio.Collections.IndicatorDatum([
         {
@@ -12,6 +13,7 @@ module 'Export Module View',
           yer: 20
           imp_target: 50
           standard: 50
+          indicator_id: 'd'
         },
         {
           id: 'jeff'
@@ -20,6 +22,7 @@ module 'Export Module View',
           myr: 10
           yer: 20
           imp_target: 50
+          indicator_id: 'd'
         },
         {
           id: 'lisa'
@@ -28,6 +31,7 @@ module 'Export Module View',
           myr: 10
           yer: 20
           imp_target: 50
+          indicator_id: 'd'
         }
       ])
     @config =
