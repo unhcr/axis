@@ -7,6 +7,12 @@ class Visio.Routers.IndexRouter extends Backbone.Router
     @menuView = new Visio.Views.MenuView
       el: $('.menu-container')
 
+    @settings?.close()
+    @settings = new Visio.Views.Settings
+      model: Visio.user
+
+    $('.user-account').html @settings.render().el
+
     @setup()
 
   routes:

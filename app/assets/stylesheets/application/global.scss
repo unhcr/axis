@@ -241,6 +241,17 @@ body.layout-cms {
   }
 }
 
+.header-item {
+  height: $header-height;
+  display: inline-block;
+  vertical-align: top;
+
+  h5 {
+    line-height: $header-height;
+    vertical-align: top;
+  }
+}
+
 #header {
   -webkit-transform: translateZ(0);
   background-color: $off-white;
@@ -262,16 +273,6 @@ body.layout-cms {
     position: relative;
   }
 
-  .header-item {
-    height: $header-height;
-    display: inline-block;
-    vertical-align: top;
-
-    h5 {
-      line-height: $header-height;
-      vertical-align: top;
-    }
-  }
 
   .col-left {
     width: 25%;
@@ -427,6 +428,8 @@ body.layout-cms {
 
 }
 
+
+
 #footer {
   background-color: $off-white;
   border-top: 2px solid $orange;
@@ -449,13 +452,29 @@ body.layout-cms {
 }
 
 header.minimal {
+  height: $header-height;
   span {
     line-height: 37px;
     padding-left: 8px;
+    display: inline-block;
+    margin-bottom: 12px;
   }
   .logo {
     vertical-align: bottom;
-    background-position: center bottom;
+    background-position: center;
+  }
+
+  .settings.open {
+    background-color: white;
+    a {
+      color: $black;
+    }
+    a:hover {
+      color: $orange;
+    }
+    .gear-icon {
+      background-image: url(/assets/icons/gear_hover.png);
+    }
   }
 }
 
@@ -467,9 +486,6 @@ body.layout-application {
 
 body.splash {
   @include text-theme-splash;
-  header {
-    height: $sp-header-height;
-  }
 
   .content {
     min-width: 900px;
@@ -563,9 +579,6 @@ header {
 }
 
 body.index {
-  header {
-    height: $sp-header-height;
-  }
   .menu {
     max-width: 1200px;
     a {
@@ -3390,4 +3403,9 @@ a {
 
 .page-margin {
   @include page-margin;
+}
+
+.axis-video {
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
