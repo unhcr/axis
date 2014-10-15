@@ -5,9 +5,9 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
 
   type: Visio.FigureTypes.BMY
 
-  groupBy: 'budget_type'
-
   initialize: (config) ->
+    super config
+
     values = {}
     values[Visio.Scenarios.AOL] = false
     values[Visio.Scenarios.OL] = true
@@ -15,11 +15,10 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
     groupByValues = {}
 
     groupByValues['scenario'] = false
-    groupByValues['budget_type'] = false
+    groupByValues['budget_type'] = true
     groupByValues['pillar'] = false
-    groupByValues[@groupBy] = true
 
-    @filters = new Visio.Collections.FigureFilter([
+    @filters or= new Visio.Collections.FigureFilter([
       {
         id: 'show_total'
         filterType: 'checkbox'
@@ -57,7 +56,6 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
       }
     ])
 
-    super config
 
     @tooltip = null
 
@@ -212,12 +210,14 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
 
     return memo if @filters.isFiltered budget
 
+    groupBy = @filters.get('group_by').active()
+
     # Add groupBy array
-    lineData = _.find memo, (array) => array[@groupBy] == budget.get @groupBy
+    lineData = _.find memo, (array) => array[groupBy] == budget.get groupBy
     unless lineData
       lineData = []
-      lineData['groupBy'] = @groupBy
-      lineData[@groupBy] = budget.get @groupBy
+      lineData['groupBy'] = groupBy
+      lineData[groupBy] = budget.get groupBy
       memo.push lineData unless @filters.isFiltered budget
 
 
@@ -225,14 +225,14 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
     datum = _.findWhere lineData, { year: budget.get 'year' }
     unless datum
       datum = { amount: 0, year: budget.get('year') }
-      datum['groupBy'] = @groupBy
-      datum[@groupBy] = budget.get @groupBy
+      datum['groupBy'] = groupBy
+      datum[groupBy] = budget.get groupBy
       datum.summary = false
 
 
       if @modelOrCollection instanceof Backbone.Collection
-        datum.model_id = budget.get @groupBy
-        datum.id_type = Visio.Utils.parameterBySingular(@groupBy.replace('_id',''))
+        datum.model_id = budget.get groupBy
+        datum.id_type = Visio.Utils.parameterBySingular(groupBy.replace('_id',''))
         datum.name = Visio.manager.get(datum.id_type.plural).get(datum.model_id).toString()
       else
         datum.model_id = @modelOrCollection.id
@@ -246,19 +246,19 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
 
     if @filters.get('show_total').filter('Show Total')
       # Add 'total' array
-      totalData = _.find memo, (array) => array[@groupBy] == 'total'
+      totalData = _.find memo, (array) => array[groupBy] == 'total'
       unless totalData
         totalData = []
-        totalData.groupBy = @groupBy
-        totalData[@groupBy] = 'total'
+        totalData.groupBy = groupBy
+        totalData[groupBy] = 'total'
         memo.push totalData
 
       # Add total datum
       total = _.findWhere totalData, { year: budget.get 'year' }
       unless total
         total = { amount: 0, year: budget.get('year') }
-        total['groupBy'] = @groupBy
-        total[@groupBy] = 'total'
+        total['groupBy'] = groupBy
+        total[groupBy] = 'total'
         total.summary = @modelOrCollection instanceof Backbone.Collection
 
         unless total.summary

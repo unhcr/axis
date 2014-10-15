@@ -2,6 +2,21 @@ class Narrative < ActiveRecord::Base
   self.primary_key = :id
   include SyncableModel
   extend AmountHelpers
+  include Tire::Model::Search
+  include Tire::Model::Callbacks
+
+  mapping do
+    indexes :id, index: :not_analyzed
+    indexes :usertxt
+    indexes :operation_id, type: "string", index: :not_analyzed
+    indexes :plan_id, type: "string", index: :not_analyzed
+    indexes :goal_id, type: "string", index: :not_analyzed
+    indexes :problem_objective_id, type: "string", index: :not_analyzed
+    indexes :output_id, type: "string", index: :not_analyzed
+    indexes :ppg_id, type: "string", index: :not_analyzed
+    indexes :report_type, type: "string", index: :not_analyzed
+    indexes :year, type: "integer"
+  end
 
   attr_accessible :operation_id, :plan_id, :year, :goal_id, :problem_objective_id, :output_id,
     :ppg_id, :elt_id, :plan_el_type, :usertxt, :createusr, :id, :report_type, :is_deleted
@@ -32,6 +47,37 @@ class Narrative < ActiveRecord::Base
     Resque.enqueue SummarizeJob, token, args
 
     token
+  end
+
+  def self.search_models(query, ids = {}, report_type = nil, year = nil, options = {})
+    ids ||= {}
+    return [] if query.nil? or query.empty?
+
+    conditions = generate_conditions ids
+    query_string = conditions.join(' AND ')
+
+    options[:page] ||= 1
+    options[:per_page] ||= 6
+
+    options[:page] = options[:page].to_i
+
+    result = self.search(options) do
+      query { string "usertxt:#{query}" }
+
+      [:operation_ids, :ppg_ids, :goal_ids, :problem_objective_ids, :output_ids].each do |key|
+        next unless ids.has_key? key
+        value = ids[key]
+        terms = {}
+        terms[key.to_s.singularize.to_sym] = value
+        filter :terms, terms
+      end
+
+      filter :term, { :year => year.to_i } if year.present?
+      filter :term, { :report_type => report_type } if report_type.present?
+
+      highlight :usertxt
+    end
+    result
   end
 
   def self.total_characters(ids = {})

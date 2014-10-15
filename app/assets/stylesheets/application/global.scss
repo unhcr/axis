@@ -1654,6 +1654,7 @@ a {
 
 #narrative-panel {
   @include box-shadow-left;
+  @include header-button-iconify;
   width: $filter-system-width;
   height: 100%;
   position: fixed;
@@ -1665,6 +1666,15 @@ a {
   .panel {
     padding-top: 60px;
   }
+
+  .panel-query:before {
+    content: 'Search results for: ';
+    font-style: normal;
+  }
+  .panel-query {
+    font-style: italic;
+  }
+
 
   .tabs {
     margin-left: 0;
@@ -1685,6 +1695,10 @@ a {
   .tabs {
     padding-top: 20px;
     margin-bottom: 10px;
+  }
+
+  em {
+    font-weight: bold;
   }
 
   label {

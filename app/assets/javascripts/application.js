@@ -54,6 +54,5 @@
 //= require ./vendor/canvg
 //= require ./vendor/svgenie
 //= require_tree ./vendor
-//= require_tree ./lib
 //= require manager
 //= require_tree ./managers

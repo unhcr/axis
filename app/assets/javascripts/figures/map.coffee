@@ -70,7 +70,7 @@ class Visio.Figures.Map extends Visio.Figures.Base
     else if Visio.manager.get('indicator') and not Visio.manager.get('indicator').get('is_performance')
       delete values['selectedPerformanceAchievement']
 
-    @filters = new Visio.Collections.FigureFilter([
+    @filters or= new Visio.Collections.FigureFilter([
       {
         id: 'scenario'
         filterType: 'checkbox'
