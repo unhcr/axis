@@ -5,6 +5,17 @@ class Narrative < ActiveRecord::Base
   include Tire::Model::Search
   include Tire::Model::Callbacks
 
+  mapping do
+    indexes :id, index: :not_analyzed
+    indexes :usertxt
+    indexes :operation_id, type: "string", index: :not_analyzed
+    indexes :plan_id, type: "string", index: :not_analyzed
+    indexes :goal_id, type: "string", index: :not_analyzed
+    indexes :problem_objective_id, type: "string", index: :not_analyzed
+    indexes :output_id, type: "string", index: :not_analyzed
+    indexes :ppg_id, type: "string", index: :not_analyzed
+  end
+
   attr_accessible :operation_id, :plan_id, :year, :goal_id, :problem_objective_id, :output_id,
     :ppg_id, :elt_id, :plan_el_type, :usertxt, :createusr, :id, :report_type, :is_deleted
 
@@ -36,7 +47,7 @@ class Narrative < ActiveRecord::Base
     token
   end
 
-  def self.search_models(query, ids, report_type, year, options = {})
+  def self.search_models(query, ids = {}, report_type = nil, year = nil, options = {})
     ids ||= {}
 
     conditions = generate_conditions ids
@@ -45,15 +56,23 @@ class Narrative < ActiveRecord::Base
     options[:page] ||= 1
     options[:per_page] ||= 6
 
-    narratives = Narrative.where(query_string)
-    narratives = narratives.where(:year => year) if year.present?
-    narratives = narratives.where(:report_type => report_type) if report_type.present?
+    options[:page] = options[:page].to_i
 
-    narratives.search(options) do
+    result = self.search(options) do
       query { string "usertxt:#{query}" }
+
+      ids.each do |key, value|
+        terms = {}
+        terms[key.to_s.singularize.to_sym] = value
+        filter :terms, terms
+      end
+
+      filter :term, { :year => year } if year.present?
+      filter :term, { :report_type => report_type } if report_type.present?
 
       highlight :usertxt
     end
+    result
   end
 
   def self.total_characters(ids = {})

@@ -3,7 +3,7 @@ class Visio.Models.NarrativeSearchResult extends Backbone.Model
   defaults:
     query: ''
     results: []
-    page: 0
+    page: 1
     loaded: false
 
   toHtmlText: ->

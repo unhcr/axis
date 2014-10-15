@@ -172,13 +172,18 @@ class Visio.Views.NarrativePanel extends Backbone.View
     @render()
 
   onFullTextScroll: (panel, $panel) =>
+    return if @loadingFullText
+    @loadingFullText = true
     @fetchText(panel.get('page'), summaryParameters).done (resp) =>
+      @loadingFullText = false
       @doneText(resp, panel, $panel)
 
   onResultsScroll: (panel, $panel) =>
+    return if @loadingResults
     result = panel.get 'result'
+    @loadingResults = true
     @search(result.get('query'), result.get('page')).done (resp) =>
-      console.log resp
+      @loadingResults = false
       @doneSearch(resp, panel, $panel, result.get('query'))
 
 
