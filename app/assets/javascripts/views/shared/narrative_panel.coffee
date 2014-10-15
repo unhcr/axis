@@ -86,7 +86,7 @@ class Visio.Views.NarrativePanel extends Backbone.View
         @summarize(summaryParameters).done (resp) => @doneSummarize(resp, panel)
       when @textTypes.results.name
         if opts.query?
-          return if panel.get('result')?.get('loaded')
+          return if panel.get('result')?.get('loaded') and opts.query == panel.get('result').get('query')
           NProgress.start()
           @search(opts.query, 0).done (resp) =>
             @doneSearch(resp, panel, $panel, opts.query)
@@ -173,6 +173,8 @@ class Visio.Views.NarrativePanel extends Backbone.View
 
   onFullTextScroll: (panel, $panel) =>
     return if @loadingFullText
+
+    summaryParameters = @model.summaryParameters()
     @loadingFullText = true
     @fetchText(panel.get('page'), summaryParameters).done (resp) =>
       @loadingFullText = false

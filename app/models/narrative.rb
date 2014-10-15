@@ -14,6 +14,8 @@ class Narrative < ActiveRecord::Base
     indexes :problem_objective_id, type: "string", index: :not_analyzed
     indexes :output_id, type: "string", index: :not_analyzed
     indexes :ppg_id, type: "string", index: :not_analyzed
+    indexes :report_type, type: "string", index: :not_analyzed
+    indexes :year, type: "integer"
   end
 
   attr_accessible :operation_id, :plan_id, :year, :goal_id, :problem_objective_id, :output_id,
@@ -62,13 +64,15 @@ class Narrative < ActiveRecord::Base
     result = self.search(options) do
       query { string "usertxt:#{query}" }
 
-      ids.each do |key, value|
+      [:operation_ids, :ppg_ids, :goal_ids, :problem_objective_ids, :output_ids].each do |key|
+        next unless ids.has_key? key
+        value = ids[key]
         terms = {}
         terms[key.to_s.singularize.to_sym] = value
         filter :terms, terms
       end
 
-      filter :term, { :year => year } if year.present?
+      filter :term, { :year => year.to_i } if year.present?
       filter :term, { :report_type => report_type } if report_type.present?
 
       highlight :usertxt
