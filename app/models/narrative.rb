@@ -49,6 +49,7 @@ class Narrative < ActiveRecord::Base
 
   def self.search_models(query, ids = {}, report_type = nil, year = nil, options = {})
     ids ||= {}
+    return [] if query.nil? or query.empty?
 
     conditions = generate_conditions ids
     query_string = conditions.join(' AND ')

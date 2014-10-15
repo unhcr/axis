@@ -56,4 +56,12 @@ class NarrativeTest < ActiveSupport::TestCase
     assert_equal result.length, 1
 
   end
+
+  test "narrative search - empty query" do
+    result = Narrative.search_models('')
+    assert_equal result.length, 0
+
+    result = Narrative.search_models(nil)
+    assert_equal result.length, 0
+  end
 end
