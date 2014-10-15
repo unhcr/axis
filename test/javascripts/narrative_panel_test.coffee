@@ -93,6 +93,7 @@ test 'renderTextType results', ->
   ok @panel.$el.find('.panel-text').text().indexOf('b') != -1
   ok @panel.$el.find('.panel-text').text().indexOf('c') != -1
   ok @panel.$el.find('.panel-text').text().indexOf('d') != -1
+  strictEqual @panel.$el.find('.panel-query').text().trim(), 'ben'
   strictEqual @panel.panels.length, 1
   panel = @panel.panels.at(0)
   ok panel.get('result')?
@@ -107,3 +108,4 @@ test 'renderTextType results', ->
   ok @panel.$el.find('.panel-text').text().indexOf('b') != -1
   ok @panel.$el.find('.panel-text').text().indexOf('c') != -1
   ok @panel.$el.find('.panel-text').text().indexOf('d') != -1
+  strictEqual @panel.$el.find('.panel-query').text().trim(), 'ben'

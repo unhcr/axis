@@ -1667,6 +1667,15 @@ a {
     padding-top: 60px;
   }
 
+  .panel-query:before {
+    content: 'Search results for: ';
+    font-style: normal;
+  }
+  .panel-query {
+    font-style: italic;
+  }
+
+
   .tabs {
     margin-left: 0;
     margin-right: 0;

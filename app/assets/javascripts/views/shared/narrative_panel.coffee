@@ -73,6 +73,7 @@ class Visio.Views.NarrativePanel extends Backbone.View
           (panel.get('result').get('query').length and
           panel.get('result').get('query') == opts.query))
 
+        @$el.find(".panel .panel-#{textType.name}-query-#{@model.cid}").text panel.get('result').get('query')
         $panel.html panel.get('result').toHtmlText()
         return
 
@@ -113,7 +114,7 @@ class Visio.Views.NarrativePanel extends Backbone.View
     if resp.success
       @fetchSummary resp.token, panel, @timeout
 
-  doneSearch: (resp, panel, $panel, query) ->
+  doneSearch: (resp, panel, $panel, query) =>
     result = panel.get 'result'
 
     if result? and result.get('query') == query
@@ -127,6 +128,7 @@ class Visio.Views.NarrativePanel extends Backbone.View
     if !resp or resp.length == 0
       result.set 'loaded', true
 
+    @$el.find(".panel .panel-#{@textTypes.results.name}-query-#{@model.cid}").text query
     $panel.append result.toHtmlText()
 
   search: (query, page = 0) =>
