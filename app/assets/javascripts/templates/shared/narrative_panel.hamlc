@@ -4,6 +4,8 @@
   .row
     .col-md-12.header-buttons
       .export.header-button
+      .query-by.header-button
+        %input{ :type => 'text', :placeholder => 'Search narrative' }
   .row
     .col-md-12
       .divider.divider-dark-gray.top-flush

@@ -29,6 +29,16 @@ class NarrativesController < ApplicationController
     }
   end
 
+  def search
+    query = ''
+    query = sanitize_query(params[:query]) + '*' unless params[:query].nil? || params[:query].empty?
+    render :json => Narrative.search_models(query,
+                                            params[:filter_ids],
+                                            params[:report_type],
+                                            params[:year],
+                                            { :page => params[:page] })
+  end
+
   def to_docx
     @name = params[:name]
     @name = "Narrative Report" if @name.nil? or @name.empty?

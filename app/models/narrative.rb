@@ -2,6 +2,8 @@ class Narrative < ActiveRecord::Base
   self.primary_key = :id
   include SyncableModel
   extend AmountHelpers
+  include Tire::Model::Search
+  include Tire::Model::Callbacks
 
   attr_accessible :operation_id, :plan_id, :year, :goal_id, :problem_objective_id, :output_id,
     :ppg_id, :elt_id, :plan_el_type, :usertxt, :createusr, :id, :report_type, :is_deleted
@@ -32,6 +34,26 @@ class Narrative < ActiveRecord::Base
     Resque.enqueue SummarizeJob, token, args
 
     token
+  end
+
+  def self.search_models(query, ids, report_type, year, options = {})
+    ids ||= {}
+
+    conditions = generate_conditions ids
+    query_string = conditions.join(' AND ')
+
+    options[:page] ||= 1
+    options[:per_page] ||= 6
+
+    narratives = Narrative.where(query_string)
+    narratives = narratives.where(:year => year) if year.present?
+    narratives = narratives.where(:report_type => report_type) if report_type.present?
+
+    narratives.search(options) do
+      query { string "usertxt:#{query}" }
+
+      highlight :usertxt
+    end
   end
 
   def self.total_characters(ids = {})

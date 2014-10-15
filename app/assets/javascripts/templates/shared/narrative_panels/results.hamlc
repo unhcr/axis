@@ -1,0 +1,2 @@
+.panel-results{ :class => "panel-results-#{@model.cid}" }
+!= HAML['shared/narrative_panels/form']({ model: @model })
