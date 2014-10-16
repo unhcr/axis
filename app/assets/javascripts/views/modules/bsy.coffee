@@ -1,6 +1,7 @@
 class Visio.Views.BsyView extends Visio.Views.Module
 
   @include Visio.Mixins.Narratify
+  @include Visio.Mixins.Slidify
 
   template: HAML['modules/bsy']
 
@@ -36,15 +37,7 @@ class Visio.Views.BsyView extends Visio.Views.Module
         @figure.sortAttribute = value
         @figure.render()
 
-    $.subscribe "hover.#{@figure.cid}.figure", (e, idxOrDatum) =>
-      if _.isNumber idxOrDatum
-        value = idxOrDatum
-      else
-        value = @figure.findBoxByDatum(idxOrDatum).idx
-
-      @$el.find('.slider').slider 'value', value
-      @$el.find('.slider .ui-slider-handle').attr 'data-value', value + 1
-
+    @initSlider @figure
 
   render: (isRerender) ->
 
@@ -56,12 +49,8 @@ class Visio.Views.BsyView extends Visio.Views.Module
       @$el.find('.header-buttons').append @filterBy.render().el
       @$el.find('.header-buttons').append @sortBy.render().el
       @$el.find('.header-buttons').append @queryBy.render().el
+      @renderSlider()
 
-      @$el.find('.slider').slider
-        animate: true
-        slide: @onSlide
-        stop: @onStop
-        min: 0
 
 
     human = Visio.Utils.parameterByPlural(Visio.manager.get('aggregation_type')).human
@@ -73,15 +62,7 @@ class Visio.Views.BsyView extends Visio.Views.Module
   drawFigures: =>
     parameters = Visio.manager.selected(Visio.manager.get('aggregation_type'))
     @figure.collectionFn parameters
-    max = parameters.length
+    max = @figure.getMax()
     @figure.render()
 
-    @$el.find('.slider').slider 'option', 'max', max - 1
-    @$el.find('.slider').attr('data-max', max)
-
-  onStop: (e, ui) =>
-    $.publish "mouseout.#{@figure.cid}.figure", ui.value
-
-  onSlide: (e, ui) =>
-    $.publish "hover.#{@figure.cid}.figure", ui.value
-    @$el.find('.slider .ui-slider-handle').attr 'data-value', ui.value + 1
+    @setSliderMax max

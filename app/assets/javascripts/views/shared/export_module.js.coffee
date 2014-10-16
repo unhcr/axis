@@ -1,5 +1,7 @@
 class Visio.Views.ExportModule extends Backbone.View
 
+  @include Visio.Mixins.Slidify
+
   className: 'page-overlay export-module'
 
   template: HAML['shared/export_module']
@@ -25,6 +27,9 @@ class Visio.Views.ExportModule extends Backbone.View
 
     @figure = @model.figure @config
 
+    if @figure.type == Visio.FigureTypes.BSY or @figure.type == Visio.FigureTypes.ISY
+      @initSlider @figure
+
     if @config.selectable
       $.subscribe "active.#{@figure.figureId()}", @select
       @selectableData = @figure.selectableData()
@@ -36,11 +41,18 @@ class Visio.Views.ExportModule extends Backbone.View
       selectableData: @selectableData
       selectableLabel: @figure.selectableLabel
 
+
     @$el.find('.export-figure figure').html @figure.el
     if @config.selectable or @config.previewable
       @figure.render()
     else
       @figure.$el.html "<img src=\"/assets/previews/#{@figure.type.name}.png\" />"
+
+    # Need to render slider
+    if @figure.type == Visio.FigureTypes.BSY or @figure.type == Visio.FigureTypes.ISY
+      @renderSlider()
+      @setSliderMax @figure.getMax()
+
     @$el.css 'height', $(document).height()
     @
 

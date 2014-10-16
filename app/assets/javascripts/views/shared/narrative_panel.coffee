@@ -129,7 +129,7 @@ class Visio.Views.NarrativePanel extends Backbone.View
       result.set 'loaded', true
 
     @$el.find(".panel .panel-#{@textTypes.results.name}-query-#{@model.cid}").text query
-    $panel.append result.toHtmlText()
+    $panel.html result.toHtmlText()
 
   search: (query, page = 0) =>
     params = @model.summaryParameters()

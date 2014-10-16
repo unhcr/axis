@@ -4,23 +4,17 @@ class Visio.Figures.Sy extends Visio.Figures.Base
   @include Visio.Mixins.Exportable
 
   findBoxByIndex: (idx) =>
-    boxes = @g.selectAll('.box')
-    result = { box: null, idx: idx, datum: null }
-    boxes.sort(@transformSortFn).each (d, i) ->
-      if idx == i
-        result.box = d3.select(@)
-        result.datum = d
+    datum = @_filtered[idx]
+    box = @g.select(".box-#{datum.id}")
+    result = { box: box, idx: idx, datum: datum }
 
     result
 
 
   findBoxByDatum: (datum) =>
-    boxes = @g.selectAll('.box')
-    result = { box: null, idx: null, datum: datum }
-    boxes.sort(@transformSortFn).each (d, i) ->
-      if d.id == datum.id
-        result.box = d3.select(@)
-        result.idx = i
+    idx = _.indexOf @_filtered, datum
+    box = @g.select(".box-#{datum.id}")
+    result = { box: box, idx: idx, datum: datum }
 
     result
 
@@ -48,6 +42,8 @@ class Visio.Figures.Sy extends Visio.Figures.Base
     @render { isPng: true }
     @renderSvgLabels()
     $(@$el.find('svg')[0])
+
+  getMax: => 0
 
   close: ->
     super

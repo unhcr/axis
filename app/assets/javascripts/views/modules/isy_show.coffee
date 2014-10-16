@@ -1,5 +1,7 @@
 class Visio.Views.IsyShowView extends Visio.Views.AccordionShowView
 
+  @include Visio.Mixins.Slidify
+
   template: HAML['modules/isy_show']
 
   className: 'isy-container accordion-show-container'
@@ -43,14 +45,7 @@ class Visio.Views.IsyShowView extends Visio.Views.AccordionShowView
           @figure.sortAttribute = progress
         @figure.render()
 
-    $.subscribe "hover.#{@figure.cid}.figure", (e, idxOrDatum) =>
-      if idxOrDatum instanceof Visio.Models.IndicatorDatum
-        value = @figure.findBoxByDatum(idxOrDatum).idx
-      else
-        value = idxOrDatum
-
-      @$el.find('.slider').slider 'value', value
-      @$el.find('.slider .ui-slider-handle').attr 'data-value', value + 1
+    @initSlider @figure
 
     $.subscribe "drawFigures.#{@figure.cid}.figure", @drawFigures
 
@@ -65,11 +60,7 @@ class Visio.Views.IsyShowView extends Visio.Views.AccordionShowView
       @$el.find('.header-buttons').append @sortBy.render().el
       @$el.find('.header-buttons').append @queryBy.render().el
 
-      @$el.find('.slider').slider
-        animate: true
-        slide: @onSlide
-        stop: @onStop
-        min: 0
+      @renderSlider()
 
     category = if situationAnalysis.total == 0 then 'white' else situationAnalysis.category
 
@@ -90,31 +81,22 @@ class Visio.Views.IsyShowView extends Visio.Views.AccordionShowView
     @drawFigures() if @isOpen()
     @
 
-  onStop: (e, ui) =>
-    $.publish "mouseout.#{@figure.cid}.figure", ui.value
-
-  onSlide: (e, ui) =>
-    $.publish "hover.#{@figure.cid}.figure", ui.value
-    @$el.find('.slider .ui-slider-handle').attr 'data-value', ui.value + 1
-
   drawFigures: =>
     # rerender filter by
     @filterBy.render true
 
     @figure.collectionFn @model.selectedIndicatorData()
-    max = @figure.filtered(@figure.collection).length
+    max = @figure.getMax()
 
     @figure.render()
 
-    $slider = @$el.find('.slider')
-    $slider.slider 'option', 'max', max - 1
-    $slider.attr 'data-max', max
+    @setSliderMax max
 
     # No reason to show slider if there is nothing to slide
     if max < @figure.maxIndicators
-      $slider.addClass 'gone'
+      @hideSlider()
     else
-      $slider.removeClass 'gone'
+      @showSlider()
 
   removeInstances: =>
     $.unsubscribe "drawFigures.#{@figure.cid}.figure"
