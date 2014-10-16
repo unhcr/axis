@@ -361,6 +361,8 @@ class Visio.Figures.Bsy extends Visio.Figures.Sy
     return unless @hoverDatum?
     box.select('.bar-container').classed 'hover', true
 
+    @renderSvgLabels() if @isExport
+
     if scroll
       if idx >= @maxParameters
         difference = idx - @maxParameters
@@ -403,6 +405,9 @@ class Visio.Figures.Bsy extends Visio.Figures.Sy
       .attr('dy', '.3em')
       .text (m, i) =>
         Visio.Utils.numberToLetter i
+
+  getMax: =>
+    @collection.length
 
   yAxisLabel: ->
 

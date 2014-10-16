@@ -1,9 +1,15 @@
 one:
   operation_id: BEN
+  ppg_id: MY
   usertxt: ben
   usertxt_length: 3
+  year: 2012
+  report_type: 'reportone'
 
 two:
   operation_id: LISA
+  ppg_id: GOD
   usertxt: lisa
   usertxt_length: 4
+  year: 2013
+  report_type: 'reporttwo'

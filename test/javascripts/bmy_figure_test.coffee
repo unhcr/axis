@@ -20,8 +20,8 @@ module 'BMY Figure',
     Visio.Models.Output.prototype.selectedBudgetData.restore()
 
 test 'filtered', ->
-  @figure.filters.get('scenario').filter(Visio.Scenarios.AOL, true)
-  @figure.filters.get('scenario').filter(Visio.Scenarios.OL, true)
+  @figure.filters.get('scenario').filter(Visio.Scenarios.AOL, true, { silent: true })
+  @figure.filters.get('scenario').filter(Visio.Scenarios.OL, true, { silent: true })
 
   memo = @figure.filtered @d
 
@@ -47,8 +47,8 @@ test 'filtered - no total', ->
   ok _.find memo, ((array) -> array[array.groupBy] == Visio.Budgets.PROJECT), 'One line should have PROJECT type'
 
 test 'render', ->
-  @figure.filters.get('scenario').filter(Visio.Scenarios.AOL, true)
-  @figure.filters.get('scenario').filter(Visio.Scenarios.OL, true)
+  @figure.filters.get('scenario').filter(Visio.Scenarios.AOL, true, { silent: true })
+  @figure.filters.get('scenario').filter(Visio.Scenarios.OL, true, { silent: true })
   @figure.collectionFn @d
   @figure.render()
 

@@ -448,6 +448,8 @@ class Visio.Figures.Isy extends Visio.Figures.Sy
     box.select('.bar-container').classed 'hover', true
 
 
+    @renderSvgLabels() if @isExport
+
     if scroll
       if idx >= @maxIndicators
         difference = idx - @maxIndicators
@@ -487,6 +489,9 @@ class Visio.Figures.Isy extends Visio.Figures.Sy
 
   datumToString: (d) =>
     d.indicator().toString()
+
+  getMax: =>
+    @filtered(@collection).length
 
   yAxisLabel: ->
 
