@@ -75,7 +75,7 @@ class Visio.Figures.Map extends Visio.Figures.Base
         id: 'scenario'
         filterType: 'checkbox'
         values: scenarioValues
-        classback: (name, attr) =>
+        callback: (name, attr) =>
           @render()
       },
       {
@@ -218,7 +218,7 @@ class Visio.Figures.Map extends Visio.Figures.Base
     @tipsyHeaderBtns()
     @
 
-  algorithmValue: (operation) ->
+  algorithmValue: (operation) =>
     algorithm = @filters.get('algorithm').active()
     switch algorithm
       when 'selectedSituationAnalysis'
