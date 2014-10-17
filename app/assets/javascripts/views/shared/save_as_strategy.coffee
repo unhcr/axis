@@ -39,6 +39,8 @@ class Visio.Views.SaveAsStrategy extends Backbone.View
           title: 'Saved'
           description: 'Strategy has successfully been saved.'
 
+        Visio.manager.get('personal_strategies').add response.strategy
+
       else
         alert(msg)
     @close()
