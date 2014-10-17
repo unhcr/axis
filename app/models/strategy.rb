@@ -82,12 +82,12 @@ class Strategy < ActiveRecord::Base
     }
   end
 
-  def data_optimized(resource = IndicatorDatum, limit = nil, where = {})
+  def data_optimized(resource = IndicatorDatum, limit = nil, where = {}, user = nil)
     ids = parameter_ids
     ids[:indicator_ids] = self.indicator_ids if resource == IndicatorDatum
     ids.delete :output_ids if resource == Narrative
 
-    resource.models_optimized ids
+    resource.models_optimized ids, limit, where, nil, user
   end
 
   def data(resource = IndicatorDatum, limit = nil, where = {})
@@ -193,7 +193,7 @@ class Strategy < ActiveRecord::Base
     if strategy_json[:strategy_objectives]
       strategy_json[:strategy_objectives].each do |json|
         so = nil
-        if json['id'].present? and json['id'] != ANY_STRATEGY_OBJECTIVE
+        if json['id'].present?
           so = self.strategy_objectives.find(json['id'])
         else
           so = self.strategy_objectives.new()

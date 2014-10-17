@@ -3356,6 +3356,12 @@ a {
   @include text-theme-one
 }
 
+.save-as-strategy-container {
+  input, textarea {
+    margin-bottom: 20px;
+  }
+}
+
 .btn {
   margin: 4px 0px;
   padding: 5px 7px;

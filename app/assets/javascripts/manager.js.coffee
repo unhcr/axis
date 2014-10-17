@@ -212,20 +212,21 @@ class Visio.Models.Manager extends Backbone.Model
 
     params = {}
 
-    params.operations = _.map _.keys(selected.operations), (id) -> { id: id }
-    params.ppgs = _.map _.keys(selected.ppgs), (id) -> { id: id }
+    params.operations = _.map _.keys(selected.operations or {}), (id) -> { id: id }
+    params.ppgs = _.map _.keys(selected.ppgs or {}), (id) -> { id: id }
 
     params.strategy_objectives = _.filter @get('strategy_objectives').toJSON(), (d) ->
-        selected.strategy_objectives[d.id] and d.id != Visio.Constants.ANY_STRATEGY_OBJECTIVE
+        selected.strategy_objectives?[d.id] and d.id != Visio.Constants.ANY_STRATEGY_OBJECTIVE
 
     _.each params.strategy_objectives, (so) ->
-      so.goals = _.filter so.goals, (d) -> selected.goals[d.id]
-      so.problem_objectives = _.filter so.problem_objectives, (d) -> selected.problem_objectives[d.id]
-      so.outputs = _.filter so.outputs, (d) -> selected.outputs[d.id]
-      so.indicators = _.filter so.indicators, (d) -> selected.indicators[d.id]
+      so.goals = _.filter so.goals, (d) -> selected.goals?[d.id]
+      so.problem_objectives = _.filter so.problem_objectives, (d) -> selected.problem_objectives?[d.id]
+      so.outputs = _.filter so.outputs, (d) -> selected.outputs?[d.id]
+      so.indicators = _.filter so.indicators, (d) -> selected.indicators?[d.id]
 
     if @includeExternalStrategyData()
       so = @get('strategy_objectives').get(Visio.Constants.ANY_STRATEGY_OBJECTIVE).toJSON()
+      delete so.id
       so.goals = _.filter @get('goals').toJSON(), (d) ->
         selected.goals[d.id] and _.every params.strategy_objectives, (so) ->
           not (_.find so.goals, (p) -> p.id == d.id)

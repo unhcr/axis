@@ -64,7 +64,7 @@ class IndicatorDatum < ActiveRecord::Base
 
   end
 
-  def self.models_optimized(ids = {}, limit = nil, where = nil, offset = nil)
+  def self.models_optimized(ids = {}, limit = nil, where = nil, offset = nil, user_id = nil)
     conditions = []
 
     conditions << "operation_id IN ('#{ids[:operation_ids].join("','")}')" if ids[:operation_ids]
@@ -82,24 +82,7 @@ class IndicatorDatum < ActiveRecord::Base
       conditions << "output_id IN ('#{ids[:output_ids].join("','")}')"
     end
     query_string = conditions.join(' AND ')
-
-    sqlStrategyObjectives = "
-      select strategy_objective_id
-      from goals_strategy_objectives
-      where goal_id = #{self.table_name}.goal_id
-
-      INTERSECT
-
-      select strategy_objective_id
-      from problem_objectives_strategy_objectives
-      where problem_objective_id = #{self.table_name}.problem_objective_id
-
-      INTERSECT
-
-      select strategy_objective_id
-      from indicators_strategy_objectives
-      where indicator_id = #{self.table_name}.indicator_id"
-
+    query_string = " AND #{query_string}" unless conditions.empty?
 
     # Need to include Strategy Objective ids
     sql = "select array_to_json(array_agg(row_to_json(t)))
@@ -108,14 +91,7 @@ class IndicatorDatum < ActiveRecord::Base
           (
             select array_to_json(array_agg(row_to_json(d)::json->'strategy_objective_id'))
             from (
-
-              #{sqlStrategyObjectives}
-
-              INTERSECT
-
-              select strategy_objective_id
-              from outputs_strategy_objectives
-              where output_id = #{self.table_name}.output_id
+              #{([Goal, Output, ProblemObjective, Indicator].map { |c| parameter_sql(c, user_id) }).join(' INTERSECT ')}
 
             ) as d
         ) as strategy_objective_ids
@@ -129,7 +105,7 @@ class IndicatorDatum < ActiveRecord::Base
             select array_to_json(array_agg(row_to_json(d)::json->'strategy_objective_id'))
             from (
 
-              #{sqlStrategyObjectives}
+              #{([Goal, ProblemObjective, Indicator].map { |c| parameter_sql(c, user_id) }).join(' INTERSECT ')}
 
             ) as d
         ) as strategy_objective_ids
@@ -137,7 +113,7 @@ class IndicatorDatum < ActiveRecord::Base
         where is_performance = false
 
       ) t
-      where is_deleted = false AND #{query_string}"
+      where is_deleted = false #{query_string}"
 
     sql += " LIMIT #{sanitize(limit)}" unless limit.nil?
     sql += " OFFSET #{sanitize(offset)}" unless offset.nil?
@@ -145,6 +121,21 @@ class IndicatorDatum < ActiveRecord::Base
 
     ActiveRecord::Base.connection.execute(sql)
 
+  end
+
+  def self.parameter_sql(parameterClass, user_id)
+    user_sql = ''
+    if user_id.nil?
+      user_sql = "user_id is NULL"
+    else
+      user_sql = "(user_id is NULL or user_id = #{user_id})"
+    end
+
+    "select strategy_objective_id
+    from #{parameterClass.table_name}_strategy_objectives
+    inner join strategy_objectives on strategy_objectives.id = #{parameterClass.table_name}_strategy_objectives.strategy_objective_id
+    inner join strategies on strategy_objectives.strategy_id = strategies.id
+    where #{parameterClass.table_name.singularize}_id = #{self.table_name}.#{parameterClass.table_name.singularize}_id and #{user_sql}"
   end
 
   def to_jbuilder(options = {})

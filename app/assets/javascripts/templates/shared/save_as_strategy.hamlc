@@ -4,15 +4,15 @@
   .row
     .col-md-12
       %h2
-        = "Save as strategy"
+        = "Save as personal strategy"
 
   .row
     .col-md-12
-      %input.strategy-name{ :type => 'text' }
+      %input.strategy-name{ :type => 'text', :placeholder => 'Strategy name' }
 
   .row
     .col-md-12
-      %textarea.strategy-description
+      %textarea.strategy-description{ :placeholder => 'Strategy description' }
 
   .row
     .col-md-6

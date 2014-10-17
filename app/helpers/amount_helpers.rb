@@ -1,5 +1,5 @@
 module AmountHelpers
-  def models(ids = {}, limit = nil, where = {})
+  def models(ids = {}, limit = nil, where = {}, user_id = nil)
 
     conditions = []
 
@@ -19,9 +19,10 @@ module AmountHelpers
         .where(where).limit(limit)
   end
 
-  def models_optimized(ids = {}, limit = nil, where = nil, offset = nil)
+  def models_optimized(ids = {}, limit = nil, where = nil, offset = nil, user_id = nil)
     conditions = generate_conditions ids
     query_string = conditions.join(' AND ')
+    query_string = " AND #{query_string}" unless conditions.empty?
 
     # Need to include Strategy Objective ids
     outerSql = "select array_to_json(array_agg(row_to_json(t))) from ( "
@@ -31,26 +32,12 @@ module AmountHelpers
             select array_to_json(array_agg(row_to_json(d)::json->'strategy_objective_id'))
             from (
 
-              select strategy_objective_id
-              from goals_strategy_objectives
-              where goal_id = #{self.table_name}.goal_id
-
-              INTERSECT
-
-              select strategy_objective_id
-              from problem_objectives_strategy_objectives
-              where problem_objective_id = #{self.table_name}.problem_objective_id
-
-              INTERSECT
-
-              select strategy_objective_id
-              from outputs_strategy_objectives
-              where output_id = #{self.table_name}.output_id
+              #{([Goal, Output, ProblemObjective].map { |c| parameter_sql(c, user_id) }).join(' INTERSECT ')}
 
             ) as d
         ) as strategy_objective_ids
       from #{self.table_name}
-      where is_deleted = false AND #{query_string}"
+      where is_deleted = false #{query_string}"
 
     innerSql += " AND (#{where})" unless where.nil?
     innerSql += " LIMIT #{sanitize(limit)}" unless limit.nil?
@@ -60,6 +47,21 @@ module AmountHelpers
 
     ActiveRecord::Base.connection.execute(sql)
 
+  end
+
+  def parameter_sql(parameterClass, user_id)
+    user_sql = ''
+    if user_id.nil?
+      user_sql = "user_id is NULL"
+    else
+      user_sql = "(user_id is NULL or user_id = #{user_id})"
+    end
+
+    "select strategy_objective_id
+    from #{parameterClass.table_name}_strategy_objectives
+    inner join strategy_objectives on strategy_objectives.id = #{parameterClass.table_name}_strategy_objectives.strategy_objective_id
+    inner join strategies on strategy_objectives.strategy_id = strategies.id
+    where #{parameterClass.table_name.singularize}_id = #{self.table_name}.#{parameterClass.table_name.singularize}_id and #{user_sql}"
   end
 
   def sanitize(sql)

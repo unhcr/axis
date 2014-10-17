@@ -102,6 +102,51 @@ test 'selected', () ->
     strictEqual(selected.length, 1)
     ok(selected.get(1))
 
+test 'toStrategyParams', ->
+  r = Visio.manager.toStrategyParams()
+  ok _.isEmpty r.operations
+  ok _.isEmpty r.ppgs
+  ok _.isEmpty r.strategy_objectives
+
+  selected =
+    operations:
+      'A': true
+      'B': true
+      'C': true
+    goals:
+      'D': true
+
+  Visio.manager.set 'selected', selected
+  Visio.manager.includeExternalStrategyData false
+
+  r = Visio.manager.toStrategyParams()
+
+  strictEqual r.operations.length, 3
+  strictEqual r.strategy_objectives.length, 0
+  ok _.indexOf(_.map(r.operations, (o) -> o.id), 'A') != -1
+
+test 'toStrategyParams include external', ->
+
+  selected =
+    operations:
+      'A': true
+      'B': true
+      'C': true
+    goals:
+      'D': true
+
+
+  Visio.manager.set 'selected', selected
+  Visio.manager.set 'goals', new Visio.Collections.Goal([{ id: 'D' }, { id: 'F' }])
+  Visio.manager.includeExternalStrategyData true
+
+  r = Visio.manager.toStrategyParams()
+
+  strictEqual r.operations.length, 3
+  strictEqual r.strategy_objectives.length, 1
+  ok not r.strategy_objectives[0].id
+  strictEqual r.strategy_objectives[0].goals.length, 1
+
 test 'formattedIds', ->
 
   Visio.manager.set 'selected', { operations: { 'BEN': true }, ppgs: { 'LISA': true } }
@@ -113,26 +158,6 @@ test 'formattedIds', ->
 
   strictEqual formatted.operation_ids.length, 1
   strictEqual formatted.ppg_ids.length, 1
-
-test 'plan', () ->
-  Visio.manager.get('plans').reset([
-    {
-      id: 'abc'
-      country: { iso3: 'ben' }
-      year: Visio.manager.year()
-    }
-    {
-      id: 'ben'
-      country: { iso3: 'aaa' }
-      year: Visio.manager.year()
-    }
-  ])
-
-  p = Visio.manager.plan('ben')
-  strictEqual p.id, 'ben'
-
-  p = Visio.manager.plan('aaa')
-  strictEqual p.id, 'ben'
 
 test 'resetSelectedDefaults', () ->
 
@@ -185,38 +210,6 @@ test 'resetSelectedDefaults - operation dashboard', ->
   ok Visio.manager.get('strategy_objectives').get('123')
 
   strictEqual Visio.manager.selected('operations').length, 1
-
-test 'selectedStrategyPlanIds', ->
-  strategies = [
-    { id: 1, plan_ids: { 1: true , 2: true } },
-    { id: 2, plan_ids: { 2: true, 3: true } },
-    { id: 3, plan_ids: { 4: true, 2: true } }]
-  selectedStrategies = {}
-  plans = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }]
-  Visio.manager.get('strategies').reset(strategies)
-  Visio.manager.get('plans').reset([plans])
-  Visio.manager.set('selected_strategies', selectedStrategies)
-
-  ids = Visio.manager.selectedStrategyPlanIds()
-  strictEqual ids.length, 0, 'Should have no plan ids for no selected strategies'
-
-  selectedStrategies[strategies[0].id] = true
-  Visio.manager.set('selected_strategies', selectedStrategies)
-
-  ids = Visio.manager.selectedStrategyPlanIds()
-  Visio.manager.set('selected_strategies', selectedStrategies)
-  strictEqual ids.length, _.keys(strategies[0].plan_ids).length
-  _.each ids, (id) ->
-    ok _.include _.keys(strategies[0].plan_ids), id
-
-  selectedStrategies[strategies[1].id] = true
-  Visio.manager.set('selected_strategies', selectedStrategies)
-  ids = Visio.manager.selectedStrategyPlanIds()
-  strictEqual ids.length, _.intersection(_.keys(strategies[0].plan_ids),
-                                         _.keys(strategies[1].plan_ids)).length
-  _.each ids, (id) ->
-    ok _.include _.intersection(_.keys(strategies[0].plan_ids),
-                                _.keys(strategies[1].plan_ids)), id
 
 test 'includeExternalStrategyData', ->
 
