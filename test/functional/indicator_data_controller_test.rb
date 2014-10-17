@@ -127,6 +127,7 @@ class IndicatorDataControllerTest < ActionController::TestCase
     r = JSON.parse(response.body)
 
     assert_equal 1, r.length
+    assert r[0]['strategy_objective_ids'], 'No SO ids'
 
   end
 

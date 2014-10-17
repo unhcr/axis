@@ -62,6 +62,18 @@ module 'Parameter',
         strategy_objective_ids: []
         year: 2012
       }
+      # Should never be selected unless we include external data
+      {
+        id: 'pink'
+        operation_id: 1
+        ppg_id: 1
+        goal_id: 1
+        output_id: null
+        problem_objective_id: 1
+        ol_admin_budget: 100
+        strategy_objective_ids: [3]
+        year: 2012
+      },
       # Should always be selected
       {
         id: 'blue'
@@ -264,21 +276,23 @@ test 'selectedIndicatorData - external data', ->
         len = 1
         ok data.get 'blue'
       else if hash.plural == Visio.Parameters.STRATEGY_OBJECTIVES.plural and d.id == Visio.Constants.ANY_STRATEGY_OBJECTIVE
-        len = 1
+        len = 2
 
         # SOs are ignored so should be selected
         ok data.get('purple'), "Should always have purple #{hash.human}"
+        ok data.get('pink'), "Should always have pink #{hash.human}"
       else if hash.plural == Visio.Parameters.STRATEGY_OBJECTIVES.plural and d.id != Visio.Constants.ANY_STRATEGY_OBJECTIVE
         len = 2
         ok data.get('green'), "Should always have green for #{hash.human}"
         ok data.get('blue'), "Should always have blue #{hash.human}"
       else
-        len = 3
+        len = 4
         ok data.get('green'), "Should always have green for #{hash.human}"
         ok data.get('blue'), "Should always have blue #{hash.human}"
 
         # SOs are ignored so should be selected
         ok data.get('purple'), "Should always have purple #{hash.human}"
+        ok data.get('pink'), "Should always have pink #{hash.human}"
 
       strictEqual data.length, len, "There should be #{len} when aggr by #{hash.human}"
 

@@ -54,7 +54,7 @@ module AmountHelpers
     from #{parameterClass.table_name}_strategy_objectives
     inner join strategy_objectives on strategy_objectives.id = #{parameterClass.table_name}_strategy_objectives.strategy_objective_id
     inner join strategies on strategy_objectives.strategy_id = strategies.id
-    where #{parameterClass.table_name.singularize}_id = #{self.table_name}.#{parameterClass.table_name.singularize}_id and user_id is NULL"
+    where #{parameterClass.table_name.singularize}_id = #{self.table_name}.#{parameterClass.table_name.singularize}_id"
   end
 
   def sanitize(sql)
