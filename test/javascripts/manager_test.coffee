@@ -5,7 +5,7 @@ module 'Manager',
     Visio.manager = new Visio.Models.Manager()
 
   teardown: () ->
-    Visio.manager.get('db').clear()
+    delete Visio.manager
 
 asyncTest 'getLastSync', () ->
   id = 'ben'
@@ -103,6 +103,7 @@ test 'selected', () ->
     ok(selected.get(1))
 
 test 'toStrategyParams', ->
+  Visio.manager.set 'selected', {}
   r = Visio.manager.toStrategyParams()
   ok _.isEmpty r.operations
   ok _.isEmpty r.ppgs
@@ -138,14 +139,18 @@ test 'toStrategyParams include external', ->
 
   Visio.manager.set 'selected', selected
   Visio.manager.set 'goals', new Visio.Collections.Goal([{ id: 'D' }, { id: 'F' }])
+  Visio.manager.set 'operations', new Visio.Collections.Operation([{ id: 'A' }, { id: 'C' }, { id: 'B' }])
+  Visio.manager.set 'problem_objectives', new Visio.Collections.ProblemObjective()
+  Visio.manager.set 'outputs', new Visio.Collections.Output()
+  Visio.manager.set 'indicators', new Visio.Collections.Indicator()
+
   Visio.manager.includeExternalStrategyData true
 
   r = Visio.manager.toStrategyParams()
 
   strictEqual r.operations.length, 3
-  strictEqual r.strategy_objectives.length, 1
-  ok not r.strategy_objectives[0].id
-  strictEqual r.strategy_objectives[0].goals.length, 1
+  strictEqual r.strategy_objectives.length, 0
+  strictEqual r.goals[0].id, 'D'
 
 test 'formattedIds', ->
 

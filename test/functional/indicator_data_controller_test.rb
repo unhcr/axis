@@ -96,7 +96,6 @@ class IndicatorDataControllerTest < ActionController::TestCase
     r = JSON.parse(response.body)
 
     assert_equal 1, r.length
-    assert_equal r[0]['strategy_objective_ids'].length, 1
   end
 
   test "index indicator data - optimized strategy id and personal strategy" do
@@ -128,7 +127,6 @@ class IndicatorDataControllerTest < ActionController::TestCase
     r = JSON.parse(response.body)
 
     assert_equal 1, r.length
-    assert_equal r[0]['strategy_objective_ids'].length, 1
 
   end
 

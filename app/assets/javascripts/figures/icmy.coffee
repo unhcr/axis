@@ -220,7 +220,7 @@ class Visio.Figures.Icmy extends Visio.Figures.Base
           summary: @summary
           model_id: id
           id_type: collection.name
-          name: if id? then collection.at(0).toString() else Visio.manager.get('dashboard').toString()
+          name: if id? then collection.at(0).toString() else Visio.manager.get('dashboard')?.toString()
 
         # Keeps track of total in that year for that category
         datum.amount += count

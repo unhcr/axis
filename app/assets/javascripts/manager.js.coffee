@@ -226,26 +226,21 @@ class Visio.Models.Manager extends Backbone.Model
 
     if @includeExternalStrategyData()
       so = @get('strategy_objectives').get(Visio.Constants.ANY_STRATEGY_OBJECTIVE).toJSON()
-      delete so.id
-      so.goals = _.filter @get('goals').toJSON(), (d) ->
+      params.goals = _.filter @get('goals').toJSON(), (d) ->
         selected.goals[d.id] and _.every params.strategy_objectives, (so) ->
           not (_.find so.goals, (p) -> p.id == d.id)
 
-      so.problem_objectives = _.filter @get('problem_objectives').toJSON(), (d) ->
+      params.problem_objectives = _.filter @get('problem_objectives').toJSON(), (d) ->
         selected.problem_objectives[d.id] and _.every params.strategy_objectives, (so) ->
           not (_.find so.problem_objectives, (p) -> p.id == d.id)
 
-      so.outputs = _.filter @get('outputs').toJSON(), (d) ->
+      params.outputs = _.filter @get('outputs').toJSON(), (d) ->
         selected.outputs[d.id] and _.every params.strategy_objectives, (so) ->
           not (_.find so.outputs, (p) -> p.id == d.id)
 
-      so.indicators = _.filter @get('indicators').toJSON(), (d) ->
+      params.indicators = _.filter @get('indicators').toJSON(), (d) ->
         selected.indicators[d.id] and _.every params.strategy_objectives, (so) ->
           not (_.find so.indicators, (p) -> p.id == d.id)
-
-
-      params.strategy_objectives.push so
-
 
     params
 

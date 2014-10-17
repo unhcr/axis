@@ -64,7 +64,7 @@ class IndicatorDatum < ActiveRecord::Base
 
   end
 
-  def self.models_optimized(ids = {}, limit = nil, where = nil, offset = nil, user_id = nil)
+  def self.models_optimized(ids = {}, limit = nil, where = nil, offset = nil)
     conditions = []
 
     conditions << "operation_id IN ('#{ids[:operation_ids].join("','")}')" if ids[:operation_ids]
@@ -91,7 +91,7 @@ class IndicatorDatum < ActiveRecord::Base
           (
             select array_to_json(array_agg(row_to_json(d)::json->'strategy_objective_id'))
             from (
-              #{([Goal, Output, ProblemObjective, Indicator].map { |c| parameter_sql(c, user_id) }).join(' INTERSECT ')}
+              #{([Goal, Output, ProblemObjective, Indicator].map { |c| parameter_sql(c) }).join(' INTERSECT ')}
 
             ) as d
         ) as strategy_objective_ids
@@ -105,7 +105,7 @@ class IndicatorDatum < ActiveRecord::Base
             select array_to_json(array_agg(row_to_json(d)::json->'strategy_objective_id'))
             from (
 
-              #{([Goal, ProblemObjective, Indicator].map { |c| parameter_sql(c, user_id) }).join(' INTERSECT ')}
+              #{([Goal, ProblemObjective, Indicator].map { |c| parameter_sql(c) }).join(' INTERSECT ')}
 
             ) as d
         ) as strategy_objective_ids
@@ -123,19 +123,12 @@ class IndicatorDatum < ActiveRecord::Base
 
   end
 
-  def self.parameter_sql(parameterClass, user_id)
-    user_sql = ''
-    if user_id.nil?
-      user_sql = "user_id is NULL"
-    else
-      user_sql = "(user_id is NULL or user_id = #{user_id})"
-    end
-
+  def self.parameter_sql(parameterClass)
     "select strategy_objective_id
     from #{parameterClass.table_name}_strategy_objectives
     inner join strategy_objectives on strategy_objectives.id = #{parameterClass.table_name}_strategy_objectives.strategy_objective_id
     inner join strategies on strategy_objectives.strategy_id = strategies.id
-    where #{parameterClass.table_name.singularize}_id = #{self.table_name}.#{parameterClass.table_name.singularize}_id and #{user_sql}"
+    where #{parameterClass.table_name.singularize}_id = #{self.table_name}.#{parameterClass.table_name.singularize}_id and user_id is NULL"
   end
 
   def to_jbuilder(options = {})
