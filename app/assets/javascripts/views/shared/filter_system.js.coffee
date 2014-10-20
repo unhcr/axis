@@ -41,6 +41,7 @@ class Visio.Views.FilterSystemView extends Backbone.View
     'click .filter-option': 'onClickFilterOption'
     'click .deselect': 'onDeselect'
     'click .reset': 'onReset'
+    'click .save-as-strategy' : 'onSaveAsStrategy'
     'change .visio-checkbox input': 'onChangeSelection'
     'keyup .page-filter': 'onFilterPages'
 
@@ -69,8 +70,17 @@ class Visio.Views.FilterSystemView extends Backbone.View
       new Visio.Views.ParameterSearch({ collection: Visio.manager.get(hash.plural) })
 
     parameters = []
+    paramHashes = [
+      Visio.Parameters.OPERATIONS
+      Visio.Parameters.PPGS
+      Visio.Parameters.GOALS
+      Visio.Parameters.PROBLEM_OBJECTIVES
+      Visio.Parameters.OUTPUTS
+      Visio.Parameters.INDICATORS
+      Visio.Parameters.STRATEGY_OBJECTIVES
+    ]
 
-    _.each _.values(Visio.Parameters), (hash) ->
+    _.each paramHashes, (hash) ->
 
       return if Visio.manager.get('indicator') and Visio.Parameters.INDICATORS == hash
 
@@ -122,6 +132,9 @@ class Visio.Views.FilterSystemView extends Backbone.View
       sharedStrategies: Visio.manager.sharedStrategies().toJSON()
       options: Visio.Views.FilterSystemView.OPTIONS
       selected: 'strategies'
+
+  onSaveAsStrategy: (e) ->
+    $('body').append (new Visio.Views.SaveAsStrategy().render().el)
 
   onChangeSelection: (e) ->
     $target = $(e.currentTarget)

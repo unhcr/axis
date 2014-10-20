@@ -7,6 +7,9 @@ class Visio.Models.Parameter extends Visio.Models.Syncable
   # @param: year - Allows for any specified year or false which will use all years. If undefined, will fall
   # @param: filters - Any sort of FigureFilter that should be applied to data
   # back to current year
+  # @param: opts
+  #   includeExternalStrategyData - Should we include external data
+  #   strategyObjectiveIds - List of all strategy objective ids
   data: (type, idHash, year, filters, opts = {}) ->
     year = Visio.manager.year() unless year?
 
@@ -24,7 +27,7 @@ class Visio.Models.Parameter extends Visio.Models.Syncable
         ids = d.get "#{@name.singular}_ids"
 
         _.include(ids, @id) or
-          (_.isEmpty(ids) and
+          (_.every(ids, (id) -> _.indexOf(opts.strategyObjectiveIds, id) == -1) and
            opts.includeExternalStrategyData and
            @id == Visio.Constants.ANY_STRATEGY_OBJECTIVE and
            idHash[@name.plural][@id])
@@ -56,11 +59,19 @@ class Visio.Models.Parameter extends Visio.Models.Syncable
         if hash == Visio.Parameters.STRATEGY_OBJECTIVES
           ids = d.get("#{hash.singular}_ids")
 
-          if _.isEmpty(ids) and opts.includeExternalStrategyData and idHash[hash.plural][Visio.Constants.ANY_STRATEGY_OBJECTIVE]
+          # If any of the SO ids are selected, it's true
+          result = _.any ids, (id) -> idHash[hash.plural][id]
 
-            return true
+          return true if result
 
-          return _.any ids, (id) -> idHash[hash.plural][id]
+          if opts.includeExternalStrategyData and idHash[hash.plural][Visio.Constants.ANY_STRATEGY_OBJECTIVE]
+            return true if _.isEmpty(ids)
+
+            # If it's not empty we need make sure that the ids it does have are not listed
+            if opts.strategyObjectiveIds
+              return true if _.every ids, (id) -> _.indexOf(opts.strategyObjectiveIds, id) == -1
+
+          return false
 
 
         id = d.get("#{hash.singular}_id")
@@ -85,6 +96,7 @@ class Visio.Models.Parameter extends Visio.Models.Syncable
   selectedData: (type, year, filters = null) ->
     opts =
       includeExternalStrategyData: Visio.manager.includeExternalStrategyData()
+      strategyObjectiveIds: Visio.manager.get('strategy_objectives').pluck('id')
 
     @data type, Visio.manager.get('selected'), year, filters, opts
 

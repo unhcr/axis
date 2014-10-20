@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140925080101) do
+ActiveRecord::Schema.define(:version => 20141017122033) do
 
   create_table "admin_configurations", :force => true do |t|
     t.integer  "startyear",                :default => 2012
@@ -604,11 +604,12 @@ ActiveRecord::Schema.define(:version => 20140925080101) do
 
   create_table "strategies", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
     t.text     "description"
     t.integer  "user_id"
     t.string   "dashboard_type"
+    t.boolean  "has_external_data", :default => false
   end
 
   create_table "strategy_objectives", :force => true do |t|

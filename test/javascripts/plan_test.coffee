@@ -7,24 +7,6 @@ module 'Plan',
   teardown: () ->
     Visio.manager.get('db').clear()
 
-test('find plan', () ->
-  Visio.manager.get('plans').reset([{ id: 'bien', year: 2013, country: { iso3: 'BEN' } },
-                              { id: 'dirk', year: 2013, country: { iso3: 'UGA' } }])
-
-  plan = Visio.manager.plan('bien')
-  ok(plan, 'Must have plan')
-  strictEqual(plan.id, 'bien')
-  Visio.manager.year(2013)
-
-  plan = Visio.manager.plan('UGA')
-  ok(plan, 'Must have plan')
-  strictEqual(plan.id, 'dirk')
-
-  Visio.manager.year(2012)
-  plan = Visio.manager.plan('UGA')
-  ok(!plan, 'Must not have plan')
-)
-
 test 'strategy situation analysis', () ->
   p = new Visio.Models.Plan({ operation_id: 'op', id: 'abcd', name: 'ben', situation_analysis:
     {

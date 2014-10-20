@@ -1,0 +1,28 @@
+.close-container
+  .close
+%form
+  .row
+    .col-md-12
+      %h2
+        = "Save as personal strategy"
+
+  .row
+    .col-md-12
+      %input.strategy-name{ :type => 'text', :placeholder => 'Strategy name' }
+
+  .row
+    .col-md-12
+      %textarea.strategy-description{ :placeholder => 'Strategy description' }
+
+  .row
+    .col-md-6
+      .btn.save
+        Save
+
+    .col-md-6
+      .btn.cancel
+        Cancel
+
+
+
+

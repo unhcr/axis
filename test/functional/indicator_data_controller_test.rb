@@ -54,9 +54,10 @@ class IndicatorDataControllerTest < ActionController::TestCase
     datum.problem_objective = problem_objectives(:one)
     datum.output = outputs(:one)
     datum.indicator = indicators(:one)
+    datum.is_performance = true
     datum.save
 
-    get :index, { :strategy_id => @s.id }
+    get :index, { :strategy_id => @s.id, :optimize => true }
 
     assert_response :success
 
@@ -65,7 +66,7 @@ class IndicatorDataControllerTest < ActionController::TestCase
     assert_equal 1, r.length
   end
 
-  test "index indicator data - strategy id - optimized" do
+  test "index indicator data - filter ids and personal strategy" do
     datum = IndicatorDatum.new()
     datum.id = 'abc'
     datum.operation = operations(:one)
@@ -77,15 +78,57 @@ class IndicatorDataControllerTest < ActionController::TestCase
     datum.output = outputs(:one)
     datum.indicator = indicators(:one)
     datum.is_performance = true
+
+    outputs(:one).strategy_objectives << strategy_objectives(:one)
+    problem_objectives(:one).strategy_objectives << strategy_objectives(:one)
+    goals(:one).strategy_objectives << strategy_objectives(:one)
+    indicators(:one).strategy_objectives << strategy_objectives(:one)
+
     datum.save
 
-    get :index, { :strategy_id => @s.id, :optimize => true }
+    @s.user = @user
+    @s.save
+
+    get :index, { :filter_ids => { :operation_ids => [datum.operation_id] }, :user_id => @user.id }
 
     assert_response :success
 
     r = JSON.parse(response.body)
 
     assert_equal 1, r.length
+  end
+
+  test "index indicator data - optimized strategy id and personal strategy" do
+    datum = IndicatorDatum.new()
+    datum.id = 'abc'
+    datum.operation = operations(:one)
+    datum.plan = plans(:one)
+    datum.ppg = ppgs(:one)
+    datum.goal = goals(:one)
+    datum.rights_group = rights_groups(:one)
+    datum.problem_objective = problem_objectives(:one)
+    datum.is_performance = false
+    datum.indicator = indicators(:one)
+
+    outputs(:one).strategy_objectives << strategy_objectives(:one)
+    problem_objectives(:one).strategy_objectives << strategy_objectives(:one)
+    goals(:one).strategy_objectives << strategy_objectives(:one)
+    indicators(:one).strategy_objectives << strategy_objectives(:one)
+
+    datum.save
+
+    @s.user = @user
+    @s.save
+
+    get :index, { :strategy_id => @s.id }
+
+    assert_response :success
+
+    r = JSON.parse(response.body)
+
+    assert_equal 1, r.length
+    assert r[0]['strategy_objective_ids'], 'No SO ids'
+
   end
 
   test "index indicator data - optimized impact strategy objective" do

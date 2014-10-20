@@ -3352,8 +3352,14 @@ a {
   }
 }
 
-.share-strategy-container form, .admin-users-container  form{
+.share-strategy-container form, .admin-users-container, .save-as-strategy-container form {
   @include text-theme-one
+}
+
+.save-as-strategy-container {
+  input, textarea {
+    margin-bottom: 20px;
+  }
 }
 
 .btn {

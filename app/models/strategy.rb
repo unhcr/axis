@@ -4,8 +4,9 @@ class Strategy < ActiveRecord::Base
     :overview => 'overview',
     :operation => 'operation',
   }
+  ANY_STRATEGY_OBJECTIVE = 'ANY_STRATEGY_OBJECTIVE'
 
-  attr_accessible :name, :description, :dashboard_type
+  attr_accessible :name, :description, :dashboard_type, :has_external_data
 
   has_many :strategy_objectives,
     :after_remove => :remove_strategy_objective_parameters,
@@ -22,19 +23,19 @@ class Strategy < ActiveRecord::Base
   has_many :ppgs, :uniq => true, :through => :ppgs_strategies
 
   has_many :goals_strategies, :class_name    => 'GoalsStrategies'
-  has_many :goals, :uniq => true, :before_add => :belongs_to_strategy_objective, :through => :goals_strategies
+  has_many :goals, :uniq => true, :through => :goals_strategies
 
   has_many :rights_groups_strategies, :class_name    => 'RightsGroupsStrategies'
   has_many :rights_groups, :uniq => true, :through => :rights_groups_strategies
 
   has_many :problem_objectives_strategies, :class_name     => 'ProblemObjectivesStrategies'
-  has_many :problem_objectives, :uniq => true, :before_add => :belongs_to_strategy_objective, :through => :problem_objectives_strategies
+  has_many :problem_objectives, :uniq => true, :through => :problem_objectives_strategies
 
   has_many :outputs_strategies, :class_name    => 'OutputsStrategies'
-  has_many :outputs, :uniq => true, :before_add => :belongs_to_strategy_objective, :through => :outputs_strategies
+  has_many :outputs, :uniq => true, :through => :outputs_strategies
 
   has_many :indicators_strategies, :class_name     => 'IndicatorsStrategies'
-  has_many :indicators, :uniq => true, :before_add => :belongs_to_strategy_objective, :through => :indicators_strategies
+  has_many :indicators, :uniq => true, :through => :indicators_strategies
 
   belongs_to :user
 
@@ -86,7 +87,7 @@ class Strategy < ActiveRecord::Base
     ids[:indicator_ids] = self.indicator_ids if resource == IndicatorDatum
     ids.delete :output_ids if resource == Narrative
 
-    resource.models_optimized ids
+    resource.models_optimized ids, limit, where, nil
   end
 
   def data(resource = IndicatorDatum, limit = nil, where = {})
@@ -144,7 +145,7 @@ class Strategy < ActiveRecord::Base
   def to_jbuilder(options = {})
     options[:include] ||= {}
     Jbuilder.new do |json|
-      json.extract! self, :name, :id, :description, :user_id, :dashboard_type
+      json.extract! self, :name, :id, :description, :user_id, :dashboard_type, :has_external_data
 
       if options[:include][:ids]
         json.operation_ids self.operation_ids.inject({}) { |h, id| h[id] = true; h }
@@ -182,24 +183,49 @@ class Strategy < ActiveRecord::Base
       .select { |json| json['id'].present? }
       .map { |json| json['id'] }
     deleted_strategy_objective_ids = self.strategy_objective_ids - strategy_objective_ids
+
     StrategyObjective.destroy(deleted_strategy_objective_ids)
-    self.strategy_objective_ids = strategy_objective_ids
+
+    self.strategy_objective_ids = strategy_objective_ids.select do
+      |d| d != ANY_STRATEGY_OBJECTIVE
+    end
+
+    params = [Goal, Output, ProblemObjective, Indicator]
+
+    params.each do |param|
+      table = param.table_name
+      next unless strategy_json[table].present?
+      self.has_external_data = true
+
+      ids = strategy_json[table].map { |p| p['id'] }
+      self.send(table) << param.find(ids)
+    end
+
     if strategy_json[:strategy_objectives]
       strategy_json[:strategy_objectives].each do |json|
-        so = json['id'].present? ? self.strategy_objectives.find(json['id']) :
-          self.strategy_objectives.new()
+        so = nil
+        if json['id'].present? && json['id'] != ANY_STRATEGY_OBJECTIVE
+          so = self.strategy_objectives.find(json['id'])
+        else
+          so = self.strategy_objectives.new()
+        end
+
         so.update_attributes(
           :name => json['name'],
           :description => json['description'])
 
-        params = [:goals, :outputs, :problem_objectives, :indicators]
         params.each do |param|
-          next unless json[param].present?
-          method = (param.to_s.singularize + '_ids=').to_sym
-          ids = json[param].map { |p| p['id'] }
+          table = param.table_name
+          next unless json[table].present?
+
+          method = (table.to_s.singularize + '_ids=').to_sym
+          ids = json[table].map { |p| p['id'] }
+
           so.send method, ids
+
         end
-        so.save
+
+        so.save unless so.nil?
       end
     end
     self.save
