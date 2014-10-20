@@ -63,6 +63,7 @@ body.pdf {
   .parameter-slider {
     .parameter-slide {
       @include article;
+      width: 405px;
 
       margin: 0;
       border: none;
