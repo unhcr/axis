@@ -37,7 +37,7 @@
       .row
         .col-sm-12
 
-.pb_after.pdf-page
+.pb_after.pdf-page.pdf-strategy-snapshot
 
   .achievement-criticality
     .row
@@ -87,4 +87,5 @@
 
               %div{ :class => "#{d.figure.name}-figure-#{context.cid} bar-figure" }
 
-.target-parameters
+.pb_after.pdf-page.pdf-strategy-snapshot
+  .target-parameters

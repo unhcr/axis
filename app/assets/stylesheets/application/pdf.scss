@@ -125,6 +125,18 @@ body.pdf {
       padding-top: 66px;
       padding-bottom: 50px;
     }
+
+    .parameter-slide {
+      height: auto;
+    }
+
+    .slide-header {
+      height: 200px;
+    }
+    .pin-container {
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }
   }
 
   p {
@@ -230,7 +242,7 @@ body.pdf {
     width: 380px;
     border: none;
     border-bottom: 1px dotted $primary;
-    margin-top: 15px;
+    margin-top: 30px;
   }
 
   .bar-figure-container, .bar-axis-container {

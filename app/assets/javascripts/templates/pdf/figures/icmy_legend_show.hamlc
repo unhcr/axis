@@ -1,5 +1,5 @@
 .row
-  .col-sm-12.bold.bottom-flush
+  %h3.col-sm-12.bold.bottom-flush
     = context.year
 
 .row
@@ -7,9 +7,9 @@
     = context.type.description
 
 .row
-  .col-sm-1
+  .col-sm-2
     .bar-axis-container
       .bar-axis
-  .col-sm-11
+  .col-sm-10
     .bar-figure-container
       %figure.bar-figure

@@ -233,7 +233,7 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
       if @modelOrCollection instanceof Backbone.Collection
         datum.model_id = budget.get groupBy
         datum.id_type = Visio.Utils.parameterBySingular(groupBy.replace('_id',''))
-        datum.name = Visio.manager.get(datum.id_type.plural).get(datum.model_id).toString()
+        datum.name = Visio.manager.get(datum.id_type.plural).get(datum.model_id)?.toString()
       else
         datum.model_id = @modelOrCollection.id
         datum.id_type = @modelOrCollection.name

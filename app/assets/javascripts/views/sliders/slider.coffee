@@ -25,8 +25,12 @@ class Visio.Views.SliderView extends Backbone.View
     @$el.find('.slider').addClass 'grid' if @isPdf
 
     @page = 0
-    @addPage @page
-    @page += 1
+
+    if @isPdf
+      @addAll()
+    else
+      @addPage @page
+      @page += 1
 
     @
 

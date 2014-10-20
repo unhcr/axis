@@ -128,6 +128,9 @@ window.Visio =
     EXPORT_LABELS_WIDTH: 300
     EXPORT_LABELS_HEIGHT: 400
     EXPORT_HEIGHT: 800
+
+    PDF_HEIGHT: 500
+
     ANY_YEAR: 'ANY_YEAR'
     ANY_STRATEGY_OBJECTIVE: 'ANY_STRATEGY_OBJECTIVE'
     DB_NAME: 'visio'
@@ -216,6 +219,11 @@ window.Visio =
       human: 'Rights Groups'
 
   Syncables:
+    STRATEGIES:
+      singular: 'strategy'
+      plural: 'strategies'
+      className: 'Strategy'
+      human: 'Strategy'
     NARRATIVES:
       singular: 'narrative'
       plural: 'narratives'
