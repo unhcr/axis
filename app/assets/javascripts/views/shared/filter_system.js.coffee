@@ -70,8 +70,17 @@ class Visio.Views.FilterSystemView extends Backbone.View
       new Visio.Views.ParameterSearch({ collection: Visio.manager.get(hash.plural) })
 
     parameters = []
+    paramHashes = [
+      Visio.Parameters.OPERATIONS
+      Visio.Parameters.PPGS
+      Visio.Parameters.GOALS
+      Visio.Parameters.PROBLEM_OBJECTIVES
+      Visio.Parameters.OUTPUTS
+      Visio.Parameters.INDICATORS
+      Visio.Parameters.STRATEGY_OBJECTIVES
+    ]
 
-    _.each _.values(Visio.Parameters), (hash) ->
+    _.each paramHashes, (hash) ->
 
       return if Visio.manager.get('indicator') and Visio.Parameters.INDICATORS == hash
 
