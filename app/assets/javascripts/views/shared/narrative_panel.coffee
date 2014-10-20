@@ -124,6 +124,7 @@ class Visio.Views.NarrativePanel extends Backbone.View
         results: resp
         query: query
       panel.set 'result', result
+      result.set 'page', 1
 
     if !resp or resp.length == 0
       result.set 'loaded', true
