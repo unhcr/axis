@@ -16,11 +16,11 @@ class Visio.Views.ExportModule extends Backbone.View
   initialize: (options) ->
     $(document).scrollTop 0
     @config = @model.get 'figure_config'
-    @loadingPdf = new Backbone.Model
+    @loadingEmail = new Backbone.Model
       loading: false
 
-    @loadingPdf.on 'change:loading', =>
-      @$el.find('.pdf').toggleClass 'disabled'
+    @loadingEmail.on 'change:loading', =>
+      @$el.find('.email').toggleClass 'disabled'
 
     @config.width = Visio.Constants.EXPORT_WIDTH
     @config.height = Visio.Constants.EXPORT_HEIGHT
@@ -54,6 +54,10 @@ class Visio.Views.ExportModule extends Backbone.View
       @setSliderMax @figure.getMax()
 
     @$el.css 'height', $(document).height()
+    @$el.find('.email, .png').tipsy
+      className: 'tipsy-black'
+      trigger: 'hover'
+      offset: 30
     @
 
   onSelectionChange: (e) ->
@@ -84,7 +88,7 @@ class Visio.Views.ExportModule extends Backbone.View
     @model.get('figure_config').selected = selected
 
   onClickEmail: ->
-    return if @loadingPdf.get 'loading'
+    return if @loadingEmail.get 'loading'
     NProgress.start()
     @buildModule()
     @model.save().done =>
@@ -96,45 +100,14 @@ class Visio.Views.ExportModule extends Backbone.View
           new Visio.Views.Success
             title: "PDF Report"
             description: "Report is being sent to #{resp.email}"
-          @loadingPdf.set 'loading', false
+          @loadingEmail.set 'loading', false
           @close()
         error: =>
           new Visio.Views.Error
             title: "Error generating PDF"
           NProgress.done()
-          @loadingPdf.set 'loading', false
+          @loadingEmail.set 'loading', false
           @close()
-        error: =>
-
-  onClickPdf: ->
-    return if @loadingPdf.get 'loading'
-    @loadingPdf.set 'loading', true
-    NProgress.start()
-    statusCodes =
-      200: =>
-        NProgress.done()
-        window.location.assign @model.pdfUrl()
-        @loadingPdf.set 'loading', false
-        @close()
-      504: =>
-        new Visio.Views.Error
-          title: "Error generating PDF"
-        NProgress.done()
-        @loadingPdf.set 'loading', false
-      503: (jqXHR, textStatus, errorThrown) =>
-        wait = parseInt jqXHR.getResponseHeader('Retry-After')
-        NProgress.inc()
-        setTimeout =>
-          $.ajax
-            url: @model.pdfUrl()
-            statusCode: statusCodes
-        , wait * 6000
-
-    @buildModule()
-    @model.save().done =>
-      $.ajax
-        url: @model.pdfUrl()
-        statusCode: statusCodes
 
   onClickPng: =>
     @buildModule()
@@ -165,6 +138,7 @@ class Visio.Views.ExportModule extends Backbone.View
     $.unsubscribe "active.#{@figure.figureId()}" if @config.selectable
     @figure.unsubscribe() if @figure?.unsubscribe?
     $(window).scrollTop 0
+    $('.tipsy').remove()
 
     @unbind()
     @remove()

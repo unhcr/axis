@@ -12,5 +12,8 @@ class Visio.Models.User extends Backbone.Model
   defaults:
     'reset_local_db': false
 
+  email: ->
+    @get('login') + '@unhcr.org'
+
   toString: ->
     @get 'login'
