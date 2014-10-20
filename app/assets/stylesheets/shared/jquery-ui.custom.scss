@@ -124,15 +124,15 @@
 .ui-slider::before {
   content: attr(data-min);
   position: absolute;
-  left: -15px;
-  top: -5px;
+  left: -20px;
+  top: -6px;
 }
 
 .ui-slider::after {
   content: attr(data-max);
   position: absolute;
-  right: -15px;
-  top: -5px;
+  right: -19px;
+  top: -6px;
 }
 
 
@@ -151,8 +151,8 @@
 .ui-slider-horizontal .ui-slider-handle::before {
   content: attr(data-value);
   left: 0;
+  right: 0;
   top: -1.4em;
-  width: 2em;
   text-align: center;
   text-decoration: none;
   color: black;
