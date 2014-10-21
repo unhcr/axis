@@ -226,24 +226,27 @@ class Visio.Models.Manager extends Backbone.Model
       so.indicators = _.filter so.indicators, (d) -> selected.indicators?[d.id]
 
     if @includeExternalStrategyData()
+      # This is a complex and non intuitive process, pay attention
+      soModel = @get('strategy_objectives').get(Visio.Constants.ANY_STRATEGY_OBJECTIVE)
       so = @get('strategy_objectives').get(Visio.Constants.ANY_STRATEGY_OBJECTIVE).toJSON()
+
+      # Get all data associated with ANY_STRATEGY_OBJECTIVE
+      d1 = soModel.selectedIndicatorData()
+      d2 = soModel.selectedBudgetData()
+      d3 = soModel.selectedExpenditureData()
+
+      soParams = [Visio.Parameters.GOALS, Visio.Parameters.PROBLEM_OBJECTIVES,
+                  Visio.Parameters.OUTPUTS, Visio.Parameters.INDICATORS]
+
       so.id = null
       so.name = 'Auto-Generated Strategy Objective'
-      so.goals = _.filter @get('goals').toJSON(), (d) ->
-        selected.goals[d.id] and _.every params.strategy_objectives, (so) ->
-          not (_.find so.goals, (p) -> p.id == d.id)
 
-      so.problem_objectives = _.filter @get('problem_objectives').toJSON(), (d) ->
-        selected.problem_objectives[d.id] and _.every params.strategy_objectives, (so) ->
-          not (_.find so.problem_objectives, (p) -> p.id == d.id)
+      _.each soParams, (p) ->
+        ids = d1.pluck(p.singular + '_id').concat(d2.pluck(p.singular + '_id'),
+                                                  d3.pluck(p.singular + '_id'))
+        ids = _.uniq ids
 
-      so.outputs = _.filter @get('outputs').toJSON(), (d) ->
-        selected.outputs[d.id] and _.every params.strategy_objectives, (so) ->
-          not (_.find so.outputs, (p) -> p.id == d.id)
-
-      so.indicators = _.filter @get('indicators').toJSON(), (d) ->
-        selected.indicators[d.id] and _.every params.strategy_objectives, (so) ->
-          not (_.find so.indicators, (p) -> p.id == d.id)
+        so[p.plural] = _.map ids, (id) -> { id: id }
 
       params.strategy_objectives.push so
 
