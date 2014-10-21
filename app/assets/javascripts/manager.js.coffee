@@ -219,6 +219,7 @@ class Visio.Models.Manager extends Backbone.Model
         selected.strategy_objectives?[d.id] and d.id != Visio.Constants.ANY_STRATEGY_OBJECTIVE
 
     _.each params.strategy_objectives, (so) ->
+      delete so.id
       so.goals = _.filter so.goals, (d) -> selected.goals?[d.id]
       so.problem_objectives = _.filter so.problem_objectives, (d) -> selected.problem_objectives?[d.id]
       so.outputs = _.filter so.outputs, (d) -> selected.outputs?[d.id]
