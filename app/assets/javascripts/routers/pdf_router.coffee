@@ -20,6 +20,7 @@ class Visio.Routers.PdfRouter extends Backbone.Router
     figureConfig = Visio.exportModule.get('figure_config')
     figureConfig.width = $(@selector).width()
     figureConfig.height = Visio.Constants.PDF_HEIGHT
+    Visio.exportModule.set 'figure_config', figureConfig
 
     @[Visio.exportModule.get('figure_config').type.name]?()
 
@@ -32,6 +33,7 @@ class Visio.Routers.PdfRouter extends Backbone.Router
            Visio.manager.get('indicator_data').fetch(data :{ filter_ids: filterIds }, type: 'POST')
 
   absy: ->
+    figureConfig = Visio.exportModule.get('figure_config')
     figureConfig.margin =
       left: 120
       bottom: 80

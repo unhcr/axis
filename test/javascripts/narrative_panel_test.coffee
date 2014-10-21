@@ -98,7 +98,7 @@ test 'renderTextType results', ->
   panel = @panel.panels.at(0)
   ok panel.get('result')?
   strictEqual panel.get('result').get('query'), 'ben'
-  strictEqual panel.get('result').get('page'), 0
+  strictEqual panel.get('result').get('page'), 1
 
   @panel.renderTextType 'summary'
   @server.respond()

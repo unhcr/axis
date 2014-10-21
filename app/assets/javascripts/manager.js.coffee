@@ -316,6 +316,6 @@ class Visio.Models.Manager extends Backbone.Model
         strategies: @get('strategies').toJSON()
         strategy_id: @get 'strategy_id'
         dashboard: @get('dashboard')?.toJSON()
-        dashboardClass: @get('dashboard').name.className
+        dashboardClass: @get('dashboard')?.name.className
       }
 
