@@ -26,5 +26,7 @@
 
     %section.row
       %h3 Go Time.
-      %button.email Email
-      %button.png PNG
+      %button.btn.email{ 'original-title' => "Email a PDF document of the figure to #{Visio.user.email()}" } Email PDF
+
+      - if context.model.figure_config.type != Visio.FigureTypes.OVERVIEW
+        %button.btn.png{ 'original-title' => "Download an image of the figure to your computer" } Image

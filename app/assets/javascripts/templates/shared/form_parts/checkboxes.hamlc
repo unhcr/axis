@@ -7,8 +7,8 @@
           :data => { :name => context.formField.get('name'), :id => item.id },
           :type => 'checkbox',
           :checked => if context.formField.selected(item.id) then true else false,
-          :id => "form-#{context.formField.get('name')}-#{item.id}" }
-      %label{ :for => "form-#{context.formField.get('name')}-#{item.id}" }
+          :id => "form-#{context.formField.get('name')}-#{item.id}-#{context.formField.cid}" }
+      %label{ :for => "form-#{context.formField.get('name')}-#{item.id}-#{context.formField.cid}" }
         = item.toString()
 
 

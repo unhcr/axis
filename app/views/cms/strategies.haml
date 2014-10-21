@@ -1,11 +1,16 @@
 .container
   %h1.bottom-flush
     %a{ :href => '#/', :data => { :visibility => @is_personal ? 'PERSONAL' : 'GLOBAL' } } Strategy Builder
-  %h4.top-flush
+  %h4.top-flush.bottom-flush
     - if @is_personal
       = "Build or Edit #{current_user.login}'s Strategies"
     - else
       Build or Edit a Strategy.
+  %h5.top-flush
+    - if @is_personal && current_user.admin
+      %a{ :href => '/cms/strategies' } View global strategy editor
+    - elsif !@is_personal
+      %a{ :href => '/cms/strategies?is_personal=true' } View personal strategy editor
   .cms-content
 
 :javascript

@@ -48,7 +48,6 @@ class StrategyTest < ActiveSupport::TestCase
     assert_equal s.operations.length, 1
     assert_equal s.strategy_objectives.length, 1
     assert_equal s.strategy_objectives[0].goals.length, 1
-    assert !s.has_external_data
 
     s_json[:strategy_objectives] = [
       { :name => 'weird', :goals => [Goal.first.as_json] },
@@ -67,7 +66,6 @@ class StrategyTest < ActiveSupport::TestCase
     s.reload
     assert_equal s.operations.length, 1
     assert_equal s.strategy_objectives.length, 0
-    assert !s.has_external_data
   end
 
   test "update nested - any_strategy_objective" do
@@ -76,26 +74,25 @@ class StrategyTest < ActiveSupport::TestCase
     s_json = ActiveSupport::HashWithIndifferentAccess.new(
       :operations => [Operation.first.as_json]
     )
-    s_json[:goals] = [Goal.first.as_json]
+    s_json[:strategy_objectives] = [
+      { :name => 'weird', :goals => [goals(:one).as_json, goals(:two).as_json] }
+    ]
 
     s.update_nested s_json
     s.reload
-    assert_equal s.goals.length, 1
-    assert_equal s.strategy_objectives.length, 0
+    assert_equal s.goals.length, 2
+    assert_equal s.strategy_objectives.length, 1
     assert_equal s.operations.length, 1
-    assert s.has_external_data
 
-    s_json[:goals] = [Goal.first.as_json]
     s_json[:strategy_objectives] = [
       { :name => 'weird', :goals => [goals(:two).as_json] }
     ]
     s.update_nested s_json
     s.reload
 
-    assert_equal s.goals.length, 2
+    assert_equal s.goals.length, 1
     assert_equal s.strategy_objectives.length, 1
     assert_equal s.operations.length, 1
-    assert s.has_external_data
   end
 
   test "should get optmized indicator data for strategy" do

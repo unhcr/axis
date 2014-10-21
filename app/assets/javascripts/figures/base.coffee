@@ -78,12 +78,13 @@ class Visio.Figures.Base extends Backbone.View
 
     # gLabels, used for PNG exports
     if @isExport
+      @nCols = 2
       @yGLegend = d3.scale.linear()
         .domain([0, 10])
         .range([0, Visio.Constants.EXPORT_LABELS_HEIGHT])
-      @xGLegend = d3.scale.linear()
-        .domain([0, 1])
-        .range([-@margin.left, (Visio.Constants.EXPORT_WIDTH / 3) - @margin.right])
+      @xGLegend = d3.scale.ordinal()
+        .domain(_.range(@nCols + 1))
+        .rangePoints([-@margin.left, Visio.Constants.EXPORT_WIDTH - @margin.right], 0.2)
       @gLabels = @svg.append('g')
         .attr('transform', "translate(#{@margin.left}, #{@margin.top + @adjustedHeight + @margin.bottom})")
         .attr('class', "svg-#{@type.name}-labels svg-labels")
@@ -117,16 +118,22 @@ class Visio.Figures.Base extends Backbone.View
 
   renderSvgLabels: =>
 
+    gLabelPadding = 30
+    wrapWidth = (@xGLegend.range()[1] - @xGLegend.range()[0]) - gLabelPadding
+
     gLabels = @gLabels.selectAll('.g-label').data @activeData.models
     gLabels.enter().append('text')
     gLabels
       .attr('class', 'g-label')
       .attr('text-anchor', 'start')
       .attr('dy', '-.33em')
-      .attr('x', (d, i) => 30 + @xGLegend(Math.floor(i / @yGLegend.domain()[1])))
+      .attr('x', (d, i) =>
+        col = Math.floor(i / @yGLegend.domain()[1])
+        gLabelPadding + @xGLegend col
+      )
       .attr('y', (d, i) => @yGLegend(i % @yGLegend.domain()[1]))
       .text((m) => @datumToString(m.get('d')))
-      .call @wrap, (Visio.Constants.EXPORT_WIDTH / 3) - (@margin.right / 3)
+      .call @wrap, wrapWidth
 
     gLabels.exit().remove()
 
@@ -136,7 +143,10 @@ class Visio.Figures.Base extends Backbone.View
       .attr('class', (d) => ['g-label-index', @datumClass(d)].join(' '))
       .attr('text-anchor', 'start')
       .attr('dy', '-.33em')
-      .attr('x', (d, i) => 5 + @xGLegend(Math.floor(i / @yGLegend.domain()[1])))
+      .attr('x', (d, i) =>
+        col = Math.floor(i / @yGLegend.domain()[1])
+        10 + @xGLegend col
+      )
       .attr('y', (d, i) => @yGLegend(i % @yGLegend.domain()[1]))
       .text (m, i) =>
         @selectableLabel m, i

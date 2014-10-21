@@ -226,21 +226,25 @@ class Visio.Models.Manager extends Backbone.Model
 
     if @includeExternalStrategyData()
       so = @get('strategy_objectives').get(Visio.Constants.ANY_STRATEGY_OBJECTIVE).toJSON()
-      params.goals = _.filter @get('goals').toJSON(), (d) ->
+      so.id = null
+      so.name = 'Auto-Generated Strategy Objective'
+      so.goals = _.filter @get('goals').toJSON(), (d) ->
         selected.goals[d.id] and _.every params.strategy_objectives, (so) ->
           not (_.find so.goals, (p) -> p.id == d.id)
 
-      params.problem_objectives = _.filter @get('problem_objectives').toJSON(), (d) ->
+      so.problem_objectives = _.filter @get('problem_objectives').toJSON(), (d) ->
         selected.problem_objectives[d.id] and _.every params.strategy_objectives, (so) ->
           not (_.find so.problem_objectives, (p) -> p.id == d.id)
 
-      params.outputs = _.filter @get('outputs').toJSON(), (d) ->
+      so.outputs = _.filter @get('outputs').toJSON(), (d) ->
         selected.outputs[d.id] and _.every params.strategy_objectives, (so) ->
           not (_.find so.outputs, (p) -> p.id == d.id)
 
-      params.indicators = _.filter @get('indicators').toJSON(), (d) ->
+      so.indicators = _.filter @get('indicators').toJSON(), (d) ->
         selected.indicators[d.id] and _.every params.strategy_objectives, (so) ->
           not (_.find so.indicators, (p) -> p.id == d.id)
+
+      params.strategy_objectives.push so
 
     params
 
@@ -297,7 +301,7 @@ class Visio.Models.Manager extends Backbone.Model
       @set 'amount_type', _state.amount_type
       @set 'strategies', new Visio.Collections.Strategy _state.strategies
       @set 'strategy_id', _state.strategy_id
-      @set 'dashboard', new Backbone.Model(_state.dashboard) if _state.dashboard
+      @set 'dashboard', new Visio.Models[_state.dashboardClass](_state.dashboard) if _state.dashboard
       return _state
     else
       return {
@@ -312,5 +316,6 @@ class Visio.Models.Manager extends Backbone.Model
         strategies: @get('strategies').toJSON()
         strategy_id: @get 'strategy_id'
         dashboard: @get('dashboard')?.toJSON()
+        dashboardClass: @get('dashboard')?.name.className
       }
 

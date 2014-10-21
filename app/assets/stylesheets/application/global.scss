@@ -3261,6 +3261,7 @@ a {
   padding: 10px;
   background-color: $yellow;
   color: $black;
+  @include box-shadow-bottom;
 
   .notification-title {
     font-weight: bold;

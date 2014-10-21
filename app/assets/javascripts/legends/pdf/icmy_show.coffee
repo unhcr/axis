@@ -29,8 +29,8 @@ class Visio.Legends.IcmyShowPdf extends Backbone.View
       margin:
         top: 20
         bottom: 10
-        left: 40
-      width: 50
+        left: 70
+      width: 70
       height: height
 
     switch @type.name

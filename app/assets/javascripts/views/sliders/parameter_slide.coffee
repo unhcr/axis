@@ -26,7 +26,7 @@ class Visio.Views.ParameterSlideView extends Visio.Views.Dashboard
 
     if @isPdf
       barConfig.width = 250
-      barConfig.height = 115
+      barConfig.height = 145
     else
       barConfig.width = 240
       barConfig.height = 146

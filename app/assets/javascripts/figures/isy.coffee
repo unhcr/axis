@@ -84,9 +84,10 @@ class Visio.Figures.Isy extends Visio.Figures.Sy
     @labelContainerWidth = 335
     @labelContainerPaddingLeft = 50
 
-    # Do not render labelContainer if we're in export
-    if @isExport
-      @labelContainerWidth = 0
+    # Do not render labelContainer if we're in export or pdf
+    if @isExport or @isPdf
+      # Enough to show label of dots
+      @labelContainerWidth = 100
       @labelContainerPaddingLeft = 0
 
 
@@ -156,7 +157,7 @@ class Visio.Figures.Isy extends Visio.Figures.Sy
       .attr('y1', @adjustedHeight)
       .attr('y2', @adjustedHeight)
 
-    unless @isExport
+    if !@isExport or !@isPdf
       # Divider line between ISY and labels
       @g.append('line')
         .attr('class', 'isy-line isy-label-line')

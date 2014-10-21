@@ -17,7 +17,12 @@ class Visio.Routers.PdfRouter extends Backbone.Router
 
     Visio.manager.includeExternalStrategyData include
 
-    @[Visio.exportModule.get('figure_config').type.name]() if @[Visio.exportModule.get('figure_config').type.name]?
+    figureConfig = Visio.exportModule.get('figure_config')
+    figureConfig.width = $(@selector).width()
+    figureConfig.height = Visio.Constants.PDF_HEIGHT
+    Visio.exportModule.set 'figure_config', figureConfig
+
+    @[Visio.exportModule.get('figure_config').type.name]?()
 
     filterIds = {}
     for plural, ids of Visio.manager.get('selected')
@@ -29,8 +34,6 @@ class Visio.Routers.PdfRouter extends Backbone.Router
 
   absy: ->
     figureConfig = Visio.exportModule.get('figure_config')
-    figureConfig.width = $(@selector).width()
-    figureConfig.height = 470
     figureConfig.margin =
       left: 120
       bottom: 80

@@ -6,7 +6,7 @@ class Strategy < ActiveRecord::Base
   }
   ANY_STRATEGY_OBJECTIVE = 'ANY_STRATEGY_OBJECTIVE'
 
-  attr_accessible :name, :description, :dashboard_type, :has_external_data
+  attr_accessible :name, :description, :dashboard_type
 
   has_many :strategy_objectives,
     :after_remove => :remove_strategy_objective_parameters,
@@ -23,19 +23,19 @@ class Strategy < ActiveRecord::Base
   has_many :ppgs, :uniq => true, :through => :ppgs_strategies
 
   has_many :goals_strategies, :class_name    => 'GoalsStrategies'
-  has_many :goals, :uniq => true, :through => :goals_strategies
+  has_many :goals, :uniq => true, :before_add => :belongs_to_strategy_objective, :through => :goals_strategies
 
   has_many :rights_groups_strategies, :class_name    => 'RightsGroupsStrategies'
   has_many :rights_groups, :uniq => true, :through => :rights_groups_strategies
 
   has_many :problem_objectives_strategies, :class_name     => 'ProblemObjectivesStrategies'
-  has_many :problem_objectives, :uniq => true, :through => :problem_objectives_strategies
+  has_many :problem_objectives, :uniq => true, :before_add => :belongs_to_strategy_objective, :through => :problem_objectives_strategies
 
   has_many :outputs_strategies, :class_name    => 'OutputsStrategies'
-  has_many :outputs, :uniq => true, :through => :outputs_strategies
+  has_many :outputs, :uniq => true, :before_add => :belongs_to_strategy_objective, :through => :outputs_strategies
 
   has_many :indicators_strategies, :class_name     => 'IndicatorsStrategies'
-  has_many :indicators, :uniq => true, :through => :indicators_strategies
+  has_many :indicators, :uniq => true, :before_add => :belongs_to_strategy_objective, :through => :indicators_strategies
 
   belongs_to :user
 
@@ -145,7 +145,7 @@ class Strategy < ActiveRecord::Base
   def to_jbuilder(options = {})
     options[:include] ||= {}
     Jbuilder.new do |json|
-      json.extract! self, :name, :id, :description, :user_id, :dashboard_type, :has_external_data
+      json.extract! self, :name, :id, :description, :user_id, :dashboard_type
 
       if options[:include][:ids]
         json.operation_ids self.operation_ids.inject({}) { |h, id| h[id] = true; h }
@@ -191,15 +191,6 @@ class Strategy < ActiveRecord::Base
     end
 
     params = [Goal, Output, ProblemObjective, Indicator]
-
-    params.each do |param|
-      table = param.table_name
-      next unless strategy_json[table].present?
-      self.has_external_data = true
-
-      ids = strategy_json[table].map { |p| p['id'] }
-      self.send(table) << param.find(ids)
-    end
 
     if strategy_json[:strategy_objectives]
       strategy_json[:strategy_objectives].each do |json|
