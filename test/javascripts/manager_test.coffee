@@ -149,8 +149,8 @@ test 'toStrategyParams include external', ->
   r = Visio.manager.toStrategyParams()
 
   strictEqual r.operations.length, 3
-  strictEqual r.strategy_objectives.length, 0
-  strictEqual r.goals[0].id, 'D'
+  strictEqual r.strategy_objectives.length, 1
+  strictEqual r.strategy_objectives[0].goals[0].id, 'D'
 
 test 'formattedIds', ->
 

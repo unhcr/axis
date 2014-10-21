@@ -43,7 +43,6 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.DashboardRouter
              optimize: true
            } })
     ).done( =>
-      Visio.manager.includeExternalStrategyData Visio.manager.get('dashboard')?.get('has_external_data')
 
       try
         # Initialize selected to be strategy
