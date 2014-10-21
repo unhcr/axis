@@ -116,14 +116,21 @@ test 'toStrategyParams', ->
       'C': true
     goals:
       'D': true
+    strategy_objectives:
+      'E': true
 
   Visio.manager.set 'selected', selected
+  Visio.manager.set 'strategy_objectives',
+    new Visio.Collections.StrategyObjective({ id: 'E', goals: { id: 'D' } })
+
   Visio.manager.includeExternalStrategyData false
 
   r = Visio.manager.toStrategyParams()
 
   strictEqual r.operations.length, 3
-  strictEqual r.strategy_objectives.length, 0
+  strictEqual r.strategy_objectives.length, 1
+  strictEqual r.strategy_objectives[0].goals.length, 1
+  ok !r.strategy_objectives[0].id
   ok _.indexOf(_.map(r.operations, (o) -> o.id), 'A') != -1
 
 test 'toStrategyParams include external', ->
