@@ -142,7 +142,11 @@ test 'toStrategyParams include external', ->
       'C': true
     goals:
       'D': true
+    strategy_objectives: {}
 
+
+  sinon.stub Visio.Models.StrategyObjective.prototype, 'selectedIndicatorData', ->
+    new Visio.Collections.IndicatorDatum({ id: 'xyz', goal_id: 'D' })
 
   Visio.manager.set 'selected', selected
   Visio.manager.set 'goals', new Visio.Collections.Goal([{ id: 'D' }, { id: 'F' }])
@@ -150,6 +154,7 @@ test 'toStrategyParams include external', ->
   Visio.manager.set 'problem_objectives', new Visio.Collections.ProblemObjective()
   Visio.manager.set 'outputs', new Visio.Collections.Output()
   Visio.manager.set 'indicators', new Visio.Collections.Indicator()
+  Visio.manager.set 'indicator_data', new Visio.Collections.IndicatorDatum({ id: 'xyz', goal_id: 'D' })
 
   Visio.manager.includeExternalStrategyData true
 
@@ -158,6 +163,8 @@ test 'toStrategyParams include external', ->
   strictEqual r.operations.length, 3
   strictEqual r.strategy_objectives.length, 1
   strictEqual r.strategy_objectives[0].goals[0].id, 'D'
+
+  Visio.Models.StrategyObjective.prototype.selectedIndicatorData.restore()
 
 test 'formattedIds', ->
 

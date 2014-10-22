@@ -238,7 +238,9 @@ class Visio.Models.Manager extends Backbone.Model
       soParams = [Visio.Parameters.GOALS, Visio.Parameters.PROBLEM_OBJECTIVES,
                   Visio.Parameters.OUTPUTS, Visio.Parameters.INDICATORS]
 
+      # Ensure that new strategy objectives are being created by setting id to null
       so.id = null
+
       so.name = 'Auto-Generated Strategy Objective'
 
       _.each soParams, (p) ->
