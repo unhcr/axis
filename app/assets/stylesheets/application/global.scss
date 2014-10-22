@@ -1685,11 +1685,18 @@ a {
     margin-bottom: -3px;
   }
 
+
   .panel-text {
     max-height: 500px;
     overflow: auto;
     padding-top: 20px;
     padding-bottom: 20px;
+
+  }
+
+  .panel-results p {
+    border-bottom: 1px solid $light-gray;
+    padding-bottom: 15px;
   }
 
   .tabs {
