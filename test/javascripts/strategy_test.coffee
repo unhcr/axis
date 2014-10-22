@@ -20,3 +20,8 @@ test('include parameter', () ->
 )
 
 
+test 'className', ->
+  s = new Visio.Models.Strategy()
+
+  ok s.name
+  ok s.name.className

@@ -4,7 +4,7 @@ class Visio.Models.Strategy extends Visio.Models.Syncable
 
   urlRoot: '/strategies'
 
-  name: Visio.Parameters.STRATEGIES
+  name: Visio.Syncables.STRATEGIES
 
   schema: [
     {
