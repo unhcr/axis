@@ -119,15 +119,18 @@ class Visio.Views.NarrativePanel extends Backbone.View
 
     if result? and result.get('query') == query
       result.set 'page', result.get('page') + 1
+      result.set 'results', result.get('results').concat(resp)
     else
       result = new Visio.Models.NarrativeSearchResult
         results: resp
         query: query
-      panel.set 'result', result
       result.set 'page', 1
+
 
     if !resp or resp.length == 0
       result.set 'loaded', true
+
+    panel.set 'result', result
 
     @$el.find(".panel .panel-#{@textTypes.results.name}-query-#{@model.cid}").text query
     $panel.html result.toHtmlText()
@@ -211,10 +214,10 @@ class Visio.Views.NarrativePanel extends Backbone.View
         switch @textType
           when @textTypes.full_text.name
             return if panel.get 'loaded'
-            @onFullTextScroll panel, $panel
+            @onFullTextScroll panel, $panel.find(".panel-#{@textType}-#{@model.cid}")
           when @textTypes.results.name
             return if panel.get('result')?.get('loaded')
-            @onResultsScroll panel, $panel
+            @onResultsScroll panel, $panel.find(".panel-#{@textType}-#{@model.cid}")
 
     throttled = _.throttle fn, 500
     throttled()
