@@ -39,7 +39,10 @@ class Visio.Views.ParameterSearch extends Backbone.View
       @clear()
 
   search: (query) =>
-    @collection.search(query).done (resp) =>
+    opts = {}
+    opts.global_only = true if @collection.name == Visio.Parameters.STRATEGY_OBJECTIVES
+
+    @collection.search(query, opts).done (resp) =>
       @$el.find('.results').removeClass 'no-border'
       @$el.find('.results').html _.map(resp, (elasticModel) =>
         HAML['shared/parameter_search_item']({ model: new @collection.model(elasticModel) }))
