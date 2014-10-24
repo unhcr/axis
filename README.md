@@ -41,3 +41,7 @@ Axis provides you with multiple modules that will help you get more from the dat
 * [Narrative Panel](https://github.com/unhcr/axis/wiki/Narrative%20Panel)
 * [Filter System](https://github.com/unhcr/axis/wiki/Filter%20System)
 
+## Hotkeys
+Axis comes with a variety of hotkeys in order to use the system more efficiently.
+
+[Hotkeys](https://github.com/unhcr/axis/wiki/Hotkeys)
