@@ -7,3 +7,7 @@ one:
 two:
   name: Girls
   description: MyText
+
+global:
+  name: Boys2
+  description: MyText

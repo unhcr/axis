@@ -4,12 +4,17 @@ class StrategyObjectivesControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
   def setup
+    so = strategy_objectives(:global)
+    so.strategy = strategies(:one)
+    so.save
+
     StrategyObjective.index_name('test_' + StrategyObjective.model_name.plural)
     StrategyObjective.index.delete
     StrategyObjective.create_elasticsearch_index
 
 
-    StrategyObjective.index.import [strategy_objectives(:one), strategy_objectives(:two)]
+    StrategyObjective.index.import [strategy_objectives(:one), strategy_objectives(:two),
+                                    strategy_objectives(:global)]
     StrategyObjective.index.refresh
     @user = users(:one)
     sign_in @user
@@ -31,7 +36,7 @@ class StrategyObjectivesControllerTest < ActionController::TestCase
     assert_response :success
 
     so = JSON.parse(response.body)
-    assert_equal so.length, 1
+    assert_equal so.length, 2
   end
 
   test 'Should not get SOs without a global strategy' do
@@ -40,7 +45,7 @@ class StrategyObjectivesControllerTest < ActionController::TestCase
     assert_response :success
 
     so = JSON.parse(response.body)
-    assert_equal so.length, 0
+    assert_equal so.length, 1
   end
 
   test 'Should get index with where parameter' do
@@ -73,9 +78,10 @@ class StrategyObjectivesControllerTest < ActionController::TestCase
     assert_response :success
     json = JSON.parse(response.body)
 
-    assert_equal json.length, 1
+    assert_equal json.length, 2
     assert_equal json[0]['id'].to_i, StrategyObjective.where(:name => 'Boys').first.id
   end
+
   test 'Search strategy objectives with quote' do
 
     get :search, { :query => 'Boy"' }
@@ -83,8 +89,20 @@ class StrategyObjectivesControllerTest < ActionController::TestCase
     assert_response :success
     json = JSON.parse(response.body)
 
-    assert_equal json.length, 1
+    assert_equal json.length, 2
     assert_equal json[0]['id'].to_i, StrategyObjective.where(:name => 'Boys').first.id
+  end
+
+  test 'Search SOs global_only flag' do
+
+    get :search, { :query => 'Boy', :global_only => true }
+
+
+    assert_response :success
+    json = JSON.parse(response.body)
+
+    assert_equal json.length, 1
+    assert_equal json[0]['id'].to_i, StrategyObjective.where(:name => 'Boys2').first.id
   end
 
 end

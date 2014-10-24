@@ -10,7 +10,7 @@ class StrategyObjectivesController < ApplicationController
   def search
     query = ''
     query = sanitize_query(params[:query]) + '*' unless params[:query].nil? || params[:query].empty?
-    render :json => StrategyObjective.search_models(query)
+    render :json => StrategyObjective.search_models(query, { :global_only => params[:global_only] })
   end
 
   def show

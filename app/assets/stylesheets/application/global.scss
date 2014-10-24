@@ -719,6 +719,9 @@ body.index {
     background-color: $off-white;
     border: 1px solid $light-gray;
     border-top: none;
+    position: absolute;
+    z-index: 1;
+    width: $filter-system-width - 75;
   }
 }
 

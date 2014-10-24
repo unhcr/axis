@@ -9,6 +9,7 @@ class StrategiesController < ApplicationController
 
 
     s.user = current_user if params[:is_personal]
+    s.save
 
     s.update_nested params
     s.save

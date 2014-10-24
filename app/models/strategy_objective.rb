@@ -5,8 +5,24 @@ class StrategyObjective < ActiveRecord::Base
   attr_accessible :description, :name
   belongs_to :strategy
 
+  mapping do
+    indexes :id, index: :not_analyzed
+    indexes :is_global, type: 'boolean'
+    indexes :name
+    indexes :description
+  end
+
   def self.parameters
     [Goal, ProblemObjective, Output, Indicator]
+  end
+
+  def to_indexed_json
+    json = {}
+    json[:id] = self.id
+    json[:name] = self.name
+    json[:description] = self.description
+    json[:is_global] = self.strategy.nil? ? false : self.strategy.user_id.nil?
+    json.to_json
   end
 
   scope :global_strategy_objectives, joins(:strategy).where('strategies.user_id is NULL')
@@ -45,6 +61,8 @@ class StrategyObjective < ActiveRecord::Base
     options[:per_page] ||= 6
     s = self.search(options) do
       query { string "name:#{query}" }
+
+      filter :term, { :is_global => true } if options[:global_only].present?
 
       highlight :name
     end
