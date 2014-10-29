@@ -11,5 +11,6 @@ class Visio.Collections.FigureFilter extends Backbone.Collection
     filter.get('values')[filterValue]
 
   resetFilters: ->
-    @each (filter) -> filter.resetFilter()
+    @each (filter) ->
+      filter.resetFilter() unless filter.get('hidden')
 

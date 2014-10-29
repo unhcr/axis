@@ -79,6 +79,12 @@ test 'resetFilter', ->
   ok filter.filter 'ADMIN'
   ok not filter.filter 'PROJECT'
 
+  # Should not reset hidden filters
+  filter.set 'hidden', true
+  filter.filter 'ADMIN', false
+  filter.resetFilter()
+  ok !filter.filter 'ADMIN'
+
 test 'resetFilter - collection', ->
 
   ok not _.every(@filters.pluck('values'), (values) ->
