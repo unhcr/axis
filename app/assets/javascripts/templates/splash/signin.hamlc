@@ -13,7 +13,8 @@
   - if not Visio.user.isLoggedIn()
     %form.form-inline{ :role => "form" }
       %h6
-        Let's get started.
+        Let's get started. Don't have an account? Sign up
+        %a{ :href => 'https://signup.unhcr.org/', :target => '_blank' } here.
 
       .input-group
         %label.sr-only{ :for => "login" }
