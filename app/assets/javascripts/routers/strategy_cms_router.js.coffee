@@ -38,6 +38,10 @@ class Visio.Routers.StrategyCMSRouter extends Backbone.Router
     @$content.html @editView.render().el
 
   destroy: (id) ->
-    @strategies.get(id).destroy().done =>
+    s = @strategies.get(id)
+    if window.confirm("Are you sure you want to delete #{s.toString()}")
+      s.destroy().done =>
 
-      @navigate '/', { trigger: true }
+        @navigate '/', { trigger: true }
+    else
+      @navigate '/'

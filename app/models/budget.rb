@@ -18,6 +18,10 @@ class Budget < ActiveRecord::Base
                :output => :strategy_objectives})
   end
 
+  def self.public_fields
+    %w{id budget_type scenario amount ppg_id goal_id output_id problem_objective_id operation_id pillar year}
+  end
+
   def to_jbuilder(options = {})
     Jbuilder.new do |json|
       json.extract! self, :id, :budget_type, :scenario, :amount, :plan_id, :ppg_id, :goal_id, :output_id,

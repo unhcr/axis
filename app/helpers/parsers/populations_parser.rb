@@ -4,16 +4,17 @@ module Parsers
 
     def self.csvfields
       @csvfields ||= {
-        :value => 'VALUE',
+        :value => 'POC',
         :ppg_code => 'PPG_CODE',
-        :ppg_id => 'PPGID',
-        :operation_id => 'OPERATIONID',
+        :ppg_id => 'ORIGPOPGROUP_ID',
+        :element_id => 'ELEMENT_ID',
+        :element_type => 'ELEMENT_TYPE',
         :year => 'YEAR'
       }
     end
 
     def self.selector
-      [:ppg_code, :ppg_id, :operation_id, :year]
+      [:ppg_code, :ppg_id, :element_id, :element_type, :year]
     end
 
   end

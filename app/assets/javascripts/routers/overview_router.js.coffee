@@ -17,7 +17,6 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.DashboardRouter
       add: true
       remove: false
       data:
-        optimize: true
         join_ids:
           strategy_id: Visio.manager.get('strategy_id')
 
@@ -32,15 +31,15 @@ class Visio.Routers.OverviewRouter extends Visio.Routers.DashboardRouter
              { data: { where: { strategy_id: Visio.manager.get('strategy_id') } } }),
            Visio.manager.get('expenditures').fetch({ data: {
              strategy_id: Visio.manager.get('strategy_id'),
-             optimize: true
            } })
            Visio.manager.get('budgets').fetch({ data: {
              strategy_id: Visio.manager.get('strategy_id'),
-             optimize: true
+           } })
+           Visio.manager.get('populations').fetch({ data: {
+             strategy_id: Visio.manager.get('strategy_id'),
            } })
            Visio.manager.get('indicator_data').fetch({ data: {
              strategy_id: Visio.manager.get('strategy_id'),
-             optimize: true
            } })
     ).done( =>
 

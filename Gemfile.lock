@@ -117,8 +117,6 @@ GEM
       execjs
     eco-source (1.1.0.rc.1)
     ejs (1.1.1)
-    equivalent-xml (0.4.0)
-      nokogiri (>= 1.4.3)
     erubis (2.7.0)
     exception_notification (4.0.1)
       actionmailer (>= 3.0.4)
@@ -367,7 +365,6 @@ DEPENDENCIES
   database_cleaner
   devise
   devise_ldap_authenticatable
-  equivalent-xml
   exception_notification
   execjs
   fakeredis
@@ -378,7 +375,6 @@ DEPENDENCIES
   htmltoword
   jbuilder
   jquery-rails
-  nokogiri
   normalize-rails
   oink
   pdfkit

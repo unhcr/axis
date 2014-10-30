@@ -30,9 +30,6 @@ class Ppg < ActiveRecord::Base
 
   has_many :indicator_data
   has_many :budgets
-  has_many :populations, :conditions => proc { ['populations.year >= ? AND populations.year <= ?',
-                                      AdminConfiguration.first.startyear,
-                                      AdminConfiguration.first.endyear] }, :foreign_key => :ppg_id
 
   def to_jbuilder(options = {})
     options ||= {}

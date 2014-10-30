@@ -79,5 +79,9 @@ Visio::Application.routes.draw do
     post 'index', on: :collection
   end
 
+  resources :populations do
+    post 'index', on: :collection
+  end
+
   root :to => 'application#index'
 end

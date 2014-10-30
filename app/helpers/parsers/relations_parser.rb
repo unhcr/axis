@@ -56,6 +56,7 @@ module Parsers
         GoalsProblemObjectives,
         GoalsIndicators,
         GoalsOutputs,
+        GoalsPpgs,
         IndicatorsOperations,
         IndicatorsOutputs,
         IndicatorsProblemObjectives,

@@ -84,6 +84,19 @@ class Visio.Models.Parameter extends Visio.Models.Syncable
 
     return new Visio.Collections[type.className](data)
 
+  populationData: (idHash, year, filters) ->
+    year = Visio.manager.year() unless year?
+
+    populations = Visio.manager.get 'populations'
+
+    populations = populations.filter (p) =>
+      p.get('element_type') == @name.plural and
+        @id == p.get('element_id') and
+        idHash.ppgs[p.get('ppg_id')] and
+        (p.get('year') == year or year == Visio.Constants.ANY_YEAR)
+
+    return new Visio.Collections.Population(populations)
+
   selectedIndicatorData: (year, filters = null) ->
     @selectedData(Visio.Syncables.INDICATOR_DATA, year, filters)
 
@@ -92,6 +105,10 @@ class Visio.Models.Parameter extends Visio.Models.Syncable
 
   selectedExpenditureData: (year, filters = null) ->
     @selectedData(Visio.Syncables.EXPENDITURES, year, filters)
+
+  selectedPopulationData: (year, filters = null) ->
+    selected = Visio.manager.get('selected')
+    @populationData selected, year, filters
 
   selectedData: (type, year, filters = null) ->
     opts =
@@ -174,6 +191,22 @@ class Visio.Models.Parameter extends Visio.Models.Syncable
 
   selectedBudget: (year, filters = null) ->
     data = @selectedBudgetData(year, filters)
+    data.amount()
+
+  selectedBudgetPerBeneficiary: (year, filters = null) ->
+    data = @selectedBudgetData(year, filters)
+    pData = @selectedPopulationData(year, filters)
+    v = data.amount() / pData.amount()
+    if _.isFinite(v) then v else 0
+
+  selectedExpenditurePerBeneficiary: (year, filters = null) ->
+    data = @selectedExpenditureData(year, filters)
+    pData = @selectedPopulationData(year, filters)
+    v data.amount() / pData.amount()
+    if _.isFinite(v) then v else 0
+
+  selectedPopulation: (year, filters = null) ->
+    data = @selectedPopulationData(year, filters)
     data.amount()
 
   selectedSituationAnalysis: (year, filters = null) ->

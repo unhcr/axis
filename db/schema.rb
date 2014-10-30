@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141021094916) do
+ActiveRecord::Schema.define(:version => 20141030122925) do
 
   create_table "admin_configurations", :force => true do |t|
     t.integer  "startyear",                :default => 2012
@@ -280,7 +280,7 @@ ActiveRecord::Schema.define(:version => 20141021094916) do
     t.string  "indicator_id", :null => false
   end
 
-  add_index "indicators_strategies", ["strategy_id"], :name => "index_indicators_strategies_on_strategy_id"
+  add_index "indicators_strategies", ["strategy_id"], :name => "indicators_strategies_strategy_id_idx"
 
   create_table "indicators_strategy_objectives", :id => false, :force => true do |t|
     t.integer "strategy_objective_id", :null => false
@@ -378,7 +378,7 @@ ActiveRecord::Schema.define(:version => 20141021094916) do
     t.string  "operation_id", :null => false
   end
 
-  add_index "operations_strategies", ["strategy_id"], :name => "index_operations_strategies_on_strategy_id"
+  add_index "operations_strategies", ["strategy_id"], :name => "operations_strategies_strategy_id_idx"
 
   create_table "operations_strategy_objectives", :id => false, :force => true do |t|
     t.integer "strategy_objective_id", :null => false
@@ -423,7 +423,7 @@ ActiveRecord::Schema.define(:version => 20141021094916) do
     t.string  "output_id",   :null => false
   end
 
-  add_index "outputs_strategies", ["strategy_id"], :name => "index_outputs_strategies_on_strategy_id"
+  add_index "outputs_strategies", ["strategy_id"], :name => "outputs_strategies_strategy_id_idx"
 
   create_table "outputs_strategy_objectives", :id => false, :force => true do |t|
     t.integer "strategy_objective_id", :null => false
@@ -479,20 +479,21 @@ ActiveRecord::Schema.define(:version => 20141021094916) do
     t.string  "plan_id",     :null => false
   end
 
-  add_index "plans_strategies", ["strategy_id"], :name => "index_plans_strategies_on_strategy_id"
+  add_index "plans_strategies", ["strategy_id"], :name => "plans_strategies_strategy_id_idx"
 
   create_table "populations", :id => false, :force => true do |t|
     t.string   "ppg_code"
     t.string   "ppg_id"
-    t.string   "operation_id"
+    t.string   "element_id"
     t.integer  "year"
     t.integer  "value"
     t.datetime "found_at"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
+    t.string   "element_type"
   end
 
-  add_index "populations", ["year", "operation_id", "ppg_id"], :name => "populations_uniqueness", :unique => true
+  add_index "populations", ["year", "element_id", "ppg_id"], :name => "populations_uniqueness", :unique => true
 
   create_table "positions", :id => false, :force => true do |t|
     t.string   "id",                                   :null => false
@@ -542,7 +543,7 @@ ActiveRecord::Schema.define(:version => 20141021094916) do
     t.string  "ppg_id",      :null => false
   end
 
-  add_index "ppgs_strategies", ["strategy_id"], :name => "index_ppgs_strategies_on_strategy_id"
+  add_index "ppgs_strategies", ["strategy_id"], :name => "ppgs_strategies_strategy_id_idx"
 
   create_table "ppgs_strategy_objectives", :id => false, :force => true do |t|
     t.integer "strategy_objective_id", :null => false
@@ -574,7 +575,7 @@ ActiveRecord::Schema.define(:version => 20141021094916) do
     t.string  "problem_objective_id", :null => false
   end
 
-  add_index "problem_objectives_strategies", ["strategy_id"], :name => "index_problem_objectives_strategies_on_strategy_id"
+  add_index "problem_objectives_strategies", ["strategy_id"], :name => "problem_objectives_strategies_strategy_id_idx"
 
   create_table "problem_objectives_strategy_objectives", :id => false, :force => true do |t|
     t.integer "strategy_objective_id", :null => false

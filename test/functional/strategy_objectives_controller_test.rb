@@ -79,7 +79,7 @@ class StrategyObjectivesControllerTest < ActionController::TestCase
     json = JSON.parse(response.body)
 
     assert_equal json.length, 2
-    assert_equal json[0]['id'].to_i, StrategyObjective.where(:name => 'Boys').first.id
+    assert !(json.select { |d| d['id'].to_i == StrategyObjective.where(:name => 'Boys').first.id }).empty?
   end
 
   test 'Search strategy objectives with quote' do
@@ -90,7 +90,7 @@ class StrategyObjectivesControllerTest < ActionController::TestCase
     json = JSON.parse(response.body)
 
     assert_equal json.length, 2
-    assert_equal json[0]['id'].to_i, StrategyObjective.where(:name => 'Boys').first.id
+    assert !(json.select { |d| d['id'].to_i == StrategyObjective.where(:name => 'Boys').first.id }).empty?
   end
 
   test 'Search SOs global_only flag' do
@@ -102,7 +102,7 @@ class StrategyObjectivesControllerTest < ActionController::TestCase
     json = JSON.parse(response.body)
 
     assert_equal json.length, 1
-    assert_equal json[0]['id'].to_i, StrategyObjective.where(:name => 'Boys2').first.id
+    assert !(json.select { |d| d['id'].to_i == StrategyObjective.where(:name => 'Boys2').first.id }).empty?
   end
 
 end

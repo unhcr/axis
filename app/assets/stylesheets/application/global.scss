@@ -223,8 +223,12 @@ body.layout-cms {
     color: $black;
   }
 
+  .home {
+    padding-top: 30px
+  }
+
   a:hover {
-    color: $black;
+    color: $orange;
     text-decoration: none;
   }
 

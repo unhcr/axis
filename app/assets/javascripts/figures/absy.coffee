@@ -32,11 +32,12 @@ class Visio.Figures.Absy extends Visio.Figures.Base
         values: {
           selectedBudget: true,
           selectedExpenditureRate: false
+          selectedBudgetPerBeneficiary: false
         }
-        human: { selectedExpenditureRate: 'Expenditure Rate', selectedBudget: 'Budget' }
+        human: { selectedExpenditureRate: 'Expenditure Rate', selectedBudget: 'Budget', selectedBudgetPerBeneficiary: 'Budget Per Beneficiary' }
         callback: (name, attr) =>
           @algorithm = name
-          if @algorithm == 'selectedBudget'
+          if @algorithm == 'selectedBudget' or @algorithm == 'selectedBudgetPerBeneficiary'
             @xAxis.tickFormat Visio.Formats.SI_SIMPLE
           else
             @xAxis.tickFormat Visio.Formats.PERCENT_NOSIGN
@@ -147,7 +148,7 @@ class Visio.Figures.Absy extends Visio.Figures.Base
   render: ->
     filtered = @filtered @collection
 
-    if @algorithm == 'selectedBudget'
+    if @algorithm == 'selectedBudget' or @algorithm == 'selectedBudgetPerBeneficiary'
       maxAmount = d3.max filtered, (d) => d[@algorithm](Visio.manager.year(), @filters)
     else
       maxAmount = 1
@@ -180,7 +181,7 @@ class Visio.Figures.Absy extends Visio.Figures.Base
 
           pointContainer.attr 'original-title', self.templateTooltip
             d: d
-            xValue: if self.algorithm == 'selectedBudget' then Visio.Formats.MONEY(cxValue) else
+            xValue: if self.algorithm == 'selectedBudget' or self.algorithm == 'selectedBudgetPerBeneficiary' then Visio.Formats.MONEY(cxValue) else
               Visio.Formats.PERCENT(cxValue)
             achievement: Visio.Formats.PERCENT(achievement)
             algorithm: self.algorithmToHuman(self.algorithm)
@@ -351,6 +352,8 @@ class Visio.Figures.Absy extends Visio.Figures.Base
   algorithmToHuman: ->
     if @algorithm == 'selectedBudget'
       title = 'Budget'
+    else if @algorithm == 'selectedBudgetPerBeneficiary'
+      title = 'Budget Per Beneficiary'
     else
       title = 'Expenditure Rate (%)'
 

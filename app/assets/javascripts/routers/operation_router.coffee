@@ -19,9 +19,21 @@ class Visio.Routers.OperationRouter extends Visio.Routers.DashboardRouter
       add: true
       remove: false
       data:
-        optimize: true
         filter_ids:
           operation_ids: [Visio.manager.get('dashboard').id]
+
+    populationOptions =
+      add: true
+      remove: false
+      type: 'POST'
+      data:
+        filter_ids:
+          operation_ids: [Visio.manager.get('dashboard').id]
+          ppg_ids: _.keys(Visio.manager.get('dashboard').get('ppg_ids'))
+          goal_ids: _.keys(Visio.manager.get('dashboard').get('goal_ids'))
+          problem_objective_ids: _.keys(Visio.manager.get('dashboard').get('problem_objective_ids'))
+          output_ids: _.keys(Visio.manager.get('dashboard').get('output_ids'))
+
 
     NProgress.start()
     $.when(Visio.manager.get('ppgs').fetch(options),
@@ -32,6 +44,7 @@ class Visio.Routers.OperationRouter extends Visio.Routers.DashboardRouter
            Visio.manager.get('indicators').fetch(options),
            Visio.manager.get('expenditures').fetch(dataOptions),
            Visio.manager.get('budgets').fetch(dataOptions),
+           Visio.manager.get('populations').fetch(populationOptions),
            Visio.manager.get('indicator_data').fetch(dataOptions)
     ).done( =>
       Visio.manager.includeExternalStrategyData true

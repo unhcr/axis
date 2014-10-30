@@ -84,10 +84,13 @@ class IndicatorDatum < ActiveRecord::Base
     query_string = conditions.join(' AND ')
     query_string = " AND #{query_string}" unless conditions.empty?
 
+    fields = [:baseline, :imp_target, :comp_target, :reversal, :standard, :threshold_green, :threshold_red, :yer, :myr, :is_performance, :year, :id, :operation_id, :ppg_id, :goal_id, :output_id, :indicator_id, :problem_objective_id, :missing_budget, :priority, :excluded, :indicator_type, :is_deleted]
+
+
     # Need to include Strategy Objective ids
     sql = "select array_to_json(array_agg(row_to_json(t)))
       from (
-        select #{self.table_name}.*,
+        select #{fields.join(', ')},
           (
             select array_to_json(array_agg(row_to_json(d)::json->'strategy_objective_id'))
             from (
@@ -100,7 +103,7 @@ class IndicatorDatum < ActiveRecord::Base
 
         UNION ALL
 
-        select #{self.table_name}.*,
+        select #{fields.join(', ')},
           (
             select array_to_json(array_agg(row_to_json(d)::json->'strategy_objective_id'))
             from (
