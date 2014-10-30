@@ -21,7 +21,7 @@ set :application, "visio"
 
 # Deploy from your local Git repo by cloning and uploading a tarball
 set :scm, :git
-set :repository, "https://github.com/unhcr/visio.git"
+set :repository, "https://github.com/unhcr/axis.git"
 require './config/capistrano_credentials.rb'
 set :deploy_via, :copy
 set :branch, "master"
