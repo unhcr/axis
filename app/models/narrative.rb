@@ -30,6 +30,9 @@ class Narrative < ActiveRecord::Base
 
   SUMMARY_PREFIX = 'summary'
 
+  def self.public_fields
+    %w{id ppg_id goal_id output_id problem_objective_id operation_id report_type year usertxt}
+  end
 
   def self.summarize(ids, report_type = nil, year = nil)
     report_type ||= 'Mid Year Report'

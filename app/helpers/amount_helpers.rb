@@ -27,7 +27,8 @@ module AmountHelpers
     # Need to include Strategy Objective ids
     outerSql = "select array_to_json(array_agg(row_to_json(t))) from ( "
     innerSql = "
-        select #{self.table_name}.*,
+        select #{self.public_fields.join(', ')},
+
           (
             select array_to_json(array_agg(row_to_json(d)::json->'strategy_objective_id'))
             from (
