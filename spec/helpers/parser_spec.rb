@@ -40,7 +40,7 @@ describe Parsers do
     {
       parser: Parsers::PopulationsParser,
       build: Build::PopulationsBuild,
-      required: [:value, :ppg_code, :ppg_id, :year, :operation_id]
+      required: [:value, :ppg_code, :year, :element_id, :element_type, :ppg_id]
     },
 
   ]

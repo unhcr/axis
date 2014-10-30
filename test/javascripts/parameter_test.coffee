@@ -110,12 +110,70 @@ module 'Parameter',
         strategy_objective_ids: [1]
         year: 2013
       }]
+
+    populations = [
+      # golden
+      {
+        element_type: 'goals'
+        element_id: 1
+        ppg_id: 1
+        value: 2
+        year: 2012
+      },
+      # wrong type
+      {
+        element_type: 'ppgs'
+        element_id: 1
+        ppg_id: 1
+        value: 3
+        year: 2012
+      },
+      # wrong ppg_id
+      {
+        element_type: 'goals'
+        element_id: 1
+        ppg_id: 2
+        value: 1
+        year: 2012
+      }
+      # wrong year
+      {
+        element_type: 'goals'
+        element_id: 1
+        ppg_id: 1
+        value: 3
+        year: 2014
+      },
+    ]
     Visio.manager.get('expenditures').reset(models)
 
     Visio.manager.get('budgets').reset(models)
 
     _.each models, (model) -> model.indicator_id = 1
     Visio.manager.get('indicator_data').reset(models)
+    Visio.manager.get('populations').reset(populations)
+test 'selectedPopulation', ->
+  g = Visio.manager.get('goals').get(1)
+
+  res = g.selectedPopulation()
+  strictEqual res, 2
+
+  res = g.selectedPopulation(2012)
+  strictEqual res, 2
+
+  res = g.selectedPopulation(2014)
+  strictEqual res, 3
+
+  o = Visio.manager.get('operations').get(1)
+
+  res = o.selectedPopulation(2014)
+  strictEqual res, 0
+
+  p = Visio.manager.get('ppgs').get(1)
+
+  res = p.selectedPopulation()
+  strictEqual res, 3
+
 
 test 'strategyExpenditureData', () ->
   nParams = _.values(Visio.Parameters).length

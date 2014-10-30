@@ -15,6 +15,7 @@ module Parsers
         GoalsOperations,
         GoalsOutputs,
         GoalsProblemObjectives,
+        GoalsPpgs,
         OperationsOutputs,
         OperationsPpgs,
         OperationsProblemObjectives,

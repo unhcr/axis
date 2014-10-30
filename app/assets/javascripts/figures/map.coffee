@@ -57,6 +57,7 @@ class Visio.Figures.Map extends Visio.Figures.Base
 
     values =
       selectedBudget: true,
+      selectedBudgetPerBeneficiary: false,
       selectedExpenditureRate: false
       selectedSituationAnalysis: false
       selectedPerformanceAchievement: false
@@ -85,6 +86,7 @@ class Visio.Figures.Map extends Visio.Figures.Base
         human: {
           selectedExpenditureRate: 'Expenditure Rate',
           selectedBudget: 'Budget'
+          selectedBudgetPerBeneficiary: 'Budget Per Beneficiary'
           selectedSituationAnalysis: 'Impact Criticality'
           selectedPerformanceAchievement: 'Performance Achievement'
           selectedImpactAchievement: 'Impact Achievement'
@@ -201,7 +203,7 @@ class Visio.Figures.Map extends Visio.Figures.Base
         formatted = switch algorithm
           when 'selectedExpenditureRate', 'selectedPerformanceAchievement', 'selectedImpactAchievement'
             Visio.Formats.PERCENT value
-          when 'selectedBudget'
+          when 'selectedBudget', 'selectedBudgetPerBeneficiary'
             Visio.Formats.MONEY value
           when 'selectedSituationAnalysis'
             Visio.Utils.humanMetric(value)
