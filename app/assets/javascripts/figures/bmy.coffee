@@ -20,6 +20,16 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
 
     @filters or= new Visio.Collections.FigureFilter([
       {
+        id: 'normalized'
+        filterType: 'checkbox'
+        values: {
+          normalized: false,
+        }
+        human: { normalized: 'Cost Per Beneficiary' }
+        callback: =>
+          @render()
+      },
+      {
         id: 'show_total'
         filterType: 'checkbox'
         values: { 'Show Total': true }
@@ -120,7 +130,10 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
 
   render: ->
     filtered = @filtered (@model or @collection)
+    normalized = @filters.get('normalized').filter('normalized')
+
     @y.domain [0, d3.max(_.flatten(filtered), (d) -> d.amount)]
+
 
     lines = @g.selectAll('.budget-line').data(filtered, (d) -> d[d.groupBy])
     lines.enter().append 'path'
@@ -210,6 +223,7 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
 
     return memo if @filters.isFiltered budget
 
+
     groupBy = @filters.get('group_by').active()
 
     # Add groupBy array
@@ -242,7 +256,8 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
 
       lineData.push datum unless @filters.isFiltered budget
 
-    datum.amount += budget.get 'amount'
+
+    datum.amount += budget.get('amount') / (@populations[budget.get('year')] or 1)
 
     if @filters.get('show_total').filter('Show Total')
       # Add 'total' array
@@ -267,12 +282,19 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
           total.name = @modelOrCollection.toString()
 
         totalData.push total
-      total.amount += budget.get 'amount'
+      total.amount += budget.get('amount') / (@populations[budget.get('year')] or 1)
 
     return memo
 
   filtered: (modelOrCollection) =>
     budgetData = modelOrCollection.selectedBudgetData(Visio.Constants.ANY_YEAR, @filters).models
+
+    normalized = @filters.get('normalized').filter('normalized')
+
+    @populations = {}
+    if normalized
+      _.each Visio.manager.get('yearList'), (year) =>
+        @populations[year] = @modelOrCollection.selectedPopulation year
 
     @modelOrCollection = modelOrCollection
     _.chain(budgetData).reduce(@reduceFn, [], @).value()

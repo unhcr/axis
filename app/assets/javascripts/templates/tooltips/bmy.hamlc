@@ -11,7 +11,7 @@
           = groupBy?.toUpperCase()
 
       .tooltip-number
-        = "$" + Visio.Formats.COMMA(model.get('amount'))
+        = Visio.Formats.MONEY(model.get('amount'))
 
 
 

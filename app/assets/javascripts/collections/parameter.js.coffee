@@ -63,6 +63,10 @@ class Visio.Collections.Parameter extends Visio.Collections.Syncable
     data = @selectedIndicatorData year, filters
     data.outputAchievement()
 
+  selectedPopulation: (year, filters = null) ->
+    data = @selectedPopulationData(year, filters)
+    data.amount()
+
   selectedPerformanceAchievement: (year, filters = null) ->
     filters or= new Visio.Collections.FigureFilter()
     filters.add { id: 'is_performance', filterType: 'radio', values: { true: true, false: false } },
@@ -112,6 +116,13 @@ class Visio.Collections.Parameter extends Visio.Collections.Syncable
     data = new Visio.Collections.Budget()
     @each (model) ->
       data.add model.selectedBudgetData.apply(model, args).models, silent: true
+    data
+
+  selectedPopulationData: (year, filters = null) ->
+    args = arguments
+    data = new Visio.Collections.Population()
+    @each (model) ->
+      data.add model.selectedPopulationData.apply(model, args).models, silent: true
     data
 
   selectedExpenditureData: (year, filters = null) ->
