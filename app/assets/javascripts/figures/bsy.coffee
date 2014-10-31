@@ -22,6 +22,16 @@ class Visio.Figures.Bsy extends Visio.Figures.Sy
     @breakdownBy = 'budget_type'
     @filters or= new Visio.Collections.FigureFilter([
       {
+        id: 'normalized'
+        filterType: 'checkbox'
+        values: {
+          normalized: false,
+        }
+        human: { normalized: 'Cost Per Beneficiary' }
+        callback: =>
+          @render()
+      },
+      {
         id: 'breakdown_by'
         filterType: 'radio'
         values:
@@ -128,6 +138,7 @@ class Visio.Figures.Bsy extends Visio.Figures.Sy
     filtered = @filtered @collection, opts?.isPng
     @_filtered = filtered
 
+    normalized = @filters.get('normalized').filter('normalized')
     breakdownBy = @filters.get('breakdown_by').active()
 
     # Expensive computation so don't want to repeat if not necessary
@@ -136,7 +147,9 @@ class Visio.Figures.Bsy extends Visio.Figures.Sy
       olData = (new Visio.Collections.Budget(data.where({ scenario: Visio.Scenarios.OL }))).amount()
       aolData = (new Visio.Collections.Budget(data.where({ scenario: Visio.Scenarios.AOL }))).amount()
 
-      if olData > aolData then olData else aolData
+      population = if normalized then d.selectedPopulation() else 1
+
+      if olData > aolData then olData / population else aolData / population
 
     )]
 
@@ -160,6 +173,9 @@ class Visio.Figures.Bsy extends Visio.Figures.Sy
       .attr('transform', (d, i) -> 'translate(' + self.x(i) + ', 0)')
       .each((d, idx) ->
         box = d3.select @
+
+        # Keep population 1 if we aren't normalizing
+        population = if normalized then d.selectedPopulation() else 1
 
 
         container = box.selectAll('.bar-container').data([d])
@@ -220,7 +236,7 @@ class Visio.Figures.Bsy extends Visio.Figures.Sy
             breakdownData = _.filter amountData, (datum) ->
               datum.get(breakdownBy) == breakdownType
 
-            amount = new Visio.Collections.AmountType(breakdownData).amount()
+            amount = new Visio.Collections.AmountType(breakdownData).amount() / population
 
             bars = box.selectAll(".#{Visio.Utils.stringToCssClass(scenario.scenario)}-bar.#{Visio.Utils.stringToCssClass(breakdownType)}-bar.#{scenario.type.singular}-bar").data([breakdownType])
             bars.enter().append('rect')
@@ -250,6 +266,7 @@ class Visio.Figures.Bsy extends Visio.Figures.Sy
         box.attr 'original-title', (d) ->
           self.templateTooltip
             values: values
+            normalized: normalized
             d: d
 
       )
@@ -304,6 +321,9 @@ class Visio.Figures.Bsy extends Visio.Figures.Sy
 
   sortFn: (a, b) =>
     filters = new Visio.Collections.FigureFilter()
+    normalized = @filters.get('normalized').filter('normalized')
+    populationA = if normalized then a.selectedPopulation() else 1
+    populationB = if normalized then b.selectedPopulation() else 1
 
     switch @sortAttribute
       when Visio.Scenarios.OL, Visio.Scenarios.AOL
@@ -321,17 +341,17 @@ class Visio.Figures.Bsy extends Visio.Figures.Sy
       filters.remove 'scenario'
       bData = b.selectedBudgetData(null, filters)
       aData = a.selectedBudgetData(null, filters)
-      bOL = new Visio.Collections.Budget(bData.where({ scenario: Visio.Scenarios.OL })).amount()
-      aOL = new Visio.Collections.Budget(aData.where({ scenario: Visio.Scenarios.OL })).amount()
-      bAOL = new Visio.Collections.Budget(bData.where({ scenario: Visio.Scenarios.AOL })).amount()
-      aAOL = new Visio.Collections.Budget(aData.where({ scenario: Visio.Scenarios.AOL })).amount()
+      bOL = new Visio.Collections.Budget(bData.where({ scenario: Visio.Scenarios.OL })).amount() / populationB
+      aOL = new Visio.Collections.Budget(aData.where({ scenario: Visio.Scenarios.OL })).amount() / populationA
+      bAOL = new Visio.Collections.Budget(bData.where({ scenario: Visio.Scenarios.AOL })).amount() / populationB
+      aAOL = new Visio.Collections.Budget(aData.where({ scenario: Visio.Scenarios.AOL })).amount() / populationA
       v = (bOL / (bOL + bAOL)) - (aOL / (aOL + aAOL))
 
-      if v != 0 then v else (bOL + bAOL) - (aOL + aAOL)
+      if v != 0 then v else ((bOL + bAOL) - (aOL + aAOL))
 
 
     else
-      b.selectedBudget(null, filters) - a.selectedBudget(null, filters)
+      (b.selectedBudget(null, filters) / populationB - a.selectedBudget(null, filters) / populationA)
 
   filtered: (collection, isPng) =>
     chain = _.chain(collection.models).filter(@queryByFn).sort(@sortFn)
@@ -410,8 +430,10 @@ class Visio.Figures.Bsy extends Visio.Figures.Sy
     @collection.length
 
   yAxisLabel: ->
+    normalized = @filters.get('normalized').filter 'normalized'
+    title = if normalized then 'Budget Per Beneficiary' else 'Budget'
 
     achievement_type = Visio.Utils.humanMetric Visio.manager.get 'achievement_type'
     return @templateLabel
-        title: 'Budget',
+        title: title
         subtitles: ['in US Dollars']

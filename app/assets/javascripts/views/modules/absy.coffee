@@ -15,7 +15,7 @@ class Visio.Views.AbsyView extends Visio.Views.Module
       margin:
         top: 90
         bottom: 90
-        left: 140
+        left: 150
         right: 80
 
     @figure = new Visio.Figures.Absy config
