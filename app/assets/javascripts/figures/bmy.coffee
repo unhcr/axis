@@ -287,6 +287,7 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
     return memo
 
   filtered: (modelOrCollection) =>
+    @modelOrCollection = modelOrCollection
     budgetData = modelOrCollection.selectedBudgetData(Visio.Constants.ANY_YEAR, @filters).models
 
     normalized = @filters.get('normalized').filter('normalized')
@@ -296,7 +297,6 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
       _.each Visio.manager.get('yearList'), (year) =>
         @populations[year] = @modelOrCollection.selectedPopulation year
 
-    @modelOrCollection = modelOrCollection
     _.chain(budgetData).reduce(@reduceFn, [], @).value()
 
   polygon: (d) ->
