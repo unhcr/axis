@@ -18,7 +18,7 @@ class Visio.Views.BmyView extends Visio.Views.AccordionIndexView
       margin:
         top: 90
         bottom: 90
-        left: 100
+        left: 150
         right: 80
       width: @figureWidth true
       height: 600
@@ -42,7 +42,9 @@ class Visio.Views.BmyView extends Visio.Views.AccordionIndexView
     parameters = Visio.manager.selected(Visio.manager.get('aggregation_type'))
 
     @figure.collectionFn parameters
-    @figure.groupBy = "#{Visio.Utils.parameterByPlural(Visio.manager.get('aggregation_type')).singular}_id"
+    groupBy = "#{Visio.Utils.parameterByPlural(Visio.manager.get('aggregation_type')).singular}_id"
+
+    @figure.filters.get('group_by').filter groupBy, true, { silent: true }
     @figure.render()
 
   sort: (parameterA, parameterB) ->

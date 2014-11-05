@@ -17,7 +17,7 @@ class Visio.Views.BmyShowView extends Visio.Views.AccordionShowView
       margin:
         top: 90
         bottom: 80
-        left: 120
+        left: 150
         right: 40
       width: @figureWidth false
       height: 450

@@ -11,7 +11,11 @@
     .bsy-value{ :data => { :type => "#{Visio.Utils.stringToCssClass(v.scenario.scenario)}-#{v.scenario.type.singular}"
       .row
         .col-xs-12
-          = v.scenario.scenario + ' ' + v.scenario.type.human
+          - out = v.scenario.scenario + ' ' + v.scenario.type.human
+          - if context.normalized
+            = out + ' Per Beneficiary'
+          - else
+            = out
       .row
         .col-xs-12.tipsy-number
           - if v.scenario.scenario == Visio.Scenarios.OL and v.scenario.type == Visio.Syncables.BUDGETS

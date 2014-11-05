@@ -16,7 +16,7 @@ class Visio.Views.BsyView extends Visio.Views.Module
       margin:
         top: 85
         bottom: 80
-        left: 115
+        left: 155
         right: 80
 
     @figure = new Visio.Figures.Bsy @config
