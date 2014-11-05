@@ -79,11 +79,6 @@ test 'resetFilter', ->
   ok filter.filter 'ADMIN'
   ok not filter.filter 'PROJECT'
 
-  # Should not reset hidden filters
-  filter.set 'hidden', true
-  filter.filter 'ADMIN', false
-  filter.resetFilter()
-  ok !filter.filter 'ADMIN'
 
 test 'resetFilter - collection', ->
 
@@ -94,6 +89,13 @@ test 'resetFilter - collection', ->
 
   ok not _.every(@filters.pluck('values'), (values) ->
     _.every(_.values(values), (value) -> value)), 'Every value should not be true'
+
+  # Should not reset hidden filters
+  filter = @filters.get('budget_type')
+  filter.set 'hidden', true
+  filter.filter 'ADMIN', false
+  @filters.resetFilters()
+  ok !filter.filter 'ADMIN'
 
 test 'Callback on filter', ->
   callback = sinon.spy()
