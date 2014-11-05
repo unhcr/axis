@@ -208,6 +208,10 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
       .duration(Visio.Durations.FAST)
       .call(@yAxis)
 
+    @g.select('.y.axis text')
+      .html =>
+        @yAxisLabel()
+
     @renderLegend()
 
     @tipsyHeaderBtns()
@@ -377,8 +381,11 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
     points.exit().remove()
 
   yAxisLabel: ->
+    normalized = @filters.get('normalized').filter 'normalized'
+    title = if normalized then 'Budget Per Beneficiary' else 'Budget'
+
     return @templateLabel
-        title: 'Budget',
+        title: title,
         subtitles: ['in US Dollars']
 
 

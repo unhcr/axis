@@ -18,7 +18,7 @@ class Visio.Views.BmyView extends Visio.Views.AccordionIndexView
       margin:
         top: 90
         bottom: 90
-        left: 100
+        left: 150
         right: 80
       width: @figureWidth true
       height: 600
