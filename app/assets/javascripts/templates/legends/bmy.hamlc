@@ -1,0 +1,8 @@
+%h6
+  = context.type.human
+
+%p
+  = Visio.Texts.BMY_LEGEND
+
+%svg
+

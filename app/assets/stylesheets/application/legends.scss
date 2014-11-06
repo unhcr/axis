@@ -1,4 +1,4 @@
-.legend-bsy, .legend-absy, .legend-bmys, .legend-icmy, .legend-isy {
+.legend-bsy, .legend-absy, .legend-bmy, .legend-bmys, .legend-icmy, .legend-isy {
   min-height: 464px;
   color: $dark-gray;
   border-left: 1px solid $dark-gray;
@@ -50,7 +50,7 @@
 
 }
 
-.legend-bsy {
+.legend-bsy, .legend-bmy {
 
   .bsy-bar-legend-circle {
     fill: $white;
@@ -79,7 +79,12 @@
     fill: $scenario-bar-exp;
   }
 
-
+  .AOL {
+    fill: $primary-soft;
+  }
+  .OL {
+    fill: $primary-light;
+  }
   .ADMIN {
     fill: $admin;
   }

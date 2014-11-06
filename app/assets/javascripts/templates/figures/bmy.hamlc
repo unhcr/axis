@@ -5,6 +5,12 @@
       .export.header-button
       .narrative.disabled.header-button
 .row
-  .col-md-12.center-text
-    %figure.figure
+  - if not context.isExport
+    .col-md-12
+      .legend-container
+      %figure.figure
 
+  - else
+    .col-md-12{ :class => ('center-text' if context.isExport) }
+      .legend-container
+      %figure.figure
