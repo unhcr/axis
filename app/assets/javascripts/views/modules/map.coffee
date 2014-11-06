@@ -11,7 +11,7 @@ class Visio.Views.MapView extends Visio.Views.Module
   initialize: (options) ->
 
     config =
-      width: @figureWidth false
+      width: @figureWidth true
       height: 800
       model: new Visio.Models.Map()
 

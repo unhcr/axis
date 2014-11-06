@@ -1,4 +1,4 @@
-.legend-bsy, .legend-absy, .legend-bmy, .legend-bmys, .legend-icmy, .legend-isy {
+.legend-map, .legend-bsy, .legend-absy, .legend-bmy, .legend-bmys, .legend-icmy, .legend-isy {
   min-height: 464px;
   color: $dark-gray;
   border-left: 1px solid $dark-gray;
@@ -138,7 +138,7 @@
   }
 }
 
-.legend-icmy {
+.legend-icmy, .legend-map {
 
   .success {
     fill: $success;
@@ -161,6 +161,19 @@
   }
   .low {
     fill: $low;
+  }
+
+  .Higher {
+    fill: rgb(253, 52, 156);
+
+  }
+  .Lower {
+    fill: #fff;
+  }
+
+  .Not-Included {
+    fill: $country-color;
+
   }
 
 }

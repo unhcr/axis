@@ -147,6 +147,7 @@ window.Visio =
     ICMY_LEGEND: 'This dashboard displays the progress of indicators over time. The first line graph aggregates all indicators. Below there is a breakdown  for each element of the specified aggregation type (Operations, PPGs, Goals, Objectives, or Outputs).'
     BSY_LEGEND: 'This dashboard displays the budget for each element of the specified aggregation type (Operations, PPGs, Goals, Objectives, or Outputs). Each bar is broken down by budget components, pillars or scenarios (AOL, OL), depending on the filters.'
     BMY_LEGEND: 'This dashboard displays the trends in budget over time. The first line graph displays the budget for each element of the specified aggregation type (Operations, PPGs, Goals, Objectives, or Outputs), over time. Below there is a breakdown for each of the elements.'
+    MAP_LEGEND: 'This dashboard displays different metrics on a map, depending on the specified filter.'
 
   TooltipTexts:
     MENU_FILTER: 'Select a filter'
