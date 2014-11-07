@@ -1,0 +1,9 @@
+%h6
+  = context.type.human
+
+%p
+  = Visio.Texts.MAP_LEGEND
+
+%svg
+
+

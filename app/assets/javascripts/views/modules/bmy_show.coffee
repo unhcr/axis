@@ -18,12 +18,12 @@ class Visio.Views.BmyShowView extends Visio.Views.AccordionShowView
         top: 90
         bottom: 80
         left: 150
-        right: 40
-      width: @figureWidth false
+        right: 80
+      width: @figureWidth true
       height: 450
 
     @figure = new Visio.Figures.Bmy config
-    @filterBy = new Visio.Views.FilterBy({ figure: @figure, })
+    @filterBy = new Visio.Views.FilterBy({ figure: @figure })
 
     @narratify @figure
 
