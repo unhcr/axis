@@ -1,4 +1,4 @@
-class ExpendituresController < ApplicationController
+class ExpendituresController < DataController
   include SyncableData
 end
 

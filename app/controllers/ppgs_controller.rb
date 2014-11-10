@@ -1,3 +1,3 @@
-class PpgsController < ApplicationController
+class PpgsController < ParametersController
   include SyncableParameter
 end

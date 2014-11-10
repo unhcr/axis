@@ -1,3 +1,3 @@
-class BudgetsController < ApplicationController
+class BudgetsController < DataController
   include SyncableData
 end

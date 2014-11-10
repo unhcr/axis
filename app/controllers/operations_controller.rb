@@ -1,4 +1,4 @@
-class OperationsController < ApplicationController
+class OperationsController < ParametersController
   include SyncableParameter
 
   def offices

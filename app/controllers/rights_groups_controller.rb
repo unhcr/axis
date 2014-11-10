@@ -1,4 +1,4 @@
-class RightsGroupsController < ApplicationController
+class RightsGroupsController < ParametersController
   include SyncableParameter
 end
 

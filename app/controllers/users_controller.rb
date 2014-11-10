@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_filter :authenticate_user!
 
   def update
     render :json => {:success => false} and return if !user_signed_in? || !current_user.admin
