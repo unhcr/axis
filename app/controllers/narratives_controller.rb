@@ -47,7 +47,7 @@ class NarrativesController < ApplicationController
     @narratives = resource.models_optimized(params[:filter_ids],
                                             nil,
                                             params[:where],
-                                            params[:offset]).values[0][0] || []
+                                            params[:offset]).values[0][0] || '[]'
     @narratives = JSON.parse(@narratives)
 
     html = view_context.render :template => 'layouts/narrative_word'
