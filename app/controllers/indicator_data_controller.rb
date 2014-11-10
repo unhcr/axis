@@ -1,3 +1,3 @@
-class IndicatorDataController < ApplicationController
+class IndicatorDataController < DataController
   include SyncableData
 end

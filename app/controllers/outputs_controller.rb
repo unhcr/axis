@@ -1,3 +1,3 @@
-class OutputsController < ApplicationController
+class OutputsController < ParametersController
   include SyncableParameter
 end

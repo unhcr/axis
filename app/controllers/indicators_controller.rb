@@ -1,3 +1,3 @@
-class IndicatorsController < ApplicationController
+class IndicatorsController < ParametersController
   include SyncableParameter
 end

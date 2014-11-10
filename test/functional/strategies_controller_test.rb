@@ -11,6 +11,22 @@ class StrategiesControllerTest < ActionController::TestCase
     sign_in @user
   end
 
+  test "user must be authenticated" do
+    sign_out @user
+
+    post :create, {}
+    assert_response :redirect
+
+    put :update, { :id => 1 }
+    assert_response :redirect
+
+    delete :destroy, { :id => 1 }
+    assert_response :redirect
+
+    get :download, { :id => 1 }
+    assert_response :redirect
+  end
+
   test "create" do
     Plan.all.map { |p| p.operation = Operation.first; p.save }
     post :create, {

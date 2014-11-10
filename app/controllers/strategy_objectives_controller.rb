@@ -1,4 +1,4 @@
-class StrategyObjectivesController < ApplicationController
+class StrategyObjectivesController < ParametersController
   def index
     results = StrategyObjective
     results = results.global_strategy_objectives if params[:global_only].present?

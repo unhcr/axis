@@ -1,3 +1,3 @@
-class OfficesController < ApplicationController
+class OfficesController < ParametersController
   include SyncableParameter
 end

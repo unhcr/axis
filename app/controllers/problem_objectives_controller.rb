@@ -1,3 +1,3 @@
-class ProblemObjectivesController < ApplicationController
+class ProblemObjectivesController < ParametersController
   include SyncableParameter
 end

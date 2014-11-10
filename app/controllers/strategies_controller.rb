@@ -1,4 +1,6 @@
 class StrategiesController < ApplicationController
+  before_filter :authenticate_user!
+
   def create
     render_403 and return if not params[:is_personal] and not current_user.admin
 

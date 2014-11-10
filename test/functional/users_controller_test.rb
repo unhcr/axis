@@ -21,6 +21,7 @@ class UsersControllerTest < ActionController::TestCase
 
   test "should not update not signed in user" do
     user = users(:one)
+    sign_in user
 
     assert !user.reset_local_db
     user.reset_local_db = true
@@ -35,6 +36,7 @@ class UsersControllerTest < ActionController::TestCase
 
   test "should not update user with different id" do
     user = users(:one)
+    sign_in user
 
     assert !user.reset_local_db
     user.reset_local_db = true
@@ -105,6 +107,8 @@ class UsersControllerTest < ActionController::TestCase
   test 'search' do
     user2 = users(:two)
     user = users(:one)
+
+    sign_in user
 
     user.login = 'abc'
     user2.login = 'ade'

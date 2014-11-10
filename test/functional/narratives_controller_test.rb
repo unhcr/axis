@@ -34,6 +34,16 @@ class NarrativesControllerTest < ActionController::TestCase
     sign_in @user
   end
 
+  test "should block access for user" do
+    sign_out @user
+
+    get :index
+
+    assert_response :redirect
+
+  end
+
+
   test "should get no narrative data" do
     get :index
 
