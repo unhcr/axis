@@ -5,6 +5,7 @@
     = stylesheet_link_tag    "application", :media => "all"
     = javascript_include_tag "application"
     = csrf_meta_tags
+    %meta{ 'http-equiv' => "X-UA-Compatable", :content => 'IE=Edge' }
   %body{ :class => "#{controller.action_name} layout-application" }
 
     :javascript
