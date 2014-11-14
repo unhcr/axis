@@ -123,7 +123,7 @@ class Visio.Figures.Bar extends Visio.Figures.Base
               y)
             .attr('dy', '1.8em')
             .text((d) =>
-                Visio.Utils.humanMetric(d.key))
+                "#{Visio.Utils.humanMetric(d.key)} #{@formatter(d.value)}")
         when 'bottom'
           @labels
             .transition().duration(Visio.Durations.FAST)
