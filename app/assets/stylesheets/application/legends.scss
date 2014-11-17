@@ -130,6 +130,10 @@
 }
 
 .legend-absy {
+  .concentric-circle {
+    fill: transparent;
+    stroke: $black;
+  }
   .Outside-Strategy {
     fill: lighten($purple, 20%);
   }
