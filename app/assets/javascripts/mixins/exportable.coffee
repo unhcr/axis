@@ -29,7 +29,6 @@ Visio.Mixins.Exportable =
     config.viewLocation = @viewLocation
     config.pdfViewLocation = @pdfViewLocation
     config.setupFns = @setupFns
-    config.activeData = @activeData
     config.includeExternalStrategyData = Visio.manager.includeExternalStrategyData()
     config
 

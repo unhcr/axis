@@ -2,17 +2,8 @@
   .idx
     = Visio.Utils.numberToLetter context.idx
 
-  - if context.model.get('country')
-    .row
-      .col-md-12
-        .country-img
-          %img{
-            :width => "55",
-            :height => "55",
-            :src => "/assets/countries/#{context.model.get('country').iso2.toLowerCase()}/128.png" }
-
   .row.header
-    .col-sm-6
+    .col-sm-8
       %h5.ui-primary
         - if context.model.name == Visio.Parameters.OPERATIONS
           = context.model.toString().toUpperCase()
@@ -20,6 +11,8 @@
           = context.model.toString()
 
 %section
+  - algorithm = context.filters.get('algorithm').active()
+  - human = context.filters.get('algorithm').get('human')?[algorithm]
   .row
     .col-sm-8
       .ui-big-number.ui-primary-light
@@ -45,7 +38,7 @@
   .row
     .col-sm-12
       .bold
-        Progress Towards Target.
+        = "Progress towards #{Visio.Utils.humanMetric(context.filters.get('achievement').active())}."
 
   .row
     .col-md-12
@@ -57,12 +50,16 @@
   .row
     .col-sm-12
       .bold
-        Budget Overview
+        = human
   .row
     .col-sm-12
       - colSize = Math.floor 12 / context.cols.length
+      - cloned = new Visio.Collections.FigureFilter(_.map(context.filters.toJSON(), (d) -> $.extend(true, {}, d)))
       - _.each context.rows, (scenario, rowNum) ->
         .row.table-row
+          - cloned.get('scenario').filterOff()
+          - cloned.get('scenario').filter scenario, true
+
           - if rowNum == 0
             .col-sm-1.cell &nbsp;
           - else
@@ -74,23 +71,25 @@
 
           .col-sm-8.zero-padding
             - _.each context.cols, (budget, colNum) ->
+              - cloned.get('budget_type').filterOff()
+              - cloned.get('budget_type').filter budget, true
 
               - if rowNum == 0
                 .table-header.cell{ :class => "col-sm-#{colSize}" }
                   = budget.toLowerCase()
               - else
                 .table-datum.cell{ :class => "col-sm-#{colSize}" }
-                  - budgets = context.model.selectedBudgetData().where({ scenario: scenario, budget_type: budget })
-                  = Visio.Formats.LONG_MONEY((new Visio.Collections.Budget(budgets)).amount())
+                  - result = context.model[algorithm](Visio.manager.year(), cloned)
+                  = Visio.Formats.LONG_MONEY(result)
 
 
           - if rowNum == 0
             .col-sm-3.table-header.table-total.cell
-              = 'TOTAL BUDGET'
+              = 'TOTAL'
           - else
             .col-sm-3.table-datum.table-total.cell
-              - budgets = context.model.selectedBudgetData(Visio.manager.year(), context.filters).where({ scenario: scenario })
-              = Visio.Formats.LONG_MONEY((new Visio.Collections.Budget(budgets)).amount())
+              - result = context.model[algorithm](Visio.manager.year(), context.filters)
+              = Visio.Formats.LONG_MONEY(result)
           .clearfix
 
         - if rowNum == 0
@@ -100,4 +99,4 @@
 
   .row
     .col-sm-12.right-text.bold.cell
-      = Visio.Formats.LONG_MONEY(context.model.selectedBudget(Visio.manager.year(), context.filters))
+      = Visio.Formats.LONG_MONEY(context.model[algorithm](Visio.manager.year(), context.filters))

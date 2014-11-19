@@ -309,6 +309,7 @@ class Visio.Models.Manager extends Backbone.Model
       @set 'strategies', new Visio.Collections.Strategy _state.strategies
       @set 'strategy_id', _state.strategy_id
       @set 'dashboard', new Visio.Models[_state.dashboardClass](_state.dashboard) if _state.dashboard
+      @set 'indicator', new Visio.Models.Indicator(_state.indicator) if _state.indicator
       return _state
     else
       return {
@@ -324,5 +325,5 @@ class Visio.Models.Manager extends Backbone.Model
         strategy_id: @get 'strategy_id'
         dashboard: @get('dashboard')?.toJSON()
         dashboardClass: @get('dashboard')?.name.className
+        indicator: @get('indicator')?.toJSON()
       }
-

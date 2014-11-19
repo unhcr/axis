@@ -233,7 +233,7 @@ class Visio.Figures.Absy extends Visio.Figures.Base
 
 
           # Conditional Labels
-          if (self.isPdf and not _.isEmpty self.selected)
+          if (self.isPdf)
             labels = pointContainer.selectAll('.label').data(_.filter([d], (d) => self.isSelected(d.id)))
             labels.enter().append('text')
             labels.attr('class', 'label')
@@ -243,7 +243,8 @@ class Visio.Figures.Absy extends Visio.Figures.Base
               .attr('text-anchor', 'middle')
               .text((d) ->
                 if self.isPdf
-                  Visio.Utils.numberToLetter(_.indexOf self.selected, "#{d.id}")
+                  idx = self.activeData.chain().pluck('id').map(String).indexOf(String(d.id)).value()
+                  Visio.Utils.numberToLetter idx
                 else
                   _.find self.activeData, (a, i) -> a.id == d.id
                   Visio.Utils.numberToLetter self.activeData.indexOf(a)
@@ -308,11 +309,6 @@ class Visio.Figures.Absy extends Visio.Figures.Base
       .html =>
         @yAxisLabel()
 
-    # Generate legend view
-    if @isPdf
-      @legendView.collection = new @collection.constructor(_.filter(filtered, (d) => self.isSelected(d.id)))
-
-
     @renderLegend()
     @$el.find(".#{@containerClass}").tipsy()
 
@@ -340,7 +336,7 @@ class Visio.Figures.Absy extends Visio.Figures.Base
     @renderSvgLabels()
 
   isSelected: (id) =>
-    _.include @selected, "#{id}"
+    _.chain(@activeData.pluck('id')).map(String).include("#{id}").value()
 
   isQueried: (d) =>
     !_.isEmpty(@query) and d.toString().toLowerCase().indexOf(@query.toLowerCase()) != -1

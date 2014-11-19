@@ -90,6 +90,9 @@ class Visio.Figures.Base extends Backbone.View
         .attr('class', "svg-#{@type.name}-labels svg-labels")
       @activeData = new Backbone.Collection()
 
+    if @isPdf
+      @activeData = new Backbone.Collection(config.activeData)
+
     @subscribe() if config.isExport
 
   selectable: true

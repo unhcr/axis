@@ -37,7 +37,7 @@ test 'index - absy aggregated by SO', ->
     collection: @sos
 
   config = @absy.config()
-  config.selected = ["#{@sos.at(0).id}"]
+  config.activeData = [@sos.at(0).toJSON()]
 
   Visio.router = new Visio.Routers.PdfRouter
     selector: $('<div></div>')
@@ -71,7 +71,7 @@ test 'index - absy', ->
     collection: @o
 
   config = @absy.config()
-  config.selected = [@o.at(0).id]
+  config.activeData = [@o.at(0).toJSON()]
 
   Visio.router = new Visio.Routers.PdfRouter
     selector: $('<div></div>')

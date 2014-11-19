@@ -3079,7 +3079,6 @@ a {
   height: 500px;
   header {
     @include section;
-    background-color: $off-white;
     padding-top: 15px;
     padding-bottom: 15px;
     border-bottom: 1px solid $primary;
@@ -3102,7 +3101,6 @@ a {
       stroke: $primary-light;
     }
   }
-
 
   .country-img {
     position: relative;

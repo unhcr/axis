@@ -6,13 +6,14 @@
   position: relative;
   margin-left: $parameter-show-padding-horizontal / 2;
   margin-right: $parameter-show-padding-horizontal / 2;
-  border: 1px solid $primary;
   padding-top: 0;
 }
 
 @mixin section {
   padding-left: 15px;
   padding-right: 15px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 @mixin number {
