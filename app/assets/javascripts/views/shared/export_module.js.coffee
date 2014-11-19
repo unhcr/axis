@@ -81,11 +81,7 @@ class Visio.Views.ExportModule extends Backbone.View
     $input.prop 'checked', not checked
 
   buildModule: =>
-    formArray = @$el.find('form').serializeArray()
-    _.each formArray, (formObj) => @model.set formObj.name, formObj.value
-
-    selected = _.map @$el.find('figcaption input[type="checkbox"]:checked'), (ele) -> $(ele).attr('data-id')
-    @model.get('figure_config').selected = selected
+    @model.get('figure_config').activeData = @figure.activeData?.toJSON()
 
   onClickEmail: ->
     return if @loadingEmail.get 'loading'

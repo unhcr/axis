@@ -14,12 +14,12 @@ class Visio.Legends.AbsyPdf extends Visio.Legends.Base
     @
 
   addAll: =>
-    @collection.each @addOne
+    @figure.activeData.each @addOne
 
   addOne: (model, idx) =>
     view = new Visio.Views.ParameterShowView
       filters: @figure.filters
-      model: model
+      model: model.get('d')
       idx: idx
 
     $legendBody = @$el.find('.legend-body')

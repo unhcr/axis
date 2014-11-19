@@ -49,7 +49,7 @@ body.pdf {
   }
 
   .parameter-show {
-    width: 406px;
+    width: 380px;
   }
 
   .legend-container {
@@ -255,22 +255,11 @@ body.pdf {
   }
 }
 
-.parameter-show:nth-of-type(2n+4) {
-  margin-left: 2px;
-}
-.parameter-show:nth-of-type(2n+3) {
-  margin-right: 2px;
-}
-.parameter-show:nth-of-type(-n+2) {
-  margin-left: 2px;
-}
-
 .idx {
   @include number;
   width: $parameter-show-idx;
   height: $parameter-show-idx;
-  border-radius: $parameter-show-idx;
-  border: 2px solid $primary;
+  color: $black;
   text-align: center;
   line-height: $parameter-show-idx - 3px;
   font-weight: bold;
