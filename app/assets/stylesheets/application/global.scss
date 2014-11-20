@@ -2113,6 +2113,8 @@ a {
 .dashboard-item.user-account {
   padding-right: 0;
   padding-left: 0;
+  position: relative;
+  z-index: 10;
 }
 
 .menu-options {
