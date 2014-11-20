@@ -102,7 +102,7 @@ class Visio.Views.Form extends Backbone.View
     $input.prop 'checked', false
     field.setSelected []
 
-    @nestedTrigger 'reset', field
+    @nestedTrigger 'fm-reset', field
 
   onSelectAll: (e) ->
     e.stopPropagation()

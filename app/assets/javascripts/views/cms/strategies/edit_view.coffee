@@ -50,7 +50,7 @@ class Visio.Views.StrategyCMSEditView extends Backbone.View
     @form.on 'close', =>
       Visio.router.navigate '/', { trigger: true }
 
-    @form.on 'fm-change:operations reset:operations select-all:operations', (form, formModel, formField, modelField) =>
+    @form.on 'fm-change:operations fm-reset:operations select-all:operations', (form, formModel, formField, modelField) =>
       related = @getRelatedParameters formField
 
       NProgress.start()
@@ -85,7 +85,7 @@ class Visio.Views.StrategyCMSEditView extends Backbone.View
           @fetchRelatedParameter nestedForm, nestedModel, parameter, cascadeParameter
 
       @form.on ["fm-change:strategy_objectives:#{parameter.plural}",
-                "reset:strategy_objectives:#{parameter.plural}"
+                "fm-reset:strategy_objectives:#{parameter.plural}"
                 "select-all:strategy_objectives:#{parameter.plural}"
                 ].join(' '),
         (form, nestedForm, nestedModel, formField, modelField, value, model) =>
