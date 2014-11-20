@@ -164,12 +164,12 @@ test 'change', ->
   field = @form.fields.findWhere { name: name }
   spy = sinon.spy()
 
-  @form.on 'change:name', spy
+  @form.on 'fm-change:name', spy
   @form.change name, field, 'abc'
   ok spy.calledOnce
 
   field = nested.fields.findWhere { name: name }
-  @form.on 'change:strategy_objectives:name', spy
+  @form.on 'fm-change:strategy_objectives:name', spy
   nested.change name, field, 'def'
   ok spy.calledTwice
 
@@ -185,7 +185,7 @@ test 'onReset', ->
   strictEqual @form.$el.find('input:checked').length, 2
   spy = sinon.spy()
 
-  @form.on 'reset:operations', spy
+  @form.on 'fm-reset:operations', spy
   @form.$el.find('.form-operations .reset').trigger 'click'
   strictEqual field.getSelected().length, 0
   strictEqual @form.$el.find('input:checked').length, 0

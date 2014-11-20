@@ -33,6 +33,7 @@ class StrategiesController < ApplicationController
 
     render :json => { :strategy => s.as_json({ :include => {
       :operations => true,
+      :ppgs => true,
       :strategy_objectives => true } }) }
   end
 

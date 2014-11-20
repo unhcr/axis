@@ -38,7 +38,7 @@ class Visio.Views.Form extends Backbone.View
           @model.set field.name, field.collection() unless @model.get(field.name)?
           formField = @fields.findWhere { name: field.name }
           formField.setSelected @model.get(field.name).pluck 'id'
-          formField.on 'change:selected', @render, @
+          formField.on 'fm-change:selected', @render, @
 
 
     @fields.each (field) =>
@@ -57,6 +57,7 @@ class Visio.Views.Form extends Backbone.View
     'click .cancel': 'onClose'
     'click .nested-delete': 'onDeleteNestedItem'
     'click .reset': 'onReset'
+    'click .select-all': 'onSelectAll'
 
   render: ->
     console.error 'Must call initSchema before rendering' unless @isSchemaInit
@@ -101,7 +102,24 @@ class Visio.Views.Form extends Backbone.View
     $input.prop 'checked', false
     field.setSelected []
 
-    @nestedTrigger 'reset', field
+    @nestedTrigger 'fm-reset', field
+
+  onSelectAll: (e) ->
+    e.stopPropagation()
+
+    $target = $(e.currentTarget)
+    name = $target.attr 'data-name'
+    $input = @$el.find "input[data-name=\"#{name}\"]"
+    field = @fields.findWhere { name: name }
+
+    $input.prop 'checked', true
+    ids = []
+    $input.each (i, ele) -> ids.push($(ele).data().id)
+
+    field.setSelected ids
+
+    @nestedTrigger 'select-all', field
+
 
   onClickNestedItem: (e) ->
     $target = $(e.currentTarget)
@@ -173,10 +191,10 @@ class Visio.Views.Form extends Backbone.View
         model = @model.get(name).get id
         field.selected id, value if field.get('formElement') is 'checkboxes'
 
-        @nestedTrigger 'change', field, value, model
+        @nestedTrigger 'fm-change', field, value, model
       when 'string'
         @model.set name, value
-        @nestedTrigger 'change', field, value
+        @nestedTrigger 'fm-change', field, value
 
   nestedTrigger: (eventName, field, args...) =>
     eventArgs = [@, @model]
