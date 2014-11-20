@@ -1,7 +1,7 @@
 != window.HAML['shared/form_parts/header']( field: context.formField.toJSON() )
 %a.reset{ :data => { :name => context.formField.get('name') } } reset
 &nbsp;
-%small.ui-orange Warning: selecting all will negatively affect the speed and performance of Axis load times
+%small.ui-orange Warning: selecting many parameters will negatively affect the speed and performance of Axis load times
 .form-data.save-scroll{ :data => { :scrollname => context.formField.get('name') } }
   - context.modelField.each (item) ->
     .visio-checkbox.visio-checkbox-left.visio-checkbox-hover
