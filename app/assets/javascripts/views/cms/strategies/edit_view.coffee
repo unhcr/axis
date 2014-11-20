@@ -50,7 +50,7 @@ class Visio.Views.StrategyCMSEditView extends Backbone.View
     @form.on 'close', =>
       Visio.router.navigate '/', { trigger: true }
 
-    @form.on 'change:operations reset:operations', (form, formModel, formField, modelField) =>
+    @form.on 'fm-change:operations reset:operations select-all:operations', (form, formModel, formField, modelField) =>
       related = @getRelatedParameters formField
 
       NProgress.start()
@@ -58,13 +58,13 @@ class Visio.Views.StrategyCMSEditView extends Backbone.View
         @fetchRelatedParameter(form, formModel, Visio.Parameters.OPERATIONS, cascadeParameter, true).done ->
           NProgress.done()
 
-    @form.on 'change:name', (form, formField, modelField, value) ->
+    @form.on 'fm-change:name', (form, formField, modelField, value) ->
       if value
         form.$el.find('h2.name').text value
       else
         form.$el.find('h2.name').html '&nbsp;'
 
-    @form.on 'change:strategy_objectives:name', (form, nestedForm, nestedModel, formField, modelField, value) ->
+    @form.on 'fm-change:strategy_objectives:name', (form, nestedForm, nestedModel, formField, modelField, value) ->
       if value
         nestedForm.$el.find('h2.name').text value
       else
@@ -84,8 +84,10 @@ class Visio.Views.StrategyCMSEditView extends Backbone.View
         _.each related.cascade, (cascadeParameter) =>
           @fetchRelatedParameter nestedForm, nestedModel, parameter, cascadeParameter
 
-      @form.on ["change:strategy_objectives:#{parameter.plural}",
-                "reset:strategy_objectives:#{parameter.plural}"].join(' '),
+      @form.on ["fm-change:strategy_objectives:#{parameter.plural}",
+                "reset:strategy_objectives:#{parameter.plural}"
+                "select-all:strategy_objectives:#{parameter.plural}"
+                ].join(' '),
         (form, nestedForm, nestedModel, formField, modelField, value, model) =>
 
           related = @getRelatedParameters formField
@@ -132,10 +134,10 @@ class Visio.Views.StrategyCMSEditView extends Backbone.View
       join_ids["#{dependentParameter.singular}_ids"] = dependentField.getSelected()
       data = { join_ids: join_ids }
 
-      collection.fetch({ data: data, remove: false }).done ->
+      collection.fetch({ data: data, remove: false, type: 'POST' }).done ->
         if select
           collection.each (model) ->
-            relatedFormField.selected model.id, true unless unselected.get(model.id)?
+            relatedFormField.selected model.id, true, true unless unselected.get(model.id)?
         form.render()
 
         resolved[idx] = true
