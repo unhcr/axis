@@ -34,7 +34,7 @@ class ApplicationController < ActionController::Base
       },
       {
         :name => 'Number of smiles?',
-        :value => 'Priceless'
+        :value => '∞'
       }
     ]
     render :layout => 'splash'
