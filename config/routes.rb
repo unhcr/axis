@@ -50,6 +50,7 @@ Visio::Application.routes.draw do
   resources :strategies do
     member do
       get 'download'
+      post 'globalize'
     end
     collection do
       get 'normalize'

@@ -37,6 +37,19 @@ class StrategiesController < ApplicationController
       :strategy_objectives => true } }) }
   end
 
+  def globalize
+    render_403 and return unless current_user.admin
+
+    s = Strategy.find(params[:id])
+    s.make_global
+    s.reload
+
+    render :json => { :success => true, :strategy => s.as_json({ :include => {
+      :operations => true,
+      :ppgs => true,
+      :strategy_objectives => true } }) }
+  end
+
   def normalize
     render_403 and return unless current_user.admin
 

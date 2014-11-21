@@ -1,0 +1,38 @@
+.close-container
+  .close
+%form
+  .row
+    .col-md-12
+      %h2
+        = "Convert personal strategies to global strategies"
+
+  .row
+    .col-md-12
+      .usersearch
+
+  .row
+    .col-md-12
+      %h4
+        Strategies:
+      .strategies
+        - context.strategies.each (s, i) ->
+          .strategy-pill{ :class => 'odd' if (i % 2 != 0)}
+            .col-xs-9
+              = s.toString()
+            .col-xs-3
+              - if s.get('is_personal')
+                .btn.globalize{ :data-id => s.id }
+                  Make Global
+              - else
+                .center-text
+                  %i Already a global strategy
+
+  .row
+    .col-md-12
+      .btn.cancel
+        Close
+
+
+
+
+

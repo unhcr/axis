@@ -68,6 +68,16 @@ class Strategy < ActiveRecord::Base
     end
   end
 
+  def is_global?
+    self.user.nil?
+  end
+
+  def make_global
+    self.user = nil
+    self.shared_users = []
+    self.save
+  end
+
   def belongs_to_strategy_objective(assoc)
     raise 'Association does not belong to a Strategy Objective' if assoc.strategy_objectives.empty?
   end
@@ -146,6 +156,8 @@ class Strategy < ActiveRecord::Base
     options[:include] ||= {}
     Jbuilder.new do |json|
       json.extract! self, :name, :id, :description, :user_id, :dashboard_type
+
+      json.is_personal self.user_id.present?
 
       if options[:include][:ids]
         json.operation_ids self.operation_ids.inject({}) { |h, id| h[id] = true; h }

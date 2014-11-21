@@ -231,6 +231,7 @@ body.layout-cms {
     position: relative;
     top: -6px;
   }
+
 }
 
 .header-item {
@@ -3353,6 +3354,20 @@ a {
 
   a {
     color: $black;
+  }
+}
+
+.globalize-strategies-container {
+  .strategies {
+    max-height: 600px;
+    overflow: auto;
+  }
+  .strategy-pill {
+    height: 40px;
+  }
+
+  .strategy-pill.odd {
+    background-color: $off-white;
   }
 }
 
