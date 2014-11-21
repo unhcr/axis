@@ -163,6 +163,7 @@ class Visio.Figures.Absy extends Visio.Figures.Base
     pointContainers
         .attr('class', (d) ->
           classList = [self.containerClass, "id-#{d.refId()}"]
+          classList.push 'external' unless Visio.manager.get('dashboard')?.include d.name.singular, d.id
 
           if self.isQueried d
             classList.push 'queried'
