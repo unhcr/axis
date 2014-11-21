@@ -12,7 +12,7 @@
       %a{ :href => '/cms/strategies?is_personal=true' } Builder
 
   .account-option
-    %a{ :href => 'https://github.com/unhcr/axis/wiki' } Help
+    %a{ :target => '_blank', :href => 'https://github.com/unhcr/axis/wiki' } Help
 
   .account-option
     %a{ :href => '/users/sign_out', :data => { :method => 'delete' }, :rel => 'nofollow' } Sign Out
