@@ -2,6 +2,8 @@ require 'test_helper'
 
 class StrategyTest < ActiveSupport::TestCase
   def setup
+    @user = users(:one)
+    @shared_user = users(:two)
     @s = strategies(:one)
 
     @operations = [operations(:one)]
@@ -93,6 +95,27 @@ class StrategyTest < ActiveSupport::TestCase
     assert_equal s.goals.length, 1
     assert_equal s.strategy_objectives.length, 1
     assert_equal s.operations.length, 1
+  end
+
+  test "make strategy global" do
+
+    s = Strategy.create()
+
+    assert s.is_global?
+
+    s.user = @user
+    s.shared_users << @shared_user
+    s.save
+    s.reload
+
+    assert !s.is_global?
+
+    s.make_global
+    s.reload
+
+    assert s.is_global?
+    assert_equal s.shared_users.length, 0
+
   end
 
   test "should get optmized indicator data for strategy" do

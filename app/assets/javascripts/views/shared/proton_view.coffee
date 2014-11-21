@@ -7,14 +7,13 @@ class Visio.Views.ProtonView extends Backbone.View
 
   intervalTime: 7500
   explodeTime: 800
-  nParticles: 15000
+  nParticles: 3000
 
   initialize: (options) ->
     @rootIndex = 0
     @mouseObj
 
     @stats = options.stats
-    @texts = ['12', '12,400,321', '2']
 
     @zones = []
     @images = []

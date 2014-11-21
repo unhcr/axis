@@ -231,6 +231,7 @@ body.layout-cms {
     position: relative;
     top: -6px;
   }
+
 }
 
 .header-item {
@@ -592,6 +593,7 @@ body.index {
   .menu-tabs , .menu-content-container {
     border-top: 2px solid $black;
     padding-top: 28px;
+    min-height: 600px;
 
   }
 
@@ -2113,6 +2115,8 @@ a {
 .dashboard-item.user-account {
   padding-right: 0;
   padding-left: 0;
+  position: relative;
+  z-index: 10;
 }
 
 .menu-options {
@@ -3350,6 +3354,20 @@ a {
 
   a {
     color: $black;
+  }
+}
+
+.globalize-strategies-container {
+  .strategies {
+    max-height: 600px;
+    overflow: auto;
+  }
+  .strategy-pill {
+    height: 40px;
+  }
+
+  .strategy-pill.odd {
+    background-color: $off-white;
   }
 }
 

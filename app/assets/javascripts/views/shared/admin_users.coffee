@@ -22,7 +22,7 @@ class Visio.Views.AdminUsers extends Backbone.View
 
   render: ->
 
-    @$el.html @template
+    @$el.html @template()
 
     @userSearch = new Visio.Views.UserSearch({ el: @$el.find('.usersearch') })
     @userSearch.render()

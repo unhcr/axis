@@ -34,22 +34,18 @@
   .row
     .col-md-3
       %button.btn.full-width
-        %a.block{ :href => '/reset_local_db' } Reset Local Data Cache
-
-  .row
-    .col-md-3
-      %button.btn.full-width
-        %a.block{ :href => '/strategies/normalize' } Normalize Strategies
-
-  .row
-    .col-md-3
-      %button.btn.full-width
         %a.block{ :href => '/create_guest_user' } Create Guest User
 
   .row
     .col-md-3
       %button.btn.full-width
         .manage-admin Manage admin users
+
+  .row
+    .col-md-3
+      %button.btn.full-width
+        .globalize Globalize Strategies
+
   .row
     .col-md-8
       .divider-stack
@@ -69,7 +65,12 @@
 
 :javascript
   var adminUsers = new Visio.Collections.User(#{@configuration.admin_users.to_json.html_safe})
+  var strategies = new Visio.Collections.Strategy(#{Strategy.all.to_json.html_safe})
 
   $('.manage-admin').on('click', function() {
     $('body').append((new Visio.Views.AdminUsers({ collection: adminUsers })).$el)
+  });
+
+  $('.globalize').on('click', function() {
+    $('body').append((new Visio.Views.GlobalizeStrategies({ collection: strategies })).$el)
   });

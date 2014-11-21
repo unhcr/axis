@@ -65,6 +65,22 @@ class StrategiesControllerTest < ActionController::TestCase
 
   end
 
+  test 'globalize strategy' do
+    @user.admin = true
+    @user.save
+
+    s = strategies(:one)
+    s.user = @user
+
+    post :globalize, { :id => s.id }
+
+    assert_response :success
+
+    s.reload
+    assert !s.user_id
+
+  end
+
   test 'create - global strategies, not admin' do
     @user.admin = false
     @user.save
