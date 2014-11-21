@@ -308,9 +308,9 @@ Visio.Algorithms.CRITICALITIES = [
   ]
 
 Visio.Algorithms.THRESHOLDS = [
-    { value: Visio.Algorithms.ALGO_RESULTS.high, description: 'Percentage of indicators that have achieved over 60% of their target.' }
+    { value: Visio.Algorithms.ALGO_RESULTS.high, description: 'Percentage of indicators that have achieved over 80% of their target.' }
     { value: Visio.Algorithms.ALGO_RESULTS.medium, description: 'Percentage of indicators that have achieved over 60% of their target.' }
-    { value: Visio.Algorithms.ALGO_RESULTS.low, description: 'Percentage of indicators that have achieved less than 60% of their target.' }
+    { value: Visio.Algorithms.ALGO_RESULTS.low, description: 'Percentage of indicators that have achieved less than 40% of their target.' }
     { value: Visio.Algorithms.STATUS.missing, description: 'Percentage of indicators with missing data.' }
   ]
 
