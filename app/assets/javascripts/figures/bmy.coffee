@@ -76,7 +76,6 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
       d3.select(@).selectAll('.point').transition().duration(Visio.Durations.VERY_FAST).attr('r', 0).remove()
     )
 
-
     @x = d3.scale.ordinal()
       .rangePoints([0, @adjustedWidth])
       .domain(Visio.manager.get('yearList'))
@@ -93,7 +92,8 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
     @voronoiFn = d3.geom.voronoi()
       .x((d) => @x(d.year))
       .y((d) => @y(d.amount))
-      .clipExtent([[-@margin.left, -@margin.top], [@adjustedWidth + @margin.right, @adjustedHeight + @margin.bottom]])
+      .clipExtent([[-@margin.left, -@margin.top],
+                   [@adjustedWidth + @margin.right, @adjustedHeight + @margin.bottom]])
 
     @isExport = if config.isExport? then config.isExport else false
 
@@ -135,6 +135,7 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
     @y.domain [0, d3.max(_.flatten(filtered), (d) -> d.amount)]
 
 
+    # Renders lines
     lines = @g.selectAll('.budget-line').data(filtered, (d) -> d[d.groupBy])
     lines.enter().append 'path'
     lines
@@ -156,7 +157,7 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
 
       allPointData = allPointData.concat pointData
 
-
+    # Render circles for any line that only has one point
     points = @g.selectAll(".budget-point")
       .data(allPointData, (d) -> "#{d[d.groupBy]}#{d.year}")
 
@@ -344,6 +345,7 @@ class Visio.Figures.Bmy extends Visio.Figures.Base
       pointData = _.chain(filtered).flatten().where({ year: d.point.year }).value()
       @renderSelectedComponents d.point, pointData
 
+  # Renders shapes for when you select a certain year to view the narrative
   renderSelectedComponents: (point, pointData) =>
     @selectedDatum.set 'd', point
 
