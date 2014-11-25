@@ -1,3 +1,4 @@
+# Used to show a pie graph of a single percent
 class Visio.Figures.Circle extends Visio.Figures.Base
 
   type: Visio.FigureTypes.CIRCLE
@@ -47,12 +48,6 @@ class Visio.Figures.Circle extends Visio.Figures.Base
 
 
           @foreground.attr('d', d))
-
-    #$(@text.node()).countTo
-    #  from: @oldNumber
-    #  to: @number
-    #  speed: Visio.Durations.FAST
-    #  formatter: Visio.Utils.countToFormatter
 
     @oldPercent = @percent || 0
     @oldNumber = @number || 0
