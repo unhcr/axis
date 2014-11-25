@@ -1,13 +1,18 @@
+# This class is the parent class for all figures. It is an abstract class.
 class Visio.Figures.Base extends Backbone.View
 
   template: HAML['figures/base']
 
   templateLabel: HAML['figures/label']
 
+  # Any attribute listed here will have an accessor function made for it. The width attribute's accessor will
+  # be called widthFn. The other attributes follow the same pattern.
   attrAccessible: ['x', 'y', 'width', 'height', 'collection', 'margin', 'model']
 
+  # Determines which attributes should be exported when calling 'config'. Used for exporting figures.
   attrConfig: ['margin', 'width', 'height']
 
+  # Where to find the view. Ex: Visio[viewLocation][<viewName>]
   viewLocation: 'Figures'
 
   hasAxis: true
@@ -20,9 +25,12 @@ class Visio.Figures.Base extends Backbone.View
       right: 2
       top: 2
       bottom: 2
+
+    # Every attribute in config becomes a property of the figure by default
     for attr, value of config
       @[attr] = value
 
+    # Create accessor functions
     _.each @attrAccessible, (attr) =>
       @[attr + 'Fn'] = (_attr) =>
         return @[attr] unless arguments.length
@@ -32,6 +40,8 @@ class Visio.Figures.Base extends Backbone.View
     if config?.filters?
       @filters = new Visio.Collections.FigureFilter(config.filters)
 
+    # Logic for selecting template. If no specific template is defined for that figure, it uses the base
+    # template
     @template = HAML["figures/#{@type.name}"] if HAML["figures/#{@type.name}"]?
 
     if @isPdf and HAML["pdf/figures/#{@type.name}"]
@@ -48,6 +58,7 @@ class Visio.Figures.Base extends Backbone.View
 
     @$el.html @template(_.extend(opts, templateOpts))
 
+    # Selected data for the figure. If it's "selectable" then you can read narratives on it.
     if Visio.SelectedData[@type.className]?
       @selectedDatum = new Visio.SelectedData[@type.className]({ d: null })
     else
@@ -57,6 +68,7 @@ class Visio.Figures.Base extends Backbone.View
 
     @legendView = new Visio.Legends[legendClass]?({ figure: @ })
 
+    # The selection for the svg to be append to
     @selection = d3.select @$el.find('figure')[0]
 
     # Adjust for margins
@@ -95,8 +107,10 @@ class Visio.Figures.Base extends Backbone.View
 
     @subscribe() if config.isExport
 
+  # Can the figure be selectable in export mode
   selectable: true
 
+  # Selects an element for export view
   select: (d, i) =>
 
     if @activeData.get(@datumId(d))?
@@ -110,6 +124,7 @@ class Visio.Figures.Base extends Backbone.View
     else
       @$el.find('.legend-container').html @legendView?.render().el
 
+  # Used for PNG exports since html cannot easily be converted to PNG
   renderSvgLegend: =>
 
     svgLegend = @g.append('svg')
@@ -119,6 +134,7 @@ class Visio.Figures.Base extends Backbone.View
       .attr('class', "legend-#{@type.name}")
     @legendView?.drawFigures?(svgLegend.node())
 
+  # Used for PNG exports since html cannot easily be converted to PNG
   renderSvgLabels: =>
 
     gLabelPadding = 30
@@ -158,6 +174,7 @@ class Visio.Figures.Base extends Backbone.View
 
     @graphLabels()
 
+  # Sets the tooltips for the header buttons on the figure
   tipsyHeaderBtns: =>
     tipsyOpts =
       className: 'tipsy-black'
@@ -193,6 +210,7 @@ class Visio.Figures.Base extends Backbone.View
   getPNGSvg: =>
     @$el.find('svg')
 
+  # Utility for wrapping svg text
   wrap: (text, width) =>
     text.each ->
       text = d3.select @
@@ -218,6 +236,8 @@ class Visio.Figures.Base extends Backbone.View
             .attr("x", x).attr("y", y + (lineNumber * (fontSize + padding)))
             .attr("dy", dy + "em").text(word)
 
+  # Closes figure. Should always be called to remove the figure since it unbinds and properly deconstructs the
+  # object.
   close: ->
     @selectedDatum.off()
     @legendView?.close()
