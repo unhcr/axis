@@ -1,3 +1,4 @@
+# Figure for providing the axis of the overview dashboard figure
 class Visio.Figures.Axis extends Visio.Figures.Base
 
   type: Visio.FigureTypes.AXIS
