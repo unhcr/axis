@@ -21,8 +21,13 @@ module AmountHelpers
         .where(where).limit(limit)
   end
 
-  # models_optimized is a much faster implantation of models but relies on postgres 9.3 or greater to generate json on 
+  # models_optimized is a much faster implementation of models but relies on postgres 9.3 or greater to generate json on 
   # selection
+  # ids - a hash of parameter ids that the data should belong to. For example, operation_ids => [123, 456] will get all data 
+  #   that belongs to either of those operations. 
+  # limit - limits the number of selected data
+  # where - any where conditions for the query. This is vulnerable  to sql injection. 
+  # offset - the number to offset the data selection.
   def models_optimized(ids = {}, limit = nil, where = nil, offset = nil)
     conditions = generate_conditions ids
     query_string = conditions.join(' AND ')
