@@ -1,3 +1,8 @@
+# This singleton class defines various default configurations for the app. 
+# For example, it defines the default year for the dashboards. This class needs to
+# instantiated before the app will work. An error will be thrown if an attempt to make
+# to make a second instance is made. 
+
 class AdminConfiguration < ActiveRecord::Base
   attr_accessible :startyear, :endyear, :default_reported_type, :default_aggregation_type, :default_date, :default_use_local_db
 
