@@ -59,6 +59,7 @@ module AmountHelpers
 
   end
 
+  Generates sql for a single parameter. This is an internal method. 
   def parameter_sql(parameterClass)
     "select strategy_objective_id
     from #{parameterClass.table_name}_strategy_objectives
@@ -75,7 +76,6 @@ module AmountHelpers
 
     conditions = []
 
-    # TODO Check accuracy of using problem_objective and output with OR
     conditions << "operation_id IN ('#{ids[:operation_ids].join("','")}')" if ids[:operation_ids]
     conditions << "plan_id IN ('#{ids[:plan_ids].join("','")}')" if ids[:plan_ids]
     conditions << "ppg_id IN ('#{ids[:ppg_ids].join("','")}')" if ids[:ppg_ids].present? && !ids[:ppg_ids].empty?
