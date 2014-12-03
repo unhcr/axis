@@ -21,12 +21,12 @@
 //= require visio
 //= require backbone_ext
 //= require_tree ./mixins
-//= require ./collections/syncable
-//= require ./models/syncable
+//= require ./collections/data
+//= require ./models/data
 //= require ./collections/parameter
 //= require ./models/parameter
-//= require ./collections/syncables/amount_type
-//= require ./models/syncables/amount_type
+//= require ./collections/data/amount_type
+//= require ./models/data/amount_type
 //= require ./models/selected_data/base.coffee
 //= require ./models/selected_data/my
 //= require ./views/tooltips/d3_tooltip

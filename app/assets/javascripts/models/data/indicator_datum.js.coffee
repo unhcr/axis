@@ -1,4 +1,4 @@
-class Visio.Models.IndicatorDatum extends Visio.Models.Syncable
+class Visio.Models.IndicatorDatum extends Visio.Models.Data
 
   urlRoot: '/indicator_data'
 

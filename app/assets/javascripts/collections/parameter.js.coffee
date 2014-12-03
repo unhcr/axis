@@ -8,7 +8,7 @@
 # As of writing this 25/11/14, the `strategy` functions are not used in the app but are maintained in the
 # event that they will/could be used in app for certain calculations.
 #
-class Visio.Collections.Parameter extends Visio.Collections.Syncable
+class Visio.Collections.Parameter extends Backbone.Collection
 
   model: Visio.Models.Parameter
 

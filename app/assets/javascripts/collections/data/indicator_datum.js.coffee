@@ -1,4 +1,4 @@
-class Visio.Collections.IndicatorDatum extends Visio.Collections.Syncable
+class Visio.Collections.IndicatorDatum extends Visio.Collections.Data
 
   model: Visio.Models.IndicatorDatum
 

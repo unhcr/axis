@@ -1,4 +1,4 @@
-class Visio.Models.Parameter extends Visio.Models.Syncable
+class Visio.Models.Parameter extends Visio.Models.Data
 
   @include Visio.Mixins.Dashboardify
 
@@ -237,4 +237,7 @@ class Visio.Models.Parameter extends Visio.Models.Syncable
 
   highlight: ->
     return @get('highlight').name[0] if @get('highlight')
+
+  toString: () ->
+    return @get('name')
 
