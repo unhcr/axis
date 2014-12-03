@@ -1,5 +1,5 @@
 # AmountHelpers is a module for aggregateable parameters in focus such as Budgets and Expenditures. It generates sql to
-# select the data based on parameter ids. Axis uses the snowflake model for all of its data tied to focus. 
+# select the data based on parameter ids. Axis uses the snowflake model for all of its data tied to focus.
 
 module AmountHelpers
   def models(ids = {}, limit = nil, where = {})
@@ -21,12 +21,12 @@ module AmountHelpers
         .where(where).limit(limit)
   end
 
-  # models_optimized is a much faster implementation of models but relies on postgres 9.3 or greater to generate json on 
+  # models_optimized is a much faster implementation of models but relies on postgres 9.3 or greater to generate json on
   # selection
-  # ids - a hash of parameter ids that the data should belong to. For example, operation_ids => [123, 456] will get all data 
-  #   that belongs to either of those operations. 
+  # ids - a hash of parameter ids that the data should belong to. For example, operation_ids => [123, 456] will get all data
+  #   that belongs to either of those operations.
   # limit - limits the number of selected data
-  # where - any where conditions for the query. This is vulnerable  to sql injection. 
+  # where - any where conditions for the query. This is vulnerable  to sql injection.
   # offset - the number to offset the data selection.
   def models_optimized(ids = {}, limit = nil, where = nil, offset = nil)
     conditions = generate_conditions ids
@@ -59,7 +59,7 @@ module AmountHelpers
 
   end
 
-  Generates sql for a single parameter. This is an internal method. 
+  #Generates sql for a single parameter. This is an internal method.
   def parameter_sql(parameterClass)
     "select strategy_objective_id
     from #{parameterClass.table_name}_strategy_objectives
