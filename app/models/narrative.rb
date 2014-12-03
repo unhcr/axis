@@ -1,6 +1,6 @@
 class Narrative < ActiveRecord::Base
   self.primary_key = :id
-  include SyncableModel
+  include VisioModel
   extend AmountHelpers
   include Tire::Model::Search
   include Tire::Model::Callbacks

@@ -1,6 +1,6 @@
 class Output < ActiveRecord::Base
-  include SyncableModel
-  include SyncableParameterModel
+  include VisioModel
+  include ParameterModel
   include Tire::Model::Search
   include Tire::Model::Callbacks
 

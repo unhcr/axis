@@ -1,4 +1,4 @@
-module SyncableModel
+module VisioModel
   def init_found_at
     self.found_at = Time.now
   end

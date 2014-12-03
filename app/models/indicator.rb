@@ -1,8 +1,8 @@
 class Indicator < ActiveRecord::Base
   self.primary_key  = :id
 
-  include SyncableModel
-  include SyncableParameterModel
+  include VisioModel
+  include ParameterModel
   include Tire::Model::Search
   include Tire::Model::Callbacks
 

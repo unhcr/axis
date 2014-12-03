@@ -1,6 +1,6 @@
 class Plan < ActiveRecord::Base
-  include SyncableModel
-  include SyncableParameterModel
+  include VisioModel
+  include ParameterModel
 
   attr_accessible :name, :operation_name, :year, :operation_id
 

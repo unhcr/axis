@@ -1,5 +1,5 @@
 class RightsGroup < ActiveRecord::Base
-  include SyncableModel
+  include VisioModel
   attr_accessible :name
 
   self.primary_key = :id

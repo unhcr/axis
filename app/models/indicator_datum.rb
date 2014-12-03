@@ -1,5 +1,5 @@
 class IndicatorDatum < ActiveRecord::Base
-  include SyncableModel
+  include VisioModel
 
   attr_accessible :baseline, :imp_target, :comp_target, :reversal, :standard, :stored_baseline, :threshold_green, :threshold_red, :yer, :myr, :is_performance, :year, :id, :operation_id, :missing_budget, :priority, :excluded, :indicator_type
 

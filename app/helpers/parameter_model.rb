@@ -1,4 +1,4 @@
-module SyncableParameterModel
+module ParameterModel
   def self.included(base)
     base.extend(ClassMethods)
 
