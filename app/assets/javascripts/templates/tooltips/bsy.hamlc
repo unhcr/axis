@@ -25,6 +25,15 @@
             - else
               = "#{Visio.Formats.MONEY v.sum}"
 
+          - else if v.scenario.scenario == Visio.Scenarios.OL and v.scenario.type == Visio.Syncables.EXPENDITURES
+            - ol = _.find context.values, (value) -> value.scenario.scenario == Visio.Scenarios.OL and value.scenario.type == Visio.Syncables.BUDGETS
+
+            - if ol?
+              = "#{Visio.Formats.MONEY v.sum} (#{Visio.Formats.PERCENT(v.sum / ol.sum)} of OL) "
+            - else
+              = "#{Visio.Formats.MONEY v.sum}"
+
+
           - else
             = Visio.Formats.MONEY v.sum
 
