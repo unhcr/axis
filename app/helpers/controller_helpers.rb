@@ -1,6 +1,6 @@
 # shared methods across all syncable helpers
 
-module SyncableHelpers
+module ControllerHelpers
   protected
     def resource
       self.controller_name.classify.constantize

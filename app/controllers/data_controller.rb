@@ -3,7 +3,7 @@
 class DataController < ApplicationController
   before_filter :authenticate_user!
 
-  include SyncableHelpers
+  include ControllerHelpers
 
   def index
     if params[:strategy_id]

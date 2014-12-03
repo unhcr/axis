@@ -1,7 +1,7 @@
 class ParametersController < ApplicationController
   before_filter :authenticate_user!
 
-  include SyncableHelpers
+  include ControllerHelpers
 
   def index
     render :json => resource.models(params[:join_ids], params[:page], params[:where]).as_json(params[:options])
