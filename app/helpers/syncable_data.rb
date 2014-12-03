@@ -1,3 +1,5 @@
+# This is a module for data controllers. It provides an interface for retrieving data like budgets or exoenditures.
+
 module SyncableData
   include SyncableHelpers
 

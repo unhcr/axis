@@ -1,3 +1,8 @@
+# The FetchMonitor monitors the syncing of parameters from the UNHCR databases.
+# It is run after rake build is completed. It will delete any parameters that 
+# haven't been found after the most recent build.
+#
+
 class FetchMonitor < ActiveRecord::Base
   attr_accessible :starttime
 

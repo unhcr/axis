@@ -1,3 +1,5 @@
+# shared methods across all syncable helpers
+
 module SyncableHelpers
   protected
     def resource
