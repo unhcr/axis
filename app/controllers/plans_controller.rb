@@ -1,4 +1,2 @@
-class PlansController < ApplicationController
-  include SyncableParameter
-
+class PlansController < ParametersController
 end

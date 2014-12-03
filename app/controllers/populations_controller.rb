@@ -1,4 +1,3 @@
-class PopulationsController < ApplicationController
-  include SyncableData
+class PopulationsController < DataController
 end
 
