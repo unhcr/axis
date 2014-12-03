@@ -59,7 +59,7 @@ module AmountHelpers
 
   end
 
-  #Generates sql for a single parameter. This is an internal method.
+  # Generates sql for a single parameter. This is an internal method.
   def parameter_sql(parameterClass)
     "select strategy_objective_id
     from #{parameterClass.table_name}_strategy_objectives
