@@ -1,6 +1,6 @@
 module 'Form',
   setup: ->
-    @model = new Visio.Models.Syncable()
+    @model = new Visio.Models.Data()
     @model.schema = [{
         name: 'name',
         type: 'string',

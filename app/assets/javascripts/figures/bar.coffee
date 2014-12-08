@@ -1,6 +1,8 @@
+# This figure is for rendering bar graphs.
 class Visio.Figures.Bar extends Visio.Figures.Base
 
   initialize: (config) ->
+    # Orientation refers to which way the bars are directed
     @orientation = config.orientation or 'left'
 
     # Have to be able to fit labels
@@ -18,9 +20,10 @@ class Visio.Figures.Bar extends Visio.Figures.Base
 
     # fixed is the scale that scales the bars equally apart
     @fixed = d3.scale.ordinal()
+
+    # Zero pad is padding for a bar that has 0 length but still shows a sliver of a bar
     @zeroPadding = if @hasZeroPad? then 3 else 0
     @labelHeight = 30
-    @barPadding = 8
 
     switch @orientation
       when 'left'
@@ -41,8 +44,8 @@ class Visio.Figures.Bar extends Visio.Figures.Base
     @fixed.domain _.times(filtered.length, (n) -> n)
 
     @barWidth = switch @orientation
-      when 'top', 'bottom' then @adjustedWidth / filtered.length
-      when 'right', 'left'
+      when 'bottom' then @adjustedWidth / filtered.length
+      when 'left'
         if @hasLabels
           (@adjustedHeight - (@labelHeight * filtered.length)) / filtered.length
         else
@@ -51,6 +54,7 @@ class Visio.Figures.Bar extends Visio.Figures.Base
     @barWidth = 0 if _.isNaN @barWidth
 
 
+    # Render bars
     @bars = @g.selectAll('.bar').data(filtered)
     @bars.enter().append('rect')
     @bars.attr('class', (d) ->

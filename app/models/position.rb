@@ -1,6 +1,6 @@
 class Position < ActiveRecord::Base
   self.primary_key = :id
-  include SyncableModel
+  include VisioModel
   attr_accessible :contract_type, :grade, :incumbent, :title, :existing
 
   scope :head_positions, where(parent_position_id: nil)

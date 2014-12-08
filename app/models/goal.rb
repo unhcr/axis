@@ -1,11 +1,11 @@
 class Goal < ActiveRecord::Base
-  include SyncableModel
-  include SyncableParameterModel
+  include VisioModel
+  include ParameterModel
   include Tire::Model::Search
   include Tire::Model::Callbacks
   attr_accessible :name
 
-  self.primary_key  = :id
+  self.primary_key = :id
   has_many :indicator_data
   has_many :budgets
   has_many :expenditures

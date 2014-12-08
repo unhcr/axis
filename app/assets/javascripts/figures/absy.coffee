@@ -1,3 +1,4 @@
+# ABSY - Achievement Budget Single Year
 class Visio.Figures.Absy extends Visio.Figures.Base
 
   @include Visio.Mixins.Exportable
@@ -148,12 +149,15 @@ class Visio.Figures.Absy extends Visio.Figures.Base
   render: ->
     filtered = @filtered @collection
 
+    # Determine the max amout for specified algorithm. If it's expenditure rate, it has to be 1
     if @algorithm == 'selectedBudget' or @algorithm == 'selectedBudgetPerBeneficiary'
       maxAmount = d3.max filtered, (d) => d[@algorithm](Visio.manager.year(), @filters)
     else
       maxAmount = 1
 
     self = @
+
+    # Redraw domain if all values are less than half the max amount
     if !@domain || @domain[1] < maxAmount || @domain[1] > 2 * maxAmount
       @domain = [0, maxAmount]
       @x.domain(@domain)
@@ -175,11 +179,13 @@ class Visio.Figures.Absy extends Visio.Figures.Base
         .each((d, i) ->
 
           pointContainer = d3.select @
-          nIndicators = d.selectedIndicatorData(Visio.manager.year(), self.filters).length
+          indicatorData = d.selectedIndicatorData(Visio.manager.year(), self.filters)
+          nIndicators = indicatorData.length
           radius = self.r nIndicators
-          achievement = d.selectedAchievement(Visio.manager.year(), self.filters).result
+          achievement = indicatorData.achievement().result
           cxValue = d[self.algorithm](Visio.manager.year(), self.filters)
 
+          # Set the tooltip for each bubble
           pointContainer.attr 'original-title', self.templateTooltip
             d: d
             xValue: if self.algorithm == 'selectedBudget' or self.algorithm == 'selectedBudgetPerBeneficiary' then Visio.Formats.MONEY(cxValue) else
@@ -188,6 +194,7 @@ class Visio.Figures.Absy extends Visio.Figures.Base
             algorithm: self.algorithmToHuman(self.algorithm)
             nIndicators: nIndicators
 
+          # Render background "shadow" of the bubble
           pointShadows = pointContainer.selectAll('.point-shadow').data([d])
           pointShadows.enter().append('circle')
           pointShadows.attr('class', (d) ->
@@ -209,7 +216,7 @@ class Visio.Figures.Absy extends Visio.Figures.Base
 
           pointShadows.exit().transition().duration(Visio.Durations.FAST).attr('r', 0).remove()
 
-          # Points
+          # Render points
           point = pointContainer.selectAll('.point').data([d])
           point.enter().append('circle')
           point
@@ -233,7 +240,7 @@ class Visio.Figures.Absy extends Visio.Figures.Base
           point.exit().transition().duration(Visio.Durations.FAST).attr('r', 0).remove()
 
 
-          # Conditional Labels
+          # Conditional Labels for PDF
           if (self.isPdf)
             labels = pointContainer.selectAll('.label').data(_.filter([d], (d) => self.isSelected(d.id)))
             labels.enter().append('text')
@@ -262,12 +269,12 @@ class Visio.Figures.Absy extends Visio.Figures.Base
     path.attr("class", (d, i) -> "voronoi" )
         .attr("d", @polygon)
         .on('mouseenter', (d) =>
-          # Hack for when we move from one to voronoi to another to which fires enter, enter, out in Chrome
           pointContainer = @g.select(".#{self.containerClass}.id-#{d.point.refId()}")
           $(pointContainer.node()).tipsy('show')
 
           pointContainer.moveToFront()
           pointContainer.classed 'focus', true
+
         ).on('mouseout', (d) =>
           pointContainer = @g.select(".#{self.containerClass}.id-#{d.point.refId()}")
           pointContainer.classed 'focus', false

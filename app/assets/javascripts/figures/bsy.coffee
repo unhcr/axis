@@ -1,6 +1,6 @@
+# Budget Single Year Figure
+# Data: Collection of parameters (operation, ppg, etc.)
 class Visio.Figures.Bsy extends Visio.Figures.Sy
-  # Budget Single Year Figure
-  # Data: Collection of parameters (operation, ppg, etc.)
 
   type: Visio.FigureTypes.BSY
 
@@ -138,7 +138,9 @@ class Visio.Figures.Bsy extends Visio.Figures.Sy
     filtered = @filtered @collection, opts?.isPng
     @_filtered = filtered
 
+    # Normalized sets whether we normalize the budget by population
     normalized = @filters.get('normalized').filter('normalized')
+
     breakdownBy = @filters.get('breakdown_by').active()
 
     # Expensive computation so don't want to repeat if not necessary
@@ -178,6 +180,7 @@ class Visio.Figures.Bsy extends Visio.Figures.Sy
         population = if normalized then d.selectedPopulation() else 1
 
 
+        # Render rect container for bars
         container = box.selectAll('.bar-container').data([d])
         container.enter().append('rect')
         container.attr('width', self.barWidth * scenarios.length)
@@ -200,6 +203,7 @@ class Visio.Figures.Bsy extends Visio.Figures.Sy
         box.selectAll('.bar').remove()
 
 
+        # Render bars for each scenario type (AOL, OL, Expenditure OL)
         scenarioBars = box.selectAll('.scenario-bar').data(scenarios)
         scenarioBars.enter().append('rect')
         scenarioBars.attr('class', (d) ->
@@ -238,6 +242,7 @@ class Visio.Figures.Bsy extends Visio.Figures.Sy
 
             amount = new Visio.Collections.AmountType(breakdownData).amount() / population
 
+            # Render each bar of a scenario and breakdown type
             bars = box.selectAll(".#{Visio.Utils.stringToCssClass(scenario.scenario)}-bar.#{Visio.Utils.stringToCssClass(breakdownType)}-bar.#{scenario.type.singular}-bar").data([breakdownType])
             bars.enter().append('rect')
             bars.attr 'class', ->
@@ -308,17 +313,11 @@ class Visio.Figures.Bsy extends Visio.Figures.Sy
         @yAxisLabel()
     @
 
-  transformSortFn: (a, b) =>
-    elA = @g.select ".box-#{a.id}"
-    elB = @g.select ".box-#{b.id}"
-    transformA = Visio.Utils.parseTransform elA.attr('transform')
-    transformB = Visio.Utils.parseTransform elB.attr('transform')
-
-    transformA.translate[0] - transformB.translate[0]
-
+  # Filters data based on a string query
   queryByFn: (d) =>
     _.isEmpty(@query) or d.toString().toLowerCase().indexOf(@query.toLowerCase()) != -1
 
+  # Sorts the data based on the sortAttribute
   sortFn: (a, b) =>
     filters = new Visio.Collections.FigureFilter()
     normalized = @filters.get('normalized').filter('normalized')
@@ -364,9 +363,11 @@ class Visio.Figures.Bsy extends Visio.Figures.Sy
     box = null
     idx = null
 
+    # Remove any hover classes
     boxes = @g.selectAll('.box')
     boxes.selectAll('.bar-container').classed 'hover', false
 
+    # Determine the idx if it's a datum, determine datum if we're given index
     if _.isNumber idxOrDatum
       idx = idxOrDatum
       result = @findBoxByIndex idx

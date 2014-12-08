@@ -1,3 +1,4 @@
+desc "Deletes everything in the database"
 task :clear => :environment do
 
   p 'Clearing Database'
@@ -41,6 +42,7 @@ namespace :build do
   }
 
   builds.each do |build_name, builder_string|
+    desc "Loads the data for #{build_name}"
     task build_name => :environment do
       builder = builder_string.constantize
 
@@ -58,6 +60,7 @@ namespace :build do
   end
 
 
+  desc "Matches country meta data with an operation"
   task :countries => :environment do
     file = open("#{Rails.root}/data/countries.json")
     json = file.read
@@ -94,17 +97,9 @@ namespace :build do
     end
   end
 
-  task :counter_caches => :environment do
-    IndicatorsPlans.counter_culture_fix_counts
-    GoalsPlans.counter_culture_fix_counts
-    OutputsPlans.counter_culture_fix_counts
-    PlansProblemObjectives.counter_culture_fix_counts
-    PlansPpgs.counter_culture_fix_counts
-
-    Plan.all.map &:touch
-  end
 end
 
+desc "Runs all the builds and then deletes parameters that were not found"
 task :build => :environment do
   starttime = Time.now
   fm = FetchMonitor.first
@@ -133,6 +128,7 @@ task :build => :environment do
   fm.save
 end
 
+desc "Reindexes elasticsearch models"
 task :reindex => :environment do
   indexes = [Operation, Ppg, Goal, Output, StrategyObjective, ProblemObjective, Indicator]
 
@@ -142,68 +138,3 @@ task :reindex => :environment do
   end
 end
 
-task :warm_cache => :environment do
-  extend WarmCache
-
-  WarmCache.warm
-end
-
-namespace :utils do
-  task :strategy_to_yaml => :environment do
-
-    id = ENV['id']
-
-    unless Strategy.exists? id
-      p "No such strategy exists for id: #{id}"
-      return
-    end
-    strategy = Strategy.find id
-    yaml = strategy.as_json({ :include => { :strategy_objectives => true } }).as_json.as_json.to_yaml
-
-    name = strategy.name.downcase.gsub ' ', '_'
-
-    File.open("#{Rails.root}/data/strategies/#{name}.yml", 'w+') { |file| file.write yaml }
-  end
-
-  task :strategy_from_yaml => :environment do
-
-  end
-
-end
-
-
-task :load_sample_strategy => :environment do
-
-  name = 'education'
-
-  Strategy.where(:name => name).destroy_all
-  s = Strategy.create(:name => name)
-
-  s.ppgs = Ppg.limit(10)
-  s.goals = Goal.limit(10)
-  s.indicators = Indicator.limit(40)
-
-end
-
-task :random_strategy => :environment do
-
-  probability = 0.33
-
-  s = Strategy.new(
-    :name => "#{RandomWord.adjs.next} #{RandomWord.nouns.next}"
-  )
-
-  s.operations << Operation.order("RAND()").limit(probability * Operation.count)
-  s.ppgs << Ppg.order("RAND()").limit(probability * Ppg.count)
-  s.goals << Goal.order("RAND()").limit(probability * Goal.count)
-  s.problem_objectives << ProblemObjective.order("RAND()").limit(probability * ProblemObjective.count)
-  s.outputs << Output.order("RAND()").limit(probability * Output.count)
-  s.indicators << Indicator.order("RAND()").limit(probability * Indicator.count)
-  s.plans << Plan.where(:operation_id => s.operation_ids)
-  s.save
-
-end
-
-task :reset_local_db => :environment do
-  User.reset_local_db(User.all)
-end

@@ -1,4 +1,14 @@
-class Visio.Collections.Parameter extends Visio.Collections.Syncable
+# Here is the collection for the Parameter class. It's responsible for running algorithms on a collection of
+# parameters.
+#
+# - Functions prefixed with `strategy` finds data or results in respect to the current strategy selected.
+# - Functions prefixed with `selected` finds data or results in respect to the current selection defined in
+#   the filter panel.
+#
+# As of writing this 25/11/14, the `strategy` functions are not used in the app but are maintained in the
+# event that they will/could be used in app for certain calculations.
+#
+class Visio.Collections.Parameter extends Backbone.Collection
 
   model: Visio.Models.Parameter
 

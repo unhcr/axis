@@ -1,5 +1,5 @@
 class Budget < ActiveRecord::Base
-  include SyncableModel
+  include VisioModel
   extend AmountHelpers
 
   attr_accessible :budget_type, :scenario, :amount, :plan_id, :ppg_id, :goal_id, :output_id,

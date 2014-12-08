@@ -1,5 +1,4 @@
 class OperationsController < ParametersController
-  include SyncableParameter
 
   def offices
     operation = Operation.find(params[:id])

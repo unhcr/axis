@@ -1,6 +1,6 @@
 class Ppg < ActiveRecord::Base
-  include SyncableModel
-  include SyncableParameterModel
+  include VisioModel
+  include ParameterModel
   include Tire::Model::Search
   include Tire::Model::Callbacks
   attr_accessible :name, :population_type, :population_type_id, :operation_name, :msrp_code

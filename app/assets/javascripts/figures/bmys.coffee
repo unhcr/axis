@@ -15,6 +15,7 @@ class Visio.Figures.BmySummary extends Visio.Figures.Bmy
     @$el.find('.legend-container').html @legendView.render().el
 
 
+  # On mouseenter show point that is hovered over
   onMouseenterVoronoi: (d) =>
     @g.selectAll(".budget-line").classed 'active', false
     @g.selectAll(".budget-point").classed 'active', false

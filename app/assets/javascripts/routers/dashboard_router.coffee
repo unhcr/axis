@@ -69,8 +69,10 @@ class Visio.Routers.DashboardRouter extends Visio.Routers.GlobalRouter
       Visio.router.navigate Visio.Utils.generateOverviewUrl(), { silent: true }
       Visio.Utils.dashboardMeta()
 
-    ).fail (e) =>
-      console.log e
+    ).fail (req, msg) =>
+      new Visio.Views.Error
+        title: "Oops"
+        description: msg
 
   share: ->
     unless Visio.manager.get('setup')

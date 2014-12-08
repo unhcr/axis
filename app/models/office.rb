@@ -1,6 +1,6 @@
 class Office < ActiveRecord::Base
   self.primary_key = :id
-  include SyncableModel
+  include VisioModel
 
   attr_accessible :name, :status, :id, :plan_id, :operation_id, :parent_office_id, :year
 

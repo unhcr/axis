@@ -1,3 +1,5 @@
+# The FigureFilter is a collection of filters used on figures
+# This is the collection behind the FilterBy dropdown view
 class Visio.Collections.FigureFilter extends Backbone.Collection
 
   model: Visio.Models.FigureFilter

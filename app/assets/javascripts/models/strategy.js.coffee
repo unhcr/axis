@@ -1,4 +1,4 @@
-class Visio.Models.Strategy extends Visio.Models.Syncable
+class Visio.Models.Strategy extends Visio.Models.Data
 
   @include Visio.Mixins.Dashboardify
 
