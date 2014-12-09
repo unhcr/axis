@@ -1,8 +1,8 @@
 GIT
   remote: https://github.com/benrudolph/shrimp.git
-  revision: 8573b701470a9c9d90ab0561e194e53171e6b0ea
+  revision: 2c8b87d3a1a2b3d1bb3cf255797a453a44e0dda7
   specs:
-    shrimp (0.0.9)
+    shrimp (0.0.10)
       json
       resque
 
@@ -396,7 +396,7 @@ DEPENDENCIES
   rubyzip
   sass-rails (~> 3.2.3)
   selenium-webdriver (~> 2.41.0)
-  shrimp!
+  shrimp (~> 0.0.10)!
   single_test
   sprinkle
   sqlite3
