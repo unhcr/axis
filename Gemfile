@@ -5,7 +5,7 @@ gem 'rubyzip'
 gem 'pdfkit'
 gem 'quoth'
 gem 'resque'
-gem 'shrimp', :git => 'https://github.com/benrudolph/shrimp.git'
+gem 'shrimp', '~> 0.0.10', :git => 'https://github.com/benrudolph/shrimp.git'
 gem 'pony'
 gem 'whenever', :require => false
 gem "devise_ldap_authenticatable"
