@@ -1,4 +1,4 @@
-# This class is the parent class for all figures. It is an abstract class.
+# This class is the parent class for all figures.
 class Visio.Figures.Base extends Backbone.View
 
   template: HAML['figures/base']
