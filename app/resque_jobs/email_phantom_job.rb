@@ -6,7 +6,7 @@ module EmailPhantomJob
     :viewport_height => 1270,
     :margin => '0cm',
     :rendering_time => 40000,
-    :logfile => '~/access.log'
+    :logfile => 'log/pdf.log'
   }
 
   @output = "#{Rails.root}/public/reports/pdf"

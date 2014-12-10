@@ -1,3 +1,6 @@
+# The export module controller allows the client to create export modules. Once an export
+# module has been created, it can then be used to create pdfs or any other exportation that
+# will be developed in the report.
 class ExportModulesController < ApplicationController
   before_filter :authenticate_user!
 
@@ -23,6 +26,8 @@ class ExportModulesController < ApplicationController
     render :json => current_user.export_modules
   end
 
+  # Renders the html of the export module for the PDF. Utilized by the Shrimp library to transform
+  # that html to PDF.
   def pdf
     @export_module = ExportModule.find(current_user.export_modules.find(params[:id]))
     render :layout => 'report'
