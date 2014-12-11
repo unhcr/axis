@@ -16,6 +16,10 @@ module VisioModel
     # To be overloaded for eager joining
     def loaded; self; end
 
+    # Returns the models based on parameters
+    # @param join_ids - ids to join many to many relations
+    # @param page - the page of data to get
+    # @param where - where conditioned for sql query. uses ActiveRecord where
     def models(join_ids = nil, page = nil, where = {})
       models = self.where(where)
       models = models.page(page) unless page.nil?

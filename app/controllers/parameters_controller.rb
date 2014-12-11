@@ -1,3 +1,4 @@
+# This is the parent class for all parameter controllers (OperationController, PpgController, etc)
 class ParametersController < ApplicationController
   before_filter :authenticate_user!
 
