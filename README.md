@@ -1,4 +1,4 @@
-[![Build Status](https://secure.travis-ci.org/benrudolph/visio.png?branch=master)](http://travis-ci.org/benrudolph/visio)
+[![Build Status](https://secure.travis-ci.org/benrudolph/visio.png?branch=master)](http://travis-ci.org/unhcr/axis)
 
 ![Logo](https://raw.githubusercontent.com/unhcr/axis-image-assets/master/misc/logo.png)
 
