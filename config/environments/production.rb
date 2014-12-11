@@ -46,7 +46,7 @@ Visio::Application.configure do
     :email => {
       :email_prefix => "[AXIS] ",
       :sender_address => %{axis@unhcr.org},
-      :exception_recipients => %w{rudolph@unhcr.org thanos@unhcr.org treves@unhcr.org}
+      :exception_recipients => %w{rudolph@unhcr.org thanos@unhcr.org treves@unhcr.org rudolphben@gmail.com}
     }
   # See everything in the log (default is :info)
   # config.log_level = :debug
