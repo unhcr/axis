@@ -1,8 +1,10 @@
 module Build
+  # AntBuild is the parent class for a build. It's job is to extract data from FOCUS database to a CSV file.
   class AntBuild
     JAR_LOCATION = "#{Rails.root}/vendor/jars/ojdbc6.jar"
     OUTPUT_FILENAME = "generated_output.csv"
     DB_URL = "jdbc:oracle:thin:@#{ENV['DB_HOST']}:1521:#{ENV['DB_SID']}"
+
     # Directory for sql queries
     SQL_PATH = "#{Rails.root}/data/queries"
 
@@ -99,7 +101,6 @@ module Build
 
     def log(message)
       p "[#{@config[:build_name]}] #{message}"
-
     end
 
   end

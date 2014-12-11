@@ -12,6 +12,12 @@
     .page.container-fluid
 
       :javascript
+        if (!Modernizr.svg) {
+          alert('Your browser does not have support for SVG graphics. This will severely limit Axis\'s functionality. Please use a modern browser like Chrome.')
+        } else if (!Modernizr.testAllProps('pointerEvents')) {
+          alert('You browser is missing some functionality for Axis to operate normally. For a better experience, use a modern browser like Chrome.')
+        }
+
         window.Visio.user = new Visio.Models.User(#{current_user.to_json.html_safe})
         window.Visio.env = "#{Rails.env}"
         window.Visio.configuration = #{@configuration.to_json.html_safe}

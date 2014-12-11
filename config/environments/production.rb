@@ -41,6 +41,13 @@ Visio::Application.configure do
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
   config.force_ssl = true
 
+
+  config.middleware.use ExceptionNotification::Rack,
+    :email => {
+      :email_prefix => "[AXIS] ",
+      :sender_address => %{axis@unhcr.org},
+      :exception_recipients => %w{rudolph@unhcr.org thanos@unhcr.org treves@unhcr.org rudolphben@gmail.com}
+    }
   # See everything in the log (default is :info)
   # config.log_level = :debug
 

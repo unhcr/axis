@@ -1,4 +1,4 @@
-# Single year figure abstract class
+# Single year figure is a parent class for all single year figures (BSY, ISY)
 class Visio.Figures.Sy extends Visio.Figures.Base
 
   @include Visio.Mixins.Exportable

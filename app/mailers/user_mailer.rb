@@ -1,6 +1,7 @@
 class UserMailer < ActionMailer::Base
   default from: "hqaxis@unhcr.org"
 
+  # This generates the email for when a user shares a strategy to another user
   def share_email(strategy, user, shared_users, host)
     return if shared_users.nil? || shared_users.length == 0
 
@@ -14,6 +15,7 @@ class UserMailer < ActionMailer::Base
          subject: "#{user.login} has shared strategy '#{strategy.name}' with you")
   end
 
+  # This generates the email for when a user becomes an admin
   def admin_email(user, new_admin, host)
     return if new_admin.nil? || new_admin.length == 0
 
