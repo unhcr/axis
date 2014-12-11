@@ -132,8 +132,13 @@ class ApplicationController < ActionController::Base
   end
 
   protected
-    def sanitize_query(query)
-      query.sub '"', ''
+    def sanitize_query(str)
+      # Escape special characters
+      escaped_characters = Regexp.escape('\\+-&|!(){}[]^~*?:\/')
+      str = str.gsub(/([#{escaped_characters}])/, ' ')
+      str = str.sub('"', '')
+
+      str
     end
 
   private
