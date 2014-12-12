@@ -2,7 +2,7 @@
   != window.HAML['shared/filter_system/filter_options']({ options: context.options, selected: context.selected })
 
   .system-container
-    %h3 Priority Strategies
+    %h3 Priority Themes
 
     - _.each context.strategies, (strategy) ->
       %a{:href => "/overview/#{strategy.id}"}
