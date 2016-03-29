@@ -39,12 +39,12 @@ module Visio
     config.action_mailer.perform_deliveries = true
     config.action_mailer.smtp_settings = {
       openssl_verify_mode: 'none',
-      address:              'smtphub.unhcr.local',
+      address:              'smtprelay.unhcr.local',
       port:                 25,
       domain:               'unhcr.org',
-      user_name:            'hqaxis',
-      password:             ENV['EMAIL_PASSWORD'],
-      authentication:       :ntlm,
+      # user_name:            'hqaxis',
+      # password:             ENV['EMAIL_PASSWORD'],
+      # authentication:       :ntlm,
     }
     # Custom directories with classes and modules you want to be autoloadable.
     # config.autoload_paths += %W(#{config.root}/extras)
