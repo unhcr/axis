@@ -28,7 +28,8 @@ set :branch, "master"
 
 
 set :user, :deploy
-set :deploy_to, "/var/www/#{application}"
+#set :deploy_to, "/var/www/#{application}"
+set :deploy_to, "/home/deploy/TEMP-DEPLOY/#{application}"
 set :use_sudo, false
 set :sudo_user, "resque_worker"
 
@@ -87,4 +88,3 @@ after "deploy", "deploy:migrate"
 after "deploy", "whenever:clear_crontab"
 after "deploy", "resque:restart"
 after "whenever:clear_crontab", "whenever:update_crontab"
-
