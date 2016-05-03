@@ -1,5 +1,5 @@
-#server = '10.9.43.153' # production
-server = '10.9.43.240' # staging
+server = '10.9.43.153' # production
+
 
 role :web, server
 role :app, server                          # This may be the same as your `Web` server
