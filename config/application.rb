@@ -38,7 +38,7 @@ module Visio
     config.action_mailer.delivery_method = :smtp
     config.action_mailer.perform_deliveries = true
     config.action_mailer.smtp_settings = {
-      openssl_verify_mode: 'none',
+      # openssl_verify_mode: 'none',
       address:              'smtprelay.unhcr.local',
       port:                 25,
       domain:               'unhcr.org',
