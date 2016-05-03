@@ -28,8 +28,8 @@ set :branch, "master"
 
 
 set :user, :deploy
-#set :deploy_to, "/var/www/#{application}"
-set :deploy_to, "/home/deploy/TEMP-DEPLOY/#{application}"
+set :deploy_to, "/var/www/#{application}"
+#set :deploy_to, "/home/deploy/TEMP-DEPLOY/#{application}"
 set :use_sudo, false
 set :sudo_user, "resque_worker"
 
