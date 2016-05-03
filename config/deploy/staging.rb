@@ -1,7 +1,8 @@
 server = '10.9.43.240'
 
-set :rails_env, 'staging'
-set :keep_releases, 2
+#set :rails_env, 'staging'
+#set :rails_env, 'production'
+#set :keep_releases, 2
 
 role :web, server
 role :app, server                          # This may be the same as your `Web` server
