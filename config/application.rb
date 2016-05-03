@@ -30,7 +30,7 @@ module Visio
       :email => {
         :email_prefix => "[AXIS] ",
         :sender_address => %{axis@unhcr.org},
-        :exception_recipients => %w{rudolph@unhcr.org}
+        :exception_recipients => %w{razafima@unhcr.org}
       }
 
     config.active_support.deprecation = :notify
