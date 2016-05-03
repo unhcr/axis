@@ -79,7 +79,7 @@ end
 
 gem 'jquery-rails'
 
-gem 'mysql2', '~> 0.3.10'
+#gem 'mysql2', '~> 0.3.10'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
