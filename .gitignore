@@ -42,3 +42,5 @@ coverage
 /script/builds/populations
 
 /public/reports/pdf/*.pdf
+/db/axis.db.2016-03-10.sql.gz
+/.ruby-version
