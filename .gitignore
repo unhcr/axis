@@ -44,3 +44,8 @@ coverage
 /public/reports/pdf/*.pdf
 /db/axis.db.2016-03-10.sql.gz
 /.ruby-version
+/.DS_Store
+/app/.DS_Store
+/app/assets/.DS_Store
+/app/assets/images/.DS_Store
+/db/.DS_Store
