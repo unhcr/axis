@@ -166,8 +166,6 @@ GEM
     mini_portile (0.5.2)
     mono_logger (1.1.0)
     multi_json (1.9.0)
-    mysql (2.9.1)
-    mysql2 (0.3.21)
     net-ldap (0.3.1)
     net-scp (1.1.2)
       net-ssh (>= 2.6.5)
@@ -266,6 +264,7 @@ GEM
       diff-lcs (>= 1.1.3, < 2.0)
       rspec-support (= 3.0.0.beta1)
     rspec-mocks (3.0.0.beta1)
+      rspec-support (= 3.0.0.beta1)
     rspec-rails (3.0.0.beta1)
       actionpack (>= 3.0)
       activemodel (>= 3.0)
@@ -377,8 +376,6 @@ DEPENDENCIES
   htmltoword
   jbuilder
   jquery-rails
-  mysql
-  mysql2 (~> 0.3.10)
   normalize-rails
   oink
   pdfkit
@@ -413,4 +410,4 @@ DEPENDENCIES
   zip-zip
 
 BUNDLED WITH
-   1.10.6
+   1.15.3
