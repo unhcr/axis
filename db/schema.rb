@@ -280,7 +280,7 @@ ActiveRecord::Schema.define(:version => 20141030122925) do
     t.string  "indicator_id", :null => false
   end
 
-  add_index "indicators_strategies", ["strategy_id"], :name => "indicators_strategies_strategy_id_idx"
+  add_index "indicators_strategies", ["strategy_id"], :name => "index_indicators_strategies_on_strategy_id"
 
   create_table "indicators_strategy_objectives", :id => false, :force => true do |t|
     t.integer "strategy_objective_id", :null => false
@@ -378,7 +378,7 @@ ActiveRecord::Schema.define(:version => 20141030122925) do
     t.string  "operation_id", :null => false
   end
 
-  add_index "operations_strategies", ["strategy_id"], :name => "operations_strategies_strategy_id_idx"
+  add_index "operations_strategies", ["strategy_id"], :name => "index_operations_strategies_on_strategy_id"
 
   create_table "operations_strategy_objectives", :id => false, :force => true do |t|
     t.integer "strategy_objective_id", :null => false
@@ -423,7 +423,7 @@ ActiveRecord::Schema.define(:version => 20141030122925) do
     t.string  "output_id",   :null => false
   end
 
-  add_index "outputs_strategies", ["strategy_id"], :name => "outputs_strategies_strategy_id_idx"
+  add_index "outputs_strategies", ["strategy_id"], :name => "index_outputs_strategies_on_strategy_id"
 
   create_table "outputs_strategy_objectives", :id => false, :force => true do |t|
     t.integer "strategy_objective_id", :null => false
@@ -479,7 +479,7 @@ ActiveRecord::Schema.define(:version => 20141030122925) do
     t.string  "plan_id",     :null => false
   end
 
-  add_index "plans_strategies", ["strategy_id"], :name => "plans_strategies_strategy_id_idx"
+  add_index "plans_strategies", ["strategy_id"], :name => "index_plans_strategies_on_strategy_id"
 
   create_table "populations", :id => false, :force => true do |t|
     t.string   "ppg_code"
@@ -543,7 +543,7 @@ ActiveRecord::Schema.define(:version => 20141030122925) do
     t.string  "ppg_id",      :null => false
   end
 
-  add_index "ppgs_strategies", ["strategy_id"], :name => "ppgs_strategies_strategy_id_idx"
+  add_index "ppgs_strategies", ["strategy_id"], :name => "index_ppgs_strategies_on_strategy_id"
 
   create_table "ppgs_strategy_objectives", :id => false, :force => true do |t|
     t.integer "strategy_objective_id", :null => false
@@ -575,7 +575,7 @@ ActiveRecord::Schema.define(:version => 20141030122925) do
     t.string  "problem_objective_id", :null => false
   end
 
-  add_index "problem_objectives_strategies", ["strategy_id"], :name => "problem_objectives_strategies_strategy_id_idx"
+  add_index "problem_objectives_strategies", ["strategy_id"], :name => "index_problem_objectives_strategies_on_strategy_id"
 
   create_table "problem_objectives_strategy_objectives", :id => false, :force => true do |t|
     t.integer "strategy_objective_id", :null => false
