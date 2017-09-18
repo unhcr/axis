@@ -74,7 +74,8 @@ module Build
       Dir.chdir "#{self.build_path}"
 
       # Need 1.9.4 version in order have file encoding
-      cmd = "#{ENV['ant']} #{@config[:build_name]}"
+      #      cmd = "#{ENV['ant']} #{@config[:build_name]}"
+      cmd = "/usr/local/bin/ant #{@config[:build_name]}"
 
       log "Running '#{cmd}' in #{self.build_path}"
       output = system(cmd)
