@@ -4,7 +4,7 @@
 
   - if @model.isAdmin()
     .account-option
-      %a{ :href => '/cms/strategies' } CMS
+      %a{ :href => '/cms/strategies' } Strategies
     .account-option
       %a{ :href => '/admin_configuration' } Config
   - else
@@ -18,4 +18,3 @@
     %a{ :href => '/users/sign_out', :data => { :method => 'delete' }, :rel => 'nofollow' } Sign Out
 
 .icon.gear-icon
-
