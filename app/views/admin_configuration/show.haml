@@ -69,8 +69,13 @@
       .divider-stack
 
 :javascript
+  var users = new Visio.Collections.User(#{@configuration.users.to_json.html_safe})
   var adminUsers = new Visio.Collections.User(#{@configuration.admin_users.to_json.html_safe})
   var strategies = new Visio.Collections.Strategy(#{Strategy.all.to_json.html_safe})
+
+  $('.list-users').on('click', function() {
+    $('body').append((new Visio.Views.Users({ collection: users })).$el)
+  });
 
   $('.manage-admin').on('click', function() {
     $('body').append((new Visio.Views.AdminUsers({ collection: adminUsers })).$el)
