@@ -5,11 +5,6 @@
     .col-md-12
       %h2
         = "Users"
-
-  .row
-    .col-md-12
-      .usersearch
-
   .row
     .col-md-12
       .userlist
