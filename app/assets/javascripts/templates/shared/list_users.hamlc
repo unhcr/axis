@@ -16,9 +16,5 @@
 
   .row
     .col-md-6
-      .btn.submit
-        Ok
-
-    .col-md-6
       .btn.cancel
-        Cancel
+        Close
