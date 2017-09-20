@@ -1,1 +1,5 @@
 .row
+  .col-md-6
+    = context.user.firstName
+  .col-md-6
+    = context.user.toString() + '@unhcr.org'
