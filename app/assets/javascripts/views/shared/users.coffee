@@ -9,10 +9,7 @@ class Visio.Views.Users extends Backbone.View
   className: 'admin-users-container'
 
   events:
-    'click .user-pill .close' : 'onUserRemove'
-    'click .close-container .close': 'close'
     'click .cancel': 'close'
-    'click .submit': 'onSubmit'
 
   initialize: (options) ->
     @initModal()
