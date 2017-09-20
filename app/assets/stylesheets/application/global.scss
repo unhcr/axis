@@ -3447,6 +3447,11 @@ a {
   border: 1px solid $dark-gray;
 }
 
+.userlist {
+  min-height: 400px;
+  border: 1px solid $dark-gray;
+}
+
 .page-margin {
   @include page-margin;
 }

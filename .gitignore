@@ -50,3 +50,8 @@ coverage
 /app/assets/images/.DS_Store
 /db/.DS_Store
 /app/assets/javascripts/.DS_Store
+/app/assets/javascripts/views/.DS_Store
+/app/views/.DS_Store
+/app/assets/javascripts/templates/.DS_Store
+/app/assets/javascripts/templates/shared/.DS_Store
+/app/assets/javascripts/views/shared/.DS_Store

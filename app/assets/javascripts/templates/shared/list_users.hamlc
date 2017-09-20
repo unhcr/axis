@@ -1,0 +1,24 @@
+.close-container
+  .close
+%form
+  .row
+    .col-md-12
+      %h2
+        = "Users"
+
+  .row
+    .col-md-12
+      .usersearch
+
+  .row
+    .col-md-12
+      .userlist
+
+  .row
+    .col-md-6
+      .btn.submit
+        Ok
+
+    .col-md-6
+      .btn.cancel
+        Cancel

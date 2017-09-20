@@ -2,9 +2,9 @@ class Visio.Views.Users extends Backbone.View
 
   @include Visio.Mixins.Modal
 
-  template: HAML['shared/admin_users']
+  template: HAML['shared/list_users']
 
-  pillTemplate: HAML['shared/users/pill']
+  rowTemplate: HAML['shared/users/list_row']
 
   className: 'admin-users-container'
 
@@ -28,7 +28,7 @@ class Visio.Views.Users extends Backbone.View
     @userSearch.render()
 
     @collection.each (user) =>
-      @$el.find('.admin-users').append @pillTemplate({ user: user })
+      @$el.find('.userlist').append @rowTemplate({ user: user })
 
 
     @
