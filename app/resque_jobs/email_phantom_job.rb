@@ -39,5 +39,7 @@ module EmailPhantomJob
                 # :authentication => :ntlm,
                 # :openssl_verify_mode => 'none',
               })
+
+    puts "\nXXXXXXXXXXXXXXXXXXXXXX Mail send to razafima\n";
   end
 end
