@@ -32,7 +32,7 @@ module EmailPhantomJob
               :attachments => { filename => File.read(fullpath) },
               :via => :smtp,
               :via_options => {
-                :address => 'smtphub.unhcr.local',
+                :address => 'smtprelay.unhcr.local',
                 :port => 25,
                 :user_name => 'hqaxis',
                 :password => ENV['EMAIL_PASSWORD'],
