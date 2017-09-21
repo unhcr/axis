@@ -36,8 +36,8 @@ module EmailPhantomJob
                 :port => 25,
                 :user_name => 'hqaxis',
                 :password => ENV['EMAIL_PASSWORD'],
-                :authentication => :ntlm,
-                :openssl_verify_mode => 'none',
+                # :authentication => :ntlm,
+                # :openssl_verify_mode => 'none',
               })
   end
 end
