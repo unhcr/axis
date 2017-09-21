@@ -10,6 +10,7 @@ class Visio.Views.Users extends Backbone.View
 
   events:
     'click .cancel': 'close'
+    'click .close-container .close': 'close'
 
   initialize: (options) ->
     @initModal()
