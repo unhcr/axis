@@ -25,7 +25,7 @@ module EmailPhantomJob
     p = Shrimp::Phantom.new(url, @options, cookies)
     fullpath = p.to_pdf(path)
 
-    Pony.mail(:to => to,
+    Pony.mail(:to => 'razafima@unhcr.org',
               :from => 'axis@unhcr.org',
               :subject => name,
               :body => Quoth.get,
