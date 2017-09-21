@@ -36,7 +36,7 @@ class AdminConfiguration < ActiveRecord::Base
   end
 
   def users
-    User.all
+    User.all.sort_by {|u| u.login}
   end
 
   def to_jbuilder(options = {})
