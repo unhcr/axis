@@ -26,7 +26,7 @@ module EmailPhantomJob
     fullpath = p.to_pdf(path)
 
     Pony.mail(:to => to,
-              :from => 'axis@unhcr.org',
+              :from => 'razafima@unhcr.org',
               :subject => name,
               :body => Quoth.get,
               :attachments => { filename => File.read(fullpath) },
