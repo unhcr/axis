@@ -14,7 +14,7 @@ class ExportModule < ActiveRecord::Base
     url = "#{host}/export_modules/#{self.id}/pdf"
     name = self.title.empty? ? 'dummy' : self.title
 
-puts "XXXXX URL: #{url} - #{cookies} - #{name} - #{to}"
+Rails.logger.info "XXXXX URL: #{url} - #{cookies} - #{name} - #{to}"
     Resque.enqueue(EmailPhantomJob, url, cookies, name, to)
   end
 end
