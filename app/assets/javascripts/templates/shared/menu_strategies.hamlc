@@ -7,6 +7,8 @@
 .divider.divider-light-gray
 
 %h3 My Strategies
+%a{ :href => "/cms/strategies/#new" }
+  Create New Strategy
 - _.each context.personalStrategies, (strategy) ->
   %a{:href => "/overview/#{strategy.id}"}
     = strategy.name
@@ -17,4 +19,3 @@
 - _.each context.sharedStrategies, (strategy) ->
   %a{:href => "/overview/#{strategy.id}"}
     = strategy.name
-
