@@ -18,7 +18,7 @@
             %small.deselect{ :data => { :type => p.hash.plural }} Deselect All
             %span
               = "|"
-            %small.reset{ :data => { :type => p.hash.plural }} Reset
+            %small.reset{ :data => { :type => p.hash.plural }} Select All
             .ui-accordion-checkboxes
               - _.each p.data, (d) ->
                 .visio-checkbox.visio-checkbox-orange.visio-checkbox-left
