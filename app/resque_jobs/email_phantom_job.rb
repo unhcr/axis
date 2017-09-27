@@ -20,9 +20,9 @@ module EmailPhantomJob
   # @param name - the name of the pdf
   # @param to - the email address to send to
   def self.perform(url, cookies, name, to)
-    filename = "#{name.strip.tr(' ', '_')}-#{Time.now.to_i}.pdf"
+Rails.logger.info "XXXX: Starting pdf generation..."
 
-Rails.logger.info "XXXX: Starting pdf generation: #{fullpath}"
+    filename = "#{name.strip.tr(' ', '_')}-#{Time.now.to_i}.pdf"
 
     path = "#{@output}/#{filename}"
     p = Shrimp::Phantom.new(url, @options, cookies)
