@@ -12,6 +12,7 @@ class ExportModule < ActiveRecord::Base
 
   def email(host, cookies, to)
     url = "#{host}/export_modules/#{self.id}/pdf"
+    url.sub!("http://", "https://") # Fails if not https
     name = self.title.empty? ? 'dummy' : self.title
 
 Rails.logger.info "XXXXX URL: #{url} - #{cookies} - #{name} - #{to}"

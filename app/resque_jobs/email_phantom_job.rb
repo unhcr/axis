@@ -25,9 +25,6 @@ module EmailPhantomJob
     p = Shrimp::Phantom.new(url, @options, cookies)
     fullpath = p.to_pdf(path)
 
-    # TODO: remove
-Rails.logger.info "XXXXXXXXXXXXX #{p}"
-
     Pony.mail(:to => 'razafima@unhcr.org',
               :from => 'axis@unhcr.org',
               :subject => name,
