@@ -15,7 +15,7 @@ class ExportModule < ActiveRecord::Base
     url.sub!("http://", "https://") # pdf generation Fails if not https
     name = self.title.empty? ? 'dummy' : self.title
 
-Rails.logger.info "XXXXX URL: #{url} - #{cookies} - #{name} - #{to}"
+Rails.logger.info "XXXXX Enqueuing task for pdf gen. and emailing --- URL: #{url} - #{cookies} - #{name} - #{to}"
     Resque.enqueue(EmailPhantomJob, url, cookies, name, to)
   end
 end

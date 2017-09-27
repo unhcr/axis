@@ -21,6 +21,9 @@ module EmailPhantomJob
   # @param to - the email address to send to
   def self.perform(url, cookies, name, to)
     filename = "#{name.strip.tr(' ', '_')}-#{Time.now.to_i}.pdf"
+
+Rails.logger.info "XXXX: Starting pdf generation: #{fullpath}"
+
     path = "#{@output}/#{filename}"
     p = Shrimp::Phantom.new(url, @options, cookies)
     fullpath = p.to_pdf(path)
@@ -39,6 +42,6 @@ Rails.logger.info "XXXX: pdf generated: #{fullpath}"
                 :openssl_verify_mode => OpenSSL::SSL::VERIFY_NONE,
               })
 
-Rails.logger.info "XXXX: email sent: #{fullpath}"
+Rails.logger.info "XXXX: email sent to: #{to}"
   end
 end
