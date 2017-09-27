@@ -25,6 +25,8 @@ module EmailPhantomJob
     p = Shrimp::Phantom.new(url, @options, cookies)
     fullpath = p.to_pdf(path)
 
+Rails.logger.info "XXXX: pdf generated: #{fullpath}"
+
     Pony.mail(:to => 'razafima@unhcr.org',
               :from => 'axis@unhcr.org',
               :subject => name,
@@ -36,5 +38,7 @@ module EmailPhantomJob
                 :port => 25,
                 :openssl_verify_mode => OpenSSL::SSL::VERIFY_NONE,
               })
+
+Rails.logger.info "XXXX: email sent: #{fullpath}"
   end
 end
