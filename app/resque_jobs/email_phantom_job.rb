@@ -20,28 +20,32 @@ module EmailPhantomJob
   # @param name - the name of the pdf
   # @param to - the email address to send to
   def self.perform(url, cookies, name, to)
-Rails.logger.info "XXXX: Starting pdf generation..."
+    begin
+      Rails.logger.info "XXXX: Starting pdf generation..."
 
-    filename = "#{name.strip.tr(' ', '_')}-#{Time.now.to_i}.pdf"
+      filename = "#{name.strip.tr(' ', '_')}-#{Time.now.to_i}.pdf"
 
-    path = "#{@output}/#{filename}"
-    p = Shrimp::Phantom.new(url, @options, cookies)
-    fullpath = p.to_pdf(path)
+      path = "#{@output}/#{filename}"
+      p = Shrimp::Phantom.new(url, @options, cookies)
+      fullpath = p.to_pdf(path)
 
-Rails.logger.info "XXXX: pdf generated: #{fullpath}"
+      Rails.logger.info "XXXX: pdf generated: #{fullpath}"
 
-    Pony.mail(:to => 'razafima@unhcr.org',
-              :from => 'axis@unhcr.org',
-              :subject => name,
-              :body => Quoth.get,
-              :attachments => { filename => File.read(fullpath) },
-              :via => :smtp,
-              :via_options => {
-                :address => 'smtprelay.unhcr.local',
-                :port => 25,
-                :openssl_verify_mode => OpenSSL::SSL::VERIFY_NONE,
-              })
+      Pony.mail(:to => 'razafima@unhcr.org',
+                :from => 'axis@unhcr.org',
+                :subject => name,
+                :body => Quoth.get,
+                :attachments => { filename => File.read(fullpath) },
+                :via => :smtp,
+                :via_options => {
+                  :address => 'smtprelay.unhcr.local',
+                  :port => 25,
+                  :openssl_verify_mode => OpenSSL::SSL::VERIFY_NONE,
+                })
 
-Rails.logger.info "XXXX: email sent to: #{to}"
+      Rails.logger.info "XXXX: email sent to: #{to}"
+    rescue e
+      Rails.logger.info "XXXX Error: pdf email failed: #{e}"
+    end
   end
 end
