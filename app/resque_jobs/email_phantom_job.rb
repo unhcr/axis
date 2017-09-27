@@ -7,7 +7,7 @@ module EmailPhantomJob
   @options = {
     :viewport_width => 896,
     :viewport_height => 1270,
-    :margin => '1cm',
+    :margin => '0cm',
     :rendering_time => 40000,
     :logfile => 'log/pdf.log'
   }
