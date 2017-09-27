@@ -5,10 +5,10 @@ module EmailPhantomJob
   # Options for Shrimp (https://github.com/adjust/shrimp) the logfile is a custom option added in a fork
   # here: https://github.com/benrudolph/shrimp
   @options = {
-    # :viewport_width => 896,
-    # :viewport_height => 1270,
+    :viewport_width => 896,
+    :viewport_height => 1270,
     :margin => '1cm',
-    # :rendering_time => 40000,
+    :rendering_time => 40000,
     :logfile => 'log/pdf.log'
   }
 
