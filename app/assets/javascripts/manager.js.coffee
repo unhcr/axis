@@ -70,7 +70,7 @@ class Visio.Models.Manager extends Backbone.Model
     'setup': false
     'db': null
     'syncTimestampId': 'sync_timestamp_id_'
-    'yearList': [Visio.configuration.startyear..Visio.configuration.endyear]
+    'yearList': [2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022]
     'selected': {}
     'selected_strategies': {}
     'aggregation_type': Visio.Parameters.OPERATIONS.name
