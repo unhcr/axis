@@ -73,7 +73,7 @@ class StrategiesController < ApplicationController
     workbook = s.to_workbook
 
     send_data workbook.to_stream.read,
-      :filename => "#{s.name} -- #{Time.now}",
+      :filename => "#{s.name} -- #{Time.now}.xls",
       :disposition => 'inline',
       :type => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
   end
