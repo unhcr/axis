@@ -10,6 +10,10 @@
       .userlist
 
   .row
-    .col-md-12
+    .col-md-6
+      .btn.download
+      %a.block{ :href => '/admin_configuration/download_users' } Download
+
+    .col-md-6
       .btn.cancel
         Close
