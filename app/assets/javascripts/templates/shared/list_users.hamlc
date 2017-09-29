@@ -12,7 +12,7 @@
   .row
     .col-md-6
       .btn.download
-      %a.block{ :href => '/admin_configuration/download_users' } Download
+        %a.block{ :href => '/admin_configuration/download_users' } Download
 
     .col-md-6
       .btn.cancel
