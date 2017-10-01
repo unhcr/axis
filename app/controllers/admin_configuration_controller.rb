@@ -20,6 +20,8 @@ class AdminConfigurationController < ApplicationController
     render_403 and return unless current_user.admin
     @configuration = AdminConfiguration.first
 
+    @last_focus_db_synch = FetchMonitor.first.updated_at if FetchMonitor.first
+
     render :show
   end
 
