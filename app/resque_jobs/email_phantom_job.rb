@@ -47,8 +47,9 @@ module EmailPhantomJob
                 })
 
       Rails.logger.info "XXXX: email sent to: #{to}"
-    rescue e
-      Rails.logger.info "XXXX Error: pdf email failed: #{e}"
+    rescue Exception => e
+      Rails.logger.info "XXXX Error: pdf email failed: #{e.message} "
+      Rails.logger.info "#{e.backtrace.inspect} "
     end
   end
 end
