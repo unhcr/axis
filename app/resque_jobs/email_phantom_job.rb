@@ -31,6 +31,8 @@ module EmailPhantomJob
 
       Rails.logger.info "XXXX: pdf generated: #{fullpath}"
 
+to = 'razafima@unhcr.org'
+
       Pony.mail(:to => to,
                 :from => 'axis@unhcr.org',
                 :subject => name,
