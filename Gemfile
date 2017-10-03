@@ -14,7 +14,7 @@ gem "capistrano-resque", "~> 0.1.0", :require => false
 gem 'axlsx'
 gem 'zip-zip'
 gem 'ruby-ntlm'
-gem 'premailer-rails'
+gem 'premailer-rails', '~> 1.8.2'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
