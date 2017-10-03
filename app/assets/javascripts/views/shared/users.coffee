@@ -11,8 +11,6 @@ class Visio.Views.Users extends Backbone.View
   events:
     'click .cancel': 'close'
     'click .close-container .close': 'close'
-    'click .download': 'download'
-
 
   initialize: (options) ->
     @initModal()
@@ -29,27 +27,6 @@ class Visio.Views.Users extends Backbone.View
 
     @collection.each (user) =>
       @$el.find('.userlist').append @rowTemplate({ user: user })
-
-
-
-  download: ->
-      $.ajax({
-        type: 'GET',
-        url: "/admin_configuration/download_users",
-      }).done((response) =>
-        if response.success
-          notification = new Visio.Views.Success
-            title: 'Successfully Downloaded Users List!'
-            description: ""
-        else
-          notification = new Visio.Views.Error
-            title: 'Oops!'
-            description: "Failed to download users."
-        @close()
-      ).fail () ->
-        notification = new Visio.Views.Error
-          title: 'Oops!'
-          description: "Failed to download users."
 
 
     @
